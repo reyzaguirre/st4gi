@@ -1,9 +1,12 @@
 Package: st4gi
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
+Title: Statistical tools for genetic improvement
+Version: 0.1.0
 Date: 2015-01-23
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Raul Eyzaguirre
+Maintainer: Raul Eyzaguirre <r.eyzaguirre@cgiar.org>
+Description: Statistical tools for the analysis of experimental data for crop genetic improvement
+Depends: R (>= 3.1.2)
+Imports: lme4
+License: GPL-3
+LazyData: true
