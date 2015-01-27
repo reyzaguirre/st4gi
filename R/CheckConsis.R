@@ -105,7 +105,34 @@
 spconsis <- function(data, plot.size, width = 240){
 
   options(width = width)
-
+  
+  colnames.valid <- c('L', 'Y', 'S', 'G', 'NAME', 'E', 'R', 'NOPS', 'NOPE', 'VIR1', 'VIR2',
+                      'VIR3', 'ALT1', 'ALT2', 'VV1', 'VV2', 'VW', 'NOPH', 'NOPR', 'NOCR',
+                      'NONC', 'CRW', 'NCRW', 'RFCP', 'RFCS', 'SCOL', 'FCOL', 'RS', 'RF',
+                      'DAMR', 'RSPR', 'WED1', 'WED2', 'DMF', 'DMD', 'DMVF', 'DMVD', 'DM',
+                      'DMFY', 'DMRY', 'FRAW1', 'SURAW1', 'STRAW1', 'COOF1', 'COOSU1', 'COOST1',
+                      'COOT1', 'COOAP1', 'FRAW2', 'SURAW2', 'STRAW2', 'COOF2', 'COOSU2', 'COOST2',
+                      'COOT2', 'COOAP2', 'PROT', 'FE', 'ZN', 'CA', 'MG', 'BC', 'BC.CC', 'TC',
+                      'STAR', 'FRUC', 'GLUC', 'SUCR', 'MALT', 'TRW', 'CYTHA', 'RYTHA', 'ACRW',
+                      'NRPP', 'YPP', 'CI', 'HI', 'SHI', 'BIOM', 'FYTHA', 'RFR')
+    
+  colnames.list <- colnames(data)
+  
+  check.list.1 <- !(toupper(colnames.list) %in% colnames.valid)
+  temp <- colnames.list[!check.list.1]
+  check.list.2 <- !(temp %in% colnames.valid)
+  
+  colnames(data) <- toupper(colnames(data))
+    
+  # Warnings
+  
+  if (max(check.list.1) == 1)
+    warning("Invalid labels not included for checking :", list(colnames.list[check.list.1]),
+            call. = FALSE)
+  
+  if (max(check.list.2) == 1)
+    warning("Some labels converted to upper case: ", list(temp[check.list.2]), call. = FALSE)
+  
   sink("checks.txt")
 
   spconsis01(data) # NOPS > NOPE > NOPH > NOPR

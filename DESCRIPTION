@@ -1,7 +1,7 @@
 Package: st4gi
 Type: Package
 Title: Statistical tools for genetic improvement
-Version: 0.1.1
+Version: 0.1.2
 Date: 2015-01-23
 Author: Raul Eyzaguirre
 Maintainer: Raul Eyzaguirre <r.eyzaguirre@cgiar.org>
