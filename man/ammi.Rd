@@ -4,7 +4,7 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(trait, geno, env, rep, data, method = "AMMI", f = 0.5, biplot = 1,
+ammi(trait, geno, env, rep, data, method = "AMMI", f = 0.5, biplot = 2,
   biplot1 = "effects", title = NULL, xlab = NULL,
   color = c("darkorange", "black", "gray"), ...)
 }

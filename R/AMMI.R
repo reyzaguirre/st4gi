@@ -43,7 +43,7 @@
 #' @export
 
 ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
-                 biplot = 1, biplot1 = "effects", title = NULL, xlab = NULL,
+                 biplot = 2, biplot1 = "effects", title = NULL, xlab = NULL,
                  color = c("darkorange", "black", "gray"), ...){
 
   # Everything as factor
@@ -149,7 +149,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 #' @export
 
 ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
-                    method = "AMMI", f = .5, biplot = 1, biplot1 = "effects",
+                    method = "AMMI", f = .5, biplot = 2, biplot1 = "effects",
                     title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"), ...){
 
   # Data

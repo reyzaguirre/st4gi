@@ -5,7 +5,7 @@
 \title{AMMI or GGE with data from an interaction means matrix}
 \usage{
 ammigxe(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
-  method = "AMMI", f = 0.5, biplot = 1, biplot1 = "effects",
+  method = "AMMI", f = 0.5, biplot = 2, biplot1 = "effects",
   title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
   ...)
 }
