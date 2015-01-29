@@ -218,4 +218,3 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.05){
 
   list(anova.table = format(at, digits=4), cv = paste(format(cv, digits=4), "%"))
 }
-
