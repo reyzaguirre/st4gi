@@ -4,7 +4,7 @@ Title: Statistical tools for genetic improvement
 Version: 0.1.2
 Date: 2015-01-23
 Author: Raul Eyzaguirre
-Maintainer: Raul Eyzaguirre <r.eyzaguirre@cgiar.org>
+Maintainer: Raul Eyzaguirre <R.EYZAGUIRRE@CGIAR.ORG>
 Description: Statistical tools for the analysis of experimental data for crop genetic improvement
 Depends: R (>= 3.1.2)
 Imports: lme4
