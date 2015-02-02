@@ -24,5 +24,5 @@ library(st4gi)
 To see the documentation type:
 
 ```{r eval=F}
-help(package=st4gi)
+help(package = st4gi)
 ```
