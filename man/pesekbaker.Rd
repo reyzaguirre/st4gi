@@ -18,22 +18,25 @@ pesekbaker(traits, geno, env, rep, data, dgg = NULL, units = "sdu",
 
 \item{data}{The name of the data frame containing the data.}
 
-\item{dgg}{Desired genetic gains, defaults to one standard deviation.}
+\item{dgg}{Desired genetic gains, defaults to one standard deviation for each trait.}
 
 \item{units}{Units for dgg, \code{"actual"} or \code{"sdu"}. See details for more information.}
 
 \item{sf}{Selected fraction, defaults to 0.1.}
 }
 \value{
-It returns the desired genetic gains in actual units,
-the estimated standard deviations,
-the estimated genetic variances,
-the estimated correlation matrix,
-the index coefficients,
-the response to selection,
-the standardized response to selection,
-the Pesek-Baker index value,
-and the Pesek-Baker index value sorted in descending order.
+It returns:
+\itemize{
+\item \code{$Desired.Genetic.Gains}, the desired genetic gains in actual units,
+\item \code{$Standard.Deviations}, the estimated standard deviations,
+\item \code{$Genetic.Variances}, the estimated genetic variances,
+\item \code{$Correlation.Matrix}, the estimated correlation matrix,
+\item \code{$Index.Coefficients}, the index coefficients,
+\item \code{$Response.to.Selection}, the response to selection,
+\item \code{$Std.Response.to.Selection}, the standardized response to selection,
+\item \code{$Pesek.Baker.Index}, the Pesek-Baker index value, and
+\item \code{$Sorted.Pesek.Baker.Index} the Pesek-Baker index value sorted in descending order.
+}
 }
 \description{
 Function to compute the Pesek-Baker index (Pesek, J. and R.J. Baker., 1969).
@@ -60,8 +63,10 @@ str(spg)
 # Run Pesek-Baker index with all the traits
 pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg)
 
-# Use 2 standard deviations as desired genetic gains for each trait
-pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", dgg = 2, spg)
+# Use different desired genetic gains for each trait,
+# more weight on bc and dm, less on star and nocr.
+pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg,
+           dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 }
 \author{
 Raul Eyzaguirre
