@@ -19,12 +19,13 @@
 #' @return It returns a plot with the means and confidence limits for each group.
 #' @examples
 #' # Simulate some data
-#' mydata <- data.frame(y = rnorm(100, sample(80:120, 10), sample(10:20, 10)), g = rep(1:10, 10))
+#' mydata <- data.frame(y = rnorm(100, sample(80:120, 10), sample(10:20, 10)),
+#'                      g = rep(1:10, 10))
 #'
 #' # Draw the plot
 #' msdplot("y", "g", mydata)
 #' @export
-
+                         
 msdplot <- function(trait, groups, data, conf = 0.95, sort.means = "none",
                       main.title = NULL, x.title = "groups", y.title = "",
                       col = "black", bg = "darkorange", col.lines = "black") {

@@ -44,7 +44,8 @@ as number of standard deviations.
 }
 \examples{
 # Simulate some data
-mydata <- data.frame(y = rnorm(100, sample(80:120, 10), sample(10:20, 10)), g = rep(1:10, 10))
+mydata <- data.frame(y = rnorm(100, sample(80:120, 10), sample(10:20, 10)),
+                     g = rep(1:10, 10))
 
 # Draw the plot
 msdplot("y", "g", mydata)

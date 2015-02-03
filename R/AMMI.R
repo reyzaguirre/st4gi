@@ -150,7 +150,8 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 
 ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
                     method = "AMMI", f = .5, biplot = 2, biplot1 = "effects",
-                    title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"), ...){
+                    title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
+                    ...){
 
   # Data
 
