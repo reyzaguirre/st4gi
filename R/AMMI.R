@@ -62,10 +62,10 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
     stop("Error: Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
 
   if (lc$c1 == 1 & lc$c2 == 0)
-    warning("Warning: There is only one replication. Inference is not possible with one replication.")
+    warning("There is only one replication. Inference is not possible with one replication.")
 
   if (method == "AMMI" & lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0)
-    warning("Warning: The data set is unbalanced. Significance of PCs is not evaluated.")
+    warning("The data set is unbalanced. Significance of PCs is not evaluated.")
 
   geno.num <- nlevels(data[,geno])
   env.num <- nlevels(data[,env])

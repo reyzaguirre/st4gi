@@ -55,7 +55,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.05){
     est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
     data[,trait] <- est.data$new.data[,5]
     nmis <- est.data$est.num
-    warning(paste("Warning: The data set is unbalanced, ",
+    warning(paste("The data set is unbalanced, ",
                   format(est.data$est.prop*100, digits = 3),
                   "% missing values estimated.", sep = ""))
   }
