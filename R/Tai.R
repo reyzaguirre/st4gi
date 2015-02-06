@@ -45,7 +45,7 @@ tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
   # Error messages
 
   if (lc$c1 == 0)
-    stop("Error: Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
+    stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
 
   if (lc$c1 == 1 & lc$c2 == 0)
     warning("There is only one replication. Inference is not possible with one replication.")
@@ -58,10 +58,10 @@ tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
   rep.num <- nlevels(data[,rep])
 
   if (geno.num < 2 | env.num < 2)
-    stop(paste("Error: This is not a MET experiment."))
+    stop(paste("This is not a MET experiment."))
 
   if (geno.num < 3 | env.num < 3)
-    stop(paste("Error: You need at least 3 genotypes and 3 environments to run Tai"))
+    stop(paste("You need at least 3 genotypes and 3 environments to run Tai"))
 
   # Compute interaction effects matrix
 
@@ -81,7 +81,7 @@ tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
   at <- summary(model)
 
   if (at[[1]][3,3] > at[[1]][2,3])
-    stop(paste("Error: MS for blocks is greater than MS for environments"))
+    stop(paste("MS for blocks is greater than MS for environments"))
 
   # Compute Tai values alpha and lambda
 

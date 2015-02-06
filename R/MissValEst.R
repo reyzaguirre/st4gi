@@ -47,17 +47,17 @@ mveb <- function(trait, geno, rep, data, maxp = 0.05, tol = 1e-06){
   # Error messages
 
   if (lc$c1 == 0)
-    stop("Error: Some genotypes have zero frequency. Remove genotypes to proceed.")
+    stop("Some genotypes have zero frequency. Remove genotypes to proceed.")
 
   if (lc$c1 == 1 & lc$c2 == 0)
-    stop("Error: There is only one replication. Inference is not possible with one replication.")
+    stop("There is only one replication. Inference is not possible with one replication.")
 
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
-    stop("Error: The data set is balanced. There are no missing values to estimate.")
+    stop("The data set is balanced. There are no missing values to estimate.")
 
   est.p <- mean(is.na(data[,trait]))
   if (est.p > maxp)
-    stop(paste("Error: Too many missing values (",
+    stop(paste("Too many missing values (",
                format(est.p*100, digits = 3), "%).", sep = ""))
 
   # Estimation
@@ -143,17 +143,17 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.05, tol = 1e-06){
   # Error messages
 
   if (lc$c1 == 0)
-    stop("Error: Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
+    stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
 
   if (lc$c1 == 1 & lc$c2 == 0)
-    stop("Error: There is only one replication. Inference is not possible with one replication.")
+    stop("There is only one replication. Inference is not possible with one replication.")
 
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
-    stop("Error: The data set is balanced. There are no missing values to estimate.")
+    stop("The data set is balanced. There are no missing values to estimate.")
 
   est.p <- mean(is.na(data[,trait]))
   if (est.p > maxp)
-    stop(paste("Error: Too many missing values (",
+    stop(paste("Too many missing values (",
                format(est.p*100, digits = 3), "%).", sep = ""))
 
   G <- nlevels(data[,geno])
@@ -161,7 +161,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.05, tol = 1e-06){
   R <- nlevels(data[,rep])
 
   if (G < 2 | E < 2)
-    stop(paste("Error: This is not a MET experiment."))
+    stop(paste("This is not a MET experiment."))
 
   # Estimation
 

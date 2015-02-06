@@ -59,7 +59,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
   # Error messages
 
   if (lc$c1 == 0)
-    stop("Error: Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
+    stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
 
   if (lc$c1 == 1 & lc$c2 == 0)
     warning("There is only one replication. Inference is not possible with one replication.")
@@ -72,10 +72,10 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
   rep.num <- nlevels(data[,rep])
 
   if (geno.num < 2 | env.num < 2)
-    stop(paste("Error: This is not a MET experiment."))
+    stop(paste("This is not a MET experiment."))
 
   if (geno.num < 3 | env.num < 3)
-    stop(paste("Error: You need at least 3 genotypes and 3 environments to run AMMI or GGE."))
+    stop(paste("You need at least 3 genotypes and 3 environments to run AMMI or GGE."))
 
   # Compute interaction means matrix
 
