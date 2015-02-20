@@ -5,11 +5,15 @@ Statistical tools for genetic improvement.
 
 ### Installation
 
-To install this package you need package `devtools`. Type the following lines
-in the R console:
+To install this package you need package `devtools`:
 
 ```{r eval=F}
 install.packages("devtools")
+```
+
+Then type:
+
+```{r eval=F}
 devtools::install_github("reyzaguirre/st4gi")
 ```
 
