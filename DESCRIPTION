@@ -8,5 +8,6 @@ Maintainer: Raul Eyzaguirre <R.EYZAGUIRRE@CGIAR.ORG>
 Description: Statistical tools for the analysis of experimental data for crop genetic improvement
 Depends: R (>= 3.1.2)
 Imports: lme4
-License: GPL-3
+License: MIT + file LICENSE
+Copyright: International Potato Center (2015)
 LazyData: true
