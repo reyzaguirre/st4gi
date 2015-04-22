@@ -1,3 +1,5 @@
+[![Travis-CI Build Status](https://travis-ci.org/reyzaguirre/st4gi.png?branch=master)](https://travis-ci.org/reyzaguirre/st4gi)
+
 st4gi
 =====
 
