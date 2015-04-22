@@ -31,7 +31,7 @@ To see the documentation type:
 help(package = st4gi)
 ```
 
-## Automated tests
+### Automated tests
 
 Windows | Linux | Test coverage
 --------|-------|-----------------
