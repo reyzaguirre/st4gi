@@ -18,7 +18,7 @@ number of selected genotypes, genotypic variance and error variance.
 }
 \details{
 It uses package \code{shiny} for the web layout.
-Type rts1() in the R console to run the app.
+Type \code{rts1()} in the R console to run the app.
 }
 \author{
 Raul Eyzaguirre.

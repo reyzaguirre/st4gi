@@ -5,7 +5,7 @@
 #' number of selected genotypes, genotypic variance and error variance.
 #' @author Raul Eyzaguirre.
 #' @details It uses package \code{shiny} for the web layout.
-#' Type rts1() in the R console to run the app.
+#' Type \code{rts1()} in the R console to run the app.
 #' @return It returns a plot of response to seleccion versus number of replications
 #' and computes the optimum number of replications and the response to selection
 #' at this optimum value.

@@ -19,7 +19,7 @@ genotypic by location variance, and error variance.
 }
 \details{
 It uses package \code{shiny} for the web layout.
-Type rts2() in the R console to run the app.
+Type \code{rts2()} in the R console to run the app.
 }
 \author{
 Raul Eyzaguirre.
