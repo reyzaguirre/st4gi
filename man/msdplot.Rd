@@ -2,14 +2,14 @@
 % Please edit documentation in R/msdplot.r
 \name{msdplot}
 \alias{msdplot}
-\title{Plot means and standard deviations}
+\title{Plot means and standard deviations with a dotplot}
 \usage{
-msdplot(trait, groups, data, conf = 0.95, sort.means = "none",
-  main.title = NULL, x.title = "groups", y.title = "", col = "black",
-  bg = "darkorange", col.lines = "black")
+msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
+  sort.means = "none", main.title = NULL, x.title = "groups",
+  y.title = "", col = "black", bg = "darkorange", col.lines = "black")
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The trait to plot.}
 
 \item{groups}{The grouping factor.}
 
@@ -17,7 +17,13 @@ msdplot(trait, groups, data, conf = 0.95, sort.means = "none",
 
 \item{conf}{Probability for the confidence limits or number of standard deviations.}
 
-\item{sort.means}{Sort for means, \code{"none"} by default.}
+\item{nmax}{Maximum number of points for the compulsory dotplot, default is 10.}
+
+\item{dotplot}{Logical. If \code{TRUE}, a dotplot is shown. If \code{FALSE}
+it will only suppress the dots if the number of data points is larger than \code{nmax}.}
+
+\item{sort.means}{Sort for means. Options are \code{"none"}, \code{"increasing"},
+and \code{"decreasing"}, \code{"none"} by default.}
 
 \item{main.title}{Main title.}
 
@@ -32,7 +38,9 @@ msdplot(trait, groups, data, conf = 0.95, sort.means = "none",
 \item{col.lines}{Line color for confidenced interval lines.}
 }
 \value{
-It returns a plot with the means and confidence limits for each group.
+It returns a plot with the means represented by circles, a line representing
+a confidence limit or a number of standard deviations, and alternatively the
+individual data points.
 }
 \description{
 Function to plot means and confidence limits.
@@ -44,8 +52,8 @@ as number of standard deviations.
 }
 \examples{
 # Simulate some data
-mydata <- data.frame(y = rnorm(100, sample(80:120, 10), sample(10:20, 10)),
-                     g = rep(1:10, 10))
+mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
+                     g = rep(1:5, 10))
 
 # Draw the plot
 msdplot("y", "g", mydata)

@@ -7,9 +7,9 @@
 #' @param conf Probability for the confidence limits or number of standard deviations.
 #' @param nmax Maximum number of points for the compulsory dotplot, default is 10.
 #' @param dotplot Logical. If \code{TRUE}, a dotplot is shown. If \code{FALSE}
-#' it will only suppress the dots if the number of data points is larger than \cod{nmax}.
+#' it will only suppress the dots if the number of data points is larger than \code{nmax}.
 #' @param sort.means Sort for means. Options are \code{"none"}, \code{"increasing"},
-#' and \code{"decreasing}, \code{"none"} by default.
+#' and \code{"decreasing"}, \code{"none"} by default.
 #' @param main.title Main title.
 #' @param x.title Title for x axis.
 #' @param y.title Title for y axis.
