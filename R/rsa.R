@@ -12,7 +12,8 @@
 #' @author Raul Eyzaguirre
 #' @details The regression stability analysis is evaluated with a balanced data set.
 #' If data is unbalanced, missing values are estimated up to an specified maximum proportion,
-#' 5\% by default.
+#' 5\% by default. For the ANOVA table, genotypes and environments are considered as fixed
+#' factors while the blocks are considered as random and nested into the environments.
 #' To run a regression stability analysis you need a set of genotypes evaluated in a set of
 #' environments. At least 3 genotypes or environments are needed. In a regression stability
 #' analysis for genotypes grown at several environments, for each genotype a simple linear
@@ -20,7 +21,6 @@
 #' (X) is fitted. In a similar way, for each environment, a simple linear regression of
 #' individual yield (Y) on the mean yield of all environments for each genotype (X) is fitted.
 #' @return It returns the regression stability analysis for genotypes and environments.
-#' It also returns the coefficient of variation.
 #' @references
 #' Eberhart, S. A. and Russell, W. A. (1966). Stability Parameters for Comparing Varieties.
 #' Crop Sci. 6: 36-40.
@@ -40,55 +40,26 @@
 #' @export
 
 rsa <- function(trait, geno, env, rep, data, maxp = 0.05){
-
-  # Everything as factor
-
-  data[,geno] <- factor(data[,geno])
-  data[,env] <- factor(data[,env])
-  data[,rep] <- factor(data[,rep])
-
-  # Check data and estimate missing values
-
-  lc <- checkdata02(trait, geno, env, data)
-
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0){
-    est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
-    data[,trait] <- est.data$new.data[,5]
-    nmis <- est.data$est.num
-    warning(paste("The data set is unbalanced, ",
-                  format(est.data$est.prop*100, digits = 3),
-                  "% missing values estimated.", sep = ""))
-  }
-
+  
   # Error messages
-
-  geno.num <- nlevels(data[,geno])
-  env.num <- nlevels(data[,env])
-  rep.num <- nlevels(data[,rep])
-
-  if (geno.num < 2 | env.num < 2)
-    stop(paste("This is not a MET experiment."))
-
+  
+   geno.num <- nlevels(data[,geno])
+   env.num <- nlevels(data[,env])
+  
   if (geno.num == 2 & env.num == 2)
     stop(paste("You need at least 3 genotypes or 3 environments for regression stability analysis."))
 
+  # Compute ANOVA
+  
+  at <- aovmet(trait, geno, env, rep, data, maxp)
+
   # Some statistics
 
-   int.mean <- tapply(data[,trait], list(data[,geno], data[,env]), mean, na.rm=T)
-   overall.mean <- mean(int.mean, na.rm=T)
-   env.mean <- apply(int.mean, 2, mean, na.rm=T)
-   geno.mean <- apply(int.mean, 1, mean, na.rm=T)
-
-  # ANOVA
-
-  add.anova <- aov(data[,trait] ~ data[,geno] + data[,env] + data[,rep] %in% data[,env] + data[,geno]:data[,env])
-  at <- summary(add.anova)
-  at <- cbind(at[[1]][,1:4], at[[1]][,5])
-  at[5,1] <- at[5,1] - nmis
-  at[5,3] <- at[5,2]/at[5,1]
-  at[1:4,4] <- at[1:4,3]/at[5,3]
-  at[1:4,5] <- pf(at[1:4,4], at[1:4,1], at[5,1], lower.tail=F)
-
+  int.mean <- tapply(data[,trait], list(data[,geno], data[,env]), mean, na.rm=T)
+  overall.mean <- mean(int.mean, na.rm=T)
+  env.mean <- apply(int.mean, 2, mean, na.rm=T)
+  geno.mean <- apply(int.mean, 1, mean, na.rm=T)
+  
   # Regression-stability for genotypes
 
   a <- NULL
@@ -201,20 +172,17 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.05){
 
   # ANOVA plus regression stability
 
-  at[2,4] <- at[2,3]/at[3,3]
-  at[2,5] <- pf(at[2,4], at[2,1], at[3,1], lower.tail=F)
-  filaux <- at[5,]
+  fileaux <- at[5,]
   at[5,] <- c(hrg_gl, hrg_sc, hrg_cm, hrg_f, hrg_p)
-  at <- rbind(at, c(drg_gl, drg_sc, drg_cm, drg_f, drg_p))
-  at <- rbind(at, c(hre_gl, hre_sc, hre_cm, hre_f, hre_p))
-  at <- rbind(at, c(dre_gl, dre_sc, dre_cm, dre_f, dre_p))
-  at[9,] <- filaux
+  at[6,] <- c(drg_gl, drg_sc, drg_cm, drg_f, drg_p)
+  at[7,] <- c(hre_gl, hre_sc, hre_cm, hre_f, hre_p)
+  at[8,] <- c(dre_gl, dre_sc, dre_cm, dre_f, dre_p)
+  at[9,] <- fileaux
   row.names(at) <- c("G", "E", "R:E", "GxE", "- Het.Regr.G", "- Dev.Regr.G",
                      "- Het.Regr.E", "- Dev.Regr.E", "Residuals")
-  colnames(at)[5] <- "Pr(>F)"
   cv <- sqrt(at[5,3])/abs(overall.mean)*100
 
   # Return
 
-  list(anova.table = format(at, digits=4), cv = paste(format(cv, digits=4), "%"))
+  at
 }

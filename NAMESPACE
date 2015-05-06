@@ -2,6 +2,7 @@
 
 export(ammi)
 export(ammigxe)
+export(aovmet)
 export(domeans)
 export(elston)
 export(msdplot)
