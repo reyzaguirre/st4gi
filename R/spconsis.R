@@ -31,8 +31,8 @@
 #'  \item NONC    : Number of non commercial roots
 #'  \item CRW     : Commercial root weight
 #'  \item NCRW    : Non commercial root weight
-#'  \item RFCP    : Root primary flesh color
-#'  \item RFCS    : Root secondary flesh color
+#'  \item RFCP    : Root primary flesh color using CIP color charts
+#'  \item RFCS    : Root secondary flesh color using CIP color charts
 #'  \item SCOL    : Storage root skin color
 #'  \item FCOL    : Storage root flesh color
 #'  \item RS      : Root size (1-9)
@@ -774,53 +774,53 @@ spconsis09 <- function(data, plot.size){
 # Outliers detection based on interquartile range and values out of range for field data.
 
 spconsis10 <- function(data){
-
+  
   if (exists("NOPE", where=data)==1)
-    if (dim(subset(data, NOPE < 0))[1]>0){
+    if (dim(subset(data, !(NOPE %in% c(0:100, NA))))[1]>0){
       cat("\n","- Out of range values for number of plants established (NOPE):","\n")
-      print(subset(data, NOPE < 0))
+      print(subset(data, !(NOPE %in% c(0:100, NA))))
     }
 
   if (exists("VIR1", where=data)==1)
-    if (dim(subset(data, VIR1 < 1 | VIR1 > 9 ))[1]>0){
+    if (dim(subset(data, !(VIR1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for virus symptoms first evaluation (VIR1):","\n")
-      print(subset(data, VIR1 < 1 | VIR1 > 9))
+      print(subset(data, !(VIR1 %in% c(1:9, NA))))
     }
 
   if (exists("VIR2", where=data)==1)
-    if (dim(subset(data, VIR2 < 1 | VIR2 > 9 ))[1]>0){
+    if (dim(subset(data, !(VIR2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for virus symptoms second evaluation (VIR2):","\n")
-      print(subset(data, VIR2 < 1 | VIR2 > 9))
+      print(subset(data, !(VIR2 %in% c(1:9, NA))))
     }
 
   if (exists("VIR3", where=data)==1)
-    if (dim(subset(data, VIR3 < 1 | VIR3 > 9 ))[1]>0){
+    if (dim(subset(data, !(VIR3 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for virus symptoms third evaluation (VIR3):","\n")
-      print(subset(data, VIR3 < 1 | VIR3 > 9))
+      print(subset(data, !(VIR3 %in% c(1:9, NA))))
     }
 
   if (exists("ALT1", where=data)==1)
-    if (dim(subset(data, ALT1 < 1 | ALT1 > 9 ))[1]>0){
+    if (dim(subset(data, !(ALT1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for alternaria symptoms first evaluation (ALT1):","\n")
-      print(subset(data, ALT1 < 1 | ALT1 > 9))
+      print(subset(data, !(ALT1 %in% c(1:9, NA))))
     }
 
   if (exists("ALT2", where=data)==1)
-    if (dim(subset(data, ALT2 < 1 | ALT2 > 9 ))[1]>0){
+    if (dim(subset(data, !(ALT2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for alternaria symptoms second evaluation (ALT2):","\n")
-      print(subset(data, ALT2 < 1 | ALT2 > 9))
+      print(subset(data, !(ALT2 %in% c(1:9, NA))))
     }
 
   if (exists("VV1", where=data)==1)
-    if (dim(subset(data, VV1 < 1 | VV1 > 9 ))[1]>0){
+    if (dim(subset(data, !(VV1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for vine vigor first evaluation (VV1):","\n")
-      print(subset(data, VV1 < 1 | VV1 > 9))
+      print(subset(data, !(VV1 %in% c(1:9, NA))))
     }
 
   if (exists("VV2", where=data)==1)
-    if (dim(subset(data, VV2 < 1 | VV2 > 9 ))[1]>0){
+    if (dim(subset(data, !(VV2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for vine vigor second evaluation (VV2):","\n")
-      print(subset(data, VV2 < 1 | VV2 > 9))
+      print(subset(data, !(VV2 %in% c(1:9, NA))))
     }
 
   if (exists("VW", where=data)==1)
@@ -842,21 +842,21 @@ spconsis10 <- function(data){
     }
 
   if (exists("NOPH", where=data)==1)
-    if (dim(subset(data, NOPH < 0))[1]>0){
+    if (dim(subset(data, !(NOPH %in% c(0:100, NA))))[1]>0){
       cat("\n","- Out of range values for number of plants harvested (NOPH):","\n")
-      print(subset(data, NOPH < 0))
+      print(subset(data, !(NOPE %in% c(0:100, NA))))
     }
 
   if (exists("NOPR", where=data)==1)
-    if (dim(subset(data, NOPR < 0))[1]>0){
+    if (dim(subset(data, !(NOPR %in% c(0:100, NA))))[1]>0){
       cat("\n","- Out of range values for number of plants with roots (NOPR):","\n")
-      print(subset(data, NOPR < 0))
+      print(subset(data, !(NOPR %in% c(0:100, NA))))
     }
 
   if (exists("NOCR", where=data)==1)
-    if (dim(subset(data, NOCR < 0))[1]>0){
+    if (dim(subset(data, !(NOCR %in% c(0:1000, NA))))[1]>0){
       cat("\n","- Out of range values for number of commercial roots (NOCR):","\n")
-      print(subset(data, NOCR < 0))
+      print(subset(data, !(NOCR %in% c(0:1000, NA))))
     }
 
   if (exists("NOCR", where=data)==1)
@@ -872,9 +872,9 @@ spconsis10 <- function(data){
     }
 
   if (exists("NONC", where=data)==1)
-    if (dim(subset(data, NONC < 0))[1]>0){
+    if (dim(subset(data, !(NONC %in% c(0:1000, NA))))[1]>0){
       cat("\n","- Out of range values for number of non commercial roots (NONC):","\n")
-      print(subset(data, NONC < 0))
+      print(subset(data, !(NONC %in% c(0:1000, NA))))
     }
 
   if (exists("NONC", where=data)==1)
@@ -926,51 +926,51 @@ spconsis10 <- function(data){
     }
 
   if (exists("SCOL", where=data)==1)
-    if (dim(subset(data, SCOL < 1 | SCOL > 9 ))[1]>0){
+    if (dim(subset(data, !(SCOL %in% c(1:30, NA))))[1]>0){
       cat("\n","- Out of range values for storage root skin color (SCOL):","\n")
-      print(subset(data, SCOL < 1 | SCOL > 9))
+      print(subset(data, !(SCOL %in% c(1:30, NA))))
     }
 
   if (exists("FCOL", where=data)==1)
-    if (dim(subset(data, FCOL < 1 | FCOL > 9 ))[1]>0){
+    if (dim(subset(data, !(FCOL %in% c(1:30, NA))))[1]>0){
       cat("\n","- Out of range values for storage root flesh color (FCOL):","\n")
-      print(subset(data, FCOL < 1 | FCOL > 9))
+      print(subset(data, !(FCOL %in% c(1:30, NA))))
     }
 
   if (exists("RS", where=data)==1)
-    if (dim(subset(data, RS < 1 | RS > 9 ))[1]>0){
+    if (dim(subset(data, !(RS %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root size (RS):","\n")
-      print(subset(data, RS < 1 | RS > 9))
+      print(subset(data, !(RS %in% c(1:9, NA))))
     }
 
   if (exists("RF", where=data)==1)
-    if (dim(subset(data, RF < 1 | RF > 9 ))[1]>0){
+    if (dim(subset(data, !(RF %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root form (RF):","\n")
-      print(subset(data, RF < 1 | RF > 9))
+      print(subset(data, !(RF %in% c(1:9, NA))))
     }
 
   if (exists("DAMR", where=data)==1)
-    if (dim(subset(data, DAMR < 1 | DAMR > 9 ))[1]>0){
+    if (dim(subset(data, !(DAMR %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root defects (DAMR):","\n")
-      print(subset(data, DAMR < 1 | DAMR > 9))
+      print(subset(data, !(DAMR %in% c(1:9, NA))))
     }
 
   if (exists("RSPR", where=data)==1)
-    if (dim(subset(data, RSPR < 1 | RSPR > 9 ))[1]>0){
+    if (dim(subset(data, !(RSPR %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root sprouting (RSPR):","\n")
-      print(subset(data, RSPR < 1 | RSPR > 9))
+      print(subset(data, !(RSPR %in% c(1:9, NA))))
     }
 
   if (exists("WED1", where=data)==1)
-    if (dim(subset(data, WED1 < 1 | WED1 > 9 ))[1]>0){
+    if (dim(subset(data, !(WED1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for weevil damage first evaluation (WED1):","\n")
-      print(subset(data, WED1 < 1 | WED1 > 9))
+      print(subset(data, !(WED1 %in% c(1:9, NA))))
     }
 
   if (exists("WED2", where=data)==1)
-    if (dim(subset(data, WED2 < 1 | WED2 > 9 ))[1]>0){
+    if (dim(subset(data, !(WED2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for weevil damage second evaluation (WED2):","\n")
-      print(subset(data, WED2 < 1 | WED2 > 9))
+      print(subset(data, !(WED2 %in% c(1:9, NA))))
     }
 }
 
@@ -1112,99 +1112,99 @@ spconsis11 <- function(data){
 spconsis12 <- function(data){
 
   if (exists("FRAW1", where=data)==1)
-    if (dim(subset(data, FRAW1 < 1 | FRAW1 > 9 ))[1]>0){
+    if (dim(subset(data, !(FRAW1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root fiber first determination (FRAW1):","\n")
-      print(subset(data, FRAW1 < 1 | FRAW1 > 9))
+      print(subset(data, !(FRAW1 %in% c(1:9, NA))))
     }
 
   if (exists("SURAW1", where=data)==1)
-    if (dim(subset(data, SURAW1 < 1 | SURAW1 > 9 ))[1]>0){
+    if (dim(subset(data, !(SURAW1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root sugar first determination (SURAW1):","\n")
-      print(subset(data, SURAW1 < 1 | SURAW1 > 9))
+      print(subset(data, !(SURAW1 %in% c(1:9, NA))))
     }
 
   if (exists("STRAW1", where=data)==1)
-    if (dim(subset(data, STRAW1 < 1 | STRAW1 > 9 ))[1]>0){
+    if (dim(subset(data, !(STRAW1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root starch first determination (STRAW1):","\n")
-      print(subset(data, STRAW1 < 1 | STRAW1 > 9))
+      print(subset(data, !(STRAW1 %in% c(1:9, NA))))
     }
 
   if (exists("COOF1", where=data)==1)
-    if (dim(subset(data, COOF1 < 1 | COOF1 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOF1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked fiber first evaluation (COOF1):","\n")
-      print(subset(data, COOF1 < 1 | COOF1 > 9))
+      print(subset(data, !(COOF1 %in% c(1:9, NA))))
     }
 
   if (exists("COOSU1", where=data)==1)
-    if (dim(subset(data, COOSU1 < 1 | COOSU1 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOSU1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked sugars first evaluation (COOSU1):","\n")
-      print(subset(data, COOSU1 < 1 | COOSU1 > 9))
+      print(subset(data, !(COOSU1 %in% c(1:9, NA))))
     }
 
   if (exists("COOST1", where=data)==1)
-    if (dim(subset(data, COOST1 < 1 | COOST1 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOST1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked starch first evaluation (COOST1):","\n")
-      print(subset(data, COOST1 < 1 | COOST1 > 9))
+      print(subset(data, !(COOST1 %in% c(1:9, NA))))
     }
 
   if (exists("COOT1", where=data)==1)
-    if (dim(subset(data, COOT1 < 1 | COOT1 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOT1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked taste first evaluation (COOT1):","\n")
-      print(subset(data, COOT1 < 1 | COOT1 > 9))
+      print(subset(data, !(COOT1 %in% c(1:9, NA))))
     }
 
   if (exists("COOAP1", where=data)==1)
-    if (dim(subset(data, COOAP1 < 1 | COOAP1 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOAP1 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked appearance first evaluation (COOAP1):","\n")
-      print(subset(data, COOAP1 < 1 | COOAP1 > 9))
+      print(subset(data, !(COOAP1 %in% c(1:9, NA))))
     }
 
   if (exists("FRAW2", where=data)==1)
-    if (dim(subset(data, FRAW2 < 1 | FRAW2 > 9 ))[1]>0){
+    if (dim(subset(data, !(FRAW2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root fiber second determination (FRAW2):","\n")
-      print(subset(data, FRAW2 < 1 | FRAW2 > 9))
+      print(subset(data, !(FRAW2 %in% c(1:9, NA))))
     }
 
   if (exists("SURAW2", where=data)==1)
-    if (dim(subset(data, SURAW2 < 1 | SURAW2 > 9 ))[1]>0){
+    if (dim(subset(data, !(SURAW2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root sugar second determination (SURAW2):","\n")
-      print(subset(data, SURAW2 < 1 | SURAW2 > 9))
+      print(subset(data, !(SURAW2 %in% c(1:9, NA))))
     }
 
   if (exists("STRAW2", where=data)==1)
-    if (dim(subset(data, STRAW2 < 1 | STRAW2 > 9 ))[1]>0){
+    if (dim(subset(data, !(STRAW2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for root starch second determination (STRAW2):","\n")
-      print(subset(data, STRAW2 < 1 | STRAW2 > 9))
+      print(subset(data, !(STRAW2 %in% c(1:9, NA))))
     }
 
   if (exists("COOF2", where=data)==1)
-    if (dim(subset(data, COOF2 < 1 | COOF2 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOF2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked fiber second evaluation (COOF2):","\n")
-      print(subset(data, COOF2 < 1 | COOF2 > 9))
+      print(subset(data, !(COOF2 %in% c(1:9, NA))))
     }
 
   if (exists("COOSU2", where=data)==1)
-    if (dim(subset(data, COOSU2 < 1 | COOSU2 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOSU2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked sugars second evaluation (COOSU2):","\n")
-      print(subset(data, COOSU2 < 1 | COOSU2 > 9))
+      print(subset(data, !(COOSU2 %in% c(1:9, NA))))
     }
 
   if (exists("COOST2", where=data)==1)
-    if (dim(subset(data, COOST2 < 1 | COOST2 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOST2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked starch second evaluation (COOST2):","\n")
-      print(subset(data, COOST2 < 1 | COOST2 > 9))
+      print(subset(data, !(COOST2 %in% c(1:9, NA))))
     }
 
   if (exists("COOT2", where=data)==1)
-    if (dim(subset(data, COOT2 < 1 | COOT2 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOT2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked taste second evaluation (COOT2):","\n")
-      print(subset(data, COOT2 < 1 | COOT2 > 9))
+      print(subset(data, !(COOT2 %in% c(1:9, NA))))
     }
 
   if (exists("COOAP2", where=data)==1)
-    if (dim(subset(data, COOAP2 < 1 | COOAP2 > 9 ))[1]>0){
+    if (dim(subset(data, !(COOAP2 %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for cooked appearance second evaluation (COOAP2):","\n")
-      print(subset(data, COOAP2 < 1 | COOAP2 > 9))
+      print(subset(data, !(COOAP2 %in% c(1:9, NA))))
     }
 }
 
@@ -1212,6 +1212,10 @@ spconsis12 <- function(data){
 # Outliers detection based on interquartile range and values out of range for lab data.
 
 spconsis13 <- function(data){
+
+  bc.cc.values <- c(0.03, 0, 0.12, 0.02, 0.15, 1.38, 1.65, 1.5, 1.74, 1.76, 0.69, 1.17, 1.32,
+                    1.04, 4.41, 4.92, 6.12, 5.46, 3.96, 5.49, 3.03, 3.76, 4.61, 7.23, 7.76,
+                    10.5, 11.03, 12.39, 14.37)
 
   if (exists("PROT", where=data)==1)
     if (dim(subset(data, PROT < 0))[1]>0){
@@ -1322,9 +1326,9 @@ spconsis13 <- function(data){
     }
 
   if (exists("BC.CC", where=data)==1)
-    if (dim(subset(data, BC.CC < 0 | BC.CC > 14.37))[1]>0){
+    if (dim(subset(data, !(BC.CC %in% c(bc.cc.values, NA))))[1]>0){
       cat("\n","- Out of range values for beta-carotene with color chart (BC.CC):","\n")
-      print(subset(data, BC.CC < 0 | BC.CC > 14.37))
+      print(subset(data, !(BC.CC %in% c(bc.cc.values, NA))))
     }
 
   if (exists("TC", where=data)==1)

@@ -48,8 +48,8 @@ The data frame must use the following labels:
  \item NONC    : Number of non commercial roots
  \item CRW     : Commercial root weight
  \item NCRW    : Non commercial root weight
- \item RFCP    : Root primary flesh color
- \item RFCS    : Root secondary flesh color
+ \item RFCP    : Root primary flesh color using CIP color charts
+ \item RFCS    : Root secondary flesh color using CIP color charts
  \item SCOL    : Storage root skin color
  \item FCOL    : Storage root flesh color
  \item RS      : Root size (1-9)
