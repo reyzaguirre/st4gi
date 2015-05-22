@@ -33,8 +33,8 @@
 #'  \item NCRW    : Non commercial root weight
 #'  \item RFCP    : Root primary flesh color using CIP color charts
 #'  \item RFCS    : Root secondary flesh color using CIP color charts
-#'  \item SCOL    : Storage root skin color
-#'  \item FCOL    : Storage root flesh color
+#'  \item SCOL    : Storage root skin color (1-9)
+#'  \item FCOL    : Storage root flesh color (1-9)
 #'  \item RS      : Root size (1-9)
 #'  \item RF      : Root form (1-9)
 #'  \item DAMR    : Root defects (1-9)
@@ -926,15 +926,15 @@ spconsis10 <- function(data){
     }
 
   if (exists("SCOL", where=data)==1)
-    if (dim(subset(data, !(SCOL %in% c(1:30, NA))))[1]>0){
+    if (dim(subset(data, !(SCOL %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for storage root skin color (SCOL):","\n")
-      print(subset(data, !(SCOL %in% c(1:30, NA))))
+      print(subset(data, !(SCOL %in% c(1:9, NA))))
     }
 
   if (exists("FCOL", where=data)==1)
-    if (dim(subset(data, !(FCOL %in% c(1:30, NA))))[1]>0){
+    if (dim(subset(data, !(FCOL %in% c(1:9, NA))))[1]>0){
       cat("\n","- Out of range values for storage root flesh color (FCOL):","\n")
-      print(subset(data, !(FCOL %in% c(1:30, NA))))
+      print(subset(data, !(FCOL %in% c(1:9, NA))))
     }
 
   if (exists("RS", where=data)==1)
