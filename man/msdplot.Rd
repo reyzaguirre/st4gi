@@ -6,7 +6,8 @@
 \usage{
 msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
   sort.means = "none", main.title = NULL, x.title = "groups",
-  y.title = "", col = "black", bg = "darkorange", col.lines = "black")
+  y.title = "", col.means = "black", col.lines = "black",
+  col.points = "black")
 }
 \arguments{
 \item{trait}{The trait to plot.}
@@ -31,16 +32,16 @@ and \code{"decreasing"}, \code{"none"} by default.}
 
 \item{y.title}{Title for y axis.}
 
-\item{col}{Line color for circles.}
-
-\item{bg}{Background color for circles.}
+\item{col.means}{Line color for mean lines.}
 
 \item{col.lines}{Line color for confidenced interval lines.}
+
+\item{col.points}{Color for data points.}
 }
 \value{
-It returns a plot with the means represented by circles, a line representing
-a confidence limit or a number of standard deviations, and alternatively the
-individual data points.
+It returns a plot with the means represented by horizontal lines, a vertical
+line representing a confidence limit or a number of standard deviations,
+and alternatively the individual data points.
 }
 \description{
 Function to plot means and confidence limits.

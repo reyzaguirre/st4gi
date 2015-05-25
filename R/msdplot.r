@@ -13,16 +13,16 @@
 #' @param main.title Main title.
 #' @param x.title Title for x axis.
 #' @param y.title Title for y axis.
-#' @param col Line color for circles.
-#' @param bg Background color for circles.
+#' @param col.means Line color for mean lines.
 #' @param col.lines Line color for confidenced interval lines.
+#' @param col.points Color for data points.
 #' @author Raul Eyzaguirre
 #' @details An alternative to the controversial dynamite plots.
 #' If \code{conf} is set to a value greater than or equal to 1, then it is interpreted
 #' as number of standard deviations.
-#' @return It returns a plot with the means represented by circles, a line representing
-#' a confidence limit or a number of standard deviations, and alternatively the
-#' individual data points.
+#' @return It returns a plot with the means represented by horizontal lines, a vertical
+#' line representing a confidence limit or a number of standard deviations,
+#' and alternatively the individual data points.
 #' @examples
 #' # Simulate some data
 #' mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
@@ -34,8 +34,8 @@
                          
 msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
                     sort.means = "none", main.title = NULL, x.title = "groups",
-                    y.title = "", col = "black", bg = "darkorange",
-                    col.lines = "black") {
+                    y.title = "", col.means = "black", col.lines = "black",
+                    col.points = "black") {
   
   # Error messages
   
@@ -66,7 +66,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
     msg <- paste("Means +/-", conf, "standard deviations")
   }
   
-  resu$orden <- as.numeric(rownames(resu))
+  resu$orden <- rownames(resu)
 
   # sort
 
@@ -100,7 +100,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
   plot(seq(1, length(resu$means)), resu$means, xaxt = "n",
        xlab = x.title, ylab = y.title, main = main.title,
        xlim = c(0.5, length(resu$means) + 0.5), ylim = c(a, b),
-       pch = 21, col = col, bg = bg, cex = 2)
+       pch = '-', col = col.means, cex = 2)
 
   axis(1, at = seq(1, length(resu$means)), labels = rownames(resu), las = 1)
 
@@ -108,6 +108,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
     lines(c(i,i), c(resu$li[i], resu$ls[i]), col = col.lines)
     subdata <- subset(data, data[, groups] == resu$orden[i])
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax)
-      points(jitter(rep(i+0.1, length(subdata[, trait])), factor=0.3), subdata[, trait])
+      points(jitter(rep(i+0.08, length(subdata[, trait])), factor=0.2),
+             subdata[, trait], col = col.points)
     }
 }
