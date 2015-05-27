@@ -14,7 +14,7 @@
 #' @param x.title Title for x axis.
 #' @param y.title Title for y axis.
 #' @param col.means Line color for mean symbols.
-#' @param col.lines Line color for confidenced interval lines.
+#' @param col.lines Line color for confidence interval lines.
 #' @param col.points Color for data points.
 #' @param ... Additional graphic parameters.
 #' @author Raul Eyzaguirre
