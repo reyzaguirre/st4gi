@@ -7,7 +7,7 @@
 msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
   sort.means = "none", main.title = NULL, x.title = "groups",
   y.title = "", col.means = "black", col.lines = "black",
-  col.points = "black")
+  col.points = "black", ...)
 }
 \arguments{
 \item{trait}{The trait to plot.}
@@ -32,11 +32,13 @@ and \code{"decreasing"}, \code{"none"} by default.}
 
 \item{y.title}{Title for y axis.}
 
-\item{col.means}{Line color for mean lines.}
+\item{col.means}{Line color for mean symbols.}
 
 \item{col.lines}{Line color for confidenced interval lines.}
 
 \item{col.points}{Color for data points.}
+
+\item{...}{Additional graphic parameters.}
 }
 \value{
 It returns a plot with the means represented by horizontal lines, a vertical

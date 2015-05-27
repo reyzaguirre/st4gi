@@ -13,9 +13,10 @@
 #' @param main.title Main title.
 #' @param x.title Title for x axis.
 #' @param y.title Title for y axis.
-#' @param col.means Line color for mean lines.
+#' @param col.means Line color for mean symbols.
 #' @param col.lines Line color for confidenced interval lines.
 #' @param col.points Color for data points.
+#' @param ... Additional graphic parameters.
 #' @author Raul Eyzaguirre
 #' @details An alternative to the controversial dynamite plots.
 #' If \code{conf} is set to a value greater than or equal to 1, then it is interpreted
@@ -35,7 +36,7 @@
 msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
                     sort.means = "none", main.title = NULL, x.title = "groups",
                     y.title = "", col.means = "black", col.lines = "black",
-                    col.points = "black") {
+                    col.points = "black", ...) {
   
   # Error messages
   
@@ -100,7 +101,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
   plot(seq(1, length(resu$means)), resu$means, xaxt = "n",
        xlab = x.title, ylab = y.title, main = main.title,
        xlim = c(0.5, length(resu$means) + 0.5), ylim = c(a, b),
-       pch = '-', col = col.means, cex = 2)
+       col = col.means, ...)
 
   axis(1, at = seq(1, length(resu$means)), labels = rownames(resu), las = 1)
 
@@ -108,7 +109,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
     lines(c(i,i), c(resu$li[i], resu$ls[i]), col = col.lines)
     subdata <- subset(data, data[, groups] == resu$orden[i])
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax)
-      points(jitter(rep(i+0.08, length(subdata[, trait])), factor=0.2),
+      points(jitter(rep(i + 0.08, length(subdata[, trait])), factor = 0.1),
              subdata[, trait], col = col.points)
     }
 }
