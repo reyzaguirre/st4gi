@@ -16,6 +16,7 @@
 #' @param col.means Line color for mean symbols.
 #' @param col.lines Line color for confidence interval lines.
 #' @param col.points Color for data points.
+#' @param jf Jitter factor for dots.
 #' @param ... Additional graphic parameters.
 #' @author Raul Eyzaguirre
 #' @details An alternative to the controversial dynamite plots.
@@ -36,7 +37,7 @@
 msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
                     sort.means = "none", main.title = NULL, x.title = "groups",
                     y.title = "", col.means = "black", col.lines = "black",
-                    col.points = "black", ...) {
+                    col.points = "black", jf = 0.1, ...) {
   
   # Error messages
   
@@ -60,11 +61,11 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
     resu$n <- tapply(is.na(data[, trait])==0, data[,groups], sum)
     resu$li <- resu$means - qt((1 + conf)/2, resu$n-1) * resu$sdev/sqrt(resu$n)
     resu$ls <- resu$means + qt((1 + conf)/2, resu$n-1) * resu$sdev/sqrt(resu$n)
-    msg <- paste("Means and ", conf*100, "% confidence limits", sep="")
+    msg <- paste("Dotplot with means and ", conf*100, "% confidence limits", sep="")
   } else {
     resu$li <- resu$means - conf * resu$sdev
     resu$ls <- resu$means + conf * resu$sdev
-    msg <- paste("Means +/-", conf, "standard deviations")
+    msg <- paste("Dotplot with means +/-", conf, "standard deviations")
   }
   
   resu$orden <- rownames(resu)
@@ -109,7 +110,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
     lines(c(i,i), c(resu$li[i], resu$ls[i]), col = col.lines)
     subdata <- subset(data, data[, groups] == resu$orden[i])
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax)
-      points(jitter(rep(i + 0.08, length(subdata[, trait])), factor = 0.1),
+      points(jitter(rep(i + 0.08, length(subdata[, trait])), factor = jf),
              subdata[, trait], col = col.points)
     }
 }

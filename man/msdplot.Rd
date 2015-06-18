@@ -7,7 +7,7 @@
 msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
   sort.means = "none", main.title = NULL, x.title = "groups",
   y.title = "", col.means = "black", col.lines = "black",
-  col.points = "black", ...)
+  col.points = "black", jf = 0.1, ...)
 }
 \arguments{
 \item{trait}{The trait to plot.}
@@ -34,9 +34,11 @@ and \code{"decreasing"}, \code{"none"} by default.}
 
 \item{col.means}{Line color for mean symbols.}
 
-\item{col.lines}{Line color for confidenced interval lines.}
+\item{col.lines}{Line color for confidence interval lines.}
 
 \item{col.points}{Color for data points.}
+
+\item{jf}{Jitter factor for dots.}
 
 \item{...}{Additional graphic parameters.}
 }
