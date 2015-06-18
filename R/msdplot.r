@@ -16,6 +16,7 @@
 #' @param col.means Line color for mean symbols.
 #' @param col.lines Line color for confidence interval lines.
 #' @param col.points Color for data points.
+#' @param x.las x axes labels orientation.
 #' @param jf Jitter factor for dots.
 #' @param dist Horizontal distance between the means and the dots.
 #' @param ... Additional graphic parameters.
@@ -38,7 +39,7 @@
 msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
                     sort.means = "none", main.title = NULL, x.title = "groups",
                     y.title = "", col.means = "black", col.lines = "black",
-                    col.points = "black", jf = 0.1, dist = 0.1, ...) {
+                    col.points = "black", x.las = 1, jf = 0.1, dist = 0.1, ...) {
   
   # Error messages
   
@@ -105,7 +106,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
        xlim = c(0.5, length(resu$means) + 0.5), ylim = c(a, b),
        col = col.means, ...)
 
-  axis(1, at = seq(1, length(resu$means)), labels = rownames(resu), las = 1)
+  axis(1, at = seq(1, length(resu$means)), labels = rownames(resu), las = x.las)
 
   for (i in 1:length(resu$means)){
     lines(c(i,i), c(resu$li[i], resu$ls[i]), col = col.lines)
