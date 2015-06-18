@@ -17,6 +17,7 @@
 #' @param col.lines Line color for confidence interval lines.
 #' @param col.points Color for data points.
 #' @param jf Jitter factor for dots.
+#' @param dist Horizontal distance between the means and the dots.
 #' @param ... Additional graphic parameters.
 #' @author Raul Eyzaguirre
 #' @details An alternative to the controversial dynamite plots.
@@ -37,7 +38,7 @@
 msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
                     sort.means = "none", main.title = NULL, x.title = "groups",
                     y.title = "", col.means = "black", col.lines = "black",
-                    col.points = "black", jf = 0.1, ...) {
+                    col.points = "black", jf = 0.1, dist = 0.1, ...) {
   
   # Error messages
   
@@ -110,7 +111,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
     lines(c(i,i), c(resu$li[i], resu$ls[i]), col = col.lines)
     subdata <- subset(data, data[, groups] == resu$orden[i])
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax)
-      points(jitter(rep(i + 0.08, length(subdata[, trait])), factor = jf),
+      points(jitter(rep(i + dist, length(subdata[, trait])), factor = jf),
              subdata[, trait], col = col.points)
     }
 }
