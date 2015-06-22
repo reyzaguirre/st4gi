@@ -218,8 +218,9 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
       title = paste(method, " biplot1 for ", trait, sep = "")
 
     if (biplot1 == "effects"){
-      maxx <- max(abs(c(env.mean - overall.mean, geno.mean - overall.mean)))*1.05
-      limx <- c(-maxx, maxx)
+      minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean))*1.05
+      maxx <- max(c(env.mean - overall.mean, geno.mean - overall.mean))*1.05
+      limx <- c(minx, maxx)
       if (is.null(xlab) == 1)
         xlab = "Genotype and environment effects"
       xcorg = geno.mean - overall.mean
@@ -236,7 +237,7 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
       xline = overall.mean
     }
 
-    limy <- c(-max(abs(c(E[,1], G[,1]))), max(abs(c(E[,1], G[,1]))))
+    limy <- range(c(E[,1], G[,1]))
 
     plot(1, type = "n", xlim = limx, ylim = limy, main = title, xlab = xlab,
          ylab = paste("PC1 (",format(PC.cont[1],digits = 3),"%)"), ...)
