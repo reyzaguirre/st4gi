@@ -35,6 +35,8 @@
 #'  \item RFCS    : Root secondary flesh color using CIP color charts
 #'  \item SCOL    : Storage root skin color (1-9)
 #'  \item FCOL    : Storage root flesh color (1-9)
+#'  \item RFCP    : Storage root primary flesh color (1-9)
+#'  \item RFCS    : Storage root secondary flesh color (1-9)
 #'  \item RS      : Root size (1-9)
 #'  \item RF      : Root form (1-9)
 #'  \item DAMR    : Root defects (1-9)
@@ -106,15 +108,15 @@ spconsis <- function(data, plot.size, width = 240){
 
   options(width = width)
   
-  colnames.valid <- c('L', 'Y', 'S', 'G', 'NAME', 'E', 'R', 'NOPS', 'NOPE', 'VIR1', 'VIR2',
-                      'VIR3', 'ALT1', 'ALT2', 'VV1', 'VV2', 'VW', 'NOPH', 'NOPR', 'NOCR',
-                      'NONC', 'CRW', 'NCRW', 'RFCP', 'RFCS', 'SCOL', 'FCOL', 'RS', 'RF',
-                      'DAMR', 'RSPR', 'WED1', 'WED2', 'DMF', 'DMD', 'DMVF', 'DMVD', 'DM',
-                      'DMFY', 'DMRY', 'FRAW1', 'SURAW1', 'STRAW1', 'COOF1', 'COOSU1', 'COOST1',
-                      'COOT1', 'COOAP1', 'FRAW2', 'SURAW2', 'STRAW2', 'COOF2', 'COOSU2', 'COOST2',
-                      'COOT2', 'COOAP2', 'PROT', 'FE', 'ZN', 'CA', 'MG', 'BC', 'BC.CC', 'TC',
-                      'STAR', 'FRUC', 'GLUC', 'SUCR', 'MALT', 'TRW', 'CYTHA', 'RYTHA', 'ACRW',
-                      'NRPP', 'YPP', 'CI', 'HI', 'SHI', 'BIOM', 'FYTHA', 'RFR')
+  colnames.valid <- c('L', 'Y', 'S', 'G', 'NAME', 'E', 'R', 'NOPS', 'NOPE', 'VIR1', 'VIR2', 'VIR3',
+                      'ALT1', 'ALT2', 'VV1', 'VV2', 'VW', 'NOPH', 'NOPR', 'NOCR', 'NONC', 'CRW',
+                      'NCRW', 'RFCP', 'RFCS', 'SCOL', 'FCOL', 'RFCP', 'RFCS', 'RS', 'RF', 'DAMR',
+                      'RSPR', 'WED1', 'WED2', 'DMF', 'DMD', 'DMVF', 'DMVD', 'DM', 'DMFY', 'DMRY',
+                      'FRAW1', 'SURAW1', 'STRAW1', 'COOF1', 'COOSU1', 'COOST1', 'COOT1', 'COOAP1',
+                      'FRAW2', 'SURAW2', 'STRAW2', 'COOF2', 'COOSU2', 'COOST2', 'COOT2', 'COOAP2',
+                      'PROT', 'FE', 'ZN', 'CA', 'MG', 'BC', 'BC.CC', 'TC', 'STAR', 'FRUC', 'GLUC',
+                      'SUCR', 'MALT', 'TRW', 'CYTHA', 'RYTHA', 'ACRW', 'NRPP', 'YPP', 'CI', 'HI',
+                      'SHI', 'BIOM', 'FYTHA', 'RFR')
     
   colnames.list <- colnames(data)
   

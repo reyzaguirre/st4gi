@@ -52,6 +52,8 @@ The data frame must use the following labels:
  \item RFCS    : Root secondary flesh color using CIP color charts
  \item SCOL    : Storage root skin color (1-9)
  \item FCOL    : Storage root flesh color (1-9)
+ \item RFCP    : Storage root primary flesh color (1-9)
+ \item RFCS    : Storage root secondary flesh color (1-9)
  \item RS      : Root size (1-9)
  \item RF      : Root form (1-9)
  \item DAMR    : Root defects (1-9)
