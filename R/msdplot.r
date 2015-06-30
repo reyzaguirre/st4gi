@@ -10,16 +10,15 @@
 #' it will only suppress the dots if the number of data points is larger than \code{nmax}.
 #' @param sort.means Sort for means. Options are \code{"none"}, \code{"increasing"},
 #' and \code{"decreasing"}, \code{"none"} by default.
-#' @param main.title Main title.
-#' @param x.title Title for x axis.
-#' @param y.title Title for y axis.
-#' @param col.means Line color for mean symbols.
-#' @param col.lines Line color for confidence interval lines.
-#' @param col.points Color for data points.
+#' @param main Main title.
+#' @param xlab Title for x axis.
+#' @param ylab Title for y axis.
+#' @param colors Color for mean symbols, confidence interval lines, and data points.
+#' @param pch Ploting character for means.
+#' @param lwd Width for ploting characters for means.
 #' @param x.las x axes labels orientation.
 #' @param jf Jitter factor for dots.
 #' @param dist Horizontal distance between the means and the dots.
-#' @param ... Additional graphic parameters.
 #' @author Raul Eyzaguirre
 #' @details An alternative to the controversial dynamite plots.
 #' If \code{conf} is set to a value greater than or equal to 1, then it is interpreted
@@ -37,9 +36,9 @@
 #' @export
                          
 msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
-                    sort.means = "none", main.title = NULL, x.title = "groups",
-                    y.title = "", col.means = "black", col.lines = "black",
-                    col.points = "black", x.las = 1, jf = 0.1, dist = 0.1, ...) {
+                    sort.means = "none", main = NULL, xlab = "groups", ylab = "",
+                    colors = c("orange", "orange", "black"), pch = 4, lwd = 2,
+                    x.las = 1, jf = 0.1, dist = 0.1) {
   
   # Error messages
   
@@ -83,8 +82,8 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
 
   # title for plot
 
-  if (is.null(main.title) == 1)
-    main.title = msg
+  if (is.null(main) == 1)
+    main = msg
 
   # limits for plot
   
@@ -102,17 +101,17 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
   # draw the plot
   
   plot(seq(1, length(resu$means)), resu$means, xaxt = "n",
-       xlab = x.title, ylab = y.title, main = main.title,
+       xlab = xlab, ylab = ylab, main = main,
        xlim = c(0.5, length(resu$means) + 0.5), ylim = c(a, b),
-       col = col.means, ...)
+       col = colors[1], pch = pch, lwd = lwd)
 
   axis(1, at = seq(1, length(resu$means)), labels = rownames(resu), las = x.las)
 
   for (i in 1:length(resu$means)){
-    lines(c(i,i), c(resu$li[i], resu$ls[i]), col = col.lines)
+    lines(c(i,i), c(resu$li[i], resu$ls[i]), col = colors[2])
     subdata <- subset(data, data[, groups] == resu$orden[i])
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax)
       points(jitter(rep(i + dist, length(subdata[, trait])), factor = jf),
-             subdata[, trait], col = col.points)
+             subdata[, trait], col = colors[3])
     }
 }

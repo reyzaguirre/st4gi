@@ -5,9 +5,9 @@
 \title{Plot means and standard deviations with a dotplot}
 \usage{
 msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
-  sort.means = "none", main.title = NULL, x.title = "groups",
-  y.title = "", col.means = "black", col.lines = "black",
-  col.points = "black", x.las = 1, jf = 0.1, dist = 0.1, ...)
+  sort.means = "none", main = NULL, xlab = "groups", ylab = "",
+  colors = c("orange", "orange", "black"), pch = 4, lwd = 2, x.las = 1,
+  jf = 0.1, dist = 0.1)
 }
 \arguments{
 \item{trait}{The trait to plot.}
@@ -26,25 +26,23 @@ it will only suppress the dots if the number of data points is larger than \code
 \item{sort.means}{Sort for means. Options are \code{"none"}, \code{"increasing"},
 and \code{"decreasing"}, \code{"none"} by default.}
 
-\item{main.title}{Main title.}
+\item{main}{Main title.}
 
-\item{x.title}{Title for x axis.}
+\item{xlab}{Title for x axis.}
 
-\item{y.title}{Title for y axis.}
+\item{ylab}{Title for y axis.}
 
-\item{col.means}{Line color for mean symbols.}
+\item{colors}{Color for mean symbols, confidence interval lines, and data points.}
 
-\item{col.lines}{Line color for confidence interval lines.}
+\item{pch}{Ploting character for means.}
 
-\item{col.points}{Color for data points.}
+\item{lwd}{Width for ploting characters for means.}
 
 \item{x.las}{x axes labels orientation.}
 
 \item{jf}{Jitter factor for dots.}
 
 \item{dist}{Horizontal distance between the means and the dots.}
-
-\item{...}{Additional graphic parameters.}
 }
 \value{
 It returns a plot with the means represented by horizontal lines, a vertical
