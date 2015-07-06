@@ -8,7 +8,7 @@
 #' @param env The environments.
 #' @param rep The replications or blocks.
 #' @param data The name of the data frame containing the data.
-#' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 5\%.
+#' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @author Raul Eyzaguirre
 #' @details The regression stability analysis is evaluated with a balanced data set.
 #' If data is unbalanced, missing values are estimated up to an specified maximum proportion,
@@ -39,7 +39,7 @@
 #' rsa("y", "geno", "env", "rep", met8x12)
 #' @export
 
-rsa <- function(trait, geno, env, rep, data, maxp = 0.05){
+rsa <- function(trait, geno, env, rep, data, maxp = 0.1){
   
   # Error messages
   

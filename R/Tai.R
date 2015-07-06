@@ -103,6 +103,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
   s2gl <- int.eff
   for (i in 1:geno.num) s2gl[i,] <- s2gl[i,]^2/(env.num-1)
   lambda <- (apply(s2gl,1,sum) - alpha*apply(slgl,1,sum))/(geno.num-1)/at[5,3]*geno.num*rep.num
+  lambda[lambda < 0] <- 0
 
   # plot lambda limits
 
@@ -117,7 +118,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
 
   if (div2 < 0){
     warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
-    amax <- max(abs(alpha))
+    amax <- max(abs(alpha))*1.05
   } else {
     pi.alpha <- ta*((lx*(geno.num - 1)*at[5,3]*at[2,3]) / ((at[2,3] - at[3,3])*div2))^.5
     amax <- max(c(abs(alpha), pi.alpha))
