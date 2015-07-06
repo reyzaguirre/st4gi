@@ -6,7 +6,7 @@
 #' @param geno The genotypes.
 #' @param rep The replications or blocks. A RCBD is assumed.
 #' @param data The name of the data frame.
-#' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 5\%.
+#' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with name \code{new.data} and the number
 #' \code{est.num} and proportion \code{est.prop} of estimated missing values.
@@ -33,7 +33,7 @@
 #' mveb("y", "geno", "rep", temp)
 #' @export
 
-mveb <- function(trait, geno, rep, data, maxp = 0.05, tol = 1e-06){
+mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06){
 
   # Everything as factor
 

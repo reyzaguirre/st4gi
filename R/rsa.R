@@ -47,7 +47,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1){
    env.num <- nlevels(data[,env])
   
   if (geno.num == 2 & env.num == 2)
-    stop(paste("You need at least 3 genotypes or 3 environments for regression stability analysis."))
+    stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")
 
   # Compute ANOVA
   
