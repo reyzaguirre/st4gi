@@ -7,6 +7,7 @@
 #' @param env The environments.
 #' @param rep The replications or blocks. A RCBD is assumed.
 #' @param data The name of the data frame containing the data.
+#' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param conf Probability for the Tai limits.
 #' @param title Main title for plot.
 #' @param color Color for symbols, labels and lines.
@@ -29,8 +30,8 @@
 #' tai("y", "geno", "env", "rep", met8x12)
 #' @export
 
-tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
-                color = c("darkorange", "black", "gray"), ...) {
+tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
+                title = NULL, color = c("darkorange", "black", "gray"), ...) {
 
   # Everything as factor
 
@@ -42,26 +43,32 @@ tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
 
   lc <- checkdata02(trait, geno, env, data)
 
-  # Error messages
-
-  if (lc$c1 == 0)
-    stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
-
-  if (lc$c1 == 1 & lc$c2 == 0)
-    warning("There is only one replication. Inference is not possible with one replication.")
-
-  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0)
-    warning("The data set is unbalanced.")
+  # Error messages and warnings
 
   geno.num <- nlevels(data[,geno])
   env.num <- nlevels(data[,env])
   rep.num <- nlevels(data[,rep])
 
+  if (lc$c1 == 0)
+    stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
+
+  if (lc$c1 == 1 & lc$c2 == 0)
+    stop("There is only one replication. Inference is not possible with one replication.")
+
   if (geno.num < 2 | env.num < 2)
-    stop(paste("This is not a MET experiment."))
+    stop("This is not a MET experiment.")
 
   if (geno.num < 3 | env.num < 3)
-    stop(paste("You need at least 3 genotypes and 3 environments to run Tai"))
+    stop("You need at least 3 genotypes and 3 environments to run Tai")
+
+  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0){
+    est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
+    data[,trait] <- est.data$new.data[,5]
+    nmis <- est.data$est.num
+    warning(paste("The data set is unbalanced, ",
+                  format(est.data$est.prop*100, digits = 3),
+                  "% missing values estimated.", sep = ""))
+  } else nmis <- 0
 
   # Compute interaction effects matrix
 
@@ -78,21 +85,24 @@ tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
 
   model <- aov(data[,trait] ~ data[,geno] + data[,env] +
                  data[,rep] %in% data[,env] + data[,geno]:data[,env])
-  at <- summary(model)
-
-  if (at[[1]][3,3] > at[[1]][2,3])
-    stop(paste("MS for blocks is greater than MS for environments"))
-
+  at <- anova(model)
+  
+  # Correction for missing values if any
+  
+  if (nmis > 0){
+    at[5,1] <- at[5,1] - nmis
+    at[5,3] <- at[5,2]/at[5,1]
+  }
+  
   # Compute Tai values alpha and lambda
 
   slgl <- int.eff
   for (i in 1:geno.num) slgl[i,] <- slgl[i,]*(env.mean - overall.mean)/(env.num-1)
-  alpha <- apply(slgl, 1, sum)/(at[[1]][2,3]-at[[1]][3,3])*geno.num*rep.num
+  alpha <- apply(slgl, 1, sum)/(at[2,3] - at[3,3])*geno.num*rep.num
 
   s2gl <- int.eff
   for (i in 1:geno.num) s2gl[i,] <- s2gl[i,]^2/(env.num-1)
-  lambda <- (apply(s2gl, 1, sum) - alpha*apply(slgl, 1, sum))/(geno.num-1)/
-    at[[1]][5,3]*geno.num*rep.num
+  lambda <- (apply(s2gl,1,sum) - alpha*apply(slgl,1,sum))/(geno.num-1)/at[5,3]*geno.num*rep.num
 
   # plot lambda limits
 
@@ -100,17 +110,19 @@ tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
 
   # Prediction interval for alpha
 
-  lx <- seq(0,lmax,lmax/100)
+  lx <- seq(0, lmax, lmax/100)
   ta <- qt(1-(1-conf)/2, env.num-2)
-  pi.alpha <- ta * ((lx * (geno.num-1) * at[[1]][5,3] * at[[1]][2,3]) /
-                      (at[[1]][2,3] - at[[1]][3,3]) /
-                      ((env.num-2) * at[[1]][2,3] - (ta^2 + env.num - 2)
-                       * at[[1]][3,3]))^.5
+  
+  div2 <- (env.num-2)*at[2,3] - (ta^2 + env.num - 2)*at[3,3]
 
-  # plot alpha limits
-
-  amax <- max(c(abs(alpha), pi.alpha))
-
+  if (div2 < 0){
+    warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
+    amax <- max(abs(alpha))
+  } else {
+    pi.alpha <- ta*((lx*(geno.num - 1)*at[5,3]*at[2,3]) / ((at[2,3] - at[3,3])*div2))^.5
+    amax <- max(c(abs(alpha), pi.alpha))
+  }
+  
   # Tai plot
 
   if (is.null(title) == 1)
@@ -120,8 +132,10 @@ tai <- function(trait, geno, env, rep, data, conf = 0.95, title = NULL,
        main = title, xlab = expression(lambda), ylab = expression(alpha), ...)
   points(lambda, alpha, col = color[1], lwd = 2, pch = 4, ...)
   text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = .3)
-  points(lx, pi.alpha, type = "l", lty = 3, col = color[3])
-  points(lx, -pi.alpha, type = "l", lty = 3, col = color[3])
+  if (div2 > 0){
+    points(lx, pi.alpha, type = "l", lty = 3, col = color[3])
+    points(lx, -pi.alpha, type = "l", lty = 3, col = color[3])
+  }
   abline(v = qf((1-conf)/2, env.num-2, env.num*(geno.num)*(rep.num-1)),
          lty = 3, col = color[3])
   abline(v = qf(1-(1-conf)/2, env.num-2, env.num*(geno.num)*(rep.num-1)),

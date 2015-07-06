@@ -107,7 +107,7 @@ mveb <- function(trait, geno, rep, data, maxp = 0.05, tol = 1e-06){
 #' @param env The environments.
 #' @param rep The replications or blocks. A RCBD is assumed.
 #' @param data The name of the data frame.
-#' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 5\%.
+#' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with name \code{new.data} and the number
 #' \code{est.num} and proportion \code{est.prop} of estimated missing values.
@@ -128,7 +128,7 @@ mveb <- function(trait, geno, rep, data, maxp = 0.05, tol = 1e-06){
 #' mvemet("y", "geno", "env", "rep", met8x12)
 #' @export
 
-mvemet <- function(trait, geno, env, rep, data, maxp = 0.05, tol = 1e-06){
+mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06){
 
   # Everything as factor
 
@@ -161,7 +161,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.05, tol = 1e-06){
   R <- nlevels(data[,rep])
 
   if (G < 2 | E < 2)
-    stop(paste("This is not a MET experiment."))
+    stop("This is not a MET experiment.")
 
   # Estimation
 

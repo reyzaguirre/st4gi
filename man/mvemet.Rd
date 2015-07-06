@@ -4,7 +4,7 @@
 \alias{mvemet}
 \title{Estimation of missing values for a MET in a RCBD}
 \usage{
-mvemet(trait, geno, env, rep, data, maxp = 0.05, tol = 1e-06)
+mvemet(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
 \item{trait}{The trait to estimate missing values.}
@@ -17,7 +17,7 @@ mvemet(trait, geno, env, rep, data, maxp = 0.05, tol = 1e-06)
 
 \item{data}{The name of the data frame.}
 
-\item{maxp}{Maximum allowed proportion of missing values to estimate, defaults to 5\%.}
+\item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 
 \item{tol}{Tolerance for the convergence of the iterative estimation process.}
 }

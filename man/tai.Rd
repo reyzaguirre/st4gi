@@ -4,7 +4,7 @@
 \alias{tai}
 \title{Tai's stability analysis}
 \usage{
-tai(trait, geno, env, rep, data, conf = 0.95, title = NULL,
+tai(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
   color = c("darkorange", "black", "gray"), ...)
 }
 \arguments{
@@ -17,6 +17,8 @@ tai(trait, geno, env, rep, data, conf = 0.95, title = NULL,
 \item{rep}{The replications or blocks. A RCBD is assumed.}
 
 \item{data}{The name of the data frame containing the data.}
+
+\item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 
 \item{conf}{Probability for the Tai limits.}
 

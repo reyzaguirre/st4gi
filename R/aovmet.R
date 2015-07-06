@@ -6,7 +6,7 @@
 #' @param env The environments.
 #' @param rep The replications or blocks.
 #' @param data The name of the data frame containing the data.
-#' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 5\%.
+#' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @author Raul Eyzaguirre
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 5\% by default. Genotypes and environments are considered as fixed
@@ -21,7 +21,7 @@
 #' aovmet("y", "geno", "env", "rep", met8x12)
 #' @export
 
-aovmet <- function(trait, geno, env, rep, data, maxp = 0.05){
+aovmet <- function(trait, geno, env, rep, data, maxp = 0.1){
 
   # Everything as factor
 
@@ -40,8 +40,7 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.05){
     warning(paste("The data set is unbalanced, ",
                   format(est.data$est.prop*100, digits = 3),
                   "% missing values estimated.", sep = ""))
-  } else
-    nmis <- 0
+  } else nmis <- 0
 
   # Error messages
 
@@ -49,7 +48,7 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.05){
   env.num <- nlevels(data[,env])
 
   if (geno.num < 2 | env.num < 2)
-    stop(paste("This is not a MET experiment."))
+    stop("This is not a MET experiment.")
 
   # ANOVA
 

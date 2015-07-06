@@ -4,7 +4,7 @@
 \alias{aovmet}
 \title{ANOVA for MET}
 \usage{
-aovmet(trait, geno, env, rep, data, maxp = 0.05)
+aovmet(trait, geno, env, rep, data, maxp = 0.1)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -17,7 +17,7 @@ aovmet(trait, geno, env, rep, data, maxp = 0.05)
 
 \item{data}{The name of the data frame containing the data.}
 
-\item{maxp}{Maximum allowed proportion of missing values to estimate, defaults to 5\%.}
+\item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
 \value{
 It returns the ANOVA table.
