@@ -6,19 +6,22 @@
 #' @param env The environments.
 #' @param rep The replications or blocks.
 #' @param data The name of the data frame containing the data.
-#' @param means Type of genotypic means to compute the index. Options are \code{"single"}
-#' or \code{"fitted"}. The default is \code{"single"}.
+#' @param means The genotypic means to compute the index, \code{"single"}
+#' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
 #' @param model Type of model, \code{"gxe"} for a model with gxe interaction or \code{"g+e"}
-#' for a model without interaction. The default is \code{"gxe"}.
-#' @param dgg Desired genetic gains, defaults to one standard deviation for each trait.
+#' for a model without interaction. The default is \code{"gxe"}. See details for more information.
+#' @param dgg Desired genetic gains. The default is one standard deviation for each trait.
 #' @param units Units for dgg, \code{"actual"} or \code{"sdu"}. See details for more information.
-#' @param sf Selected fraction, defaults to 0.1.
+#' @param sf Selected fraction. The default is 0.1.
 #' @author Raul Eyzaguirre
 #' @details The Pesek-Baker is an index where relative economic weights have been replaced
 #' by desired gains. By default a model with components for genotypes, environments,
 #' genotypes by environments interaction and replications nested into environments is fitted.
-#' If model is specified as \code{"g+e"} then a model with components for genotypes and environments
+#' If \code{model = "g+e"} then a model with components for genotypes and environments
 #' is fitted, and in this case the gxe variance includes the gxe plus the error variance.
+#' If \code{means = "fitted"} then the model specified in \code{model} is used to fit
+#' the means of the genotypes. Otherwise single arithmetic means are computed over the
+#' replications for each genotype at each location and then for each genotype over locations.
 #' Response to selection is only computed when \code{model = "gxe"}.
 #' If \code{dgg} is not specified, the standard deviations of the traits
 #' are used. It means that the desired genetic gains are equal to one standard deviation for
@@ -136,10 +139,8 @@ pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "
   outind <- data.frame(geno = levels(factor(data[,geno])))
   
   if (means == "single"){
-    m <- matrix(NA, ng, nt)
-    for (i in 1:nt)
-      m[,i] <- tapply(data[,traits[i]], data[,geno], mean, na.rm = T)
-    outind <- cbind(outind, m)
+    temp <- domeans(traits, c(geno, env), data = data)
+    outind <- domeans(traits, geno, data = temp)
     colnames(outind) <- c("geno", paste("m", traits, sep='.'))
   }
   
@@ -155,9 +156,9 @@ pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "
       temp$geno <- substring(rownames(temp), 3)
       outind <- merge(outind, temp, all = TRUE)
     }
-    m <- as.matrix(outind[,2:(1+nt)])
   }
 
+  m <- as.matrix(outind[,2:(1+nt)])
   indices <- m %*% b
   outind <- cbind(outind, indices)
   colnames(outind)[2+nt] <- "PB.Index"

@@ -30,7 +30,8 @@
 #' elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", data = spg)
 #' @export
 
-elston <- function(traits, geno, env, rep, data, means = "single", model = "gxe", lb = 1) {
+elston <- function(traits, geno, env = NULL, rep = NULL, data,
+                   means = "single", model = "gxe", lb = 1) {
 
   # inits
 

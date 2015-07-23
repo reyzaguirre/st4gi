@@ -18,17 +18,17 @@ pesekbaker(traits, geno, env, rep, data, means = "single", model = "gxe",
 
 \item{data}{The name of the data frame containing the data.}
 
-\item{means}{Type of genotypic means to compute the index. Options are \code{"single"}
-or \code{"fitted"}. The default is \code{"single"}.}
+\item{means}{The genotypic means to compute the index, \code{"single"}
+or \code{"fitted"}. The default is \code{"single"}. See details for more information.}
 
 \item{model}{Type of model, \code{"gxe"} for a model with gxe interaction or \code{"g+e"}
-for a model without interaction. The default is \code{"gxe"}.}
+for a model without interaction. The default is \code{"gxe"}. See details for more information.}
 
-\item{dgg}{Desired genetic gains, defaults to one standard deviation for each trait.}
+\item{dgg}{Desired genetic gains. The default is one standard deviation for each trait.}
 
 \item{units}{Units for dgg, \code{"actual"} or \code{"sdu"}. See details for more information.}
 
-\item{sf}{Selected fraction, defaults to 0.1.}
+\item{sf}{Selected fraction. The default is 0.1.}
 }
 \value{
 It returns:
@@ -51,8 +51,11 @@ Function to compute the Pesek-Baker index (Pesek, J. and R.J. Baker., 1969).
 The Pesek-Baker is an index where relative economic weights have been replaced
 by desired gains. By default a model with components for genotypes, environments,
 genotypes by environments interaction and replications nested into environments is fitted.
-If model is specified as \code{"g+e"} then a model with components for genotypes and environments
+If \code{model = "g+e"} then a model with components for genotypes and environments
 is fitted, and in this case the gxe variance includes the gxe plus the error variance.
+If \code{means = "fitted"} then the model specified in \code{model} is used to fit
+the means of the genotypes. Otherwise single arithmetic means are computed over the
+replications for each genotype at each location and then for each genotype over locations.
 Response to selection is only computed when \code{model = "gxe"}.
 If \code{dgg} is not specified, the standard deviations of the traits
 are used. It means that the desired genetic gains are equal to one standard deviation for
