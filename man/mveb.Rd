@@ -4,7 +4,7 @@
 \alias{mveb}
 \title{Estimation of missing values for a RCBD}
 \usage{
-mveb(trait, geno, rep, data, maxp = 0.05, tol = 1e-06)
+mveb(trait, geno, rep, data, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
 \item{trait}{The trait to estimate missing values.}
@@ -15,7 +15,7 @@ mveb(trait, geno, rep, data, maxp = 0.05, tol = 1e-06)
 
 \item{data}{The name of the data frame.}
 
-\item{maxp}{Maximum allowed proportion of missing values to estimate, defaults to 5\%.}
+\item{maxp}{Maximum allowed proportion of missing values to estimate, defaults to 10\%.}
 
 \item{tol}{Tolerance for the convergence of the iterative estimation process.}
 }

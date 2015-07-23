@@ -4,8 +4,8 @@
 \alias{pesekbaker}
 \title{Pesek-Baker Index}
 \usage{
-pesekbaker(traits, geno, env, rep, data, dgg = NULL, units = "sdu",
-  sf = 0.1)
+pesekbaker(traits, geno, env, rep, data, means = "single", model = "gxe",
+  dgg = NULL, units = "sdu", sf = 0.1)
 }
 \arguments{
 \item{traits}{List of traits.}
@@ -17,6 +17,12 @@ pesekbaker(traits, geno, env, rep, data, dgg = NULL, units = "sdu",
 \item{rep}{The replications or blocks.}
 
 \item{data}{The name of the data frame containing the data.}
+
+\item{means}{Type of genotypic means to compute the index. Options are \code{"single"}
+or \code{"fitted"}.}
+
+\item{model}{Type of model, \code{"gxe"} for a model with gxe interaction or \code{"g+e"}
+for a model without interaction. The default is \code{"gxe"}.}
 
 \item{dgg}{Desired genetic gains, defaults to one standard deviation for each trait.}
 
@@ -33,9 +39,8 @@ It returns:
 \item \code{$Correlation.Matrix}, the estimated correlation matrix,
 \item \code{$Index.Coefficients}, the index coefficients,
 \item \code{$Response.to.Selection}, the response to selection,
-\item \code{$Std.Response.to.Selection}, the standardized response to selection,
-\item \code{$Pesek.Baker.Index}, the Pesek-Baker index value, and
-\item \code{$Sorted.Pesek.Baker.Index} the Pesek-Baker index value sorted in descending order.
+\item \code{$Std.Response.to.Selection}, the standardized response to selection, and
+\item \code{$Pesek.Baker.Index}, the Pesek-Baker index value.
 }
 }
 \description{
@@ -43,7 +48,12 @@ Function to compute the Pesek-Baker index (Pesek, J. and R.J. Baker., 1969).
 }
 \details{
 The Pesek-Baker is an index where relative economic weights have been replaced
-by desired gains. If \code{dgg} is not specified, the standard deviations of the traits
+by desired gains. By default a model with components for genotypes, environments,
+genotypes by environments interaction and replications nested into environments is fitted.
+If model is specified as \code{"g+e"} then a model with components for genotypes and environments
+is fitted, and in this case the gxe variance includes the gxe plus the error variance.
+Response to selection is only computed when \code{model = "gxe"}.
+If \code{dgg} is not specified, the standard deviations of the traits
 are used. It means that the desired genetic gains are equal to one standard deviation for
 each trait. \code{dgg} can be specified in actual units (\code{units = "actual"}) or in
 standard deviations (\code{units = "sdu"}), defaults to \code{"sdu"}. For example,
