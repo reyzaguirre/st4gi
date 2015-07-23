@@ -7,7 +7,7 @@
 #' @param rep The replications or blocks.
 #' @param data The name of the data frame containing the data.
 #' @param means Type of genotypic means to compute the index. Options are \code{"single"}
-#' or \code{"fitted"}.
+#' or \code{"fitted"}. The default is \code{"single"}.
 #' @param model Type of model, \code{"gxe"} for a model with gxe interaction or \code{"g+e"}
 #' for a model without interaction. The default is \code{"gxe"}.
 #' @param dgg Desired genetic gains, defaults to one standard deviation for each trait.
@@ -40,7 +40,8 @@
 #' \item \code{$Index.Coefficients}, the index coefficients,
 #' \item \code{$Response.to.Selection}, the response to selection,
 #' \item \code{$Std.Response.to.Selection}, the standardized response to selection, and
-#' \item \code{$Pesek.Baker.Index}, the Pesek-Baker index value.
+#' \item \code{$Pesek.Baker.Index}, a data frame with the genotypic means for each trait and
+#' the Pesek-Baker index.
 #' }
 #' @references
 #' Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.
