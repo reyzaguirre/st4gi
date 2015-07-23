@@ -150,7 +150,7 @@ pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "
         fm <- lme4::lmer(c1 ~ c2-1 + (1|c2:c3) + (1|c3/c4), data = abc)
       if (model == "g+e")
         fm <- lme4::lmer(c1 ~ c2-1 + (1|c3), data = abc)
-      temp <- as.data.frame(fixef(fm))
+      temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep=".")
       temp$geno <- substring(rownames(temp), 3)
       outind <- merge(outind, temp, all = TRUE)

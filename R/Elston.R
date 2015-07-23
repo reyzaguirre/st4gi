@@ -27,7 +27,7 @@
 #' str(spg)
 #'
 #' # Run Elston index with all the traits
-#' elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", spg)
+#' elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", data = spg)
 #' @export
 
 elston <- function(traits, geno, env, rep, data, means = "single", model = "gxe", lb = 1) {
@@ -57,7 +57,7 @@ elston <- function(traits, geno, env, rep, data, means = "single", model = "gxe"
         fm <- lme4::lmer(c1 ~ c2-1 + (1|c2:c3) + (1|c3/c4), data = abc)
       if (model == "g+e")
         fm <- lme4::lmer(c1 ~ c2-1 + (1|c3), data = abc)
-      temp <- as.data.frame(fixef(fm))
+      temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep=".")
       temp$geno <- substring(rownames(temp), 3)
       outind <- merge(outind, temp, all = TRUE)
@@ -82,12 +82,14 @@ elston <- function(traits, geno, env, rep, data, means = "single", model = "gxe"
 
   # Elston index
 
-  outind$EI <- outind[,nt+2] - k[1]
+  outind$E.Index <- outind[,nt+2] - k[1]
   if (nt > 1)
     for (i in 2:nt)
-      outind$EI <- outind$EI * (outind[,1+nt+i] - k[i])
+      outind$E.Index <- outind$E.Index * (outind[,1+nt+i] - k[i])
+  
+  outind <- outind[, c(1:(1+nt), 2+2*nt)]
 
   # results
 
-  list(Elston.Index = outind)
+  return(outind)
 }

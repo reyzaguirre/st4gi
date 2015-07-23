@@ -45,7 +45,7 @@ head(spg)
 str(spg)
 
 # Run Elston index with all the traits
-elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", spg)
+elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", data = spg)
 }
 \author{
 Raul Eyzaguirre
