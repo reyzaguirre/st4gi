@@ -4,26 +4,40 @@
 \alias{elston}
 \title{Elston Index}
 \usage{
-elston(traits, geno, data, lb = 1)
+elston(traits, geno, env, rep, data, means = "single", model = "gxe",
+  lb = 1)
 }
 \arguments{
 \item{traits}{List of traits.}
 
 \item{geno}{The genotypes.}
 
+\item{env}{The environments.}
+
+\item{rep}{The replications or blocks.}
+
 \item{data}{The name of the data frame containing the data.}
 
-\item{lb}{Lower bound. 1 for k = min(x) and 2 for k = (n*min(x) - max(x))/(n-1)}
+\item{means}{Type of genotypic means to compute the index. Options are \code{"single"}
+or \code{"fitted"}. The default is \code{"single"}.}
+
+\item{model}{Type of model to compute the fitted means. Type \code{model = "gxe"} or
+\code{model = "g+e"} for a model with or without interaction. The default is \code{"gxe"}.}
+
+\item{lb}{Lower bound. \code{1} for k = min(x) and \code{2} for k = (n*min(x) - max(x))/(n-1)}
 }
 \value{
-It returns the Elston index value and the Elston index value
-sorted in descending order.
+It returns a data frame with the genotypic means for each trait and the Elston index.
 }
 \description{
 Function to compute the Elston index (Elston, R. C., 1963).
 }
 \details{
 The Elston index is a weight free index.
+If \code{means = "fitted"} and \code{model = "gxe"} then the arguments \code{env} and
+\code{rep} must be specified.
+If \code{means = "fitted"} and \code{model = "g+e"} then only the argument \code{env}
+must be specified.
 }
 \examples{
 # The data
