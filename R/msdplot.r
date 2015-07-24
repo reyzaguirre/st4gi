@@ -82,7 +82,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
 
   # title for plot
 
-  if (is.null(main) == 1)
+  if (is.null(main))
     main = msg
 
   # limits for plot

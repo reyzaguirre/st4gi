@@ -195,13 +195,13 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
   # Significance of PCs, only for AMMI and if rep.num, rms and rdf are known
 
   if (method == "AMMI"){
-    if (is.null(rep.num) == 0){
+    if (!is.null(rep.num)){
       int.SS <- (t(as.vector(svd.mat))%*%as.vector(svd.mat))*rep.num
       PC.SS <- (dec$d[1:PC]^2)*rep.num
       PC.DF <- env.num + geno.num - 1 - 2*c(1:PC)
       MS <- PC.SS/PC.DF
     }
-    if (is.null(rms) == 0 & is.null(rdf) == 0){
+    if (!is.null(rms) & !is.null(rdf)){
       F <- MS/rms
       probab <- pf(F, PC.DF, rdf, lower.tail = FALSE)
       rowlab <- PC.num
@@ -214,14 +214,14 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
 
   if (biplot == 1){
 
-    if (is.null(title) == 1)
+    if (is.null(title))
       title = paste(method, " biplot1 for ", trait, sep = "")
 
     if (biplot1 == "effects"){
       minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean))*1.05
       maxx <- max(c(env.mean - overall.mean, geno.mean - overall.mean))*1.05
       limx <- c(minx, maxx)
-      if (is.null(xlab) == 1)
+      if (is.null(xlab))
         xlab = "Genotype and environment effects"
       xcorg = geno.mean - overall.mean
       xcore = env.mean - overall.mean
@@ -230,7 +230,7 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
     if (biplot1 == "means"){
       limx <- range(c(env.mean, geno.mean))
       limx <- limx + c(-max(abs(limx)), max(abs(limx)))*.05
-      if (is.null(xlab) == 1)
+      if (is.null(xlab))
         xlab = "Genotype and environment means"
       xcorg = geno.mean
       xcore = env.mean
@@ -252,7 +252,7 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
 
   if (biplot == 2){
 
-    if (is.null(title) == 1)
+    if (is.null(title))
       title = paste(method, " biplot2 for ", trait, sep = "")
 
     limx <- range(c(E[,1], G[,1]))

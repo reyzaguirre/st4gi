@@ -126,7 +126,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
   
   # Tai plot
 
-  if (is.null(title) == 1)
+  if (is.null(title))
     title = paste("Tai stability analysis for ", trait, sep = "")
 
   plot(1, type = "n", xlim = c(-0.05*lmax, lmax), ylim = c(-amax, amax),
