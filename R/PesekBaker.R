@@ -48,8 +48,8 @@
 #' \item \code{$Index.Coefficients}, the index coefficients,
 #' \item \code{$Response.to.Selection}, the response to selection,
 #' \item \code{$Std.Response.to.Selection}, the standardized response to selection, and
-#' \item \code{$Pesek.Baker.Index}, a data frame with the genotypic means for each trait and
-#' the Pesek-Baker index.
+#' \item \code{$Pesek.Baker.Index}, a data frame with the genotypic means for each trait,
+#' the Pesek-Baker index, and the rank for each genotype according to the index.
 #' }
 #' @references
 #' Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.
@@ -175,7 +175,8 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   indices <- m %*% b
   outind <- cbind(outind, indices)
   colnames(outind)[2+nt] <- "PB.Index"
-    
+  outind$PB.Rank <- rank(-outind$PB.Index, na.last = 'keep')
+  
   # results
 
   list(Desired.Genetic.Gains = dgg, Standard.Deviations = gv^.5, Genetic.Variances = gv,

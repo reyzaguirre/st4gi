@@ -23,7 +23,8 @@
 #' single arithmetic means are computed over the replications for each genotype
 #' at each location and then for each genotype over locations. In any other case
 #' single arithmetic means are computed over all the observations for each genotype.
-#' @return It returns a data frame with the genotypic means for each trait and the Elston index.
+#' @return It returns a data frame with the genotypic means for each trait, the Elston index,
+#' and the rank for each genotype according to the index.
 #' @references
 #' Elston, R. C. (1963). A weight-free index for the purpose of ranking or selection
 #' with respect to several traits at a time. Biometrics. 19(1): 85-97.
@@ -102,7 +103,8 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
       outind$E.Index <- outind$E.Index * (outind[,1+nt+i] - k[i])
   
   outind <- outind[, c(1:(1+nt), 2+2*nt)]
-
+  outind$E.Rank <- rank(-outind$E.Index, na.last = 'keep')
+  
   # results
 
   return(outind)

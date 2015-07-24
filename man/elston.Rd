@@ -28,7 +28,8 @@ The default is \code{"gxe"}. See details for more information.}
 \item{lb}{Lower bound. \code{1} for k = min(x) and \code{2} for k = (n*min(x) - max(x))/(n-1)}
 }
 \value{
-It returns a data frame with the genotypic means for each trait and the Elston index.
+It returns a data frame with the genotypic means for each trait, the Elston index,
+and the rank for each genotype according to the index.
 }
 \description{
 Function to compute the Elston index (Elston, R. C., 1963).
