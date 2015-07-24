@@ -5,7 +5,7 @@ Version: 0.3.5
 Date: 2015-04-28
 Author: Raul Eyzaguirre
 Maintainer: Raul Eyzaguirre <R.EYZAGUIRRE@CGIAR.ORG>
-Description: Statistical tools for the analysis of experimental data for crop genetic improvement
+Description: Statistical tools for the analysis of experimental data for crop genetic improvement.
 Depends: R (>= 3.0.0)
 Imports: lme4, shiny
 License: MIT + file LICENSE

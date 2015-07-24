@@ -4,7 +4,7 @@
 #' @param traits List of traits.
 #' @param geno The genotypes.
 #' @param env The environments.
-#' @param rep The replications or blocks.
+#' @param rep The replications or blocks. Must be defined if \code{model = "gxe"}.
 #' @param data The name of the data frame containing the data.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
@@ -15,16 +15,20 @@
 #' @param sf Selected fraction. The default is 0.1.
 #' @author Raul Eyzaguirre
 #' @details The Pesek-Baker is an index where relative economic weights have been replaced
-#' by desired gains. By default a model with components for genotypes, environments,
-#' genotypes by environments interaction and replications nested into environments is fitted.
-#' If \code{model = "g+e"} then a model with components for genotypes and environments
-#' is fitted, and in this case the gxe variance includes the gxe plus the error variance.
+#' by desired gains.
+#' 
+#' By default a model with components for genotypes, environments, genotypes by environments
+#' interaction and replications nested into environments is fitted (\code{model = "gxe"}).
+#' If \code{model = "g+e"} then a model with components for genotypes
+#' and environments is fitted, and in this case the gxe variance includes the gxe plus the
+#' error variance. Response to selection is only computed when \code{model = "gxe"}.
+#' 
 #' If \code{means = "fitted"} then the model specified in \code{model} is used to fit
 #' the means of the genotypes. Otherwise single arithmetic means are computed over the
 #' replications for each genotype at each location and then for each genotype over locations.
-#' Response to selection is only computed when \code{model = "gxe"}.
-#' If \code{dgg} is not specified, the standard deviations of the traits
-#' are used. It means that the desired genetic gains are equal to one standard deviation for
+#' 
+#' If \code{dgg} is not specified, the standard deviations of the traits are used.
+#' It means that the desired genetic gains are equal to one standard deviation for
 #' each trait. \code{dgg} can be specified in actual units (\code{units = "actual"}) or in
 #' standard deviations (\code{units = "sdu"}), defaults to \code{"sdu"}. For example,
 #' if you have a trait which is expressed in kilograms and with a standard deviation of
@@ -33,6 +37,7 @@
 #' then this means a desired genetic gain of 2 kilograms. If \code{dgg = NULL} then the
 #' desired genetic gain will be one standard deviation, no matter if \code{units} is set
 #' as \code{"actual"} or \code{"sdu"}.
+#' 
 #' To compute the index the package \code{lme4} is needed.
 #' @return It returns:
 #' \itemize{
@@ -63,8 +68,8 @@
 #'            dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 #' @export
 
-pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "gxe",
-                       dgg = NULL, units = "sdu", sf = 0.1) {
+pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
+                       model = "gxe", dgg = NULL, units = "sdu", sf = 0.1) {
 
   # inits
 
@@ -73,10 +78,11 @@ pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "
   nt <- length(traits) # number of traits
   ng <- nlevels(factor(data[,geno])) # number of genotypes
   ne <- nlevels(factor(data[,env])) # number of environments
-  nr <- nlevels(factor(data[,rep])) # number of replications in each environment
+  if (!is.null(rep))
+    nr <- nlevels(factor(data[,rep])) # number of replications in each environment
   rs <- NULL # response to selection
 
-  # fitted models by REML
+  # fitted models by REML for variance components
 
   if (model == 'gxe'){
     for (i in 1:nt){
@@ -97,8 +103,14 @@ pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "
 
   # compute correlation and covariance matrices
 
-  df <- data[,c(sapply(traits, c), env, rep)]
-  df <- split(df, factor(paste(data[,env], data[,rep]))) # split by env and rep
+  if (!is.null(rep)){
+    df <- data[,c(sapply(traits, c), env, rep)]
+    df <- split(df, factor(paste(data[,env], data[,rep]))) # split by env and rep
+  }
+  if (is.null(rep)){
+    df <- data[,c(sapply(traits, c), env)]
+    df <- split(df, data[,env]) # split by env
+  }
   ner <- length(df)
   ll <- paste('cor', 1:ner, sep="_")
   my.list <- list()
@@ -116,7 +128,7 @@ pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "
 
   # compute index coefficients
 
-  if (is.null(dgg) == TRUE) dgg <- gv^.5 else
+  if (is.null(dgg)) dgg <- gv^.5 else
     if (units == "sdu") dgg <- dgg*gv^.5
   b <- solve(G)%*%dgg
   dimnames(b) <- list(dimnames(corr)[[1]], "coef")
@@ -140,7 +152,8 @@ pesekbaker <- function(traits, geno, env, rep, data, means = "single", model = "
   
   if (means == "single"){
     temp <- domeans(traits, c(geno, env), data = data)
-    outind <- domeans(traits, geno, data = temp)
+    temp <- domeans(traits, geno, data = temp)
+    outind <- merge(outind, temp, all=T)
     colnames(outind) <- c("geno", paste("m", traits, sep='.'))
   }
   

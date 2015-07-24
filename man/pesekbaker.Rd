@@ -4,8 +4,8 @@
 \alias{pesekbaker}
 \title{Pesek-Baker Index}
 \usage{
-pesekbaker(traits, geno, env, rep, data, means = "single", model = "gxe",
-  dgg = NULL, units = "sdu", sf = 0.1)
+pesekbaker(traits, geno, env, rep = NULL, data, means = "single",
+  model = "gxe", dgg = NULL, units = "sdu", sf = 0.1)
 }
 \arguments{
 \item{traits}{List of traits.}
@@ -14,7 +14,7 @@ pesekbaker(traits, geno, env, rep, data, means = "single", model = "gxe",
 
 \item{env}{The environments.}
 
-\item{rep}{The replications or blocks.}
+\item{rep}{The replications or blocks. Must be defined if \code{model = "gxe"}.}
 
 \item{data}{The name of the data frame containing the data.}
 
@@ -49,16 +49,20 @@ Function to compute the Pesek-Baker index (Pesek, J. and R.J. Baker., 1969).
 }
 \details{
 The Pesek-Baker is an index where relative economic weights have been replaced
-by desired gains. By default a model with components for genotypes, environments,
-genotypes by environments interaction and replications nested into environments is fitted.
-If \code{model = "g+e"} then a model with components for genotypes and environments
-is fitted, and in this case the gxe variance includes the gxe plus the error variance.
+by desired gains.
+
+By default a model with components for genotypes, environments, genotypes by environments
+interaction and replications nested into environments is fitted (\code{model = "gxe"}).
+If \code{model = "g+e"} then a model with components for genotypes
+and environments is fitted, and in this case the gxe variance includes the gxe plus the
+error variance. Response to selection is only computed when \code{model = "gxe"}.
+
 If \code{means = "fitted"} then the model specified in \code{model} is used to fit
 the means of the genotypes. Otherwise single arithmetic means are computed over the
 replications for each genotype at each location and then for each genotype over locations.
-Response to selection is only computed when \code{model = "gxe"}.
-If \code{dgg} is not specified, the standard deviations of the traits
-are used. It means that the desired genetic gains are equal to one standard deviation for
+
+If \code{dgg} is not specified, the standard deviations of the traits are used.
+It means that the desired genetic gains are equal to one standard deviation for
 each trait. \code{dgg} can be specified in actual units (\code{units = "actual"}) or in
 standard deviations (\code{units = "sdu"}), defaults to \code{"sdu"}. For example,
 if you have a trait which is expressed in kilograms and with a standard deviation of
@@ -67,6 +71,7 @@ that corresponds to 10 kilograms. If you type \code{dgg = 2} and \code{units = "
 then this means a desired genetic gain of 2 kilograms. If \code{dgg = NULL} then the
 desired genetic gain will be one standard deviation, no matter if \code{units} is set
 as \code{"actual"} or \code{"sdu"}.
+
 To compute the index the package \code{lme4} is needed.
 }
 \examples{
