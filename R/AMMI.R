@@ -273,6 +273,7 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
 
   # Output
 
-  list(PC_values_genotypes = PC.geno, PC_values_environments = PC.env,
-       Contribution_PCs = tablaPC)
+  list(Genotype_means = geno.mean, Environment_means = env.mean,
+       Interaction_means = int.mean, PC_values_genotypes = PC.geno,
+       PC_values_environments = PC.env, Contribution_PCs = tablaPC)
 }
