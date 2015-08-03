@@ -37,11 +37,11 @@ ammigxe(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
 \item{...}{Additional graphic parameters.}
 }
 \value{
-It returns the first and second PC values for genotypes and environments,
-a table with the contribution of each PC, a dispersion plot of means or effects
-against the first PC, or a dispersion plot of PC1 against PC2.
-Significance of PCs are included in the contributions table only if \code{rep.num},
-\code{rms} and \code{rdf} are specified and method is set to AMMI.
+It returns the genotype, environment and interaction means, the first and second
+PC values for genotypes and environments, a table with the contribution of each PC,
+a dispersion plot of means or effects against the first PC, or a dispersion plot of
+PC1 against PC2. Significance of PCs are included in the contributions table only if
+\code{rep.num}, \code{rms} and \code{rdf} are specified and method is set to AMMI.
 }
 \description{
 This function runs AMMI (Gollob, H. R., 1968) or GGE biplot (Yan , W. et al., 2000)

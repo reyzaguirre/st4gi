@@ -18,10 +18,10 @@
 #' @author Raul Eyzaguirre
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' the data are balanced.
-#' @return It returns the first and second PC values for genotypes and environments,
-#' a table with the contribution of each PC, a dispersion plot of means or effects
-#' against the first PC, or a dispersion plot of PC1 against PC2.
-#' Significance of PCs are included in the contributions table only if
+#' @return It returns the genotype, environment and interaction means, the first and second
+#' PC values for genotypes and environments, a table with the contribution of each PC,
+#' a dispersion plot of means or effects against the first PC, or a dispersion plot of
+#' PC1 against PC2. Significance of PCs are included in the contributions table only if
 #' method is set to AMMI.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
@@ -121,11 +121,11 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 #' @author Raul Eyzaguirre
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' \code{rep.num}, \code{rms} and \code{rdf} are specified.
-#' @return It returns the first and second PC values for genotypes and environments,
-#' a table with the contribution of each PC, a dispersion plot of means or effects
-#' against the first PC, or a dispersion plot of PC1 against PC2.
-#' Significance of PCs are included in the contributions table only if \code{rep.num},
-#' \code{rms} and \code{rdf} are specified and method is set to AMMI.
+#' @return It returns the genotype, environment and interaction means, the first and second
+#' PC values for genotypes and environments, a table with the contribution of each PC,
+#' a dispersion plot of means or effects against the first PC, or a dispersion plot of
+#' PC1 against PC2. Significance of PCs are included in the contributions table only if
+#' \code{rep.num}, \code{rms} and \code{rdf} are specified and method is set to AMMI.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 #' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
