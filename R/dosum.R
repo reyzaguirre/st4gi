@@ -33,7 +33,7 @@ dosum <- function(traits, factors, addcol = NULL, data){
   
   data$temp <- seq(1:dim(data)[1])
     
-  dataout <- data[, c('temp', factors, addcol)]
+  dataout <- data[, c("temp", factors, addcol)]
   dataout$dup <- duplicated(dataout[,factors])
   dataout <- subset(dataout, dup==F)
   dataout <- dataout[, -dim(dataout)[2]]
@@ -63,7 +63,7 @@ dosum <- function(traits, factors, addcol = NULL, data){
   
   # Remove x and temp
   
-  dataout <- dataout[, !(names(dataout) %in% c('temp', 'x'))]
+  dataout <- dataout[, !(names(dataout) %in% c("temp", "x"))]
   
   # return data.frame with maxima
     

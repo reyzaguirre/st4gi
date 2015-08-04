@@ -84,16 +84,16 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
 
   # fitted models by REML for variance components
 
-  if (model == 'gxe'){
+  if (model == "gxe"){
     for (i in 1:nt){
       abc <- data.frame(c1 = data[,traits[i]], c2 = data[,geno], c3 = data[,env], c4 = data[,rep])
       fm <- lme4::lmer(c1 ~ (1|c2) + (1|c2:c3) + (1|c3/c4), data = abc)
       gv[i] <- lme4::VarCorr(fm)$c2[1]
-      pv[i] <- lme4::VarCorr(fm)$c2[1] + lme4::VarCorr(fm)$'c2:c3'[1]/ne +
+      pv[i] <- lme4::VarCorr(fm)$c2[1] + lme4::VarCorr(fm)$"c2:c3"[1]/ne +
         attr(lme4::VarCorr(fm), "sc")^2/ne/nr
     }
   }
-  if (model == 'g+e') {
+  if (model == "g+e") {
     for (i in 1:nt){
       abc <- data.frame(c1 = data[,traits[i]], c2 = data[,geno], c3 = data[,env])
       fm <- lme4::lmer(c1 ~ (1|c2) + (1|c3), data = abc)
@@ -112,7 +112,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
     df <- split(df, data[,env]) # split by env
   }
   ner <- length(df)
-  ll <- paste('cor', 1:ner, sep="_")
+  ll <- paste("cor", 1:ner, sep="_")
   my.list <- list()
   for (i in 1:ner)
     my.list[[ll[i]]] <- cor(df[[i]][,1:nt], use = "pairwise.complete.obs")
@@ -121,7 +121,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   S <- diag(gv^.5, nt, nt)
   G <- S%*%corr%*%S
   dimnames(G) <- dimnames(corr)
-  if (model == 'gxe'){
+  if (model == "gxe"){
     P <- G
     diag(P) <- pv
   }
@@ -135,7 +135,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
 
   # response to selection
 
-  if (model == 'gxe'){
+  if (model == "gxe"){
     si <- dnorm(qnorm(1-sf))/sf # selection intensity
     bPb <- t(b)%*%P%*%b
     for (i in 1:nt)
@@ -154,7 +154,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
     temp <- domeans(traits, c(geno, env), data = data)
     temp <- domeans(traits, geno, data = temp)
     outind <- merge(outind, temp, all=T)
-    colnames(outind) <- c("geno", paste("m", traits, sep='.'))
+    colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
   
   if (means == "fitted"){
@@ -175,7 +175,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   indices <- m %*% b
   outind <- cbind(outind, indices)
   colnames(outind)[2+nt] <- "PB.Index"
-  outind$PB.Rank <- rank(-outind$PB.Index, na.last = 'keep')
+  outind$PB.Rank <- rank(-outind$PB.Index, na.last = "keep")
   
   # results
 

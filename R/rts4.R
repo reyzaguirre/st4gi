@@ -13,6 +13,6 @@
 #' @export
 
 rts4 <- function () {
-  dirfiles <- paste(system.file(package='st4gi'), "/shinyapps/rts4", sep="")
+  dirfiles <- paste(system.file(package = "st4gi"), "/shinyapps/rts4", sep="")
   shiny::runApp(dirfiles)
 }

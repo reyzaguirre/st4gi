@@ -55,14 +55,14 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
     for (i in 1:nt)
       m[,i] <- tapply(data[,traits[i]], data[,geno], mean, na.rm = T)
     outind <- cbind(outind, m)
-    colnames(outind) <- c("geno", paste("m", traits, sep='.'))
+    colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
   
   if (means == "single" & !is.null(env) & !is.null(rep)){
     temp <- domeans(traits, c(geno, env), data = data)
     temp <- domeans(traits, geno, data = temp)
-    outind <- merge(outind, temp, all=T)
-    colnames(outind) <- c("geno", paste("m", traits, sep='.'))
+    outind <- merge(outind, temp, all = T)
+    colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
   
   if (means == "fitted"){
@@ -73,7 +73,7 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
       if (model == "g+e")
         fm <- lme4::lmer(c1 ~ c2-1 + (1|c3), data = abc)
       temp <- as.data.frame(lme4::fixef(fm))
-      colnames(temp) <- paste("f", traits[i], sep=".")
+      colnames(temp) <- paste("f", traits[i], sep = ".")
       temp$geno <- substring(rownames(temp), 3)
       outind <- merge(outind, temp, all = TRUE)
     }
@@ -82,18 +82,18 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   # Standardized means
 
   for (i in 2:(1+nt))
-    outind[ ,i+nt] <- (outind[,i] - mean(outind[,i], na.rm=T))/sd(outind[,i], na.rm=T)
-  colnames(outind)[(2+nt):(1+2*nt)] <- c(paste("s", traits, sep='.'))
+    outind[ ,i+nt] <- (outind[,i] - mean(outind[,i], na.rm = T))/sd(outind[,i], na.rm = T)
+  colnames(outind)[(2+nt):(1+2*nt)] <- c(paste("s", traits, sep = "."))
   
   # compute lower bounds
 
   if (lb == 1)
     for (i in 1:nt)
-      k[i] <- min(outind[,1+nt+i], na.rm=T)
+      k[i] <- min(outind[,1+nt+i], na.rm = T)
 
   if (lb == 2)
     for (i in 1:nt)
-      k[i] <- (ng * min(outind[,1+nt+i], na.rm=T) - max(outind[,1+nt+i], na.rm=T))/(ng-1)
+      k[i] <- (ng * min(outind[,1+nt+i], na.rm = T) - max(outind[,1+nt+i], na.rm = T))/(ng-1)
 
   # Elston index
 
@@ -103,7 +103,7 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
       outind$E.Index <- outind$E.Index * (outind[,1+nt+i] - k[i])
   
   outind <- outind[, c(1:(1+nt), 2+2*nt)]
-  outind$E.Rank <- rank(-outind$E.Index, na.last = 'keep')
+  outind$E.Rank <- rank(-outind$E.Index, na.last = "keep")
   
   # results
 
