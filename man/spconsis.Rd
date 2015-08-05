@@ -97,9 +97,9 @@ The data frame must use the following labels:
  \item SUCR    : Sucrose
  \item MALT    : Maltose
  \item TRW     : Total root weight
- \item CYTHA   : Commercial root yield t/ ha
+ \item CYTHA   : Commercial root yield t/ha
  \item RYTHA   : Total root yield t/ha
- \item ACRW    : Average commercial root weight = CRW/NOCR
+ \item ACRW    : Average commercial root weight = CRW / NOCR
  \item NRPP    : Number of roots per plant
  \item YPP     : Yield per plant Kg
  \item CI      : Percent marketable roots (commercial index)
