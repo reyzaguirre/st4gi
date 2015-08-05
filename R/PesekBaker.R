@@ -84,17 +84,17 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
 
   # fitted models by REML for variance components
 
-  if (model == "gxe"){
-    for (i in 1:nt){
+  if (model == "gxe") {
+    for (i in 1:nt) {
       abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
       fm <- lme4::lmer(c1 ~ (1|c2) + (1|c2:c3) + (1|c3/c4), data = abc)
       gv[i] <- lme4::VarCorr(fm)$c2[1]
-      pv[i] <- lme4::VarCorr(fm)$c2[1] + lme4::VarCorr(fm)$"c2:c3"[1]/ne +
-        attr(lme4::VarCorr(fm), "sc")^2/ne/nr
+      pv[i] <- lme4::VarCorr(fm)$c2[1] + lme4::VarCorr(fm)$"c2:c3"[1] / ne +
+        attr(lme4::VarCorr(fm), "sc")^2 / ne / nr
     }
   }
   if (model == "g+e") {
-    for (i in 1:nt){
+    for (i in 1:nt) {
       abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env])
       fm <- lme4::lmer(c1 ~ (1|c2) + (1|c3), data = abc)
       gv[i] <- lme4::VarCorr(fm)$c2[1]
@@ -103,43 +103,46 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
 
   # compute correlation and covariance matrices
 
-  if (!is.null(rep)){
+  if (!is.null(rep)) {
     df <- data[, c(sapply(traits, c), env, rep)]
     df <- split(df, factor(paste(data[, env], data[, rep]))) # split by env and rep
   }
-  if (is.null(rep)){
+  if (is.null(rep)) {
     df <- data[, c(sapply(traits, c), env)]
     df <- split(df, data[, env]) # split by env
   }
   ner <- length(df)
-  ll <- paste("cor", 1:ner, sep="_")
+  ll <- paste("cor", 1:ner, sep = "_")
   my.list <- list()
   for (i in 1:ner)
     my.list[[ll[i]]] <- cor(df[[i]][, 1:nt], use = "pairwise.complete.obs")
-  corr <- apply(simplify2array(my.list), 1:2, mean, na.rm=T)
+  corr <- apply(simplify2array(my.list), 1:2, mean, na.rm = TRUE)
   
   S <- diag(gv^.5, nt, nt)
-  G <- S%*%corr%*%S
+  G <- S %*% corr %*% S
   dimnames(G) <- dimnames(corr)
-  if (model == "gxe"){
+  if (model == "gxe") {
     P <- G
     diag(P) <- pv
   }
 
   # compute index coefficients
 
-  if (is.null(dgg)) dgg <- gv^.5 else
-    if (units == "sdu") dgg <- dgg*gv^.5
-  b <- solve(G)%*%dgg
+  if (is.null(dgg)) {
+    dgg <- gv^.5
+  } else {
+      if (units == "sdu") dgg <- dgg * gv^.5
+  }
+  b <- solve(G) %*% dgg
   dimnames(b) <- list(dimnames(corr)[[1]], "coef")
 
   # response to selection
 
-  if (model == "gxe"){
-    si <- dnorm(qnorm(1-sf))/sf # selection intensity
-    bPb <- t(b)%*%P%*%b
+  if (model == "gxe") {
+    si <- dnorm(qnorm(1 - sf)) / sf # selection intensity
+    bPb <- t(b) %*% P %*% b
     for (i in 1:nt)
-      rs[i] <- si * t(b)%*%G[, i]/sqrt(bPb*G[i, i])
+      rs[i] <- si * t(b) %*% G[, i] / sqrt(bPb * G[i, i])
     rsa <- rs * gv^.5 # response to selection in actual units
   } else {
     rsa <- "NA"
@@ -150,31 +153,31 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   
   outind <- data.frame(geno = levels(factor(data[, geno])))
   
-  if (means == "single"){
+  if (means == "single") {
     temp <- domeans(traits, c(geno, env), data = data)
     temp <- domeans(traits, geno, data = temp)
-    outind <- merge(outind, temp, all=T)
+    outind <- merge(outind, temp, all = TRUE)
     colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
   
-  if (means == "fitted"){
-    for (i in 1:nt){
+  if (means == "fitted") {
+    for (i in 1:nt) {
       abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
       if (model == "gxe")
-        fm <- lme4::lmer(c1 ~ c2-1 + (1|c2:c3) + (1|c3/c4), data = abc)
+        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c2:c3) + (1|c3/c4), data = abc)
       if (model == "g+e")
-        fm <- lme4::lmer(c1 ~ c2-1 + (1|c3), data = abc)
+        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c3), data = abc)
       temp <- as.data.frame(lme4::fixef(fm))
-      colnames(temp) <- paste("f", traits[i], sep=".")
+      colnames(temp) <- paste("f", traits[i], sep = ".")
       temp$geno <- substring(rownames(temp), 3)
       outind <- merge(outind, temp, all = TRUE)
     }
   }
 
-  m <- as.matrix(outind[, 2:(1+nt)])
+  m <- as.matrix(outind[, 2:(1 + nt)])
   indices <- m %*% b
   outind <- cbind(outind, indices)
-  colnames(outind)[2+nt] <- "PB.Index"
+  colnames(outind)[2 + nt] <- "PB.Index"
   outind$PB.Rank <- rank(-outind$PB.Index, na.last = "keep")
   
   # results

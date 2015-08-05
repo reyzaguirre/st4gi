@@ -42,7 +42,7 @@ head(met8x12)
 str(met8x12)
 
 # Choose one environment
-temp <- subset(met8x12, env=="TM80N")
+temp <- subset(met8x12, env == "TM80N")
 
 # Missing value in the first row
 head(temp)

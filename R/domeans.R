@@ -17,17 +17,17 @@
 #'
 #' # Compute means for all the traits across the two replications
 #' # for each genotype and location.
-#' traits <- c('rytha', 'bc', 'dm', 'star', 'nocr')
-#' factors <- c('geno', 'loc')
-#' domeans(traits, factors, data=spg)
+#' traits <- c("rytha", "bc", "dm", "star", "nocr")
+#' factors <- c("geno", "loc")
+#' domeans(traits, factors, data = spg)
 #' 
-#' # Save the output in a data.frame with name 'output1'
+#' # Save the output in a data.frame with name "output1"
 #' # and compute means for each genotype across the two locations.
-#' output1 <- domeans(traits, factors, data=spg)
-#' domeans(traits, 'geno', data=output1)
+#' output1 <- domeans(traits, factors, data = spg)
+#' domeans(traits, "geno", data = output1)
 #' @export
 
-domeans <- function(traits, factors, addcol = NULL, data){
+domeans <- function(traits, factors, addcol = NULL, data) {
   
   # Create data.frame
   
@@ -35,7 +35,7 @@ domeans <- function(traits, factors, addcol = NULL, data){
     
   dataout <- data[, c("temp", factors, addcol)]
   dataout$dup <- duplicated(dataout[, factors])
-  dataout <- subset(dataout, dup==F)
+  dataout <- subset(dataout, dup == FALSE)
   dataout <- dataout[, -dim(dataout)[2]]
   
   # Number of factors and traits
@@ -49,16 +49,16 @@ domeans <- function(traits, factors, addcol = NULL, data){
   dataout$x <- dataout[, factors[1]]
   
   if (nf > 1)
-    for (i in 2:nf){
+    for (i in 2:nf) {
       data$x <- paste(data$x, data[, factors[i]])
       dataout$x <- paste(dataout$x, dataout[, factors[i]])
     }
   
   # Compute means
   
-  for(i in 1:nt){
+  for (i in 1:nt) {
     for (j in 1:dim(dataout)[1])
-      dataout[j, traits[i]] <- mean(subset(data, x == dataout$x[j])[, traits[i]], na.rm=T)
+      dataout[j, traits[i]] <- mean(subset(data, x == dataout$x[j])[, traits[i]], na.rm = TRUE)
   }
   
   # Remove x and temp

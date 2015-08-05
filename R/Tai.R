@@ -61,18 +61,20 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
   if (geno.num < 3 | env.num < 3)
     stop("You need at least 3 genotypes and 3 environments to run Tai")
 
-  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0){
+  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0) {
     est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
     data[, trait] <- est.data$new.data[, 5]
     nmis <- est.data$est.num
     warning(paste("The data set is unbalanced, ",
-                  format(est.data$est.prop*100, digits = 3),
+                  format(est.data$est.prop * 100, digits = 3),
                   "% missing values estimated.", sep = ""))
-  } else nmis <- 0
+  } else {
+    nmis <- 0
+  }
 
   # Compute interaction effects matrix
 
-  int.mean <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = T)
+  int.mean <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = TRUE)
 
   overall.mean <- mean(int.mean)
   env.mean <- apply(int.mean, 2, mean)
@@ -89,57 +91,58 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
   
   # Correction for missing values if any
   
-  if (nmis > 0){
+  if (nmis > 0) {
     at[5, 1] <- at[5, 1] - nmis
-    at[5, 3] <- at[5, 2]/at[5, 1]
+    at[5, 3] <- at[5, 2] / at[5, 1]
   }
   
   # Compute Tai values alpha and lambda
 
   slgl <- int.eff
-  for (i in 1:geno.num) slgl[i, ] <- slgl[i, ]*(env.mean - overall.mean)/(env.num-1)
-  alpha <- apply(slgl, 1, sum)/(at[2, 3] - at[3, 3])*geno.num*rep.num
+  for (i in 1:geno.num) slgl[i, ] <- slgl[i, ] * (env.mean - overall.mean) / (env.num - 1)
+  alpha <- apply(slgl, 1, sum) / (at[2, 3] - at[3, 3]) * geno.num * rep.num
 
   s2gl <- int.eff
-  for (i in 1:geno.num) s2gl[i, ] <- s2gl[i, ]^2/(env.num-1)
-  lambda <- (apply(s2gl, 1, sum) - alpha*apply(slgl, 1, sum))/(geno.num-1)/at[5, 3]*geno.num*rep.num
+  for (i in 1:geno.num) s2gl[i, ] <- s2gl[i, ]^2 / (env.num - 1)
+  lambda <- (apply(s2gl, 1, sum) - alpha * apply(slgl, 1, sum)) / 
+    (geno.num - 1) / at[5, 3] * geno.num * rep.num
   lambda[lambda < 0] <- 0
 
   # plot lambda limits
 
-  lmax <- max(c(lambda, qf(1-(1-conf)/2, env.num-2, env.num*(geno.num-1)*(rep.num-1))))*1.1
+  lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, env.num - 2, env.num * (geno.num - 1) * (rep.num - 1)))) * 1.1
 
   # Prediction interval for alpha
 
-  lx <- seq(0, lmax, lmax/100)
-  ta <- qt(1-(1-conf)/2, env.num-2)
+  lx <- seq(0, lmax, lmax / 100)
+  ta <- qt(1 - (1 - conf) / 2, env.num - 2)
   
-  div2 <- (env.num-2)*at[2, 3] - (ta^2 + env.num - 2)*at[3, 3]
+  div2 <- (env.num - 2) * at[2, 3] - (ta^2 + env.num - 2) * at[3, 3]
 
-  if (div2 < 0){
+  if (div2 < 0) {
     warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
-    amax <- max(abs(alpha))*1.05
+    amax <- max(abs(alpha)) * 1.05
   } else {
-    pi.alpha <- ta*((lx*(geno.num - 1)*at[5, 3]*at[2, 3]) / ((at[2, 3] - at[3, 3])*div2))^.5
+    pi.alpha <- ta * ((lx * (geno.num - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^.5
     amax <- max(c(abs(alpha), pi.alpha))
   }
   
   # Tai plot
 
   if (is.null(title))
-    title = paste("Tai stability analysis for ", trait, sep = "")
+    title <- paste("Tai stability analysis for ", trait, sep = "")
 
-  plot(1, type = "n", xlim = c(-0.05*lmax, lmax), ylim = c(-amax, amax),
+  plot(1, type = "n", xlim = c(-0.05 * lmax, lmax), ylim = c(-amax, amax),
        main = title, xlab = expression(lambda), ylab = expression(alpha), ...)
   points(lambda, alpha, col = color[1], lwd = 2, pch = 4, ...)
   text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = .3)
-  if (div2 > 0){
+  if (div2 > 0) {
     points(lx, pi.alpha, type = "l", lty = 3, col = color[3])
     points(lx, -pi.alpha, type = "l", lty = 3, col = color[3])
   }
-  abline(v = qf((1-conf)/2, env.num-2, env.num*(geno.num)*(rep.num-1)),
+  abline(v = qf((1 - conf) / 2, env.num - 2, env.num * geno.num * (rep.num - 1)),
          lty = 3, col = color[3])
-  abline(v = qf(1-(1-conf)/2, env.num-2, env.num*(geno.num)*(rep.num-1)),
+  abline(v = qf(1 - (1 - conf) / 2, env.num - 2, env.num * geno.num * (rep.num - 1)),
          lty = 3, col = color[3])
 
   # Output

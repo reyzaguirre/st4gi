@@ -160,23 +160,23 @@ spconsis <- function(data, plot.size, width = 240){
 
 spconsis01 <- function(data){
 
-  if (exists("NOPE", where=data)==1 & exists("NOPS", where=data)==1)
+  if (exists("NOPE", where = data) & exists("NOPS", where=data))
     if (dim(subset(data, NOPE>NOPS))[1]>0){
       cat("\n", "-  Number of plants established (NOPE) greater than number of plants sowed (NOPS):", "\n")
       print(subset(data, NOPE>NOPS))
     }
 
-  if (exists("NOPH", where=data)==1 & exists("NOPE", where=data)==1)
+  if (exists("NOPH", where=data) & exists("NOPE", where=data))
     if (dim(subset(data, NOPH>NOPE))[1]>0){
       cat("\n", "-  Number of plants harvested (NOPH) greater than number of plants established (NOPE):", "\n")
       print(subset(data, NOPH>NOPE))
     }
 
-  if (exists("NOPH", where=data)==1 & exists("NOPS", where=data)==1){
-    if (exists("NOPE", where=data)==1){
-      if (dim(subset(data, is.na(NOPE)==1 & NOPH>NOPS))[1]>0){
+  if (exists("NOPH", where=data) & exists("NOPS", where=data)){
+    if (exists("NOPE", where=data)){
+      if (dim(subset(data, is.na(NOPE) & NOPH>NOPS))[1]>0){
         cat("\n", "- Number of plants harvested (NOPH) greater than number of plants sowed (NOPS):", "\n")
-        print(subset(data, is.na(NOPE)==1 & NOPH>NOPS))
+        print(subset(data, is.na(NOPE) & NOPH>NOPS))
       }
     } else {
       if (dim(subset(data, NOPH>NOPS))[1]>0){
@@ -186,17 +186,17 @@ spconsis01 <- function(data){
     }
   }
 
-  if (exists("NOPR", where=data)==1 & exists("NOPH", where=data)==1)
+  if (exists("NOPR", where=data) & exists("NOPH", where=data))
     if (dim(subset(data, NOPR>NOPH))[1]>0){
       cat("\n", "- Number of plants with roots (NOPR) greater than number of plants harvested (NOPH):", "\n")
       print(subset(data, NOPR>NOPH))
     }
 
-  if (exists("NOPR", where=data)==1 & exists("NOPE", where=data)==1){
-    if (exists("NOPH", where=data)==1){
-      if (dim(subset(data, is.na(NOPH)==1 & NOPR>NOPE))[1]>0){
+  if (exists("NOPR", where=data) & exists("NOPE", where=data)){
+    if (exists("NOPH", where=data)){
+      if (dim(subset(data, is.na(NOPH) & NOPR>NOPE))[1]>0){
         cat("\n", "- Number of plants with roots (NOPR) greater than number of plants established (NOPE):", "\n")
-        print(subset(data, is.na(NOPH)==1 & NOPR>NOPE))
+        print(subset(data, is.na(NOPH) & NOPR>NOPE))
       }
     } else {
       if (dim(subset(data, NOPR>NOPE))[1]>0){
@@ -206,11 +206,11 @@ spconsis01 <- function(data){
     }
   }
 
-  if (exists("NOPR", where=data)==1 & exists("NOPS", where=data)==1){
-    if (exists("NOPH", where=data)==1 & exists("NOPE", where=data)==1){
-      if (dim(subset(data, is.na(NOPH)==1 & is.na(NOPE)==1 & NOPR>NOPS))[1]>0){
+  if (exists("NOPR", where=data) & exists("NOPS", where=data)){
+    if (exists("NOPH", where=data) & exists("NOPE", where=data)){
+      if (dim(subset(data, is.na(NOPH) & is.na(NOPE) & NOPR>NOPS))[1]>0){
         cat("\n", "- Number of plants with roots (NOPR) greater than number of plants sowed (NOPS):", "\n")
-        print(subset(data, is.na(NOPH)==1 & is.na(NOPE)==1 & NOPR>NOPS))
+        print(subset(data, is.na(NOPH) & is.na(NOPE) & NOPR>NOPS))
       }
     } else {
       if (dim(subset(data, NOPR>NOPS))[1]>0){

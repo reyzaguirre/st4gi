@@ -24,7 +24,7 @@
 #' str(met8x12)
 #'
 #' # Choose one environment
-#' temp <- subset(met8x12, env=="TM80N")
+#' temp <- subset(met8x12, env == "TM80N")
 #'
 #' # Missing value in the first row
 #' head(temp)
@@ -33,7 +33,7 @@
 #' mveb("y", "geno", "rep", temp)
 #' @export
 
-mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06){
+mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Everything as factor
 
@@ -58,7 +58,7 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06){
   est.p <- mean(is.na(data[, trait]))
   if (est.p > maxp)
     stop(paste("Too many missing values (",
-               format(est.p*100, digits = 3), "%).", sep = ""))
+               format(est.p * 100, digits = 3), "%).", sep = ""))
 
   # Estimation
 
@@ -68,23 +68,23 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06){
   trait.est <- paste(trait, ".est", sep = "")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
-  mG <- tapply(data[, trait], data[, geno], mean, na.rm = T)
+  mG <- tapply(data[, trait], data[, geno], mean, na.rm = TRUE)
   for (i in 1:length(data[, trait]))
     if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mG[data[i, geno]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
-  cc <- max(data[, trait], na.rm = T)
+  cc <- max(data[, trait], na.rm = TRUE)
   cont <- 0
-  while (cc > max(data[, trait], na.rm = T)*tol & cont<100){
-    cont <- cont+1
+  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont<100) {
+    cont <- cont + 1
     for (i in 1:length(data[, trait]))
-      if (is.na(data[i, trait]) == 1){
+      if (is.na(data[i, trait]) == 1) {
         data[i, "ytemp"] <- data[i, trait]
-        sum1 <- tapply(data[, "ytemp"], data[, geno], sum, na.rm = T)
-        sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = T)
-        sum3 <- sum(data[, "ytemp"], na.rm = T)
-        data[i, trait.est] <- (G*sum1[data[i, geno]] + R*sum2[data[i, rep]] - sum3)/
-                             (G*R - G - R + 1)
+        sum1 <- tapply(data[, "ytemp"], data[, geno], sum, na.rm = TRUE)
+        sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
+        sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
+        data[i, trait.est] <- (G * sum1[data[i, geno]] + R * sum2[data[i, rep]] - sum3) /
+                             (G * R - G - R + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
@@ -128,13 +128,13 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06){
 #' mvemet("y", "geno", "env", "rep", met8x12)
 #' @export
 
-mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06){
+mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Everything as factor
 
-  data[,geno] <- factor(data[,geno])
-  data[,env] <- factor(data[,env])
-  data[,rep] <- factor(data[,rep])
+  data[, geno] <- factor(data[, geno])
+  data[, env] <- factor(data[, env])
+  data[, rep] <- factor(data[, rep])
 
   # Check data
 
@@ -151,14 +151,14 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06){
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
     stop("The data set is balanced. There are no missing values to estimate.")
 
-  est.p <- mean(is.na(data[,trait]))
+  est.p <- mean(is.na(data[, trait]))
   if (est.p > maxp)
     stop(paste("Too many missing values (",
-               format(est.p*100, digits = 3), "%).", sep = ""))
+               format(est.p * 100, digits = 3), "%).", sep = ""))
 
-  G <- nlevels(data[,geno])
-  E <- nlevels(data[,env])
-  R <- nlevels(data[,rep])
+  G <- nlevels(data[, geno])
+  E <- nlevels(data[, env])
+  R <- nlevels(data[, rep])
 
   if (G < 2 | E < 2)
     stop("This is not a MET experiment.")
@@ -166,35 +166,35 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06){
   # Estimation
 
   trait.est <- paste(trait, ".est", sep = "")
-  data[,trait.est] <- data[,trait]
-  data[,"ytemp"] <- data[,trait]
-  mGE <- tapply(data[,trait], list(data[,geno], data[,env]), mean, na.rm = T)
-  for (i in 1:length(data[,trait]))
-    if (is.na(data[i,trait]) == 1) data[i,"ytemp"] <- mGE[data[i,geno], data[i,env]]
+  data[, trait.est] <- data[, trait]
+  data[, "ytemp"] <- data[, trait]
+  mGE <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = TRUE)
+  for (i in 1:length(data[, trait]))
+    if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mGE[data[i, geno], data[i, env]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
-  cc <- max(data[,trait], na.rm = T)
+  cc <- max(data[, trait], na.rm = TRUE)
   cont <- 0
-  while (cc > max(data[,trait], na.rm = T)*tol & cont<100){
-    cont <- cont+1
-    for (i in 1:length(data[,trait]))
-      if (is.na(data[i,trait]) == 1){
-        data[i,"ytemp"] <- data[i,trait]
-        sum1 <- tapply(data[,"ytemp"], list(data[,geno], data[,env]), sum, na.rm = T)
-        sum2 <- tapply(data[,"ytemp"], list(data[,env], data[,rep]), sum, na.rm = T)
-        sum3 <- tapply(data[,"ytemp"], data[,env], sum, na.rm = T)
-        data[i,trait.est] <- (G*sum1[data[i,geno], data[i,env]] +
-                                R*sum2[data[i,env], data[i,rep]] -
-                                sum3[data[i,env]]) / (G*R - G - R + 1)
-        data[i,"ytemp"] <- data[i,trait.est]
+  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont<100) {
+    cont <- cont + 1
+    for (i in 1:length(data[, trait]))
+      if (is.na(data[i, trait]) == 1) {
+        data[i, "ytemp"] <- data[i, trait]
+        sum1 <- tapply(data[, "ytemp"], list(data[, geno], data[, env]), sum, na.rm = TRUE)
+        sum2 <- tapply(data[, "ytemp"], list(data[, env], data[, rep]), sum, na.rm = TRUE)
+        sum3 <- tapply(data[, "ytemp"], data[, env], sum, na.rm = TRUE)
+        data[i, trait.est] <- (G * sum1[data[i, geno], data[i, env]] +
+                                R * sum2[data[i, env], data[i, rep]] -
+                                sum3[data[i, env]]) / (G * R - G - R + 1)
+        data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
-    lc2 <- subset(data, is.na(data[,trait]) == 1)[,trait.est]
+    lc2 <- subset(data, is.na(data[, trait]) == 1)[, trait.est]
     cc <- max(abs(lc1 - lc2))
   }
 
   # Return
 
-  list(new.data = data[,c(geno,env,rep,trait,trait.est)],
+  list(new.data = data[, c(geno, env, rep, trait, trait.est)],
        est.num = lc$nmis, est.prop = est.p)
 }
