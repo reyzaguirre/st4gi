@@ -34,7 +34,7 @@ dosum <- function(traits, factors, addcol = NULL, data){
   data$temp <- seq(1:dim(data)[1])
     
   dataout <- data[, c("temp", factors, addcol)]
-  dataout$dup <- duplicated(dataout[,factors])
+  dataout$dup <- duplicated(dataout[, factors])
   dataout <- subset(dataout, dup==F)
   dataout <- dataout[, -dim(dataout)[2]]
   

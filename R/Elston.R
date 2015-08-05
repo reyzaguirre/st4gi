@@ -44,16 +44,16 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
 
   nt <- length(traits) # number of traits
   k <- NULL
-  ng <- nlevels(factor(data[,geno])) # number of genotypes
+  ng <- nlevels(factor(data[, geno])) # number of genotypes
 
   # compute means
   
-  outind <- data.frame(geno = levels(factor(data[,geno])))
+  outind <- data.frame(geno = levels(factor(data[, geno])))
   
   if (means == "single" & (is.null(env) | is.null(rep))){
     m <- matrix(NA, ng, nt)
     for (i in 1:nt)
-      m[,i] <- tapply(data[,traits[i]], data[,geno], mean, na.rm = T)
+      m[, i] <- tapply(data[, traits[i]], data[, geno], mean, na.rm = T)
     outind <- cbind(outind, m)
     colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
@@ -67,7 +67,7 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   
   if (means == "fitted"){
     for (i in 1:nt){
-      abc <- data.frame(c1 = data[,traits[i]], c2 = data[,geno], c3 = data[,env], c4 = data[,rep])
+      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
       if (model == "gxe")
         fm <- lme4::lmer(c1 ~ c2-1 + (1|c2:c3) + (1|c3/c4), data = abc)
       if (model == "g+e")
@@ -82,25 +82,25 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   # Standardized means
 
   for (i in 2:(1+nt))
-    outind[ ,i+nt] <- (outind[,i] - mean(outind[,i], na.rm = T))/sd(outind[,i], na.rm = T)
+    outind[, i+nt] <- (outind[, i] - mean(outind[, i], na.rm = T))/sd(outind[, i], na.rm = T)
   colnames(outind)[(2+nt):(1+2*nt)] <- c(paste("s", traits, sep = "."))
   
   # compute lower bounds
 
   if (lb == 1)
     for (i in 1:nt)
-      k[i] <- min(outind[,1+nt+i], na.rm = T)
+      k[i] <- min(outind[, 1+nt+i], na.rm = T)
 
   if (lb == 2)
     for (i in 1:nt)
-      k[i] <- (ng * min(outind[,1+nt+i], na.rm = T) - max(outind[,1+nt+i], na.rm = T))/(ng-1)
+      k[i] <- (ng * min(outind[, 1+nt+i], na.rm = T) - max(outind[, 1+nt+i], na.rm = T))/(ng-1)
 
   # Elston index
 
-  outind$E.Index <- outind[,nt+2] - k[1]
+  outind$E.Index <- outind[, nt+2] - k[1]
   if (nt > 1)
     for (i in 2:nt)
-      outind$E.Index <- outind$E.Index * (outind[,1+nt+i] - k[i])
+      outind$E.Index <- outind$E.Index * (outind[, 1+nt+i] - k[i])
   
   outind <- outind[, c(1:(1+nt), 2+2*nt)]
   outind$E.Rank <- rank(-outind$E.Index, na.last = "keep")

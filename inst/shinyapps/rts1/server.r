@@ -19,10 +19,10 @@ shiny::shinyServer(function(input, output) {
     
     # draw the plot
     plot(r, R, xlab="Number of replications", ylab="Response to selection", type="b")
-    points(r[match(max(R),R)], max(R), col = "red", pch=18)
-    mtext(paste("Optimum number of replications = ", r[match(max(R),R)]), line=2.9)
-    mtext(paste("Number of genotypes at optimum = ", g[match(max(R),R)]), line=1.7)
-    mtext(paste("Response to selection at optimum = ", round(max(R),2)), line=0.5)
+    points(r[match(max(R), R)], max(R), col = "red", pch=18)
+    mtext(paste("Optimum number of replications = ", r[match(max(R), R)]), line=2.9)
+    mtext(paste("Number of genotypes at optimum = ", g[match(max(R), R)]), line=1.7)
+    mtext(paste("Response to selection at optimum = ", round(max(R), 2)), line=0.5)
   })
 
 })

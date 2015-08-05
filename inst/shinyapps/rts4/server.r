@@ -41,7 +41,7 @@ shiny::shinyServer(function(input, output) {
     f <- function(t){
       integrate(int, t, Inf)$value - alpha
     }
-    x2 <- uniroot(f, c(0,20))$root # truncation point on the N(0,1) for the selected fraction
+    x2 <- uniroot(f, c(0, 20))$root # truncation point on the N(0,1) for the selected fraction
     z2 <- dnorm(x2) 
     a <- (x1 - rho*x2)/sqrt(1-rho^2)
     b <- (x2 - rho*x1)/sqrt(1-rho^2)
@@ -49,8 +49,8 @@ shiny::shinyServer(function(input, output) {
     I2 <- 1 - pnorm(b)
     R2 <- (rho1*z1*I2 + rho2*z2*I1)/alpha
     salida <- data.frame(row.names=c("1st step =", "2nd step ="))
-    salida$x <- c(x1,x2)
-    salida$Ru <- c(R1,R2)
+    salida$x <- c(x1, x2)
+    salida$Ru <- c(R1, R2)
     salida
     
   })

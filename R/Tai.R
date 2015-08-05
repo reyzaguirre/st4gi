@@ -35,9 +35,9 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
 
   # Everything as factor
 
-  data[,geno] <- factor(data[,geno])
-  data[,env] <- factor(data[,env])
-  data[,rep] <- factor(data[,rep])
+  data[, geno] <- factor(data[, geno])
+  data[, env] <- factor(data[, env])
+  data[, rep] <- factor(data[, rep])
 
   # Check data
 
@@ -45,9 +45,9 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
 
   # Error messages and warnings
 
-  geno.num <- nlevels(data[,geno])
-  env.num <- nlevels(data[,env])
-  rep.num <- nlevels(data[,rep])
+  geno.num <- nlevels(data[, geno])
+  env.num <- nlevels(data[, env])
+  rep.num <- nlevels(data[, rep])
 
   if (lc$c1 == 0)
     stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
@@ -63,7 +63,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
 
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0){
     est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
-    data[,trait] <- est.data$new.data[,5]
+    data[, trait] <- est.data$new.data[, 5]
     nmis <- est.data$est.num
     warning(paste("The data set is unbalanced, ",
                   format(est.data$est.prop*100, digits = 3),
@@ -72,37 +72,37 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
 
   # Compute interaction effects matrix
 
-  int.mean <- tapply(data[,trait], list(data[,geno], data[,env]), mean, na.rm = T)
+  int.mean <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = T)
 
   overall.mean <- mean(int.mean)
   env.mean <- apply(int.mean, 2, mean)
   geno.mean <- apply(int.mean, 1, mean)
   int.eff <- int.mean + overall.mean
-  for (i in 1:env.num) int.eff[,i] <- int.eff[,i] - geno.mean
-  for (i in 1:geno.num) int.eff[i,] <- int.eff[i,] - env.mean
+  for (i in 1:env.num) int.eff[, i] <- int.eff[, i] - geno.mean
+  for (i in 1:geno.num) int.eff[i, ] <- int.eff[i, ] - env.mean
 
   # ANOVA
 
-  model <- aov(data[,trait] ~ data[,geno] + data[,env] +
-                 data[,rep] %in% data[,env] + data[,geno]:data[,env])
+  model <- aov(data[, trait] ~ data[, geno] + data[, env] +
+                 data[, rep] %in% data[, env] + data[, geno]:data[, env])
   at <- anova(model)
   
   # Correction for missing values if any
   
   if (nmis > 0){
-    at[5,1] <- at[5,1] - nmis
-    at[5,3] <- at[5,2]/at[5,1]
+    at[5, 1] <- at[5, 1] - nmis
+    at[5, 3] <- at[5, 2]/at[5, 1]
   }
   
   # Compute Tai values alpha and lambda
 
   slgl <- int.eff
-  for (i in 1:geno.num) slgl[i,] <- slgl[i,]*(env.mean - overall.mean)/(env.num-1)
-  alpha <- apply(slgl, 1, sum)/(at[2,3] - at[3,3])*geno.num*rep.num
+  for (i in 1:geno.num) slgl[i, ] <- slgl[i, ]*(env.mean - overall.mean)/(env.num-1)
+  alpha <- apply(slgl, 1, sum)/(at[2, 3] - at[3, 3])*geno.num*rep.num
 
   s2gl <- int.eff
-  for (i in 1:geno.num) s2gl[i,] <- s2gl[i,]^2/(env.num-1)
-  lambda <- (apply(s2gl,1,sum) - alpha*apply(slgl,1,sum))/(geno.num-1)/at[5,3]*geno.num*rep.num
+  for (i in 1:geno.num) s2gl[i, ] <- s2gl[i, ]^2/(env.num-1)
+  lambda <- (apply(s2gl, 1, sum) - alpha*apply(slgl, 1, sum))/(geno.num-1)/at[5, 3]*geno.num*rep.num
   lambda[lambda < 0] <- 0
 
   # plot lambda limits
@@ -114,13 +114,13 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
   lx <- seq(0, lmax, lmax/100)
   ta <- qt(1-(1-conf)/2, env.num-2)
   
-  div2 <- (env.num-2)*at[2,3] - (ta^2 + env.num - 2)*at[3,3]
+  div2 <- (env.num-2)*at[2, 3] - (ta^2 + env.num - 2)*at[3, 3]
 
   if (div2 < 0){
     warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
     amax <- max(abs(alpha))*1.05
   } else {
-    pi.alpha <- ta*((lx*(geno.num - 1)*at[5,3]*at[2,3]) / ((at[2,3] - at[3,3])*div2))^.5
+    pi.alpha <- ta*((lx*(geno.num - 1)*at[5, 3]*at[2, 3]) / ((at[2, 3] - at[3, 3])*div2))^.5
     amax <- max(c(abs(alpha), pi.alpha))
   }
   

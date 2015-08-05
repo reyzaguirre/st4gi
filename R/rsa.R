@@ -43,8 +43,8 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1){
   
   # Error messages
   
-   geno.num <- nlevels(data[,geno])
-   env.num <- nlevels(data[,env])
+   geno.num <- nlevels(data[, geno])
+   env.num <- nlevels(data[, env])
   
   if (geno.num == 2 & env.num == 2)
     stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")
@@ -55,7 +55,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1){
 
   # Some statistics
 
-  int.mean <- tapply(data[,trait], list(data[,geno], data[,env]), mean, na.rm=T)
+  int.mean <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm=T)
   overall.mean <- mean(int.mean, na.rm=T)
   env.mean <- apply(int.mean, 2, mean, na.rm=T)
   geno.mean <- apply(int.mean, 1, mean, na.rm=T)
@@ -71,37 +71,37 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1){
   ms_reg <- NULL
 
   for (i in 1:geno.num){
-    modelo <- lm(int.mean[i,] ~ env.mean)
+    modelo <- lm(int.mean[i, ] ~ env.mean)
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
-    se[i] <- summary.lm(modelo)$coefficients[2,2]
-    ms_dev[i] <- anova(modelo)[2,3]
-    ms_gxe[i] <- sum((int.mean[i,] - geno.mean[i] - env.mean + overall.mean)^2)/(env.num - 1)
-    ms_entry[i] <- sum((int.mean[i,] - geno.mean[i])^2)/(env.num - 1)
+    se[i] <- summary.lm(modelo)$coefficients[2, 2]
+    ms_dev[i] <- anova(modelo)[2, 3]
+    ms_gxe[i] <- sum((int.mean[i, ] - geno.mean[i] - env.mean + overall.mean)^2)/(env.num - 1)
+    ms_entry[i] <- sum((int.mean[i, ] - geno.mean[i])^2)/(env.num - 1)
   }
   stability_geno <- cbind(b, se, ms_dev, ms_entry, ms_gxe)
-  row.names(stability_geno) <- levels(data[,geno])
-  names(a) <- levels(data[,geno])
-  names(b) <- levels(data[,geno])
+  row.names(stability_geno) <- levels(data[, geno])
+  names(a) <- levels(data[, geno])
+  names(b) <- levels(data[, geno])
   if (env.num > 2){
     x <- NULL
     ypred <- NULL
     ymean <- NULL
-    for (i in 1:length(data[,trait])){
-      x[i] <- env.mean[names(env.mean)==data[i,env]]
-      ypred[i] <- a[names(a)==data[i,geno]] + b[names(b)==data[i,geno]]*x[i]
-      ymean[i] <- int.mean[row.names(int.mean)==data[i,geno], colnames(int.mean)==data[i,env]]
+    for (i in 1:length(data[, trait])){
+      x[i] <- env.mean[names(env.mean)==data[i, env]]
+      ypred[i] <- a[names(a)==data[i, geno]] + b[names(b)==data[i, geno]]*x[i]
+      ymean[i] <- int.mean[row.names(int.mean)==data[i, geno], colnames(int.mean)==data[i, env]]
     }
     drg_sc <- sum((ypred - ymean)^2)
     hrg_gl <- geno.num - 1
     drg_gl <- (geno.num - 1)*(env.num - 1) - hrg_gl
     drg_cm <- drg_sc/drg_gl
-    hrg_sc <- at[4,2] - drg_sc
+    hrg_sc <- at[4, 2] - drg_sc
     hrg_cm <- hrg_sc/hrg_gl
     hrg_f <- hrg_cm/drg_cm
     hrg_p <- pf(hrg_f, hrg_gl, drg_gl, lower.tail=F)
-    drg_f <- drg_cm/at[5,3]
-    drg_p <- pf(drg_f, drg_gl, at[5,1], lower.tail=F)
+    drg_f <- drg_cm/at[5, 3]
+    drg_p <- pf(drg_f, drg_gl, at[5, 1], lower.tail=F)
   } else {
     drg_sc <- NA
     hrg_gl <- NA
@@ -126,37 +126,37 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1){
   ms_reg <- NULL
 
   for (i in 1:env.num){
-    modelo <- lm(int.mean[,i] ~ geno.mean)
+    modelo <- lm(int.mean[, i] ~ geno.mean)
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
-    se[i] <- summary.lm(modelo)$coefficients[2,2]
-    ms_dev[i] <- anova(modelo)[2,3]
-    ms_gxe[i] <- sum((int.mean[,i] - env.mean[i] - geno.mean + overall.mean)^2)/(geno.num - 1)
-    ms_entry[i] <- sum((int.mean[,i] - env.mean[i])^2)/(geno.num - 1)
+    se[i] <- summary.lm(modelo)$coefficients[2, 2]
+    ms_dev[i] <- anova(modelo)[2, 3]
+    ms_gxe[i] <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2)/(geno.num - 1)
+    ms_entry[i] <- sum((int.mean[, i] - env.mean[i])^2)/(geno.num - 1)
   }
   stability_env <- cbind(b, se, ms_dev, ms_entry, ms_gxe)
-  row.names(stability_env) <- levels(data[,env])
-  names(a) <- levels(data[,env])
-  names(b) <- levels(data[,env])
+  row.names(stability_env) <- levels(data[, env])
+  names(a) <- levels(data[, env])
+  names(b) <- levels(data[, env])
   if (geno.num > 2){
     x <- NULL
     ypred <- NULL
     ymean <- NULL
-    for (i in 1:length(data[,trait])){
-      x[i] <- geno.mean[names(geno.mean)==data[i,geno]]
-      ypred[i] <- a[names(a)==data[i,env]] + b[names(b)==data[i,env]]*x[i]
-      ymean[i] <- int.mean[row.names(int.mean)==data[i,geno], colnames(int.mean)==data[i,env]]
+    for (i in 1:length(data[, trait])){
+      x[i] <- geno.mean[names(geno.mean)==data[i, geno]]
+      ypred[i] <- a[names(a)==data[i, env]] + b[names(b)==data[i, env]]*x[i]
+      ymean[i] <- int.mean[row.names(int.mean)==data[i, geno], colnames(int.mean)==data[i, env]]
     }
     dre_sc <- sum((ypred-ymean)^2)
     hre_gl <- env.num - 1
     dre_gl <- (geno.num - 1)*(env.num - 1) - hre_gl
     dre_cm <- dre_sc/dre_gl
-    hre_sc <- at[4,2] - dre_sc
+    hre_sc <- at[4, 2] - dre_sc
     hre_cm <- hre_sc/hre_gl
     hre_f <- hre_cm/dre_cm
     hre_p <- pf(hre_f, hre_gl, dre_gl, lower.tail=F)
-    dre_f <- dre_cm/at[5,3]
-    dre_p <- pf(dre_f, dre_gl, at[5,1], lower.tail=F)
+    dre_f <- dre_cm/at[5, 3]
+    dre_p <- pf(dre_f, dre_gl, at[5, 1], lower.tail=F)
   } else {
     dre_sc <- NA
     hre_gl <- NA
@@ -172,15 +172,15 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1){
 
   # ANOVA plus regression stability
 
-  fileaux <- at[5,]
-  at[5,] <- c(hrg_gl, hrg_sc, hrg_cm, hrg_f, hrg_p)
-  at[6,] <- c(drg_gl, drg_sc, drg_cm, drg_f, drg_p)
-  at[7,] <- c(hre_gl, hre_sc, hre_cm, hre_f, hre_p)
-  at[8,] <- c(dre_gl, dre_sc, dre_cm, dre_f, dre_p)
-  at[9,] <- fileaux
+  fileaux <- at[5, ]
+  at[5, ] <- c(hrg_gl, hrg_sc, hrg_cm, hrg_f, hrg_p)
+  at[6, ] <- c(drg_gl, drg_sc, drg_cm, drg_f, drg_p)
+  at[7, ] <- c(hre_gl, hre_sc, hre_cm, hre_f, hre_p)
+  at[8, ] <- c(dre_gl, dre_sc, dre_cm, dre_f, dre_p)
+  at[9, ] <- fileaux
   row.names(at) <- c("G", "E", "R:E", "GxE", "- Het.Regr.G", "- Dev.Regr.G",
                      "- Het.Regr.E", "- Dev.Regr.E", "Residuals")
-  cv <- sqrt(at[5,3])/abs(overall.mean)*100
+  cv <- sqrt(at[5, 3])/abs(overall.mean)*100
 
   # Return
 

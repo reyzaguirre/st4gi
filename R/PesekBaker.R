@@ -76,17 +76,17 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   gv <- NULL # genetic variance
   pv <- NULL # phenotipic variance
   nt <- length(traits) # number of traits
-  ng <- nlevels(factor(data[,geno])) # number of genotypes
-  ne <- nlevels(factor(data[,env])) # number of environments
+  ng <- nlevels(factor(data[, geno])) # number of genotypes
+  ne <- nlevels(factor(data[, env])) # number of environments
   if (!is.null(rep))
-    nr <- nlevels(factor(data[,rep])) # number of replications in each environment
+    nr <- nlevels(factor(data[, rep])) # number of replications in each environment
   rs <- NULL # response to selection
 
   # fitted models by REML for variance components
 
   if (model == "gxe"){
     for (i in 1:nt){
-      abc <- data.frame(c1 = data[,traits[i]], c2 = data[,geno], c3 = data[,env], c4 = data[,rep])
+      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
       fm <- lme4::lmer(c1 ~ (1|c2) + (1|c2:c3) + (1|c3/c4), data = abc)
       gv[i] <- lme4::VarCorr(fm)$c2[1]
       pv[i] <- lme4::VarCorr(fm)$c2[1] + lme4::VarCorr(fm)$"c2:c3"[1]/ne +
@@ -95,7 +95,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   }
   if (model == "g+e") {
     for (i in 1:nt){
-      abc <- data.frame(c1 = data[,traits[i]], c2 = data[,geno], c3 = data[,env])
+      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env])
       fm <- lme4::lmer(c1 ~ (1|c2) + (1|c3), data = abc)
       gv[i] <- lme4::VarCorr(fm)$c2[1]
     }
@@ -104,18 +104,18 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   # compute correlation and covariance matrices
 
   if (!is.null(rep)){
-    df <- data[,c(sapply(traits, c), env, rep)]
-    df <- split(df, factor(paste(data[,env], data[,rep]))) # split by env and rep
+    df <- data[, c(sapply(traits, c), env, rep)]
+    df <- split(df, factor(paste(data[, env], data[, rep]))) # split by env and rep
   }
   if (is.null(rep)){
-    df <- data[,c(sapply(traits, c), env)]
-    df <- split(df, data[,env]) # split by env
+    df <- data[, c(sapply(traits, c), env)]
+    df <- split(df, data[, env]) # split by env
   }
   ner <- length(df)
   ll <- paste("cor", 1:ner, sep="_")
   my.list <- list()
   for (i in 1:ner)
-    my.list[[ll[i]]] <- cor(df[[i]][,1:nt], use = "pairwise.complete.obs")
+    my.list[[ll[i]]] <- cor(df[[i]][, 1:nt], use = "pairwise.complete.obs")
   corr <- apply(simplify2array(my.list), 1:2, mean, na.rm=T)
   
   S <- diag(gv^.5, nt, nt)
@@ -139,7 +139,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
     si <- dnorm(qnorm(1-sf))/sf # selection intensity
     bPb <- t(b)%*%P%*%b
     for (i in 1:nt)
-      rs[i] <- si * t(b)%*%G[,i]/sqrt(bPb*G[i,i])
+      rs[i] <- si * t(b)%*%G[, i]/sqrt(bPb*G[i, i])
     rsa <- rs * gv^.5 # response to selection in actual units
   } else {
     rsa <- "NA"
@@ -148,7 +148,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
 
   # index calculation
   
-  outind <- data.frame(geno = levels(factor(data[,geno])))
+  outind <- data.frame(geno = levels(factor(data[, geno])))
   
   if (means == "single"){
     temp <- domeans(traits, c(geno, env), data = data)
@@ -159,7 +159,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   
   if (means == "fitted"){
     for (i in 1:nt){
-      abc <- data.frame(c1 = data[,traits[i]], c2 = data[,geno], c3 = data[,env], c4 = data[,rep])
+      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
       if (model == "gxe")
         fm <- lme4::lmer(c1 ~ c2-1 + (1|c2:c3) + (1|c3/c4), data = abc)
       if (model == "g+e")
@@ -171,7 +171,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
     }
   }
 
-  m <- as.matrix(outind[,2:(1+nt)])
+  m <- as.matrix(outind[, 2:(1+nt)])
   indices <- m %*% b
   outind <- cbind(outind, indices)
   colnames(outind)[2+nt] <- "PB.Index"

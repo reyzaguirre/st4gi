@@ -33,14 +33,14 @@ str(spg)
 
 # Compute maxima for all the traits across the two replications
 # for each genotype and location.
-traits <- c('rytha', 'bc', 'dm', 'star', 'nocr')
-factors <- c('geno', 'loc')
-domax(traits, factors, data=spg)
+traits <- c("rytha", "bc", "dm", "star", "nocr")
+factors <- c("geno", "loc")
+domax(traits, factors, data = spg)
 
-# Save the output in a data.frame with name 'output1'
+# Save the output in a data.frame with name "output1"
 # and compute maxima for each genotype across the two locations.
-output1 <- domax(traits, factors, data=spg)
-domax(traits, 'geno', data=output1)
+output1 <- domax(traits, factors, data = spg)
+domax(traits, "geno", data = output1)
 }
 \author{
 Raul Eyzaguirre

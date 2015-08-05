@@ -51,15 +51,15 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
 
   # means and standard deviations
 
-  means <- tapply(data[,trait], data[,groups], mean, na.rm=T)
-  sdev <- tapply(data[,trait], data[,groups], sd, na.rm=T)
+  means <- tapply(data[, trait], data[, groups], mean, na.rm=T)
+  sdev <- tapply(data[, trait], data[, groups], sd, na.rm=T)
 
   resu <- data.frame(means, sdev)
 
   # compute confidence intervals
 
   if (conf < 1) {
-    resu$n <- tapply(is.na(data[, trait])==0, data[,groups], sum)
+    resu$n <- tapply(is.na(data[, trait])==0, data[, groups], sum)
     resu$li <- resu$means - qt((1 + conf)/2, resu$n-1) * resu$sdev/sqrt(resu$n)
     resu$ls <- resu$means + qt((1 + conf)/2, resu$n-1) * resu$sdev/sqrt(resu$n)
     msg <- paste("Dotplot with means and ", conf*100, "% confidence limits", sep="")
@@ -74,9 +74,9 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
   # sort
 
   if (sort.means == "increasing")
-    resu <- resu[sort(resu$means, index.return=T)$ix,]
+    resu <- resu[sort(resu$means, index.return=T)$ix, ]
   if (sort.means == "decreasing")
-    resu <- resu[sort(resu$means, decreasing=T, index.return=T)$ix,]
+    resu <- resu[sort(resu$means, decreasing=T, index.return=T)$ix, ]
   if (sort.means %in% c("none", "increasing", "decreasing") == F)
     stop("Invalid value for sort.means")
 
@@ -108,7 +108,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE
   axis(1, at = seq(1, length(resu$means)), labels = rownames(resu), las = x.las)
 
   for (i in 1:length(resu$means)){
-    lines(c(i,i), c(resu$li[i], resu$ls[i]), col = colors[2])
+    lines(c(i, i), c(resu$li[i], resu$ls[i]), col = colors[2])
     subdata <- subset(data, data[, groups] == resu$orden[i])
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax)
       points(jitter(rep(i + dist, length(subdata[, trait])), factor = jf),
