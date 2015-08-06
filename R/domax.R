@@ -35,7 +35,7 @@ domax <- function(traits, factors, addcol = NULL, data) {
     
   dataout <- data[, c("temp", factors, addcol)]
   dataout$dup <- duplicated(dataout[, factors])
-  dataout <- subset(dataout, dup == F)
+  dataout <- subset(dataout, dataout$dup == F)
   dataout <- dataout[, -dim(dataout)[2]]
   
   # Number of factors and traits
@@ -58,7 +58,7 @@ domax <- function(traits, factors, addcol = NULL, data) {
   
   for (i in 1:nt) {
     for (j in 1:dim(dataout)[1])
-      dataout[j, traits[i]] <- max(subset(data, x == dataout$x[j])[, traits[i]], na.rm = TRUE)
+      dataout[j, traits[i]] <- max(subset(data, data$x == dataout$x[j])[, traits[i]], na.rm = TRUE)
   }
   
   # Remove x and temp
