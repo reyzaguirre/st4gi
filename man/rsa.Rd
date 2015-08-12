@@ -20,7 +20,9 @@ rsa(trait, geno, env, rep, data, maxp = 0.1)
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
 \value{
-It returns the regression stability analysis for genotypes and environments.
+It returns the regression stability analysis decomposition of the GxE interaction
+for genotypes and environments, the coefficient of variation, and the regression stability
+measures for genotypes and environments.
 }
 \description{
 Function to run the regression stability analysis (Yates and Cochran, 1938,

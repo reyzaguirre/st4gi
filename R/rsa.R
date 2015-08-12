@@ -20,7 +20,9 @@
 #' regression of individual yield (Y) on the mean yield of all genotypes for each environment
 #' (X) is fitted. In a similar way, for each environment, a simple linear regression of
 #' individual yield (Y) on the mean yield of all environments for each genotype (X) is fitted.
-#' @return It returns the regression stability analysis for genotypes and environments.
+#' @return It returns the regression stability analysis decomposition of the GxE interaction
+#' for genotypes and environments, the coefficient of variation, and the regression stability
+#' measures for genotypes and environments. 
 #' @references
 #' Eberhart, S. A. and Russell, W. A. (1966). Stability Parameters for Comparing Varieties.
 #' Crop Sci. 6: 36-40.
@@ -51,8 +53,20 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Compute ANOVA
   
-  at <- aovmet(trait, geno, env, rep, data, maxp)
+  at <- suppressWarnings(aovmet(trait, geno, env, rep, data, maxp))
 
+  # Check data and estimate missing values
+  
+  lc <- checkdata02(trait, geno, env, data)
+  
+  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0) {
+    est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
+    data[, trait] <- est.data$new.data[, 5]
+    warning(paste("The data set is unbalanced, ",
+                  format(est.data$est.prop * 100, digits = 3),
+                  "% missing values estimated.", sep = ""))
+  }
+  
   # Some statistics
 
   int.mean <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = TRUE)
@@ -184,5 +198,6 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Return
 
-  at
+  list(ANOVA = at, CV = cv, Stability_for_genotypes = stability_geno,
+       Stability_for_environments = stability_env)
 }
