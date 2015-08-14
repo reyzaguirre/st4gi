@@ -76,24 +76,21 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
   # Regression-stability for genotypes
 
-  a <- NULL
-  b <- NULL
-  se <- NULL
-  ms_dev <- NULL
-  ms_gxe <- NULL
-  ms_entry <- NULL
-  ms_reg <- NULL
+  a <- NULL        # linear regression intercept
+  b <- NULL        # linear regression slope
+  se <- NULL       # slope standard error
+  ms_e <- NULL     # error mean square
+  ms_gxe <- NULL   # gxe variance
 
   for (i in 1:geno.num) {
     modelo <- lm(int.mean[i, ] ~ env.mean)
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
     se[i] <- summary.lm(modelo)$coefficients[2, 2]
-    ms_dev[i] <- anova(modelo)[2, 3]
+    ms_e[i] <- anova(modelo)[2, 3]
     ms_gxe[i] <- sum((int.mean[i, ] - geno.mean[i] - env.mean + overall.mean)^2) / (env.num - 1)
-    ms_entry[i] <- sum((int.mean[i, ] - geno.mean[i])^2) / (env.num - 1)
   }
-  stability_geno <- cbind(b, se, ms_dev, ms_entry, ms_gxe)
+  stability_geno <- cbind(b, se, ms_e, ms_gxe)
   row.names(stability_geno) <- levels(data[, geno])
   names(a) <- levels(data[, geno])
   names(b) <- levels(data[, geno])
@@ -131,24 +128,21 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Regression-stability for environments
 
-  a <- NULL
-  b <- NULL
-  se <- NULL
-  ms_dev <- NULL
-  ms_gxe <- NULL
-  ms_entry <- NULL
-  ms_reg <- NULL
-
+  a <- NULL        # linear regression intercept
+  b <- NULL        # linear regression slope
+  se <- NULL       # slope standard error
+  ms_e <- NULL     # error mean square
+  ms_gxe <- NULL   # gxe variance
+  
   for (i in 1:env.num) {
     modelo <- lm(int.mean[, i] ~ geno.mean)
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
     se[i] <- summary.lm(modelo)$coefficients[2, 2]
-    ms_dev[i] <- anova(modelo)[2, 3]
+    ms_e[i] <- anova(modelo)[2, 3]
     ms_gxe[i] <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (geno.num - 1)
-    ms_entry[i] <- sum((int.mean[, i] - env.mean[i])^2) / (geno.num - 1)
   }
-  stability_env <- cbind(b, se, ms_dev, ms_entry, ms_gxe)
+  stability_env <- cbind(b, se, ms_e, ms_gxe)
   row.names(stability_env) <- levels(data[, env])
   names(a) <- levels(data[, env])
   names(b) <- levels(data[, env])
