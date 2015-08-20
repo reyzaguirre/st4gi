@@ -55,11 +55,11 @@ the data are balanced.
 head(met8x12)
 str(met8x12)
 
-# Run AMMI for trait y, biplot1 by default
+# Run AMMI for trait y, biplot2 by default
 ammi("y", "geno", "env", "rep", met8x12)
 
-# Run AMMI for trait y, biplot2
-ammi("y", "geno", "env", "rep", met8x12, biplot = 2)
+# Run AMMI for trait y, biplot1
+ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 }
 \author{
 Raul Eyzaguirre

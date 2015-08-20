@@ -35,11 +35,11 @@
 #' head(met8x12)
 #' str(met8x12)
 #'
-#' # Run AMMI for trait y, biplot1 by default
+#' # Run AMMI for trait y, biplot2 by default
 #' ammi("y", "geno", "env", "rep", met8x12)
 #'
-#' # Run AMMI for trait y, biplot2
-#' ammi("y", "geno", "env", "rep", met8x12, biplot = 2)
+#' # Run AMMI for trait y, biplot1
+#' ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 #' @export
 
 ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
@@ -142,10 +142,10 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 #' int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
 #'
 #' # Run AMMI with GxE means matrix, biplot2
-#' ammigxe(int.mean, trait = "y", biplot = 2)
+#' ammigxe(int.mean, trait = "y")
 #'
 #' # Run GGE with GxE means matrix, biplot2
-#' ammigxe(int.mean, trait = "y", method = "GGE", biplot = 2)
+#' ammigxe(int.mean, trait = "y", method = "GGE")
 #' @export
 
 ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
@@ -163,13 +163,13 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
 
   if (method == "AMMI") {
     svd.mat <- int.mean + overall.mean
-    for (i in 1:env.num) svd.mat[, i] <- svd.mat[, i] - geno.mean
-    for (i in 1:geno.num) svd.mat[i, ] <- svd.mat[i, ] - env.mean
+    svd.mat <- svd.mat - geno.mean
+    svd.mat <- t(t(svd.mat) - env.mean)
   }
 
   if (method == "GGE") {
     svd.mat <- int.mean
-    for (i in 1:geno.num) svd.mat[i, ] <- svd.mat[i, ] - env.mean
+    svd.mat <- t(t(svd.mat) - env.mean)
   }
 
   # SVD

@@ -60,10 +60,10 @@ str(met8x12)
 int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
 
 # Run AMMI with GxE means matrix, biplot2
-ammigxe(int.mean, trait = "y", biplot = 2)
+ammigxe(int.mean, trait = "y")
 
 # Run GGE with GxE means matrix, biplot2
-ammigxe(int.mean, trait = "y", method = "GGE", biplot = 2)
+ammigxe(int.mean, trait = "y", method = "GGE")
 }
 \author{
 Raul Eyzaguirre

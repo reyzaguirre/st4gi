@@ -80,8 +80,8 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
   env.mean <- apply(int.mean, 2, mean)
   geno.mean <- apply(int.mean, 1, mean)
   int.eff <- int.mean + overall.mean
-  for (i in 1:env.num) int.eff[, i] <- int.eff[, i] - geno.mean
-  for (i in 1:geno.num) int.eff[i, ] <- int.eff[i, ] - env.mean
+  int.eff <- int.eff - geno.mean
+  int.eff <- t(t(int.eff)- env.mean)
 
   # ANOVA
 
@@ -99,11 +99,11 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
   # Compute Tai values alpha and lambda
 
   slgl <- int.eff
-  for (i in 1:geno.num) slgl[i, ] <- slgl[i, ] * (env.mean - overall.mean) / (env.num - 1)
+  slgl <- t(t(slgl) * (env.mean - overall.mean) / (env.num - 1))
   alpha <- apply(slgl, 1, sum) / (at[2, 3] - at[3, 3]) * geno.num * rep.num
 
   s2gl <- int.eff
-  for (i in 1:geno.num) s2gl[i, ] <- s2gl[i, ]^2 / (env.num - 1)
+  s2gl <- s2gl^2 / (env.num - 1)
   lambda <- (apply(s2gl, 1, sum) - alpha * apply(slgl, 1, sum)) / 
     (geno.num - 1) / at[5, 3] * geno.num * rep.num
   lambda[lambda < 0] <- 0
