@@ -6,15 +6,15 @@
 #' @param data The name of the data frame.
 #' @param plot.size Plot size in square meters.
 #' @param width Number of columns for the output file.
-#' @details The data frame must use the following labels:
+#' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
-#'  \item L       : Locations
-#'  \item Y       : Year
-#'  \item S       : Season
-#'  \item G       : Genotypes
+#'  \item L       : Locations (LOC is also valid)
+#'  \item Y       : Years
+#'  \item S       : Seasons
+#'  \item G       : Genotypes (GENO is also valid)
 #'  \item NAME    : Names for genotypes
-#'  \item E       : Environments
-#'  \item R       : Replications or blocks
+#'  \item ENV     : Environments (ENV is also valid)
+#'  \item REP     : Replications (REP is also valid)
 #'  \item NOPS    : Number of plants sowed
 #'  \item NOPE    : Number of plants established
 #'  \item VIR1    : Virus symptoms (1-9), first evaluation
@@ -108,15 +108,15 @@ spconsis <- function(data, plot.size, width = 240) {
 
   options(width = width)
   
-  colnames.valid <- c("L", "Y", "S", "G", "NAME", "E", "R", "NOPS", "NOPE", "VIR1", "VIR2", "VIR3",
-                      "ALT1", "ALT2", "VV1", "VV2", "VW", "NOPH", "NOPR", "NOCR", "NONC", "CRW",
-                      "NCRW", "RFCP", "RFCS", "SCOL", "FCOL", "RFCP", "RFCS", "RS", "RF", "DAMR",
-                      "RSPR", "WED1", "WED2", "DMF", "DMD", "DMVF", "DMVD", "DM", "DMFY", "DMRY",
-                      "FRAW1", "SURAW1", "STRAW1", "COOF1", "COOSU1", "COOST1", "COOT1", "COOAP1",
-                      "FRAW2", "SURAW2", "STRAW2", "COOF2", "COOSU2", "COOST2", "COOT2", "COOAP2",
-                      "PROT", "FE", "ZN", "CA", "MG", "BC", "BC.CC", "TC", "STAR", "FRUC", "GLUC",
-                      "SUCR", "MALT", "TRW", "CYTHA", "RYTHA", "ACRW", "NRPP", "YPP", "CI", "HI",
-                      "SHI", "BIOM", "FYTHA", "RFR")
+  colnames.valid <- c("L", "LOC", "Y", "S", "G", "GENO", "NAME", "E", "ENV", "R", "REP", "NOPS",
+                      "NOPE", "VIR1", "VIR2", "VIR3", "ALT1", "ALT2", "VV1", "VV2", "VW", "NOPH",
+                      "NOPR", "NOCR", "NONC", "CRW", "NCRW", "RFCP", "RFCS", "SCOL", "FCOL", "RFCP",
+                      "RFCS", "RS", "RF", "DAMR", "RSPR", "WED1", "WED2", "DMF", "DMD", "DMVF",
+                      "DMVD", "DM", "DMFY", "DMRY", "FRAW1", "SURAW1", "STRAW1", "COOF1", "COOSU1",
+                      "COOST1", "COOT1", "COOAP1", "FRAW2", "SURAW2", "STRAW2", "COOF2", "COOSU2",
+                      "COOST2", "COOT2", "COOAP2", "PROT", "FE", "ZN", "CA", "MG", "BC", "BC.CC",
+                      "TC", "STAR", "FRUC", "GLUC", "SUCR", "MALT", "TRW", "CYTHA", "RYTHA", "ACRW",
+                      "NRPP", "YPP", "CI", "HI", "SHI", "BIOM", "FYTHA", "RFR")
     
   colnames.list <- colnames(data)
   
@@ -129,10 +129,10 @@ spconsis <- function(data, plot.size, width = 240) {
   # Warnings
   
   if (max(check.list.1) == 1)
-    warning("Invalid labels not included for checking :", list(colnames.list[check.list.1]), call. = FALSE)
+    warning("Invalid labels not included for checking: ", list(colnames.list[check.list.1]), call. = FALSE)
   
   if (max(check.list.2) == 1)
-    warning("Some labels converted to upper case: ", list(temp[check.list.2]), call. = FALSE)
+    warning("Some labels converted to upper case in the output: ", list(temp[check.list.2]), call. = FALSE)
   
   sink("checks.txt")
 

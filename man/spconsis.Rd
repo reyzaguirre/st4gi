@@ -23,15 +23,15 @@ Data labels must be defined as specified in the PROCEDURES FOR THE EVALUATION
 AND ANALYSIS OF SWEETPOTATO TRIALS document.
 }
 \details{
-The data frame must use the following labels:
+The data frame must use the following labels (lower or upper case):
 \itemize{
- \item L       : Locations
- \item Y       : Year
- \item S       : Season
- \item G       : Genotypes
+ \item L       : Locations (LOC is also valid)
+ \item Y       : Years
+ \item S       : Seasons
+ \item G       : Genotypes (GENO is also valid)
  \item NAME    : Names for genotypes
- \item E       : Environments
- \item R       : Replications or blocks
+ \item ENV     : Environments (ENV is also valid)
+ \item REP     : Replications (REP is also valid)
  \item NOPS    : Number of plants sowed
  \item NOPE    : Number of plants established
  \item VIR1    : Virus symptoms (1-9), first evaluation
