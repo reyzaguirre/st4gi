@@ -15,7 +15,7 @@
 #'  \item NAME    : Names for genotypes
 #'  \item E       : Environments
 #'  \item R       : Replications or blocks
-#'  \item NOPS    : Number of plants planted
+#'  \item NOPS    : Number of plants sowed
 #'  \item NOPE    : Number of plants established
 #'  \item VIR1    : Virus symptoms (1-9), first evaluation
 #'  \item VIR2    : Virus symptoms (1-9), second evaluation

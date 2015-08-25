@@ -12,7 +12,8 @@ International Potato Center, sweetpotato experimental data.
 met8x12
 }
 \description{
-This data set gives the yields per plot for 8 genotypes
-in 12 environments with a RCBD with 3 blocks in each environment.
+This data set has the yields per plot (\code{y}) for an experiment with
+8 genotypes (\code{geno}), 12 environments (\code{env}), and 3 replications (\code{rep})
+in each evironment following a RCBD.
 }
 

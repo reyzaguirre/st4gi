@@ -12,8 +12,10 @@ International Potato Center, sweetpotato experimental data.
 spg
 }
 \description{
-This data set has data for root yield in tons per hectare (rytha),
-beta-carotene (bc), dry matter (dm), starch (star) and number of commercial roots
-(nocr) for 8 genotypes in 2 locations with a RCBD with 2 blocks in each location.
+This data set has data for root yield in tons per hectare (\code{rytha}),
+beta-carotene (\code{bc}), dry matter (\code{dm}), starch (\code{star}) and number of
+commercial roots (\code{nocr}) for an experiment with 8 genotypes (\code{geno}), 2
+locations (\code{loc}), and 2 replications (\code{rep}) in each location following
+a RCBD.
 }
 
