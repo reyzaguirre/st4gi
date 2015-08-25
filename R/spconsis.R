@@ -13,8 +13,8 @@
 #'  \item S       : Seasons
 #'  \item G       : Genotypes (GENO is also valid)
 #'  \item NAME    : Names for genotypes
-#'  \item ENV     : Environments (ENV is also valid)
-#'  \item REP     : Replications (REP is also valid)
+#'  \item E       : Environments (ENV is also valid)
+#'  \item R       : Replications (REP is also valid)
 #'  \item NOPS    : Number of plants sowed
 #'  \item NOPE    : Number of plants established
 #'  \item VIR1    : Virus symptoms (1-9), first evaluation
