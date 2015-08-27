@@ -7,8 +7,8 @@ st4gi
 
 Statistical tools for genetic improvement.
 
-### Installation
-
+Installation
+------------
 To install this package you need package `devtools`:
 
 ```{r eval=F}
@@ -21,8 +21,8 @@ Then type:
 devtools::install_github("reyzaguirre/st4gi")
 ```
 
-### Usage
-
+Usage
+-----
 To load the package type:
 
 ```{r eval=F}
