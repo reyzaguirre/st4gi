@@ -18,11 +18,11 @@
 #' @author Raul Eyzaguirre
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' the data are balanced.
-#' @return It returns the genotype, environment and interaction means, the first and second
-#' PC values for genotypes and environments, a table with the contribution of each PC,
-#' a dispersion plot of means or effects against the first PC, or a dispersion plot of
-#' PC1 against PC2. Significance of PCs are included in the contributions table only if
-#' method is set to AMMI.
+#' @return It returns the genotype, environment and interaction means, the interaction
+#' effects matrix, the first and second PC values for genotypes and environments, a table
+#' with the contribution of each PC, a dispersion plot of means or effects against the
+#' first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
+#' in the contributions table only if method is set to AMMI and the data are balanced.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 #' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
@@ -121,11 +121,12 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 #' @author Raul Eyzaguirre
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' \code{rep.num}, \code{rms} and \code{rdf} are specified.
-#' @return It returns the genotype, environment and interaction means, the first and second
-#' PC values for genotypes and environments, a table with the contribution of each PC,
-#' a dispersion plot of means or effects against the first PC, or a dispersion plot of
-#' PC1 against PC2. Significance of PCs are included in the contributions table only if
-#' \code{rep.num}, \code{rms} and \code{rdf} are specified and method is set to AMMI.
+#' @return It returns the genotype, environment and interaction means, the interaction
+#' effects matrix, the first and second PC values for genotypes and environments, a table
+#' with the contribution of each PC, a dispersion plot of means or effects against the
+#' first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
+#' in the contributions table only if method is set to AMMI and \code{rep.num},
+#' \code{rms} and \code{rdf} are specified.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 #' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
@@ -160,13 +161,12 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
   geno.mean <- apply(int.mean, 1, mean)
   env.num <- length(env.mean)
   geno.num <- length(geno.mean)
-
-  if (method == "AMMI") {
-    svd.mat <- int.mean + overall.mean
-    svd.mat <- svd.mat - geno.mean
-    svd.mat <- t(t(svd.mat) - env.mean)
-  }
-
+  int.eff <- int.mean + overall.mean - geno.mean
+  int.eff <- t(t(int.eff) - env.mean)
+  
+  if (method == "AMMI")
+    svd.mat <- int.eff
+  
   if (method == "GGE") {
     svd.mat <- int.mean
     svd.mat <- t(t(svd.mat) - env.mean)
@@ -274,6 +274,7 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
   # Output
 
   list(Genotype_means = geno.mean, Environment_means = env.mean,
-       Interaction_means = int.mean, PC_values_genotypes = PC.geno,
-       PC_values_environments = PC.env, Contribution_PCs = tablaPC)
+       Interaction_means = int.mean, Interaction_effects = int.eff,
+       PC_values_genotypes = PC.geno, PC_values_environments = PC.env,
+       Contribution_PCs = tablaPC)
 }
