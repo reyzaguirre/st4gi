@@ -110,7 +110,8 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
 
   # plot lambda limits
 
-  lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, env.num - 2, env.num * (geno.num - 1) * (rep.num - 1)))) * 1.1
+  lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, env.num - 2,
+                           env.num * (geno.num - 1) * (rep.num - 1)))) * 1.1
 
   # Prediction interval for alpha
 
@@ -123,7 +124,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
     warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
     amax <- max(abs(alpha)) * 1.05
   } else {
-    pi.alpha <- ta * ((lx * (geno.num - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^.5
+    pi.alpha <- ta * ((lx * (geno.num - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^0.5
     amax <- max(c(abs(alpha), pi.alpha))
   }
   
@@ -135,7 +136,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
   plot(1, type = "n", xlim = c(-0.05 * lmax, lmax), ylim = c(-amax, amax),
        main = title, xlab = expression(lambda), ylab = expression(alpha))
   points(lambda, alpha, col = color[1], lwd = 2, pch = 4, cex = size[1])
-  text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = .3, cex = size[2])
+  text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = 0.3, cex = size[2])
   if (div2 > 0) {
     points(lx, pi.alpha, type = "l", lty = 3, col = color[3])
     points(lx, -pi.alpha, type = "l", lty = 3, col = color[3])

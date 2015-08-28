@@ -118,7 +118,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
     my.list[[ll[i]]] <- cor(df[[i]][, 1:nt], use = "pairwise.complete.obs")
   corr <- apply(simplify2array(my.list), 1:2, mean, na.rm = TRUE)
   
-  S <- diag(gv^.5, nt, nt)
+  S <- diag(gv^0.5, nt, nt)
   G <- S %*% corr %*% S
   dimnames(G) <- dimnames(corr)
   if (model == "gxe") {
@@ -129,9 +129,9 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   # compute index coefficients
 
   if (is.null(dgg)) {
-    dgg <- gv^.5
+    dgg <- gv^0.5
   } else {
-      if (units == "sdu") dgg <- dgg * gv^.5
+      if (units == "sdu") dgg <- dgg * gv^0.5
   }
   b <- solve(G) %*% dgg
   dimnames(b) <- list(dimnames(corr)[[1]], "coef")
@@ -143,7 +143,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
     bPb <- t(b) %*% P %*% b
     for (i in 1:nt)
       rs[i] <- si * t(b) %*% G[, i] / sqrt(bPb * G[i, i])
-    rsa <- rs * gv^.5 # response to selection in actual units
+    rsa <- rs * gv^0.5 # response to selection in actual units
   } else {
     rsa <- "NA"
     rs <- "NA"
@@ -182,7 +182,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   
   # results
 
-  list(Desired.Genetic.Gains = dgg, Standard.Deviations = gv^.5, Genetic.Variances = gv,
+  list(Desired.Genetic.Gains = dgg, Standard.Deviations = gv^0.5, Genetic.Variances = gv,
        Correlation.Matrix = corr, Index.Coefficients = b,
        Response.to.Selection = rsa, Std.Response.to.Selection = rs,
        Pesek.Baker.Index = outind)
