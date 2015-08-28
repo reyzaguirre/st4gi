@@ -7,7 +7,7 @@
 ammigxe(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
   method = "AMMI", f = 0.5, biplot = 2, biplot1 = "effects",
   title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
-  ...)
+  size = c(1, 1))
 }
 \arguments{
 \item{int.mean}{GxE means matrix, genotypes in rows, environments in columns.}
@@ -34,7 +34,7 @@ ammigxe(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
 
 \item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes.}
 
-\item{...}{Additional graphic parameters.}
+\item{size}{Relative size for symbols and labels.}
 }
 \value{
 It returns the genotype, environment and interaction means, the interaction

@@ -14,7 +14,7 @@
 #' @param title Main title for biplot1 or biplot2.
 #' @param xlab Xlab for biplot1.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
-#' @param ... Additional graphic parameters.
+#' @param size Relative size for symbols and labels.
 #' @author Raul Eyzaguirre
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' the data are balanced.
@@ -42,9 +42,9 @@
 #' ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 #' @export
 
-ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
+ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
                  biplot = 2, biplot1 = "effects", title = NULL, xlab = NULL,
-                 color = c("darkorange", "black", "gray"), ...) {
+                 color = c("darkorange", "black", "gray"), size = c(1, 1)) {
 
   # Everything as factor
 
@@ -98,7 +98,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 
   ammigxe(int.mean, trait = trait, rep.num = rep.num, rdf = rdf, rms = rms,
           method = method, f = f, biplot = biplot, biplot1 = biplot1,
-          title = title, xlab = xlab, color = color, ...)
+          title = title, xlab = xlab, color = color, size = size)
 }
 
 #' AMMI or GGE with data from an interaction means matrix
@@ -117,7 +117,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 #' @param title Main title for biplot1 or biplot2.
 #' @param xlab Xlab for biplot1.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
-#' @param ... Additional graphic parameters.
+#' @param size Relative size for symbols and labels.
 #' @author Raul Eyzaguirre
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' \code{rep.num}, \code{rms} and \code{rdf} are specified.
@@ -150,9 +150,8 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = .5,
 #' @export
 
 ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
-                    method = "AMMI", f = .5, biplot = 2, biplot1 = "effects",
-                    title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
-                    ...) {
+                    method = "AMMI", f = 0.5, biplot = 2, biplot1 = "effects", title = NULL,
+                    xlab = NULL, color = c("darkorange", "black", "gray"), size = c(1, 1)) {
 
   # Data
 
@@ -229,7 +228,7 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
     }
     if (biplot1 == "means") {
       limx <- range(c(env.mean, geno.mean))
-      limx <- limx + c(-max(abs(limx)), max(abs(limx))) * .05
+      limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.05
       if (is.null(xlab))
         xlab <- "Genotype and environment means"
       xcorg <- geno.mean
@@ -240,11 +239,13 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
     limy <- range(c(E[, 1], G[, 1]))
 
     plot(1, type = "n", xlim = limx, ylim = limy, main = title, xlab = xlab,
-         ylab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"), ...)
-    points(xcorg, G[, 1], col = color[2], pch = 17, ...)
-    text(xcorg, G[, 1], labels = rownames(int.mean), col = color[2], pos = 1, offset = 0.3)
-    points(xcore, E[, 1], col = color[1], pch = 15, ...)
-    text(xcore, E[, 1], labels = colnames(int.mean), col = color[1], pos = 1, offset = .3)
+         ylab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"))
+    points(xcorg, G[, 1], col = color[2], pch = 17, cex = size[1])
+    text(xcorg, G[, 1], labels = rownames(int.mean), col = color[2], pos = 1,
+         offset = 0.3, cex = size[2])
+    points(xcore, E[, 1], col = color[1], pch = 15, cex = size[1])
+    text(xcore, E[, 1], labels = colnames(int.mean), col = color[1], pos = 1,
+         offset = 0.3, cex = size[2])
     abline(h = 0, v = xline, col = color[3], lty = 2)
   }
 
@@ -256,17 +257,19 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
       title <- paste(method, " biplot2 for ", trait, sep = "")
 
     limx <- range(c(E[, 1], G[, 1]))
-    limx <- limx + c(-max(abs(limx)), max(abs(limx))) * .05
+    limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.05
     limy <- range(c(E[, 2], G[, 2]))
 
     plot(1, type = "n", xlim = limx, ylim = limy, main = title,
          xlab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"),
          ylab = paste("PC2 (", format(PC.cont[2], digits = 3), "%)"),
-         asp = 1, ...)
-    points(G[, 1], G[, 2], col = color[2], pch = 17, ...)
-    text(G[, 1], G[, 2], labels = rownames(int.mean), col = color[2], pos = 1, offset = .3)
-    points(E[, 1], E[, 2], col = color[1], pch = 15, ...)
-    text(E[, 1], E[, 2], labels = colnames(int.mean), col = color[1], pos = 1, offset = .3)
+         asp = 1)
+    points(G[, 1], G[, 2], col = color[2], pch = 17, cex = size[1])
+    text(G[, 1], G[, 2], labels = rownames(int.mean), col = color[2], pos = 1,
+         offset = 0.3, cex = size[2])
+    points(E[, 1], E[, 2], col = color[1], pch = 15, cex = size[1])
+    text(E[, 1], E[, 2], labels = colnames(int.mean), col = color[1], pos = 1,
+         offset = 0.3, cex = size[2])
     abline(h = 0, v = 0, col = color[3], lty = 2)
     for (i in 1:env.num) lines(c(0, E[i, 1]), c(0, E[i, 2]), col = color[1], lty = 3)
   }

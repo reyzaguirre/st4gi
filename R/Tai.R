@@ -11,7 +11,7 @@
 #' @param conf Probability for the Tai limits.
 #' @param title Main title for plot.
 #' @param color Color for symbols, labels and lines.
-#' @param ... Additional graphic parameters.
+#' @param size Relative size for symbols and labels.
 #' @author Raul Eyzaguirre
 #' @details The limits for alpha and lambda are computed using the mean squares from
 #' an ANOVA table for a RCBD with blocks nested into environments. If the data set is
@@ -30,8 +30,8 @@
 #' tai("y", "geno", "env", "rep", met8x12)
 #' @export
 
-tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
-                title = NULL, color = c("darkorange", "black", "gray"), ...) {
+tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
+                color = c("darkorange", "black", "gray"), size = c(1, 1)) {
 
   # Everything as factor
 
@@ -133,9 +133,9 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
     title <- paste("Tai stability analysis for ", trait, sep = "")
 
   plot(1, type = "n", xlim = c(-0.05 * lmax, lmax), ylim = c(-amax, amax),
-       main = title, xlab = expression(lambda), ylab = expression(alpha), ...)
-  points(lambda, alpha, col = color[1], lwd = 2, pch = 4, ...)
-  text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = .3)
+       main = title, xlab = expression(lambda), ylab = expression(alpha))
+  points(lambda, alpha, col = color[1], lwd = 2, pch = 4, cex = size[1])
+  text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = .3, cex = size[2])
   if (div2 > 0) {
     points(lx, pi.alpha, type = "l", lty = 3, col = color[3])
     points(lx, -pi.alpha, type = "l", lty = 3, col = color[3])

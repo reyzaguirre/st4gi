@@ -5,7 +5,7 @@
 \title{Tai's stability analysis}
 \usage{
 tai(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
-  color = c("darkorange", "black", "gray"), ...)
+  color = c("darkorange", "black", "gray"), size = c(1, 1))
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -26,7 +26,7 @@ tai(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
 
 \item{color}{Color for symbols, labels and lines.}
 
-\item{...}{Additional graphic parameters.}
+\item{size}{Relative size for symbols and labels.}
 }
 \value{
 It returns the Tai graph for stability analysis and the values of alpha

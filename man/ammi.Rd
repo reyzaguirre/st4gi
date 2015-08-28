@@ -6,7 +6,7 @@
 \usage{
 ammi(trait, geno, env, rep, data, method = "AMMI", f = 0.5, biplot = 2,
   biplot1 = "effects", title = NULL, xlab = NULL,
-  color = c("darkorange", "black", "gray"), ...)
+  color = c("darkorange", "black", "gray"), size = c(1, 1))
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -33,7 +33,7 @@ ammi(trait, geno, env, rep, data, method = "AMMI", f = 0.5, biplot = 2,
 
 \item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes.}
 
-\item{...}{Additional graphic parameters.}
+\item{size}{Relative size for symbols and labels.}
 }
 \value{
 It returns the genotype, environment and interaction means, the interaction
