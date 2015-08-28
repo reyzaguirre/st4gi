@@ -14,7 +14,7 @@ checkdata01(trait, geno, data)
 \item{data}{The name of the data frame.}
 }
 \value{
-c1, c2, c3, three control values.
+Three control values: c1, c2, c3. In addition the number of missing values.
 }
 \description{
 This function checks the frequencies of genotypes in a RCBD.

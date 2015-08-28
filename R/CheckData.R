@@ -4,7 +4,7 @@
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
 #' @param data The name of the data frame.
-#' @return c1, c2, c3, three control values.
+#' @return Three control values: c1, c2, c3. In addition the number of missing values.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any genotype without data, and if the design is balanced.
@@ -39,7 +39,8 @@ checkdata01 <- function(trait, geno, data) {
 #' @param geno The genotypes
 #' @param env The environments
 #' @param data The name of the data frame
-#' @return c1, c2, c3, three control values
+#' @return Three control values: c1, c2, c3. In addition the number of replications and
+#' the number of missing values.
 #' @author Raul Eyzaguirre
 #' @details This function checks if there is more than one replication in a RCBD in
 #' several environments, if there is any genotype without data for some specific environments,
@@ -52,6 +53,7 @@ checkdata02 <- function(trait, geno, env, data) {
   nmis <- sum(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, geno], subdata[, env])
+  rep.num <- max(tfreq)
   
   # Controls
   
@@ -65,5 +67,5 @@ checkdata02 <- function(trait, geno, env, data) {
     
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis)
+  list(c1 = c1, c2 = c2, c3 = c3, rep.num = rep.num, nmis = nmis)
 }
