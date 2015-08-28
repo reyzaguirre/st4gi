@@ -47,7 +47,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95,
 
   geno.num <- nlevels(data[, geno])
   env.num <- nlevels(data[, env])
-  rep.num <- nlevels(data[, rep])
+  rep.num <- lc$rep.num
 
   if (lc$c1 == 0)
     stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
