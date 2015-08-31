@@ -12,7 +12,7 @@
 #' @author Raul Eyzaguirre
 #' @details The regression stability analysis is evaluated with a balanced data set.
 #' If data is unbalanced, missing values are estimated up to an specified maximum proportion,
-#' 5\% by default. For the ANOVA table, genotypes and environments are considered as fixed
+#' 10\% by default. For the ANOVA table, genotypes and environments are considered as fixed
 #' factors while the blocks are considered as random and nested into the environments.
 #' To run a regression stability analysis you need a set of genotypes evaluated in a set of
 #' environments. At least 3 genotypes or environments are needed. In a regression stability
