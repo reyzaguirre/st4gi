@@ -83,7 +83,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   b <- NULL        # linear regression slope
   se <- NULL       # slope standard error
   ms_e <- NULL     # error mean square
-  ms_gxe <- NULL   # gxe variance
+  ms_gxe <- NULL   # variance of the interaction effects for genotype i
 
   for (i in 1:geno.num) {
     modelo <- lm(int.mean[i, ] ~ env.mean)

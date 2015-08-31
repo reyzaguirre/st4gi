@@ -59,6 +59,9 @@ Crop Sci. 6: 36-40.
 Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.
 Aust. J. Agric. Res. 14: 742-754.
 
+Shukla, G. K. (1972). Some Statistical Aspects of Partitioning Genotype-Environmental Components
+of Variability. Heredity. 29: 237-245.
+
 Yates, F., and Cochran, W. G. (1938). The Analysis of Group Experiments.
 J. Agric. Sci. 28: 556-580.
 }
