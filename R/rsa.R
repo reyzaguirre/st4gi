@@ -1,8 +1,7 @@
 #' Regression Stability Analysis
 #'
 #' Function to run the regression stability analysis (Yates and Cochran, 1938,
-#' Finlay and Wilkinson, 1963). This implementation follows the formulas of
-#' Eberhart and Russell (1966).
+#' Finlay and Wilkinson, 1963).
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
 #' @param env The environments.
@@ -18,11 +17,25 @@
 #' environments. At least 3 genotypes or environments are needed. In a regression stability
 #' analysis for genotypes grown at several environments, for each genotype a simple linear
 #' regression of individual yield (Y) on the mean yield of all genotypes for each environment
-#' (X) is fitted. In a similar way, for each environment, a simple linear regression of
+#' (X) is fitted. In a similar way, for each environment a simple linear regression of
 #' individual yield (Y) on the mean yield of all environments for each genotype (X) is fitted.
+#' In both cases the X values are centered on zero, so the intercept of the model corresponds to
+#' the means of the genotypes or environments.
 #' @return It returns the regression stability analysis decomposition of the GxE interaction
-#' for genotypes and environments, the coefficient of variation, and the regression stability
-#' measures for genotypes and environments. 
+#' for genotypes and environments (Heterogeneity among regressions and deviation from regression),
+#' the coefficient of variation, and the following regression stability measures for genotypes
+#' and environments:
+#' \itemize{
+#' \item \code{a} the intercept. 
+#' \item \code{b} the slope.
+#' \item \code{se} the standard error for the slope.
+#' \item \code{MSe} the mean square error.
+#' \item \code{MSentry} the variance of the genotype means across environments and the environment
+#' means across genotypes.
+#' \item \code{MSinter} the variance of the genotype interaction effects across environments and the
+#' environment interaction effects across genotypes.
+#' \item \code{}
+#' }
 #' @references
 #' Eberhart, S. A. and Russell, W. A. (1966). Stability Parameters for Comparing Varieties.
 #' Crop Sci. 6: 36-40.
@@ -58,6 +71,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   # Check data and estimate missing values
   
   lc <- checkdata02(trait, geno, env, data)
+  rep.num <- lc$rep.num
   
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0) {
     est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
@@ -79,51 +93,46 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   a <- NULL        # linear regression intercept
   b <- NULL        # linear regression slope
   se <- NULL       # slope standard error
-  ms_e <- NULL     # error mean square
-  ms_gxe <- NULL   # variance of the interaction effects for genotype i
+  MSe <- NULL      # error mean square
+  MSentry <- NULL  # variance of the means
+  MSinter <- NULL  # variance of the interaction effects
+  ssr <- NULL      # residual sum of squares
 
   for (i in 1:geno.num) {
-    modelo <- lm(int.mean[i, ] ~ env.mean)
+    modelo <- lm(int.mean[i, ] ~ I(env.mean - overall.mean))
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
     se[i] <- summary.lm(modelo)$coefficients[2, 2]
-    ms_e[i] <- anova(modelo)[2, 3]
-    ms_gxe[i] <- sum((int.mean[i, ] - geno.mean[i] - env.mean + overall.mean)^2) / (env.num - 1)
+    MSe[i] <- anova(modelo)[2, 3]
+    MSentry[i] <- sum((int.mean[i, ] - geno.mean[i])^2) / (env.num - 1)
+    MSinter[i] <- sum((int.mean[i, ] - geno.mean[i] - env.mean + overall.mean)^2) / (env.num - 1)
+    ssr[i] <- anova(modelo)[2, 2] * rep.num
   }
-  stability_geno <- cbind(b, se, ms_e, ms_gxe)
-  row.names(stability_geno) <- levels(data[, geno])
-  names(a) <- levels(data[, geno])
-  names(b) <- levels(data[, geno])
+  stab.geno <- cbind(a, b, se, MSe, MSentry, MSinter)
+  row.names(stab.geno) <- row.names(int.mean)
+  
   if (env.num > 2) {
-    x <- NULL
-    ypred <- NULL
-    ymean <- NULL
-    for (i in 1:length(data[, trait])) {
-      x[i] <- env.mean[names(env.mean) == data[i, env]]
-      ypred[i] <- a[names(a) == data[i, geno]] + b[names(b) == data[i, geno]] * x[i]
-      ymean[i] <- int.mean[row.names(int.mean) == data[i, geno], colnames(int.mean) == data[i, env]]
-    }
-    drg_sc <- sum((ypred - ymean)^2)
-    hrg_gl <- geno.num - 1
-    drg_gl <- (geno.num - 1) * (env.num - 1) - hrg_gl
-    drg_cm <- drg_sc / drg_gl
-    hrg_sc <- at[4, 2] - drg_sc
-    hrg_cm <- hrg_sc / hrg_gl
-    hrg_f <- hrg_cm / drg_cm
-    hrg_p <- pf(hrg_f, hrg_gl, drg_gl, lower.tail = FALSE)
-    drg_f <- drg_cm / at[5, 3]
-    drg_p <- pf(drg_f, drg_gl, at[5, 1], lower.tail = FALSE)
+    drg.sc <- sum(ssr)
+    hrg.sc <- at[4, 2] - drg.sc
+    drg.gl <- (geno.num - 1) * (env.num - 1) - hrg.gl
+    hrg.gl <- geno.num - 1
+    drg.cm <- drg.sc / drg.gl
+    hrg.cm <- hrg.sc / hrg.gl
+    drg.f <- drg.cm / at[5, 3]
+    hrg.f <- hrg.cm / drg.cm
+    drg.p <- pf(drg.f, drg.gl, at[5, 1], lower.tail = FALSE)
+    hrg.p <- pf(hrg.f, hrg.gl, drg.gl, lower.tail = FALSE)
   } else {
-    drg_sc <- NA
-    hrg_gl <- NA
-    drg_gl <- NA
-    drg_cm <- NA
-    hrg_sc <- NA
-    hrg_cm <- NA
-    hrg_f <- NA
-    hrg_p <- NA
-    drg_f <- NA
-    drg_p <- NA
+    drg.sc <- NA
+    hrg.sc <- NA
+    drg.gl <- NA
+    hrg.gl <- NA
+    drg.cm <- NA
+    hrg.cm <- NA
+    drg.f <- NA
+    hrg.f <- NA
+    drg.p <- NA
+    hrg.p <- NA
   }
 
   # Regression-stability for environments
@@ -131,67 +140,63 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   a <- NULL        # linear regression intercept
   b <- NULL        # linear regression slope
   se <- NULL       # slope standard error
-  ms_e <- NULL     # error mean square
-  ms_gxe <- NULL   # gxe variance
+  MSe <- NULL      # error mean square
+  MSentry <- NULL  # variance of the means
+  MSinter <- NULL  # variance of the interaction effects
+  ssr <- NULL      # residual sum of squares
   
   for (i in 1:env.num) {
-    modelo <- lm(int.mean[, i] ~ geno.mean)
+    modelo <- lm(int.mean[, i] ~ I(geno.mean - overall.mean))
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
     se[i] <- summary.lm(modelo)$coefficients[2, 2]
-    ms_e[i] <- anova(modelo)[2, 3]
-    ms_gxe[i] <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (geno.num - 1)
+    MSe[i] <- anova(modelo)[2, 3]
+    MSentry[i] <- sum((int.mean[, i] - env.mean[i])^2) / (geno.num - 1)
+    MSinter <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (geno.num - 1)
+    ssr[i] <- anova(modelo)[2, 2] * rep.num
   }
-  stability_env <- cbind(b, se, ms_e, ms_gxe)
-  row.names(stability_env) <- levels(data[, env])
-  names(a) <- levels(data[, env])
-  names(b) <- levels(data[, env])
+  stab.env <- cbind(a, b, se, MSe, MSentry, MSinter)
+  row.names(stab.env) <- colnames(int.mean)
+
   if (geno.num > 2) {
-    x <- NULL
-    ypred <- NULL
-    ymean <- NULL
-    for (i in 1:length(data[, trait])) {
-      x[i] <- geno.mean[names(geno.mean) == data[i, geno]]
-      ypred[i] <- a[names(a) == data[i, env]] + b[names(b) == data[i, env]] * x[i]
-      ymean[i] <- int.mean[row.names(int.mean) == data[i, geno], colnames(int.mean) == data[i, env]]
-    }
-    dre_sc <- sum((ypred - ymean)^2)
-    hre_gl <- env.num - 1
-    dre_gl <- (geno.num - 1) * (env.num - 1) - hre_gl
-    dre_cm <- dre_sc / dre_gl
-    hre_sc <- at[4, 2] - dre_sc
-    hre_cm <- hre_sc / hre_gl
-    hre_f <- hre_cm / dre_cm
-    hre_p <- pf(hre_f, hre_gl, dre_gl, lower.tail = FALSE)
-    dre_f <- dre_cm / at[5, 3]
-    dre_p <- pf(dre_f, dre_gl, at[5, 1], lower.tail = FALSE)
+    dre.sc <- sum(ssr)
+    hre.sc <- at[4, 2] - dre.sc
+    dre.gl <- (geno.num - 1) * (env.num - 1) - hre.gl
+    hre.gl <- env.num - 1
+    dre.cm <- dre.sc / dre.gl
+    hre.cm <- hre.sc / hre.gl
+    dre.f <- dre.cm / at[5, 3]
+    hre.f <- hre.cm / dre.cm
+    dre.p <- pf(dre.f, dre.gl, at[5, 1], lower.tail = FALSE)
+    hre.p <- pf(hre.f, hre.gl, dre.gl, lower.tail = FALSE)
   } else {
-    dre_sc <- NA
-    hre_gl <- NA
-    dre_gl <- NA
-    dre_cm <- NA
-    hre_sc <- NA
-    hre_cm <- NA
-    hre_f <- NA
-    hre_p <- NA
-    dre_f <- NA
-    dre_p <- NA
+    dre.sc <- NA
+    hre.sc <- NA
+    dre.gl <- NA
+    hre.gl <- NA
+    dre.cm <- NA
+    hre.cm <- NA
+    dre.f <- NA
+    hre.f <- NA
+    dre.p <- NA
+    hre.p <- NA
   }
 
   # ANOVA plus regression stability
 
+  cv <- sqrt(at[5, 3]) / abs(overall.mean) * 100
+
   fileaux <- at[5, ]
-  at[5, ] <- c(hrg_gl, hrg_sc, hrg_cm, hrg_f, hrg_p)
-  at[6, ] <- c(drg_gl, drg_sc, drg_cm, drg_f, drg_p)
-  at[7, ] <- c(hre_gl, hre_sc, hre_cm, hre_f, hre_p)
-  at[8, ] <- c(dre_gl, dre_sc, dre_cm, dre_f, dre_p)
+  at[5, ] <- c(hrg.gl, hrg.sc, hrg.cm, hrg.f, hrg.p)
+  at[6, ] <- c(drg.gl, drg.sc, drg.cm, drg.f, drg.p)
+  at[7, ] <- c(hre.gl, hre.sc, hre.cm, hre.f, hre.p)
+  at[8, ] <- c(dre.gl, dre.sc, dre.cm, dre.f, dre.p)
   at[9, ] <- fileaux
   row.names(at) <- c("G", "E", "R:E", "GxE", "- Het.Regr.G", "- Dev.Regr.G",
                      "- Het.Regr.E", "- Dev.Regr.E", "Residuals")
-  cv <- sqrt(at[5, 3]) / abs(overall.mean) * 100
 
   # Return
 
-  list(ANOVA = at, CV = cv, Stability_for_genotypes = stability_geno,
-       Stability_for_environments = stability_env)
+  list(ANOVA = at, CV = cv, Stability_for_genotypes = stab.geno,
+       Stability_for_environments = stab.env)
 }

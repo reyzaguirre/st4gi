@@ -21,13 +21,24 @@ rsa(trait, geno, env, rep, data, maxp = 0.1)
 }
 \value{
 It returns the regression stability analysis decomposition of the GxE interaction
-for genotypes and environments, the coefficient of variation, and the regression stability
-measures for genotypes and environments.
+for genotypes and environments (Heterogeneity among regressions and deviation from regression),
+the coefficient of variation, and the following regression stability measures for genotypes
+and environments:
+\itemize{
+\item \code{a} the intercept.
+\item \code{b} the slope.
+\item \code{se} the standard error for the slope.
+\item \code{MSe} the mean square error.
+\item \code{MSentry} the variance of the genotype means across environments and the environment
+means across genotypes.
+\item \code{MSinter} the variance of the genotype interaction effects across environments and the
+environment interaction effects across genotypes.
+\item \code{}
+}
 }
 \description{
 Function to run the regression stability analysis (Yates and Cochran, 1938,
-Finlay and Wilkinson, 1963). This implementation follows the formulas of
-Eberhart and Russell (1966).
+Finlay and Wilkinson, 1963).
 }
 \details{
 The regression stability analysis is evaluated with a balanced data set.
@@ -38,8 +49,10 @@ To run a regression stability analysis you need a set of genotypes evaluated in 
 environments. At least 3 genotypes or environments are needed. In a regression stability
 analysis for genotypes grown at several environments, for each genotype a simple linear
 regression of individual yield (Y) on the mean yield of all genotypes for each environment
-(X) is fitted. In a similar way, for each environment, a simple linear regression of
+(X) is fitted. In a similar way, for each environment a simple linear regression of
 individual yield (Y) on the mean yield of all environments for each genotype (X) is fitted.
+In both cases the X values are centered on zero, so the intercept of the model corresponds to
+the means of the genotypes or environments.
 }
 \examples{
 # The data
@@ -58,9 +71,6 @@ Crop Sci. 6: 36-40.
 
 Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.
 Aust. J. Agric. Res. 14: 742-754.
-
-Shukla, G. K. (1972). Some Statistical Aspects of Partitioning Genotype-Environmental Components
-of Variability. Heredity. 29: 237-245.
 
 Yates, F., and Cochran, W. G. (1938). The Analysis of Group Experiments.
 J. Agric. Sci. 28: 556-580.
