@@ -19,7 +19,7 @@
 #' regression of individual yield (Y) on the mean yield of all genotypes for each environment
 #' (X) is fitted. In a similar way, for each environment a simple linear regression of
 #' individual yield (Y) on the mean yield of all environments for each genotype (X) is fitted.
-#' In both cases the X values are centered on zero, so the intercept of the model corresponds to
+#' In both cases the X values are centered on zero, so the intercepts of the models correspond to
 #' the means of the genotypes or environments.
 #' @return It returns the regression stability analysis decomposition of the GxE interaction
 #' for genotypes and environments (Heterogeneity among regressions and deviation from regression),
@@ -34,12 +34,8 @@
 #' means across genotypes.
 #' \item \code{MSinter} the variance of the genotype interaction effects across environments and the
 #' environment interaction effects across genotypes.
-#' \item \code{}
 #' }
 #' @references
-#' Eberhart, S. A. and Russell, W. A. (1966). Stability Parameters for Comparing Varieties.
-#' Crop Sci. 6: 36-40.
-#'
 #' Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.
 #' Aust. J. Agric. Res. 14: 742-754.
 #'
@@ -114,8 +110,8 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   if (env.num > 2) {
     drg.sc <- sum(ssr)
     hrg.sc <- at[4, 2] - drg.sc
-    drg.gl <- (geno.num - 1) * (env.num - 1) - hrg.gl
     hrg.gl <- geno.num - 1
+    drg.gl <- (geno.num - 1) * (env.num - 1) - hrg.gl
     drg.cm <- drg.sc / drg.gl
     hrg.cm <- hrg.sc / hrg.gl
     drg.f <- drg.cm / at[5, 3]
@@ -152,7 +148,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
     se[i] <- summary.lm(modelo)$coefficients[2, 2]
     MSe[i] <- anova(modelo)[2, 3]
     MSentry[i] <- sum((int.mean[, i] - env.mean[i])^2) / (geno.num - 1)
-    MSinter <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (geno.num - 1)
+    MSinter[i] <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (geno.num - 1)
     ssr[i] <- anova(modelo)[2, 2] * rep.num
   }
   stab.env <- cbind(a, b, se, MSe, MSentry, MSinter)
@@ -161,8 +157,8 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   if (geno.num > 2) {
     dre.sc <- sum(ssr)
     hre.sc <- at[4, 2] - dre.sc
-    dre.gl <- (geno.num - 1) * (env.num - 1) - hre.gl
     hre.gl <- env.num - 1
+    dre.gl <- (geno.num - 1) * (env.num - 1) - hre.gl
     dre.cm <- dre.sc / dre.gl
     hre.cm <- hre.sc / hre.gl
     dre.f <- dre.cm / at[5, 3]

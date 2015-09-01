@@ -33,7 +33,6 @@ and environments:
 means across genotypes.
 \item \code{MSinter} the variance of the genotype interaction effects across environments and the
 environment interaction effects across genotypes.
-\item \code{}
 }
 }
 \description{
@@ -51,7 +50,7 @@ analysis for genotypes grown at several environments, for each genotype a simple
 regression of individual yield (Y) on the mean yield of all genotypes for each environment
 (X) is fitted. In a similar way, for each environment a simple linear regression of
 individual yield (Y) on the mean yield of all environments for each genotype (X) is fitted.
-In both cases the X values are centered on zero, so the intercept of the model corresponds to
+In both cases the X values are centered on zero, so the intercepts of the models correspond to
 the means of the genotypes or environments.
 }
 \examples{
@@ -66,9 +65,6 @@ rsa("y", "geno", "env", "rep", met8x12)
 Raul Eyzaguirre
 }
 \references{
-Eberhart, S. A. and Russell, W. A. (1966). Stability Parameters for Comparing Varieties.
-Crop Sci. 6: 36-40.
-
 Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.
 Aust. J. Agric. Res. 14: 742-754.
 
