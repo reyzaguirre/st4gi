@@ -246,7 +246,7 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
     points(xcore, E[, 1], col = color[1], pch = 15, cex = size[1])
     text(xcore, E[, 1], labels = colnames(int.mean), col = color[1], pos = 1,
          offset = 0.3, cex = size[2])
-    abline(h = 0, v = xline, col = color[3], lty = 2)
+    abline(h = 0, v = xline, col = color[3], lty = 5)
   }
 
   # Biplot 2
@@ -270,8 +270,8 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
     points(E[, 1], E[, 2], col = color[1], pch = 15, cex = size[1])
     text(E[, 1], E[, 2], labels = colnames(int.mean), col = color[1], pos = 1,
          offset = 0.3, cex = size[2])
-    abline(h = 0, v = 0, col = color[3], lty = 2)
-    for (i in 1:env.num) lines(c(0, E[i, 1]), c(0, E[i, 2]), col = color[1], lty = 3)
+    abline(h = 0, v = 0, col = color[3], lty = 5)
+    for (i in 1:env.num) lines(c(0, E[i, 1]), c(0, E[i, 2]), col = color[1], lty = 2)
   }
 
   # Output
