@@ -138,13 +138,13 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
   points(lambda, alpha, col = color[1], lwd = 2, pch = 4, cex = size[1])
   text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = 0.3, cex = size[2])
   if (div2 > 0) {
-    points(lx, pi.alpha, type = "l", lty = 3, col = color[3])
-    points(lx, -pi.alpha, type = "l", lty = 3, col = color[3])
+    points(lx, pi.alpha, type = "l", lty = 5, col = color[3])
+    points(lx, -pi.alpha, type = "l", lty = 5, col = color[3])
   }
   abline(v = qf((1 - conf) / 2, env.num - 2, env.num * geno.num * (rep.num - 1)),
-         lty = 3, col = color[3])
+         lty = 5, col = color[3])
   abline(v = qf(1 - (1 - conf) / 2, env.num - 2, env.num * geno.num * (rep.num - 1)),
-         lty = 3, col = color[3])
+         lty = 5, col = color[3])
 
   # Output
 
