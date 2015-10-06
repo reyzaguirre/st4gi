@@ -3,6 +3,7 @@
 export(ammi)
 export(ammigxe)
 export(aovmet)
+export(checkdata01)
 export(domax)
 export(domeans)
 export(dosum)

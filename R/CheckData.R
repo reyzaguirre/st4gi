@@ -8,6 +8,7 @@
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any genotype without data, and if the design is balanced.
+#' @export
 
 checkdata01 <- function(trait, geno, data) {
   
