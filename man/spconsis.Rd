@@ -62,11 +62,12 @@ The data frame must use the following labels (lower or upper case):
  \item WED2    : Weevil damage2 (1-9), second evaluation
  \item DMF     : Fresh weight of roots for dry matter assessment
  \item DMD     : Dry weight of DMF samples
+ \item DM      : Storage root dry matter content (\%)
+ \item DMRY    : Dry matter root yield
  \item DMVF    : Fresh weight vines for dry matter assessment
  \item DMVD    : Dry weight of DMVF samples
- \item DM      : Storage root dry matter content (\%)
+ \item DMV     : Vines dry matter content (\%)
  \item DMFY    : Dry matter foliage yield
- \item DMRY    : Dry matter root yield
  \item FRAW1   : Root fiber (1-9), first determination
  \item SURAW1  : Root sugar (1-9), first determination
  \item STRAW1  : Root starch (1-9), first determination

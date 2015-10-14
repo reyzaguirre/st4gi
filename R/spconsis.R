@@ -45,11 +45,12 @@
 #'  \item WED2    : Weevil damage2 (1-9), second evaluation
 #'  \item DMF     : Fresh weight of roots for dry matter assessment
 #'  \item DMD     : Dry weight of DMF samples
+#'  \item DM      : Storage root dry matter content (\%)
+#'  \item DMRY    : Dry matter root yield
 #'  \item DMVF    : Fresh weight vines for dry matter assessment
 #'  \item DMVD    : Dry weight of DMVF samples
-#'  \item DM      : Storage root dry matter content (\%)
+#'  \item DMV     : Vines dry matter content (\%)
 #'  \item DMFY    : Dry matter foliage yield
-#'  \item DMRY    : Dry matter root yield
 #'  \item FRAW1   : Root fiber (1-9), first determination
 #'  \item SURAW1  : Root sugar (1-9), first determination
 #'  \item STRAW1  : Root starch (1-9), first determination
@@ -111,8 +112,8 @@ spconsis <- function(data, plot.size, width = 240) {
   colnames.valid <- c("L", "LOC", "Y", "S", "G", "GENO", "NAME", "E", "ENV", "R", "REP", "NOPS",
                       "NOPE", "VIR1", "VIR2", "VIR3", "ALT1", "ALT2", "VV1", "VV2", "VW", "NOPH",
                       "NOPR", "NOCR", "NONC", "CRW", "NCRW", "RFCP", "RFCS", "SCOL", "FCOL", "RFCP",
-                      "RFCS", "RS", "RF", "DAMR", "RSPR", "WED1", "WED2", "DMF", "DMD", "DMVF",
-                      "DMVD", "DM", "DMFY", "DMRY", "FRAW1", "SURAW1", "STRAW1", "COOF1", "COOSU1",
+                      "RFCS", "RS", "RF", "DAMR", "RSPR", "WED1", "WED2", "DMF", "DMD", "DM", "DMRY",
+                      "DMVF", "DMVD", "DMV", "DMFY", "FRAW1", "SURAW1", "STRAW1", "COOF1", "COOSU1",
                       "COOST1", "COOT1", "COOAP1", "FRAW2", "SURAW2", "STRAW2", "COOF2", "COOSU2",
                       "COOST2", "COOT2", "COOAP2", "PROT", "FE", "ZN", "CA", "MG", "BC", "BC.CC",
                       "TC", "STAR", "FRUC", "GLUC", "SUCR", "MALT", "TRW", "CYTHA", "RYTHA", "ACRW",
@@ -759,7 +760,13 @@ spconsis09 <- function(data, plot.size) {
       print(subset(data, abs(DM - DMD / DMF * 100) > 1e-10))
     }
 
-  if (exists("DMFY", data) & exists("VW", data) & exists("DMVD", data) & exists("DMVF", data))
+  if (exists("DMV", data) & exists("DMVD", data) & exists("DMVF", data))
+    if (dim(subset(data, abs(DMV - DMVD / DMVF * 100) > 1e-10))[1] > 0) {
+      cat("\n", "- Vine dry matter content (DMV) is different from DMVD / DMVF * 100:", "\n")
+      print(subset(data, abs(DMV - DMVD / DMVF * 100) > 1e-10))
+    }
+
+    if (exists("DMFY", data) & exists("VW", data) & exists("DMVD", data) & exists("DMVF", data))
     if (dim(subset(data, abs(DMFY - VW * 10 / plot.size * DMVD / DMVF) > 1e-10))[1] > 0) {
       cat("\n", "- Dry matter foliage yield (DMFY) is different from VW * 10 / plot.size * DMVD / DMVF:", "\n")
       print(subset(data, abs(DMFY - VW * 10 / plot.size * DMVD / DMVF) > 1e-10))
@@ -1080,7 +1087,25 @@ spconsis11 <- function(data) {
       print(subset(data, DM > quantile(DM, 0.75, na.rm = TRUE) + 3 * IQR(DM, na.rm = TRUE)))
     }
 
-  if (exists("DMFY", data))
+  if (exists("DMV", data))
+    if (dim(subset(data, DMV < 0 | DMV > 100))[1] > 0) {
+      cat("\n", "- Out of range values for vine dry matter content (DMV):", "\n")
+      print(subset(data, DMV < 0 | DMV > 100))
+    }
+  
+  if (exists("DMV", data))
+    if (dim(subset(data, DMV < quantile(DMV, 0.25, na.rm = TRUE) - 3 * IQR(DMV, na.rm = TRUE)))[1] > 0) {
+      cat("\n", "- Extreme low values for vine dry matter content (DMV):", "\n")
+      print(subset(data, DMV < quantile(DMV, 0.25, na.rm = TRUE) - 3 * IQR(DMV, na.rm = TRUE)))
+    }
+  
+  if (exists("DMV", data))
+    if (dim(subset(data, DMV > quantile(DMV, 0.75, na.rm = TRUE) + 3 * IQR(DMV, na.rm = TRUE)))[1] > 0) {
+      cat("\n", "- Extreme high values for vine dry matter content (DMV):", "\n")
+      print(subset(data, DMV > quantile(DMV, 0.75, na.rm = TRUE) + 3 * IQR(DMV, na.rm = TRUE)))
+    }
+
+    if (exists("DMFY", data))
     if (dim(subset(data, DMFY < 0))[1] > 0) {
       cat("\n", "- Out of range values for dry matter foliage yield (DMFY):", "\n")
       print(subset(data, DMFY < 0))
