@@ -64,7 +64,7 @@ The data frame must use the following labels (lower or upper case):
  \item DMD     : Dry weight of DMF samples
  \item DMVF    : Fresh weight vines for dry matter assessment
  \item DMVD    : Dry weight of DMVF samples
- \item DM      : Storage root dry matter content (%)
+ \item DM      : Storage root dry matter content (\%)
  \item DMFY    : Dry matter foliage yield
  \item DMRY    : Dry matter root yield
  \item FRAW1   : Root fiber (1-9), first determination
