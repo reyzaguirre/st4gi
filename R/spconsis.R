@@ -5,6 +5,7 @@
 #' AND ANALYSIS OF SWEETPOTATO TRIALS document.
 #' @param data The name of the data frame.
 #' @param plot.size Plot size in square meters.
+#' @param f Factor for extreme values detection. See details.
 #' @param width Number of columns for the output file.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
@@ -93,6 +94,9 @@
 #'  \item FYTHA   : Foliage total yield t/ha
 #'  \item RFR     : Root foliage ratio
 #'  }
+#'  Extreme values are detected using the interquartile range.
+#'  The rule is to detect any value out of the interval 
+#'  \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
 #' @return It returns a file with name checks.txt with a list of
 #' all rows with some kind of inconsistency and all rows with outliers.
 #' @author Raul Eyzaguirre.
@@ -105,7 +109,7 @@
 #'  spconsis(pjpz09, 4.5)
 #' @export
 
-spconsis <- function(data, plot.size, width = 240) {
+spconsis <- function(data, plot.size, f = 3, width = 240) {
 
   options(width = width)
   
@@ -146,11 +150,11 @@ spconsis <- function(data, plot.size, width = 240) {
   spconsis07(data) # TRW, CRW + NCRW, NOCR + NONC, NOPR
   spconsis08(data) # Roots and dependencies
   spconsis09(data, plot.size) # Calculated variables
-  spconsis10(data) # Outliers detection and values out of range for field data
-  spconsis11(data) # Outliers detection and values out of range for DM data
-  spconsis12(data) # Outliers detection and values out of range for cooked traits
-  spconsis13(data) # Outliers detection and values out of range for lab data
-  spconsis14(data) # Outliers detection and values out of range for derived variables
+  spconsis10(data, f) # Outliers detection and values out of range for field data
+  spconsis11(data, f) # Outliers detection and values out of range for DM data
+  spconsis12(data, f) # Outliers detection and values out of range for cooked traits
+  spconsis13(data, f) # Outliers detection and values out of range for lab data
+  spconsis14(data, f) # Outliers detection and values out of range for derived variables
 
   sink()
 }
@@ -791,7 +795,7 @@ spconsis09 <- function(data, plot.size) {
 # Check consistency for sweetpotato experimental data, part 10.
 # Outliers detection based on interquartile range and values out of range for field data.
 
-spconsis10 <- function(data) {
+spconsis10 <- function(data, f) {
   
   if (exists("NOPE", data))
     if (dim(subset(data, !(NOPE %in% c(0:100, NA))))[1] > 0) {
@@ -848,15 +852,15 @@ spconsis10 <- function(data) {
     }
 
   if (exists("VW", data))
-    if (dim(subset(data, VW < quantile(VW, 0.25, na.rm = TRUE) - 3 * IQR(VW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, VW < quantile(VW, 0.25, na.rm = TRUE) - f * IQR(VW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for vine weight (VW):", "\n")
-      print(subset(data, VW < quantile(VW, 0.25, na.rm = TRUE) - 3 * IQR(VW, na.rm = TRUE)))
+      print(subset(data, VW < quantile(VW, 0.25, na.rm = TRUE) - f * IQR(VW, na.rm = TRUE)))
     }
 
   if (exists("VW", data))
-    if (dim(subset(data, VW > quantile(VW, 0.75, na.rm = TRUE) + 3 * IQR(VW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, VW > quantile(VW, 0.75, na.rm = TRUE) + f * IQR(VW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for vine weight (VW):", "\n")
-      print(subset(data, VW > quantile(VW, 0.75, na.rm = TRUE) + 3 * IQR(VW, na.rm = TRUE)))
+      print(subset(data, VW > quantile(VW, 0.75, na.rm = TRUE) + f * IQR(VW, na.rm = TRUE)))
     }
 
   if (exists("NOPH", data))
@@ -878,15 +882,15 @@ spconsis10 <- function(data) {
     }
 
   if (exists("NOCR", data))
-    if (dim(subset(data, NOCR < quantile(NOCR, 0.25, na.rm = TRUE) - 3 * IQR(NOCR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NOCR < quantile(NOCR, 0.25, na.rm = TRUE) - f * IQR(NOCR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for number of commercial roots (NOCR):", "\n")
-      print(subset(data, NOCR < quantile(NOCR, 0.25, na.rm = TRUE) - 3 * IQR(NOCR, na.rm = TRUE)))
+      print(subset(data, NOCR < quantile(NOCR, 0.25, na.rm = TRUE) - f * IQR(NOCR, na.rm = TRUE)))
     }
 
   if (exists("NOCR", data))
-    if (dim(subset(data, NOCR > quantile(NOCR, 0.75, na.rm = TRUE) + 3 * IQR(NOCR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NOCR > quantile(NOCR, 0.75, na.rm = TRUE) + f * IQR(NOCR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for number of commercial roots (NOCR):", "\n")
-      print(subset(data, NOCR > quantile(NOCR, 0.75, na.rm = TRUE) + 3 * IQR(NOCR, na.rm = TRUE)))
+      print(subset(data, NOCR > quantile(NOCR, 0.75, na.rm = TRUE) + f * IQR(NOCR, na.rm = TRUE)))
     }
 
   if (exists("NONC", data))
@@ -896,15 +900,15 @@ spconsis10 <- function(data) {
     }
 
   if (exists("NONC", data))
-    if (dim(subset(data, NONC < quantile(NONC, 0.25, na.rm = TRUE) - 3 * IQR(NONC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NONC < quantile(NONC, 0.25, na.rm = TRUE) - f * IQR(NONC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for number of non commercial roots (NONC):", "\n")
-      print(subset(data, NONC < quantile(NONC, 0.25, na.rm = TRUE) - 3 * IQR(NONC, na.rm = TRUE)))
+      print(subset(data, NONC < quantile(NONC, 0.25, na.rm = TRUE) - f * IQR(NONC, na.rm = TRUE)))
     }
 
   if (exists("NONC", data))
-    if (dim(subset(data, NONC > quantile(NONC, 0.75, na.rm = TRUE) + 3 * IQR(NONC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NONC > quantile(NONC, 0.75, na.rm = TRUE) + f * IQR(NONC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for number of non commercial roots (NONC):", "\n")
-      print(subset(data, NONC > quantile(NONC, 0.75, na.rm = TRUE) + 3 * IQR(NONC, na.rm = TRUE)))
+      print(subset(data, NONC > quantile(NONC, 0.75, na.rm = TRUE) + f * IQR(NONC, na.rm = TRUE)))
     }
 
   if (exists("CRW", data))
@@ -914,15 +918,15 @@ spconsis10 <- function(data) {
     }
 
   if (exists("CRW", data))
-    if (dim(subset(data, CRW < quantile(CRW, 0.25, na.rm = TRUE) - 3 * IQR(CRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CRW < quantile(CRW, 0.25, na.rm = TRUE) - f * IQR(CRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for commercial root weight (CRW):", "\n")
-      print(subset(data, CRW < quantile(CRW, 0.25, na.rm = TRUE) - 3 * IQR(CRW, na.rm = TRUE)))
+      print(subset(data, CRW < quantile(CRW, 0.25, na.rm = TRUE) - f * IQR(CRW, na.rm = TRUE)))
     }
 
   if (exists("CRW", data))
-    if (dim(subset(data, CRW > quantile(CRW, 0.75, na.rm = TRUE) + 3 * IQR(CRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CRW > quantile(CRW, 0.75, na.rm = TRUE) + f * IQR(CRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for commercial root weight (CRW):", "\n")
-      print(subset(data, CRW > quantile(CRW, 0.75, na.rm = TRUE) + 3 * IQR(CRW, na.rm = TRUE)))
+      print(subset(data, CRW > quantile(CRW, 0.75, na.rm = TRUE) + f * IQR(CRW, na.rm = TRUE)))
     }
 
   if (exists("NCRW", data))
@@ -932,15 +936,15 @@ spconsis10 <- function(data) {
     }
 
   if (exists("NCRW", data))
-    if (dim(subset(data, NCRW < quantile(NCRW, 0.25, na.rm = TRUE) - 3 * IQR(NCRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NCRW < quantile(NCRW, 0.25, na.rm = TRUE) - f * IQR(NCRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for non commercial root weight (NCRW):", "\n")
-      print(subset(data, NCRW < quantile(NCRW, 0.25, na.rm = TRUE) - 3 * IQR(NCRW, na.rm = TRUE)))
+      print(subset(data, NCRW < quantile(NCRW, 0.25, na.rm = TRUE) - f * IQR(NCRW, na.rm = TRUE)))
     }
 
   if (exists("NCRW", data))
-    if (dim(subset(data, NCRW > quantile(NCRW, 0.75, na.rm = TRUE) + 3 * IQR(NCRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NCRW > quantile(NCRW, 0.75, na.rm = TRUE) + f * IQR(NCRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for non commercial root weight (NCRW):", "\n")
-      print(subset(data, NCRW > quantile(NCRW, 0.75, na.rm = TRUE) + 3 * IQR(NCRW, na.rm = TRUE)))
+      print(subset(data, NCRW > quantile(NCRW, 0.75, na.rm = TRUE) + f * IQR(NCRW, na.rm = TRUE)))
     }
 
   if (exists("SCOL", data))
@@ -995,7 +999,7 @@ spconsis10 <- function(data) {
 # Check consistency for sweetpotato experimental data, part 11.
 # Outliers detection based on interquartile range and values out of range for DM data.
 
-spconsis11 <- function(data) {
+spconsis11 <- function(data, f) {
 
   if (exists("DMF", data))
     if (dim(subset(data, DMF < 0))[1] > 0) {
@@ -1004,15 +1008,15 @@ spconsis11 <- function(data) {
     }
 
   if (exists("DMF", data))
-    if (dim(subset(data, DMF < quantile(DMF, 0.25, na.rm = TRUE) - 3 * IQR(DMF, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMF < quantile(DMF, 0.25, na.rm = TRUE) - f * IQR(DMF, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for fresh weight of roots for dry matter assessment (DMF):", "\n")
-      print(subset(data, DMF < quantile(DMF, 0.25, na.rm = TRUE) - 3 * IQR(DMF, na.rm = TRUE)))
+      print(subset(data, DMF < quantile(DMF, 0.25, na.rm = TRUE) - f * IQR(DMF, na.rm = TRUE)))
     }
 
   if (exists("DMF", data))
-    if (dim(subset(data, DMF > quantile(DMF, 0.75, na.rm = TRUE) + 3 * IQR(DMF, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMF > quantile(DMF, 0.75, na.rm = TRUE) + f * IQR(DMF, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for fresh weight of roots for dry matter assessment (DMF):", "\n")
-      print(subset(data, DMF > quantile(DMF, 0.75, na.rm = TRUE) + 3 * IQR(DMF, na.rm = TRUE)))
+      print(subset(data, DMF > quantile(DMF, 0.75, na.rm = TRUE) + f * IQR(DMF, na.rm = TRUE)))
     }
 
   if (exists("DMD", data))
@@ -1022,15 +1026,15 @@ spconsis11 <- function(data) {
     }
 
   if (exists("DMD", data))
-    if (dim(subset(data, DMD < quantile(DMD, 0.25, na.rm = TRUE) - 3 * IQR(DMD, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMD < quantile(DMD, 0.25, na.rm = TRUE) - f * IQR(DMD, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for dry weight of roots for dry matter assessment (DMD):", "\n")
-      print(subset(data, DMD < quantile(DMD, 0.25, na.rm = TRUE) - 3 * IQR(DMD, na.rm = TRUE)))
+      print(subset(data, DMD < quantile(DMD, 0.25, na.rm = TRUE) - f * IQR(DMD, na.rm = TRUE)))
     }
 
   if (exists("DMD", data))
-    if (dim(subset(data, DMD > quantile(DMD, 0.75, na.rm = TRUE) + 3 * IQR(DMD, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMD > quantile(DMD, 0.75, na.rm = TRUE) + f * IQR(DMD, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for dry weight of roots for dry matter assessment (DMD):", "\n")
-      print(subset(data, DMD > quantile(DMD, 0.75, na.rm = TRUE) + 3 * IQR(DMD, na.rm = TRUE)))
+      print(subset(data, DMD > quantile(DMD, 0.75, na.rm = TRUE) + f * IQR(DMD, na.rm = TRUE)))
     }
 
   if (exists("DMVF", data))
@@ -1040,15 +1044,15 @@ spconsis11 <- function(data) {
     }
 
   if (exists("DMVF", data))
-    if (dim(subset(data, DMVF < quantile(DMVF, 0.25, na.rm = TRUE) - 3 * IQR(DMVF, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMVF < quantile(DMVF, 0.25, na.rm = TRUE) - f * IQR(DMVF, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for fresh weight of vines for dry matter assessment (DMVF):", "\n")
-      print(subset(data, DMVF < quantile(DMVF, 0.25, na.rm = TRUE) - 3 * IQR(DMVF, na.rm = TRUE)))
+      print(subset(data, DMVF < quantile(DMVF, 0.25, na.rm = TRUE) - f * IQR(DMVF, na.rm = TRUE)))
     }
 
   if (exists("DMVF", data))
-    if (dim(subset(data, DMVF > quantile(DMVF, 0.75, na.rm = TRUE) + 3 * IQR(DMVF, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMVF > quantile(DMVF, 0.75, na.rm = TRUE) + f * IQR(DMVF, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for fresh weight of vines for dry matter assessment (DMVF):", "\n")
-      print(subset(data, DMVF > quantile(DMVF, 0.75, na.rm = TRUE) + 3 * IQR(DMVF, na.rm = TRUE)))
+      print(subset(data, DMVF > quantile(DMVF, 0.75, na.rm = TRUE) + f * IQR(DMVF, na.rm = TRUE)))
     }
 
   if (exists("DMVD", data))
@@ -1058,15 +1062,15 @@ spconsis11 <- function(data) {
     }
 
   if (exists("DMVD", data))
-    if (dim(subset(data, DMVD < quantile(DMVD, 0.25, na.rm = TRUE) - 3 * IQR(DMVD, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMVD < quantile(DMVD, 0.25, na.rm = TRUE) - f * IQR(DMVD, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for dry weight of vines for dry matter assessment (DMVD):", "\n")
-      print(subset(data, DMVD < quantile(DMVD, 0.25, na.rm = TRUE) - 3 * IQR(DMVD, na.rm = TRUE)))
+      print(subset(data, DMVD < quantile(DMVD, 0.25, na.rm = TRUE) - f * IQR(DMVD, na.rm = TRUE)))
     }
 
   if (exists("DMVD", data))
-    if (dim(subset(data, DMVD > quantile(DMVD, 0.75, na.rm = TRUE) + 3 * IQR(DMVD, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMVD > quantile(DMVD, 0.75, na.rm = TRUE) + f * IQR(DMVD, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for dry weight of vines for dry matter assessment (DMVD):", "\n")
-      print(subset(data, DMVD > quantile(DMVD, 0.75, na.rm = TRUE) + 3 * IQR(DMVD, na.rm = TRUE)))
+      print(subset(data, DMVD > quantile(DMVD, 0.75, na.rm = TRUE) + f * IQR(DMVD, na.rm = TRUE)))
     }
 
   if (exists("DM", data))
@@ -1076,15 +1080,15 @@ spconsis11 <- function(data) {
     }
 
   if (exists("DM", data))
-    if (dim(subset(data, DM < quantile(DM, 0.25, na.rm = TRUE) - 3 * IQR(DM, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DM < quantile(DM, 0.25, na.rm = TRUE) - f * IQR(DM, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for storage root dry matter content (DM):", "\n")
-      print(subset(data, DM < quantile(DM, 0.25, na.rm = TRUE) - 3 * IQR(DM, na.rm = TRUE)))
+      print(subset(data, DM < quantile(DM, 0.25, na.rm = TRUE) - f * IQR(DM, na.rm = TRUE)))
     }
 
   if (exists("DM", data))
-    if (dim(subset(data, DM > quantile(DM, 0.75, na.rm = TRUE) + 3 * IQR(DM, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DM > quantile(DM, 0.75, na.rm = TRUE) + f * IQR(DM, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for storage root dry matter content (DM):", "\n")
-      print(subset(data, DM > quantile(DM, 0.75, na.rm = TRUE) + 3 * IQR(DM, na.rm = TRUE)))
+      print(subset(data, DM > quantile(DM, 0.75, na.rm = TRUE) + f * IQR(DM, na.rm = TRUE)))
     }
 
   if (exists("DMV", data))
@@ -1094,15 +1098,15 @@ spconsis11 <- function(data) {
     }
   
   if (exists("DMV", data))
-    if (dim(subset(data, DMV < quantile(DMV, 0.25, na.rm = TRUE) - 3 * IQR(DMV, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMV < quantile(DMV, 0.25, na.rm = TRUE) - f * IQR(DMV, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for vine dry matter content (DMV):", "\n")
-      print(subset(data, DMV < quantile(DMV, 0.25, na.rm = TRUE) - 3 * IQR(DMV, na.rm = TRUE)))
+      print(subset(data, DMV < quantile(DMV, 0.25, na.rm = TRUE) - f * IQR(DMV, na.rm = TRUE)))
     }
   
   if (exists("DMV", data))
-    if (dim(subset(data, DMV > quantile(DMV, 0.75, na.rm = TRUE) + 3 * IQR(DMV, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMV > quantile(DMV, 0.75, na.rm = TRUE) + f * IQR(DMV, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for vine dry matter content (DMV):", "\n")
-      print(subset(data, DMV > quantile(DMV, 0.75, na.rm = TRUE) + 3 * IQR(DMV, na.rm = TRUE)))
+      print(subset(data, DMV > quantile(DMV, 0.75, na.rm = TRUE) + f * IQR(DMV, na.rm = TRUE)))
     }
 
     if (exists("DMFY", data))
@@ -1112,15 +1116,15 @@ spconsis11 <- function(data) {
     }
 
   if (exists("DMFY", data))
-    if (dim(subset(data, DMFY < quantile(DMFY, 0.25, na.rm = TRUE) - 3 * IQR(DMFY, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMFY < quantile(DMFY, 0.25, na.rm = TRUE) - f * IQR(DMFY, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for dry matter foliage yield (DMFY):", "\n")
-      print(subset(data, DMFY < quantile(DMFY, 0.25, na.rm = TRUE) - 3 * IQR(DMFY, na.rm = TRUE)))
+      print(subset(data, DMFY < quantile(DMFY, 0.25, na.rm = TRUE) - f * IQR(DMFY, na.rm = TRUE)))
     }
 
   if (exists("DMFY", data))
-    if (dim(subset(data, DMFY > quantile(DMFY, 0.75, na.rm = TRUE) + 3 * IQR(DMFY, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMFY > quantile(DMFY, 0.75, na.rm = TRUE) + f * IQR(DMFY, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for dry matter foliage yield (DMFY):", "\n")
-      print(subset(data, DMFY > quantile(DMFY, 0.75, na.rm = TRUE) + 3 * IQR(DMFY, na.rm = TRUE)))
+      print(subset(data, DMFY > quantile(DMFY, 0.75, na.rm = TRUE) + f * IQR(DMFY, na.rm = TRUE)))
     }
 
   if (exists("DMRY", data))
@@ -1130,22 +1134,22 @@ spconsis11 <- function(data) {
     }
 
   if (exists("DMRY", data))
-    if (dim(subset(data, DMRY < quantile(DMRY, 0.25, na.rm = TRUE) - 3 * IQR(DMRY, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMRY < quantile(DMRY, 0.25, na.rm = TRUE) - f * IQR(DMRY, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for dry matter root yield (DMRY):", "\n")
-      print(subset(data, DMRY < quantile(DMRY, 0.25, na.rm = TRUE) - 3 * IQR(DMRY, na.rm = TRUE)))
+      print(subset(data, DMRY < quantile(DMRY, 0.25, na.rm = TRUE) - f * IQR(DMRY, na.rm = TRUE)))
     }
 
   if (exists("DMRY", data))
-    if (dim(subset(data, DMRY > quantile(DMRY, 0.75, na.rm = TRUE) + 3 * IQR(DMRY, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, DMRY > quantile(DMRY, 0.75, na.rm = TRUE) + f * IQR(DMRY, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for dry matter root yield (DMRY):", "\n")
-      print(subset(data, DMRY > quantile(DMRY, 0.75, na.rm = TRUE) + 3 * IQR(DMRY, na.rm = TRUE)))
+      print(subset(data, DMRY > quantile(DMRY, 0.75, na.rm = TRUE) + f * IQR(DMRY, na.rm = TRUE)))
     }
 }
 
 # Check consistency for sweetpotato experimental data, part 12.
 # Outliers detection based on interquartile range and values out of range for cooked traits.
 
-spconsis12 <- function(data) {
+spconsis12 <- function(data, f) {
 
   if (exists("FRAW1", data))
     if (dim(subset(data, !(FRAW1 %in% c(1:9, NA))))[1] > 0) {
@@ -1247,7 +1251,7 @@ spconsis12 <- function(data) {
 # Check consistency for sweetpotato experimental data, part 13.
 # Outliers detection based on interquartile range and values out of range for lab data.
 
-spconsis13 <- function(data) {
+spconsis13 <- function(data, f) {
 
   bc.cc.values <- c(0.03, 0, 0.12, 0.02, 0.15, 1.38, 1.65, 1.5, 1.74, 1.76, 0.69, 1.17, 1.32,
                     1.04, 4.41, 4.92, 6.12, 5.46, 3.96, 5.49, 3.03, 3.76, 4.61, 7.23, 7.76,
@@ -1260,15 +1264,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("PROT", data))
-    if (dim(subset(data, PROT < quantile(PROT, 0.25, na.rm = TRUE) - 3 * IQR(PROT, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, PROT < quantile(PROT, 0.25, na.rm = TRUE) - f * IQR(PROT, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for protein (PROT):", "\n")
-      print(subset(data, PROT < quantile(PROT, 0.25, na.rm = TRUE) - 3 * IQR(PROT, na.rm = TRUE)))
+      print(subset(data, PROT < quantile(PROT, 0.25, na.rm = TRUE) - f * IQR(PROT, na.rm = TRUE)))
     }
 
   if (exists("PROT", data))
-    if (dim(subset(data, PROT > quantile(PROT, 0.75, na.rm = TRUE) + 3 * IQR(PROT, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, PROT > quantile(PROT, 0.75, na.rm = TRUE) + f * IQR(PROT, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for protein (PROT):", "\n")
-      print(subset(data, PROT > quantile(PROT, 0.75, na.rm = TRUE) + 3 * IQR(PROT, na.rm = TRUE)))
+      print(subset(data, PROT > quantile(PROT, 0.75, na.rm = TRUE) + f * IQR(PROT, na.rm = TRUE)))
     }
 
   if (exists("FE", data))
@@ -1278,15 +1282,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("FE", data))
-    if (dim(subset(data, FE < quantile(FE, 0.25, na.rm = TRUE) - 3 * IQR(FE, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, FE < quantile(FE, 0.25, na.rm = TRUE) - f * IQR(FE, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for iron in dry weight (FE):", "\n")
-      print(subset(data, FE < quantile(FE, 0.25, na.rm = TRUE) - 3 * IQR(FE, na.rm = TRUE)))
+      print(subset(data, FE < quantile(FE, 0.25, na.rm = TRUE) - f * IQR(FE, na.rm = TRUE)))
     }
 
   if (exists("FE", data))
-    if (dim(subset(data, FE > quantile(FE, 0.75, na.rm = TRUE) + 3 * IQR(FE, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, FE > quantile(FE, 0.75, na.rm = TRUE) + f * IQR(FE, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for iron in dry weight (FE):", "\n")
-      print(subset(data, FE > quantile(FE, 0.75, na.rm = TRUE) + 3 * IQR(FE, na.rm = TRUE)))
+      print(subset(data, FE > quantile(FE, 0.75, na.rm = TRUE) + f * IQR(FE, na.rm = TRUE)))
     }
 
   if (exists("ZN", data))
@@ -1296,15 +1300,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("ZN", data))
-    if (dim(subset(data, ZN < quantile(ZN, 0.25, na.rm = TRUE) - 3 * IQR(ZN, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, ZN < quantile(ZN, 0.25, na.rm = TRUE) - f * IQR(ZN, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for zinc in dry weight (ZN):", "\n")
-      print(subset(data, ZN < quantile(ZN, 0.25, na.rm = TRUE) - 3 * IQR(ZN, na.rm = TRUE)))
+      print(subset(data, ZN < quantile(ZN, 0.25, na.rm = TRUE) - f * IQR(ZN, na.rm = TRUE)))
     }
 
   if (exists("ZN", data))
-    if (dim(subset(data, ZN > quantile(ZN, 0.75, na.rm = TRUE) + 3 * IQR(ZN, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, ZN > quantile(ZN, 0.75, na.rm = TRUE) + f * IQR(ZN, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for zinc in dry weight (ZN):", "\n")
-      print(subset(data, ZN > quantile(ZN, 0.75, na.rm = TRUE) + 3 * IQR(ZN, na.rm = TRUE)))
+      print(subset(data, ZN > quantile(ZN, 0.75, na.rm = TRUE) + f * IQR(ZN, na.rm = TRUE)))
     }
 
   if (exists("CA", data))
@@ -1314,15 +1318,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("CA", data))
-    if (dim(subset(data, CA < quantile(CA, 0.25, na.rm = TRUE) - 3 * IQR(CA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CA < quantile(CA, 0.25, na.rm = TRUE) - f * IQR(CA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for calcium in dry weight (CA):", "\n")
-      print(subset(data, CA < quantile(CA, 0.25, na.rm = TRUE) - 3 * IQR(CA, na.rm = TRUE)))
+      print(subset(data, CA < quantile(CA, 0.25, na.rm = TRUE) - f * IQR(CA, na.rm = TRUE)))
     }
 
   if (exists("CA", data))
-    if (dim(subset(data, CA > quantile(CA, 0.75, na.rm = TRUE) + 3 * IQR(CA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CA > quantile(CA, 0.75, na.rm = TRUE) + f * IQR(CA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for calcium in dry weight (CA):", "\n")
-      print(subset(data, CA > quantile(CA, 0.75, na.rm = TRUE) + 3 * IQR(CA, na.rm = TRUE)))
+      print(subset(data, CA > quantile(CA, 0.75, na.rm = TRUE) + f * IQR(CA, na.rm = TRUE)))
     }
 
   if (exists("MG", data))
@@ -1332,15 +1336,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("MG", data))
-    if (dim(subset(data, MG < quantile(MG, 0.25, na.rm = TRUE) - 3 * IQR(MG, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, MG < quantile(MG, 0.25, na.rm = TRUE) - f * IQR(MG, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for magnesium in dry weight (MG):", "\n")
-      print(subset(data, MG < quantile(MG, 0.25, na.rm = TRUE) - 3 * IQR(MG, na.rm = TRUE)))
+      print(subset(data, MG < quantile(MG, 0.25, na.rm = TRUE) - f * IQR(MG, na.rm = TRUE)))
     }
 
   if (exists("MG", data))
-    if (dim(subset(data, MG > quantile(MG, 0.75, na.rm = TRUE) + 3 * IQR(MG, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, MG > quantile(MG, 0.75, na.rm = TRUE) + f * IQR(MG, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for magnesium in dry weight (MG):", "\n")
-      print(subset(data, MG > quantile(MG, 0.75, na.rm = TRUE) + 3 * IQR(MG, na.rm = TRUE)))
+      print(subset(data, MG > quantile(MG, 0.75, na.rm = TRUE) + f * IQR(MG, na.rm = TRUE)))
     }
 
   if (exists("BC", data))
@@ -1350,15 +1354,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("BC", data))
-    if (dim(subset(data, BC < quantile(BC, 0.25, na.rm = TRUE) - 3 * IQR(BC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, BC < quantile(BC, 0.25, na.rm = TRUE) - f * IQR(BC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for beta-carotene in dry weight (BC):", "\n")
-      print(subset(data, BC < quantile(BC, 0.25, na.rm = TRUE) - 3 * IQR(BC, na.rm = TRUE)))
+      print(subset(data, BC < quantile(BC, 0.25, na.rm = TRUE) - f * IQR(BC, na.rm = TRUE)))
     }
 
   if (exists("BC", data))
-    if (dim(subset(data, BC > quantile(BC, 0.75, na.rm = TRUE) + 3 * IQR(BC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, BC > quantile(BC, 0.75, na.rm = TRUE) + f * IQR(BC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for beta-carotene in dry weight (BC):", "\n")
-      print(subset(data, BC > quantile(BC, 0.75, na.rm = TRUE) + 3 * IQR(BC, na.rm = TRUE)))
+      print(subset(data, BC > quantile(BC, 0.75, na.rm = TRUE) + f * IQR(BC, na.rm = TRUE)))
     }
 
   if (exists("BC.CC", data))
@@ -1374,15 +1378,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("TC", data))
-    if (dim(subset(data, TC < quantile(TC, 0.25, na.rm = TRUE) - 3 * IQR(TC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, TC < quantile(TC, 0.25, na.rm = TRUE) - f * IQR(TC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for total carotenoids in dry weight (TC):", "\n")
-      print(subset(data, TC < quantile(TC, 0.25, na.rm = TRUE) - 3 * IQR(TC, na.rm = TRUE)))
+      print(subset(data, TC < quantile(TC, 0.25, na.rm = TRUE) - f * IQR(TC, na.rm = TRUE)))
     }
 
   if (exists("TC", data))
-    if (dim(subset(data, TC > quantile(TC, 0.75, na.rm = TRUE) + 3 * IQR(TC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, TC > quantile(TC, 0.75, na.rm = TRUE) + f * IQR(TC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for total carotenoids in dry weight (TC):", "\n")
-      print(subset(data, TC > quantile(TC, 0.75, na.rm = TRUE) + 3 * IQR(TC, na.rm = TRUE)))
+      print(subset(data, TC > quantile(TC, 0.75, na.rm = TRUE) + f * IQR(TC, na.rm = TRUE)))
     }
 
   if (exists("STAR", data))
@@ -1392,15 +1396,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("STAR", data))
-    if (dim(subset(data, STAR < quantile(STAR, 0.25, na.rm = TRUE) - 3 * IQR(STAR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, STAR < quantile(STAR, 0.25, na.rm = TRUE) - f * IQR(STAR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for starch (STAR):", "\n")
-      print(subset(data, STAR < quantile(STAR, 0.25, na.rm = TRUE) - 3 * IQR(STAR, na.rm = TRUE)))
+      print(subset(data, STAR < quantile(STAR, 0.25, na.rm = TRUE) - f * IQR(STAR, na.rm = TRUE)))
     }
 
   if (exists("STAR", data))
-    if (dim(subset(data, STAR > quantile(STAR, 0.75, na.rm = TRUE) + 3 * IQR(STAR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, STAR > quantile(STAR, 0.75, na.rm = TRUE) + f * IQR(STAR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for starch (STAR):", "\n")
-      print(subset(data, STAR > quantile(STAR, 0.75, na.rm = TRUE) + 3 * IQR(STAR, na.rm = TRUE)))
+      print(subset(data, STAR > quantile(STAR, 0.75, na.rm = TRUE) + f * IQR(STAR, na.rm = TRUE)))
     }
 
   if (exists("FRUC", data))
@@ -1410,15 +1414,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("FRUC", data))
-    if (dim(subset(data, FRUC < quantile(FRUC, 0.25, na.rm = TRUE) - 3 * IQR(FRUC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, FRUC < quantile(FRUC, 0.25, na.rm = TRUE) - f * IQR(FRUC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for fructose (FRUC):", "\n")
-      print(subset(data, FRUC < quantile(FRUC, 0.25, na.rm = TRUE) - 3 * IQR(FRUC, na.rm = TRUE)))
+      print(subset(data, FRUC < quantile(FRUC, 0.25, na.rm = TRUE) - f * IQR(FRUC, na.rm = TRUE)))
     }
 
   if (exists("FRUC", data))
-    if (dim(subset(data, FRUC > quantile(FRUC, 0.75, na.rm = TRUE) + 3 * IQR(FRUC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, FRUC > quantile(FRUC, 0.75, na.rm = TRUE) + f * IQR(FRUC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for fructose (FRUC):", "\n")
-      print(subset(data, FRUC > quantile(FRUC, 0.75, na.rm = TRUE) + 3 * IQR(FRUC, na.rm = TRUE)))
+      print(subset(data, FRUC > quantile(FRUC, 0.75, na.rm = TRUE) + f * IQR(FRUC, na.rm = TRUE)))
     }
 
   if (exists("GLUC", data))
@@ -1428,15 +1432,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("GLUC", data))
-    if (dim(subset(data, GLUC < quantile(GLUC, 0.25, na.rm = TRUE) - 3 * IQR(GLUC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, GLUC < quantile(GLUC, 0.25, na.rm = TRUE) - f * IQR(GLUC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for glucose (GLUC):", "\n")
-      print(subset(data, GLUC < quantile(GLUC, 0.25, na.rm = TRUE) - 3 * IQR(GLUC, na.rm = TRUE)))
+      print(subset(data, GLUC < quantile(GLUC, 0.25, na.rm = TRUE) - f * IQR(GLUC, na.rm = TRUE)))
     }
 
   if (exists("GLUC", data))
-    if (dim(subset(data, GLUC > quantile(GLUC, 0.75, na.rm = TRUE) + 3 * IQR(GLUC, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, GLUC > quantile(GLUC, 0.75, na.rm = TRUE) + f * IQR(GLUC, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for glucose (GLUC):", "\n")
-      print(subset(data, GLUC > quantile(GLUC, 0.75, na.rm = TRUE) + 3 * IQR(GLUC, na.rm = TRUE)))
+      print(subset(data, GLUC > quantile(GLUC, 0.75, na.rm = TRUE) + f * IQR(GLUC, na.rm = TRUE)))
     }
 
   if (exists("SUCR", data))
@@ -1446,15 +1450,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("SUCR", data))
-    if (dim(subset(data, SUCR < quantile(SUCR, 0.25, na.rm = TRUE) - 3 * IQR(SUCR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, SUCR < quantile(SUCR, 0.25, na.rm = TRUE) - f * IQR(SUCR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for sucrose (SUCR):", "\n")
-      print(subset(data, SUCR < quantile(SUCR, 0.25, na.rm = TRUE) - 3 * IQR(SUCR, na.rm = TRUE)))
+      print(subset(data, SUCR < quantile(SUCR, 0.25, na.rm = TRUE) - f * IQR(SUCR, na.rm = TRUE)))
     }
 
   if (exists("SUCR", data))
-    if (dim(subset(data, SUCR > quantile(SUCR, 0.75, na.rm = TRUE) + 3 * IQR(SUCR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, SUCR > quantile(SUCR, 0.75, na.rm = TRUE) + f * IQR(SUCR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for sucrose (SUCR):", "\n")
-      print(subset(data, SUCR > quantile(SUCR, 0.75, na.rm = TRUE) + 3 * IQR(SUCR, na.rm = TRUE)))
+      print(subset(data, SUCR > quantile(SUCR, 0.75, na.rm = TRUE) + f * IQR(SUCR, na.rm = TRUE)))
     }
 
   if (exists("MALT", data))
@@ -1464,15 +1468,15 @@ spconsis13 <- function(data) {
     }
 
   if (exists("MALT", data))
-    if (dim(subset(data, MALT < quantile(MALT, 0.25, na.rm = TRUE) - 3 * IQR(MALT, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, MALT < quantile(MALT, 0.25, na.rm = TRUE) - f * IQR(MALT, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for maltose (MALT):", "\n")
-      print(subset(data, MALT < quantile(MALT, 0.25, na.rm = TRUE) - 3 * IQR(MALT, na.rm = TRUE)))
+      print(subset(data, MALT < quantile(MALT, 0.25, na.rm = TRUE) - f * IQR(MALT, na.rm = TRUE)))
     }
 
   if (exists("MALT", data))
-    if (dim(subset(data, MALT > quantile(MALT, 0.75, na.rm = TRUE) + 3 * IQR(MALT, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, MALT > quantile(MALT, 0.75, na.rm = TRUE) + f * IQR(MALT, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for maltose (MALT):", "\n")
-      print(subset(data, MALT > quantile(MALT, 0.75, na.rm = TRUE) + 3 * IQR(MALT, na.rm = TRUE)))
+      print(subset(data, MALT > quantile(MALT, 0.75, na.rm = TRUE) + f * IQR(MALT, na.rm = TRUE)))
     }
 }
 
@@ -1480,7 +1484,7 @@ spconsis13 <- function(data) {
 # Outliers detection based on interquartile range and values out of range for
 # derived variables.
 
-spconsis14 <- function(data) {
+spconsis14 <- function(data, f) {
 
   if (exists("TRW", data))
     if (dim(subset(data, TRW < 0))[1] > 0) {
@@ -1489,15 +1493,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("TRW", data))
-    if (dim(subset(data, TRW < quantile(TRW, 0.25, na.rm = TRUE) - 3 * IQR(TRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, TRW < quantile(TRW, 0.25, na.rm = TRUE) - f * IQR(TRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for total root weight (TRW):", "\n")
-      print(subset(data, TRW < quantile(TRW, 0.25, na.rm = TRUE) - 3 * IQR(TRW, na.rm = TRUE)))
+      print(subset(data, TRW < quantile(TRW, 0.25, na.rm = TRUE) - f * IQR(TRW, na.rm = TRUE)))
     }
 
   if (exists("TRW", data))
-    if (dim(subset(data, TRW > quantile(TRW, 0.75, na.rm = TRUE) + 3 * IQR(TRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, TRW > quantile(TRW, 0.75, na.rm = TRUE) + f * IQR(TRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for total root weight (TRW):", "\n")
-      print(subset(data, TRW > quantile(TRW, 0.75, na.rm = TRUE) + 3 * IQR(TRW, na.rm = TRUE)))
+      print(subset(data, TRW > quantile(TRW, 0.75, na.rm = TRUE) + f * IQR(TRW, na.rm = TRUE)))
     }
 
   if (exists("CYTHA", data))
@@ -1507,15 +1511,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("CYTHA", data))
-    if (dim(subset(data, CYTHA < quantile(CYTHA, 0.25, na.rm = TRUE) - 3 * IQR(CYTHA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CYTHA < quantile(CYTHA, 0.25, na.rm = TRUE) - f * IQR(CYTHA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for commercial root yield in tons per hectare (CYTHA):", "\n")
-      print(subset(data, CYTHA < quantile(CYTHA, 0.25, na.rm = TRUE) - 3 * IQR(CYTHA, na.rm = TRUE)))
+      print(subset(data, CYTHA < quantile(CYTHA, 0.25, na.rm = TRUE) - f * IQR(CYTHA, na.rm = TRUE)))
     }
 
   if (exists("CYTHA", data))
-    if (dim(subset(data, CYTHA > quantile(CYTHA, 0.75, na.rm = TRUE) + 3 * IQR(CYTHA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CYTHA > quantile(CYTHA, 0.75, na.rm = TRUE) + f * IQR(CYTHA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for commercial root yield in tons per hectare (CYTHA):", "\n")
-      print(subset(data, CYTHA > quantile(CYTHA, 0.75, na.rm = TRUE) + 3 * IQR(CYTHA, na.rm = TRUE)))
+      print(subset(data, CYTHA > quantile(CYTHA, 0.75, na.rm = TRUE) + f * IQR(CYTHA, na.rm = TRUE)))
     }
 
   if (exists("RYTHA", data))
@@ -1525,15 +1529,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("RYTHA", data))
-    if (dim(subset(data, RYTHA < quantile(RYTHA, 0.25, na.rm = TRUE) - 3 * IQR(RYTHA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, RYTHA < quantile(RYTHA, 0.25, na.rm = TRUE) - f * IQR(RYTHA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for total root yield in tons per hectare (RYTHA):", "\n")
-      print(subset(data, RYTHA < quantile(RYTHA, 0.25, na.rm = TRUE) - 3 * IQR(RYTHA, na.rm = TRUE)))
+      print(subset(data, RYTHA < quantile(RYTHA, 0.25, na.rm = TRUE) - f * IQR(RYTHA, na.rm = TRUE)))
     }
 
   if (exists("RYTHA", data))
-    if (dim(subset(data, RYTHA > quantile(RYTHA, 0.75, na.rm = TRUE) + 3 * IQR(RYTHA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, RYTHA > quantile(RYTHA, 0.75, na.rm = TRUE) + f * IQR(RYTHA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for total root yield in tons per hectare (RYTHA):", "\n")
-      print(subset(data, RYTHA > quantile(RYTHA, 0.75, na.rm = TRUE) + 3 * IQR(RYTHA, na.rm = TRUE)))
+      print(subset(data, RYTHA > quantile(RYTHA, 0.75, na.rm = TRUE) + f * IQR(RYTHA, na.rm = TRUE)))
     }
 
   if (exists("ACRW", data))
@@ -1543,15 +1547,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("ACRW", data))
-    if (dim(subset(data, ACRW < quantile(ACRW, 0.25, na.rm = TRUE) - 3 * IQR(ACRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, ACRW < quantile(ACRW, 0.25, na.rm = TRUE) - f * IQR(ACRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for average commercial root weight (ACRW):", "\n")
-      print(subset(data, ACRW < quantile(ACRW, 0.25, na.rm = TRUE) - 3 * IQR(ACRW, na.rm = TRUE)))
+      print(subset(data, ACRW < quantile(ACRW, 0.25, na.rm = TRUE) - f * IQR(ACRW, na.rm = TRUE)))
     }
 
   if (exists("ACRW", data))
-    if (dim(subset(data, ACRW > quantile(ACRW, 0.75, na.rm = TRUE) + 3 * IQR(ACRW, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, ACRW > quantile(ACRW, 0.75, na.rm = TRUE) + f * IQR(ACRW, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for average commercial root weight (ACRW):", "\n")
-      print(subset(data, ACRW > quantile(ACRW, 0.75, na.rm = TRUE) + 3 * IQR(ACRW, na.rm = TRUE)))
+      print(subset(data, ACRW > quantile(ACRW, 0.75, na.rm = TRUE) + f * IQR(ACRW, na.rm = TRUE)))
     }
 
   if (exists("NRPP", data))
@@ -1561,15 +1565,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("NRPP", data))
-    if (dim(subset(data, NRPP < quantile(NRPP, 0.25, na.rm = TRUE) - 3 * IQR(NRPP, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NRPP < quantile(NRPP, 0.25, na.rm = TRUE) - f * IQR(NRPP, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for number of roots per plant (NRPP):", "\n")
-      print(subset(data, NRPP < quantile(NRPP, 0.25, na.rm = TRUE) - 3 * IQR(NRPP, na.rm = TRUE)))
+      print(subset(data, NRPP < quantile(NRPP, 0.25, na.rm = TRUE) - f * IQR(NRPP, na.rm = TRUE)))
     }
 
   if (exists("NRPP", data))
-    if (dim(subset(data, NRPP > quantile(NRPP, 0.75, na.rm = TRUE) + 3 * IQR(NRPP, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, NRPP > quantile(NRPP, 0.75, na.rm = TRUE) + f * IQR(NRPP, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for number of roots per plant (NRPP):", "\n")
-      print(subset(data, NRPP > quantile(NRPP, 0.75, na.rm = TRUE) + 3 * IQR(NRPP, na.rm = TRUE)))
+      print(subset(data, NRPP > quantile(NRPP, 0.75, na.rm = TRUE) + f * IQR(NRPP, na.rm = TRUE)))
     }
 
   if (exists("YPP", data))
@@ -1579,15 +1583,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("YPP", data))
-    if (dim(subset(data, YPP < quantile(YPP, 0.25, na.rm = TRUE) - 3 * IQR(YPP, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, YPP < quantile(YPP, 0.25, na.rm = TRUE) - f * IQR(YPP, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for yield per plant (YPP):", "\n")
-      print(subset(data, YPP < quantile(YPP, 0.25, na.rm = TRUE) - 3 * IQR(YPP, na.rm = TRUE)))
+      print(subset(data, YPP < quantile(YPP, 0.25, na.rm = TRUE) - f * IQR(YPP, na.rm = TRUE)))
     }
 
   if (exists("YPP", data))
-    if (dim(subset(data, YPP > quantile(YPP, 0.75, na.rm = TRUE) + 3 * IQR(YPP, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, YPP > quantile(YPP, 0.75, na.rm = TRUE) + f * IQR(YPP, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for yield per plant (YPP):", "\n")
-      print(subset(data, YPP > quantile(YPP, 0.75, na.rm = TRUE) + 3 * IQR(YPP, na.rm = TRUE)))
+      print(subset(data, YPP > quantile(YPP, 0.75, na.rm = TRUE) + f * IQR(YPP, na.rm = TRUE)))
     }
 
   if (exists("CI", data))
@@ -1597,15 +1601,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("CI", data))
-    if (dim(subset(data, CI < quantile(CI, 0.25, na.rm = TRUE) - 3 * IQR(CI, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CI < quantile(CI, 0.25, na.rm = TRUE) - f * IQR(CI, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for commercial index (CI):", "\n")
-      print(subset(data, CI < quantile(CI, 0.25, na.rm = TRUE) - 3 * IQR(CI, na.rm = TRUE)))
+      print(subset(data, CI < quantile(CI, 0.25, na.rm = TRUE) - f * IQR(CI, na.rm = TRUE)))
     }
 
   if (exists("CI", data))
-    if (dim(subset(data, CI > quantile(CI, 0.75, na.rm = TRUE) + 3 * IQR(CI, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, CI > quantile(CI, 0.75, na.rm = TRUE) + f * IQR(CI, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for commercial index (CI):", "\n")
-      print(subset(data, CI > quantile(CI, 0.75, na.rm = TRUE) + 3 * IQR(CI, na.rm = TRUE)))
+      print(subset(data, CI > quantile(CI, 0.75, na.rm = TRUE) + f * IQR(CI, na.rm = TRUE)))
     }
 
   if (exists("HI", data))
@@ -1615,15 +1619,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("HI", data))
-    if (dim(subset(data, HI < quantile(HI, 0.25, na.rm = TRUE) - 3 * IQR(HI, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, HI < quantile(HI, 0.25, na.rm = TRUE) - f * IQR(HI, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for harvest index (HI):", "\n")
-      print(subset(data, HI < quantile(HI, 0.25, na.rm = TRUE) - 3 * IQR(HI, na.rm = TRUE)))
+      print(subset(data, HI < quantile(HI, 0.25, na.rm = TRUE) - f * IQR(HI, na.rm = TRUE)))
     }
 
   if (exists("HI", data))
-    if (dim(subset(data, HI > quantile(HI, 0.75, na.rm = TRUE) + 3 * IQR(HI, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, HI > quantile(HI, 0.75, na.rm = TRUE) + f * IQR(HI, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for harvest index (HI):", "\n")
-      print(subset(data, HI > quantile(HI, 0.75, na.rm = TRUE) + 3 * IQR(HI, na.rm = TRUE)))
+      print(subset(data, HI > quantile(HI, 0.75, na.rm = TRUE) + f * IQR(HI, na.rm = TRUE)))
     }
 
   if (exists("SHI", data))
@@ -1633,15 +1637,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("SHI", data))
-    if (dim(subset(data, SHI < quantile(SHI, 0.25, na.rm = TRUE) - 3 * IQR(SHI, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, SHI < quantile(SHI, 0.25, na.rm = TRUE) - f * IQR(SHI, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for harvest sowing index (SHI):", "\n")
-      print(subset(data, SHI < quantile(SHI, 0.25, na.rm = TRUE) - 3 * IQR(SHI, na.rm = TRUE)))
+      print(subset(data, SHI < quantile(SHI, 0.25, na.rm = TRUE) - f * IQR(SHI, na.rm = TRUE)))
     }
 
   if (exists("SHI", data))
-    if (dim(subset(data, SHI > quantile(SHI, 0.75, na.rm = TRUE) + 3 * IQR(SHI, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, SHI > quantile(SHI, 0.75, na.rm = TRUE) + f * IQR(SHI, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for harvest sowing index (SHI):", "\n")
-      print(subset(data, SHI > quantile(SHI, 0.75, na.rm = TRUE) + 3 * IQR(SHI, na.rm = TRUE)))
+      print(subset(data, SHI > quantile(SHI, 0.75, na.rm = TRUE) + f * IQR(SHI, na.rm = TRUE)))
     }
 
   if (exists("BIOM", data))
@@ -1651,15 +1655,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("BIOM", data))
-    if (dim(subset(data, BIOM < quantile(BIOM, 0.25, na.rm = TRUE) - 3 * IQR(BIOM, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, BIOM < quantile(BIOM, 0.25, na.rm = TRUE) - f * IQR(BIOM, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for biomass yield (BIOM):", "\n")
-      print(subset(data, BIOM < quantile(BIOM, 0.25, na.rm = TRUE) - 3 * IQR(BIOM, na.rm = TRUE)))
+      print(subset(data, BIOM < quantile(BIOM, 0.25, na.rm = TRUE) - f * IQR(BIOM, na.rm = TRUE)))
     }
 
   if (exists("BIOM", data))
-    if (dim(subset(data, BIOM > quantile(BIOM, 0.75, na.rm = TRUE) + 3 * IQR(BIOM, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, BIOM > quantile(BIOM, 0.75, na.rm = TRUE) + f * IQR(BIOM, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for biomass yield (BIOM):", "\n")
-      print(subset(data, BIOM > quantile(BIOM, 0.75, na.rm = TRUE) + 3 * IQR(BIOM, na.rm = TRUE)))
+      print(subset(data, BIOM > quantile(BIOM, 0.75, na.rm = TRUE) + f * IQR(BIOM, na.rm = TRUE)))
     }
 
   if (exists("FYTHA", data))
@@ -1669,15 +1673,15 @@ spconsis14 <- function(data) {
     }
 
   if (exists("FYTHA", data))
-    if (dim(subset(data, FYTHA < quantile(FYTHA, 0.25, na.rm = TRUE) - 3 * IQR(FYTHA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, FYTHA < quantile(FYTHA, 0.25, na.rm = TRUE) - f * IQR(FYTHA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for foliage total yield in tons per hectare (FYTHA):", "\n")
-      print(subset(data, FYTHA < quantile(FYTHA, 0.25, na.rm = TRUE) - 3 * IQR(FYTHA, na.rm = TRUE)))
+      print(subset(data, FYTHA < quantile(FYTHA, 0.25, na.rm = TRUE) - f * IQR(FYTHA, na.rm = TRUE)))
     }
 
   if (exists("FYTHA", data))
-    if (dim(subset(data, FYTHA > quantile(FYTHA, 0.75, na.rm = TRUE) + 3 * IQR(FYTHA, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, FYTHA > quantile(FYTHA, 0.75, na.rm = TRUE) + f * IQR(FYTHA, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for foliage total yield in tons per hectare (FYTHA):", "\n")
-      print(subset(data, FYTHA > quantile(FYTHA, 0.75, na.rm = TRUE) + 3 * IQR(FYTHA, na.rm = TRUE)))
+      print(subset(data, FYTHA > quantile(FYTHA, 0.75, na.rm = TRUE) + f * IQR(FYTHA, na.rm = TRUE)))
     }
 
   if (exists("RFR", data))
@@ -1687,14 +1691,14 @@ spconsis14 <- function(data) {
     }
 
   if (exists("RFR", data))
-    if (dim(subset(data, RFR < quantile(RFR, 0.25, na.rm = TRUE) - 3 * IQR(RFR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, RFR < quantile(RFR, 0.25, na.rm = TRUE) - f * IQR(RFR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme low values for root foliage ratio (RFR):", "\n")
-      print(subset(data, RFR < quantile(RFR, 0.25, na.rm = TRUE) - 3 * IQR(RFR, na.rm = TRUE)))
+      print(subset(data, RFR < quantile(RFR, 0.25, na.rm = TRUE) - f * IQR(RFR, na.rm = TRUE)))
     }
 
   if (exists("RFR", data))
-    if (dim(subset(data, RFR > quantile(RFR, 0.75, na.rm = TRUE) + 3 * IQR(RFR, na.rm = TRUE)))[1] > 0) {
+    if (dim(subset(data, RFR > quantile(RFR, 0.75, na.rm = TRUE) + f * IQR(RFR, na.rm = TRUE)))[1] > 0) {
       cat("\n", "- Extreme high values for root foliage ratio (RFR):", "\n")
-      print(subset(data, RFR > quantile(RFR, 0.75, na.rm = TRUE) + 3 * IQR(RFR, na.rm = TRUE)))
+      print(subset(data, RFR > quantile(RFR, 0.75, na.rm = TRUE) + f * IQR(RFR, na.rm = TRUE)))
     }
 }

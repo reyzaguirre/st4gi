@@ -4,12 +4,14 @@
 \alias{spconsis}
 \title{Check consistency for sweetpotato experimental data}
 \usage{
-spconsis(data, plot.size, width = 240)
+spconsis(data, plot.size, f = 3, width = 240)
 }
 \arguments{
 \item{data}{The name of the data frame.}
 
 \item{plot.size}{Plot size in square meters.}
+
+\item{f}{Factor for extreme values detection. See details.}
 
 \item{width}{Number of columns for the output file.}
 }
@@ -110,6 +112,9 @@ The data frame must use the following labels (lower or upper case):
  \item FYTHA   : Foliage total yield t/ha
  \item RFR     : Root foliage ratio
  }
+ Extreme values are detected using the interquartile range.
+ The rule is to detect any value out of the interval
+ \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
 }
 \examples{
 # The data
