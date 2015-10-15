@@ -11,7 +11,8 @@
 #' @param model Type of model to fit means if \code{means = "fitted"}, \code{"gxe"} for
 #' a model with gxe interaction or \code{"g+e"} for a model without interaction.
 #' The default is \code{"gxe"}. See details for more information.
-#' @param lb Lower bound. \code{1} for k = min(x) and \code{2} for k = (n * min(x) - max(x)) / (n - 1)
+#' @param lb Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for 
+#' \eqn{k = (n \times min(x) - max(x)) / (n - 1)}
 #' @author Raul Eyzaguirre
 #' @details The Elston index is a weight free index.
 #' 

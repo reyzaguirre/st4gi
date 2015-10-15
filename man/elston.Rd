@@ -25,7 +25,8 @@ or \code{"fitted"}. The default is \code{"single"}. See details for more informa
 a model with gxe interaction or \code{"g+e"} for a model without interaction.
 The default is \code{"gxe"}. See details for more information.}
 
-\item{lb}{Lower bound. \code{1} for k = min(x) and \code{2} for k = (n * min(x) - max(x)) / (n - 1)}
+\item{lb}{Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for
+\eqn{k = (n \times min(x) - max(x)) / (n - 1)}}
 }
 \value{
 It returns a data frame with the genotypic means for each trait, the Elston index,
