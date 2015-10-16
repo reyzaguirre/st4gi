@@ -22,7 +22,7 @@
 #' must be specified.
 #' If \code{means = "single"} and \code{env} and \code{rep} are specified, then
 #' single arithmetic means are computed over the replications for each genotype
-#' at each location and then for each genotype over locations. In any other case
+#' at each environment and then for each genotype over environments. In any other case
 #' single arithmetic means are computed over all the observations for each genotype.
 #' @return It returns a data frame with the genotypic means for each trait, the Elston index,
 #' and the rank for each genotype according to the index.
@@ -50,6 +50,7 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   # compute means
   
   outind <- data.frame(geno = levels(factor(data[, geno])))
+  colnames(outind) <- geno
   
   if (means == "single" & (is.null(env) | is.null(rep))) {
     m <- matrix(NA, ng, nt)
