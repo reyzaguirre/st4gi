@@ -152,6 +152,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   # index calculation
   
   outind <- data.frame(geno = levels(factor(data[, geno])))
+  colnames(outind) <- geno
   
   if (means == "single") {
     temp <- domeans(traits, c(geno, env), data = data)
