@@ -59,7 +59,7 @@ error variance. Response to selection is only computed when \code{model = "gxe"}
 
 If \code{means = "fitted"} then the model specified in \code{model} is used to fit
 the means of the genotypes. Otherwise single arithmetic means are computed over the
-replications for each genotype at each location and then for each genotype over locations.
+replications for each genotype at each environment and then for each genotype over environments.
 
 If \code{dgg} is not specified, the standard deviations of the traits are used.
 It means that the desired genetic gains are equal to one standard deviation for
