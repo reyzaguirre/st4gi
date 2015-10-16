@@ -65,7 +65,7 @@ dosum <- function(traits, factors, addcol = NULL, data) {
   
   dataout <- dataout[, !(names(dataout) %in% c("temp", "x"))]
   
-  # return data.frame with maxima
+  # return data.frame with sum
     
   return(dataout)
 }
