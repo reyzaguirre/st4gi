@@ -10,7 +10,7 @@
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @author Raul Eyzaguirre
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
-#' proportion, 5\% by default. Genotypes and environments are considered as fixed
+#' proportion, 10\% by default. Genotypes and environments are considered as fixed
 #' factors while the blocks are considered as random and nested into the environments.
 #' @return It returns the ANOVA table.
 #' @examples
