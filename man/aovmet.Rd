@@ -2,7 +2,7 @@
 % Please edit documentation in R/aovmet.R
 \name{aovmet}
 \alias{aovmet}
-\title{ANOVA for MET}
+\title{ANOVA for MET with a RCBD}
 \usage{
 aovmet(trait, geno, env, rep, data, maxp = 0.1)
 }

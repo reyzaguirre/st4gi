@@ -1,4 +1,4 @@
-#' ANOVA for MET
+#' ANOVA for MET with a RCBD
 #'
 #' Fit an analysis of variance model for a multi environment trial (MET) with a RCBD
 #' in each environment.
