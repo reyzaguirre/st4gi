@@ -1,6 +1,7 @@
 #' ANOVA for MET
 #'
-#' Fit an analysis of variance model for a multi environment trial (MET).
+#' Fit an analysis of variance model for a multi environment trial (MET) with a RCBD
+#' in each environment.
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
 #' @param env The environments.
