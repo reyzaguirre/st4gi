@@ -23,7 +23,8 @@ aovmet(trait, geno, env, rep, data, maxp = 0.1)
 It returns the ANOVA table.
 }
 \description{
-Fit an analysis of variance model for a multi environment trial (MET).
+Fit an analysis of variance model for a multi environment trial (MET) with a RCBD
+in each environment.
 }
 \details{
 If data is unbalanced, missing values are estimated up to an specified maximum
