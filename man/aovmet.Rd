@@ -4,7 +4,7 @@
 \alias{aovmet}
 \title{ANOVA for MET with a RCBD}
 \usage{
-aovmet(trait, geno, env, rep, data, maxp = 0.1)
+aovmet(trait, geno, env, rep, data, maxp = 0.1, anova = TRUE)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -18,6 +18,8 @@ aovmet(trait, geno, env, rep, data, maxp = 0.1)
 \item{data}{The name of the data frame containing the data.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
+
+\item{anova}{Logical, if TRUE the ANOVA table is shown.}
 }
 \value{
 It returns the ANOVA table.

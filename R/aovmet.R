@@ -8,6 +8,7 @@
 #' @param rep The replications or blocks.
 #' @param data The name of the data frame containing the data.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
+#' @param anova Logical, if TRUE the ANOVA table is shown.
 #' @author Raul Eyzaguirre
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default. Genotypes and environments are considered as fixed
@@ -22,7 +23,7 @@
 #' aovmet("y", "geno", "env", "rep", met8x12)
 #' @export
 
-aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {
+aovmet <- function(trait, geno, env, rep, data, maxp = 0.1, anova = TRUE) {
 
   # Everything as factor
 
@@ -78,5 +79,7 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
   # Return
 
-  at
+  output <- list (at = at, lc = lc, est.data = est.data)
+  
+  if(anova == TRUE) output$at else invisible(output)
 }
