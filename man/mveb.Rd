@@ -4,14 +4,14 @@
 \alias{mveb}
 \title{Estimation of missing values for a RCBD}
 \usage{
-mveb(trait, geno, rep, data, maxp = 0.1, tol = 1e-06)
+mveb(trait, treat, block, data, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
 \item{trait}{The trait to estimate missing values.}
 
-\item{geno}{The genotypes.}
+\item{treat}{The treatments.}
 
-\item{rep}{The replications or blocks. A RCBD is assumed.}
+\item{block}{The blocks.}
 
 \item{data}{The name of the data frame.}
 
