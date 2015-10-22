@@ -46,6 +46,7 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.1, anova = TRUE) {
                   "% missing values estimated.", sep = ""))
   } else {
     nmis <- 0
+    est.data <- NULL
   }
 
   # Error messages

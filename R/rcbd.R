@@ -46,6 +46,7 @@ rcbd <- function(trait, treat, block, data, maxp = 0.1, anova = TRUE) {
                   "% missing values estimated.", sep = ""))
   } else {
     nmis <- 0
+    est.data <- NULL
   }
 
   # ANOVA
