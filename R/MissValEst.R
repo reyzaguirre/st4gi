@@ -3,8 +3,8 @@
 #' Function to estimate missing values for a Randomized Complete Block Design (RCBD) by
 #' the least squares method.
 #' @param trait The trait to estimate missing values.
-#' @param geno The genotypes.
-#' @param rep The replications or blocks. A RCBD is assumed.
+#' @param treat The treatments.
+#' @param block The blocks.
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
@@ -33,21 +33,21 @@
 #' mveb("y", "geno", "rep", temp)
 #' @export
 
-mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
+mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
 
   # Everything as factor
 
-  data[, geno] <- factor(data[, geno])
-  data[, rep] <- factor(data[, rep])
+  data[, treat] <- factor(data[, treat])
+  data[, block] <- factor(data[, block])
 
   # Check data
 
-  lc <- checkdata01(trait, geno, data)
+  lc <- checkdata01(trait, treat, data)
 
   # Error messages
 
   if (lc$c1 == 0)
-    stop("Some genotypes have zero frequency. Remove genotypes to proceed.")
+    stop("Some treatments have zero frequency. Remove treatments to proceed.")
 
   if (lc$c1 == 1 & lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
@@ -62,15 +62,15 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Estimation
 
-  G <- nlevels(data[, geno])
-  R <- nlevels(data[, rep])
+  G <- nlevels(data[, treat])
+  R <- nlevels(data[, block])
 
   trait.est <- paste(trait, ".est", sep = "")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
-  mG <- tapply(data[, trait], data[, geno], mean, na.rm = TRUE)
+  mG <- tapply(data[, trait], data[, treat], mean, na.rm = TRUE)
   for (i in 1:length(data[, trait]))
-    if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mG[data[i, geno]]
+    if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mG[data[i, treat]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
   cc <- max(data[, trait], na.rm = TRUE)
@@ -80,10 +80,10 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
     for (i in 1:length(data[, trait]))
       if (is.na(data[i, trait]) == 1) {
         data[i, "ytemp"] <- data[i, trait]
-        sum1 <- tapply(data[, "ytemp"], data[, geno], sum, na.rm = TRUE)
-        sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
+        sum1 <- tapply(data[, "ytemp"], data[, treat], sum, na.rm = TRUE)
+        sum2 <- tapply(data[, "ytemp"], data[, block], sum, na.rm = TRUE)
         sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
-        data[i, trait.est] <- (G * sum1[data[i, geno]] + R * sum2[data[i, rep]] - sum3) /
+        data[i, trait.est] <- (G * sum1[data[i, treat]] + R * sum2[data[i, block]] - sum3) /
                              (G * R - G - R + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
@@ -94,7 +94,7 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  list(new.data = data[, c(geno, rep, trait, trait.est)],
+  list(new.data = data[, c(treat, block, trait, trait.est)],
        est.num = lc$nmis, est.prop = est.p)
 }
 
