@@ -69,8 +69,8 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 
   geno.num <- nlevels(data[, geno])
   env.num <- nlevels(data[, env])
-  rep.num <- lc$rep.num
-
+  rep.num <- nlevels(data[, rep])
+  
   if (geno.num < 2 | env.num < 2)
     stop(paste("This is not a MET experiment."))
 
