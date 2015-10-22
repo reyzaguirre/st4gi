@@ -8,14 +8,11 @@
 #' @param rep The replications or blocks.
 #' @param data The name of the data frame containing the data.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
-#' @param anova Logical, if TRUE the ANOVA table is shown.
 #' @author Raul Eyzaguirre
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default. Genotypes and environments are considered as fixed
 #' factors while the blocks are considered as random and nested into the environments.
-#' @return If \code{anova} is {TRUE} it returns and shows the ANOVA table.
-#' If \code{anova} is {FALSE} it returns the ANOVA table and some other components as the
-#' estimated missing values, but nothing is shown.
+#' @return It returns the ANOVA table.
 #' @examples
 #' # The data
 #' head(met8x12)
@@ -25,7 +22,7 @@
 #' aovmet("y", "geno", "env", "rep", met8x12)
 #' @export
 
-aovmet <- function(trait, geno, env, rep, data, maxp = 0.1, anova = TRUE) {
+aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Everything as factor
 
@@ -38,15 +35,10 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.1, anova = TRUE) {
   lc <- checkdata02(trait, geno, env, data)
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0) {
-    est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
-    data[, trait] <- est.data$new.data[, 5]
-    nmis <- est.data$est.num
+    data[, trait] <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
     warning(paste("The data set is unbalanced, ",
-                  format(est.data$est.prop * 100, digits = 3),
+                  format(lc$pmis * 100, digits = 3),
                   "% missing values estimated.", sep = ""))
-  } else {
-    nmis <- 0
-    est.data <- NULL
   }
 
   # Error messages
@@ -68,21 +60,21 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.1, anova = TRUE) {
   rownames(at)[1:4] <- c(geno, env, paste(rep, "(", env, ")", sep = ""),
                          paste(geno, ":", env, sep = ""))
   
+  # Correction for missing values
+  
+  if (lc$nmis > 0) {
+    at[5, 1] <- at[5, 1] - lc$nmis
+    at[5, 3] <- at[5, 2] / at[5, 1]
+    at[c(1, 3, 4), 4] <- at[c(1, 3, 4), 3] / at[5, 3]
+    at[c(1, 3, 4), 5] <- pf(at[c(1, 3, 4), 4], at[c(1, 3, 4), 1], at[5, 1], lower.tail = FALSE)
+  }
+  
   # Correction for blocks nested into environments
   
   at[2, 4] <- at[2, 3] / at[3, 3]
   at[2, 5] <- pf(at[2, 4], at[2, 1], at[3, 1], lower.tail = FALSE)  
-  
-  # Correction for missing values
-  
-  at[5, 1] <- at[5, 1] - nmis
-  at[5, 3] <- at[5, 2] / at[5, 1]
-  at[c(1, 3, 4), 4] <- at[c(1, 3, 4), 3] / at[5, 3]
-  at[c(1, 3, 4), 5] <- pf(at[c(1, 3, 4), 4], at[c(1, 3, 4), 1], at[5, 1], lower.tail = FALSE)
-  
-  # Return
 
-  output <- list (at = at, lc = lc, est.data = est.data)
+  # Return
   
-  if(anova == TRUE) output$at else invisible(output)
+  at
 }

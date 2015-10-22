@@ -8,11 +8,9 @@
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with name \code{new.data} and the number
-#' \code{est.num} and proportion \code{est.prop} of estimated missing values.
-#' The \code{new.data} data frame contains the experimental layout and columns
-#' \code{trait} and \code{trait.est} with the original data and the original data plus the
-#' estimated values.
+#' @return It returns a data frame with name \code{new.data}. The \code{new.data} data
+#' frame contains the experimental layout and columns \code{trait} and \code{trait.est}
+#' with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a RCBD with at least two replications
 #' and at least one datum for each treatment must be loaded. Experimental data
@@ -55,10 +53,9 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
     stop("The data set is balanced. There are no missing values to estimate.")
 
-  est.p <- mean(is.na(data[, trait]))
-  if (est.p > maxp)
+  if (lc$pmis > maxp)
     stop(paste("Too many missing values (",
-               format(est.p * 100, digits = 3), "%).", sep = ""))
+               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
   # Estimation
 
@@ -94,8 +91,7 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  list(new.data = data[, c(treat, block, trait, trait.est)],
-       est.num = lc$nmis, est.prop = est.p)
+  new.data = data[, c(treat, block, trait, trait.est)]
 }
 
 #' Estimation of missing values for a MET in a RCBD
@@ -109,11 +105,9 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with name \code{new.data} and the number
-#' \code{est.num} and proportion \code{est.prop} of estimated missing values.
-#' The \code{new.data} data frame contains the experimental layout and columns
-#' \code{trait} and \code{trait.est} with the original data and the original data plus the
-#' estimated values.
+#' @return It returns a data frame with name \code{new.data}. The \code{new.data} data
+#' frame contains the experimental layout and columns \code{trait} and \code{trait.est}
+#' with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a MET in a RCBD with at least two replications
 #' and at least one datum for each treatment must be loaded. Experimental data
@@ -151,10 +145,9 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
     stop("The data set is balanced. There are no missing values to estimate.")
 
-  est.p <- mean(is.na(data[, trait]))
-  if (est.p > maxp)
+  if (lc$pmis > maxp)
     stop(paste("Too many missing values (",
-               format(est.p * 100, digits = 3), "%).", sep = ""))
+               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
   G <- nlevels(data[, geno])
   E <- nlevels(data[, env])
@@ -195,6 +188,5 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  list(new.data = data[, c(geno, env, rep, trait, trait.est)],
-       est.num = lc$nmis, est.prop = est.p)
+  new.data = data[, c(geno, env, rep, trait, trait.est)]
 }

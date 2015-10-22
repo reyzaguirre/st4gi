@@ -47,8 +47,8 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
 
   geno.num <- nlevels(data[, geno])
   env.num <- nlevels(data[, env])
-  rep.num <- lc$rep.num
-
+  rep.num <- nlevels(data[, rep])
+  
   if (lc$c1 == 0)
     stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
 
@@ -62,14 +62,10 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
     stop("You need at least 3 genotypes and 3 environments to run Tai")
 
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0) {
-    est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
-    data[, trait] <- est.data$new.data[, 5]
-    nmis <- est.data$est.num
+    data[, trait] <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
     warning(paste("The data set is unbalanced, ",
-                  format(est.data$est.prop * 100, digits = 3),
+                  format(lc$pmis * 100, digits = 3),
                   "% missing values estimated.", sep = ""))
-  } else {
-    nmis <- 0
   }
 
   # Compute interaction effects matrix
@@ -91,8 +87,8 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
   
   # Correction for missing values if any
   
-  if (nmis > 0) {
-    at[5, 1] <- at[5, 1] - nmis
+  if (lc$nmis > 0) {
+    at[5, 1] <- at[5, 1] - lc$nmis
     at[5, 3] <- at[5, 2] / at[5, 1]
   }
   

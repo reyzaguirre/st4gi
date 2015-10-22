@@ -20,11 +20,9 @@ mveb(trait, treat, block, data, maxp = 0.1, tol = 1e-06)
 \item{tol}{Tolerance for the convergence of the iterative estimation process.}
 }
 \value{
-It returns a data frame with name \code{new.data} and the number
-\code{est.num} and proportion \code{est.prop} of estimated missing values.
-The \code{new.data} data frame contains the experimental layout and columns
-\code{trait} and \code{trait.est} with the original data and the original data plus the
-estimated values.
+It returns a data frame with name \code{new.data}. The \code{new.data} data
+frame contains the experimental layout and columns \code{trait} and \code{trait.est}
+with the original data and the original data plus the estimated values.
 }
 \description{
 Function to estimate missing values for a Randomized Complete Block Design (RCBD) by

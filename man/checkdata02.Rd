@@ -16,8 +16,8 @@ checkdata02(trait, geno, env, data)
 \item{data}{The name of the data frame}
 }
 \value{
-Three control values: c1, c2, c3. In addition the number of replications and
-the number of missing values.
+Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
+missing values \code{nmis}, and the proportion of missing values (\code{pmis}).
 }
 \description{
 This function checks the frequencies of genotypes in each environment in a RCBD.

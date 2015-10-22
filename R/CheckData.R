@@ -4,7 +4,8 @@
 #' @param trait The trait to analyze.
 #' @param treat The treatments
 #' @param data The name of the data frame.
-#' @return Three control values: c1, c2, c3. In addition the number of missing values.
+#' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
+#' missing values \code{nmis}, and the proportion of missing values (\code{pmis}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any treatment without data, and if the design is balanced.
@@ -15,10 +16,10 @@ checkdata01 <- function(trait, treat, data) {
   # Check frequencies by treat
   
   nmis <- sum(is.na(data[, trait]))
+  pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, treat])
-  rep.num <- max(tfreq)
-  
+
   # Controls
   
   c1 <- 1 # Check for zeros. Initial state no zeros which is good
@@ -31,7 +32,7 @@ checkdata01 <- function(trait, treat, data) {
   
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, rep.num = rep.num, nmis = nmis)
+  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis)
 }
 
 #' Check data for a MET in a RCBD
@@ -41,8 +42,8 @@ checkdata01 <- function(trait, treat, data) {
 #' @param geno The genotypes
 #' @param env The environments
 #' @param data The name of the data frame
-#' @return Three control values: c1, c2, c3. In addition the number of replications and
-#' the number of missing values.
+#' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
+#' missing values \code{nmis}, and the proportion of missing values (\code{pmis}).
 #' @author Raul Eyzaguirre
 #' @details This function checks if there is more than one replication in a RCBD in
 #' several environments, if there is any genotype without data for some specific environments,
@@ -53,10 +54,10 @@ checkdata02 <- function(trait, geno, env, data) {
   # Check frequencies by geno and env
   
   nmis <- sum(is.na(data[, trait]))
+  pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, geno], subdata[, env])
-  rep.num <- max(tfreq)
-  
+
   # Controls
   
   c1 <- 1 # Check for zeros. Initial state no zeros which is good
@@ -69,5 +70,5 @@ checkdata02 <- function(trait, geno, env, data) {
     
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, rep.num = rep.num, nmis = nmis)
+  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis)
 }

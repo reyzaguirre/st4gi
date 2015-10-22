@@ -52,10 +52,17 @@
 
 rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
+  # Everything as factor
+  
+  data[, geno] <- factor(data[, geno])
+  data[, env] <- factor(data[, env])
+  data[, rep] <- factor(data[, rep])
+
   # Error messages
   
-   geno.num <- nlevels(data[, geno])
-   env.num <- nlevels(data[, env])
+  geno.num <- nlevels(data[, geno])
+  env.num <- nlevels(data[, env])
+  rep.num <- nlevels(data[, rep])
   
   if (geno.num == 2 & env.num == 2)
     stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")
@@ -67,13 +74,11 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   # Check data and estimate missing values
   
   lc <- checkdata02(trait, geno, env, data)
-  rep.num <- lc$rep.num
-  
+
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0) {
-    est.data <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)
-    data[, trait] <- est.data$new.data[, 5]
+    data[, trait] <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
     warning(paste("The data set is unbalanced, ",
-                  format(est.data$est.prop * 100, digits = 3),
+                  format(lc$pmis * 100, digits = 3),
                   "% missing values estimated.", sep = ""))
   }
   
