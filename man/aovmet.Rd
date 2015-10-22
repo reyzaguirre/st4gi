@@ -22,7 +22,9 @@ aovmet(trait, geno, env, rep, data, maxp = 0.1, anova = TRUE)
 \item{anova}{Logical, if TRUE the ANOVA table is shown.}
 }
 \value{
-It returns the ANOVA table.
+If \code{anova} is {TRUE} it returns and shows the ANOVA table.
+If \code{anova} is {FALSE} it returns the ANOVA table and some other components as the
+estimated missing values, but nothing is shown.
 }
 \description{
 Fit an analysis of variance model for a multi environment trial (MET) with a RCBD
