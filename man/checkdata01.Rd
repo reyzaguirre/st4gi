@@ -4,12 +4,12 @@
 \alias{checkdata01}
 \title{Check data for a RCBD}
 \usage{
-checkdata01(trait, geno, data)
+checkdata01(trait, treat, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
-\item{geno}{The genotypes.}
+\item{treat}{The treatments}
 
 \item{data}{The name of the data frame.}
 }
@@ -21,7 +21,7 @@ This function checks the frequencies of genotypes in a RCBD.
 }
 \details{
 This function checks if there is more than one replication in a RCBD,
-if there is any genotype without data, and if the design is balanced.
+if there is any treatment without data, and if the design is balanced.
 }
 \author{
 Raul Eyzaguirre.
