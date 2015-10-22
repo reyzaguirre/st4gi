@@ -13,7 +13,9 @@
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default. Genotypes and environments are considered as fixed
 #' factors while the blocks are considered as random and nested into the environments.
-#' @return It returns the ANOVA table.
+#' @return If \code{anova} is {TRUE} it returns and shows the ANOVA table.
+#' If \code{anova} is {FALSE} it returns the ANOVA table and some other components as the
+#' estimated missing values, but nothing is shown.
 #' @examples
 #' # The data
 #' head(met8x12)
