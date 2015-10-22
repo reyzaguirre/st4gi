@@ -2,21 +2,22 @@
 #'
 #' This function checks the frequencies of genotypes in a RCBD.
 #' @param trait The trait to analyze.
-#' @param geno The genotypes.
+#' @param treat The treatments
 #' @param data The name of the data frame.
 #' @return Three control values: c1, c2, c3. In addition the number of missing values.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
-#' if there is any genotype without data, and if the design is balanced.
+#' if there is any treatment without data, and if the design is balanced.
 #' @export
 
-checkdata01 <- function(trait, geno, data) {
+checkdata01 <- function(trait, treat, data) {
   
-  # Check frequencies by geno
+  # Check frequencies by treat
   
   nmis <- sum(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
-  tfreq <- table(subdata[, geno])
+  tfreq <- table(subdata[, treat])
+  rep.num <- max(tfreq)
   
   # Controls
   
@@ -30,7 +31,7 @@ checkdata01 <- function(trait, geno, data) {
   
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis)
+  list(c1 = c1, c2 = c2, c3 = c3, rep.num = rep.num, nmis = nmis)
 }
 
 #' Check data for a MET in a RCBD
