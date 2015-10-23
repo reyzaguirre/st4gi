@@ -62,7 +62,7 @@ ammi("y", "geno", "env", "rep", met8x12)
 ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }
 \references{
 Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
