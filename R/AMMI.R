@@ -15,7 +15,7 @@
 #' @param xlab Xlab for biplot1.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
 #' @param size Relative size for symbols and labels.
-#' @author Raul Eyzaguirre
+#' @author Raul Eyzaguirre.
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' the data are balanced.
 #' @return It returns the genotype, environment and interaction means, the interaction
@@ -54,7 +54,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 
   # Check data
 
-  lc <- checkdata02(trait, geno, env, data)
+  lc <- checkdata02(trait, geno, env, rep, data)
 
   # Error messages
 
@@ -63,18 +63,14 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 
   if (lc$c1 == 1 & lc$c2 == 0)
     warning("There is only one replication. Inference is not possible with one replication.")
-
+  
   if (method == "AMMI" & lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0)
     warning("The data set is unbalanced. Significance of PCs is not evaluated.")
 
-  geno.num <- nlevels(data[, geno])
-  env.num <- nlevels(data[, env])
-  rep.num <- nlevels(data[, rep])
-  
-  if (geno.num < 2 | env.num < 2)
+  if (lc$ng < 2 | lc$ne < 2)
     stop(paste("This is not a MET experiment."))
 
-  if (geno.num < 3 | env.num < 3)
+  if (lc$ng < 3 | lc$ne < 3)
     stop(paste("You need at least 3 genotypes and 3 environments to run AMMI or GGE."))
 
   # Compute interaction means matrix
@@ -89,14 +85,14 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
     rdf <- model$df.residual
     rms <- deviance(model) / rdf
   } else {
-    rep.num <- NULL
+    lc$nr <- NULL
     rdf <- NULL
     rms <- NULL
   }
 
   # Run ammigxe
 
-  ammigxe(int.mean, trait = trait, rep.num = rep.num, rdf = rdf, rms = rms,
+  ammigxe(int.mean, trait = trait, nr = lc$nr, rdf = rdf, rms = rms,
           method = method, f = f, biplot = biplot, biplot1 = biplot1,
           title = title, xlab = xlab, color = color, size = size)
 }
@@ -107,7 +103,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 #' with data from an interaction means matrix.
 #' @param int.mean GxE means matrix, genotypes in rows, environments in columns.
 #' @param trait Name of the trait.
-#' @param rep.num Number of replications.
+#' @param nr Number of replications.
 #' @param rdf Residual degrees of freedom.
 #' @param rms Residual mean square.
 #' @param method AMMI or GGE.
@@ -118,14 +114,14 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 #' @param xlab Xlab for biplot1.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
 #' @param size Relative size for symbols and labels.
-#' @author Raul Eyzaguirre
+#' @author Raul Eyzaguirre.
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
-#' \code{rep.num}, \code{rms} and \code{rdf} are specified.
+#' \code{nr}, \code{rms} and \code{rdf} are specified.
 #' @return It returns the genotype, environment and interaction means, the interaction
 #' effects matrix, the first and second PC values for genotypes and environments, a table
 #' with the contribution of each PC, a dispersion plot of means or effects against the
 #' first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
-#' in the contributions table only if method is set to AMMI and \code{rep.num},
+#' in the contributions table only if method is set to AMMI and \code{nr},
 #' \code{rms} and \code{rdf} are specified.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
@@ -149,7 +145,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 #' ammigxe(int.mean, trait = "y", method = "GGE")
 #' @export
 
-ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
+ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
                     method = "AMMI", f = 0.5, biplot = 2, biplot1 = "effects", title = NULL,
                     xlab = NULL, color = c("darkorange", "black", "gray"), size = c(1, 1)) {
 
@@ -191,12 +187,12 @@ ammigxe <- function(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NU
   PC.acum <- cumsum(PC.cont)
   tablaPC <- data.frame(PC = PC.num, SV = PC.sv, Cont = PC.cont, CumCont = PC.acum)
 
-  # Significance of PCs, only for AMMI and if rep.num, rms and rdf are known
+  # Significance of PCs, only for AMMI and if nr, rms and rdf are known
 
   if (method == "AMMI") {
-    if (!is.null(rep.num)) {
-      int.SS <- (t(as.vector(svd.mat)) %*% as.vector(svd.mat)) * rep.num
-      PC.SS <- (dec$d[1:PC]^2) * rep.num
+    if (!is.null(nr)) {
+      int.SS <- (t(as.vector(svd.mat)) %*% as.vector(svd.mat)) * nr
+      PC.SS <- (dec$d[1:PC]^2) * nr
       PC.DF <- env.num + geno.num - 1 - 2 * c(1:PC)
       MS <- PC.SS / PC.DF
     }
