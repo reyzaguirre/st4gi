@@ -4,7 +4,7 @@
 #' the least squares method.
 #' @param trait The trait to estimate missing values.
 #' @param treat The treatments.
-#' @param block The blocks.
+#' @param rep The replications.
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
@@ -31,16 +31,11 @@
 #' mveb("y", "geno", "rep", temp)
 #' @export
 
-mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
-
-  # Everything as factor
-
-  data[, treat] <- factor(data[, treat])
-  data[, block] <- factor(data[, block])
+mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- checkdata01(trait, treat, data)
+  lc <- checkdata01(trait, treat, rep, data)
 
   # Error messages
 
@@ -59,9 +54,6 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
 
   # Estimation
 
-  G <- nlevels(data[, treat])
-  R <- nlevels(data[, block])
-
   trait.est <- paste(trait, ".est", sep = "")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
@@ -72,16 +64,16 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
   lc2 <- array(0, lc$nmis)
   cc <- max(data[, trait], na.rm = TRUE)
   cont <- 0
-  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont<100) {
+  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
     cont <- cont + 1
     for (i in 1:length(data[, trait]))
       if (is.na(data[i, trait]) == 1) {
         data[i, "ytemp"] <- data[i, trait]
         sum1 <- tapply(data[, "ytemp"], data[, treat], sum, na.rm = TRUE)
-        sum2 <- tapply(data[, "ytemp"], data[, block], sum, na.rm = TRUE)
+        sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
         sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
-        data[i, trait.est] <- (G * sum1[data[i, treat]] + R * sum2[data[i, block]] - sum3) /
-                             (G * R - G - R + 1)
+        data[i, trait.est] <- (lc$nt * sum1[data[i, treat]] + lc$nr * sum2[data[i, rep]] - sum3) /
+          (lc$nt * lc$nr - lc$nt - lc$nr + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
@@ -91,7 +83,7 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  new.data = data[, c(treat, block, trait, trait.est)]
+  new.data = data[, c(treat, rep, trait, trait.est)]
 }
 
 #' Estimation of missing values for a MET in a RCBD
@@ -101,7 +93,7 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
 #' @param trait The trait to estimate missing values.
 #' @param geno The genotypes.
 #' @param env The environments.
-#' @param rep The replications or blocks. A RCBD is assumed.
+#' @param rep The replications.
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
@@ -124,15 +116,9 @@ mveb <- function(trait, treat, block, data, maxp = 0.1, tol = 1e-06) {
 
 mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
-  # Everything as factor
-
-  data[, geno] <- factor(data[, geno])
-  data[, env] <- factor(data[, env])
-  data[, rep] <- factor(data[, rep])
-
   # Check data
 
-  lc <- checkdata02(trait, geno, env, data)
+  lc <- checkdata02(trait, geno, env, rep, data)
 
   # Error messages
 
@@ -149,11 +135,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
     stop(paste("Too many missing values (",
                format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
-  G <- nlevels(data[, geno])
-  E <- nlevels(data[, env])
-  R <- nlevels(data[, rep])
-
-  if (G < 2 | E < 2)
+  if (lc$ng < 2 | lc$ne < 2)
     stop("This is not a MET experiment.")
 
   # Estimation
@@ -176,9 +158,9 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
         sum1 <- tapply(data[, "ytemp"], list(data[, geno], data[, env]), sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], list(data[, env], data[, rep]), sum, na.rm = TRUE)
         sum3 <- tapply(data[, "ytemp"], data[, env], sum, na.rm = TRUE)
-        data[i, trait.est] <- (G * sum1[data[i, geno], data[i, env]] +
-                                R * sum2[data[i, env], data[i, rep]] -
-                                sum3[data[i, env]]) / (G * R - G - R + 1)
+        data[i, trait.est] <- (lc$ng * sum1[data[i, geno], data[i, env]] +
+                                 lc$nr * sum2[data[i, env], data[i, rep]] -
+                                 sum3[data[i, env]]) / (lc$ng * lc$nr - lc$ng - lc$nr + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
