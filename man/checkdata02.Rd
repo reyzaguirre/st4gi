@@ -4,20 +4,24 @@
 \alias{checkdata02}
 \title{Check data for a MET in a RCBD}
 \usage{
-checkdata02(trait, geno, env, data)
+checkdata02(trait, geno, env, rep, data)
 }
 \arguments{
-\item{trait}{The trait to analyze}
+\item{trait}{The trait to analyze.}
 
-\item{geno}{The genotypes}
+\item{geno}{The genotypes.}
 
-\item{env}{The environments}
+\item{env}{The environments.}
 
-\item{data}{The name of the data frame}
+\item{rep}{The replications.}
+
+\item{data}{The name of the data frame.}
 }
 \value{
 Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
-missing values \code{nmis}, and the proportion of missing values (\code{pmis}).
+missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
+of genotypes (\code{ng}), the number of environments (\code{ne}), and the number of
+replications (\code{nr}).
 }
 \description{
 This function checks the frequencies of genotypes in each environment in a RCBD.
@@ -28,6 +32,6 @@ several environments, if there is any genotype without data for some specific en
 and if the design is balanced.
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }
 
