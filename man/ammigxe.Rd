@@ -4,7 +4,7 @@
 \alias{ammigxe}
 \title{AMMI or GGE with data from an interaction means matrix}
 \usage{
-ammigxe(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
+ammigxe(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
   method = "AMMI", f = 0.5, biplot = 2, biplot1 = "effects",
   title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
   size = c(1, 1))
@@ -14,7 +14,7 @@ ammigxe(int.mean, trait = NULL, rep.num = NULL, rdf = NULL, rms = NULL,
 
 \item{trait}{Name of the trait.}
 
-\item{rep.num}{Number of replications.}
+\item{nr}{Number of replications.}
 
 \item{rdf}{Residual degrees of freedom.}
 
@@ -41,7 +41,7 @@ It returns the genotype, environment and interaction means, the interaction
 effects matrix, the first and second PC values for genotypes and environments, a table
 with the contribution of each PC, a dispersion plot of means or effects against the
 first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
-in the contributions table only if method is set to AMMI and \code{rep.num},
+in the contributions table only if method is set to AMMI and \code{nr},
 \code{rms} and \code{rdf} are specified.
 }
 \description{
@@ -50,7 +50,7 @@ with data from an interaction means matrix.
 }
 \details{
 Significance of PCs are evaluated only with \code{method = "AMMI"} and if
-\code{rep.num}, \code{rms} and \code{rdf} are specified.
+\code{nr}, \code{rms} and \code{rdf} are specified.
 }
 \examples{
 # The data
@@ -67,7 +67,7 @@ ammigxe(int.mean, trait = "y")
 ammigxe(int.mean, trait = "y", method = "GGE")
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }
 \references{
 Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
