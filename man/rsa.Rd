@@ -13,7 +13,7 @@ rsa(trait, geno, env, rep, data, maxp = 0.1)
 
 \item{env}{The environments.}
 
-\item{rep}{The replications or blocks.}
+\item{rep}{The replications.}
 
 \item{data}{The name of the data frame containing the data.}
 
@@ -62,7 +62,7 @@ str(met8x12)
 rsa("y", "geno", "env", "rep", met8x12)
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }
 \references{
 Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.
