@@ -13,7 +13,7 @@ mvemet(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06)
 
 \item{env}{The environments.}
 
-\item{rep}{The replications or blocks. A RCBD is assumed.}
+\item{rep}{The replications.}
 
 \item{data}{The name of the data frame.}
 
