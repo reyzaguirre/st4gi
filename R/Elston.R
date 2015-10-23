@@ -110,5 +110,6 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   
   # results
 
-  return(outind)
+  outind
 }
+

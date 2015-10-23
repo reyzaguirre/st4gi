@@ -67,5 +67,5 @@ domeans <- function(traits, factors, addcol = NULL, data) {
   
   # return data.frame with means
     
-  return(dataout)
+  dataout
 }

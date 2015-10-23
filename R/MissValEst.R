@@ -8,9 +8,8 @@
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with name \code{new.data}. The \code{new.data} data
-#' frame contains the experimental layout and columns \code{trait} and \code{trait.est}
-#' with the original data and the original data plus the estimated values.
+#' @return It returns a data frame with the experimental layout and columns \code{trait}
+#' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a RCBD with at least two replications
 #' and at least one datum for each treatment must be loaded. Experimental data
@@ -83,7 +82,7 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  new.data = data[, c(treat, rep, trait, trait.est)]
+  data[, c(treat, rep, trait, trait.est)]
 }
 
 #' Estimation of missing values for a MET in a RCBD
@@ -97,9 +96,8 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with name \code{new.data}. The \code{new.data} data
-#' frame contains the experimental layout and columns \code{trait} and \code{trait.est}
-#' with the original data and the original data plus the estimated values.
+#' @return It returns a data frame with the experimental layout and columns \code{trait}
+#' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a MET in a RCBD with at least two replications
 #' and at least one datum for each treatment must be loaded. Experimental data
@@ -170,5 +168,5 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  new.data = data[, c(geno, env, rep, trait, trait.est)]
+  data[, c(geno, env, rep, trait, trait.est)]
 }

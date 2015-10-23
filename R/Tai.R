@@ -140,7 +140,5 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
 
   # Output
 
-  coords <- cbind(alpha, lambda)
-  return(coords)
-
+  cbind(alpha, lambda)
 }

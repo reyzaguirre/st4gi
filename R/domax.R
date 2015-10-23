@@ -67,5 +67,5 @@ domax <- function(traits, factors, addcol = NULL, data) {
   
   # return data.frame with maxima
     
-  return(dataout)
+  dataout
 }
