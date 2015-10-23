@@ -4,14 +4,14 @@
 \alias{rcbd}
 \title{ANOVA for a RCBD}
 \usage{
-rcbd(trait, treat, block, data, maxp = 0.1)
+rcbd(trait, treat, rep, data, maxp = 0.1)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
 \item{treat}{The treatments.}
 
-\item{block}{The blocks.}
+\item{rep}{The replications.}
 
 \item{data}{The name of the data frame containing the data.}
 
@@ -40,6 +40,6 @@ temp[c(10, 20, 30), "trw"] <- NA
 rcbd("trw", "geno", "rep", temp)
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }
 
