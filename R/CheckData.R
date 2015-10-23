@@ -61,6 +61,7 @@ checkdata01 <- function(trait, treat, rep, data) {
 #' @details This function checks if there is more than one replication in a RCBD in
 #' several environments, if there is any genotype without data for some specific environments,
 #' and if the design is balanced.
+#' @export
 
 checkdata02 <- function(trait, geno, env, rep, data) {
   
