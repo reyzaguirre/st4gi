@@ -4,18 +4,21 @@
 \alias{checkdata01}
 \title{Check data for a RCBD}
 \usage{
-checkdata01(trait, treat, data)
+checkdata01(trait, treat, rep, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
-\item{treat}{The treatments}
+\item{treat}{The treatments.}
+
+\item{rep}{The replications.}
 
 \item{data}{The name of the data frame.}
 }
 \value{
 Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
-missing values \code{nmis}, and the proportion of missing values (\code{pmis}).
+missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
+of treatments (\code{nt}), and the number of replications (\code{nr}).
 }
 \description{
 This function checks the frequencies of genotypes in a RCBD.
