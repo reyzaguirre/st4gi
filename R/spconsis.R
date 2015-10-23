@@ -68,19 +68,19 @@
 #'  \item COOST2  : Cooked starch (1-9), second evaluation
 #'  \item COOT2   : Cooked taste (1-9), second evaluation
 #'  \item COOAP2  : Cooked appearance (1-9), second evaluation
-#'  \item PROT    : Protein
-#'  \item FE      : Iron in dry weight
-#'  \item ZN      : Zinc in dry weight
-#'  \item CA      : Calcium in dry weight
-#'  \item MG      : Magnesium in dry weight
-#'  \item BC      : Beta-carotene in dry weight (NIRS)
+#'  \item PROT    : Protein (\%)
+#'  \item FE      : Iron (mg/100 g dry weight)
+#'  \item ZN      : Zinc (mg/100 g dry weight)
+#'  \item CA      : Calcium (mg/100 g dry weight)
+#'  \item MG      : Magnesium (mg/100 g dry weight)
+#'  \item BC      : Beta-carotene (mg/100 g dry weight)
 #'  \item BC.CC   : Beta-carotene with color charts
-#'  \item TC      : Total carotenoids  in dry weight (NIRS)
-#'  \item STAR    : Starch
-#'  \item FRUC    : Fructose
-#'  \item GLUC    : Glucose
-#'  \item SUCR    : Sucrose
-#'  \item MALT    : Maltose
+#'  \item TC      : Total carotenoids (mg/100 g dry weight)
+#'  \item STAR    : Starch (\%)
+#'  \item FRUC    : Fructose (\%)
+#'  \item GLUC    : Glucose (\%)
+#'  \item SUCR    : Sucrose (\%)
+#'  \item MALT    : Maltose (\%)
 #'  \item TRW     : Total root weight
 #'  \item CYTHA   : Commercial root yield t/ha
 #'  \item RYTHA   : Total root yield t/ha
