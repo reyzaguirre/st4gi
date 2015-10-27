@@ -14,7 +14,7 @@ pesekbaker(traits, geno, env, rep = NULL, data, means = "single",
 
 \item{env}{The environments.}
 
-\item{rep}{The replications or blocks. Must be defined if \code{model = "gxe"}.}
+\item{rep}{The replications. Must be defined if \code{model = "gxe"}.}
 
 \item{data}{The name of the data frame containing the data.}
 
@@ -71,8 +71,6 @@ that corresponds to 10 kilograms. If you type \code{dgg = 2} and \code{units = "
 then this means a desired genetic gain of 2 kilograms. If \code{dgg = NULL} then the
 desired genetic gain will be one standard deviation, no matter if \code{units} is set
 as \code{"actual"} or \code{"sdu"}.
-
-To compute the index the package \code{lme4} is needed.
 }
 \examples{
 # The data

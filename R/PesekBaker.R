@@ -4,7 +4,7 @@
 #' @param traits List of traits.
 #' @param geno The genotypes.
 #' @param env The environments.
-#' @param rep The replications or blocks. Must be defined if \code{model = "gxe"}.
+#' @param rep The replications. Must be defined if \code{model = "gxe"}.
 #' @param data The name of the data frame containing the data.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
@@ -38,7 +38,6 @@
 #' desired genetic gain will be one standard deviation, no matter if \code{units} is set
 #' as \code{"actual"} or \code{"sdu"}.
 #' 
-#' To compute the index the package \code{lme4} is needed.
 #' @return It returns:
 #' \itemize{
 #' \item \code{$Desired.Genetic.Gains}, the desired genetic gains in actual units,
