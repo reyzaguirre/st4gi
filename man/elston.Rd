@@ -14,7 +14,7 @@ elston(traits, geno, env = NULL, rep = NULL, data, means = "single",
 
 \item{env}{The environments.}
 
-\item{rep}{The replications or blocks.}
+\item{rep}{The replications.}
 
 \item{data}{The name of the data frame containing the data.}
 

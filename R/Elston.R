@@ -4,7 +4,7 @@
 #' @param traits List of traits.
 #' @param geno The genotypes.
 #' @param env The environments.
-#' @param rep The replications or blocks.
+#' @param rep The replications.
 #' @param data The name of the data frame containing the data.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
