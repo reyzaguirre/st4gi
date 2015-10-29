@@ -69,14 +69,18 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   
   if (means == "fitted") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
-      if (model == "gxe")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c2:c3) + (1|c3 / c4), data = abc)
-      if (model == "g+e")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c3), data = abc)
+      if (model == "gxe") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", geno, ":", env,
+                               ") + (1|", env, "/", rep, ")"))
+        fm <- lme4::lmer(ff, data = data)
+      }
+      if (model == "g+e") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", env, ")"))
+        fm <- lme4::lmer(ff, data = data)
+      }
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
-      temp$geno <- substring(rownames(temp), 3)
+      temp$geno <- substring(rownames(temp), 5)
       outind <- merge(outind, temp, all = TRUE)
     }
   }
