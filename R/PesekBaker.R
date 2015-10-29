@@ -85,18 +85,19 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
 
   if (model == "gxe") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
-      fm <- lme4::lmer(c1 ~ (1|c2) + (1|c2:c3) + (1|c3/c4), data = abc)
-      gv[i] <- lme4::VarCorr(fm)$c2[1]
-      pv[i] <- lme4::VarCorr(fm)$c2[1] + lme4::VarCorr(fm)$"c2:c3"[1] / ne +
+      ff <- as.formula(paste(traits[i], "~ (1|", geno, ") + (1|", geno, ":", env,
+                             ") + (1|", env, "/", rep, ")"))
+      fm <- lme4::lmer(ff, data = data)
+      gv[i] <- lme4::VarCorr(fm)[[2]][1]
+      pv[i] <- lme4::VarCorr(fm)[[2]][1] + lme4::VarCorr(fm)[[1]][1] / ne +
         attr(lme4::VarCorr(fm), "sc")^2 / ne / nr
     }
   }
   if (model == "g+e") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env])
-      fm <- lme4::lmer(c1 ~ (1|c2) + (1|c3), data = abc)
-      gv[i] <- lme4::VarCorr(fm)$c2[1]
+      ff <- as.formula(paste(traits[i], "~ (1|", geno, ") + (1|", env, ")"))
+      fm <- lme4::lmer(ff, data = data)
+      gv[i] <- lme4::VarCorr(fm)[[1]][1]
     }
   }
 
@@ -162,14 +163,18 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   
   if (means == "fitted") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
-      if (model == "gxe")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c2:c3) + (1|c3/c4), data = abc)
-      if (model == "g+e")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c3), data = abc)
+      if (model == "gxe") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", geno, ":", env,
+                               ") + (1|", env, "/", rep, ")"))
+        fm <- lme4::lmer(ff, data = data)
+        }
+      if (model == "g+e") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", env, ")"))
+        fm <- lme4::lmer(ff, data = data)
+      }
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
-      temp$geno <- substring(rownames(temp), 3)
+      temp$geno <- substring(rownames(temp), 5)
       outind <- merge(outind, temp, all = TRUE)
     }
   }
