@@ -41,6 +41,11 @@
 elston <- function(traits, geno, env = NULL, rep = NULL, data,
                    means = "single", model = "gxe", lb = 1) {
 
+  # Error messages
+  
+  if (means == "fitted" & (is.null(env) | is.null(rep)))
+    stop("For 'fitted' means with the 'gxe' model you must specify the arguments 'env' and 'rep'.")
+  
   # inits
 
   nt <- length(traits) # number of traits
