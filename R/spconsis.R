@@ -6,7 +6,8 @@
 #' @param data The name of the data frame.
 #' @param plot.size Plot size in square meters.
 #' @param f Factor for extreme values detection. See details.
-#' @param width Number of columns for the output file.
+#' @param width Number of columns for the output.
+#' @param file Logigal, if TRUE the output goes to a file.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
 #'  \item L       : Locations (LOC is also valid)
@@ -97,8 +98,9 @@
 #'  Extreme values are detected using the interquartile range.
 #'  The rule is to detect any value out of the interval 
 #'  \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
-#' @return It returns a file with name checks.txt with a list of
-#' all rows with some kind of inconsistency and all rows with outliers.
+#' @return If \code{file = TRUE} it returns a file with name checks.txt with a list of
+#' all rows with some kind of inconsistency and all rows with outliers. If \code{file = FALSE}
+#' the output is shown in the R console.
 #' @author Raul Eyzaguirre.
 #' @examples
 #'  # The data
@@ -109,7 +111,7 @@
 #'  spconsis(pjpz09, 4.5)
 #' @export
 
-spconsis <- function(data, plot.size, f = 3, width = 240) {
+spconsis <- function(data, plot.size, f = 3, width = 240, file = TRUE) {
 
   options(width = width)
   
@@ -139,7 +141,7 @@ spconsis <- function(data, plot.size, f = 3, width = 240) {
   if (max(check.list.2) == 1)
     warning("Some labels converted to upper case in the output: ", list(temp[check.list.2]), call. = FALSE)
   
-  sink("checks.txt")
+  if (file == TRUE) sink("checks.txt")
 
   spconsis01(data) # NOPS > NOPE > NOPH > NOPR
   spconsis02(data) # NOPE and dependencies
@@ -156,7 +158,7 @@ spconsis <- function(data, plot.size, f = 3, width = 240) {
   spconsis13(data, f) # Outliers detection and values out of range for lab data
   spconsis14(data, f) # Outliers detection and values out of range for derived variables
 
-  sink()
+  if (file == TRUE) sink()
 }
 
 # Check consistency for sweetpotato experimental data, part 1.

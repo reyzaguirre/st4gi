@@ -4,7 +4,7 @@
 \alias{spconsis}
 \title{Check consistency for sweetpotato experimental data}
 \usage{
-spconsis(data, plot.size, f = 3, width = 240)
+spconsis(data, plot.size, f = 3, width = 240, file = TRUE)
 }
 \arguments{
 \item{data}{The name of the data frame.}
@@ -13,11 +13,14 @@ spconsis(data, plot.size, f = 3, width = 240)
 
 \item{f}{Factor for extreme values detection. See details.}
 
-\item{width}{Number of columns for the output file.}
+\item{width}{Number of columns for the output.}
+
+\item{file}{Logigal, if TRUE the output goes to a file.}
 }
 \value{
-It returns a file with name checks.txt with a list of
-all rows with some kind of inconsistency and all rows with outliers.
+If \code{file = TRUE} it returns a file with name checks.txt with a list of
+all rows with some kind of inconsistency and all rows with outliers. If \code{file = FALSE}
+the output is shown in the R console.
 }
 \description{
 Set of rules to check for consistency of sweetpotato experimental data.
