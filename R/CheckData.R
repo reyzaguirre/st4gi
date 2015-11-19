@@ -6,6 +6,7 @@
 #' @param data The name of the data frame.
 #' @return Three control values: c1, c2, c3. In addition the number of missing values.
 #' @author Raul Eyzaguirre.
+#' @export
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any genotype without data, and if the design is balanced.
 
