@@ -5,10 +5,16 @@ Version: 0.4.3
 Date: 2015-09-01
 Author: Raul Eyzaguirre
 Maintainer: Raul Eyzaguirre <R.EYZAGUIRRE@CGIAR.ORG>
-Description: Statistical tools for the analysis of experimental data for crop genetic improvement.
-Depends: R (>= 3.0.0)
-Imports: lme4, shiny
+Description: Statistical tools for the analysis of experimental data for crop
+    genetic improvement.
+Depends:
+    R (>= 3.0.0)
+Imports:
+    lme4,
+    shiny
 License: MIT + file LICENSE
 Copyright: International Potato Center (2015)
 LazyData: true
-Suggests: testthat
+Suggests:
+    testthat
+RoxygenNote: 5.0.1
