@@ -43,6 +43,7 @@ checkdata01 <- function(trait, geno, data) {
 #' @return Three control values: c1, c2, c3. In addition the number of replications and
 #' the number of missing values.
 #' @author Raul Eyzaguirre
+#' @export
 #' @details This function checks if there is more than one replication in a RCBD in
 #' several environments, if there is any genotype without data for some specific environments,
 #' and if the design is balanced.
