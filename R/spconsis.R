@@ -90,7 +90,7 @@
 #'  \item YPP     : Yield per plant Kg
 #'  \item CI      : Percent marketable roots (commercial index)
 #'  \item HI      : Harvest index
-#'  \item SHI     : Harvest sowing index  (survival)
+#'  \item SHI     : Harvest sowing index (survival)
 #'  \item BIOM    : Biomass yield
 #'  \item FYTHA   : Foliage total yield t/ha
 #'  \item RFR     : Root foliage ratio
