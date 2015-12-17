@@ -7,9 +7,9 @@
 cdt(fb, plot.size = NULL)
 }
 \arguments{
-\item{plot.size}{Plot size in square meters.}
+\item{fb}{The name of the fieldbook data frame.}
 
-\item{data}{The name of the data frame.}
+\item{plot.size}{Plot size in square meters.}
 }
 \value{
 It returns a data frame with the original and derived traits.

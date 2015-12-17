@@ -1,7 +1,7 @@
 #' Compute derived traits
 #'
 #' Compute derived traits for a given fieldbook.
-#' @param data The name of the data frame.
+#' @param fb The name of the fieldbook data frame.
 #' @param plot.size Plot size in square meters.
 #' @details The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
 #' See \code{?checknames} for details.
