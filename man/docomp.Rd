@@ -8,7 +8,8 @@ docomp(do, traits, factors, addcol = NULL, data)
 }
 \arguments{
 \item{do}{The computation to perform. Implemented options are \code{count},
-\code{max}, \code{mean}, \code{min}, and \code{sum}.}
+and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
+\code{sd}, \code{var}, \code{sum}, etc.}
 
 \item{traits}{List of traits.}
 

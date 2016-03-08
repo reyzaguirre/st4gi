@@ -2,7 +2,8 @@
 #'
 #' Do computations for several traits for some specific factors.
 #' @param do The computation to perform. Implemented options are \code{count},
-#' \code{max}, \code{mean}, \code{min}, and \code{sum}.
+#' and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
+#' \code{sd}, \code{var}, \code{sum}, etc.
 #' @param traits List of traits. 
 #' @param factors List of factors.
 #' @param addcol Additional columns to keep.
@@ -60,14 +61,8 @@ docomp <- function(do, traits, factors, addcol = NULL, data) {
     for (j in 1:dim(dataout)[1]){
       if (do == "count")
         dataout[j, traits[i]] <- sum(!is.na(data[idin == idout[j], traits[i]]))
-      if (do == "max")
-        dataout[j, traits[i]] <- max(data[idin == idout[j], traits[i]], na.rm = TRUE)
-      if (do == "mean")
-        dataout[j, traits[i]] <- mean(data[idin == idout[j], traits[i]], na.rm = TRUE)
-      if (do == "min")
-        dataout[j, traits[i]] <- min(data[idin == idout[j], traits[i]], na.rm = TRUE)
-      if (do == "sum")
-        dataout[j, traits[i]] <- sum(data[idin == idout[j], traits[i]], na.rm = TRUE)
+      else
+        dataout[j, traits[i]] <- eval(parse(text = do))(data[idin == idout[j], traits[i]], na.rm = TRUE)
     }
   }
   
@@ -75,5 +70,3 @@ docomp <- function(do, traits, factors, addcol = NULL, data) {
     
   dataout
 }
-
-
