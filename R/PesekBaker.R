@@ -155,8 +155,8 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   colnames(outind) <- geno
   
   if (means == "single") {
-    temp <- domeans(traits, c(geno, env), data = data)
-    temp <- domeans(traits, geno, data = temp)
+    temp <- docomp("mean", traits, c(geno, env), data = data)
+    temp <- docomp("mean", traits, geno, data = temp)
     outind <- merge(outind, temp, all = TRUE)
     colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
