@@ -14,7 +14,10 @@
 #' @param lb Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for 
 #' \eqn{k = (n \times min(x) - max(x)) / (n - 1)}
 #' @author Raul Eyzaguirre
-#' @details The Elston index is a weight free index.
+#' @details The Elston index is a weight free index. It is assumed that all the
+#' traits are in the same direction where the highest the value the better the genotype.
+#' To include any trait with an opposite direction it must be transformed by multiplication
+#' by -1 before.
 #' 
 #' If \code{means = "fitted"} and \code{model = "gxe"} then the arguments \code{env} and
 #' \code{rep} must be specified.

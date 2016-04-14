@@ -36,7 +36,10 @@ and the rank for each genotype according to the index.
 Function to compute the Elston index (Elston, R. C., 1963).
 }
 \details{
-The Elston index is a weight free index.
+The Elston index is a weight free index. It is assumed that all the
+traits are in the same direction where the highest the value the better the genotype.
+To include any trait with an opposite direction it must be transformed by multiplication
+by -1 before.
 
 If \code{means = "fitted"} and \code{model = "gxe"} then the arguments \code{env} and
 \code{rep} must be specified.
