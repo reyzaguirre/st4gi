@@ -4,16 +4,20 @@
 #' @param traits List of traits.
 #' @param geno The genotypes.
 #' @param env The environments.
-#' @param rep The replications or blocks.
+#' @param rep The replications.
 #' @param data The name of the data frame containing the data.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
 #' @param model Type of model to fit means if \code{means = "fitted"}, \code{"gxe"} for
 #' a model with gxe interaction or \code{"g+e"} for a model without interaction.
 #' The default is \code{"gxe"}. See details for more information.
-#' @param lb Lower bound. \code{1} for k = min(x) and \code{2} for k = (n * min(x) - max(x)) / (n - 1)
+#' @param lb Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for 
+#' \eqn{k = (n \times min(x) - max(x)) / (n - 1)}
 #' @author Raul Eyzaguirre
-#' @details The Elston index is a weight free index.
+#' @details The Elston index is a weight free index. It is assumed that all the
+#' traits are in the same direction where the highest the value the better the genotype.
+#' To include any trait with an opposite direction it must be transformed by multiplication
+#' by -1 before.
 #' 
 #' If \code{means = "fitted"} and \code{model = "gxe"} then the arguments \code{env} and
 #' \code{rep} must be specified.
@@ -21,7 +25,7 @@
 #' must be specified.
 #' If \code{means = "single"} and \code{env} and \code{rep} are specified, then
 #' single arithmetic means are computed over the replications for each genotype
-#' at each location and then for each genotype over locations. In any other case
+#' at each environment and then for each genotype over environments. In any other case
 #' single arithmetic means are computed over all the observations for each genotype.
 #' @return It returns a data frame with the genotypic means for each trait, the Elston index,
 #' and the rank for each genotype according to the index.
@@ -40,6 +44,11 @@
 elston <- function(traits, geno, env = NULL, rep = NULL, data,
                    means = "single", model = "gxe", lb = 1) {
 
+  # Error messages
+  
+  if (means == "fitted" & (is.null(env) | is.null(rep)))
+    stop("For 'fitted' means with the 'gxe' model you must specify the arguments 'env' and 'rep'.")
+  
   # inits
 
   nt <- length(traits) # number of traits
@@ -49,6 +58,7 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   # compute means
   
   outind <- data.frame(geno = levels(factor(data[, geno])))
+  colnames(outind) <- geno
   
   if (means == "single" & (is.null(env) | is.null(rep))) {
     m <- matrix(NA, ng, nt)
@@ -67,14 +77,18 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   
   if (means == "fitted") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
-      if (model == "gxe")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c2:c3) + (1|c3 / c4), data = abc)
-      if (model == "g+e")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c3), data = abc)
+      if (model == "gxe") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", geno, ":", env,
+                               ") + (1|", env, "/", rep, ")"))
+        fm <- lme4::lmer(ff, data = data)
+      }
+      if (model == "g+e") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", env, ")"))
+        fm <- lme4::lmer(ff, data = data)
+      }
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
-      temp$geno <- substring(rownames(temp), 3)
+      temp$geno <- substring(rownames(temp), 5)
       outind <- merge(outind, temp, all = TRUE)
     }
   }
@@ -108,5 +122,6 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   
   # results
 
-  return(outind)
+  outind
 }
+

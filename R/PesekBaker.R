@@ -4,7 +4,7 @@
 #' @param traits List of traits.
 #' @param geno The genotypes.
 #' @param env The environments.
-#' @param rep The replications or blocks. Must be defined if \code{model = "gxe"}.
+#' @param rep The replications. Must be defined if \code{model = "gxe"}.
 #' @param data The name of the data frame containing the data.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
@@ -25,7 +25,7 @@
 #' 
 #' If \code{means = "fitted"} then the model specified in \code{model} is used to fit
 #' the means of the genotypes. Otherwise single arithmetic means are computed over the
-#' replications for each genotype at each location and then for each genotype over locations.
+#' replications for each genotype at each environment and then for each genotype over environments.
 #' 
 #' If \code{dgg} is not specified, the standard deviations of the traits are used.
 #' It means that the desired genetic gains are equal to one standard deviation for
@@ -38,7 +38,6 @@
 #' desired genetic gain will be one standard deviation, no matter if \code{units} is set
 #' as \code{"actual"} or \code{"sdu"}.
 #' 
-#' To compute the index the package \code{lme4} is needed.
 #' @return It returns:
 #' \itemize{
 #' \item \code{$Desired.Genetic.Gains}, the desired genetic gains in actual units,
@@ -86,18 +85,19 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
 
   if (model == "gxe") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
-      fm <- lme4::lmer(c1 ~ (1|c2) + (1|c2:c3) + (1|c3/c4), data = abc)
-      gv[i] <- lme4::VarCorr(fm)$c2[1]
-      pv[i] <- lme4::VarCorr(fm)$c2[1] + lme4::VarCorr(fm)$"c2:c3"[1] / ne +
+      ff <- as.formula(paste(traits[i], "~ (1|", geno, ") + (1|", geno, ":", env,
+                             ") + (1|", env, "/", rep, ")"))
+      fm <- lme4::lmer(ff, data = data)
+      gv[i] <- lme4::VarCorr(fm)[[2]][1]
+      pv[i] <- lme4::VarCorr(fm)[[2]][1] + lme4::VarCorr(fm)[[1]][1] / ne +
         attr(lme4::VarCorr(fm), "sc")^2 / ne / nr
     }
   }
   if (model == "g+e") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env])
-      fm <- lme4::lmer(c1 ~ (1|c2) + (1|c3), data = abc)
-      gv[i] <- lme4::VarCorr(fm)$c2[1]
+      ff <- as.formula(paste(traits[i], "~ (1|", geno, ") + (1|", env, ")"))
+      fm <- lme4::lmer(ff, data = data)
+      gv[i] <- lme4::VarCorr(fm)[[1]][1]
     }
   }
 
@@ -152,24 +152,29 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
   # index calculation
   
   outind <- data.frame(geno = levels(factor(data[, geno])))
+  colnames(outind) <- geno
   
   if (means == "single") {
-    temp <- domeans(traits, c(geno, env), data = data)
-    temp <- domeans(traits, geno, data = temp)
+    temp <- docomp("mean", traits, c(geno, env), data = data)
+    temp <- docomp("mean", traits, geno, data = temp)
     outind <- merge(outind, temp, all = TRUE)
     colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
   
   if (means == "fitted") {
     for (i in 1:nt) {
-      abc <- data.frame(c1 = data[, traits[i]], c2 = data[, geno], c3 = data[, env], c4 = data[, rep])
-      if (model == "gxe")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c2:c3) + (1|c3/c4), data = abc)
-      if (model == "g+e")
-        fm <- lme4::lmer(c1 ~ c2 - 1 + (1|c3), data = abc)
+      if (model == "gxe") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", geno, ":", env,
+                               ") + (1|", env, "/", rep, ")"))
+        fm <- lme4::lmer(ff, data = data)
+        }
+      if (model == "g+e") {
+        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", env, ")"))
+        fm <- lme4::lmer(ff, data = data)
+      }
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
-      temp$geno <- substring(rownames(temp), 3)
+      temp$geno <- substring(rownames(temp), 5)
       outind <- merge(outind, temp, all = TRUE)
     }
   }

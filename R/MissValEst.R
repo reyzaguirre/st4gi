@@ -3,16 +3,13 @@
 #' Function to estimate missing values for a Randomized Complete Block Design (RCBD) by
 #' the least squares method.
 #' @param trait The trait to estimate missing values.
-#' @param geno The genotypes.
-#' @param rep The replications or blocks. A RCBD is assumed.
+#' @param treat The treatments.
+#' @param rep The replications.
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with name \code{new.data} and the number
-#' \code{est.num} and proportion \code{est.prop} of estimated missing values.
-#' The \code{new.data} data frame contains the experimental layout and columns
-#' \code{trait} and \code{trait.est} with the original data and the original data plus the
-#' estimated values.
+#' @return It returns a data frame with the experimental layout and columns \code{trait}
+#' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a RCBD with at least two replications
 #' and at least one datum for each treatment must be loaded. Experimental data
@@ -33,21 +30,16 @@
 #' mveb("y", "geno", "rep", temp)
 #' @export
 
-mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
-
-  # Everything as factor
-
-  data[, geno] <- factor(data[, geno])
-  data[, rep] <- factor(data[, rep])
+mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- checkdata01(trait, geno, data)
+  lc <- checkdata01(trait, treat, rep, data)
 
   # Error messages
 
   if (lc$c1 == 0)
-    stop("Some genotypes have zero frequency. Remove genotypes to proceed.")
+    stop("Some treatments have zero frequency. Remove treatments to proceed.")
 
   if (lc$c1 == 1 & lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
@@ -55,36 +47,32 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
     stop("The data set is balanced. There are no missing values to estimate.")
 
-  est.p <- mean(is.na(data[, trait]))
-  if (est.p > maxp)
+  if (lc$pmis > maxp)
     stop(paste("Too many missing values (",
-               format(est.p * 100, digits = 3), "%).", sep = ""))
+               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
   # Estimation
-
-  G <- nlevels(data[, geno])
-  R <- nlevels(data[, rep])
 
   trait.est <- paste(trait, ".est", sep = "")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
-  mG <- tapply(data[, trait], data[, geno], mean, na.rm = TRUE)
+  mG <- tapply(data[, trait], data[, treat], mean, na.rm = TRUE)
   for (i in 1:length(data[, trait]))
-    if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mG[data[i, geno]]
+    if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mG[data[i, treat]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
   cc <- max(data[, trait], na.rm = TRUE)
   cont <- 0
-  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont<100) {
+  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
     cont <- cont + 1
     for (i in 1:length(data[, trait]))
       if (is.na(data[i, trait]) == 1) {
         data[i, "ytemp"] <- data[i, trait]
-        sum1 <- tapply(data[, "ytemp"], data[, geno], sum, na.rm = TRUE)
+        sum1 <- tapply(data[, "ytemp"], data[, treat], sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
         sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
-        data[i, trait.est] <- (G * sum1[data[i, geno]] + R * sum2[data[i, rep]] - sum3) /
-                             (G * R - G - R + 1)
+        data[i, trait.est] <- (lc$nt * sum1[data[i, treat]] + lc$nr * sum2[data[i, rep]] - sum3) /
+          (lc$nt * lc$nr - lc$nt - lc$nr + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
@@ -94,8 +82,7 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  list(new.data = data[, c(geno, rep, trait, trait.est)],
-       est.num = lc$nmis, est.prop = est.p)
+  data[, c(treat, rep, trait, trait.est)]
 }
 
 #' Estimation of missing values for a MET in a RCBD
@@ -105,15 +92,12 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 #' @param trait The trait to estimate missing values.
 #' @param geno The genotypes.
 #' @param env The environments.
-#' @param rep The replications or blocks. A RCBD is assumed.
+#' @param rep The replications.
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with name \code{new.data} and the number
-#' \code{est.num} and proportion \code{est.prop} of estimated missing values.
-#' The \code{new.data} data frame contains the experimental layout and columns
-#' \code{trait} and \code{trait.est} with the original data and the original data plus the
-#' estimated values.
+#' @return It returns a data frame with the experimental layout and columns \code{trait}
+#' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a MET in a RCBD with at least two replications
 #' and at least one datum for each treatment must be loaded. Experimental data
@@ -130,15 +114,9 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 
 mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
-  # Everything as factor
-
-  data[, geno] <- factor(data[, geno])
-  data[, env] <- factor(data[, env])
-  data[, rep] <- factor(data[, rep])
-
   # Check data
 
-  lc <- checkdata02(trait, geno, env, data)
+  lc <- checkdata02(trait, geno, env, rep, data)
 
   # Error messages
 
@@ -151,16 +129,11 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
     stop("The data set is balanced. There are no missing values to estimate.")
 
-  est.p <- mean(is.na(data[, trait]))
-  if (est.p > maxp)
+  if (lc$pmis > maxp)
     stop(paste("Too many missing values (",
-               format(est.p * 100, digits = 3), "%).", sep = ""))
+               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
-  G <- nlevels(data[, geno])
-  E <- nlevels(data[, env])
-  R <- nlevels(data[, rep])
-
-  if (G < 2 | E < 2)
+  if (lc$ng < 2 | lc$ne < 2)
     stop("This is not a MET experiment.")
 
   # Estimation
@@ -183,9 +156,9 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
         sum1 <- tapply(data[, "ytemp"], list(data[, geno], data[, env]), sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], list(data[, env], data[, rep]), sum, na.rm = TRUE)
         sum3 <- tapply(data[, "ytemp"], data[, env], sum, na.rm = TRUE)
-        data[i, trait.est] <- (G * sum1[data[i, geno], data[i, env]] +
-                                R * sum2[data[i, env], data[i, rep]] -
-                                sum3[data[i, env]]) / (G * R - G - R + 1)
+        data[i, trait.est] <- (lc$ng * sum1[data[i, geno], data[i, env]] +
+                                 lc$nr * sum2[data[i, env], data[i, rep]] -
+                                 sum3[data[i, env]]) / (lc$ng * lc$nr - lc$ng - lc$nr + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
@@ -195,6 +168,5 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  list(new.data = data[, c(geno, env, rep, trait, trait.est)],
-       est.num = lc$nmis, est.prop = est.p)
+  data[, c(geno, env, rep, trait, trait.est)]
 }
