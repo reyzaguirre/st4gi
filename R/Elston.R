@@ -69,8 +69,8 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   }
   
   if (means == "single" & !is.null(env) & !is.null(rep)) {
-    temp <- domeans(traits, c(geno, env), data = data)
-    temp <- domeans(traits, geno, data = temp)
+    temp <- docomp("mean", traits, c(geno, env), data = data)
+    temp <- docomp("mean", traits, geno, data = temp)
     outind <- merge(outind, temp, all = TRUE)
     colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
