@@ -37,8 +37,7 @@ cdt <- function(fb, plot.size = NULL) {
   # Compute derived traits
   
   if (exists("CRW", fb) & exists("NCRW", fb)) {
-    fb$TRW <- apply(cbind(fb$CRW, fb$NCRW), 1, sum, na.rm = TRUE)
-    fb$TRW[is.na(fb$CRW) & is.na(fb$NCRW)] <- NA
+    fb$TRW <- suma(fb$CRW, fb$NCRW)
   }
     
   if (exists("CRW", fb) & !is.null(plot.size))
@@ -53,8 +52,7 @@ cdt <- function(fb, plot.size = NULL) {
   }
   
   if (exists("NOCR", fb) & exists("NONC", fb) & exists("NOPH", fb)) {
-    fb$NRPP <- apply(cbind(fb$NOCR, fb$NONC), 1, sum, na.rm = TRUE) / fb$NOPH
-    fb$NRPP[is.na(fb$NOCR) & is.na(fb$NONC)] <- NA
+    fb$NRPP <- suma(fb$NOCR, fb$NONC) / fb$NOPH
     fb$NRPP[fb$NOPH == 0] <- NA
   }
   
@@ -64,13 +62,13 @@ cdt <- function(fb, plot.size = NULL) {
   }
   
   if (exists("NOCR", fb) & exists("NONC", fb)) {
-    temp <- apply(cbind(fb$NOCR, fb$NONC), 1, sum, na.rm = TRUE)
+    temp <- suma(fb$NOCR, fb$NONC)
     fb$CI <- fb$NOCR /  temp * 100
     fb$CI[temp == 0] <- NA
   }
 
   if (exists("CRW", fb) & exists("NCRW", fb) & exists("VW", fb)) {
-    temp <- apply(cbind(fb$VW, fb$TRW), 1, sum, na.rm = TRUE)
+    temp <- suma(fb$VW, fb$TRW)
     fb$HI <- fb$TRW / temp * 100
     fb$HI[temp == 0] <- NA
   }
@@ -81,8 +79,7 @@ cdt <- function(fb, plot.size = NULL) {
   }
   
   if (exists("CRW", fb) & exists("NCRW", fb) & exists("VW", fb) & !is.null(plot.size)) {
-    fb$BIOM <- apply(cbind(fb$VW, fb$TRW), 1, sum, na.rm = TRUE) * 10 / plot.size
-    fb$BIOM[is.na(fb$VW) & is.na(fb$TRW)] <- NA
+    fb$BIOM <- suma(fb$VW, fb$TRW) * 10 / plot.size
   }
   
   if (exists("VW", fb) & !is.null(plot.size))
