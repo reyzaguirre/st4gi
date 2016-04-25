@@ -54,7 +54,7 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 
   # Check data
 
-  lc <- checkdata02(trait, geno, env, rep, data)
+  lc <- check.met(trait, geno, env, rep, data)
 
   # Error messages
 

@@ -13,7 +13,7 @@
 #' if there is any treatment without data, and if the design is balanced.
 #' @export
 
-checkdata01 <- function(trait, treat, rep, data) {
+check.rcbd <- function(trait, treat, rep, data) {
   
   # Everything as factor
   
@@ -63,7 +63,7 @@ checkdata01 <- function(trait, treat, rep, data) {
 #' and if the design is balanced.
 #' @export
 
-checkdata02 <- function(trait, geno, env, rep, data) {
+check.met <- function(trait, geno, env, rep, data) {
   
   # Everything as factor
   

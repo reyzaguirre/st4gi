@@ -60,7 +60,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Error messages
   
-  lc <- checkdata02(trait, geno, env, rep, data)
+  lc <- check.met(trait, geno, env, rep, data)
   
   if (lc$ng == 2 & lc$ne == 2)
     stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")

@@ -34,7 +34,7 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- checkdata01(trait, treat, rep, data)
+  lc <- check.rcbd(trait, treat, rep, data)
 
   # Error messages
 
@@ -116,7 +116,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- checkdata02(trait, geno, env, rep, data)
+  lc <- check.met(trait, geno, env, rep, data)
 
   # Error messages
 

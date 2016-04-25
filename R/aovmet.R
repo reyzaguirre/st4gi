@@ -32,7 +32,7 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Check data and estimate missing values
 
-  lc <- checkdata02(trait, geno, env, rep, data)
+  lc <- check.met(trait, geno, env, rep, data)
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0) {
     data[, trait] <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
