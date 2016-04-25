@@ -220,11 +220,9 @@ spconsis05 <- function(fb) {
     }
 
   if (exists("NOPR", fb) & exists("NOCR", fb) & exists("NONC", fb))
-    if (dim(subset(fb, NOPR > 0 & ((NOCR + NONC) == 0 | (NOCR == 0 & is.na(NONC)) | (is.na(NOCR) & NONC == 0) |
-                                     (is.na(NOCR) & is.na(NONC)))))[1] > 0) {
+    if (dim(subset(fb, NOPR > 0 & (suma(NOCR, NONC) == 0 | is.na(suma(NOCR, NONC)))))[1] > 0) {
       cat("\n", "- Number of roots (NOCR + NONC) is zero or NA but number of plants with roots (NOPR) is greater than zero:", "\n")
-      print(subset(fb, NOPR > 0 & ((NOCR + NONC) == 0 | (NOCR == 0 & is.na(NONC)) | (is.na(NOCR) & NONC == 0) |
-                                     (is.na(NOCR) & is.na(NONC)))))
+      print(subset(fb, NOPR > 0 & (suma(NOCR, NONC) == 0 | is.na(suma(NOCR, NONC)))))
     }
 }
 
@@ -270,23 +268,21 @@ spconsis07 <- function(fb) {
     }
 
   if (exists("TRW", fb) & exists("CRW", fb) & exists("NCRW", fb))
-    if (dim(subset(fb, (TRW == 0 | is.na(TRW)) & (CRW > 0 | NCRW > 0)))[1] > 0) {
+    if (dim(subset(fb, (TRW == 0 | is.na(TRW)) & suma(CRW, NCRW) > 0))[1] > 0) {
       cat("\n", "- Total root weight (TRW) is zero or NA but root weight (CRW + NCRW) is greater than zero:", "\n")
-      print(subset(fb, (TRW == 0 | is.na(TRW)) & (CRW > 0 | NCRW > 0)))
+      print(subset(fb, (TRW == 0 | is.na(TRW)) & suma(CRW, NCRW) > 0))
     }
 
   if (exists("TRW", fb) & exists("NOCR", fb) & exists("NONC", fb))
-    if (dim(subset(fb, (TRW == 0 | is.na(TRW)) & (NOCR > 0 | NONC > 0)))[1] > 0) {
+    if (dim(subset(fb, (TRW == 0 | is.na(TRW)) & suma(NOCR, NONC) > 0))[1] > 0) {
       cat("\n", "- Total root weight (TRW) is zero or NA but number of roots (NOCR + NONC) is greater than zero:", "\n")
-      print(subset(fb, (TRW == 0 | is.na(TRW)) & (NOCR > 0 | NONC > 0)))
+      print(subset(fb, (TRW == 0 | is.na(TRW)) & suma(NOCR, NONC) > 0))
     }
 
   if (exists("CRW", fb) & exists("NCRW", fb) & exists("NOPR", fb))
-    if (dim(subset(fb, NOPR > 0 & ((CRW + NCRW) == 0 | (CRW == 0 & is.na(NCRW)) | (is.na(CRW) & NCRW == 0) |
-                                     (is.na(CRW) & is.na(NCRW)))))[1] > 0) {
+    if (dim(subset(fb, NOPR > 0 & (suma(CRW, NCRW) == 0 | is.na(suma(CRW, NCRW)))))[1] > 0) {
       cat("\n", "- Root weight (CRW + NCRW) is zero or NA but number of plants with roots (NOPR) is greater than zero:", "\n")
-      print(subset(fb, NOPR > 0 & ((CRW + NCRW) == 0 | (CRW == 0 & is.na(NCRW)) | (is.na(CRW) & NCRW == 0) |
-                                     (is.na(CRW) & is.na(NCRW)))))
+      print(subset(fb, NOPR > 0 & (suma(CRW, NCRW) == 0 | is.na(suma(CRW, NCRW)))))
     }
 }
 
@@ -296,26 +292,20 @@ spconsis07 <- function(fb) {
 spconsis08 <- function(fb) {
 
   if (exists("NOPR", fb))
-    fb$RAUX <- fb$NOPR
-  else
-    if (exists("NOCR", fb) & exists("NONC", fb))
-      fb$RAUX <- apply(cbind(fb$NOCR, fb$NONC), 1, sum, na.rm = TRUE)
-    else
-      if (exists("CRW", fb) & exists("NCRW", fb))
-        fb$RAUX <- apply(cbind(fb$CRW, fb$NCRW), 1, sum, na.rm = TRUE)
-      else
-        if (exists("TRW", fb))
-          fb$RAUX <- fb$TRW
-        else
-          if (exists("RYTHA", fb))
-            fb$RAUX <- fb$RYTHA
-          else
-            if (exists("CRW", fb))
-              fb$RAUX <- fb$CRW
-            else
-              if (exists("CYTHA", fb))
-                fb$RAUX <- fb$CYTHA
-
+    fb$RAUX <- fb$NOPR else
+      if (exists("NOCR", fb) & exists("NONC", fb))
+        fb$RAUX <- suma(fb$NOCR, fb$NONC) else
+          if (exists("CRW", fb) & exists("NCRW", fb))
+            fb$RAUX <- suma(fb$CRW, fb$NCRW) else
+              if (exists("TRW", fb))
+                fb$RAUX <- fb$TRW else
+                  if (exists("RYTHA", fb))
+                    fb$RAUX <- fb$RYTHA else
+                      if (exists("CRW", fb))
+                        fb$RAUX <- fb$CRW else
+                          if (exists("CYTHA", fb))
+                            fb$RAUX <- fb$CYTHA
+                          
   if (exists("RAUX", fb) & exists("RFCP", fb))
     if (dim(subset(fb, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCP)))[1] > 0) {
       cat("\n", "- There are no roots but there is data for root primary flesh color (RFCP):", "\n")
@@ -583,9 +573,9 @@ spconsis08 <- function(fb) {
 spconsis09 <- function(fb, plot.size) {
 
   if (exists("TRW", fb) & exists("CRW", fb) & exists("NCRW", fb))
-    if (dim(subset(fb, abs(TRW - apply(cbind(fb$CRW, fb$NCRW), 1, sum, na.rm = TRUE)) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(TRW - suma(CRW, NCRW)) > 1e-10))[1] > 0) {
       cat("\n", "- Total root weight (TRW) different from CRW + NCRW:", "\n")
-      print(subset(fb, abs(TRW - apply(cbind(fb$CRW, fb$NCRW), 1, sum, na.rm = TRUE)) > 1e-10))
+      print(subset(fb, abs(TRW - suma(CRW, NCRW)) > 1e-10))
     }
 
   if (exists("CYTHA", fb) & exists("CRW", fb))
@@ -595,9 +585,9 @@ spconsis09 <- function(fb, plot.size) {
     }
 
   if (exists("RYTHA", fb) & exists("CRW", fb) & exists("NCRW", fb))
-    if (dim(subset(fb, abs(RYTHA - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) * 10 / plot.size) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(RYTHA - suma(CRW, NCRW) * 10 / plot.size) > 1e-10))[1] > 0) {
       cat("\n", "- Total root yield in tons per hectare (RYTHA) is different from (CRW + NCRW) * 10 / plot.size:", "\n")
-      print(subset(fb, abs(RYTHA - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) * 10 / plot.size) > 1e-10))
+      print(subset(fb, abs(RYTHA - suma(CRW, NCRW) * 10 / plot.size) > 1e-10))
     }
 
   if (exists("ACRW", fb) & exists("CRW", fb) & exists("NOCR", fb))
@@ -607,29 +597,27 @@ spconsis09 <- function(fb, plot.size) {
     }
 
   if (exists("NRPP", fb) & exists("NOCR", fb) & exists("NONC", fb) & exists("NOPH", fb))
-    if (dim(subset(fb, abs(NRPP - apply(cbind(NOCR, NONC), 1, sum, na.rm = TRUE) / NOPH) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(NRPP - suma(NOCR, NONC) / NOPH) > 1e-10))[1] > 0) {
       cat("\n", "- Number of roots per plant (NRPP) is different from (NOCR + NONC) / NOPH:", "\n")
-      print(subset(fb, abs(NRPP - apply(cbind(NOCR, NONC), 1, sum, na.rm = TRUE) / NOPH) > 1e-10))
+      print(subset(fb, abs(NRPP - suma(NOCR, NONC) / NOPH) > 1e-10))
     }
 
   if (exists("YPP", fb) & exists("CRW", fb) & exists("NCRW", fb) & exists("NOPH", fb))
-    if (dim(subset(fb, abs(YPP - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) / NOPH) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(YPP - suma(CRW, NCRW) / NOPH) > 1e-10))[1] > 0) {
       cat("\n", "- Yield per plant (YPP) is different from (CRW + NCRW) / NOPH:", "\n")
-      print(subset(fb, abs(YPP - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) / NOPH) > 1e-10))
+      print(subset(fb, abs(YPP - suma(CRW, NCRW) / NOPH) > 1e-10))
     }
 
   if (exists("CI", fb) & exists("NOCR", fb) & exists("NONC", fb))
-    if (dim(subset(fb, abs(CI - NOCR / apply(cbind(NOCR, NONC), 1, sum, na.rm = TRUE) * 100) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(CI - NOCR / suma(NOCR, NONC) * 100) > 1e-10))[1] > 0) {
       cat("\n", "- Commercial index (CI) is different from NOCR / (NOCR + NONC) * 100:", "\n")
-      print(subset(fb, abs(CI - NOCR / apply(cbind(NOCR, NONC), 1, sum, na.rm = TRUE) * 100) > 1e-10))
+      print(subset(fb, abs(CI - NOCR / suma(NOCR, NONC) * 100) > 1e-10))
     }
 
   if (exists("HI", fb) & exists("CRW", fb) & exists("NCRW", fb) & exists("VW", fb))
-    if (dim(subset(fb, abs(HI - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) /
-                             apply(cbind(VW, CRW, NCRW), 1, sum, na.rm = TRUE) * 100) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(HI - suma(CRW, NCRW) / suma(suma(VW, CRW), NCRW) * 100) > 1e-10))[1] > 0) {
       cat("\n", "- Harvest index (HI) is different from (CRW + NCRW) / (VW + CRW + NCRW) * 100:", "\n")
-      print(subset(fb, abs(HI - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) /
-                             apply(cbind(VW, CRW, NCRW), 1, sum, na.rm = TRUE) * 100) > 1e-10))
+      print(subset(fb, abs(HI - suma(CRW, NCRW) / suma(suma(VW, CRW), NCRW) * 100) > 1e-10))
     }
 
   if (exists("SHI", fb) & exists("NOPH", fb) & exists("NOPS", fb))
@@ -639,10 +627,9 @@ spconsis09 <- function(fb, plot.size) {
     }
 
   if (exists("BIOM", fb) & exists("CRW", fb) & exists("NCRW", fb) & exists("VW", fb))
-    if (dim(subset(fb, abs(BIOM - apply(cbind(VW, CRW, NCRW), 1, sum, na.rm = TRUE) * 10 /
-                             plot.size) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(BIOM - suma(suma(VW, CRW), NCRW) * 10 / plot.size) > 1e-10))[1] > 0) {
       cat("\n", "- Biomass yield (BIOM) is different from (CRW + NCRW + VW) * 10 / plot.size:", "\n")
-      print(subset(fb, abs(BIOM - apply(cbind(VW, CRW, NCRW), 1, sum, na.rm = TRUE) * 10 / plot.size) > 1e-10))
+      print(subset(fb, abs(BIOM - suma(suma(VW, CRW), NCRW) * 10 / plot.size) > 1e-10))
     }
 
   if (exists("FYTHA", fb) & exists("VW", fb))
@@ -670,18 +657,16 @@ spconsis09 <- function(fb, plot.size) {
     }
 
   if (exists("DMRY", fb) & exists("CRW", fb) & exists("NCRW", fb) & exists("DMD", fb) & exists("DMF", fb))
-    if (dim(subset(fb, DMRY != apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) * 10 / plot.size * DMD / DMF))[1] > 0) {
+    if (dim(subset(fb, DMRY != suma(CRW, NCRW) * 10 / plot.size * DMD / DMF))[1] > 0) {
       cat("\n", "- Dry matter root yield (DMRY) is different from (CRW + NCRW) * 10 / plot.size * DMD / DMF:", "\n")
-      print(subset(fb, DMRY != apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) * 10 / plot.size * DMD / DMF))
+      print(subset(fb, DMRY != suma(CRW, NCRW) * 10 / plot.size * DMD / DMF))
     }
 
   if (exists("RFR", fb) & exists("CRW", fb) & exists("NCRW", fb) & exists("DMD", fb)
       & exists("DMF", fb) & exists("VW", fb) & exists("DMVD", fb) & exists("DMVF", fb))
-    if (dim(subset(fb, abs(RFR - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) *
-                             (DMD / DMF) / (VW * DMVD / DMVF)) > 1e-10))[1] > 0) {
+    if (dim(subset(fb, abs(RFR - suma(CRW, NCRW) * (DMD / DMF) / (VW * DMVD / DMVF)) > 1e-10))[1] > 0) {
       cat("\n", "- Root foliage ratio (RFR) is different from (CRW + NCRW) * (DMD / DMF) / (VW * DMVD / DMVF) * 100:", "\n")
-      print(subset(fb, abs(RFR - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) *
-                               (DMD / DMF) / (VW * DMVD / DMVF)) > 1e-10))
+      print(subset(fb, abs(RFR - suma(CRW, NCRW) * (DMD / DMF) / (VW * DMVD / DMVF)) > 1e-10))
     }
 }
 
