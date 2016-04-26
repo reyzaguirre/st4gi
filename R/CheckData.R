@@ -9,6 +9,7 @@
 #' the number of treatments \code{nt.new}, the number of checks \code{nt.check},
 #' the number of missing values for treatments \code{nmis.new}), the number of missing
 #' values for checks \code{nmis.check}, the number of checks without data \code{nt.check.0},
+#' the list of checks without data \code{check.0},
 #' the number of checks with only one datum \code{nt.check.1}, the number of checks with
 #' at least two data \code{nt.check.2}, and the number of replications \code{nr}.
 #' @author Raul Eyzaguirre.
@@ -55,11 +56,17 @@ check.abd <- function(trait, treat, rep, data) {
   nt.check.0 <- sum(tfreq$Freq == 0)
   nt.check.1 <- sum(tfreq$Freq == 1)
   nt.check.2 <- sum(tfreq$Freq > 1)
-    
+  
+  # Checks to remove
+  
+  check.0 <- NULL
+  if (nt.check.0 > 0 )
+    check.0 <- as.character(subset(tfreq, Freq == 0)$Var1)
+
   # Return
   
   list(checks = checks, newmat = newmat, nt.check = nt.check, nt.new = nt.new,
-       nmis.check = nmis.check, nmis.new = nmis.new, nr = nr,
+       nmis.check = nmis.check, nmis.new = nmis.new, nr = nr, check.0 = check.0,
        nt.check.0 = nt.check.0, nt.check.1 = nt.check.1, nt.check.2 = nt.check.2)
 }
 

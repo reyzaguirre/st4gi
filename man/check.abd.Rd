@@ -20,6 +20,7 @@ A list of treatments \code{newmat}, a list of checks \code{checks},
 the number of treatments \code{nt.new}, the number of checks \code{nt.check},
 the number of missing values for treatments \code{nmis.new}), the number of missing
 values for checks \code{nmis.check}, the number of checks without data \code{nt.check.0},
+the list of checks without data \code{check.0},
 the number of checks with only one datum \code{nt.check.1}, the number of checks with
 at least two data \code{nt.check.2}, and the number of replications \code{nr}.
 }
