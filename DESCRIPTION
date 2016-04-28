@@ -11,7 +11,9 @@ Depends:
     R (>= 3.0.0)
 Imports:
     lme4,
-    shiny
+    shiny,
+    ggplot2,
+    ggrepel
 License: MIT + file LICENSE
 Copyright: International Potato Center (2015)
 LazyData: true

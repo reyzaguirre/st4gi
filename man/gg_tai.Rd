@@ -44,6 +44,18 @@ The limits for alpha and lambda are computed using the mean squares from
 an ANOVA table for a RCBD with blocks nested into environments. If the data set is
 unbalanced, a warning is produced.
 }
+\examples{
+# The data
+library(st4gi)
+data(METdata)
+head(met8x12)
+str(met8x12)
+
+# Run Tai for trait y
+if(interactive()){
+  gg_tai("y", "geno", "env", "rep", met8x12)
+}
+}
 \author{
 Raul Eyzaguirre
 

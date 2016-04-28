@@ -41,7 +41,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
 
   # Check data
 
-  lc <- checkdata02(trait, geno, env, data)
+  lc <- checkdata02(trait, geno, env, data = data)
 
   # Error messages and warnings
 

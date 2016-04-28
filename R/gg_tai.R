@@ -22,22 +22,68 @@
 #' unbalanced, a warning is produced.
 #' @return It returns the Tai graph for stability analysis but not anymore the values of alpha
 #' and lambda for each genotype. Use 'tai' function.
+#' @examples
+#' # The data
+#' library(st4gi)
+#' data(METdata)
+#' head(met8x12)
+#' str(met8x12)
+#'
+#' # Run Tai for trait y
+#' if(interactive()){
+#'   gg_tai("y", "geno", "env", "rep", met8x12)
+#' }
 #' @references
 #' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 #' Regional Trials, Crop Science, Vol 11.
-#' @export
+# @export
 
 gg_tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
                    color = c("darkorange", "black", "gray"), size = c(1, 1), scaleSize = TRUE) {
   
-
+  
+  check.met <- function(trait, geno, env, rep, data) {
+    
+    # Everything as factor
+    
+    data[, geno] <- factor(data[, geno])
+    data[, env] <- factor(data[, env])
+    data[, rep] <- factor(data[, rep])
+    
+    ng <- nlevels(data[, geno])
+    ne <- nlevels(data[, env])
+    nr <- nlevels(data[, rep])
+    
+    # Check frequencies by geno and env
+    
+    nmis <- sum(is.na(data[, trait]))
+    pmis <- mean(is.na(data[, trait]))
+    subdata <- subset(data, is.na(data[, trait]) == 0)
+    tfreq <- table(subdata[, geno], subdata[, env])
+    
+    # Controls
+    
+    c1 <- 1 # Check for zeros. Initial state no zeros which is good
+    c2 <- 0 # Check for replicates. Initial state only one replicate which is bad
+    c3 <- 1 # Check for balance. Initial state balanced which is good
+    
+    if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
+    if (max(tfreq) > 1) c2 <- 1 # State 1: more than one replicate
+    if (min(tfreq) != max(tfreq)) c3 <- 0 # State 0: unbalanced
+    
+    # Return
+    
+    list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis, ng = ng, ne = ne, nr = nr)
+  }
+  
   data[, geno] <- factor(data[, geno])
   data[, env] <- factor(data[, env])
   data[, rep] <- factor(data[, rep])
   
   # Check data
+  print(head(data))
   
-  lc <- check.met(trait, geno, env, rep, data)
+  lc <- checkdata02(trait, geno, env, rep, data)
   
   # Error messages and warnings
   

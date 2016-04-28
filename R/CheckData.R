@@ -70,7 +70,7 @@ checkdata02 <- function(trait, geno, env, rep, data) {
   data[, geno] <- factor(data[, geno])
   data[, env] <- factor(data[, env])
   data[, rep] <- factor(data[, rep])
-  
+
   ng <- nlevels(data[, geno])
   ne <- nlevels(data[, env])
   nr <- nlevels(data[, rep])
