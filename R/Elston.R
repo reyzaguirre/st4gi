@@ -46,10 +46,14 @@
 #' @export
 
 elston <- function(traits, geno, env = NULL, rep = NULL, data,
-                   means = "single", model = "gxe", lb = 1) {
-
-  # Error messages
+                   means = c("single", "fitted"), model = c("gxe", "g+e"),
+                   lb = 1) {
   
+  # Error messages
+
+  means <- match.arg(means)
+  model <- match.arg(model)
+
   if (means == "fitted" & model == "gxe" & (is.null(env) | is.null(rep)))
     stop("For 'fitted' means with the 'gxe' model you must specify the arguments 'env' and 'rep'.")
   
