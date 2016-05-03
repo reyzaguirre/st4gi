@@ -4,10 +4,10 @@
 \alias{msdplot}
 \title{Plot means and standard deviations with a dotplot}
 \usage{
-msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
-  sort.means = "none", main = NULL, xlab = "groups", ylab = "",
-  colors = c("orange", "orange", "black"), pch = 4, lwd = 2, x.las = 1,
-  jf = 0.1, dist = 0.1)
+msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
+  sort.means = c("none", "increasing", "decreasing"), main = NULL,
+  xlab = "groups", ylab = "", colors = c("orange", "orange", "black"),
+  pch = 4, lwd = 2, x.las = 1, jf = 0.1, dist = 0.1)
 }
 \arguments{
 \item{trait}{The trait to plot.}

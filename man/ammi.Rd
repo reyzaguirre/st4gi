@@ -4,9 +4,9 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(trait, geno, env, rep, data, method = "AMMI", f = 0.5, biplot = 2,
-  biplot1 = "effects", title = NULL, xlab = NULL,
-  color = c("darkorange", "black", "gray"), size = c(1, 1))
+ammi(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5,
+  biplot = 2, biplot1 = c("effects", "means"), title = NULL,
+  xlab = NULL, color = c("darkorange", "black", "gray"), size = c(1, 1))
 }
 \arguments{
 \item{trait}{The trait to analyze.}

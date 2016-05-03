@@ -67,8 +67,15 @@
 #'            dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 #' @export
 
-pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
-                       model = "gxe", dgg = NULL, units = "sdu", sf = 0.1) {
+pesekbaker <- function(traits, geno, env, rep = NULL, data,
+                       means = c("single", "fitted"), model = c("gxe", "g+e"),
+                       dgg = NULL, units = c("sdu", "actual"), sf = 0.1) {
+
+  # match arguments
+  
+  means <- match.arg(means)
+  model <- match.arg(model)
+  units <- match.arg(units)
 
   # inits
 

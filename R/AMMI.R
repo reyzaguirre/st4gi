@@ -42,9 +42,14 @@
 #' ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 #' @export
 
-ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
-                 biplot = 2, biplot1 = "effects", title = NULL, xlab = NULL,
+ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5,
+                 biplot = 2, biplot1 = c("effects", "means"), title = NULL, xlab = NULL,
                  color = c("darkorange", "black", "gray"), size = c(1, 1)) {
+
+  # match arguments
+  
+  method <- match.arg(method)
+  biplot1 <- match.arg(biplot1)
 
   # Everything as factor
 

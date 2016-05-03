@@ -35,19 +35,18 @@
 #' msdplot("y", "g", mydata)
 #' @export
                          
-msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
-                    sort.means = "none", main = NULL, xlab = "groups", ylab = "",
-                    colors = c("orange", "orange", "black"), pch = 4, lwd = 2,
-                    x.las = 1, jf = 0.1, dist = 0.1) {
-  
-  # Error messages
-  
-  if (dotplot != "TRUE" & dotplot != "FALSE")
-    stop("dotplot argument must be TRUE or FALSE.")    
-    
+msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
+                    sort.means = c("none", "increasing", "decreasing"), main = NULL,
+                    xlab = "groups", ylab = "", colors = c("orange", "orange", "black"),
+                    pch = 4, lwd = 2, x.las = 1, jf = 0.1, dist = 0.1) {
+
+  # match arguments
+
+  sort.means <- match.arg(sort.means)
+
   # Groups as factor
   
-    data[, groups] <- as.factor(data[, groups])
+  data[, groups] <- as.factor(data[, groups])
 
   # means and standard deviations
 
