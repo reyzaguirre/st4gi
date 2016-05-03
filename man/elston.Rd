@@ -21,9 +21,9 @@ elston(traits, geno, env = NULL, rep = NULL, data, means = c("single",
 \item{means}{The genotypic means to compute the index, \code{"single"} or
 \code{"fitted"}. The default is \code{"single"}. See details for more information.}
 
-\item{model}{Type of model to fit means if \code{means = "fitted"}: \code{"gxe"}
-for a model with gxe interaction or \code{"g+e"} for a model without interaction.
-The default is \code{"gxe"}. See details for more information.}
+\item{model}{Type of model to fit means, \code{"gxe"} for a model with gxe interaction
+or \code{"g+e"} for a model without interaction. The default is \code{"gxe"}.
+See details for more information.}
 
 \item{lb}{Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for 
 \eqn{k = (n \times min(x) - max(x)) / (n - 1)}}
