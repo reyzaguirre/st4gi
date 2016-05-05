@@ -53,14 +53,6 @@ individual yield (Y) on the mean yield of all environments for each genotype (X)
 In both cases the X values are centered on zero, so the intercepts of the models correspond to
 the means of the genotypes or environments.
 }
-\examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run regression stability analysis
-rsa("y", "geno", "env", "rep", met8x12)
-}
 \author{
 Raul Eyzaguirre
 }
@@ -70,5 +62,12 @@ Aust. J. Agric. Res. 14: 742-754.
 
 Yates, F., and Cochran, W. G. (1938). The Analysis of Group Experiments.
 J. Agric. Sci. 28: 556-580.
+#@examples
+# The data
+#head(met8x12)
+#str(met8x12)
+
+# Run regression stability analysis
+#rsa("y", "geno", "env", "rep", met8x12)
 }
 

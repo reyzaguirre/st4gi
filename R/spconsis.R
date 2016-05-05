@@ -318,7 +318,7 @@ spconsis04 <- function(data) {
 # Inconsistencies for NOPR and number of roots.
 
 spconsis05 <- function(data) {
-
+  with(data, {
   if (exists("NOPR", data) & exists("NOCR", data) & exists("NONC", data))
     if (dim(subset(data, (NOPR == 0 | is.na(NOPR)) & (NOCR > 0 | NONC > 0)))[1] > 0) {
       cat("\n", "- Number of plants with roots (NOPR) is zero or NA but number of roots (NOCR + NONC) is greater than zero:", "\n")
@@ -332,13 +332,14 @@ spconsis05 <- function(data) {
       print(subset(data, NOPR > 0 & ((NOCR + NONC) == 0 | (NOCR == 0 & is.na(NONC)) | (is.na(NOCR) & NONC == 0) |
                                      (is.na(NOCR) & is.na(NONC)))))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 6.
 # Inconsistencies for number of roots and root weight.
 
 spconsis06 <- function(data) {
-
+  with(data, {
   if (exists("NOCR", data) & exists("CRW", data))
     if (dim(subset(data, (NOCR == 0 | is.na(NOCR)) & CRW > 0))[1] > 0) {
       cat("\n", "- Number of commercial roots (NOCR) is zero or NA but the commercial root weight (CRW) is greater than zero:", "\n")
@@ -362,13 +363,14 @@ spconsis06 <- function(data) {
       cat("\n", "- Non commercial root weight (NCRW) is zero or NA but the number of non commercial roots (NONC) is greater than zero:", "\n")
       print(subset(data, NONC > 0 & (NCRW == 0 | is.na(NCRW))))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 7.
 # Inconsistencies for TRW, CRW + NCRW, NOCR + NONC, NOPR.
 
 spconsis07 <- function(data) {
-
+  with(data, {
   if (exists("TRW", data) & exists("NOPR", data))
     if (dim(subset(data, (TRW == 0 | is.na(TRW)) & NOPR > 0))[1] > 0) {
       cat("\n", "- Total root weight (TRW) is zero or NA but number of plants with roots (NOPR) is greater than zero:", "\n")
@@ -394,300 +396,302 @@ spconsis07 <- function(data) {
       print(subset(data, NOPR > 0 & ((CRW + NCRW) == 0 | (CRW == 0 & is.na(NCRW)) | (is.na(CRW) & NCRW == 0) |
                                      (is.na(CRW) & is.na(NCRW)))))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 8.
 # Inconsistencies for roots and dependencies.
 
 spconsis08 <- function(data) {
-
-  if (exists("NOPR", data))
-    data$RAUX <- data$NOPR
-  else
-    if (exists("NOCR", data) & exists("NONC", data))
-      data$RAUX <- apply(cbind(data$NOCR, data$NONC), 1, sum, na.rm = TRUE)
-    else
-      if (exists("CRW", data) & exists("NCRW", data))
-        data$RAUX <- apply(cbind(data$CRW, data$NCRW), 1, sum, na.rm = TRUE)
-      else
-        if (exists("TRW", data))
-          data$RAUX <- data$TRW
-        else
-          if (exists("RYTHA", data))
-            data$RAUX <- data$RYTHA
-          else
-            if (exists("CRW", data))
-              data$RAUX <- data$CRW
-            else
-              if (exists("CYTHA", data))
-                data$RAUX <- data$CYTHA
-
-  if (exists("RAUX", data) & exists("RFCP", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCP)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root primary flesh color (RFCP):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCP), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("RFCS", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCS)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root secondary flesh color (RFCS):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCS), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("SCOL", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SCOL)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for storage root skin color (SCOL):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SCOL), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("FCOL", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FCOL)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for storage root flesh color (FCOL):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FCOL), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("RS", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RS)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root size (RS):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RS), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("RF", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RF)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root form (RF):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RF), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("DAMR", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DAMR)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root defects (DAMR):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DAMR), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("RSPR", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RSPR)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root sprouting (RSPR):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RSPR), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("WED1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for weevil damage first evaluation (WED1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("WED2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for weevil damage second evaluation (WED2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("DMF", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMF)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (DMF):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMF), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("DMD", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMD)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for dry weight of roots for dry matter assessment (DMD):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMD), select = -RAUX))
-    }
-
-  if (exists("DMF", data) & exists("DMD", data))
-    if (dim(subset(data, DMF < DMD))[1] > 0) {
-      cat("\n", "- Dry weight of roots for dry matter assessment (DMD) is greater than fresh weight of roots for dry matter assessment (DMF):", "\n")
-      print(subset(data, DMF < DMD, select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("FRAW1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root fiber first determination (FRAW1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("SURAW1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root sugar first determination (SURAW1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("STRAW1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root starch first determination (STRAW1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOF1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked fiber first evaluation (COOF1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOSU1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked sugars first evaluation (COOSU1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOST1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked starch first evaluation (COOST1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOT1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked taste first evaluation (COOT1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOAP1", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP1)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked appearance first evaluation (COOAP1):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP1), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("FRAW2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root fiber second determination (FRAW2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("SURAW2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root sugar second determination (SURAW2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("STRAW2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for root starch second determination (STRAW2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOF2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked fiber second evaluation (COOF2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOSU2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked sugars second evaluation (COOSU2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOST2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked starch second evaluation (COOST2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOT2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked taste second evaluation (COOT2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("COOAP2", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP2)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for cooked appearance second evaluation (COOAP2):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP2), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("PROT", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(PROT)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for protein (PROT):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(PROT), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("FE", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FE)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for iron in dry weight (FE):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FE), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("ZN", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(ZN)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for zinc in dry weight (ZN):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(ZN), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("CA", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(CA)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for calcium in dry weight (CA):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(CA), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("MG", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MG)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for magnesium in dry weight (MG):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MG), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("BC", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(BC)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for beta-carotene in dry weight (BC):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(BC), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("TC", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(TC)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for total carotenoids in dry weight (TC):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(TC), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("STAR", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STAR)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for starch (STAR):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STAR), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("FRUC", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRUC)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for fructose (FRUC):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRUC), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("GLUC", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(GLUC)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for glucose (GLUC):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(GLUC), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("SUCR", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SUCR)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for sucrose (SUCR):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SUCR), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("MALT", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MALT)))[1] > 0) {
-      cat("\n", "- There are no roots but there is data for maltose (MALT):", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MALT), select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("TRW", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & TRW > 0))[1] > 0) {
-      cat("\n", "- There are no roots but total root weight (TRW) is greater than zero:", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & TRW > 0, select = -RAUX))
-    }
-
-  if (exists("RAUX", data) & exists("RYTHA", data))
-    if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & RYTHA > 0))[1] > 0) {
-      cat("\n", "- There are no roots but total root yield (RYTHA) is greater than zero:", "\n")
-      print(subset(data, (RAUX == 0 | is.na(RAUX)) & RYTHA > 0, select = -RAUX))
-    }
-
-  data$RAUX <- NULL
+  # with(data, {
+  # if (exists("NOPR", data))
+  #   data$RAUX <- data$NOPR
+  # else
+  #   if (exists("NOCR", data) & exists("NONC", data))
+  #     data$RAUX <- apply(cbind(data$NOCR, data$NONC), 1, sum, na.rm = TRUE)
+  #   else
+  #     if (exists("CRW", data) & exists("NCRW", data))
+  #       data$RAUX <- apply(cbind(data$CRW, data$NCRW), 1, sum, na.rm = TRUE)
+  #     else
+  #       if (exists("TRW", data))
+  #         data$RAUX <- data$TRW
+  #       else
+  #         if (exists("RYTHA", data))
+  #           data$RAUX <- data$RYTHA
+  #         else
+  #           if (exists("CRW", data))
+  #             data$RAUX <- data$CRW
+  #           else
+  #             if (exists("CYTHA", data))
+  #               data$RAUX <- data$CYTHA
+  # 
+  # if (exists("RAUX", data) & exists("RFCP", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCP)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root primary flesh color (RFCP):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCP), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("RFCS", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCS)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root secondary flesh color (RFCS):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RFCS), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("SCOL", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SCOL)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for storage root skin color (SCOL):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SCOL), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("FCOL", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FCOL)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for storage root flesh color (FCOL):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FCOL), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("RS", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RS)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root size (RS):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RS), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("RF", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RF)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root form (RF):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RF), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("DAMR", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DAMR)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root defects (DAMR):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DAMR), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("RSPR", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RSPR)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root sprouting (RSPR):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(RSPR), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("WED1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for weevil damage first evaluation (WED1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("WED2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for weevil damage second evaluation (WED2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(WED2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("DMF", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMF)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (DMF):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMF), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("DMD", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMD)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for dry weight of roots for dry matter assessment (DMD):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(DMD), select = -RAUX))
+  #   }
+  # 
+  # if (exists("DMF", data) & exists("DMD", data))
+  #   if (dim(subset(data, DMF < DMD))[1] > 0) {
+  #     cat("\n", "- Dry weight of roots for dry matter assessment (DMD) is greater than fresh weight of roots for dry matter assessment (DMF):", "\n")
+  #     print(subset(data, DMF < DMD, select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("FRAW1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root fiber first determination (FRAW1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("SURAW1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root sugar first determination (SURAW1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("STRAW1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root starch first determination (STRAW1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOF1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked fiber first evaluation (COOF1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOSU1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked sugars first evaluation (COOSU1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOST1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked starch first evaluation (COOST1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOT1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked taste first evaluation (COOT1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOAP1", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP1)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked appearance first evaluation (COOAP1):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP1), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("FRAW2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root fiber second determination (FRAW2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRAW2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("SURAW2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root sugar second determination (SURAW2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SURAW2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("STRAW2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for root starch second determination (STRAW2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STRAW2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOF2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked fiber second evaluation (COOF2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOF2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOSU2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked sugars second evaluation (COOSU2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOSU2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOST2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked starch second evaluation (COOST2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOST2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOT2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked taste second evaluation (COOT2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOT2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("COOAP2", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP2)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for cooked appearance second evaluation (COOAP2):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(COOAP2), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("PROT", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(PROT)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for protein (PROT):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(PROT), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("FE", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FE)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for iron in dry weight (FE):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FE), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("ZN", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(ZN)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for zinc in dry weight (ZN):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(ZN), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("CA", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(CA)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for calcium in dry weight (CA):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(CA), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("MG", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MG)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for magnesium in dry weight (MG):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MG), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("BC", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(BC)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for beta-carotene in dry weight (BC):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(BC), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("TC", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(TC)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for total carotenoids in dry weight (TC):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(TC), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("STAR", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STAR)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for starch (STAR):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(STAR), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("FRUC", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRUC)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for fructose (FRUC):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(FRUC), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("GLUC", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(GLUC)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for glucose (GLUC):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(GLUC), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("SUCR", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SUCR)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for sucrose (SUCR):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(SUCR), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("MALT", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MALT)))[1] > 0) {
+  #     cat("\n", "- There are no roots but there is data for maltose (MALT):", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & !is.na(MALT), select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("TRW", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & TRW > 0))[1] > 0) {
+  #     cat("\n", "- There are no roots but total root weight (TRW) is greater than zero:", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & TRW > 0, select = -RAUX))
+  #   }
+  # 
+  # if (exists("RAUX", data) & exists("RYTHA", data))
+  #   if (dim(subset(data, (RAUX == 0 | is.na(RAUX)) & RYTHA > 0))[1] > 0) {
+  #     cat("\n", "- There are no roots but total root yield (RYTHA) is greater than zero:", "\n")
+  #     print(subset(data, (RAUX == 0 | is.na(RAUX)) & RYTHA > 0, select = -RAUX))
+  #   }
+  # 
+  # data$RAUX <- NULL
+  #})
 }
 
 # Check consistency for sweetpotato experimental data, part 9.
 # Inconsistencies for calculated variables.
 
 spconsis09 <- function(data, plot.size) {
-
+  with(data, {
   if (exists("TRW", data) & exists("CRW", data) & exists("NCRW", data))
     if (dim(subset(data, abs(TRW - apply(cbind(data$CRW, data$NCRW), 1, sum, na.rm = TRUE)) > 1e-10))[1] > 0) {
       cat("\n", "- Total root weight (TRW) different from CRW + NCRW:", "\n")
@@ -783,13 +787,14 @@ spconsis09 <- function(data, plot.size) {
       print(subset(data, abs(RFR - apply(cbind(CRW, NCRW), 1, sum, na.rm = TRUE) *
                                (DMD / DMF) / (VW * DMVD / DMVF)) > 1e-10))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 10.
 # Outliers detection based on interquartile range and values out of range for field data.
 
 spconsis10 <- function(data) {
-  
+  with(data, {
   if (exists("NOPE", data))
     if (dim(subset(data, !(NOPE %in% c(0:100, NA))))[1] > 0) {
       cat("\n", "- Out of range values for number of plants established (NOPE):", "\n")
@@ -987,13 +992,14 @@ spconsis10 <- function(data) {
       cat("\n", "- Out of range values for weevil damage second evaluation (WED2):", "\n")
       print(subset(data, !(WED2 %in% c(1:9, NA))))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 11.
 # Outliers detection based on interquartile range and values out of range for DM data.
 
 spconsis11 <- function(data) {
-
+  with(data, {
   if (exists("DMF", data))
     if (dim(subset(data, DMF < 0))[1] > 0) {
       cat("\n", "- Out of range values for fresh weight of roots for dry matter assessment (DMF):", "\n")
@@ -1119,13 +1125,14 @@ spconsis11 <- function(data) {
       cat("\n", "- Extreme high values for dry matter root yield (DMRY):", "\n")
       print(subset(data, DMRY > quantile(DMRY, 0.75, na.rm = TRUE) + 3 * IQR(DMRY, na.rm = TRUE)))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 12.
 # Outliers detection based on interquartile range and values out of range for cooked traits.
 
 spconsis12 <- function(data) {
-
+  with(data, {
   if (exists("FRAW1", data))
     if (dim(subset(data, !(FRAW1 %in% c(1:9, NA))))[1] > 0) {
       cat("\n", "- Out of range values for root fiber first determination (FRAW1):", "\n")
@@ -1221,13 +1228,14 @@ spconsis12 <- function(data) {
       cat("\n", "- Out of range values for cooked appearance second evaluation (COOAP2):", "\n")
       print(subset(data, !(COOAP2 %in% c(1:9, NA))))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 13.
 # Outliers detection based on interquartile range and values out of range for lab data.
 
 spconsis13 <- function(data) {
-
+  with(data, {
   bc.cc.values <- c(0.03, 0, 0.12, 0.02, 0.15, 1.38, 1.65, 1.5, 1.74, 1.76, 0.69, 1.17, 1.32,
                     1.04, 4.41, 4.92, 6.12, 5.46, 3.96, 5.49, 3.03, 3.76, 4.61, 7.23, 7.76,
                     10.5, 11.03, 12.39, 14.37)
@@ -1453,6 +1461,7 @@ spconsis13 <- function(data) {
       cat("\n", "- Extreme high values for maltose (MALT):", "\n")
       print(subset(data, MALT > quantile(MALT, 0.75, na.rm = TRUE) + 3 * IQR(MALT, na.rm = TRUE)))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 14.
@@ -1460,7 +1469,7 @@ spconsis13 <- function(data) {
 # derived variables.
 
 spconsis14 <- function(data) {
-
+  with(data, {
   if (exists("TRW", data))
     if (dim(subset(data, TRW < 0))[1] > 0) {
       cat("\n", "- Out of range values for total root weight (TRW):", "\n")
@@ -1676,4 +1685,5 @@ spconsis14 <- function(data) {
       cat("\n", "- Extreme high values for root foliage ratio (RFR):", "\n")
       print(subset(data, RFR > quantile(RFR, 0.75, na.rm = TRUE) + 3 * IQR(RFR, na.rm = TRUE)))
     }
+  })
 }
