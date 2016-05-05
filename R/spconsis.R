@@ -158,7 +158,7 @@ spconsis <- function(data, plot.size, width = 240) {
 # Inconsistencies for NOPS > NOPE > NOPH > NOPR.
 
 spconsis01 <- function(data) {
-
+  with(data, {
   if (exists("NOPE", data) & exists("NOPS", data))
     if (dim(subset(data, NOPE > NOPS))[1] > 0) {
       cat("\n", "- Number of plants established (NOPE) greater than number of plants sowed (NOPS):", "\n")
@@ -218,13 +218,14 @@ spconsis01 <- function(data) {
       }
     }
   }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 2.
 # Inconsistencies for NOPE and dependencies.
 
 spconsis02 <- function(data) {
-
+  with(data, {
   if (exists("NOPE", data) & exists("VIR1", data))
     if (dim(subset(data, (NOPE == 0 | is.na(NOPE)) & !is.na(VIR1)))[1] > 0) {
       cat("\n", "- Number of plants established (NOPE) is zero or NA but there is data for virus symptoms first evaluation (VIR1):", "\n")
@@ -254,13 +255,14 @@ spconsis02 <- function(data) {
       cat("\n", "- Number of plants established (NOPE) is zero or NA but there is data for vine vigor first evaluation (VV1):", "\n")
       print(subset(data, (NOPE == 0 | is.na(NOPE)) & !is.na(VV1)))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 3.
 # Inconsistencies for NOPH and VW.
 
 spconsis03 <- function(data) {
-
+  with(data, {
   if (exists("NOPH", data) & exists("VW", data))
     if (dim(subset(data, (NOPH == 0 | is.na(NOPH)) & VW > 0))[1] > 0) {
       cat("\n", "- Number of plants harvested (NOPH) is zero or NA but vine weight (VW) is greater than zero:", "\n")
@@ -272,13 +274,14 @@ spconsis03 <- function(data) {
       cat("\n", "- Vine weight (VW) is zero or NA but the number of plants harvested (NOPH) is greater than zero:", "\n")
       print(subset(data, NOPH > 0 & (VW == 0 | is.na(VW))))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 4.
 # Inconsistencies for VW and dependencies.
 
 spconsis04 <- function(data) {
-
+  with(data, {
   if (exists("VW", data) & exists("DMVF", data))
     if (dim(subset(data, (VW == 0 | is.na(VW)) & DMVF > 0))[1] > 0) {
       cat("\n", "- Vine weight (VW) is zero or NA but there is fresh weight vines for dry matter assessment (DMVF):", "\n")
@@ -308,6 +311,7 @@ spconsis04 <- function(data) {
       cat("\n", "- Vine weight (VW) is zero or NA but there is data for virus symptoms third evaluation (VIR3):", "\n")
       print(subset(data, (VW == 0 | is.na(VW)) & !is.na(VIR3)))
     }
+  })
 }
 
 # Check consistency for sweetpotato experimental data, part 5.

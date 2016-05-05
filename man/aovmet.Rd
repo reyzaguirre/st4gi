@@ -21,6 +21,13 @@ aovmet(trait, geno, env, rep, data, maxp = 0.1)
 }
 \value{
 It returns the ANOVA table.
+#@examples
+# The data
+#head(met8x12)
+#str(met8x12)
+
+# Run ANOVA for MET
+#aovmet("y", "geno", "env", "rep", met8x12)
 }
 \description{
 Fit an analysis of variance model for a multi environment trial (MET).
@@ -29,14 +36,6 @@ Fit an analysis of variance model for a multi environment trial (MET).
 If data is unbalanced, missing values are estimated up to an specified maximum
 proportion, 5\% by default. Genotypes and environments are considered as fixed
 factors while the blocks are considered as random and nested into the environments.
-}
-\examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run ANOVA for MET
-aovmet("y", "geno", "env", "rep", met8x12)
 }
 \author{
 Raul Eyzaguirre

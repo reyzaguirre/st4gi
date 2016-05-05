@@ -50,17 +50,6 @@ with data at plot level.
 Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 the data are balanced.
 }
-\examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run AMMI for trait y, biplot2 by default
-ammi("y", "geno", "env", "rep", met8x12)
-
-# Run AMMI for trait y, biplot1
-ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
-}
 \author{
 Raul Eyzaguirre
 }
@@ -73,5 +62,15 @@ biplot, Crop Sci., Vol 40: 597-605.
 }
 \seealso{
 \code{svd}
+#@examples
+# The data
+#head(met8x12)
+3str(met8x12)
+
+# Run AMMI for trait y, biplot2 by default
+#ammi("y", "geno", "env", "rep", met8x12)
+
+# Run AMMI for trait y, biplot1
+#ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 }
 

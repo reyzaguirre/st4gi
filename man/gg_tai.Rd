@@ -34,6 +34,17 @@ gg_tai(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
 \value{
 It returns the Tai graph for stability analysis but not anymore the values of alpha
 and lambda for each genotype. Use 'tai' function.
+#@examples
+# The data
+#library(st4gi)
+#data(METdata)
+#head(met8x12)
+#str(met8x12)
+
+# Run Tai for trait y
+#if(interactive()){
+#  gg_tai("y", "geno", "env", "rep", met8x12)
+#}
 }
 \description{
 This function runs Tai's stability analysis (Tai, G. C. C., 1971).
@@ -43,18 +54,6 @@ It assumes a RCBD with fixed effects for genotypes and random effects for enviro
 The limits for alpha and lambda are computed using the mean squares from
 an ANOVA table for a RCBD with blocks nested into environments. If the data set is
 unbalanced, a warning is produced.
-}
-\examples{
-# The data
-library(st4gi)
-data(METdata)
-head(met8x12)
-str(met8x12)
-
-# Run Tai for trait y
-if(interactive()){
-  gg_tai("y", "geno", "env", "rep", met8x12)
-}
 }
 \author{
 Raul Eyzaguirre

@@ -22,17 +22,17 @@
 #' unbalanced, a warning is produced.
 #' @return It returns the Tai graph for stability analysis but not anymore the values of alpha
 #' and lambda for each genotype. Use 'tai' function.
-#' @examples
+#' #@examples
 #' # The data
-#' library(st4gi)
-#' data(METdata)
-#' head(met8x12)
-#' str(met8x12)
+#' #library(st4gi)
+#' #data(METdata)
+#' #head(met8x12)
+#' #str(met8x12)
 #'
 #' # Run Tai for trait y
-#' if(interactive()){
-#'   gg_tai("y", "geno", "env", "rep", met8x12)
-#' }
+#' #if(interactive()){
+#' #  gg_tai("y", "geno", "env", "rep", met8x12)
+#' #}
 #' @references
 #' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 #' Regional Trials, Crop Science, Vol 11.

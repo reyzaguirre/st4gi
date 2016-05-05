@@ -21,13 +21,13 @@
 #' @references
 #' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 #' Regional Trials, Crop Science, Vol 11.
-#' @examples
+#' #@examples
 #' # The data
-#' head(met8x12)
-#' str(met8x12)
+#' #head(met8x12)
+#' #str(met8x12)
 #'
 #' # Run Tai for trait y
-#' tai("y", "geno", "env", "rep", met8x12)
+#' #tai("y", "geno", "env", "rep", met8x12)
 #' @export
 
 tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,

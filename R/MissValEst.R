@@ -18,19 +18,19 @@
 #' and at least one datum for each treatment must be loaded. Experimental data
 #' with only one replication, any treatment without data, or more missing values than
 #' specified in \code{maxp} will generate an error message.
-#' @examples
+#' #@examples
 #' # The data
-#' head(met8x12)
-#' str(met8x12)
+#' #head(met8x12)
+#' #str(met8x12)
 #'
 #' # Choose one environment
-#' temp <- subset(met8x12, env == "TM80N")
+#' #temp <- subset(met8x12, env == "TM80N")
 #'
 #' # Missing value in the first row
-#' head(temp)
+#' #head(temp)
 #'
 #' # Estimate the missing value
-#' mveb("y", "geno", "rep", temp)
+#' #mveb("y", "geno", "rep", temp)
 #' @export
 
 mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
@@ -119,13 +119,13 @@ mveb <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 #' and at least one datum for each treatment must be loaded. Experimental data
 #' with only one replication, any treatment without data, or more missing values than
 #' specified in \code{maxp} will generate an error message.
-#' @examples
+#' #@examples
 #' # The data
-#' head(met8x12)
-#' str(met8x12)
+#' #head(met8x12)
+#' #str(met8x12)
 #'
 #' # Estimate the missing values
-#' mvemet("y", "geno", "env", "rep", met8x12)
+#' #mvemet("y", "geno", "env", "rep", met8x12)
 #' @export
 
 mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {

@@ -30,16 +30,16 @@
 #' Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based on the GGE
 #' biplot, Crop Sci., Vol 40: 597-605.
 #' @seealso \code{svd}
-#' @examples
+#' #@examples
 #' # The data
-#' head(met8x12)
-#' str(met8x12)
+#' #head(met8x12)
+#' 3str(met8x12)
 #'
 #' # Run AMMI for trait y, biplot2 by default
-#' ammi("y", "geno", "env", "rep", met8x12)
+#' #ammi("y", "geno", "env", "rep", met8x12)
 #'
 #' # Run AMMI for trait y, biplot1
-#' ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
+#' #ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 #' @export
 
 ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,

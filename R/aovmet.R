@@ -12,13 +12,13 @@
 #' proportion, 5\% by default. Genotypes and environments are considered as fixed
 #' factors while the blocks are considered as random and nested into the environments.
 #' @return It returns the ANOVA table.
-#' @examples
+#' #@examples
 #' # The data
-#' head(met8x12)
-#' str(met8x12)
+#' #head(met8x12)
+#' #str(met8x12)
 #'
 #' # Run ANOVA for MET
-#' aovmet("y", "geno", "env", "rep", met8x12)
+#' #aovmet("y", "geno", "env", "rep", met8x12)
 #' @export
 
 aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {

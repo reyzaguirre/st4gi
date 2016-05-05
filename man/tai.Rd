@@ -41,19 +41,18 @@ The limits for alpha and lambda are computed using the mean squares from
 an ANOVA table for a RCBD with blocks nested into environments. If the data set is
 unbalanced, a warning is produced.
 }
-\examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run Tai for trait y
-tai("y", "geno", "env", "rep", met8x12)
-}
 \author{
 Raul Eyzaguirre
 }
 \references{
 Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 Regional Trials, Crop Science, Vol 11.
+#@examples
+# The data
+#head(met8x12)
+#str(met8x12)
+
+# Run Tai for trait y
+#tai("y", "geno", "env", "rep", met8x12)
 }
 
