@@ -181,7 +181,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data,
       }
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
-      temp$geno <- substring(rownames(temp), 5)
+      temp[, geno] <- substring(rownames(temp), nchar(geno) + 1)
       outind <- merge(outind, temp, all = TRUE)
     }
   }
