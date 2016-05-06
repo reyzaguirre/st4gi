@@ -25,7 +25,7 @@ elston(traits, geno, env = NULL, rep = NULL, data, means = c("single",
 or \code{"g+e"} for a model without interaction. The default is \code{"gxe"}.
 See details for more information.}
 
-\item{lb}{Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for 
+\item{lb}{Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for
 \eqn{k = (n \times min(x) - max(x)) / (n - 1)}}
 }
 \value{
@@ -43,7 +43,7 @@ by multiplication by \code{-1} before.
 
 If \code{means = "fitted"} then a linear model is fitted and used to estimate
 the means for each genotype. In this case you can choose between a model with
-interaction (\code{model = "gxe"}) and without interaction (\code{model = "g+e"}). 
+interaction (\code{model = "gxe"}) and without interaction (\code{model = "g+e"}).
 If \code{means = "fitted"} and \code{model = "gxe"} then the arguments \code{env}
 and \code{rep} must be specified.
 If \code{means = "fitted"} and \code{model = "g+e"} then the argument \code{env}
