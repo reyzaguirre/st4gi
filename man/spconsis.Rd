@@ -35,12 +35,12 @@ The rule is to detect any value out of the interval
 \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
 }
 \examples{
- # The data
- head(pjpz09)
- str(pjpz09)
+# The data
+head(pjpz09)
+str(pjpz09)
 
- # Check the data
- spconsis(pjpz09, 4.5)
+# Check the data
+spconsis(pjpz09, 4.5)
 }
 \author{
 Raul Eyzaguirre.
