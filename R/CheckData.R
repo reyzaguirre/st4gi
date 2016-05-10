@@ -32,8 +32,8 @@ check.abd <- function(trait, treat, rep, data) {
   # Identify checks and no checks
   
   tfreq <- data.frame(table(data[, treat]))
-  checks <- as.character(subset(tfreq, Freq > 1)[, 1])
-  newmat <- as.character(subset(tfreq, Freq == 1)[, 1])
+  checks <- as.character(tfreq[tfreq$Freq > 1, 1])
+  newmat <- as.character(tfreq[tfreq$Freq == 1, 1])
   
   # Number of treatments
   
@@ -62,11 +62,11 @@ check.abd <- function(trait, treat, rep, data) {
   
   check.0 <- NULL
   if (nt.check.0 > 0 )
-    check.0 <- as.character(subset(tfreq, Freq == 0)$Var1)
+    check.0 <- as.character(tfreq[tfreq$Freq == 0, 1])
   
   check.1 <- NULL
   if (nt.check.1 > 0)
-    check.1 <- as.character(subset(tfreq, Freq == 1)$Var1)
+    check.1 <- as.character(tfreq[tfreq$Freq == 1, 1])
 
   # Return
   
