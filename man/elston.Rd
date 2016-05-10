@@ -55,11 +55,6 @@ If \code{means = "single"} and \code{env} is not specified, then single arithmet
 means are computed over all the observations for each genotype.
 }
 \examples{
-# The data
-head(spg)
-str(spg)
-
-# Run Elston index with all the traits
 elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", data = spg)
 }
 \author{

@@ -22,11 +22,8 @@ Missing values do not propagate. If NA is present for both traits then NA
 is applied to the sum.
 }
 \examples{
- # The data
- head(pjpz09)
-
- # Compute total biomass as the sum of trw and vw
- suma(pjpz09$trw, pjpz09$vw)
+## Compute total biomass as the sum of trw and vw
+suma(pjpz09$trw, pjpz09$vw)
 }
 \author{
 Raul Eyzaguirre.

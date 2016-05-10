@@ -58,11 +58,9 @@ If \code{conf} is set to a value greater than or equal to 1, then it is interpre
 as number of standard deviations.
 }
 \examples{
-# Simulate some data
+## Simulate some data
 mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
                      g = rep(1:5, 10))
-
-# Draw the plot
 msdplot("y", "g", mydata)
 }
 \author{

@@ -42,11 +42,6 @@ an ANOVA table for a RCBD with blocks nested into environments. If the data set 
 unbalanced, a warning is produced.
 }
 \examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run Tai for trait y
 tai("y", "geno", "env", "rep", met8x12)
 }
 \author{

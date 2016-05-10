@@ -107,12 +107,7 @@ The data frame must use the following labels (lower or upper case):
  }
 }
 \examples{
- # The data
- head(pjpz09)
- str(pjpz09)
-
- # Check the trait names
- checknames(pjpz09)
+checknames(pjpz09)
 }
 \author{
 Raul Eyzaguirre.
