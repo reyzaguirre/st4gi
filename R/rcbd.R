@@ -11,15 +11,9 @@
 #' proportion, 10\% by default.
 #' @return It returns ANOVA table.
 #' @examples
-#' # The data
-#' head(pjpz09)
-#' str(pjpz09)
-#'
-#' # Get a copy with some missing values for trw
+#' ## Get a copy with some missing values for trw and run ANOVA
 #' temp <- pjpz09
 #' temp[c(10, 20, 30), "trw"] <- NA
-#' 
-#' # Run ANOVA for trw
 #' rcbd("trw", "geno", "rep", temp)
 #' @export
 

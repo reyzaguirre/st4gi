@@ -8,12 +8,7 @@
 #' @return It returns a data frame with the original and derived traits.
 #' @author Raul Eyzaguirre.
 #' @examples
-#'  # The data
-#'  head(pjpz09)
-#'  str(pjpz09)
-#'
-#'  # Compute derived traits
-#'  cdt(pjpz09, 4.5)
+#' cdt(pjpz09, 4.5)
 #' @export
 
 cdt <- function(fb, plot.size = NULL) {

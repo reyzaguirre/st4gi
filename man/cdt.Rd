@@ -22,11 +22,6 @@ The data frame must use the labels (lower or upper case) listed in function \cod
 See \code{?checknames} for details.
 }
 \examples{
- # The data
- head(pjpz09)
- str(pjpz09)
-
- # Compute derived traits
  cdt(pjpz09, 4.5)
 }
 \author{

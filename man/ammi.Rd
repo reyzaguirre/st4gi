@@ -51,14 +51,10 @@ Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 the data are balanced.
 }
 \examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run AMMI for trait y, biplot2 by default
+## Run AMMI for trait y, biplot2 by default
 ammi("y", "geno", "env", "rep", met8x12)
 
-# Run AMMI for trait y, biplot1
+## Run AMMI for trait y, biplot1
 ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 }
 \author{

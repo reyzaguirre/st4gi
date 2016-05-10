@@ -53,17 +53,13 @@ Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 \code{nr}, \code{rms} and \code{rdf} are specified.
 }
 \examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Compute GxE means
+## Compute GxE means
 int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
 
-# Run AMMI with GxE means matrix, biplot2
+## Run AMMI with GxE means matrix, biplot2
 ammigxe(int.mean, trait = "y")
 
-# Run GGE with GxE means matrix, biplot2
+## Run GGE with GxE means matrix, biplot2
 ammigxe(int.mean, trait = "y", method = "GGE")
 }
 \author{

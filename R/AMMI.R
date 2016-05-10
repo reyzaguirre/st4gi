@@ -31,14 +31,7 @@
 #' biplot, Crop Sci., Vol 40: 597-605.
 #' @seealso \code{svd}
 #' @examples
-#' # The data
-#' head(met8x12)
-#' str(met8x12)
-#'
-#' # Run AMMI for trait y, biplot2 by default
 #' ammi("y", "geno", "env", "rep", met8x12)
-#'
-#' # Run AMMI for trait y, biplot1
 #' ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
 #' @export
 
@@ -136,17 +129,13 @@ ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5
 #' biplot, Crop Sci., Vol 40: 597-605.
 #' @seealso \code{svd}
 #' @examples
-#' # The data
-#' head(met8x12)
-#' str(met8x12)
-#'
-#' # Compute GxE means
+#' ## Compute GxE means
 #' int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
-#'
-#' # Run AMMI with GxE means matrix, biplot2
+#' 
+#' ## Run AMMI with GxE means matrix, biplot2
 #' ammigxe(int.mean, trait = "y")
-#'
-#' # Run GGE with GxE means matrix, biplot2
+#' 
+#' ## Run GGE with GxE means matrix, biplot2
 #' ammigxe(int.mean, trait = "y", method = "GGE")
 #' @export
 

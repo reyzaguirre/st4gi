@@ -94,12 +94,7 @@
 #' with names not included in the list shown above.
 #' @author Raul Eyzaguirre.
 #' @examples
-#'  # The data
-#'  head(pjpz09)
-#'  str(pjpz09)
-#'
-#'  # Check the trait names
-#'  checknames(pjpz09)
+#' checknames(pjpz09)
 #' @export
 
 checknames <- function(fb) {

@@ -32,11 +32,7 @@ proportion, 10\% by default. Genotypes and environments are considered as fixed
 factors while the blocks are considered as random and nested into the environments.
 }
 \examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run ANOVA for MET
+## Run ANOVA for MET
 aovmet("y", "geno", "env", "rep", met8x12)
 }
 \author{

@@ -8,11 +8,8 @@
 #' @return It returns the sum of the two traits.
 #' @author Raul Eyzaguirre.
 #' @examples
-#'  # The data
-#'  head(pjpz09)
-#'
-#'  # Compute total biomass as the sum of trw and vw
-#'  suma(pjpz09$trw, pjpz09$vw)
+#' ## Compute total biomass as the sum of trw and vw
+#' suma(pjpz09$trw, pjpz09$vw)
 #' @export
 
 suma <- function(a, b){

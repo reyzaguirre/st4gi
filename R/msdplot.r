@@ -27,11 +27,9 @@
 #' line representing a confidence limit or a number of standard deviations,
 #' and alternatively the individual data points.
 #' @examples
-#' # Simulate some data
+#' ## Simulate some data
 #' mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
 #'                      g = rep(1:5, 10))
-#'
-#' # Draw the plot
 #' msdplot("y", "g", mydata)
 #' @export
                          

@@ -54,15 +54,9 @@
 #' Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.
 #' Can. J. Plant. Sci. 9:803-804.
 #' @examples
-#' # The data
-#' head(spg)
-#' str(spg)
-#'
-#' # Run Pesek-Baker index with all the traits
 #' pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg)
 #'
-#' # Use different desired genetic gains for each trait,
-#' # more weight on bc and dm, less on star and nocr.
+#' ## More weight on bc and dm, less on star and nocr.
 #' pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg,
 #'            dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 #' @export
