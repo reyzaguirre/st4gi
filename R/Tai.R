@@ -9,24 +9,21 @@
 #' @param data The name of the data frame containing the data.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param conf Probability for the Tai limits.
-#' @param title Main title for plot.
-#' @param color Color for symbols, labels and lines.
-#' @param size Relative size for symbols and labels.
 #' @author Raul Eyzaguirre.
 #' @details The limits for alpha and lambda are computed using the mean squares from
 #' an ANOVA table for a RCBD with blocks nested into environments. If the data set is
 #' unbalanced, a warning is produced.
-#' @return It returns the Tai graph for stability analysis and the values of alpha
-#' and lambda for each genotype.
+#' @return It returns the alpha and lambda values for each genotype for the Tai
+#' stability analysis.
 #' @references
 #' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 #' Regional Trials, Crop Science, Vol 11.
 #' @examples
-#' tai("y", "geno", "env", "rep", met8x12)
+#' model.tai <- tai("y", "geno", "env", "rep", met8x12)
+#' model.tai$Tai_values
 #' @export
 
-tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
-                color = c("darkorange", "black", "gray"), size = c(1, 1)) {
+tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95) {
 
   # Everything as factor
 
@@ -115,15 +112,62 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
     amax <- max(c(abs(alpha), pi.alpha))
   }
   
-  # Tai plot
+  # Output
 
+  output <- list(Trait = trait, Confidence = conf, Tai_values = cbind(alpha, lambda),
+                 Alpha_prediction_limits = pi.alpha, Alpha_limits = amax,
+                 Lambda_limits = lmax, lc = lc, div2 = div2)
+  
+  class(output) <- "tai"
+  invisible(output)
+}
+
+#' Tai plot.
+#' 
+#' This function produces a Tai's stability analysis plot (Tai, G. C. C., 1971).
+#' @param x An object of class \code{tai}.
+#' @param title Main title for plot.
+#' @param color Color for symbols, labels and lines.
+#' @param size Relative size for symbols and labels.
+#' @param ... Additional plot arguments.
+#' @author Raul Eyzaguirre.
+#' @details It produces a Tai's stability analysis plot for an object of class
+#' \code{tai}. See \code{?tai} for additional details.
+#' @return It returns the Tai graph for stability analysis.
+#' @references
+#' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
+#' Regional Trials, Crop Science, Vol 11.
+#' @examples
+#' model.tai <- tai("y", "geno", "env", "rep", met8x12)
+#' plot(model.tai)
+#' @export
+
+plot.tai <- function(x, title = NULL, color = c("darkorange", "black", "gray"),
+                     size = c(1, 1), ...) {
+
+  # arguments
+  
+  trait <- x$Trait
+  conf <- x$Confidence
+  alpha <- x$Tai_values[, 1]
+  lambda <- x$Tai_values[, 2] 
+  amax <- x$Alpha_limits
+  lmax <- x$Lambda_limits
+  lx <- seq(0, lmax, lmax / 100)
+  pi.alpha <- x$Alpha_prediction_limits
+  lc <- x$lc
+  div2 <- x$div2
+    
+  # Tai plot
+  
   if (is.null(title))
     title <- paste("Tai stability analysis for ", trait, sep = "")
-
+  
   plot(1, type = "n", xlim = c(-0.05 * lmax, lmax), ylim = c(-amax, amax),
        main = title, xlab = expression(lambda), ylab = expression(alpha))
   points(lambda, alpha, col = color[1], lwd = 2, pch = 4, cex = size[1])
-  text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1, offset = 0.3, cex = size[2])
+  text(lambda, alpha, labels = names(alpha), col = color[2], pos = 1,
+       offset = 0.3, cex = size[2])
   if (div2 > 0) {
     points(lx, pi.alpha, type = "l", lty = 5, col = color[3])
     points(lx, -pi.alpha, type = "l", lty = 5, col = color[3])
@@ -132,8 +176,4 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NU
          lty = 5, col = color[3])
   abline(v = qf(1 - (1 - conf) / 2, lc$ne - 2, lc$ne * lc$ng * (lc$nr - 1)),
          lty = 5, col = color[3])
-
-  # Output
-
-  cbind(alpha, lambda)
 }
