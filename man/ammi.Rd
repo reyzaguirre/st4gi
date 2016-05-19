@@ -4,9 +4,7 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5,
-  biplot = 2, biplot1 = c("effects", "means"), title = NULL,
-  xlab = NULL, color = c("darkorange", "black", "gray"), size = c(1, 1))
+ammi(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -22,28 +20,16 @@ ammi(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5,
 \item{method}{AMMI or GGE.}
 
 \item{f}{Scaling factor, defaults to 0.5.}
-
-\item{biplot}{Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.}
-
-\item{biplot1}{Choose "effects" or "means" for biplot1.}
-
-\item{title}{Main title for biplot1 or biplot2.}
-
-\item{xlab}{Xlab for biplot1.}
-
-\item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes.}
-
-\item{size}{Relative size for symbols and labels.}
 }
 \value{
-It returns the genotype, environment and interaction means, the interaction
-effects matrix, the first and second PC values for genotypes and environments, a table
-with the contribution of each PC, a dispersion plot of means or effects against the
-first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
-in the contributions table only if method is set to AMMI and the data are balanced.
+It returns an object of class ammi with the overall, genotype,
+environment and interaction means, the interaction effects matrix, the
+first and second PC values for genotypes and environments, and a table
+with the contribution of each PC. Significance of PCs are included in the
+contributions table only if method is set to AMMI and the data are balanced.
 }
 \description{
-This function runs AMMI (Gollob, H. R., 1968) or GGE biplot (Yan , W. et al., 2000)
+This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 with data at plot level.
 }
 \details{
@@ -51,8 +37,10 @@ Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 the data are balanced.
 }
 \examples{
-ammi("y", "geno", "env", "rep", met8x12)
-ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
+model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
+model.ammi
+model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "GGE")
+model.gge
 }
 \author{
 Raul Eyzaguirre.
