@@ -12,6 +12,7 @@ export(check.rcbd)
 export(checknames)
 export(docomp)
 export(elston)
+export(ggtai)
 export(msdplot)
 export(mveb)
 export(mvemet)
@@ -25,7 +26,7 @@ export(rts4)
 export(spconsis)
 export(suma)
 export(tai)
-importFrom("graphics", "abline", "axis", "lines", "plot", "points", 
+importFrom("graphics", "abline", "axis", "lines", "plot", "points",
            "text")
 importFrom("stats", "IQR", "anova", "aov", "as.formula", "coef", "cor",
            "deviance", "dnorm", "lm", "pf", "qf", "qnorm", "qt",
