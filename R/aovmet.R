@@ -15,6 +15,7 @@
 #' @return It returns the ANOVA table.
 #' @examples
 #' aovmet("y", "geno", "env", "rep", met8x12)
+#' @importFrom stats anova
 #' @export
 
 aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {

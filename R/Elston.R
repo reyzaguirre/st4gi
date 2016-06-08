@@ -38,6 +38,7 @@
 #' with respect to several traits at a time. Biometrics. 19(1): 85-97.
 #' @examples
 #' elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", data = spg)
+#' @importFrom stats as.formula sd
 #' @export
 
 elston <- function(traits, geno, env = NULL, rep = NULL, data,

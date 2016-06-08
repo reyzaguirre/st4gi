@@ -43,6 +43,7 @@
 #' J. Agric. Sci. 28: 556-580.
 #' @examples
 #' rsa("y", "geno", "env", "rep", met8x12)
+#' @importFrom stats coef lm summary.lm
 #' @export
 
 rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {

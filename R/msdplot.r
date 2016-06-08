@@ -31,6 +31,7 @@
 #' mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
 #'                      g = rep(1:5, 10))
 #' msdplot("y", "g", mydata)
+#' @importFrom graphics axis lines plot points
 #' @export
                          
 msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,

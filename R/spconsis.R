@@ -19,6 +19,7 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' spconsis(pjpz09, 4.5)
+#' @importFrom stats IQR quantile
 #' @export
 
 spconsis <- function(fb, plot.size, f = 3, width = 240, file = TRUE) {

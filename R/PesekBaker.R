@@ -59,6 +59,7 @@
 #' ## More weight on bc and dm, less on star and nocr.
 #' pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg,
 #'            dgg = c(1, 1.5, 1.5, 0.8, 0.8))
+#' @importFrom stats cor dnorm qnorm
 #' @export
 
 pesekbaker <- function(traits, geno, env, rep = NULL, data,

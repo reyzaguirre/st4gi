@@ -29,6 +29,7 @@
 #' model.ammi
 #' model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "GGE")
 #' model.gge
+#' @importFrom stats aov deviance
 #' @export
 
 ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5) {
@@ -125,6 +126,7 @@ ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5
 #' ## Run GGE with GxE means matrix
 #' model.gge <- ammigxe(int.mean, trait = "y", method = "GGE")
 #' model.gge
+#' @importFrom stats pf
 #' @export
 
 ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
@@ -228,6 +230,7 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
 #' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 #' plot(model.ammi)
 #' plot(model.ammi, biplot = 1)
+#' @importFrom graphics abline text
 #' @export
 
 plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),

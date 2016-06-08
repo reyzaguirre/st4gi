@@ -188,6 +188,7 @@ plot.tai <- function(x, conf = 0.95, title = NULL, color = c("darkorange", "blac
 #' @examples
 #' model.tai <- tai("y", "geno", "env", "rep", met8x12)
 #' ggtai(model.tai)
+#' @importFrom stats qf qt
 #' @export
 
 ggtai <- function(x, conf = 0.95, title = NULL) {
