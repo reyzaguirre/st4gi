@@ -391,7 +391,7 @@ spc02 <- function(fb, type, t1, t2, t3, tx) {
 # Roots and dependencies
 spc03 <- function(fb, temp, t1, tx) {
   if (exists(t1, fb)) {
-    cond <- temp == FALSE
+    cond <- (temp == FALSE) & (fb[, t1] > 0)
     output(fb, cond, tx)
   }
 }
