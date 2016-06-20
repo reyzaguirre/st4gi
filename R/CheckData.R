@@ -134,8 +134,9 @@ check.rcbd <- function(trait, treat, rep, data) {
 #' @param data The name of the data frame.
 #' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
 #' missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-#' of genotypes (\code{ng}), the number of environments (\code{ne}), and the number of
-#' replications (\code{nr}).
+#' of genotypes (\code{ng}), the number of environments (\code{ne}), the number of
+#' replications (\code{nr}), and a table with frequencies of valid cases for each
+#' genotype and environment combination.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD in
 #' several environments, if there is any genotype without data for some specific environments,
@@ -173,5 +174,6 @@ check.met <- function(trait, geno, env, rep, data) {
     
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis, ng = ng, ne = ne, nr = nr)
+  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis, ng = ng, ne = ne, nr = nr,
+       tfreq = tfreq)
 }
