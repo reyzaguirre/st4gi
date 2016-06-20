@@ -41,10 +41,13 @@ spconsis <- function(fb, plot.size, f = 3, width = 240, file = TRUE) {
 
   # Inconsistencies for NOPE and dependencies.
 
+  spc01(fb, 2, "NOPE", "VIR", "- Number of plants established (NOPE) is zero or NA but there is data for virus symptoms (VIR):")
   spc01(fb, 2, "NOPE", "VIR1", "- Number of plants established (NOPE) is zero or NA but there is data for virus symptoms first evaluation (VIR1):")
   spc01(fb, 2, "NOPE", "VIR2", "- Number of plants established (NOPE) is zero or NA but there is data for virus symptoms second evaluation (VIR2):")
+  spc01(fb, 2, "NOPE", "ALT", "- Number of plants established (NOPE) is zero or NA but there is data for alternaria symptoms (ALT):")
   spc01(fb, 2, "NOPE", "ALT1", "- Number of plants established (NOPE) is zero or NA but there is data for alternaria symptoms first evaluation (ALT1):")
   spc01(fb, 2, "NOPE", "ALT2", "- Number of plants established (NOPE) is zero or NA but there is data for alternaria symptoms second evaluation (ALT2):")
+  spc01(fb, 2, "NOPE", "VV", "- Number of plants established (NOPE) is zero or NA but there is data for vine vigor (VV):")
   spc01(fb, 2, "NOPE", "VV1", "- Number of plants established (NOPE) is zero or NA but there is data for vine vigor first evaluation (VV1):")
   
   # NOPH and VW
@@ -111,11 +114,20 @@ spconsis <- function(fb, plot.size, f = 3, width = 240, file = TRUE) {
   spc03(fb, temp, "RF", "- There are no roots but there is data for root form (RF):")
   spc03(fb, temp, "DAMR", "- There are no roots but there is data for root defects (DAMR):")
   spc03(fb, temp, "RSPR", "- There are no roots but there is data for root sprouting (RSPR):")
+  spc03(fb, temp, "WED", "- There are no roots but there is data for weevil damage (WED):")
   spc03(fb, temp, "WED1", "- There are no roots but there is data for weevil damage first evaluation (WED1):")
   spc03(fb, temp, "WED2", "- There are no roots but there is data for weevil damage second evaluation (WED2):")
   spc03(fb, temp, "DMF", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (DMF):")
   spc03(fb, temp, "DMD", "- There are no roots but there is data for dry weight of roots for dry matter assessment (DMD):")
   spc01(fb, 1, "DMD", "DMF", "- Dry weight of roots for dry matter assessment (DMD) is greater than fresh weight of roots for dry matter assessment (DMF):")
+  spc03(fb, temp, "FRAW", "- There are no roots but there is data for root fiber (FRAW):")
+  spc03(fb, temp, "SURAW", "- There are no roots but there is data for root sugar (SURAW):")
+  spc03(fb, temp, "STRAW", "- There are no roots but there is data for root starch (STRAW):")
+  spc03(fb, temp, "COOF", "- There are no roots but there is data for cooked fiber (COOF):")
+  spc03(fb, temp, "COOSU", "- There are no roots but there is data for cooked sugars (COOSU):")
+  spc03(fb, temp, "COOST", "- There are no roots but there is data for cooked starch (COOST):")
+  spc03(fb, temp, "COOT", "- There are no roots but there is data for cooked taste (COOT):")
+  spc03(fb, temp, "COOAP", "- There are no roots but there is data for cooked appearance (COOAP):")
   spc03(fb, temp, "FRAW1", "- There are no roots but there is data for root fiber first determination (FRAW1):")
   spc03(fb, temp, "SURAW1", "- There are no roots but there is data for root sugar first determination (SURAW1):")
   spc03(fb, temp, "STRAW1", "- There are no roots but there is data for root starch first determination (STRAW1):")
@@ -167,11 +179,14 @@ spconsis <- function(fb, plot.size, f = 3, width = 240, file = TRUE) {
   # Outliers detection and values out of range for field data
 
   spc09(fb, c(0:100, NA), "NOPE", "- Out of range values for number of plants established (NOPE):")
+  spc09(fb, c(1:9, NA), "VIR", "- Out of range values for virus symptoms (VIR):")
   spc09(fb, c(1:9, NA), "VIR1", "- Out of range values for virus symptoms first evaluation (VIR1):")
   spc09(fb, c(1:9, NA), "VIR2", "- Out of range values for virus symptoms second evaluation (VIR2):")
   spc09(fb, c(1:9, NA), "VIR2", "- Out of range values for virus symptoms third evaluation (VIR3):")
+  spc09(fb, c(1:9, NA), "ALT", "- Out of range values for alternaria symptoms (ALT):")
   spc09(fb, c(1:9, NA), "ALT1", "- Out of range values for alternaria symptoms first evaluation (ALT1):")
   spc09(fb, c(1:9, NA), "ALT2", "- Out of range values for alternaria symptoms second evaluation (ALT2):")
+  spc09(fb, c(1:9, NA), "VV", "- Out of range values for vine vigor (VV):")
   spc09(fb, c(1:9, NA), "VV1", "- Out of range values for vine vigor first evaluation (VV1):")
   spc09(fb, c(1:9, NA), "VV2", "- Out of range values for vine vigor second evaluation (VV2):")
   spc10(fb, "lower", "VW", "- Out of range values for vine weight (VW):")
@@ -197,6 +212,7 @@ spconsis <- function(fb, plot.size, f = 3, width = 240, file = TRUE) {
   spc09(fb, c(1:9, NA), "RF", "- Out of range values for root form (RF):")
   spc09(fb, c(1:9, NA), "DAMR", "- Out of range values for root defects (DAMR):")
   spc09(fb, c(1:9, NA), "RSPR", "- Out of range values for root sprouting (RSPR):")
+  spc09(fb, c(1:9, NA), "WED", "- Out of range values for weevil damage (WED):")
   spc09(fb, c(1:9, NA), "WED1", "- Out of range values for weevil damage first evaluation (WED1):")
   spc09(fb, c(1:9, NA), "WED2", "- Out of range values for weevil damage second evaluation (WED2):")
   
@@ -229,6 +245,14 @@ spconsis <- function(fb, plot.size, f = 3, width = 240, file = TRUE) {
   
   # Outliers detection and values out of range for cooked traits
   
+  spc09(fb, c(1:9, NA), "FRAW", "- Out of range values for root fiber (FRAW):")
+  spc09(fb, c(1:9, NA), "SURAW", "- Out of range values for root sugar (SURAW):")
+  spc09(fb, c(1:9, NA), "STRAW", "- Out of range values for root starch (STRAW):")
+  spc09(fb, c(1:9, NA), "COOF", "- Out of range values for cooked fiber (COOF):")
+  spc09(fb, c(1:9, NA), "COOSU", "- Out of range values for cooked sugars (COOSU):")
+  spc09(fb, c(1:9, NA), "COOST", "- Out of range values for cooked starch (COOST):")
+  spc09(fb, c(1:9, NA), "COOT", "- Out of range values for cooked taste (COOT):")
+  spc09(fb, c(1:9, NA), "COOAP", "- Out of range values for cooked appearance (COOAP):")
   spc09(fb, c(1:9, NA), "FRAW1", "- Out of range values for root fiber first determination (FRAW1):")
   spc09(fb, c(1:9, NA), "SURAW1", "- Out of range values for root sugar first determination (SURAW1):")
   spc09(fb, c(1:9, NA), "STRAW1", "- Out of range values for root starch first determination (STRAW1):")
