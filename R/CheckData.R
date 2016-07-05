@@ -86,7 +86,8 @@ check.abd <- function(trait, treat, rep, data) {
 #' @param data The name of the data frame.
 #' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
 #' missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-#' of treatments (\code{nt}), and the number of replications (\code{nr}).
+#' of treatments (\code{nt}), the number of replications (\code{nr}), and a table with
+#' frequencies of valid cases for each genotype.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any treatment without data, and if the design is balanced.
@@ -121,7 +122,8 @@ check.rcbd <- function(trait, treat, rep, data) {
   
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis, nt = nt, nr = nr)
+  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis,
+       nt = nt, nr = nr, tfreq = tfreq)
 }
 
 #' Check data for a MET in a RCBD
@@ -174,6 +176,6 @@ check.met <- function(trait, geno, env, rep, data) {
     
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis, ng = ng, ne = ne, nr = nr,
-       tfreq = tfreq)
+  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis,
+       ng = ng, ne = ne, nr = nr, tfreq = tfreq)
 }
