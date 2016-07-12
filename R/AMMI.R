@@ -262,8 +262,8 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
       title <- paste(method, " biplot1 for ", trait, sep = "")
     
     if (biplot1 == "effects") {
-      minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.05
-      maxx <- max(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.05
+      minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.1
+      maxx <- max(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.1
       limx <- c(minx, maxx)
       if (is.null(xlab))
         xlab <- "Genotype and environment effects"
@@ -302,7 +302,7 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
       title <- paste(method, " biplot2 for ", trait, sep = "")
     
     limx <- range(c(E[, 1], G[, 1]))
-    limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.05
+    limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.1
     limy <- range(c(E[, 2], G[, 2]))
     
     plot(1, type = "n", xlim = limx, ylim = limy, main = title,
