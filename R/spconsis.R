@@ -7,9 +7,14 @@
 #' @param plot.size Plot size in square meters.
 #' @param f Factor for extreme values detection. See details.
 #' @param width Number of columns for the output.
-#' @param file Logigal, if TRUE the output goes to a file.
+#' @param file Logigal, if TRUE the output goes to a file with name output.txt.
 #' @details The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
 #' See \code{?checknames} for details.
+#' 
+#' \code{Plot.size} must be specified to check if traits expressed in tons per
+#' hectare have been correctly computed from kilograms per plot. If \code{NULL} this
+#' is not verified.
+#' 
 #' Extreme values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
 #' \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
@@ -18,11 +23,11 @@
 #' the output is shown in the R console.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' spconsis(pjpz09, 4.5)
+#' spconsis(pjpz09)
 #' @importFrom stats IQR quantile
 #' @export
 
-spconsis <- function(fb, plot.size, f = 3, width = 240, file = TRUE) {
+spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
 
   options(width = width)
   
@@ -398,7 +403,7 @@ spc03 <- function(fb, temp, t1, tx) {
 
 # Formula for derived traits with two traits
 spc04 <- function(fb, plot.size, t1, t2, tx) {
-  if (exists(t1, fb) & exists(t2, fb)) {
+  if (exists(t1, fb) & exists(t2, fb) & !is.null(plot.size)) {
     cond <- abs(fb[, t1] - fb[, t2] * 10 / plot.size) > 1e-10
     output(fb, cond, tx)
   }
@@ -406,7 +411,7 @@ spc04 <- function(fb, plot.size, t1, t2, tx) {
 
 # Formula for derived traits with three traits
 spc05 <- function(fb, dtf, plot.size, t1, t2, t3, tx) {
-  if (exists(t1, fb) & exists(t2, fb) & exists(t3, fb)) {
+  if (exists(t1, fb) & exists(t2, fb) & exists(t3, fb) & !is.null(plot.size)) {
     if (dtf == 1)
       cond <- abs(fb[, t1] - suma(fb[, t2], fb[, t3])) > 1e-10
     if (dtf == 2)
@@ -423,7 +428,7 @@ spc05 <- function(fb, dtf, plot.size, t1, t2, t3, tx) {
 
 # Formula for derived traits with four traits
 spc06 <- function(fb, dtf, plot.size, t1, t2, t3, t4, tx) {
-  if (exists(t1, fb) & exists(t2, fb) & exists(t3, fb) & exists(t4, fb)) {
+  if (exists(t1, fb) & exists(t2, fb) & exists(t3, fb) & exists(t4, fb) & !is.null(plot.size)) {
     if (dtf == 1)
       cond <- abs(fb[, t1] - suma(fb[, t2], fb[, t3]) / fb[, t4]) > 1e-10
     if (dtf == 2)
@@ -438,7 +443,7 @@ spc06 <- function(fb, dtf, plot.size, t1, t2, t3, t4, tx) {
 
 # Formula for derived traits with five traits
 spc07 <- function(fb, plot.size, t1, t2, t3, t4, t5, tx) {
-  if (exists(t1, fb) & exists(t2, fb) & exists(t3, fb) & exists(t4, fb) & exists(t5, fb)) {
+  if (exists(t1, fb) & exists(t2, fb) & exists(t3, fb) & exists(t4, fb) & exists(t5, fb) & !is.null(plot.size)) {
     cond <- abs(fb[, t1] - suma(fb[, t2], fb[, t3]) * 10 / plot.size * fb[, t4] / fb[, t5]) > 1e-10
     output(fb, cond, tx)
   }
