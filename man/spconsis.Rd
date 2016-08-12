@@ -4,7 +4,8 @@
 \alias{spconsis}
 \title{Check consistency for sweetpotato experimental data}
 \usage{
-spconsis(fb, plot.size = NULL, f = 3, width = 240, file = FALSE)
+spconsis(fb, plot.size = NULL, f = 3, out.mod = c("none", "rcbd", "met"),
+  out.max = 4, width = 240, file = FALSE)
 }
 \arguments{
 \item{fb}{The name of the fieldbook data frame.}
@@ -12,6 +13,10 @@ spconsis(fb, plot.size = NULL, f = 3, width = 240, file = FALSE)
 \item{plot.size}{Plot size in square meters.}
 
 \item{f}{Factor for extreme values detection. See details.}
+
+\item{out.mod}{Statistical model for outliers' detection. See details.}
+
+\item{out.max}{Threshold for outliers' detection.}
 
 \item{width}{Number of columns for the output.}
 
@@ -38,6 +43,11 @@ is not verified.
 Extreme values are detected using the interquartile range.
 The rule is to detect any value out of the interval 
 \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
+
+Outliers are detected based on standardized residuals for some statistical models.
+Options are \code{'rcbd'} and \code{'met'} for a randomized complete block design
+and a multi environment trial with RCBD in each environment. By default the threshold
+value is \code{out.max = 4}.
 }
 \examples{
 spconsis(pjpz09)

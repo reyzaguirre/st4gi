@@ -6,6 +6,8 @@
 #' @param fb The name of the fieldbook data frame.
 #' @param plot.size Plot size in square meters.
 #' @param f Factor for extreme values detection. See details.
+#' @param out.mod Statistical model for outliers' detection. See details.
+#' @param out.max Threshold for outliers' detection.
 #' @param width Number of columns for the output.
 #' @param file Logigal, if TRUE the output goes to a file with name output.txt.
 #' @details The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
@@ -18,20 +20,28 @@
 #' Extreme values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
 #' \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
+#' 
+#' Outliers are detected based on standardized residuals for some statistical models.
+#' Options are \code{'rcbd'} and \code{'met'} for a randomized complete block design
+#' and a multi environment trial with RCBD in each environment. By default the threshold
+#' value is \code{out.max = 4}.
 #' @return If \code{file = TRUE} it returns a file with name checks.txt with a list of
 #' all rows with some kind of inconsistency and all rows with outliers. If \code{file = FALSE}
 #' the output is shown in the R console.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' spconsis(pjpz09)
-#' @importFrom stats IQR quantile
+#' @importFrom stats IQR quantile rstandard
 #' @export
 
-spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
+spconsis <- function(fb, plot.size = NULL, f = 3, out.mod = c("none", "rcbd", "met"),
+                     out.max = 4, width = 240, file = FALSE) {
 
   options(width = width)
   
-  fb <- checknames(fb)
+  out.mod = match.arg(out.mod)
+  
+  fb <- checknames(fb) 
 
   if (file == TRUE) sink(paste(getwd(), "/checks.txt", sep = ""))
 
@@ -78,7 +88,7 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc02(fb, 2, "NOPR", "CRW", "NCRW", "- Root weight (CRW + NCRW) is zero or NA but number of plants with roots (NOPR) is greater than zero:")
   spc01(fb, 3, "NOPR", "TRW", "- Number of plants with roots (NOPR) is zero or NA but total root weight (TRW) is greater than zero::")
   spc01(fb, 3, "TRW", "NOPR", "- Total root weight (TRW) is zero or NA but number of plants with roots (NOPR) is greater than zero:")
-  spc01(fb, 3, "NOPR", "RYTHA", "- Number of plants with roots (NOPR) is zero or NA but root yield in tons per hectare (rytha) is greater than zero::")
+  spc01(fb, 3, "NOPR", "RYTHA", "- Number of plants with roots (NOPR) is zero or NA but root yield in tons per hectare (RYTHA) is greater than zero::")
   spc01(fb, 3, "RYTHA", "NOPR", "- Root yield in tons per hectare (RYTHA) is zero or NA but number of plants with roots (NOPR) is greater than zero:")
   
   # Number of roots and root weight
@@ -150,12 +160,13 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc03(fb, temp, "COOT2", "- There are no roots but there is data for cooked taste second evaluation (COOT2):")
   spc03(fb, temp, "COOAP2", "- There are no roots but there is data for cooked appearance second evaluation (COOAP2):")
   spc03(fb, temp, "PROT", "- There are no roots but there is data for protein (PROT):")
-  spc03(fb, temp, "FE", "- There are no roots but there is data for iron in dry weight (FE):")
-  spc03(fb, temp, "ZN", "- There are no roots but there is data for zinc in dry weight (ZN):")
-  spc03(fb, temp, "CA", "- There are no roots but there is data for calcium in dry weight (CA):")
-  spc03(fb, temp, "MG", "- There are no roots but there is data for magnesium in dry weight (MG):")
-  spc03(fb, temp, "BC", "- There are no roots but there is data for beta-carotene in dry weight (BC):")
-  spc03(fb, temp, "TC", "- There are no roots but there is data for total carotenoids in dry weight (TC):")
+  spc03(fb, temp, "FE", "- There are no roots but there is data for iron (FE):")
+  spc03(fb, temp, "ZN", "- There are no roots but there is data for zinc (ZN):")
+  spc03(fb, temp, "CA", "- There are no roots but there is data for calcium (CA):")
+  spc03(fb, temp, "MG", "- There are no roots but there is data for magnesium (MG):")
+  spc03(fb, temp, "BC", "- There are no roots but there is data for beta-carotene (BC):")
+  spc03(fb, temp, "BC.CC", "- There are no roots but there is data for beta-carotene (BC.CC):")
+  spc03(fb, temp, "TC", "- There are no roots but there is data for total carotenoids (TC):")
   spc03(fb, temp, "STAR", "- There are no roots but there is data for starch (STAR):")
   spc03(fb, temp, "FRUC", "- There are no roots but there is data for fructose (FRUC):")
   spc03(fb, temp, "GLUC", "- There are no roots but there is data for glucose (GLUC):")
@@ -181,7 +192,7 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc07(fb, plot.size, "DMRY", "CRW", "NCRW", "DMD", "DMF", "- Dry matter root yield (DMRY) is different from (CRW + NCRW) * 10 / plot.size * DMD / DMF:")
   spc08(fb, "RFR", "CRW", "NCRW", "DMD", "DMF", "VW", "DMVD", "DMVF", "- Root foliage ratio (RFR) is different from (CRW + NCRW) * (DMD / DMF) / (VW * DMVD / DMVF) * 100:")
   
-  # Outliers detection and values out of range for field data
+  # Extreme values detection and values out of range for field data
 
   spc09(fb, c(0:100, NA), "NOPE", "- Out of range values for number of plants established (NOPE):")
   spc09(fb, c(1:9, NA), "VIR", "- Out of range values for virus symptoms (VIR):")
@@ -221,7 +232,7 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc09(fb, c(1:9, NA), "WED1", "- Out of range values for weevil damage first evaluation (WED1):")
   spc09(fb, c(1:9, NA), "WED2", "- Out of range values for weevil damage second evaluation (WED2):")
   
-  # Outliers detection and values out of range for DM data
+  # Extgreme values detection and values out of range for DM data
   
   spc10(fb, "lower", "DMF", "- Out of range values for fresh weight of roots for dry matter assessment (DMF):")
   spc11(fb, f, "low", "DMF", "- Extreme low values for fresh weight of roots for dry matter assessment (DMF):")
@@ -248,7 +259,7 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc11(fb, f, "low", "DMRY", "- Extreme low values for dry matter root yield (DMRY):")
   spc11(fb, f, "high", "DMRY", "- Extreme high values for dry matter root yield (DMRY):")
   
-  # Outliers detection and values out of range for cooked traits
+  # Extreme values detection and values out of range for cooked traits
   
   spc09(fb, c(1:9, NA), "FRAW", "- Out of range values for root fiber (FRAW):")
   spc09(fb, c(1:9, NA), "SURAW", "- Out of range values for root sugar (SURAW):")
@@ -275,33 +286,33 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc09(fb, c(1:9, NA), "COOT2", "- Out of range values for cooked taste second evaluation (COOT2):")
   spc09(fb, c(1:9, NA), "COOAP2", "- Out of range values for cooked appearance second evaluation (COOAP2):")
   
-  # Outliers detection and values out of range for lab data
+  # Extreme values detection and values out of range for lab data
   
   spc10(fb, "lower", "PROT", "- Out of range values for protein (PROT):")
   spc11(fb, f, "low", "PROT", "- Extreme low values for protein (PROT):")
   spc11(fb, f, "high", "PROT", "- Extreme high values for protein (PROT):")
-  spc10(fb, "lower", "FE", "- Out of range values for iron in dry weight (FE):")
-  spc11(fb, f, "low", "FE", "- Extreme low values for iron in dry weight (FE):")
-  spc11(fb, f, "high", "FE", "- Extreme high values for iron in dry weight (FE):")
-  spc10(fb, "lower", "ZN", "- Out of range values for zinc in dry weight (ZN):")
-  spc11(fb, f, "low", "ZN", "- Extreme low values for zinc in dry weight (ZN):")
-  spc11(fb, f, "high", "ZN", "- Extreme high values for zinc in dry weight (ZN):")
-  spc10(fb, "lower", "CA", "- Out of range values for calcium in dry weight (CA):")
-  spc11(fb, f, "low", "CA", "- Extreme low values for calcium in dry weight (CA):")
-  spc11(fb, f, "high", "CA", "- Extreme high values for calcium in dry weight (CA):")
-  spc10(fb, "lower", "MG", "- Out of range values for magnesium in dry weight (MG):")
-  spc11(fb, f, "low", "MG", "- Extreme low values for magnesium in dry weight (MG):")
-  spc11(fb, f, "high", "MG", "- Extreme high values for magnesium in dry weight (MG):")
-  spc10(fb, "lower", "BC", "- Out of range values for beta-carotene in dry weight (BC):")
-  spc11(fb, f, "low", "BC", "- Extreme low values for beta-carotene in dry weight (BC):")
-  spc11(fb, f, "high", "BC", "- Extreme high values for beta-carotene in dry weight (BC):")
+  spc10(fb, "lower", "FE", "- Out of range values for iron (FE):")
+  spc11(fb, f, "low", "FE", "- Extreme low values for iron (FE):")
+  spc11(fb, f, "high", "FE", "- Extreme high values for iron (FE):")
+  spc10(fb, "lower", "ZN", "- Out of range values for zinc (ZN):")
+  spc11(fb, f, "low", "ZN", "- Extreme low values for zinc (ZN):")
+  spc11(fb, f, "high", "ZN", "- Extreme high values for zinc (ZN):")
+  spc10(fb, "lower", "CA", "- Out of range values for calcium (CA):")
+  spc11(fb, f, "low", "CA", "- Extreme low values for calcium (CA):")
+  spc11(fb, f, "high", "CA", "- Extreme high values for calcium (CA):")
+  spc10(fb, "lower", "MG", "- Out of range values for magnesium (MG):")
+  spc11(fb, f, "low", "MG", "- Extreme low values for magnesium (MG):")
+  spc11(fb, f, "high", "MG", "- Extreme high values for magnesium (MG):")
+  spc10(fb, "lower", "BC", "- Out of range values for beta-carotene (BC):")
+  spc11(fb, f, "low", "BC", "- Extreme low values for beta-carotene (BC):")
+  spc11(fb, f, "high", "BC", "- Extreme high values for beta-carotene (BC):")
   bc.cc.values <- c(0.03, 0, 0.12, 0.02, 0.15, 1.38, 1.65, 1.5, 1.74, 1.76, 0.69, 1.17, 1.32,
                     1.04, 4.41, 4.92, 6.12, 5.46, 3.96, 5.49, 3.03, 3.76, 4.61, 7.23, 7.76,
                     10.5, 11.03, 12.39, 14.37, NA)
-  spc09(fb, bc.cc.values, "BC.CC", "- Out of range values for beta-carotene with color chart (BC.CC):")
-  spc10(fb, "lower", "TC", "- Out of range values for total carotenoids in dry weight (TC):")
-  spc11(fb, f, "low", "TC", "- Extreme low values for total carotenoids in dry weight (TC):")
-  spc11(fb, f, "high", "TC", "- Extreme high values for total carotenoids in dry weight (TC):")
+  spc09(fb, bc.cc.values, "BC.CC", "- Out of range values for beta-carotene (BC.CC):")
+  spc10(fb, "lower", "TC", "- Out of range values for total carotenoids (TC):")
+  spc11(fb, f, "low", "TC", "- Extreme low values for total carotenoids (TC):")
+  spc11(fb, f, "high", "TC", "- Extreme high values for total carotenoids (TC):")
   spc10(fb, "lower", "STAR", "- Out of range values for starch (STAR):")
   spc11(fb, f, "low", "STAR", "- Extreme low values for starch (STAR):")
   spc11(fb, f, "high", "STAR", "- Extreme high values for starch (STAR):")
@@ -318,7 +329,7 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc11(fb, f, "low", "MALT", "- Extreme low values for maltose (MALT):")
   spc11(fb, f, "high", "MALT", "- Extreme high values for maltose (MALT):")
   
-  # Outliers detection and values out of range for derived variables
+  # Extreme values detection and values out of range for derived variables
 
   spc10(fb, "lower", "TRW", "- Out of range values for total root weight (TRW):")
   spc11(fb, f, "low", "TRW", "- Extreme low values for total root weight (TRW):")
@@ -356,6 +367,114 @@ spconsis <- function(fb, plot.size = NULL, f = 3, width = 240, file = FALSE) {
   spc10(fb, "both", "RFR", "- Out of range values for root foliage ratio (RFR):")
   spc11(fb, f, "low", "RFR", "- Extreme low values for root foliage ratio (RFR):")
   spc11(fb, f, "high", "RFR", "- Extreme high values for root foliage ratio (RFR):")
+  
+  # Outliers' detection
+  
+  oc <- 0
+  
+  if (out.mod == "rcbd") {
+    oc <- 1
+    if (exists('G', fb)) {
+      geno <- fb[, 'G']
+    } else {
+      if (exists('GENO', fb)) {
+        geno <- fb[, 'GENO']
+      } else {
+        if (exists('NAME', fb)) {
+          geno <- fb[, 'NAME']
+        } else {
+          oc <- 0
+          warning("Genotypes are not defined. Use G or GENO as labels.", call. = FALSE)  
+        }
+      }
+    }
+    if (exists('R', fb)) {
+      rep <- fb[, 'R']
+    } else {
+      if (exists('REP', fb)) {
+        rep <- fb[, 'REP']
+      } else {
+        oc <- 0
+        warning('Blocks are not defined. Use R or REP as labels.', call. = FALSE)
+      }
+    }
+    env <- NULL
+  }
+  
+  if (out.mod == "met") {
+    oc <- 1
+    if (exists('G', fb)) {
+      geno <- fb[, 'G']
+    } else {
+      if (exists('GENO', fb)) {
+        geno <- fb[, 'GENO']
+      } else {
+        if (exists('NAME', fb)) {
+          geno <- fb[, 'NAME']
+        } else {
+          oc <- 0
+          warning("Genotypes are not defined. Use G or GENO as labels.", call. = FALSE)  
+        }
+      }
+    }
+    if (exists('E', fb)) {
+      env <- fb[, 'E']
+    } else {
+      if (exists('ENV', fb)) {
+        env <- fb[, 'ENV']
+      } else {
+        oc <- 0
+        warning('Environments are not defined. Use E or ENV as labels.', call. = FALSE)
+      }
+    }
+    if (exists('R', fb)) {
+      rep <- fb[, 'R']
+    } else {
+      if (exists('REP', fb)) {
+        rep <- fb[, 'REP']
+      } else {
+        oc <- 0
+        warning('Blocks are not defined. Use R or REP as labels.', call. = FALSE)
+      }
+    }
+  }
+  
+  if (oc == 1) {
+    spc12(fb, geno, env, rep, "VW", out.mod, out.max, "- Outliers for vine weight (VW):")
+    spc12(fb, geno, env, rep, "NOCR", out.mod, out.max, "- Outliers for number of commercial roots (NOCR):")
+    spc12(fb, geno, env, rep, "NONC", out.mod, out.max, "- Outliers for number of non commercial roots (NONC):")
+    spc12(fb, geno, env, rep, "CRW", out.mod, out.max, "- Outliers for commercial root weight (CRW):")
+    spc12(fb, geno, env, rep, "NCRW", out.mod, out.max, "- Outliers for non commercial root weight (NCRW):")
+    spc12(fb, geno, env, rep, "DM", out.mod, out.max, "- Outliers for storage root dry matter content (DM):")
+    spc12(fb, geno, env, rep, "DMRY", out.mod, out.max, "- Outliers for dry matter root yield (DMRY):")
+    spc12(fb, geno, env, rep, "DMV", out.mod, out.max, "- Outliers for vines dry matter content (DMV):")
+    spc12(fb, geno, env, rep, "DMFY", out.mod, out.max, "- Outliers for dry matter foliage yield (DMFY):")
+    spc12(fb, geno, env, rep, "PROT", out.mod, out.max, "- Outliers for protein (PROT):")
+    spc12(fb, geno, env, rep, "FE", out.mod, out.max, "- Outliers for iron (FE):")
+    spc12(fb, geno, env, rep, "ZN", out.mod, out.max, "- Outliers for zinc (ZN):")
+    spc12(fb, geno, env, rep, "CA", out.mod, out.max, "- Outliers for calcium (CA):")
+    spc12(fb, geno, env, rep, "MG", out.mod, out.max, "- Outliers for magnesium (MG):")
+    spc12(fb, geno, env, rep, "BC", out.mod, out.max, "- Outliers for beta-carotene (BC):")
+    spc12(fb, geno, env, rep, "BC.CC", out.mod, out.max, "- Outliers for beta-carotene (BC.CC):")
+    spc12(fb, geno, env, rep, "TC", out.mod, out.max, "- Outliers for total carotenoids (TC):")
+    spc12(fb, geno, env, rep, "STAR", out.mod, out.max, "- Outliers for starch (STAR):")
+    spc12(fb, geno, env, rep, "FRUC", out.mod, out.max, "- Outliers for fructose (FRUC):")
+    spc12(fb, geno, env, rep, "GLUC", out.mod, out.max, "- Outliers for glucose (GLUC):")
+    spc12(fb, geno, env, rep, "SUCR", out.mod, out.max, "- Outliers for sucrose (SUCR):")
+    spc12(fb, geno, env, rep, "MALT", out.mod, out.max, "- Outliers for maltose (MALT):")
+    spc12(fb, geno, env, rep, "TRW", out.mod, out.max, "- Outliers for total root weight (TRW):")
+    spc12(fb, geno, env, rep, "CYTHA", out.mod, out.max, "- Outliers for commercial root yield in tons per hectare (CYTHA):")
+    spc12(fb, geno, env, rep, "RYTHA", out.mod, out.max, "- Outliers for total root yield in tons per hectare (RYTHA):")
+    spc12(fb, geno, env, rep, "ACRW", out.mod, out.max, "- Outliers for average commercial root weight (ACRW):")
+    spc12(fb, geno, env, rep, "NRPP", out.mod, out.max, "- Outliers for number of roots per plant (NRPP):")
+    spc12(fb, geno, env, rep, "YPP", out.mod, out.max, "- Outliers for yield per plant (YPP):")
+    spc12(fb, geno, env, rep, "CI", out.mod, out.max, "- Outliers for commercial index (CI):")
+    spc12(fb, geno, env, rep, "HI", out.mod, out.max, "- Outliers for harvest index (HI):")
+    spc12(fb, geno, env, rep, "SHI", out.mod, out.max, "- Outliers for harvest sowing index (SHI):")
+    spc12(fb, geno, env, rep, "BIOM", out.mod, out.max, "- Outliers for biomass yield (BIOM):")
+    spc12(fb, geno, env, rep, "FYTHA", out.mod, out.max, "- Outliers for foliage total yield in tons per hectare (FYTHA):")
+    spc12(fb, geno, env, rep, "RFR", out.mod, out.max, "- Outliers for root foliage ratio (RFR):")
+  }
   
   if (file == TRUE) sink()
 }
@@ -485,6 +604,22 @@ spc11 <- function(fb, f, ex, t1, tx) {
       cond <- fb[, t1] < quantile(fb[, t1], 0.25, na.rm = TRUE) - f * IQR(fb[, t1], na.rm = TRUE)
     if (ex == "high")
       cond <- fb[, t1] > quantile(fb[, t1], 0.75, na.rm = TRUE) + f * IQR(fb[, t1], na.rm = TRUE)
+    output(fb, cond, tx)
+  } 
+}
+
+# Outliers' detection
+spc12 <- function(fb, geno, env, rep, t1, out.mod, out.max, tx) {
+  if (exists(t1, fb)) {
+    fb$id <- as.numeric(row.names(fb))
+    if (out.mod == "rcbd")
+      model <- aov(fb[, t1] ~ geno + rep)
+    if (out.mod == "met")
+      model <- aov(fb[, t1] ~ geno + env + rep %in% env + geno:env)
+    res <- data.frame(residual = rstandard(model))
+    res$id <- as.numeric(row.names(res))
+    fb <- merge(fb, res, all = T)[, -1]
+    cond <- abs(fb[, 'residual']) > out.max
     output(fb, cond, tx)
   }
 }
