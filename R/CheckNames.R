@@ -14,13 +14,11 @@
 #'  \item R       : Replications (REP is also valid)
 #'  \item NOPS    : Number of plants sowed
 #'  \item NOPE    : Number of plants established
-#'  \item VIR1    : Virus symptoms (1-9), first evaluation (VIR is also valid)
-#'  \item VIR2    : Virus symptoms (1-9), second evaluation
-#'  \item VIR3    : Virus symptoms (1-9), third evaluation
-#'  \item ALT1    : Alternaria symptoms (1-9), first evaluation (ALT is also valid)
-#'  \item ALT2    : Alternaria symptoms (1-9), second evaluation
-#'  \item VV1     : Vine vigor (1-9), first evaluation (VV is also valid)
-#'  \item VV2     : Vine vigor2 (1-9), second evaluation
+#'  \item VIR1    : Virus symptoms (1-9), first evaluation, 4-8 weeks after planting (VIR is also valid)
+#'  \item VIR2    : Virus symptoms (1-9), second evaluation, 1 month before harvest
+#'  \item ALT1    : Alternaria symptoms (1-9), first evaluation, 4-8 weeks after planting (ALT is also valid)
+#'  \item ALT2    : Alternaria symptoms (1-9), second evaluation, 1 month before harvest
+#'  \item VV      : Vine vigor (1-9), 1 month before harvest
 #'  \item VW      : Vine weight (kg/plot)
 #'  \item NOPH    : Number of plants harvested
 #'  \item NOPR    : Number of plants with roots
@@ -38,8 +36,7 @@
 #'  \item RF      : Root form (1-9)
 #'  \item DAMR    : Root defects (1-9)
 #'  \item RSPR    : Root sprouting (1-9)
-#'  \item WED1    : Weevil damage (1-9), first evaluation (WED is also valid)
-#'  \item WED2    : Weevil damage2 (1-9), second evaluation
+#'  \item WED     : Weevil damage (1-9)
 #'  \item DMF     : Fresh weight of roots for dry matter assessment (kg)
 #'  \item DMD     : Dry weight of DMF samples (kg)
 #'  \item DM      : Storage root dry matter content (\%)
@@ -79,7 +76,9 @@
 #'  \item MALT    : Maltose (\%)
 #'  \item TRW     : Total root weight (kg/plot)
 #'  \item CYTHA   : Commercial root yield (t/ha)
+#'  \item CYTHA.AJ: Commercial root yield (t/ha) adjusted by number of harvested plants
 #'  \item RYTHA   : Total root yield (t/ha)
+#'  \item RYTHA.AJ: Total root yield (t/ha) adjusted by number of harvested plants
 #'  \item ACRW    : Average commercial root weight (kg/root)
 #'  \item NRPP    : Number of roots per plant
 #'  \item YPP     : Yield per plant (kg/plant)
@@ -87,7 +86,9 @@
 #'  \item HI      : Harvest index
 #'  \item SHI     : Harvest sowing index (survival)
 #'  \item BIOM    : Biomass yield (t/ha)
+#'  \item BIOM.AJ : Biomass yield (t/ha) adjusted by number of harvested plants
 #'  \item FYTHA   : Foliage total yield (t/ha)
+#'  \item FYTHA.AJ: Foliage total yield (t/ha) adjusted by number of harvested plants
 #'  \item RFR     : Root foliage ratio
 #'  }
 #' @return It returns a data frame with all traits names in upper case, and a list of the traits
@@ -101,16 +102,16 @@ checknames <- function(fb) {
 
 
   colnames.valid <- c("L", "LOC", "Y", "S", "G", "GENO", "NAME", "E", "ENV", "R", "REP", "NOPS",
-                      "NOPE", "VIR", "VIR1", "VIR2", "VIR3", "ALT", "ALT1", "ALT2", "VV", "VV1",
-                      "VV2", "VW", "NOPH", "NOPR", "NOCR", "NONC", "CRW", "NCRW", "RFCP", "RFCS",
-                      "SCOL", "FCOL", "RFCP", "RFCS", "RS", "RF", "DAMR", "RSPR", "WED", "WED1",
-                      "WED2", "DMF", "DMD", "DM", "DMRY", "DMVF", "DMVD", "DMV", "DMFY", "FRAW",
-                      "FRAW1", "SURAW", "SURAW1", "STRAW", "STRAW1", "COOF", "COOF1", "COOSU",
-                      "COOSU1", "COOST", "COOST1", "COOT", "COOT1", "COOAP", "COOAP1", "FRAW2",
-                      "SURAW2", "STRAW2", "COOF2", "COOSU2", "COOST2", "COOT2", "COOAP2", "PROT",
-                      "FE", "ZN", "CA", "MG", "BC", "BC.CC", "TC", "STAR", "FRUC", "GLUC", "SUCR",
-                      "MALT", "TRW", "CYTHA", "RYTHA", "ACRW", "NRPP", "YPP", "CI", "HI", "SHI",
-                      "BIOM", "FYTHA", "RFR")
+                      "NOPE", "VIR", "VIR1", "VIR2", "ALT", "ALT1", "ALT2", "VV", "VW", "NOPH",
+                      "NOPR", "NOCR", "NONC", "CRW", "NCRW", "RFCP", "RFCS", "SCOL", "FCOL",
+                      "RFCP", "RFCS", "RS", "RF", "DAMR", "RSPR", "WED", "DMF", "DMD", "DM",
+                      "DMRY", "DMVF", "DMVD", "DMV", "DMFY", "FRAW", "FRAW1", "SURAW", "SURAW1",
+                      "STRAW", "STRAW1", "COOF", "COOF1", "COOSU", "COOSU1", "COOST", "COOST1",
+                      "COOT", "COOT1", "COOAP", "COOAP1", "FRAW2", "SURAW2", "STRAW2", "COOF2",
+                      "COOSU2", "COOST2", "COOT2", "COOAP2", "PROT", "FE", "ZN", "CA", "MG",
+                      "BC", "BC.CC", "TC", "STAR", "FRUC", "GLUC", "SUCR", "MALT", "TRW", "CYTHA",
+                      "CYTHA.AJ", "RYTHA", "RYTHA.AJ", "ACRW", "NRPP", "YPP", "CI", "HI", "SHI",
+                      "BIOM", "BIOM.AJ", "FYTHA", "FYTHA.AJ", "RFR")
     
   colnames.list <- colnames(fb)
   
@@ -123,7 +124,7 @@ checknames <- function(fb) {
   # Warnings
   
   if (max(check.list.1) == 1)
-    warning("Invalid labels not included for checking: ", list(colnames.list[check.list.1]), call. = FALSE)
+    warning("Columns not included for checking: ", list(colnames.list[check.list.1]), call. = FALSE)
   
   if (max(check.list.2) == 1)
     warning("Some labels converted to upper case: ", list(temp[check.list.2]), call. = FALSE)

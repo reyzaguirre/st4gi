@@ -4,13 +4,11 @@
 \alias{spconsis}
 \title{Check consistency for sweetpotato experimental data}
 \usage{
-spconsis(fb, plot.size = NULL, f = 3, out.mod = c("none", "rcbd", "met"),
-  out.max = 4, width = 240, file = FALSE)
+spconsis(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
+  width = 240, file = FALSE)
 }
 \arguments{
 \item{fb}{The name of the fieldbook data frame.}
-
-\item{plot.size}{Plot size in square meters.}
 
 \item{f}{Factor for extreme values detection. See details.}
 
@@ -36,11 +34,7 @@ AND ANALYSIS OF SWEETPOTATO TRIALS document.
 The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
 See \code{?checknames} for details.
 
-\code{Plot.size} must be specified to check if traits expressed in tons per
-hectare have been correctly computed from kilograms per plot. If \code{NULL} this
-is not verified.
-
-Extreme values are detected using the interquartile range.
+Extreme low and high values are detected using the interquartile range.
 The rule is to detect any value out of the interval 
 \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
 
