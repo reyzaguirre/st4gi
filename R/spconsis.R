@@ -493,6 +493,7 @@ spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
   if (file == TRUE) sink()
 }
 
+# Print results
 output <- function(fb, cond, tx) {
   if (sum(cond, na.rm = TRUE) > 0) {
     cat("\n", tx, "\n", sep = "")

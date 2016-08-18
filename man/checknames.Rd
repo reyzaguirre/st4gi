@@ -82,7 +82,7 @@ The data frame must use the following labels (lower or upper case):
  \item CA      : Calcium (mg/100 g dry weight)
  \item MG      : Magnesium (mg/100 g dry weight)
  \item BC      : Beta-carotene (mg/100 g dry weight)
- \item BC.CC   : Beta-carotene with color charts (mg/100 g dry weight)
+ \item BC.CC   : Beta-carotene with color charts (mg/100 g fresh weight)
  \item TC      : Total carotenoids (mg/100 g dry weight)
  \item STAR    : Starch (\%)
  \item FRUC    : Fructose (\%)
