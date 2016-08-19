@@ -7,6 +7,7 @@
 #' @param f Factor for extreme values detection. See details.
 #' @param out.mod Statistical model for outliers' detection. See details.
 #' @param out.max Threshold for outliers' detection.
+#' @param aqt Additional quantitative traits.
 #' @param width Number of columns for the output.
 #' @param file Logigal, if TRUE the output goes to a file with name output.txt.
 #' @details The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
@@ -30,13 +31,15 @@
 #' @export
 
 spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
-                     out.max = 4, width = 240, file = FALSE) {
+                     out.max = 4, aqt = NULL, width = 240, file = FALSE) {
 
   options(width = width)
   
   out.mod = match.arg(out.mod)
   
-  fb <- checknames(fb) 
+  fb <- checknames(fb, aqt)
+  if (!is.null(aqt))
+    aqt <- toupper(aqt)
 
   if (file == TRUE) sink(paste(getwd(), "/checks.txt", sep = ""))
 
@@ -377,6 +380,15 @@ spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
   spc05(fb, "both", "RFR", "- Out of range values for root foliage ratio (RFR):")
   spc06(fb, f, "low", "RFR", "- Extreme low values for root foliage ratio (RFR):")
   spc06(fb, f, "high", "RFR", "- Extreme high values for root foliage ratio (RFR):")
+
+  # Extreme values detection and values out of range for additional traits
+  
+  if (!is.null(aqt)) {
+    for (i in 1:length(aqt)) {
+      spc06(fb, f, "low", aqt[i], paste("- Extreme low values for (", aqt[i], "):", sep = ""))
+      spc06(fb, f, "high", aqt[i], paste("- Extreme high values for (", aqt[i], "):", sep = ""))
+    }
+  }
   
   # Outliers' detection
   
@@ -488,6 +500,13 @@ spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
     spc07(fb, geno, env, rep, "FYTHA", out.mod, out.max, "- Outliers for foliage total yield in tons per hectare (FYTHA):")
     spc07(fb, geno, env, rep, "FYTHA.AJ", out.mod, out.max, "- Outliers for foliage total yield in tons per hectare (FYTHA.AJ):")
     spc07(fb, geno, env, rep, "RFR", out.mod, out.max, "- Outliers for root foliage ratio (RFR):")
+    
+    # Outliers' detection for additional traits
+    
+    if (!is.null(aqt))
+      for (i in 1:length(aqt))
+        spc07(fb, geno, env, rep, aqt[i], out.mod, out.max, paste("- Outlilers for (", aqt[i], "):", sep = ""))
+    
   }
   
   if (file == TRUE) sink()

@@ -5,7 +5,7 @@
 \title{Check consistency for sweetpotato experimental data}
 \usage{
 spconsis(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
-  width = 240, file = FALSE)
+  aqt = NULL, width = 240, file = FALSE)
 }
 \arguments{
 \item{fb}{The name of the fieldbook data frame.}
@@ -15,6 +15,8 @@ spconsis(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
 \item{out.mod}{Statistical model for outliers' detection. See details.}
 
 \item{out.max}{Threshold for outliers' detection.}
+
+\item{aqt}{Additional quantitative traits.}
 
 \item{width}{Number of columns for the output.}
 

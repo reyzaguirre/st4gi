@@ -3,6 +3,7 @@
 #' Check that fieldbook traits names correspond with the names defined in the document
 #' "PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
 #' @param fb The name of the fieldbook data frame.
+#' @param aqt Additional quantitative traits.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
 #'  \item L       : Locations (LOC is also valid)
@@ -98,8 +99,7 @@
 #' checknames(pjpz09)
 #' @export
 
-checknames <- function(fb) {
-
+checknames <- function(fb, aqt = NULL) {
 
   colnames.valid <- c("L", "LOC", "Y", "S", "G", "GENO", "NAME", "E", "ENV", "R", "REP", "NOPS",
                       "NOPE", "VIR", "VIR1", "VIR2", "ALT", "ALT1", "ALT2", "VV", "VW", "NOPH",
@@ -111,7 +111,7 @@ checknames <- function(fb) {
                       "COOSU2", "COOST2", "COOT2", "COOAP2", "PROT", "FE", "ZN", "CA", "MG",
                       "BC", "BC.CC", "TC", "STAR", "FRUC", "GLUC", "SUCR", "MALT", "TRW", "CYTHA",
                       "CYTHA.AJ", "RYTHA", "RYTHA.AJ", "ACRW", "NRPP", "YPP", "CI", "HI", "SHI",
-                      "BIOM", "BIOM.AJ", "FYTHA", "FYTHA.AJ", "RFR")
+                      "BIOM", "BIOM.AJ", "FYTHA", "FYTHA.AJ", "RFR", toupper(aqt))
     
   colnames.list <- colnames(fb)
   

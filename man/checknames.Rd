@@ -4,10 +4,12 @@
 \alias{checknames}
 \title{Check fieldbook traits names}
 \usage{
-checknames(fb)
+checknames(fb, aqt = NULL)
 }
 \arguments{
 \item{fb}{The name of the fieldbook data frame.}
+
+\item{aqt}{Additional quantitative traits.}
 }
 \value{
 It returns a data frame with all traits names in upper case, and a list of the traits
