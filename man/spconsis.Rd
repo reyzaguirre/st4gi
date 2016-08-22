@@ -4,18 +4,23 @@
 \alias{spconsis}
 \title{Check consistency for sweetpotato experimental data}
 \usage{
-spconsis(fb, plot.size, f = 3, width = 240, file = TRUE)
+spconsis(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
+  aqt = NULL, width = 240, file = FALSE)
 }
 \arguments{
 \item{fb}{The name of the fieldbook data frame.}
 
-\item{plot.size}{Plot size in square meters.}
-
 \item{f}{Factor for extreme values detection. See details.}
+
+\item{out.mod}{Statistical model for outliers' detection. See details.}
+
+\item{out.max}{Threshold for outliers' detection.}
+
+\item{aqt}{Additional quantitative traits.}
 
 \item{width}{Number of columns for the output.}
 
-\item{file}{Logigal, if TRUE the output goes to a file.}
+\item{file}{Logigal, if TRUE the output goes to a file with name output.txt.}
 }
 \value{
 If \code{file = TRUE} it returns a file with name checks.txt with a list of
@@ -30,17 +35,18 @@ AND ANALYSIS OF SWEETPOTATO TRIALS document.
 \details{
 The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
 See \code{?checknames} for details.
-Extreme values are detected using the interquartile range.
+
+Extreme low and high values are detected using the interquartile range.
 The rule is to detect any value out of the interval 
 \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
+
+Outliers are detected based on standardized residuals for some statistical models.
+Options are \code{'rcbd'} and \code{'met'} for a randomized complete block design
+and a multi environment trial with RCBD in each environment. By default the threshold
+value is \code{out.max = 4}.
 }
 \examples{
- # The data
- head(pjpz09)
- str(pjpz09)
-
- # Check the data
- spconsis(pjpz09, 4.5)
+spconsis(pjpz09)
 }
 \author{
 Raul Eyzaguirre.

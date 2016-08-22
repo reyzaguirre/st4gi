@@ -12,3 +12,13 @@
 #' @format A data frame with 10 columns and 204 rows.
 #' @source International Potato Center, sweetpotato experimental data.
 NULL
+
+#' @name alpha01data
+#' @title Data for an alpha (0,1) design
+#' @docType data
+#' @aliases alpha01data
+#' @description This data set contains data for al alpha (0,1) design.
+#' @usage alpha01data
+#' @format A data frame.
+#' @source International Potato Center, sweetpotato experimental data.
+NULL

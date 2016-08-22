@@ -54,21 +54,23 @@
 #' Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.
 #' Can. J. Plant. Sci. 9:803-804.
 #' @examples
-#' # The data
-#' head(spg)
-#' str(spg)
-#'
-#' # Run Pesek-Baker index with all the traits
 #' pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg)
 #'
-#' # Use different desired genetic gains for each trait,
-#' # more weight on bc and dm, less on star and nocr.
+#' ## More weight on bc and dm, less on star and nocr.
 #' pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg,
 #'            dgg = c(1, 1.5, 1.5, 0.8, 0.8))
+#' @importFrom stats cor dnorm qnorm
 #' @export
 
-pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
-                       model = "gxe", dgg = NULL, units = "sdu", sf = 0.1) {
+pesekbaker <- function(traits, geno, env, rep = NULL, data,
+                       means = c("single", "fitted"), model = c("gxe", "g+e"),
+                       dgg = NULL, units = c("sdu", "actual"), sf = 0.1) {
+
+  # match arguments
+  
+  means <- match.arg(means)
+  model <- match.arg(model)
+  units <- match.arg(units)
 
   # inits
 
@@ -174,7 +176,7 @@ pesekbaker <- function(traits, geno, env, rep = NULL, data, means = "single",
       }
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
-      temp$geno <- substring(rownames(temp), 5)
+      temp[, geno] <- substring(rownames(temp), nchar(geno) + 1)
       outind <- merge(outind, temp, all = TRUE)
     }
   }

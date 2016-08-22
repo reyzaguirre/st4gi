@@ -32,8 +32,8 @@ check.abd <- function(trait, treat, rep, data) {
   # Identify checks and no checks
   
   tfreq <- data.frame(table(data[, treat]))
-  checks <- as.character(subset(tfreq, Freq > 1)[, 1])
-  newmat <- as.character(subset(tfreq, Freq == 1)[, 1])
+  checks <- as.character(tfreq[tfreq$Freq > 1, 1])
+  newmat <- as.character(tfreq[tfreq$Freq == 1, 1])
   
   # Number of treatments
   
@@ -62,11 +62,11 @@ check.abd <- function(trait, treat, rep, data) {
   
   check.0 <- NULL
   if (nt.check.0 > 0 )
-    check.0 <- as.character(subset(tfreq, Freq == 0)$Var1)
+    check.0 <- as.character(tfreq[tfreq$Freq == 0, 1])
   
   check.1 <- NULL
   if (nt.check.1 > 0)
-    check.1 <- as.character(subset(tfreq, Freq == 1)$Var1)
+    check.1 <- as.character(tfreq[tfreq$Freq == 1, 1])
 
   # Return
   
@@ -86,7 +86,8 @@ check.abd <- function(trait, treat, rep, data) {
 #' @param data The name of the data frame.
 #' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
 #' missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-#' of treatments (\code{nt}), and the number of replications (\code{nr}).
+#' of treatments (\code{nt}), the number of replications (\code{nr}), and a table with
+#' frequencies of valid cases for each genotype.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any treatment without data, and if the design is balanced.
@@ -121,7 +122,8 @@ check.rcbd <- function(trait, treat, rep, data) {
   
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis, nt = nt, nr = nr)
+  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis,
+       nt = nt, nr = nr, tfreq = tfreq)
 }
 
 #' Check data for a MET in a RCBD
@@ -134,8 +136,9 @@ check.rcbd <- function(trait, treat, rep, data) {
 #' @param data The name of the data frame.
 #' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
 #' missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-#' of genotypes (\code{ng}), the number of environments (\code{ne}), and the number of
-#' replications (\code{nr}).
+#' of genotypes (\code{ng}), the number of environments (\code{ne}), the number of
+#' replications (\code{nr}), and a table with frequencies of valid cases for each
+#' genotype and environment combination.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD in
 #' several environments, if there is any genotype without data for some specific environments,
@@ -173,5 +176,6 @@ check.met <- function(trait, geno, env, rep, data) {
     
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis, ng = ng, ne = ne, nr = nr)
+  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis,
+       ng = ng, ne = ne, nr = nr, tfreq = tfreq)
 }

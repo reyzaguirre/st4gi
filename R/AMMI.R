@@ -1,6 +1,6 @@
 #' AMMI or GGE with data at plot level
 #'
-#' This function runs AMMI (Gollob, H. R., 1968) or GGE biplot (Yan , W. et al., 2000)
+#' This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 #' with data at plot level.
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
@@ -9,20 +9,14 @@
 #' @param data The name of the data frame containing the data.
 #' @param method AMMI or GGE.
 #' @param f Scaling factor, defaults to 0.5.
-#' @param biplot Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
-#' @param biplot1 Choose "effects" or "means" for biplot1.
-#' @param title Main title for biplot1 or biplot2.
-#' @param xlab Xlab for biplot1.
-#' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
-#' @param size Relative size for symbols and labels.
 #' @author Raul Eyzaguirre.
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' the data are balanced.
-#' @return It returns the genotype, environment and interaction means, the interaction
-#' effects matrix, the first and second PC values for genotypes and environments, a table
-#' with the contribution of each PC, a dispersion plot of means or effects against the
-#' first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
-#' in the contributions table only if method is set to AMMI and the data are balanced.
+#' @return It returns an object of class ammi with the overall, genotype,
+#' environment and interaction means, the interaction effects matrix, the
+#' first and second PC values for genotypes and environments, and a table
+#' with the contribution of each PC. Significance of PCs are included in the
+#' contributions table only if method is set to AMMI and the data are balanced.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 #' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
@@ -31,20 +25,18 @@
 #' biplot, Crop Sci., Vol 40: 597-605.
 #' @seealso \code{svd}
 #' @examples
-#' # The data
-#' head(met8x12)
-#' str(met8x12)
-#'
-#' # Run AMMI for trait y, biplot2 by default
-#' ammi("y", "geno", "env", "rep", met8x12)
-#'
-#' # Run AMMI for trait y, biplot1
-#' ammi("y", "geno", "env", "rep", met8x12, biplot = 1)
+#' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
+#' model.ammi
+#' model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "GGE")
+#' model.gge
+#' @importFrom stats aov deviance
 #' @export
 
-ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
-                 biplot = 2, biplot1 = "effects", title = NULL, xlab = NULL,
-                 color = c("darkorange", "black", "gray"), size = c(1, 1)) {
+ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5) {
+
+  # match arguments
+  
+  method <- match.arg(method)
 
   # Everything as factor
 
@@ -93,13 +85,12 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
   # Run ammigxe
 
   ammigxe(int.mean, trait = trait, nr = lc$nr, rdf = rdf, rms = rms,
-          method = method, f = f, biplot = biplot, biplot1 = biplot1,
-          title = title, xlab = xlab, color = color, size = size)
+          method = method, f = f)
 }
 
 #' AMMI or GGE with data from an interaction means matrix
 #'
-#' This function runs AMMI (Gollob, H. R., 1968) or GGE biplot (Yan , W. et al., 2000)
+#' This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 #' with data from an interaction means matrix.
 #' @param int.mean GxE means matrix, genotypes in rows, environments in columns.
 #' @param trait Name of the trait.
@@ -108,21 +99,15 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 #' @param rms Residual mean square.
 #' @param method AMMI or GGE.
 #' @param f Scaling factor, defaults to 0.5.
-#' @param biplot 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
-#' @param biplot1 Choose "effects" or "means" for biplot1.
-#' @param title Main title for biplot1 or biplot2.
-#' @param xlab Xlab for biplot1.
-#' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
-#' @param size Relative size for symbols and labels.
 #' @author Raul Eyzaguirre.
 #' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 #' \code{nr}, \code{rms} and \code{rdf} are specified.
-#' @return It returns the genotype, environment and interaction means, the interaction
-#' effects matrix, the first and second PC values for genotypes and environments, a table
-#' with the contribution of each PC, a dispersion plot of means or effects against the
-#' first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
-#' in the contributions table only if method is set to AMMI and \code{nr},
-#' \code{rms} and \code{rdf} are specified.
+#' @return It returns an object of class ammi with the overall, genotype,
+#' environment and interaction means, the interaction effects matrix, the
+#' first and second PC values for genotypes and environments, and a table
+#' with the contribution of each PC. Significance of PCs are included in the
+#' contributions table only if method is set to AMMI and \code{nr}, \code{rms}
+#' and \code{rdf} are specified.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 #' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
@@ -131,23 +116,25 @@ ammi <- function(trait, geno, env, rep, data, method = "AMMI", f = 0.5,
 #' biplot, Crop Sci., Vol 40: 597-605.
 #' @seealso \code{svd}
 #' @examples
-#' # The data
-#' head(met8x12)
-#' str(met8x12)
-#'
-#' # Compute GxE means
+#' ## Compute GxE means
 #' int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
-#'
-#' # Run AMMI with GxE means matrix, biplot2
-#' ammigxe(int.mean, trait = "y")
-#'
-#' # Run GGE with GxE means matrix, biplot2
-#' ammigxe(int.mean, trait = "y", method = "GGE")
+#' 
+#' ## Run AMMI with GxE means matrix
+#' model.ammi <- ammigxe(int.mean, trait = "y")
+#' model.ammi
+#' 
+#' ## Run GGE with GxE means matrix
+#' model.gge <- ammigxe(int.mean, trait = "y", method = "GGE")
+#' model.gge
+#' @importFrom stats pf
 #' @export
 
 ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
-                    method = "AMMI", f = 0.5, biplot = 2, biplot1 = "effects", title = NULL,
-                    xlab = NULL, color = c("darkorange", "black", "gray"), size = c(1, 1)) {
+                    method = c("AMMI", "GGE"), f = 0.5) {
+
+  # match arguments
+  
+  method <- match.arg(method)
 
   # Data
 
@@ -205,16 +192,78 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
     }
   }
 
+  # Output
+
+  output <- list(Method = method, Trait = trait, Number_of_environments = env.num,
+                 Overall_mean = overall.mean, Genotype_means = geno.mean,
+                 Environment_means = env.mean, Interaction_means = int.mean,
+                 Interaction_effects = int.eff, PC_values_genotypes = PC.geno,
+                 PC_values_environments = PC.env, Contribution_PCs = tablaPC)
+  
+  class(output) <- "ammi"
+  invisible(output)
+}
+
+#' AMMI or GGE biplots
+#'
+#' This function produces AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000) biplots.
+#' @param x An object of class \code{ammi}.
+#' @param biplot Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
+#' @param biplot1 Choose "effects" or "means" for biplot1.
+#' @param title Main title for biplot1 or biplot2.
+#' @param xlab Xlab for biplot1.
+#' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
+#' @param size Relative size for symbols and labels.
+#' @param ... Additional plot arguments.
+#' @author Raul Eyzaguirre.
+#' @details It produces a biplot for an object of class \code{ammi}. See \code{?ammi}
+#' for additional details.
+#' @return It returns a dispersion plot of means or effects against the first PC,
+#' or a dispersion plot of PC1 against PC2.
+#' @references
+#' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
+#' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
+#'
+#' Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based on the GGE
+#' biplot, Crop Sci., Vol 40: 597-605.
+#' @examples
+#' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
+#' plot(model.ammi)
+#' plot(model.ammi, biplot = 1)
+#' @importFrom graphics abline text
+#' @export
+
+plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
+                      title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
+                      size = c(1, 1), ...) {
+  
+  # match arguments
+  
+  biplot1 <- match.arg(biplot1)
+  
+  # arguments
+  
+  method <- x$Method
+  trait <- x$Trait
+  overall.mean <- x$Overall_mean
+  geno.mean <- x$Genotype_means
+  env.mean <- x$Environment_means
+  int.mean <- x$Interaction_means
+  G <- x$PC_values_genotypes
+  E <- x$PC_values_environments
+  PC.cont <- x$Contribution_PCs$Cont
+  env.num <- x$Number_of_environments
+  
   #  Biplot 1
-
+  
   if (biplot == 1) {
-
+    
     if (is.null(title))
       title <- paste(method, " biplot1 for ", trait, sep = "")
-
+    
     if (biplot1 == "effects") {
-      minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.05
-      maxx <- max(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.05
+      minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.1
+      maxx <- max(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.1
       limx <- c(minx, maxx)
       if (is.null(xlab))
         xlab <- "Genotype and environment effects"
@@ -231,9 +280,9 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
       xcore <- env.mean
       xline <- overall.mean
     }
-
+    
     limy <- range(c(E[, 1], G[, 1]))
-
+    
     plot(1, type = "n", xlim = limx, ylim = limy, main = title, xlab = xlab,
          ylab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"))
     points(xcorg, G[, 1], col = color[2], pch = 17, cex = size[1])
@@ -244,18 +293,18 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
          offset = 0.3, cex = size[2])
     abline(h = 0, v = xline, col = color[3], lty = 5)
   }
-
+  
   # Biplot 2
-
+  
   if (biplot == 2) {
-
+    
     if (is.null(title))
       title <- paste(method, " biplot2 for ", trait, sep = "")
-
+    
     limx <- range(c(E[, 1], G[, 1]))
-    limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.05
+    limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.1
     limy <- range(c(E[, 2], G[, 2]))
-
+    
     plot(1, type = "n", xlim = limx, ylim = limy, main = title,
          xlab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"),
          ylab = paste("PC2 (", format(PC.cont[2], digits = 3), "%)"),
@@ -269,11 +318,4 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
     abline(h = 0, v = 0, col = color[3], lty = 5)
     for (i in 1:env.num) lines(c(0, E[i, 1]), c(0, E[i, 2]), col = color[1], lty = 2)
   }
-
-  # Output
-
-  list(Genotype_means = geno.mean, Environment_means = env.mean,
-       Interaction_means = int.mean, Interaction_effects = int.eff,
-       PC_values_genotypes = PC.geno, PC_values_environments = PC.env,
-       Contribution_PCs = tablaPC)
 }

@@ -4,12 +4,18 @@
 \alias{cdt}
 \title{Compute derived traits}
 \usage{
-cdt(fb, plot.size = NULL)
+cdt(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL)
 }
 \arguments{
 \item{fb}{The name of the fieldbook data frame.}
 
-\item{plot.size}{Plot size in square meters.}
+\item{method}{Method to scale data from plot to hectare level. Options are plot size
+\code{"ps"} and number of plants for a full hectare \code{"np"}. See details.}
+
+\item{value}{Value for the method selected in square meters if \code{method = "ps"}
+and in number of plants per hectare if \code{method = "np"}.}
+
+\item{nops}{Number of plants sowed per plot.}
 }
 \value{
 It returns a data frame with the original and derived traits.
@@ -18,16 +24,17 @@ It returns a data frame with the original and derived traits.
 Compute derived traits for a given fieldbook.
 }
 \details{
-The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
-See \code{?checknames} for details.
+The data frame must use the labels (lower or upper case) listed in function
+\code{checknames}. See \code{?checknames} for details.
+
+Conversion from kilograms per plot to tons per hectare can be done using \code{ps}, the
+plot size, or \code{np}, the total number of plants that are expected to be allocated in a
+full hectare. In both cases computations can be adjusted by the number of harvested plants,
+if available in the fieldbook. For \code{method = "np"}, \code{nops} must be specified to
+compute non adjusted values.
 }
 \examples{
- # The data
- head(pjpz09)
- str(pjpz09)
-
- # Compute derived traits
- cdt(pjpz09, 4.5)
+cdt(pjpz09)
 }
 \author{
 Raul Eyzaguirre.

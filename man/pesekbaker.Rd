@@ -4,8 +4,9 @@
 \alias{pesekbaker}
 \title{Pesek-Baker Index}
 \usage{
-pesekbaker(traits, geno, env, rep = NULL, data, means = "single",
-  model = "gxe", dgg = NULL, units = "sdu", sf = 0.1)
+pesekbaker(traits, geno, env, rep = NULL, data, means = c("single",
+  "fitted"), model = c("gxe", "g+e"), dgg = NULL, units = c("sdu",
+  "actual"), sf = 0.1)
 }
 \arguments{
 \item{traits}{List of traits.}
@@ -73,15 +74,9 @@ desired genetic gain will be one standard deviation, no matter if \code{units} i
 as \code{"actual"} or \code{"sdu"}.
 }
 \examples{
-# The data
-head(spg)
-str(spg)
-
-# Run Pesek-Baker index with all the traits
 pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg)
 
-# Use different desired genetic gains for each trait,
-# more weight on bc and dm, less on star and nocr.
+## More weight on bc and dm, less on star and nocr.
 pesekbaker(c("rytha", "bc", "dm", "star", "nocr"), "geno", "loc", "rep", spg,
            dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 }

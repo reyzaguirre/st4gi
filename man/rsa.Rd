@@ -54,11 +54,6 @@ In both cases the X values are centered on zero, so the intercepts of the models
 the means of the genotypes or environments.
 }
 \examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run regression stability analysis
 rsa("y", "geno", "env", "rep", met8x12)
 }
 \author{

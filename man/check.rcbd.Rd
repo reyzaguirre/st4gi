@@ -18,7 +18,8 @@ check.rcbd(trait, treat, rep, data)
 \value{
 Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
 missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-of treatments (\code{nt}), and the number of replications (\code{nr}).
+of treatments (\code{nt}), the number of replications (\code{nr}), and a table with
+frequencies of valid cases for each genotype.
 }
 \description{
 This function checks the frequencies of genotypes in a RCBD.

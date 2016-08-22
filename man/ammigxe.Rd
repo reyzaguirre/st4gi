@@ -5,9 +5,7 @@
 \title{AMMI or GGE with data from an interaction means matrix}
 \usage{
 ammigxe(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
-  method = "AMMI", f = 0.5, biplot = 2, biplot1 = "effects",
-  title = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
-  size = c(1, 1))
+  method = c("AMMI", "GGE"), f = 0.5)
 }
 \arguments{
 \item{int.mean}{GxE means matrix, genotypes in rows, environments in columns.}
@@ -23,29 +21,17 @@ ammigxe(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
 \item{method}{AMMI or GGE.}
 
 \item{f}{Scaling factor, defaults to 0.5.}
-
-\item{biplot}{1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.}
-
-\item{biplot1}{Choose "effects" or "means" for biplot1.}
-
-\item{title}{Main title for biplot1 or biplot2.}
-
-\item{xlab}{Xlab for biplot1.}
-
-\item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes.}
-
-\item{size}{Relative size for symbols and labels.}
 }
 \value{
-It returns the genotype, environment and interaction means, the interaction
-effects matrix, the first and second PC values for genotypes and environments, a table
-with the contribution of each PC, a dispersion plot of means or effects against the
-first PC, or a dispersion plot of PC1 against PC2. Significance of PCs are included
-in the contributions table only if method is set to AMMI and \code{nr},
-\code{rms} and \code{rdf} are specified.
+It returns an object of class ammi with the overall, genotype,
+environment and interaction means, the interaction effects matrix, the
+first and second PC values for genotypes and environments, and a table
+with the contribution of each PC. Significance of PCs are included in the
+contributions table only if method is set to AMMI and \code{nr}, \code{rms}
+and \code{rdf} are specified.
 }
 \description{
-This function runs AMMI (Gollob, H. R., 1968) or GGE biplot (Yan , W. et al., 2000)
+This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 with data from an interaction means matrix.
 }
 \details{
@@ -53,18 +39,16 @@ Significance of PCs are evaluated only with \code{method = "AMMI"} and if
 \code{nr}, \code{rms} and \code{rdf} are specified.
 }
 \examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Compute GxE means
+## Compute GxE means
 int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
 
-# Run AMMI with GxE means matrix, biplot2
-ammigxe(int.mean, trait = "y")
+## Run AMMI with GxE means matrix
+model.ammi <- ammigxe(int.mean, trait = "y")
+model.ammi
 
-# Run GGE with GxE means matrix, biplot2
-ammigxe(int.mean, trait = "y", method = "GGE")
+## Run GGE with GxE means matrix
+model.gge <- ammigxe(int.mean, trait = "y", method = "GGE")
+model.gge
 }
 \author{
 Raul Eyzaguirre.

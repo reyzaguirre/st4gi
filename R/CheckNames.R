@@ -3,6 +3,7 @@
 #' Check that fieldbook traits names correspond with the names defined in the document
 #' "PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
 #' @param fb The name of the fieldbook data frame.
+#' @param aqt Additional quantitative traits.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
 #'  \item L       : Locations (LOC is also valid)
@@ -14,20 +15,18 @@
 #'  \item R       : Replications (REP is also valid)
 #'  \item NOPS    : Number of plants sowed
 #'  \item NOPE    : Number of plants established
-#'  \item VIR1    : Virus symptoms (1-9), first evaluation
-#'  \item VIR2    : Virus symptoms (1-9), second evaluation
-#'  \item VIR3    : Virus symptoms (1-9), third evaluation
-#'  \item ALT1    : Alternaria symptoms (1-9), first evaluation
-#'  \item ALT2    : Alternaria symptoms (1-9), second evaluation
-#'  \item VV1     : Vine vigor (1-9), first evaluation
-#'  \item VV2     : Vine vigor2 (1-9), second evaluation
-#'  \item VW      : Vine weight
+#'  \item VIR1    : Virus symptoms (1-9), first evaluation, 4-8 weeks after planting (VIR is also valid)
+#'  \item VIR2    : Virus symptoms (1-9), second evaluation, 1 month before harvest
+#'  \item ALT1    : Alternaria symptoms (1-9), first evaluation, 4-8 weeks after planting (ALT is also valid)
+#'  \item ALT2    : Alternaria symptoms (1-9), second evaluation, 1 month before harvest
+#'  \item VV      : Vine vigor (1-9), 1 month before harvest
+#'  \item VW      : Vine weight (kg/plot)
 #'  \item NOPH    : Number of plants harvested
 #'  \item NOPR    : Number of plants with roots
 #'  \item NOCR    : Number of commercial roots
 #'  \item NONC    : Number of non commercial roots
-#'  \item CRW     : Commercial root weight
-#'  \item NCRW    : Non commercial root weight
+#'  \item CRW     : Commercial root weight (kg/plot)
+#'  \item NCRW    : Non commercial root weight (kg/plot)
 #'  \item RFCP    : Root primary flesh color using CIP color charts
 #'  \item RFCS    : Root secondary flesh color using CIP color charts
 #'  \item SCOL    : Storage root skin color (1-9)
@@ -38,24 +37,23 @@
 #'  \item RF      : Root form (1-9)
 #'  \item DAMR    : Root defects (1-9)
 #'  \item RSPR    : Root sprouting (1-9)
-#'  \item WED1    : Weevil damage (1-9), first evaluation
-#'  \item WED2    : Weevil damage2 (1-9), second evaluation
-#'  \item DMF     : Fresh weight of roots for dry matter assessment
-#'  \item DMD     : Dry weight of DMF samples
+#'  \item WED     : Weevil damage (1-9)
+#'  \item DMF     : Fresh weight of roots for dry matter assessment (kg)
+#'  \item DMD     : Dry weight of DMF samples (kg)
 #'  \item DM      : Storage root dry matter content (\%)
-#'  \item DMRY    : Dry matter root yield
-#'  \item DMVF    : Fresh weight vines for dry matter assessment
-#'  \item DMVD    : Dry weight of DMVF samples
+#'  \item DMRY    : Dry matter root yield (kg)
+#'  \item DMVF    : Fresh weight vines for dry matter assessment (kg)
+#'  \item DMVD    : Dry weight of DMVF samples (kg)
 #'  \item DMV     : Vines dry matter content (\%)
-#'  \item DMFY    : Dry matter foliage yield
-#'  \item FRAW1   : Root fiber (1-9), first determination
-#'  \item SURAW1  : Root sugar (1-9), first determination
-#'  \item STRAW1  : Root starch (1-9), first determination
-#'  \item COOF1   : Cooked fiber (1-9), first evaluation
-#'  \item COOSU1  : Cooked sugars (1-9), first evaluation
-#'  \item COOST1  : Cooked starch (1-9), first evaluation
-#'  \item COOT1   : Cooked taste (1-9), first evaluation
-#'  \item COOAP1  : Cooked appearance (1-9), first evaluation
+#'  \item DMFY    : Dry matter foliage yield (kg)
+#'  \item FRAW1   : Root fiber (1-9), first determination (FRAW is also valid)
+#'  \item SURAW1  : Root sugar (1-9), first determination (SURAW is also valid)
+#'  \item STRAW1  : Root starch (1-9), first determination (STRAW is also valid)
+#'  \item COOF1   : Cooked fiber (1-9), first evaluation (COOF is also valid)
+#'  \item COOSU1  : Cooked sugars (1-9), first evaluation (COOSU is also valid)
+#'  \item COOST1  : Cooked starch (1-9), first evaluation (COOST is also valid)
+#'  \item COOT1   : Cooked taste (1-9), first evaluation (COOT is also valid)
+#'  \item COOAP1  : Cooked appearance (1-9), first evaluation (COOAP is also valid)
 #'  \item FRAW2   : Root fiber (1-9), second determination
 #'  \item SURAW2  : Root sugar (1-9), second determination
 #'  \item STRAW2  : Root starch (1-9), second determination
@@ -70,50 +68,50 @@
 #'  \item CA      : Calcium (mg/100 g dry weight)
 #'  \item MG      : Magnesium (mg/100 g dry weight)
 #'  \item BC      : Beta-carotene (mg/100 g dry weight)
-#'  \item BC.CC   : Beta-carotene with color charts
+#'  \item BC.CC   : Beta-carotene with color charts (mg/100 g fresh weight)
 #'  \item TC      : Total carotenoids (mg/100 g dry weight)
 #'  \item STAR    : Starch (\%)
 #'  \item FRUC    : Fructose (\%)
 #'  \item GLUC    : Glucose (\%)
 #'  \item SUCR    : Sucrose (\%)
 #'  \item MALT    : Maltose (\%)
-#'  \item TRW     : Total root weight
-#'  \item CYTHA   : Commercial root yield t/ha
-#'  \item RYTHA   : Total root yield t/ha
-#'  \item ACRW    : Average commercial root weight = CRW / NOCR
+#'  \item TRW     : Total root weight (kg/plot)
+#'  \item CYTHA   : Commercial root yield (t/ha)
+#'  \item CYTHA.AJ: Commercial root yield (t/ha) adjusted by number of harvested plants
+#'  \item RYTHA   : Total root yield (t/ha)
+#'  \item RYTHA.AJ: Total root yield (t/ha) adjusted by number of harvested plants
+#'  \item ACRW    : Average commercial root weight (kg/root)
 #'  \item NRPP    : Number of roots per plant
-#'  \item YPP     : Yield per plant Kg
+#'  \item YPP     : Yield per plant (kg/plant)
 #'  \item CI      : Percent marketable roots (commercial index)
 #'  \item HI      : Harvest index
 #'  \item SHI     : Harvest sowing index (survival)
-#'  \item BIOM    : Biomass yield
-#'  \item FYTHA   : Foliage total yield t/ha
+#'  \item BIOM    : Biomass yield (t/ha)
+#'  \item BIOM.AJ : Biomass yield (t/ha) adjusted by number of harvested plants
+#'  \item FYTHA   : Foliage total yield (t/ha)
+#'  \item FYTHA.AJ: Foliage total yield (t/ha) adjusted by number of harvested plants
 #'  \item RFR     : Root foliage ratio
 #'  }
 #' @return It returns a data frame with all traits names in upper case, and a list of the traits
 #' with names not included in the list shown above.
 #' @author Raul Eyzaguirre.
 #' @examples
-#'  # The data
-#'  head(pjpz09)
-#'  str(pjpz09)
-#'
-#'  # Check the trait names
-#'  checknames(pjpz09)
+#' checknames(pjpz09)
 #' @export
 
-checknames <- function(fb) {
-
+checknames <- function(fb, aqt = NULL) {
 
   colnames.valid <- c("L", "LOC", "Y", "S", "G", "GENO", "NAME", "E", "ENV", "R", "REP", "NOPS",
-                      "NOPE", "VIR1", "VIR2", "VIR3", "ALT1", "ALT2", "VV1", "VV2", "VW", "NOPH",
-                      "NOPR", "NOCR", "NONC", "CRW", "NCRW", "RFCP", "RFCS", "SCOL", "FCOL", "RFCP",
-                      "RFCS", "RS", "RF", "DAMR", "RSPR", "WED1", "WED2", "DMF", "DMD", "DM", "DMRY",
-                      "DMVF", "DMVD", "DMV", "DMFY", "FRAW1", "SURAW1", "STRAW1", "COOF1", "COOSU1",
-                      "COOST1", "COOT1", "COOAP1", "FRAW2", "SURAW2", "STRAW2", "COOF2", "COOSU2",
-                      "COOST2", "COOT2", "COOAP2", "PROT", "FE", "ZN", "CA", "MG", "BC", "BC.CC",
-                      "TC", "STAR", "FRUC", "GLUC", "SUCR", "MALT", "TRW", "CYTHA", "RYTHA", "ACRW",
-                      "NRPP", "YPP", "CI", "HI", "SHI", "BIOM", "FYTHA", "RFR")
+                      "NOPE", "VIR", "VIR1", "VIR2", "ALT", "ALT1", "ALT2", "VV", "VW", "NOPH",
+                      "NOPR", "NOCR", "NONC", "CRW", "NCRW", "RFCP", "RFCS", "SCOL", "FCOL",
+                      "RFCP", "RFCS", "RS", "RF", "DAMR", "RSPR", "WED", "DMF", "DMD", "DM",
+                      "DMRY", "DMVF", "DMVD", "DMV", "DMFY", "FRAW", "FRAW1", "SURAW", "SURAW1",
+                      "STRAW", "STRAW1", "COOF", "COOF1", "COOSU", "COOSU1", "COOST", "COOST1",
+                      "COOT", "COOT1", "COOAP", "COOAP1", "FRAW2", "SURAW2", "STRAW2", "COOF2",
+                      "COOSU2", "COOST2", "COOT2", "COOAP2", "PROT", "FE", "ZN", "CA", "MG",
+                      "BC", "BC.CC", "TC", "STAR", "FRUC", "GLUC", "SUCR", "MALT", "TRW", "CYTHA",
+                      "CYTHA.AJ", "RYTHA", "RYTHA.AJ", "ACRW", "NRPP", "YPP", "CI", "HI", "SHI",
+                      "BIOM", "BIOM.AJ", "FYTHA", "FYTHA.AJ", "RFR", toupper(aqt))
     
   colnames.list <- colnames(fb)
   
@@ -126,7 +124,7 @@ checknames <- function(fb) {
   # Warnings
   
   if (max(check.list.1) == 1)
-    warning("Invalid labels not included for checking: ", list(colnames.list[check.list.1]), call. = FALSE)
+    warning("Columns not included for checking: ", list(colnames.list[check.list.1]), call. = FALSE)
   
   if (max(check.list.2) == 1)
     warning("Some labels converted to upper case: ", list(temp[check.list.2]), call. = FALSE)

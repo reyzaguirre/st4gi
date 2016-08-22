@@ -4,8 +4,7 @@
 \alias{tai}
 \title{Tai's stability analysis}
 \usage{
-tai(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
-  color = c("darkorange", "black", "gray"), size = c(1, 1))
+tai(trait, geno, env, rep, data, maxp = 0.1)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -19,35 +18,21 @@ tai(trait, geno, env, rep, data, maxp = 0.1, conf = 0.95, title = NULL,
 \item{data}{The name of the data frame containing the data.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
-
-\item{conf}{Probability for the Tai limits.}
-
-\item{title}{Main title for plot.}
-
-\item{color}{Color for symbols, labels and lines.}
-
-\item{size}{Relative size for symbols and labels.}
 }
 \value{
-It returns the Tai graph for stability analysis and the values of alpha
-and lambda for each genotype.
+It returns the alpha and lambda values for each genotype for the Tai
+stability analysis.
 }
 \description{
 This function runs Tai's stability analysis (Tai, G. C. C., 1971).
 It assumes a RCBD with fixed effects for genotypes and random effects for environments.
 }
 \details{
-The limits for alpha and lambda are computed using the mean squares from
-an ANOVA table for a RCBD with blocks nested into environments. If the data set is
-unbalanced, a warning is produced.
+If the data set is unbalanced, a warning is produced.
 }
 \examples{
-# The data
-head(met8x12)
-str(met8x12)
-
-# Run Tai for trait y
-tai("y", "geno", "env", "rep", met8x12)
+model.tai <- tai("y", "geno", "env", "rep", met8x12)
+model.tai$Tai_values
 }
 \author{
 Raul Eyzaguirre.

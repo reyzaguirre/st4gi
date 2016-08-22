@@ -27,27 +27,25 @@
 #' line representing a confidence limit or a number of standard deviations,
 #' and alternatively the individual data points.
 #' @examples
-#' # Simulate some data
+#' ## Simulate some data
 #' mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
 #'                      g = rep(1:5, 10))
-#'
-#' # Draw the plot
 #' msdplot("y", "g", mydata)
+#' @importFrom graphics axis lines plot points
 #' @export
                          
-msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
-                    sort.means = "none", main = NULL, xlab = "groups", ylab = "",
-                    colors = c("orange", "orange", "black"), pch = 4, lwd = 2,
-                    x.las = 1, jf = 0.1, dist = 0.1) {
-  
-  # Error messages
-  
-  if (dotplot != "TRUE" & dotplot != "FALSE")
-    stop("dotplot argument must be TRUE or FALSE.")    
-    
+msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
+                    sort.means = c("none", "increasing", "decreasing"), main = NULL,
+                    xlab = "groups", ylab = "", colors = c("orange", "orange", "black"),
+                    pch = 4, lwd = 2, x.las = 1, jf = 0.1, dist = 0.1) {
+
+  # match arguments
+
+  sort.means <- match.arg(sort.means)
+
   # Groups as factor
   
-    data[, groups] <- as.factor(data[, groups])
+  data[, groups] <- as.factor(data[, groups])
 
   # means and standard deviations
 

@@ -31,20 +31,13 @@ for each level's combination of the \code{factors}. Additional columns can be
 kept if specified in \code{addcol}.
 }
 \examples{
-# The data
-head(spg)
-str(spg)
-
-# Compute means for all the traits across the two replications
-# for each genotype and location and then for each genotype 
-# across the two locations.
+## Compute means across replications and then across locations for each genotype
 traits <- c("rytha", "bc", "dm", "star", "nocr")
 factors <- c("geno", "loc")
 output1 <- docomp("mean", traits, factors, data = spg)
 docomp("mean", traits, "geno", data = output1)
 
-# Compute maxima for all the traits across the two replications
-# for each genotype and location.
+## Compute maxima across replications for each genotype and location.
 docomp("max", traits, factors, data = spg)
 }
 \author{

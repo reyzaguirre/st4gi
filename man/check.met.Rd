@@ -20,8 +20,9 @@ check.met(trait, geno, env, rep, data)
 \value{
 Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
 missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-of genotypes (\code{ng}), the number of environments (\code{ne}), and the number of
-replications (\code{nr}).
+of genotypes (\code{ng}), the number of environments (\code{ne}), the number of
+replications (\code{nr}), and a table with frequencies of valid cases for each
+genotype and environment combination.
 }
 \description{
 This function checks the frequencies of genotypes in each environment in a RCBD.

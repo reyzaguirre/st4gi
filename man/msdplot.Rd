@@ -4,10 +4,10 @@
 \alias{msdplot}
 \title{Plot means and standard deviations with a dotplot}
 \usage{
-msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = "TRUE",
-  sort.means = "none", main = NULL, xlab = "groups", ylab = "",
-  colors = c("orange", "orange", "black"), pch = 4, lwd = 2, x.las = 1,
-  jf = 0.1, dist = 0.1)
+msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
+  sort.means = c("none", "increasing", "decreasing"), main = NULL,
+  xlab = "groups", ylab = "", colors = c("orange", "orange", "black"),
+  pch = 4, lwd = 2, x.las = 1, jf = 0.1, dist = 0.1)
 }
 \arguments{
 \item{trait}{The trait to plot.}
@@ -58,11 +58,9 @@ If \code{conf} is set to a value greater than or equal to 1, then it is interpre
 as number of standard deviations.
 }
 \examples{
-# Simulate some data
+## Simulate some data
 mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
                      g = rep(1:5, 10))
-
-# Draw the plot
 msdplot("y", "g", mydata)
 }
 \author{
