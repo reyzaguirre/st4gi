@@ -124,7 +124,7 @@ checknames <- function(fb, aqt = NULL) {
   # Warnings
   
   if (max(check.list.1) == 1)
-    warning("Columns not included for checking: ", list(colnames.list[check.list.1]), call. = FALSE)
+    warning("Some columns with invalid names: ", list(colnames.list[check.list.1]), call. = FALSE)
   
   if (max(check.list.2) == 1)
     warning("Some labels converted to upper case: ", list(temp[check.list.2]), call. = FALSE)
