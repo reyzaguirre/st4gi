@@ -22,91 +22,91 @@ Check that fieldbook traits names correspond with the names defined in the docum
 \details{
 The data frame must use the following labels (lower or upper case):
 \itemize{
- \item L       : Locations (LOC is also valid)
- \item Y       : Years
- \item S       : Seasons
- \item G       : Genotypes (GENO is also valid)
- \item NAME    : Names for genotypes
- \item E       : Environments (ENV is also valid)
- \item R       : Replications (REP is also valid)
- \item NOPS    : Number of plants sowed
- \item NOPE    : Number of plants established
- \item VIR1    : Virus symptoms (1-9), first evaluation, 4-8 weeks after planting (VIR is also valid)
- \item VIR2    : Virus symptoms (1-9), second evaluation, 1 month before harvest
- \item ALT1    : Alternaria symptoms (1-9), first evaluation, 4-8 weeks after planting (ALT is also valid)
- \item ALT2    : Alternaria symptoms (1-9), second evaluation, 1 month before harvest
- \item VV      : Vine vigor (1-9), 1 month before harvest
- \item VW      : Vine weight (kg/plot)
- \item NOPH    : Number of plants harvested
- \item NOPR    : Number of plants with roots
- \item NOCR    : Number of commercial roots
- \item NONC    : Number of non commercial roots
- \item CRW     : Commercial root weight (kg/plot)
- \item NCRW    : Non commercial root weight (kg/plot)
- \item RFCP    : Root primary flesh color using CIP color charts
- \item RFCS    : Root secondary flesh color using CIP color charts
- \item SCOL    : Storage root skin color (1-9)
- \item FCOL    : Storage root flesh color (1-9)
- \item RFCP    : Storage root primary flesh color (1-9)
- \item RFCS    : Storage root secondary flesh color (1-9)
- \item RS      : Root size (1-9)
- \item RF      : Root form (1-9)
- \item DAMR    : Root defects (1-9)
- \item RSPR    : Root sprouting (1-9)
- \item WED     : Weevil damage (1-9)
- \item DMF     : Fresh weight of roots for dry matter assessment (kg)
- \item DMD     : Dry weight of DMF samples (kg)
- \item DM      : Storage root dry matter content (\%)
- \item DMRY    : Dry matter root yield (kg)
- \item DMVF    : Fresh weight vines for dry matter assessment (kg)
- \item DMVD    : Dry weight of DMVF samples (kg)
- \item DMV     : Vines dry matter content (\%)
- \item DMFY    : Dry matter foliage yield (kg)
- \item FRAW1   : Root fiber (1-9), first determination (FRAW is also valid)
- \item SURAW1  : Root sugar (1-9), first determination (SURAW is also valid)
- \item STRAW1  : Root starch (1-9), first determination (STRAW is also valid)
- \item COOF1   : Cooked fiber (1-9), first evaluation (COOF is also valid)
- \item COOSU1  : Cooked sugars (1-9), first evaluation (COOSU is also valid)
- \item COOST1  : Cooked starch (1-9), first evaluation (COOST is also valid)
- \item COOT1   : Cooked taste (1-9), first evaluation (COOT is also valid)
- \item COOAP1  : Cooked appearance (1-9), first evaluation (COOAP is also valid)
- \item FRAW2   : Root fiber (1-9), second determination
- \item SURAW2  : Root sugar (1-9), second determination
- \item STRAW2  : Root starch (1-9), second determination
- \item COOF2   : Cooked fiber (1-9), second evaluation
- \item COOSU2  : Cooked sugars (1-9), second evaluation
- \item COOST2  : Cooked starch (1-9), second evaluation
- \item COOT2   : Cooked taste (1-9), second evaluation
- \item COOAP2  : Cooked appearance (1-9), second evaluation
- \item PROT    : Protein (\%)
- \item FE      : Iron (mg/100 g dry weight)
- \item ZN      : Zinc (mg/100 g dry weight)
- \item CA      : Calcium (mg/100 g dry weight)
- \item MG      : Magnesium (mg/100 g dry weight)
- \item BC      : Beta-carotene (mg/100 g dry weight)
- \item BC.CC   : Beta-carotene with color charts (mg/100 g fresh weight)
- \item TC      : Total carotenoids (mg/100 g dry weight)
- \item STAR    : Starch (\%)
- \item FRUC    : Fructose (\%)
- \item GLUC    : Glucose (\%)
- \item SUCR    : Sucrose (\%)
- \item MALT    : Maltose (\%)
- \item TRW     : Total root weight (kg/plot)
- \item CYTHA   : Commercial root yield (t/ha)
- \item CYTHA.AJ: Commercial root yield (t/ha) adjusted by number of harvested plants
- \item RYTHA   : Total root yield (t/ha)
- \item RYTHA.AJ: Total root yield (t/ha) adjusted by number of harvested plants
- \item ACRW    : Average commercial root weight (kg/root)
- \item NRPP    : Number of roots per plant
- \item YPP     : Yield per plant (kg/plant)
- \item CI      : Percent marketable roots (commercial index)
- \item HI      : Harvest index
- \item SHI     : Harvest sowing index (survival)
- \item BIOM    : Biomass yield (t/ha)
- \item BIOM.AJ : Biomass yield (t/ha) adjusted by number of harvested plants
- \item FYTHA   : Foliage total yield (t/ha)
- \item FYTHA.AJ: Foliage total yield (t/ha) adjusted by number of harvested plants
- \item RFR     : Root foliage ratio
+ \item \code{l}       : Locations (\code{loc} is also valid)
+ \item \code{y}       : Years
+ \item \code{s}       : Seasons
+ \item \code{g}       : Genotypes (\code{geno} is also valid)
+ \item \code{name}    : Names for genotypes
+ \item \code{e}       : Environments (\code{env} is also valid)
+ \item \code{r}       : Replications (\code{rep} is also valid)
+ \item \code{nops}    : Number of plants sowed
+ \item \code{nope}    : Number of plants established
+ \item \code{vir1}    : Virus symptoms (1-9), first evaluation, 4-8 weeks after planting (\code{vir} is also valid)
+ \item \code{vir2}    : Virus symptoms (1-9), second evaluation, 1 month before harvest
+ \item \code{alt1}    : Alternaria symptoms (1-9), first evaluation, 4-8 weeks after planting (\code{alt} is also valid)
+ \item \code{alt2}    : Alternaria symptoms (1-9), second evaluation, 1 month before harvest
+ \item \code{vv}      : Vine vigor (1-9), 1 month before harvest
+ \item \code{vw}      : Vine weight (kg/plot)
+ \item \code{noph}    : Number of plants harvested
+ \item \code{nopr}    : Number of plants with roots
+ \item \code{nocr}    : Number of commercial roots
+ \item \code{nonc}    : Number of non commercial roots
+ \item \code{crw}     : Commercial root weight (kg/plot)
+ \item \code{ncrw}    : Non commercial root weight (kg/plot)
+ \item \code{rfcp.cc} : Root primary flesh color using CIP color charts
+ \item \code{rfcs.cc} : Root secondary flesh color using CIP color charts
+ \item \code{scol}    : Storage root skin color (1-9)
+ \item \code{fcol}    : Storage root flesh color (1-9)
+ \item \code{rfcp}    : Storage root primary flesh color (1-9)
+ \item \code{rfcs}    : Storage root secondary flesh color (1-9)
+ \item \code{rs}      : Root size (1-9)
+ \item \code{rf}      : Root form (1-9)
+ \item \code{damr}    : Root defects (1-9)
+ \item \code{rspr}    : Root sprouting (1-9)
+ \item \code{wed}     : Weevil damage (1-9)
+ \item \code{dmf}     : Fresh weight of roots for dry matter assessment (kg)
+ \item \code{dmd}     : Dry weight of dmf samples (kg)
+ \item \code{dm}      : Storage root dry matter content (\%)
+ \item \code{dmry}    : Dry matter root yield (kg)
+ \item \code{dmvf}    : Fresh weight vines for dry matter assessment (kg)
+ \item \code{dmvd}    : Dry weight of dmvf samples (kg)
+ \item \code{dmv}     : Vines dry matter content (\%)
+ \item \code{dmfy}    : Dry matter foliage yield (kg)
+ \item \code{fraw1}   : Root fiber (1-9), first determination (\code{fraw} is also valid)
+ \item \code{suraw1}  : Root sugar (1-9), first determination (\code{suraw} is also valid)
+ \item \code{straw1}  : Root starch (1-9), first determination (\code{straw} is also valid)
+ \item \code{coof1}   : Cooked fiber (1-9), first evaluation (\code{coof} is also valid)
+ \item \code{coosu1}  : Cooked sugars (1-9), first evaluation (\code{coosu} is also valid)
+ \item \code{coost1}  : Cooked starch (1-9), first evaluation (\code{coost} is also valid)
+ \item \code{coot1}   : Cooked taste (1-9), first evaluation (\code{coot} is also valid)
+ \item \code{cooap1}  : Cooked appearance (1-9), first evaluation (\code{cooap} is also valid)
+ \item \code{fraw2}   : Root fiber (1-9), second determination
+ \item \code{suraw2}  : Root sugar (1-9), second determination
+ \item \code{straw2}  : Root starch (1-9), second determination
+ \item \code{coof2}   : Cooked fiber (1-9), second evaluation
+ \item \code{coosu2}  : Cooked sugars (1-9), second evaluation
+ \item \code{coost2}  : Cooked starch (1-9), second evaluation
+ \item \code{coot2}   : Cooked taste (1-9), second evaluation
+ \item \code{cooap2}  : Cooked appearance (1-9), second evaluation
+ \item \code{prot}    : Protein (\%)
+ \item \code{fe}      : Iron (mg/100 g dry weight)
+ \item \code{zn}      : Zinc (mg/100 g dry weight)
+ \item \code{ca}      : Calcium (mg/100 g dry weight)
+ \item \code{mg}      : Magnesium (mg/100 g dry weight)
+ \item \code{bc}      : Beta-carotene (mg/100 g dry weight)
+ \item \code{bc.cc}   : Beta-carotene with color charts (mg/100 g fresh weight)
+ \item \code{tc}      : Total carotenoids (mg/100 g dry weight)
+ \item \code{star}    : Starch (\%)
+ \item \code{fruc}    : Fructose (\%)
+ \item \code{gluc}    : Glucose (\%)
+ \item \code{sucr}    : Sucrose (\%)
+ \item \code{malt}    : Maltose (\%)
+ \item \code{trw}     : Total root weight (kg/plot)
+ \item \code{cytha}   : Commercial root yield (t/ha)
+ \item \code{cytha.aj}: Commercial root yield (t/ha) adjusted by number of harvested plants
+ \item \code{rytha}   : Total root yield (t/ha)
+ \item \code{rytha.aj}: Total root yield (t/ha) adjusted by number of harvested plants
+ \item \code{acrw}    : Average commercial root weight (kg/root)
+ \item \code{nrpp}    : Number of roots per plant
+ \item \code{ypp}     : Yield per plant (kg/plant)
+ \item \code{ci}      : Percent marketable roots (commercial index)
+ \item \code{hi}      : Harvest index
+ \item \code{shi}     : Harvest sowing index (survival)
+ \item \code{biom}    : Biomass yield (t/ha)
+ \item \code{biom.aj} : Biomass yield (t/ha) adjusted by number of harvested plants
+ \item \code{fytha}   : Foliage total yield (t/ha)
+ \item \code{fytha.aj}: Foliage total yield (t/ha) adjusted by number of harvested plants
+ \item \code{rfr}     : Root foliage ratio
  }
 }
 \examples{

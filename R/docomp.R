@@ -31,8 +31,13 @@ docomp <- function(do, traits, factors, addcol = NULL, data) {
   # Convert to character
   
   n <- dim(data[, c(factors, addcol)])[2]
-  for (i in 1:n)
-    data[, c(factors, addcol)][, i] <- as.character(data[, c(factors, addcol)][, i])
+  
+  if (is.null(n)) {
+    data[, c(factors, addcol)] <- as.character(data[, c(factors, addcol)])
+  } else {
+    for (i in 1:n)
+      data[, c(factors, addcol)][, i] <- as.character(data[, c(factors, addcol)][, i])
+  }
   
   # Create data.frame
   
