@@ -4,7 +4,7 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5)
+ammi(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -17,29 +17,29 @@ ammi(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5)
 
 \item{data}{The name of the data frame containing the data.}
 
-\item{method}{AMMI or GGE.}
+\item{method}{\code{"ammi"} or \code{"gge"}.}
 
 \item{f}{Scaling factor, defaults to 0.5.}
 }
 \value{
-It returns an object of class ammi with the overall, genotype,
+It returns an object of class \code{ammi} with the overall, genotype,
 environment and interaction means, the interaction effects matrix, the
 first and second PC values for genotypes and environments, and a table
 with the contribution of each PC. Significance of PCs are included in the
-contributions table only if method is set to AMMI and the data are balanced.
+contributions table only if \code{method = "ammi"} and the data are balanced.
 }
 \description{
 This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 with data at plot level.
 }
 \details{
-Significance of PCs are evaluated only with \code{method = "AMMI"} and if
+Significance of PCs are evaluated only with \code{method = "ammi"} and if
 the data are balanced.
 }
 \examples{
 model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 model.ammi
-model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "GGE")
+model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "gge")
 model.gge
 }
 \author{
@@ -49,8 +49,8 @@ Raul Eyzaguirre.
 Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
 
-Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based on the GGE
-biplot, Crop Sci., Vol 40: 597-605.
+Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based
+on the GGE biplot, Crop Sci., Vol 40: 597-605.
 }
 \seealso{
 \code{svd}

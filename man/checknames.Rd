@@ -12,8 +12,8 @@ checknames(fb, aqt = NULL)
 \item{aqt}{Additional quantitative traits.}
 }
 \value{
-It returns a data frame with all traits names in upper case, and a list of the traits
-with names not included in the list shown above.
+It returns a data frame with all traits names in lower case, and a list of the
+traits with names not included in the list shown above.
 }
 \description{
 Check that fieldbook traits names correspond with the names defined in the document

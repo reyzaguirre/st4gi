@@ -5,7 +5,7 @@
 \title{AMMI or GGE with data from an interaction means matrix}
 \usage{
 ammigxe(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
-  method = c("AMMI", "GGE"), f = 0.5)
+  method = c("ammi", "gge"), f = 0.5)
 }
 \arguments{
 \item{int.mean}{GxE means matrix, genotypes in rows, environments in columns.}
@@ -18,7 +18,7 @@ ammigxe(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
 
 \item{rms}{Residual mean square.}
 
-\item{method}{AMMI or GGE.}
+\item{method}{\code{"ammi"} or \code{"gge"}.}
 
 \item{f}{Scaling factor, defaults to 0.5.}
 }
@@ -27,7 +27,7 @@ It returns an object of class ammi with the overall, genotype,
 environment and interaction means, the interaction effects matrix, the
 first and second PC values for genotypes and environments, and a table
 with the contribution of each PC. Significance of PCs are included in the
-contributions table only if method is set to AMMI and \code{nr}, \code{rms}
+contributions table only if \code{method = "ammi"} and \code{nr}, \code{rms}
 and \code{rdf} are specified.
 }
 \description{
@@ -35,7 +35,7 @@ This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 with data from an interaction means matrix.
 }
 \details{
-Significance of PCs are evaluated only with \code{method = "AMMI"} and if
+Significance of PCs are evaluated only with \code{method = "ammi"} and if
 \code{nr}, \code{rms} and \code{rdf} are specified.
 }
 \examples{
@@ -47,7 +47,7 @@ model.ammi <- ammigxe(int.mean, trait = "y")
 model.ammi
 
 ## Run GGE with GxE means matrix
-model.gge <- ammigxe(int.mean, trait = "y", method = "GGE")
+model.gge <- ammigxe(int.mean, trait = "y", method = "gge")
 model.gge
 }
 \author{

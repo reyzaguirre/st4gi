@@ -7,32 +7,32 @@
 #' @param env The environments.
 #' @param rep The replications or blocks. A RCBD is assumed.
 #' @param data The name of the data frame containing the data.
-#' @param method AMMI or GGE.
+#' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
 #' @author Raul Eyzaguirre.
-#' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
+#' @details Significance of PCs are evaluated only with \code{method = "ammi"} and if
 #' the data are balanced.
-#' @return It returns an object of class ammi with the overall, genotype,
+#' @return It returns an object of class \code{ammi} with the overall, genotype,
 #' environment and interaction means, the interaction effects matrix, the
 #' first and second PC values for genotypes and environments, and a table
 #' with the contribution of each PC. Significance of PCs are included in the
-#' contributions table only if method is set to AMMI and the data are balanced.
+#' contributions table only if \code{method = "ammi"} and the data are balanced.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 #' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
 #'
-#' Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based on the GGE
-#' biplot, Crop Sci., Vol 40: 597-605.
+#' Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based
+#' on the GGE biplot, Crop Sci., Vol 40: 597-605.
 #' @seealso \code{svd}
 #' @examples
 #' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 #' model.ammi
-#' model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "GGE")
+#' model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "gge")
 #' model.gge
 #' @importFrom stats aov deviance
 #' @export
 
-ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5) {
+ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5) {
 
   # match arguments
   
@@ -56,7 +56,7 @@ ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5
   if (lc$c1 == 1 & lc$c2 == 0)
     warning("There is only one replication. Inference is not possible with one replication.")
   
-  if (method == "AMMI" & lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0)
+  if (method == "ammi" & lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0)
     warning("The data set is unbalanced. Significance of PCs is not evaluated.")
 
   if (lc$ng < 2 | lc$ne < 2)
@@ -97,16 +97,16 @@ ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5
 #' @param nr Number of replications.
 #' @param rdf Residual degrees of freedom.
 #' @param rms Residual mean square.
-#' @param method AMMI or GGE.
+#' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
 #' @author Raul Eyzaguirre.
-#' @details Significance of PCs are evaluated only with \code{method = "AMMI"} and if
+#' @details Significance of PCs are evaluated only with \code{method = "ammi"} and if
 #' \code{nr}, \code{rms} and \code{rdf} are specified.
 #' @return It returns an object of class ammi with the overall, genotype,
 #' environment and interaction means, the interaction effects matrix, the
 #' first and second PC values for genotypes and environments, and a table
 #' with the contribution of each PC. Significance of PCs are included in the
-#' contributions table only if method is set to AMMI and \code{nr}, \code{rms}
+#' contributions table only if \code{method = "ammi"} and \code{nr}, \code{rms}
 #' and \code{rdf} are specified.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
@@ -124,13 +124,13 @@ ammi <- function(trait, geno, env, rep, data, method = c("AMMI", "GGE"), f = 0.5
 #' model.ammi
 #' 
 #' ## Run GGE with GxE means matrix
-#' model.gge <- ammigxe(int.mean, trait = "y", method = "GGE")
+#' model.gge <- ammigxe(int.mean, trait = "y", method = "gge")
 #' model.gge
 #' @importFrom stats pf
 #' @export
 
 ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
-                    method = c("AMMI", "GGE"), f = 0.5) {
+                    method = c("ammi", "gge"), f = 0.5) {
 
   # match arguments
   
@@ -146,10 +146,10 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
   int.eff <- int.mean + overall.mean - geno.mean
   int.eff <- t(t(int.eff) - env.mean)
   
-  if (method == "AMMI")
+  if (method == "ammi")
     svd.mat <- int.eff
   
-  if (method == "GGE") {
+  if (method == "gge") {
     svd.mat <- int.mean
     svd.mat <- t(t(svd.mat) - env.mean)
   }
@@ -176,7 +176,7 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
 
   # Significance of PCs, only for AMMI and if nr, rms and rdf are known
 
-  if (method == "AMMI") {
+  if (method == "ammi") {
     if (!is.null(nr)) {
       int.SS <- (t(as.vector(svd.mat)) %*% as.vector(svd.mat)) * nr
       PC.SS <- (dec$d[1:PC]^2) * nr
@@ -224,8 +224,8 @@ ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 #' and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
 #'
-#' Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based on the GGE
-#' biplot, Crop Sci., Vol 40: 597-605.
+#' Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based
+#' on the GGE biplot, Crop Sci., Vol 40: 597-605.
 #' @examples
 #' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 #' plot(model.ammi)

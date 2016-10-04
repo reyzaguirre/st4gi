@@ -92,8 +92,8 @@
 #'  \item \code{fytha.aj}: Foliage total yield (t/ha) adjusted by number of harvested plants
 #'  \item \code{rfr}     : Root foliage ratio
 #'  }
-#' @return It returns a data frame with all traits names in upper case, and a list of the traits
-#' with names not included in the list shown above.
+#' @return It returns a data frame with all traits names in lower case, and a list of the
+#' traits with names not included in the list shown above.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' checknames(pjpz09)
