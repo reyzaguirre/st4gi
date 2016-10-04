@@ -11,7 +11,9 @@
 #' @author Raul Eyzaguirre
 #' @details This function do a specific computation for all the \code{traits}
 #' for each level's combination of the \code{factors}. Additional columns can be
-#' kept if specified in \code{addcol}.
+#' kept if specified in \code{addcol}. All \code{factors} and \code{addcol} values
+#' are converted to character. \code{do = "count"} counts the number
+#' of valid cases (excluding missing values).
 #' @return It returns a data frame with the computations.
 #' @examples
 #' ## Compute means across replications and then across locations for each genotype
@@ -26,6 +28,12 @@
 
 docomp <- function(do, traits, factors, addcol = NULL, data) {
 
+  # Convert to character
+  
+  n <- dim(data[, c(factors, addcol)])[2]
+  for (i in 1:n)
+    data[, c(factors, addcol)][, i] <- as.character(data[, c(factors, addcol)][, i])
+  
   # Create data.frame
   
   dataout <- data.frame(data[, c(factors, addcol)])

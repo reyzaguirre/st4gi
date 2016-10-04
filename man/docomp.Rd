@@ -28,7 +28,9 @@ Do computations for several traits for some specific factors.
 \details{
 This function do a specific computation for all the \code{traits}
 for each level's combination of the \code{factors}. Additional columns can be
-kept if specified in \code{addcol}.
+kept if specified in \code{addcol}. All \code{factors} and \code{addcol} values
+are converted to character. \code{do = "count"} counts the number
+of valid cases (excluding missing values).
 }
 \examples{
 ## Compute means across replications and then across locations for each genotype
