@@ -5,7 +5,7 @@
 \title{Elston Index}
 \usage{
 elston(traits, geno, env = NULL, rep = NULL, data, means = c("single",
-  "fitted"), model = c("gxe", "g+e"), lb = 1)
+  "fitted"), lb = 1)
 }
 \arguments{
 \item{traits}{List of traits.}
@@ -20,10 +20,6 @@ elston(traits, geno, env = NULL, rep = NULL, data, means = c("single",
 
 \item{means}{The genotypic means to compute the index, \code{"single"} or
 \code{"fitted"}. The default is \code{"single"}. See details for more information.}
-
-\item{model}{Type of model to fit means, \code{"gxe"} for a model with gxe interaction
-or \code{"g+e"} for a model without interaction. The default is \code{"gxe"}.
-See details for more information.}
 
 \item{lb}{Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for
 \eqn{k = (n \times min(x) - max(x)) / (n - 1)}}
@@ -42,12 +38,7 @@ genotype. To include any trait with an opposite direction it must be transformed
 by multiplication by \code{-1} before.
 
 If \code{means = "fitted"} then a linear model is fitted and used to estimate
-the means for each genotype. In this case you can choose between a model with
-interaction (\code{model = "gxe"}) and without interaction (\code{model = "g+e"}).
-If \code{means = "fitted"} and \code{model = "gxe"} then the arguments \code{env}
-and \code{rep} must be specified.
-If \code{means = "fitted"} and \code{model = "g+e"} then the argument \code{env}
-must be specified.
+the means for each genotype.
 If \code{means = "single"} and \code{env} is specified, then single arithmetic
 means are computed over the replications for each genotype at each environment
 and then for each genotype over environments.
