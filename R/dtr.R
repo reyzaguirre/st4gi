@@ -52,7 +52,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   if (type == "logy") {
     if (sum(data[, trait] <= 0) > 0) {
       data[data[, trait] <= 0, trait] <- NA
-      warning("Values <= 0 converted to NA")
+      warning("Values <= 0 converted to NA", call. = FALSE)
     }
     data[, trait] <- log(data[, trait], base)
   }
@@ -60,7 +60,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   if (type == "logy1"){
     if (sum(data[, trait] + 1 <= 0) > 0) {
       data[data[, trait] + 1 <= 0, trait] <- NA
-      warning("Values <= -1 converted to NA")
+      warning("Values <= -1 converted to NA", call. = FALSE)
     }
     data[, trait] <- log(data[, trait] + 1, base)
   }
@@ -70,7 +70,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   if (type == "sqrty") {
     if (sum(data[, trait] < 0) > 0) {
       data[data[, trait] < 0, trait] <- NA
-      warning("Values < 0 converted to NA")
+      warning("Values < 0 converted to NA", call. = FALSE)
     }
     data[, trait] <- sqrt(data[, trait])
   }
@@ -78,7 +78,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   if (type == "sqrty1") {
     if (sum(data[, trait] + 0.5 < 0) > 0) {
       data[data[, trait] + 0.5 < 0, trait] <- NA
-      warning("Values < -0.5 converted to NA")
+      warning("Values < -0.5 converted to NA", call. = FALSE)
     }
     data[, trait] <- sqrt(data[, trait] + 0.5)
   }
@@ -89,16 +89,16 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
     if (sum(data[, trait] < 0) > 0 | sum(data[, trait] > 1) > 0) {
       data[data[, trait] < 0, trait] <- NA
       data[data[, trait] > 1, trait] <- NA
-      warning("Values < 0 or > 1 converted to NA")
+      warning("Values < 0 or > 1 converted to NA", call. = FALSE)
     }
     if (sum(data[, trait] == 0) > 0 | sum(data[, trait] == 1) > 0) {
       if (!is.null(n)) {
         data[data[, trait] == 0, trait] <- 1/(4*n)
         data[data[, trait] == 1, trait] <- 1 - 1/(4*n)
-        warning("Values = 0 and = 1 replaced with 1/4n and 1 - 1/4n.")
+        warning("Values = 0 and = 1 replaced with 1/4n and 1 - 1/4n", call. = FALSE)
       }
       if (is.null(n)) {
-        warning("n is not specified. Values = 0 or = 1 are not replaced.")
+        warning("n is not specified. Values = 0 or = 1 are not replaced", call. = FALSE)
       }
     }
     data[, trait] <- sqrt(data[, trait] + 0.5)
