@@ -14,8 +14,8 @@ spg
 \description{
 This data set has data for root yield in tons per hectare (\code{rytha}),
 beta-carotene (\code{bc}), dry matter (\code{dm}), starch (\code{star}) and number of
-commercial roots (\code{nocr}) for an experiment with 8 genotypes (\code{geno}), 2
-locations (\code{loc}), and 2 replications (\code{rep}) in each location following
-a RCBD.
+commercial roots (\code{nocr}) for an experiment with 8 sweetpotato genotypes
+(\code{geno}), 2 locations (\code{loc}), and 2 replications (\code{rep}) in each
+location following a RCBD.
 }
 

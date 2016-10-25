@@ -13,7 +13,7 @@ met8x12
 }
 \description{
 This data set has the yields per plot (\code{y}) for an experiment with
-8 genotypes (\code{geno}), 12 environments (\code{env}), and 3 replications (\code{rep})
-in each evironment following a RCBD.
+8 sweetpotato genotypes (\code{geno}), 12 environments (\code{env}), and 3 replications
+(\code{rep}) in each evironment following a RCBD.
 }
 
