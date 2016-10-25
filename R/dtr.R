@@ -50,63 +50,68 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # log transformations
 
   if (type == "logy") {
-    if (sum(data[, trait] <= 0, na.rm = T) > 0) {
-      data[data[, trait] <= 0, trait] <- NA
+    nn <- paste("log", trait, sep = ".")
+    data[, nn] <- data[, trait]
+    if (sum(data[, nn] <= 0, na.rm = T) > 0) {
+      data[data[, nn] <= 0 & !is.na(data[, nn]), nn] <- NA
       warning("Values <= 0 converted to NA", call. = FALSE)
     }
-    name <- paste("log", trait, sep = ".")
-    data[, name] <- log(data[, trait], base)
+    data[, nn] <- log(data[, nn], base)
   }
 
   if (type == "logy1"){
-    if (sum(data[, trait] + 1 <= 0, na.rm = T) > 0) {
-      data[data[, trait] + 1 <= 0, trait] <- NA
+    nn <- paste("log", trait, sep = ".")
+    data[, nn] <- data[, trait]
+    if (sum(data[, nn] + 1 <= 0, na.rm = T) > 0) {
+      data[data[, nn] + 1 <= 0 & !is.na(data[, nn]), nn] <- NA
       warning("Values <= -1 converted to NA", call. = FALSE)
     }
-    name <- paste("log", trait, sep = ".")
-    data[, name] <- log(data[, trait] + 1, base)
+    data[, nn] <- log(data[, nn] + 1, base)
   }
   
   # sqrt transformation
 
   if (type == "sqrty") {
-    if (sum(data[, trait] < 0, na.rm = T) > 0) {
-      data[data[, trait] < 0, trait] <- NA
+    nn <- paste("sqrt", trait, sep = ".")
+    data[, nn] <- data[, trait]
+    if (sum(data[, nn] < 0, na.rm = T) > 0) {
+      data[data[, nn] < 0 & !is.na(data[, nn]), nn] <- NA
       warning("Values < 0 converted to NA", call. = FALSE)
     }
-    name <- paste("sqrt", trait, sep = ".")
-    data[, name] <- sqrt(data[, trait])
+    data[, nn] <- sqrt(data[, nn])
   }
   
   if (type == "sqrty1") {
-    if (sum(data[, trait] + 0.5 < 0, na.rm = T) > 0) {
-      data[data[, trait] + 0.5 < 0, trait] <- NA
+    nn <- paste("sqrt", trait, sep = ".")
+    data[, nn] <- data[, trait]
+    if (sum(data[, nn] + 0.5 < 0, na.rm = T) > 0) {
+      data[data[, nn] + 0.5 < 0 & !is.na(data[, nn]), nn] <- NA
       warning("Values < -0.5 converted to NA", call. = FALSE)
     }
-    name <- paste("sqrt", trait, sep = ".")
-    data[, name] <- sqrt(data[, trait] + 0.5)
+    data[, nn] <- sqrt(data[, nn] + 0.5)
   }
   
   # arc-sine transformation
   
   if (type == "arcsin") {
-    if (sum(data[, trait] < 0, na.rm = T) > 0 | sum(data[, trait] > 1, na.rm = T) > 0) {
-      data[data[, trait] < 0, trait] <- NA
-      data[data[, trait] > 1, trait] <- NA
+    nn <- paste("arcsin", trait, sep = ".")
+    data[, nn] <- data[, trait]
+    if (sum(data[, nn] < 0, na.rm = T) > 0 | sum(data[, nn] > 1, na.rm = T) > 0) {
+      data[data[, nn] < 0 & !is.na(data[, nn]), nn] <- NA
+      data[data[, nn] > 1 & !is.na(data[, nn]), nn] <- NA
       warning("Values < 0 or > 1 converted to NA", call. = FALSE)
     }
-    if (sum(data[, trait] == 0, na.rm = T) > 0 | sum(data[, trait] == 1, na.rm = T) > 0) {
+    if (sum(data[, nn] == 0, na.rm = T) > 0 | sum(data[, nn] == 1, na.rm = T) > 0) {
       if (!is.null(n)) {
-        data[data[, trait] == 0, trait] <- 1/(4*n)
-        data[data[, trait] == 1, trait] <- 1 - 1/(4*n)
+        data[data[, nn] == 0 & !is.na(data[, nn]), nn] <- 1/(4*n)
+        data[data[, nn] == 1 & !is.na(data[, nn]), nn] <- 1 - 1/(4*n)
         warning("Values = 0 and = 1 replaced with 1/4n and 1 - 1/4n", call. = FALSE)
       }
       if (is.null(n)) {
         warning("n is not specified. Values = 0 or = 1 are not replaced", call. = FALSE)
       }
     }
-    name <- paste("arcsin", trait, sep = ".")
-    data[, name] <- asin(sqrt(data[, trait]))
+    data[, nn] <- asin(sqrt(data[, nn]))
   }
 
   # results
