@@ -47,12 +47,12 @@ especially if zeros are present.
 
 \code{arcsin} for the arc-sine transformation arcsin(y^0.5). This transformation
 is recommended for data on proportions, which typically follow a binomial
-distribution. Where the values of 0 or 1 are present, these must be substituted
-by 1/4n and 1-1/4n, where \code{n} is the denominator for the computation of the
-proportions. When the proportions are in the range 0.2 to 0.8 no transformation
-could be needed, and where some are on either the range 0 to 0.2 or 0.8 to 1 a
-square root transformation could be useful. Finally, Note that for binomial data,
-a binomial regression model could be a better option.
+distribution. Data must lie between 0 and 1. Where the values of 0 or 1 are present,
+these should be substituted by 1/4n and 1-1/4n, where \code{n} is the denominator for
+the computation of the proportions. When the proportions are in the range 0.2 to 0.8
+no transformation could be needed, and where some are on either the range 0 to 0.2 or
+0.8 to 1 a square root transformation could be useful. Finally, Note that for binomial
+data, a binomial regression model could be a better option.
 }
 \examples{
 dtr("nonc", "logy", data = pjpz09)
