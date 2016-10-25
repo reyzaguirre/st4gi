@@ -50,48 +50,52 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # log transformations
   
   if (type == "logy") {
-    if (sum(data[, trait] <= 0) > 0) {
+    if (sum(data[, trait] <= 0, na.rm = T) > 0) {
       data[data[, trait] <= 0, trait] <- NA
       warning("Values <= 0 converted to NA", call. = FALSE)
     }
-    data[, trait] <- log(data[, trait], base)
+    name <- paste("log", trait, sep = ".")
+    data[, name] <- log(data[, trait], base)
   }
 
   if (type == "logy1"){
-    if (sum(data[, trait] + 1 <= 0) > 0) {
+    if (sum(data[, trait] + 1 <= 0, na.rm = T) > 0) {
       data[data[, trait] + 1 <= 0, trait] <- NA
       warning("Values <= -1 converted to NA", call. = FALSE)
     }
-    data[, trait] <- log(data[, trait] + 1, base)
+    name <- paste("log", trait, sep = ".")
+    data[, name] <- log(data[, trait] + 1, base)
   }
   
   # sqrt transformation
 
   if (type == "sqrty") {
-    if (sum(data[, trait] < 0) > 0) {
+    if (sum(data[, trait] < 0, na.rm = T) > 0) {
       data[data[, trait] < 0, trait] <- NA
       warning("Values < 0 converted to NA", call. = FALSE)
     }
-    data[, trait] <- sqrt(data[, trait])
+    name <- paste("sqrt", trait, sep = ".")
+    data[, name] <- sqrt(data[, trait])
   }
   
   if (type == "sqrty1") {
-    if (sum(data[, trait] + 0.5 < 0) > 0) {
+    if (sum(data[, trait] + 0.5 < 0, na.rm = T) > 0) {
       data[data[, trait] + 0.5 < 0, trait] <- NA
       warning("Values < -0.5 converted to NA", call. = FALSE)
     }
-    data[, trait] <- sqrt(data[, trait] + 0.5)
+    name <- paste("sqrt", trait, sep = ".")
+    data[, name] <- sqrt(data[, trait] + 0.5)
   }
   
   # arc-sine transformation
   
   if (type == "arcsin") {
-    if (sum(data[, trait] < 0) > 0 | sum(data[, trait] > 1) > 0) {
+    if (sum(data[, trait] < 0, na.rm = T) > 0 | sum(data[, trait] > 1, na.rm = T) > 0) {
       data[data[, trait] < 0, trait] <- NA
       data[data[, trait] > 1, trait] <- NA
       warning("Values < 0 or > 1 converted to NA", call. = FALSE)
     }
-    if (sum(data[, trait] == 0) > 0 | sum(data[, trait] == 1) > 0) {
+    if (sum(data[, trait] == 0, na.rm = T) > 0 | sum(data[, trait] == 1, na.rm = T) > 0) {
       if (!is.null(n)) {
         data[data[, trait] == 0, trait] <- 1/(4*n)
         data[data[, trait] == 1, trait] <- 1 - 1/(4*n)
@@ -101,7 +105,8 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
         warning("n is not specified. Values = 0 or = 1 are not replaced", call. = FALSE)
       }
     }
-    data[, trait] <- sqrt(data[, trait] + 0.5)
+    name <- paste("arcsin", trait, sep = ".")
+    data[, name] <- sqrt(data[, trait] + 0.5)
   }
 
   # results
