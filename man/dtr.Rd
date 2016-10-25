@@ -29,26 +29,26 @@ Available transformations are:
 
 \code{none} for no transformation.
 
-\code{logy} for the logaritmic transformation log(y). This transformation is
-recomended for data that follow a multiplicative intead of an additive model.
+\code{logy} for the logarithmic transformation log(y). This transformation is
+recommended for data that follow a multiplicative instead of an additive model.
 
-\code{logy1} for the logaritmic transformation log(y + 1). The same as the
+\code{logy1} for the logarithmic transformation log(y + 1). The same as the
 previous case, but when the data set includes small values (e.g. less than 10).
 
 \code{sqrty} for the square root transformation sqrt(y). This transformation is
-recomended for count data, which typically follow a Poisson distribution where
+recommended for count data, which typically follow a Poisson distribution where
 the variance is proportional to the mean. It is also recommended for percentage
-data where the range is between 0 and 20% or between 80 and 100%. However note
-that for Poisson data, a Poisson regression model could be a better option.
+data where the range is between 0 and 20% or between 80 and 100%. However, note
+that for Poisson data a Poisson regression model could be a better option.
 
 \code{sqrty1} for the square root transformation sqrt(y + 0.5). The same as the
 previous case but when most of the values in the data set are less than 10,
 especially if zeros are present.
 
-\code{arcsin} for the  arc-sine transformation arcsin(y^0.5). This transformation
-is recomended for data on proportions, which typically follow a binomial
+\code{arcsin} for the arc-sine transformation arcsin(y^0.5). This transformation
+is recommended for data on proportions, which typically follow a binomial
 distribution. Where the values of 0 or 1 are present, these must be substituted
-by 1/4n and 1-1/4n, where \code{n} is the denomitator for the computation of the
+by 1/4n and 1-1/4n, where \code{n} is the denominator for the computation of the
 proportions. When the proportions are in the range 0.2 to 0.8 no transformation
 could be needed, and where some are on either the range 0 to 0.2 or 0.8 to 1 a
 square root transformation could be useful. Finally, Note that for binomial data,
