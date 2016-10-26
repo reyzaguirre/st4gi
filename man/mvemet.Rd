@@ -37,7 +37,6 @@ specified in \code{maxp} will generate an error message.
 }
 \examples{
 # The data
-head(met8x12)
 str(met8x12)
 
 # Estimate the missing values

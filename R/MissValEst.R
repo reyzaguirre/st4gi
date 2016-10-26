@@ -48,7 +48,8 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
   data[, "ytemp"] <- data[, trait]
   mG <- tapply(data[, trait], data[, treat], mean, na.rm = TRUE)
   for (i in 1:length(data[, trait]))
-    if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mG[data[i, treat]]
+    if (is.na(data[i, trait]))
+      data[i, "ytemp"] <- mG[data[i, treat]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
   cc <- max(data[, trait], na.rm = TRUE)
@@ -56,7 +57,7 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
   while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
     cont <- cont + 1
     for (i in 1:length(data[, trait]))
-      if (is.na(data[i, trait]) == 1) {
+      if (is.na(data[i, trait])) {
         data[i, "ytemp"] <- data[i, trait]
         sum1 <- tapply(data[, "ytemp"], data[, treat], sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
@@ -66,7 +67,7 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
-    lc2 <- subset(data, is.na(data[, trait]) == 1)[, trait.est]
+    lc2 <- subset(data, is.na(data[, trait]))[, trait.est]
     cc <- max(abs(lc1 - lc2))
   }
 
@@ -95,7 +96,6 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 #' specified in \code{maxp} will generate an error message.
 #' @examples
 #' # The data
-#' head(met8x12)
 #' str(met8x12)
 #'
 #' # Estimate the missing values
@@ -133,7 +133,8 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   data[, "ytemp"] <- data[, trait]
   mGE <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = TRUE)
   for (i in 1:length(data[, trait]))
-    if (is.na(data[i, trait]) == 1) data[i, "ytemp"] <- mGE[data[i, geno], data[i, env]]
+    if (is.na(data[i, trait]))
+      data[i, "ytemp"] <- mGE[data[i, geno], data[i, env]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
   cc <- max(data[, trait], na.rm = TRUE)
@@ -141,7 +142,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
     cont <- cont + 1
     for (i in 1:length(data[, trait]))
-      if (is.na(data[i, trait]) == 1) {
+      if (is.na(data[i, trait])) {
         data[i, "ytemp"] <- data[i, trait]
         sum1 <- tapply(data[, "ytemp"], list(data[, geno], data[, env]), sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], list(data[, env], data[, rep]), sum, na.rm = TRUE)
@@ -152,11 +153,111 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
-    lc2 <- subset(data, is.na(data[, trait]) == 1)[, trait.est]
+    lc2 <- subset(data, is.na(data[, trait]))[, trait.est]
     cc <- max(abs(lc1 - lc2))
   }
 
   # Return
 
   data[, c(geno, env, rep, trait, trait.est)]
+}
+
+#' Estimation of missing values for a 2-factor factorial
+#'
+#' Function to estimate missing values for a 2-factor factorial with a CRD
+#' or a RCBD by the least squares method.
+#' @param trait The trait to estimate missing values.
+#' @param A Factor A.
+#' @param B Factor B.
+#' @param rep The replications or blocks.
+#' @param design The statistical design, \code{crd} or \code{rcbd}.
+#' @param data The name of the data frame.
+#' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
+#' @param tol Tolerance for the convergence of the iterative estimation process.
+#' @return It returns a data frame with the experimental layout and columns \code{trait}
+#' and \code{trait.est} with the original data and the original data plus the estimated values.
+#' @author Raul Eyzaguirre.
+#' @details A \code{data.frame} with data for a 2-factor factorial with at least two
+#' replications and at least one datum for each factor levels' combination must be loaded.
+#' Experimental data with only one replication, any factor levels' combination without data,
+#' or more missing values than specified in \code{maxp} will generate an error message.
+#' @examples
+#' # The data
+#' str(asc)
+#' 
+#' # A copy with some missing values
+#' temp <- asc
+#' temp$dm[c(3, 10, 115)] <- NA
+#'
+#' # Estimate the missing values
+#' mveAB("dm", "geno", "treat", "rep", "crd", temp)
+#' @export
+
+mveAB <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1, tol = 1e-06) {
+  
+  # match arguments
+  
+  design <- match.arg(design)
+  
+  # Check data
+  
+  lc <- check.AxB(trait, A, B, rep, data)
+  
+  # Error messages
+  
+  if (lc$c1 == 0)
+    stop("Some factor levels's combinations have zero frequency. Remove levels of factor A or B to proceed.")
+  
+  if (lc$c1 == 1 & lc$c2 == 0)
+    stop("There is only one replication. Inference is not possible with one replication.")
+  
+  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
+    stop("The data set is balanced. There are no missing values to estimate.")
+  
+  if (lc$pmis > maxp)
+    stop(paste("Too many missing values (",
+               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
+  
+  if (lc$na < 2 | lc$nb < 2)
+    stop("This is not a 2-factor factorial experiment.")
+  
+  # Estimation
+  
+  trait.est <- paste(trait, ".est", sep = "")
+  data[, trait.est] <- data[, trait]
+  data[, "ytemp"] <- data[, trait]
+  mAB <- tapply(data[, trait], list(data[, A], data[, B]), mean, na.rm = TRUE)
+  for (i in 1:length(data[, trait]))
+    if (is.na(data[i, trait])) {
+      data[i, "ytemp"] <- mAB[data[i, A], data[i, B]]
+      if (design == "crd")
+        data[i, trait.est] <- mAB[data[i, A], data[i, B]]
+    }
+  if (design == "rcbd"){
+    lc1 <- array(0, lc$nmis)
+    lc2 <- array(0, lc$nmis)
+    cc <- max(data[, trait], na.rm = TRUE)
+    cont <- 0
+    while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
+      cont <- cont + 1
+      for (i in 1:length(data[, trait]))
+        if (is.na(data[i, trait])) {
+          data[i, "ytemp"] <- data[i, trait]
+          sum1 <- tapply(data[, "ytemp"], list(data[, A], data[, B]), sum, na.rm = TRUE)
+          sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
+          sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
+          data[i, trait.est] <- (lc$na * lc$nb * sum1[data[i, A], data[i, B]] +
+                                   lc$nr * sum2[data[i, rep]] - sum3) /
+            (lc$na * lc$nb * lc$nr - lc$na * lc$nb - lc$nr + 1)
+          data[i, "ytemp"] <- data[i, trait.est]
+        }
+      lc1 <- lc2
+      lc2 <- subset(data, is.na(data[, trait]) == 1)[, trait.est]
+      cc <- max(abs(lc1 - lc2))
+    }
+  }
+  
+  # Return
+  
+  data[, c(A, B, rep, trait, trait.est)]
 }
