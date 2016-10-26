@@ -106,7 +106,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- check.met(trait, geno, env, rep, data)
+  lc <- check.AxB(trait, geno, env, rep, data)
 
   # Error messages
 
@@ -123,7 +123,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
     stop(paste("Too many missing values (",
                format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
-  if (lc$ng < 2 | lc$ne < 2)
+  if (lc$na < 2 | lc$nb < 2)
     stop("This is not a MET experiment.")
 
   # Estimation
@@ -138,7 +138,7 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   lc2 <- array(0, lc$nmis)
   cc <- max(data[, trait], na.rm = TRUE)
   cont <- 0
-  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont<100) {
+  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
     cont <- cont + 1
     for (i in 1:length(data[, trait]))
       if (is.na(data[i, trait]) == 1) {
@@ -146,9 +146,9 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
         sum1 <- tapply(data[, "ytemp"], list(data[, geno], data[, env]), sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], list(data[, env], data[, rep]), sum, na.rm = TRUE)
         sum3 <- tapply(data[, "ytemp"], data[, env], sum, na.rm = TRUE)
-        data[i, trait.est] <- (lc$ng * sum1[data[i, geno], data[i, env]] +
+        data[i, trait.est] <- (lc$na * sum1[data[i, geno], data[i, env]] +
                                  lc$nr * sum2[data[i, env], data[i, rep]] -
-                                 sum3[data[i, env]]) / (lc$ng * lc$nr - lc$ng - lc$nr + 1)
+                                 sum3[data[i, env]]) / (lc$na * lc$nr - lc$na - lc$nr + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2

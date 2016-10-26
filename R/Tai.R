@@ -30,7 +30,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Check data
 
-  lc <- check.met(trait, geno, env, rep, data)
+  lc <- check.AxB(trait, geno, env, rep, data)
 
   # Error messages and warnings
 
@@ -40,10 +40,10 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
   if (lc$c1 == 1 & lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
 
-  if (lc$ng < 2 | lc$ne < 2)
+  if (lc$na < 2 | lc$nb < 2)
     stop("This is not a MET experiment.")
 
-  if (lc$ng < 3 | lc$ne < 3)
+  if (lc$na < 3 | lc$nb < 3)
     stop("You need at least 3 genotypes and 3 environments to run Tai")
 
   if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0) {
@@ -80,13 +80,13 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
   # Compute Tai values alpha and lambda
 
   slgl <- int.eff
-  slgl <- t(t(slgl) * (env.mean - overall.mean) / (lc$ne - 1))
-  alpha <- apply(slgl, 1, sum) / (at[2, 3] - at[3, 3]) * lc$ng * lc$nr
+  slgl <- t(t(slgl) * (env.mean - overall.mean) / (lc$nb - 1))
+  alpha <- apply(slgl, 1, sum) / (at[2, 3] - at[3, 3]) * lc$na * lc$nr
 
   s2gl <- int.eff
-  s2gl <- s2gl^2 / (lc$ne - 1)
+  s2gl <- s2gl^2 / (lc$nb - 1)
   lambda <- (apply(s2gl, 1, sum) - alpha * apply(slgl, 1, sum)) / 
-    (lc$ng - 1) / at[5, 3] * lc$ng * lc$nr
+    (lc$na - 1) / at[5, 3] * lc$na * lc$nr
   lambda[lambda < 0] <- 0
 
   # Output
@@ -132,21 +132,21 @@ plot.tai <- function(x, conf = 0.95, title = NULL, color = c("darkorange", "blac
 
   # plot lambda limits
   
-  lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$ne - 2,
-                           lc$ne * (lc$ng - 1) * (lc$nr - 1)))) * 1.1
+  lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$nb - 2,
+                           lc$nb * (lc$na - 1) * (lc$nr - 1)))) * 1.1
   
   # Prediction interval for alpha
   
   lx <- seq(0, lmax, lmax / 100)
-  ta <- qt(1 - (1 - conf) / 2, lc$ne - 2)
+  ta <- qt(1 - (1 - conf) / 2, lc$nb - 2)
   
-  div2 <- (lc$ne - 2) * at[2, 3] - (ta^2 + lc$ne - 2) * at[3, 3]
+  div2 <- (lc$nb - 2) * at[2, 3] - (ta^2 + lc$nb - 2) * at[3, 3]
   
   if (div2 < 0) {
     warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
     amax <- max(abs(alpha)) * 1.05
   } else {
-    pi.alpha <- ta * ((lx * (lc$ng - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^0.5
+    pi.alpha <- ta * ((lx * (lc$na - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^0.5
     amax <- max(c(abs(alpha), pi.alpha))
   }
 
@@ -164,9 +164,9 @@ plot.tai <- function(x, conf = 0.95, title = NULL, color = c("darkorange", "blac
     points(lx, pi.alpha, type = "l", lty = 5, col = color[3])
     points(lx, -pi.alpha, type = "l", lty = 5, col = color[3])
   }
-  abline(v = qf((1 - conf) / 2, lc$ne - 2, lc$ne * lc$ng * (lc$nr - 1)),
+  abline(v = qf((1 - conf) / 2, lc$nb - 2, lc$nb * lc$na * (lc$nr - 1)),
          lty = 5, col = color[3])
-  abline(v = qf(1 - (1 - conf) / 2, lc$ne - 2, lc$ne * lc$ng * (lc$nr - 1)),
+  abline(v = qf(1 - (1 - conf) / 2, lc$nb - 2, lc$nb * lc$na * (lc$nr - 1)),
          lty = 5, col = color[3])
 }
 
@@ -205,21 +205,21 @@ ggtai <- function(x, conf = 0.95, title = NULL) {
   
   # plot lambda limits
   
-  lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$ne - 2,
-                           lc$ne * (lc$ng - 1) * (lc$nr - 1)))) * 1.1
+  lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$nb - 2,
+                           lc$nb * (lc$na - 1) * (lc$nr - 1)))) * 1.1
   
   # Prediction interval for alpha
   
   lx <- seq(0, lmax, lmax / 100)
-  ta <- qt(1 - (1 - conf) / 2, lc$ne - 2)
+  ta <- qt(1 - (1 - conf) / 2, lc$nb - 2)
   
-  div2 <- (lc$ne - 2) * at[2, 3] - (ta^2 + lc$ne - 2) * at[3, 3]
+  div2 <- (lc$nb - 2) * at[2, 3] - (ta^2 + lc$nb - 2) * at[3, 3]
   
   if (div2 < 0) {
     warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
     amax <- max(abs(alpha)) * 1.05
   } else {
-    pi.alpha <- ta * ((lx * (lc$ng - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^0.5
+    pi.alpha <- ta * ((lx * (lc$na - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^0.5
     amax <- max(c(abs(alpha), pi.alpha))
   }
   
@@ -246,9 +246,9 @@ ggtai <- function(x, conf = 0.95, title = NULL) {
   # lambda limits
   
   gg <- gg +
-    ggplot2::geom_vline(xintercept = qf((1 - conf) / 2, lc$ne - 2, lc$ne * lc$ng * (lc$nr - 1)),
+    ggplot2::geom_vline(xintercept = qf((1 - conf) / 2, lc$nb - 2, lc$nb * lc$na * (lc$nr - 1)),
                         col = "gray") +
-    ggplot2::geom_vline(xintercept = qf(1 - (1 - conf) / 2, lc$ne - 2, lc$ne * lc$ng * (lc$nr - 1)),
+    ggplot2::geom_vline(xintercept = qf(1 - (1 - conf) / 2, lc$nb - 2, lc$nb * lc$na * (lc$nr - 1)),
                         col = "gray")
   
   # points

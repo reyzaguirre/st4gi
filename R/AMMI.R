@@ -46,7 +46,7 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
 
   # Check data
 
-  lc <- check.met(trait, geno, env, rep, data)
+  lc <- check.AxB(trait, geno, env, rep, data)
 
   # Error messages
 
@@ -59,10 +59,10 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
   if (method == "ammi" & lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0)
     warning("The data set is unbalanced. Significance of PCs is not evaluated.")
 
-  if (lc$ng < 2 | lc$ne < 2)
+  if (lc$na < 2 | lc$nb < 2)
     stop(paste("This is not a MET experiment."))
 
-  if (lc$ng < 3 | lc$ne < 3)
+  if (lc$na < 3 | lc$nb < 3)
     stop(paste("You need at least 3 genotypes and 3 environments to run AMMI or GGE."))
 
   # Compute interaction means matrix
