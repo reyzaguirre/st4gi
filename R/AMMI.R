@@ -46,7 +46,7 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
 
   # Check data
 
-  lc <- check.AxB(trait, geno, env, rep, data)
+  lc <- check.2f(trait, geno, env, rep, data)
 
   # Error messages
 

@@ -145,7 +145,7 @@ check.rcbd <- function(trait, treat, rep, data) {
 #' balanced.
 #' @export
 
-check.AxB <- function(trait, A, B, rep, data) {
+check.2f <- function(trait, A, B, rep, data) {
   
   # Everything as factor
   

@@ -17,10 +17,10 @@
 #' specified in \code{maxp} will generate an error message.
 #' @examples
 #' temp <- subset(met8x12, env == "TM80N")
-#' mveb("y", "geno", "rep", temp)
+#' mve.rcbd("y", "geno", "rep", temp)
 #' @export
 
-mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
+mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
@@ -99,14 +99,14 @@ mveb <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 #' str(met8x12)
 #'
 #' # Estimate the missing values
-#' mvemet("y", "geno", "env", "rep", met8x12)
+#' mve.met("y", "geno", "env", "rep", met8x12)
 #' @export
 
-mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
+mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- check.AxB(trait, geno, env, rep, data)
+  lc <- check.2f(trait, geno, env, rep, data)
 
   # Error messages
 
@@ -190,10 +190,10 @@ mvemet <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 #' temp$dm[c(3, 10, 115)] <- NA
 #'
 #' # Estimate the missing values
-#' mveAB("dm", "geno", "treat", "rep", "crd", temp)
+#' mve.2f("dm", "geno", "treat", "rep", "crd", temp)
 #' @export
 
-mveAB <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1, tol = 1e-06) {
+mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1, tol = 1e-06) {
   
   # match arguments
   
@@ -201,7 +201,7 @@ mveAB <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1,
   
   # Check data
   
-  lc <- check.AxB(trait, A, B, rep, data)
+  lc <- check.2f(trait, A, B, rep, data)
   
   # Error messages
   

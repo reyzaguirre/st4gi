@@ -14,11 +14,11 @@
 #' factors while the blocks are considered as random and nested into the environments.
 #' @return It returns the ANOVA table.
 #' @examples
-#' aovmet("y", "geno", "env", "rep", met8x12)
+#' aov.met("y", "geno", "env", "rep", met8x12)
 #' @importFrom stats anova
 #' @export
 
-aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {
+aov.met <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Everything as factor
 
@@ -28,10 +28,10 @@ aovmet <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Check data and estimate missing values
 
-  lc <- check.AxB(trait, geno, env, rep, data)
+  lc <- check.2f(trait, geno, env, rep, data)
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0) {
-    data[, trait] <- mvemet(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
+    data[, trait] <- mve.met(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
     warning(paste("The data set is unbalanced, ",
                   format(lc$pmis * 100, digits = 3),
                   "% missing values estimated.", sep = ""))
