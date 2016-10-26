@@ -63,7 +63,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Compute ANOVA
   
-  at <- suppressWarnings(aovmet(trait, geno, env, rep, data, maxp))
+  at <- suppressWarnings(aov.met(trait, geno, env, rep, data, maxp))
 
   # Check data and estimate missing values
   
