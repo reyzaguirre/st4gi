@@ -50,7 +50,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # log transformations
 
   if (type == "logy") {
-    nn <- paste("log", trait, sep = ".")
+    nn <- paste("log", trait, sep = "_")
     data[, nn] <- data[, trait]
     if (sum(data[, nn] <= 0, na.rm = T) > 0) {
       data[data[, nn] <= 0 & !is.na(data[, nn]), nn] <- NA
@@ -60,7 +60,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   }
 
   if (type == "logy1"){
-    nn <- paste("log", trait, sep = ".")
+    nn <- paste("log", trait, sep = "_")
     data[, nn] <- data[, trait]
     if (sum(data[, nn] + 1 <= 0, na.rm = T) > 0) {
       data[data[, nn] + 1 <= 0 & !is.na(data[, nn]), nn] <- NA
@@ -72,7 +72,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # sqrt transformation
 
   if (type == "sqrty") {
-    nn <- paste("sqrt", trait, sep = ".")
+    nn <- paste("sqrt", trait, sep = "_")
     data[, nn] <- data[, trait]
     if (sum(data[, nn] < 0, na.rm = T) > 0) {
       data[data[, nn] < 0 & !is.na(data[, nn]), nn] <- NA
@@ -82,7 +82,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   }
   
   if (type == "sqrty1") {
-    nn <- paste("sqrt", trait, sep = ".")
+    nn <- paste("sqrt", trait, sep = "_")
     data[, nn] <- data[, trait]
     if (sum(data[, nn] + 0.5 < 0, na.rm = T) > 0) {
       data[data[, nn] + 0.5 < 0 & !is.na(data[, nn]), nn] <- NA
@@ -94,7 +94,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # arc-sine transformation
   
   if (type == "arcsin") {
-    nn <- paste("arcsin", trait, sep = ".")
+    nn <- paste("arcsin", trait, sep = "_")
     data[, nn] <- data[, trait]
     if (sum(data[, nn] < 0, na.rm = T) > 0 | sum(data[, nn] > 1, na.rm = T) > 0) {
       data[data[, nn] < 0 & !is.na(data[, nn]), nn] <- NA
