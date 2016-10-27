@@ -174,14 +174,14 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
    
     if (exists("vw", fb) & exists("dmv", fb)) {
       temp2 <- fb$vw * fb$dmv / 100
-      if (exists("dmfy", fb))
-        ow <- c(ow, "dmfy")
-      fb$dmfy <- temp2 * 10 / value
+      if (exists("dmvy", fb))
+        ow <- c(ow, "dmvy")
+      fb$dmvy <- temp2 * 10 / value
       if (exists("noph", fb) & exists("nops", fb)) {
-        if (exists("dmfy.aj", fb))
-          ow <- c(ow, "dmfy.aj")
-        fb$dmfy.aj <- temp2 / fb$noph * fb$nops * 10 / value
-        fb$dmfy.aj[fb$noph == 0] <- NA
+        if (exists("dmvy.aj", fb))
+          ow <- c(ow, "dmvy.aj")
+        fb$dmvy.aj <- temp2 / fb$noph * fb$nops * 10 / value
+        fb$dmvy.aj[fb$noph == 0] <- NA
       }
     }
   }
@@ -254,16 +254,16 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     if (exists("vw", fb) & exists("dmv", fb)) {
       temp2 <- fb$vw * fb$dmv / 100
       if (exists("nops", fb)) {
-        if (exists("dmfy", fb))
-          ow <- c(ow, "dmfy")
-        fb$dmfy <- temp2 / fb$nops * value / 1000
-        fb$dmfy[fb$nops == 0] <- NA
+        if (exists("dmvy", fb))
+          ow <- c(ow, "dmvy")
+        fb$dmvy <- temp2 / fb$nops * value / 1000
+        fb$dmvy[fb$nops == 0] <- NA
       }
       if (exists("noph", fb)) {
-        if (exists("dmfy.aj", fb))
-          ow <- c(ow, "dmfy.aj")
-        fb$dmfy.aj <- temp2 / fb$noph * value / 1000
-        fb$dmfy.aj[fb$noph == 0] <- NA
+        if (exists("dmvy.aj", fb))
+          ow <- c(ow, "dmvy.aj")
+        fb$dmvy.aj <- temp2 / fb$noph * value / 1000
+        fb$dmvy.aj[fb$noph == 0] <- NA
       }
     }
   }

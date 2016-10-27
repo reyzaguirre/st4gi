@@ -45,7 +45,7 @@
 #'  \item \code{dmvf}    : Fresh weight vines for dry matter assessment (kg)
 #'  \item \code{dmvd}    : Dry weight of dmvf samples (kg)
 #'  \item \code{dmv}     : Vines dry matter content (\%)
-#'  \item \code{dmfy}    : Dry matter foliage yield (kg)
+#'  \item \code{dmvy}    : Dry matter vine yield (kg)
 #'  \item \code{fraw1}   : Root fiber (1-9), first determination (\code{fraw} is also valid)
 #'  \item \code{suraw1}  : Root sugar (1-9), first determination (\code{suraw} is also valid)
 #'  \item \code{straw1}  : Root starch (1-9), first determination (\code{straw} is also valid)
@@ -105,7 +105,7 @@ checknames <- function(fb, aqt = NULL) {
                       "nope", "vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv", "vw", "noph",
                       "nopr", "nocr", "nonc", "crw", "ncrw", "rfcp.cc", "rfcs.cc", "scol", "fcol",
                       "rfcp", "rfcs", "rs", "rf", "damr", "rspr", "wed", "dmf", "dmd", "dm",
-                      "dmry", "dmvf", "dmvd", "dmv", "dmfy", "fraw", "fraw1", "suraw", "suraw1",
+                      "dmry", "dmvf", "dmvd", "dmv", "dmvy", "fraw", "fraw1", "suraw", "suraw1",
                       "straw", "straw1", "coof", "coof1", "coosu", "coosu1", "coost", "coost1",
                       "coot", "coot1", "cooap", "cooap1", "fraw2", "suraw2", "straw2", "coof2",
                       "coosu2", "coost2", "coot2", "cooap2", "prot", "fe", "zn", "ca", "mg",

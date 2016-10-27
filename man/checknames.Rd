@@ -61,7 +61,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{dmvf}    : Fresh weight vines for dry matter assessment (kg)
  \item \code{dmvd}    : Dry weight of dmvf samples (kg)
  \item \code{dmv}     : Vines dry matter content (\%)
- \item \code{dmfy}    : Dry matter foliage yield (kg)
+ \item \code{dmvy}    : Dry matter vine yield (kg)
  \item \code{fraw1}   : Root fiber (1-9), first determination (\code{fraw} is also valid)
  \item \code{suraw1}  : Root sugar (1-9), first determination (\code{suraw} is also valid)
  \item \code{straw1}  : Root starch (1-9), first determination (\code{straw} is also valid)
