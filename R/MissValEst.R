@@ -31,13 +31,16 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
   if (lc$c1 == 0)
     stop("Some treatments have zero frequency. Remove treatments to proceed.")
 
-  if (lc$c1 == 1 & lc$c2 == 0)
+  if (lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
 
-  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
-    stop("The data set is balanced. There are no missing values to estimate.")
+  if (lc$c3 == 0)
+    stop("Some treatments have additional replications. Remove those replications to proceed.")
 
-  if (lc$pmis > maxp)
+  if (lc$c4 == 1)
+    stop("There are no missing values to estimate.")
+
+    if (lc$pmis > maxp)
     stop(paste("Too many missing values (",
                format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
@@ -113,11 +116,14 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   if (lc$c1 == 0)
     stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
 
-  if (lc$c1 == 1 & lc$c2 == 0)
+  if (lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
 
-  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
-    stop("The data set is balanced. There are no missing values to estimate.")
+  if (lc$c3 == 0)
+    stop("Some genotypes have additional replications. Remove those replications to proceed.")
+
+  if (lc$c4 == 1)
+    stop("There are no missing values to estimate.")
 
   if (lc$pmis > maxp)
     stop(paste("Too many missing values (",
@@ -206,14 +212,17 @@ mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
   # Error messages
   
   if (lc$c1 == 0)
-    stop("Some factor levels's combinations have zero frequency. Remove levels of factor A or B to proceed.")
+    stop("Some factor levels' combinations have zero frequency. Remove levels of factor A or B to proceed.")
   
-  if (lc$c1 == 1 & lc$c2 == 0)
+  if (lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
   
-  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1)
+  if (lc$c3 == 0)
+    stop("Some factor levels' combinations have additional replications. Remove those replications to proceed.")
+
+  if (lc$c4 == 1)
     stop("The data set is balanced. There are no missing values to estimate.")
-  
+
   if (lc$pmis > maxp)
     stop(paste("Too many missing values (",
                format(lc$pmis * 100, digits = 3), "%).", sep = ""))

@@ -18,8 +18,8 @@ check.2f(trait, A, B, rep, data)
 \item{data}{The name of the data frame.}
 }
 \value{
-Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
-missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
+Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
+of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
 of levels of factor A (\code{na}), the number of levels of factor B (\code{nb}),
 the number of replications (\code{nr}), and a table with frequencies of valid cases
 for each combination of the levels of both factors.
@@ -29,8 +29,8 @@ This function checks the frequencies for a 2-factor factorial.
 }
 \details{
 This function checks if there is more than one replication, if there is
-any combination of the levels of both factors without data and if the design is
-balanced.
+any combination of the levels of both factors without data or with more data then
+replications, and if the design is balanced.
 }
 \author{
 Raul Eyzaguirre.

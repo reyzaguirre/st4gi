@@ -34,19 +34,13 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Error messages and warnings
 
-  if (lc$c1 == 0)
-    stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
-
-  if (lc$c1 == 1 & lc$c2 == 0)
-    stop("There is only one replication. Inference is not possible with one replication.")
-
   if (lc$na < 2 | lc$nb < 2)
     stop("This is not a MET experiment.")
 
   if (lc$na < 3 | lc$nb < 3)
     stop("You need at least 3 genotypes and 3 environments to run Tai")
 
-  if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0) {
+  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
     data[, trait] <- mve.met(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
     warning(paste("The data set is unbalanced, ",
                   format(lc$pmis * 100, digits = 3),

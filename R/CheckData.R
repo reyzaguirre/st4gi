@@ -84,13 +84,14 @@ check.abd <- function(trait, treat, rep, data) {
 #' @param treat The treatments.
 #' @param rep The replications.
 #' @param data The name of the data frame.
-#' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
-#' missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
+#' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
+#' of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
 #' of treatments (\code{nt}), the number of replications (\code{nr}), and a table with
 #' frequencies of valid cases for each genotype.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
-#' if there is any treatment without data, and if the design is balanced.
+#' if there is any treatment without data or with more data than replications, and
+#' if the design is balanced.
 #' @export
 
 check.rcbd <- function(trait, treat, rep, data) {
@@ -100,6 +101,11 @@ check.rcbd <- function(trait, treat, rep, data) {
   data[, treat] <- factor(data[, treat])
   data[, rep] <- factor(data[, rep])
   
+  # Number of levels
+  
+  nt <- nlevels(data[, treat])
+  nr <- nlevels(data[, rep])
+
   # Check frequencies by treat
   
   nmis <- sum(is.na(data[, trait]))
@@ -107,24 +113,21 @@ check.rcbd <- function(trait, treat, rep, data) {
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, treat])
 
-  # Number of levels
-
-  nt <- nlevels(data[, treat])
-  nr <- max(tfreq)
-
   # Controls
   
-  c1 <- 1 # Check for zeros. Initial state no zeros which is good
-  c2 <- 0 # Check for replicates. Initial state only one replicate which is bad
-  c3 <- 1 # Check for balance. Initial state balanced which is good
+  c1 <- 1 # Check for zeros. Initial state no zeros
+  c2 <- 0 # Check for replicates. Initial state only one replicate
+  c3 <- 1 # Check for balance (additional data). Initial state balanced
+  c4 <- 1 # Check for missing values. Initial state no missing values
   
   if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
   if (max(tfreq) > 1) c2 <- 1 # State 1: more than one replicate
-  if (min(tfreq) != nr) c3 <- 0 # State 0: unbalanced
+  if (max(tfreq) > nr) c3 <- 0 # State 0: some cells with addional data
+  if (min(tfreq) < nr) c4 <- 0 # State 0: missing values
   
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis,
+  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        nt = nt, nr = nr, tfreq = tfreq)
 }
 
@@ -136,15 +139,15 @@ check.rcbd <- function(trait, treat, rep, data) {
 #' @param B Factor B.
 #' @param rep The replications.
 #' @param data The name of the data frame.
-#' @return Three control values (\code{c1}, \code{c2}, and \code{c3}), the number of
-#' missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
+#' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
+#' of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
 #' of levels of factor A (\code{na}), the number of levels of factor B (\code{nb}),
 #' the number of replications (\code{nr}), and a table with frequencies of valid cases
 #' for each combination of the levels of both factors.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication, if there is
-#' any combination of the levels of both factors without data and if the design is
-#' balanced.
+#' any combination of the levels of both factors without data or with more data then
+#' replications, and if the design is balanced.
 #' @export
 
 check.2f <- function(trait, A, B, rep, data) {
@@ -155,6 +158,12 @@ check.2f <- function(trait, A, B, rep, data) {
   data[, B] <- factor(data[, B])
   data[, rep] <- factor(data[, rep])
   
+  # Number of levels
+  
+  na <- nlevels(data[, A])
+  nb <- nlevels(data[, B])
+  nr <- nlevels(data[, rep])
+
   # Check frequencies by A and B
   
   nmis <- sum(is.na(data[, trait]))
@@ -162,24 +171,20 @@ check.2f <- function(trait, A, B, rep, data) {
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, A], subdata[, B])
 
-  # Number of levels
-  
-  na <- nlevels(data[, A])
-  nb <- nlevels(data[, B])
-  nr <- max(tfreq)
-
   # Controls
   
-  c1 <- 1 # Check for zeros. Initial state no zeros which is good
-  c2 <- 0 # Check for replicates. Initial state only one replicate which is bad
-  c3 <- 1 # Check for balance. Initial state balanced which is good
-  
+  c1 <- 1 # Check for zeros. Initial state no zeros
+  c2 <- 0 # Check for replicates. Initial state only one replicate
+  c3 <- 1 # Check for balance (additional data). Initial state balanced
+  c4 <- 1 # Check for missing values. Initial state no missing values
+    
   if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
   if (max(tfreq) > 1) c2 <- 1 # State 1: more than one replicate
-  if (min(tfreq) != nr) c3 <- 0 # State 0: unbalanced
+  if (max(tfreq) > nr) c3 <- 0 # State 0: some cells with addional data
+  if (min(tfreq) < nr) c4 <- 0 # State 0: missing values
     
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, nmis = nmis, pmis = pmis,
+  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        na = na, nb = nb, nr = nr, tfreq = tfreq)
 }

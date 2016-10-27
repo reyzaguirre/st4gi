@@ -53,10 +53,10 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
   if (lc$c1 == 0)
     stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
 
-  if (lc$c1 == 1 & lc$c2 == 0)
+  if (lc$c2 == 0)
     warning("There is only one replication. Inference is not possible with one replication.")
   
-  if (method == "ammi" & lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 0)
+  if (method == "ammi" & (lc$c3 == 0 | lc$c4 == 0))
     warning("The data set is unbalanced. Significance of PCs is not evaluated.")
 
   if (lc$na < 2 | lc$nb < 2)
@@ -71,7 +71,7 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
 
   # Compute ANOVA
 
-  if (lc$c1 + lc$c2 + lc$c3 == 3) {
+  if (lc$c2 + lc$c3 + lc$c4 == 3) {
     model <- aov(data[, trait] ~ data[, geno] + data[, env] +
                    data[, rep] %in% data[, env] + data[, geno]:data[, env])
     rdf <- model$df.residual

@@ -28,7 +28,7 @@ aov.rcbd <- function(trait, treat, rep, data, maxp = 0.1) {
 
   lc <- check.rcbd(trait, treat, rep, data)
 
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0) {
+  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
     data[, trait] <- mve.rcbd(trait, treat, rep, data, maxp, tol = 1e-06)[, 4]
     warning(paste("The data set is unbalanced, ",
                   format(lc$pmis * 100, digits = 3),
