@@ -100,15 +100,17 @@ check.rcbd <- function(trait, treat, rep, data) {
   data[, treat] <- factor(data[, treat])
   data[, rep] <- factor(data[, rep])
   
-  nt <- nlevels(data[, treat])
-  nr <- nlevels(data[, rep])
-  
   # Check frequencies by treat
   
   nmis <- sum(is.na(data[, trait]))
   pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, treat])
+
+  # Number of levels
+
+  nt <- nlevels(data[, treat])
+  nr <- max(tfreq)
 
   # Controls
   
@@ -118,7 +120,7 @@ check.rcbd <- function(trait, treat, rep, data) {
   
   if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
   if (max(tfreq) > 1) c2 <- 1 # State 1: more than one replicate
-  if (min(tfreq) != max(tfreq)) c3 <- 0 # State 0: unbalanced
+  if (min(tfreq) != nr) c3 <- 0 # State 0: unbalanced
   
   # Return
   
@@ -153,16 +155,18 @@ check.2f <- function(trait, A, B, rep, data) {
   data[, B] <- factor(data[, B])
   data[, rep] <- factor(data[, rep])
   
-  na <- nlevels(data[, A])
-  nb <- nlevels(data[, B])
-  nr <- nlevels(data[, rep])
-
   # Check frequencies by A and B
   
   nmis <- sum(is.na(data[, trait]))
   pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, A], subdata[, B])
+
+  # Number of levels
+  
+  na <- nlevels(data[, A])
+  nb <- nlevels(data[, B])
+  nr <- max(tfreq)
 
   # Controls
   
@@ -172,7 +176,7 @@ check.2f <- function(trait, A, B, rep, data) {
   
   if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
   if (max(tfreq) > 1) c2 <- 1 # State 1: more than one replicate
-  if (min(tfreq) != max(tfreq)) c3 <- 0 # State 0: unbalanced
+  if (min(tfreq) != nr) c3 <- 0 # State 0: unbalanced
     
   # Return
   
