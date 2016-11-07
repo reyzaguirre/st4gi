@@ -1,7 +1,7 @@
 #' @name asc
 #' @title Data for a 2-factor factorial with a CRD
 #' @docType data
-#' @aliases f2crd
+#' @aliases asc
 #' @description This data set contains data for ascorbic acid content in mg/100g dry weight
 #' (\code{asc.dw}), ascorbic acid content in mg/100g fresh weight (\code{asc.fw}), and
 #' dry matter percentage (\code{dm}) for an experiment with 46 potato genotypes (\code{geno}),

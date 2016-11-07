@@ -3,7 +3,6 @@
 \docType{data}
 \name{asc}
 \alias{asc}
-\alias{f2crd}
 \title{Data for a 2-factor factorial with a CRD}
 \format{A data frame with 6 columns and 282 rows.}
 \source{
