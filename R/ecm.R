@@ -10,9 +10,10 @@
 #' @param method The method to compute genotypic covariances. See details.
 #' @author Raul Eyzaguirre.
 #' @details If \code{env = NULL} a RCBD with one environment is considered.
-#' If \code{method = 1} the covariance between each pair of traits is computed using the variance
-#' of each trait and the variance of the sum. If \code{method = 2} the covariance matrix is
-#' approximated using the average of the correlation matrices computed with each replication.
+#' If \code{method = 1} the covariances between each pair of traits are computed
+#' using the variances of each trait and the variances of the sum. If \code{method = 2}
+#' the covariance matrices are approximated using the average of the correlation
+#' matrices computed with each replication in each environment.
 #' @return It returns the genotypic and phenotypic covariance and correlation matrices.
 #' @examples
 #' traits <- c("rytha", "bc", "dm", "star", "nocr")
@@ -28,7 +29,7 @@ ecm <- function(traits, geno, env = NULL, rep, data, method = 1) {
     e <- factor(data[, env])
   r <- factor(data[, rep])
 
-  # inits
+  # Inits
   
   nt <- length(traits) # number of traits
   G <- matrix(nrow = nt, ncol = nt) # genotypic covariance matrix
@@ -38,7 +39,7 @@ ecm <- function(traits, geno, env = NULL, rep, data, method = 1) {
     ne <- nlevels(e) # number of environments
   nr <- nlevels(r) # number of replications in each environment
 
-  # fitted models by REML for variance components
+  # Fitted models by REML for variance components
   
   if (!is.null(env)) {
     for (i in 1:nt) {
@@ -58,6 +59,8 @@ ecm <- function(traits, geno, env = NULL, rep, data, method = 1) {
       P[i, i] <- vc$g[1] + attr(vc, "sc")^2 / nr
     }
   }
+  
+  # Method based on Z = Y1 + Y2
 
   if (method == 1) {
     if (!is.null(env)) {
@@ -89,7 +92,7 @@ ecm <- function(traits, geno, env = NULL, rep, data, method = 1) {
     PC <- d2 %*% P %*% d2 # Phenotypic correlation matrix
   }
   
-  # correlation matrix
+  # Method based on average correlation matrix
   
   if (method == 2) {
     if (!is.null(env)) {
@@ -104,14 +107,11 @@ ecm <- function(traits, geno, env = NULL, rep, data, method = 1) {
     cl <- list() # correlation list
     for (i in 1:ner)
       cl[[i]] <- cor(df[[i]][, 1:nt], use = "pairwise.complete.obs")
-    GC <- apply(simplify2array(cl), 1:2, mean, na.rm = TRUE) # Genotypic correlation matrix
-    S <- diag(diag(G)^0.5, nt, nt)
-    G <- S %*% GC %*% S # Genotypic covariance matrix
-    pv <- diag(P)
-    P <- G # Phenotypic covariance matrix
-    diag(P) <- pv
-    d2 <- diag(diag(P)^{-0.5}, nt, nt)
-    PC <- d2 %*% P %*% d2 # Phenotypic correlation matrix
+    GC <- PC <- apply(simplify2array(cl), 1:2, mean, na.rm = TRUE) # Correlation matrices
+    d1 <- diag(diag(G)^0.5, nt, nt)
+    d2 <- diag(diag(P)^0.5, nt, nt)
+    G <- d1 %*% GC %*% d1 # Genotypic covariance matrix
+    P <- d2 %*% PC %*% d2 # Phenotypic covariance matrix
   }
   
   dimnames(G) <- dimnames(P) <- dimnames(GC) <- dimnames(PC) <- list(traits, traits)

@@ -6,7 +6,7 @@
 \usage{
 pesekbaker(traits, geno, env = NULL, rep, data, means = c("single",
   "fitted"), dgg = NULL, units = c("sdu", "actual"), sf = 0.1,
-  method = 2)
+  method = 1)
 }
 \arguments{
 \item{traits}{List of traits.}
