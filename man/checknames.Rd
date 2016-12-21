@@ -57,11 +57,9 @@ The data frame must use the following labels (lower or upper case):
  \item \code{dmf}     : Fresh weight of roots for dry matter assessment (kg)
  \item \code{dmd}     : Dry weight of dmf samples (kg)
  \item \code{dm}      : Storage root dry matter content (\%)
- \item \code{dmry}    : Dry matter root yield (kg)
  \item \code{dmvf}    : Fresh weight vines for dry matter assessment (kg)
  \item \code{dmvd}    : Dry weight of dmvf samples (kg)
  \item \code{dmv}     : Vines dry matter content (\%)
- \item \code{dmvy}    : Dry matter vine yield (kg)
  \item \code{fraw1}   : Root fiber (1-9), first determination (\code{fraw} is also valid)
  \item \code{suraw1}  : Root sugar (1-9), first determination (\code{suraw} is also valid)
  \item \code{straw1}  : Root starch (1-9), first determination (\code{straw} is also valid)
@@ -92,20 +90,26 @@ The data frame must use the following labels (lower or upper case):
  \item \code{sucr}    : Sucrose (\%)
  \item \code{malt}    : Maltose (\%)
  \item \code{trw}     : Total root weight (kg/plot)
+ \item \code{trw.d}   : Total root dry weight (kg/plot)
  \item \code{cytha}   : Commercial root yield (t/ha)
  \item \code{cytha.aj}: Commercial root yield (t/ha) adjusted by number of harvested plants
  \item \code{rytha}   : Total root yield (t/ha)
  \item \code{rytha.aj}: Total root yield (t/ha) adjusted by number of harvested plants
+ \item \code{dmry}    : Dry matter root yield (t/ha)
+ \item \code{dmry.aj} : Dry matter root yield (t/ha) adjusted by number of harvested plants
+ \item \code{vw.d}    : Vine dry weight (kg/plot)
+ \item \code{fytha}   : Foliage total yield (t/ha)
+ \item \code{fytha.aj}: Foliage total yield (t/ha) adjusted by number of harvested plants
+ \item \code{dmvy}    : Dry matter vine yield (t/ha)
+ \item \code{dmvy.aj} : Dry matter vine yield (t/ha) adjusted by number of harvested plants
+ \item \code{biom}    : Biomass yield (t/ha)
+ \item \code{biom.aj} : Biomass yield (t/ha) adjusted by number of harvested plants
  \item \code{acrw}    : Average commercial root weight (kg/root)
  \item \code{nrpp}    : Number of roots per plant
  \item \code{ypp}     : Yield per plant (kg/plant)
  \item \code{ci}      : Percent marketable roots (commercial index)
  \item \code{hi}      : Harvest index
  \item \code{shi}     : Harvest sowing index (survival)
- \item \code{biom}    : Biomass yield (t/ha)
- \item \code{biom.aj} : Biomass yield (t/ha) adjusted by number of harvested plants
- \item \code{fytha}   : Foliage total yield (t/ha)
- \item \code{fytha.aj}: Foliage total yield (t/ha) adjusted by number of harvested plants
  \item \code{rfr}     : Root foliage ratio
  }
 }
