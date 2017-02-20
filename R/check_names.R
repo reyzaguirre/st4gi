@@ -90,6 +90,7 @@
 #'  \item \code{biom.aj} : Biomass yield (t/ha) adjusted by number of harvested plants
 #'  \item \code{acrw}    : Average commercial root weight (kg/root)
 #'  \item \code{nrpp}    : Number of roots per plant
+#'  \item \code{ncrpp}   : Number of commercial roots per plant
 #'  \item \code{ypp}     : Yield per plant (kg/plant)
 #'  \item \code{ci}      : Percent marketable roots (commercial index)
 #'  \item \code{hi}      : Harvest index
@@ -117,7 +118,7 @@ checknames <- function(fb, aqt = NULL) {
                       "tc", "star", "fruc", "gluc", "sucr", "malt", "trw", "trw.d", "cytha",
                       "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha",
                       "fytha.aj", "dmvy", "dmvy.aj", "biom", "biom.aj", "acrw", "nrpp",
-                      "ypp", "ci", "hi", "shi", "rfr", tolower(aqt))
+                      "ncrpp", "ypp", "ci", "hi", "shi", "rfr", tolower(aqt))
     
   colnames.list <- colnames(fb)
   

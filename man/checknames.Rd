@@ -106,6 +106,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{biom.aj} : Biomass yield (t/ha) adjusted by number of harvested plants
  \item \code{acrw}    : Average commercial root weight (kg/root)
  \item \code{nrpp}    : Number of roots per plant
+ \item \code{ncrpp}   : Number of commercial roots per plant
  \item \code{ypp}     : Yield per plant (kg/plant)
  \item \code{ci}      : Percent marketable roots (commercial index)
  \item \code{hi}      : Harvest index
