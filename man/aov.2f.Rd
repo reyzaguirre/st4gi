@@ -37,4 +37,3 @@ aov.2f("asc.dw", "geno", "treat", "rep", "crd", asc)
 \author{
 Raul Eyzaguirre.
 }
-

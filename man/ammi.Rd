@@ -42,9 +42,6 @@ model.ammi
 model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "gge")
 model.gge
 }
-\author{
-Raul Eyzaguirre.
-}
 \references{
 Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
@@ -55,4 +52,6 @@ on the GGE biplot, Crop Sci., Vol 40: 597-605.
 \seealso{
 \code{svd}
 }
-
+\author{
+Raul Eyzaguirre.
+}

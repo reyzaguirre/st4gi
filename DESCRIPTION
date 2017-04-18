@@ -19,4 +19,4 @@ Copyright: International Potato Center (2015)
 LazyData: true
 Suggests:
     testthat
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

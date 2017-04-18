@@ -68,10 +68,16 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$acrw[fb$nocr == 0] <- NA
   }
   
-  if (exists("nocr", fb) & exists("nonc", fb) & exists("noph", fb)) {
+  if (exists("nocr", fb) & exists("nonc", fb)) {
+    if (exists("tnrplot", fb))
+      ow <- c(ow, "tnrplot")
+    fb$tnrplot <- suma(fb$nocr, fb$nonc)
+  }
+
+  if (exists("tnrplot", fb) & exists("noph", fb)) {
     if (exists("nrpp", fb))
       ow <- c(ow, "nrpp")
-    fb$nrpp <- suma(fb$nocr, fb$nonc) / fb$noph
+    fb$nrpp <- fb$tnrplot / fb$noph
     fb$nrpp[fb$noph == 0] <- NA
   }
 

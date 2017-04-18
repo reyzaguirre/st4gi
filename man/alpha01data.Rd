@@ -14,4 +14,3 @@ alpha01data
 \description{
 This data set contains data for al alpha (0,1) design.
 }
-
