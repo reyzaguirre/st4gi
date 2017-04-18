@@ -35,4 +35,3 @@ For an ANOVA in an ABD it is needed at least two checks with at least 2 valid ca
 \author{
 Raul Eyzaguirre.
 }
-

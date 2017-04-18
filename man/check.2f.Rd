@@ -35,4 +35,3 @@ replications, and if the design is balanced.
 \author{
 Raul Eyzaguirre.
 }
-

@@ -35,7 +35,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{vir2}    : Virus symptoms (1-9), second evaluation, 1 month before harvest
  \item \code{alt1}    : Alternaria symptoms (1-9), first evaluation, 4-8 weeks after planting (\code{alt} is also valid)
  \item \code{alt2}    : Alternaria symptoms (1-9), second evaluation, 1 month before harvest
- \item \code{vv}      : Vine vigor (1-9), 1 month before harvest
+ \item \code{vv}      : Vine vigor (1-9), first evaluation, 1 month before harvest
  \item \code{vw}      : Vine weight (kg/plot)
  \item \code{noph}    : Number of plants harvested
  \item \code{nopr}    : Number of plants with roots
@@ -54,11 +54,11 @@ The data frame must use the following labels (lower or upper case):
  \item \code{damr}    : Root defects (1-9)
  \item \code{rspr}    : Root sprouting (1-9)
  \item \code{wed}     : Weevil damage (1-9)
- \item \code{dmf}     : Fresh weight of roots for dry matter assessment (kg)
- \item \code{dmd}     : Dry weight of dmf samples (kg)
+ \item \code{dmf}     : Fresh weight of roots for dry matter assessment (g)
+ \item \code{dmd}     : Dry weight of dmf samples (g)
  \item \code{dm}      : Storage root dry matter content (\%)
- \item \code{dmvf}    : Fresh weight vines for dry matter assessment (kg)
- \item \code{dmvd}    : Dry weight of dmvf samples (kg)
+ \item \code{dmvf}    : Fresh weight vines for dry matter assessment (g)
+ \item \code{dmvd}    : Dry weight of dmvf samples (g)
  \item \code{dmv}     : Vines dry matter content (\%)
  \item \code{fraw1}   : Root fiber (1-9), first determination (\code{fraw} is also valid)
  \item \code{suraw1}  : Root sugar (1-9), first determination (\code{suraw} is also valid)
@@ -89,6 +89,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{gluc}    : Glucose (\%)
  \item \code{sucr}    : Sucrose (\%)
  \item \code{malt}    : Maltose (\%)
+ \item \code{tnrplot} : Total number of roots per plot
  \item \code{trw}     : Total root weight (kg/plot)
  \item \code{trw.d}   : Total root dry weight (kg/plot)
  \item \code{cytha}   : Commercial root yield (t/ha)
@@ -108,9 +109,9 @@ The data frame must use the following labels (lower or upper case):
  \item \code{nrpp}    : Number of roots per plant
  \item \code{ncrpp}   : Number of commercial roots per plant
  \item \code{ypp}     : Yield per plant (kg/plant)
- \item \code{ci}      : Percent marketable roots (commercial index)
- \item \code{hi}      : Harvest index
- \item \code{shi}     : Harvest sowing index (survival)
+ \item \code{ci}      : Commercial index (\%)
+ \item \code{hi}      : Harvest index (\%)
+ \item \code{shi}     : Harvest sowing index (\%)
  \item \code{rfr}     : Root foliage ratio
  }
 }
@@ -120,4 +121,3 @@ checknames(pjpz09)
 \author{
 Raul Eyzaguirre.
 }
-
