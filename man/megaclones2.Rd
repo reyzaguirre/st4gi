@@ -17,4 +17,3 @@ and foliage yield in tons per hectare (\code{fytha}) for an experiment with 14
 sweetpotato genotypes (\code{geno}), 5 environments (\code{env}), and 4 replications
 (\code{rep}) in each environment following a RCBD.
 }
-

@@ -48,11 +48,10 @@ means are computed over all the observations for each genotype.
 \examples{
 elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", data = spg)
 }
-\author{
-Raul Eyzaguirre
-}
 \references{
 Elston, R. C. (1963). A weight-free index for the purpose of ranking or selection
 with respect to several traits at a time. Biometrics. 19(1): 85-97.
 }
-
+\author{
+Raul Eyzaguirre
+}

@@ -66,4 +66,3 @@ msdplot("y", "g", mydata)
 \author{
 Raul Eyzaguirre
 }
-

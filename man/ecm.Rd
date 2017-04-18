@@ -40,4 +40,3 @@ ecm(traits, "geno", "loc", "rep", spg)
 \author{
 Raul Eyzaguirre.
 }
-

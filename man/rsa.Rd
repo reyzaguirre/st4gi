@@ -56,9 +56,6 @@ the means of the genotypes or environments.
 \examples{
 rsa("y", "geno", "env", "rep", met8x12)
 }
-\author{
-Raul Eyzaguirre.
-}
 \references{
 Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.
 Aust. J. Agric. Res. 14: 742-754.
@@ -66,4 +63,6 @@ Aust. J. Agric. Res. 14: 742-754.
 Yates, F., and Cochran, W. G. (1938). The Analysis of Group Experiments.
 J. Agric. Sci. 28: 556-580.
 }
-
+\author{
+Raul Eyzaguirre.
+}

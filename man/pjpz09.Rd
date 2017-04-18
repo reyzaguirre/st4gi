@@ -19,4 +19,3 @@ non commercial root weght (\code{ncrw}), total root weight (\code{trw}), and vin
 weight (\code{vw}) for an experiment with 85 sweetpotato genotypes (\code{geno})
 and 2 replications (\code{rep}) with a RCBD.
 }
-

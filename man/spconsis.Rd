@@ -51,4 +51,3 @@ spconsis(pjpz09)
 \author{
 Raul Eyzaguirre.
 }
-

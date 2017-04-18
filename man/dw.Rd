@@ -29,13 +29,12 @@ the method described on Westcott (1981).
 The genotypes are randomly allocated on a field with equally spaced
 columns of two alternating check varieties.
 }
-\author{
-Raul Eyzaguirre.
-}
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
 In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
 INRA Poitier, France, pp 91-95.
 dw(1:100, "A", "B", 5, 10)
 }
-
+\author{
+Raul Eyzaguirre.
+}

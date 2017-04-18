@@ -41,9 +41,6 @@ model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 plot(model.ammi)
 plot(model.ammi, biplot = 1)
 }
-\author{
-Raul Eyzaguirre.
-}
 \references{
 Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
 and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
@@ -51,4 +48,6 @@ and Analysis of Variance Techniques, Psychometrika, Vol 33(1): 73-114.
 Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based
 on the GGE biplot, Crop Sci., Vol 40: 597-605.
 }
-
+\author{
+Raul Eyzaguirre.
+}

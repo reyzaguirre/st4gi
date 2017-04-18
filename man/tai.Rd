@@ -34,11 +34,10 @@ If the data set is unbalanced, a warning is produced.
 model.tai <- tai("y", "geno", "env", "rep", met8x12)
 model.tai$Tai_values
 }
-\author{
-Raul Eyzaguirre.
-}
 \references{
 Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 Regional Trials, Crop Science, Vol 11.
 }
-
+\author{
+Raul Eyzaguirre.
+}

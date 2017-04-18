@@ -18,4 +18,3 @@ commercial roots (\code{nocr}) for an experiment with 8 sweetpotato genotypes
 (\code{geno}), 2 locations (\code{loc}), and 2 replications (\code{rep}) in each
 location following a RCBD.
 }
-

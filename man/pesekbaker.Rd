@@ -71,11 +71,10 @@ pesekbaker(traits, "geno", "loc", "rep", spg)
 ## More weight on bc and dm, less on star and nocr
 pesekbaker(traits, "geno", "loc", "rep", spg, dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 }
-\author{
-Raul Eyzaguirre
-}
 \references{
 Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.
 Can. J. Plant. Sci. 9:803-804.
 }
-
+\author{
+Raul Eyzaguirre
+}
