@@ -73,7 +73,7 @@
 #'  \item \code{gluc}    : Glucose (\%)
 #'  \item \code{sucr}    : Sucrose (\%)
 #'  \item \code{malt}    : Maltose (\%)
-#'  \item \code{tnrplot} : Total number of roots per plot
+#'  \item \code{tnr}     : Total number of roots per plot
 #'  \item \code{trw}     : Total root weight (kg/plot)
 #'  \item \code{trw.d}   : Total root dry weight (kg/plot)
 #'  \item \code{cytha}   : Commercial root yield (t/ha)
@@ -116,10 +116,10 @@ checknames <- function(fb, aqt = NULL) {
                       "coosu", "coosu1", "coost", "coost1", "coot", "coot1", "cooap",
                       "cooap1", "fraw2", "suraw2", "straw2", "coof2", "coosu2", "coost2",
                       "coot2", "cooap2", "prot", "fe", "zn", "ca", "mg", "bc", "bc.cc",
-                      "tc", "star", "fruc", "gluc", "sucr", "malt", "tnrplot", "trw",
-                      "trw.d", "cytha", "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj",
-                      "vw.d", "fytha", "fytha.aj", "dmvy", "dmvy.aj", "biom", "biom.aj",
-                      "acrw", "nrpp", "ncrpp", "ypp", "ci", "hi", "shi", "rfr", tolower(aqt))
+                      "tc", "star", "fruc", "gluc", "sucr", "malt", "tnr", "trw", "trw.d",
+                      "cytha", "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d",
+                      "fytha", "fytha.aj", "dmvy", "dmvy.aj", "biom", "biom.aj", "acrw",
+                      "nrpp", "ncrpp", "ypp", "ci", "hi", "shi", "rfr", tolower(aqt))
     
   colnames.list <- colnames(fb)
   

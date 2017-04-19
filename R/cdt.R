@@ -69,15 +69,15 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
   }
   
   if (exists("nocr", fb) & exists("nonc", fb)) {
-    if (exists("tnrplot", fb))
-      ow <- c(ow, "tnrplot")
-    fb$tnrplot <- suma(fb$nocr, fb$nonc)
+    if (exists("tnr", fb))
+      ow <- c(ow, "tnr")
+    fb$tnr <- suma(fb$nocr, fb$nonc)
   }
 
-  if (exists("tnrplot", fb) & exists("noph", fb)) {
+  if (exists("tnr", fb) & exists("noph", fb)) {
     if (exists("nrpp", fb))
       ow <- c(ow, "nrpp")
-    fb$nrpp <- fb$tnrplot / fb$noph
+    fb$nrpp <- fb$tnr / fb$noph
     fb$nrpp[fb$noph == 0] <- NA
   }
 
@@ -98,9 +98,8 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
   if (exists("nocr", fb) & exists("nonc", fb)) {
     if (exists("ci", fb))
       ow <- c(ow, "ci")
-    temp <- suma(fb$nocr, fb$nonc)
-    fb$ci <- fb$nocr / temp * 100
-    fb$ci[temp == 0] <- NA
+    fb$ci <- fb$nocr / fb$tnr * 100
+    fb$ci[fb$tnr == 0] <- NA
   }
 
   if (exists("trw", fb) & exists("vw", fb)) {

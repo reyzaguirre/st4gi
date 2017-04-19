@@ -89,7 +89,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{gluc}    : Glucose (\%)
  \item \code{sucr}    : Sucrose (\%)
  \item \code{malt}    : Maltose (\%)
- \item \code{tnrplot} : Total number of roots per plot
+ \item \code{tnr}     : Total number of roots per plot
  \item \code{trw}     : Total root weight (kg/plot)
  \item \code{trw.d}   : Total root dry weight (kg/plot)
  \item \code{cytha}   : Commercial root yield (t/ha)
