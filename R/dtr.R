@@ -20,7 +20,7 @@
 #' \code{sqrty} for the square root transformation sqrt(y). This transformation is
 #' recommended for count data, which typically follow a Poisson distribution where
 #' the variance is proportional to the mean. It is also recommended for percentage
-#' data where the range is between 0 and 20% or between 80 and 100%. However, note
+#' data where the range is between 0 and 20\% or between 80 and 100\%. However, note
 #' that for Poisson data a Poisson regression model could be a better option.
 #' 
 #' \code{sqrty1} for the square root transformation sqrt(y + 0.5). The same as the
