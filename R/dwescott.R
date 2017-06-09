@@ -16,6 +16,7 @@
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
 #' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
 #' INRA Poitier, France, pp 91-95.
+#' @examples
 #' dw(1:100, "A", "B", 5, 10)
 #' @export
 
@@ -59,7 +60,14 @@ dw <- function(geno, ch1, ch2, nr, nc) {
   
   # Delete non necessary checks
   
-  fp[(sum(!is.na(fp[, tnc - 1])) + 1):nr, tnc] <- NA
+  nrc <- sum(!is.na(fp[, tnc - 1])) + 1 # number of rows with clones in the last column
+  if (nrc <= nr)
+    fp[nrc:nr, tnc] <- NA
+  
+  # Row and column names
+  
+  rownames(fp) <- paste("row", 1:nr)
+  colnames(fp) <- paste("col", 1:tnc)
 
   # Create fielbook
   
