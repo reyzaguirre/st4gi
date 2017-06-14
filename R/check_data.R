@@ -111,19 +111,19 @@ check.rcbd <- function(trait, treat, rep, data) {
   nmis <- sum(is.na(data[, trait]))
   pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
-  tfreq <- table(subdata[, treat])
+  tfreq <- table(subdata[, treat], subdata[, rep])
 
   # Controls
   
   c1 <- 1 # Check for zeros. Initial state no zeros
-  c2 <- 0 # Check for replicates. Initial state only one replicate
+  c2 <- 0 # Check for replicates. Initial state only one replication
   c3 <- 1 # Check for balance (additional data). Initial state balanced
   c4 <- 1 # Check for missing values. Initial state no missing values
   
-  if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
-  if (max(tfreq) > 1) c2 <- 1 # State 1: more than one replicate
-  if (max(tfreq) > nr) c3 <- 0 # State 0: some cells with addional data
-  if (min(tfreq) < nr) c4 <- 0 # State 0: missing values
+  if (min(table(subdata[, treat])) == 0) c1 <- 0 # State 0: there are zeros
+  if (nr > 1) c2 <- 1 # State 1: more than one replication
+  if (max(tfreq) > 1) c3 <- 0 # State 0: some cells with addional data
+  if (min(tfreq) == 0) c4 <- 0 # State 0: missing values
   
   # Return
   
@@ -170,7 +170,8 @@ check.2f <- function(trait, A, B, rep, data) {
   pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, A], subdata[, B])
-
+  tfreq2 <- table(subdata[, A], subdata[, B], subdata[, rep])
+  
   # Controls
   
   c1 <- 1 # Check for zeros. Initial state no zeros
@@ -179,9 +180,9 @@ check.2f <- function(trait, A, B, rep, data) {
   c4 <- 1 # Check for missing values. Initial state no missing values
     
   if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
-  if (max(tfreq) > 1) c2 <- 1 # State 1: more than one replicate
-  if (max(tfreq) > nr) c3 <- 0 # State 0: some cells with addional data
-  if (min(tfreq) < nr) c4 <- 0 # State 0: missing values
+  if (nr > 1) c2 <- 1 # State 1: more than one replicate
+  if (max(tfreq2) > 1) c3 <- 0 # State 0: some cells with addional data
+  if (min(tfreq2) == 0) c4 <- 0 # State 0: missing values
     
   # Return
   
