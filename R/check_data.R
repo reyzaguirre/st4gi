@@ -117,12 +117,12 @@ check.rcbd <- function(trait, treat, rep, data) {
   
   c1 <- 1 # Check for zeros. Initial state no zeros
   c2 <- 0 # Check for replicates. Initial state only one replication
-  c3 <- 1 # Check for balance (additional data). Initial state balanced
+  c3 <- 1 # Check for genotypes with more than one datum in a replication
   c4 <- 1 # Check for missing values. Initial state no missing values
   
   if (min(table(subdata[, treat])) == 0) c1 <- 0 # State 0: there are zeros
   if (nr > 1) c2 <- 1 # State 1: more than one replication
-  if (max(tfreq) > 1) c3 <- 0 # State 0: some cells with addional data
+  if (max(tfreq) > 1) c3 <- 0 # State 0: some genotypes with addional data
   if (min(tfreq) == 0) c4 <- 0 # State 0: missing values
   
   # Return
@@ -178,12 +178,12 @@ check.2f <- function(trait, A, B, rep, data) {
   
   c1 <- 1 # Check for zeros. Initial state no zeros
   c2 <- 0 # Check for replicates. Initial state only one replicate
-  c3 <- 1 # Check for balance (additional data). Initial state balanced
+  c3 <- 1 # Check for genotypes with more than one datum in a replication of one environment
   c4 <- 1 # Check for missing values. Initial state no missing values
     
   if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
   if (nr > 1) c2 <- 1 # State 1: more than one replicate
-  if (max(tfreqr) > 1) c3 <- 0 # State 0: some cells with addional data
+  if (max(tfreqr) > 1) c3 <- 0 # State 0: some genotypes with addional data
   if (min(tfreqr) == 0) c4 <- 0 # State 0: missing values
     
   # Return
