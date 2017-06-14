@@ -21,8 +21,10 @@ check.2f(trait, A, B, rep, data)
 Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
 of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
 of levels of factor A (\code{na}), the number of levels of factor B (\code{nb}),
-the number of replications (\code{nr}), and a table with frequencies of valid cases
-for each combination of the levels of both factors.
+the number of replications (\code{nr}), a table with frequencies of valid cases
+for each combination of the levels of both factors (\code{tfreq}), and a table with
+frequencies of valid cases for each combination of the levels of both factors in each
+replication (\code{tfreqr}).
 }
 \description{
 This function checks the frequencies for a 2-factor factorial.

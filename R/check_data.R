@@ -142,8 +142,10 @@ check.rcbd <- function(trait, treat, rep, data) {
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
 #' of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
 #' of levels of factor A (\code{na}), the number of levels of factor B (\code{nb}),
-#' the number of replications (\code{nr}), and a table with frequencies of valid cases
-#' for each combination of the levels of both factors.
+#' the number of replications (\code{nr}), a table with frequencies of valid cases
+#' for each combination of the levels of both factors (\code{tfreq}), and a table with
+#' frequencies of valid cases for each combination of the levels of both factors in each
+#' replication (\code{tfreqr}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication, if there is
 #' any combination of the levels of both factors without data or with more data then
@@ -170,7 +172,7 @@ check.2f <- function(trait, A, B, rep, data) {
   pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, A], subdata[, B])
-  tfreq2 <- table(subdata[, A], subdata[, B], subdata[, rep])
+  tfreqr <- table(subdata[, A], subdata[, B], subdata[, rep])
   
   # Controls
   
@@ -181,11 +183,11 @@ check.2f <- function(trait, A, B, rep, data) {
     
   if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
   if (nr > 1) c2 <- 1 # State 1: more than one replicate
-  if (max(tfreq2) > 1) c3 <- 0 # State 0: some cells with addional data
-  if (min(tfreq2) == 0) c4 <- 0 # State 0: missing values
+  if (max(tfreqr) > 1) c3 <- 0 # State 0: some cells with addional data
+  if (min(tfreqr) == 0) c4 <- 0 # State 0: missing values
     
   # Return
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
-       na = na, nb = nb, nr = nr, tfreq = tfreq)
+       na = na, nb = nb, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
 }
