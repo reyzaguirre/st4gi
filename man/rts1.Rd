@@ -23,4 +23,3 @@ Type \code{rts1()} in the R console to run the app.
 \author{
 Raul Eyzaguirre.
 }
-

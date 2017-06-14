@@ -34,3 +34,15 @@ NULL
 #' @format A data frame with 6 columns and 312 rows.
 #' @source International Potato Center, sweetpotato experimental data.
 NULL
+#' @name megaclones2
+#' @title Some traits for a multi-environment trial (MET)
+#' @docType data
+#' @aliases megaclones2
+#' @description This data set has data for root yield in tons per hectare (\code{rytha})
+#' and foliage yield in tons per hectare (\code{fytha}) for an experiment with 14
+#' sweetpotato genotypes (\code{geno}), 5 environments (\code{env}), and 4 replications
+#' (\code{rep}) in each environment following a RCBD.
+#' @usage megaclones2
+#' @format A data frame with 6 columns and 312 rows.
+#' @source International Potato Center, sweetpotato experimental data.
+NULL

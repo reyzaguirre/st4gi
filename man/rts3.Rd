@@ -25,4 +25,3 @@ Type \code{rts3()} in the R console to run the app.
 \author{
 Raul Eyzaguirre.
 }
-

@@ -45,4 +45,3 @@ docomp("max", traits, factors, data = spg)
 \author{
 Raul Eyzaguirre
 }
-

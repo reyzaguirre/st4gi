@@ -54,7 +54,7 @@
 #' @export
 
 pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", "fitted"),
-                       dgg = NULL, units = c("sdu", "actual"), sf = 0.1, method = 2) {
+                       dgg = NULL, units = c("sdu", "actual"), sf = 0.1, method = 1) {
 
   # match arguments
   

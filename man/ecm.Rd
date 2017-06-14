@@ -28,9 +28,10 @@ matrices with data from a RCBD with one or several environments.
 }
 \details{
 If \code{env = NULL} a RCBD with one environment is considered.
-If \code{method = 1} the covariance between each pair of traits is computed using the variance
-of each trait and the variance of the sum. If \code{method = 2} the covariance matrix is
-approximated using the average of the correlation matrices computed with each replication.
+If \code{method = 1} the covariances between each pair of traits are computed
+using the variances of each trait and the variances of the sum. If \code{method = 2}
+the covariance matrices are approximated using the average of the correlation
+matrices computed with each replication in each environment.
 }
 \examples{
 traits <- c("rytha", "bc", "dm", "star", "nocr")
@@ -39,4 +40,3 @@ ecm(traits, "geno", "loc", "rep", spg)
 \author{
 Raul Eyzaguirre.
 }
-

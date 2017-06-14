@@ -68,11 +68,24 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$acrw[fb$nocr == 0] <- NA
   }
   
-  if (exists("nocr", fb) & exists("nonc", fb) & exists("noph", fb)) {
+  if (exists("nocr", fb) & exists("nonc", fb)) {
+    if (exists("tnr", fb))
+      ow <- c(ow, "tnr")
+    fb$tnr <- suma(fb$nocr, fb$nonc)
+  }
+
+  if (exists("tnr", fb) & exists("noph", fb)) {
     if (exists("nrpp", fb))
       ow <- c(ow, "nrpp")
-    fb$nrpp <- suma(fb$nocr, fb$nonc) / fb$noph
+    fb$nrpp <- fb$tnr / fb$noph
     fb$nrpp[fb$noph == 0] <- NA
+  }
+
+  if (exists("nocr", fb) & exists("noph", fb)) {
+    if (exists("ncrpp", fb))
+      ow <- c(ow, "ncrpp")
+    fb$ncrpp <- fb$nocr / fb$noph
+    fb$ncrpp[fb$noph == 0] <- NA
   }
 
   if (exists("trw", fb) & exists("noph", fb)) {
@@ -85,9 +98,8 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
   if (exists("nocr", fb) & exists("nonc", fb)) {
     if (exists("ci", fb))
       ow <- c(ow, "ci")
-    temp <- suma(fb$nocr, fb$nonc)
-    fb$ci <- fb$nocr / temp * 100
-    fb$ci[temp == 0] <- NA
+    fb$ci <- fb$nocr / fb$tnr * 100
+    fb$ci[fb$tnr == 0] <- NA
   }
 
   if (exists("trw", fb) & exists("vw", fb)) {
@@ -119,6 +131,18 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$dmv[fb$dmvf == 0] <- NA
   }
   
+  if (exists("trw", fb) & exists("dm", fb)) {
+    if (exists("trw.d", fb))
+      ow <- c(ow, "trw.d")
+    fb$trw.d <- fb$trw * fb$dm / 100
+  }
+
+  if (exists("vw.d", fb) & exists("dmv", fb)) {
+    if (exists("vw.d", fb))
+      ow <- c(ow, "vw.d")
+    fb$vw.d <- fb$vw * fb$dmv / 100
+  }
+
   # Computations based on plot size
   
   if (method == "ps" & !is.null(value)) {
@@ -159,28 +183,26 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
       }
     }
 
-    if (exists("trw", fb) & exists("dm", fb)) {
-      temp1 <- fb$trw * fb$dm / 100
+    if (exists("trw.d", fb)) {
       if (exists("dmry", fb))
         ow <- c(ow, "dmry")
-      fb$dmry <- temp1 * 10 / value
+      fb$dmry <- fb$trw.d * 10 / value
       if (exists("noph", fb) & exists("nops", fb)) {
         if (exists("dmry.aj", fb))
           ow <- c(ow, "dmry.aj")
-        fb$dmry.aj <- temp1 / fb$noph * fb$nops * 10 / value
+        fb$dmry.aj <- fb$trw.d / fb$noph * fb$nops * 10 / value
         fb$dmry.aj[fb$noph == 0] <- NA
       }
     }
    
-    if (exists("vw", fb) & exists("dmv", fb)) {
-      temp2 <- fb$vw * fb$dmv / 100
+    if (exists("vw.d", fb)) {
       if (exists("dmvy", fb))
         ow <- c(ow, "dmvy")
-      fb$dmvy <- temp2 * 10 / value
+      fb$dmvy <- fb$vw.d * 10 / value
       if (exists("noph", fb) & exists("nops", fb)) {
         if (exists("dmvy.aj", fb))
           ow <- c(ow, "dmvy.aj")
-        fb$dmvy.aj <- temp2 / fb$noph * fb$nops * 10 / value
+        fb$dmvy.aj <- fb$vw.d / fb$noph * fb$nops * 10 / value
         fb$dmvy.aj[fb$noph == 0] <- NA
       }
     }
@@ -235,34 +257,32 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
       }
     }
 
-    if (exists("trw", fb) & exists("dm", fb)) {
-      temp1 <- fb$trw * fb$dm / 100
+    if (exists("trw.d", fb)) {
       if (exists("nops", fb)) {
         if (exists("dmry", fb))
           ow <- c(ow, "dmry")
-        fb$dmry <- temp1 / fb$nops * value / 1000
+        fb$dmry <- fb$trw.d / fb$nops * value / 1000
         fb$dmry[fb$nops == 0] <- NA
       }
       if (exists("noph", fb)) {
         if (exists("dmry.aj", fb))
           ow <- c(ow, "dmry.aj")
-        fb$dmry.aj <- temp1 / fb$noph * value / 1000
+        fb$dmry.aj <- fb$trw.d / fb$noph * value / 1000
         fb$dmry.aj[fb$noph == 0] <- NA
       }
     }
     
-    if (exists("vw", fb) & exists("dmv", fb)) {
-      temp2 <- fb$vw * fb$dmv / 100
+    if (exists("vw.d", fb)) {
       if (exists("nops", fb)) {
         if (exists("dmvy", fb))
           ow <- c(ow, "dmvy")
-        fb$dmvy <- temp2 / fb$nops * value / 1000
+        fb$dmvy <- fb$vw.d / fb$nops * value / 1000
         fb$dmvy[fb$nops == 0] <- NA
       }
       if (exists("noph", fb)) {
         if (exists("dmvy.aj", fb))
           ow <- c(ow, "dmvy.aj")
-        fb$dmvy.aj <- temp2 / fb$noph * value / 1000
+        fb$dmvy.aj <- fb$vw.d / fb$noph * value / 1000
         fb$dmvy.aj[fb$noph == 0] <- NA
       }
     }
@@ -282,11 +302,11 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$biom.aj <- suma(fb$rytha.aj, fb$fytha.aj)
   }
   
-  if (exists("temp1") & exists("temp2")) {
+  if (exists("trw.d", fb) & exists("vw.d", fb)) {
     if (exists("rfr", fb))
       ow <- c(ow, "rfr")
-      fb$rfr <- temp1 / temp2
-      fb$rfr[temp2 == 0] <- NA
+      fb$rfr <- fb$trw.d / fb$vw.d
+      fb$rfr[fb$vw.d == 0] <- NA
     }
 
   # Warning: Overwritten traits

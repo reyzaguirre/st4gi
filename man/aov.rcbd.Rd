@@ -36,4 +36,3 @@ aov.rcbd("trw", "geno", "rep", temp)
 \author{
 Raul Eyzaguirre.
 }
-
