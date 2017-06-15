@@ -334,7 +334,7 @@ spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
   spc05(fb, f, "high", "cytha", "- Extreme high values for commercial root yield in tons per hectare (cytha):")
   spc04(fb, "lower", "cytha.aj", "- Out of range values for commercial root yield in tons per hectare (cytha.aj):")
   spc05(fb, f, "low", "cytha.aj", "- Extreme low values for commercial root yield in tons per hectare (cytha.aj):")
-  spc05(fb, f, "high", "cytha", "- Extreme high values for commercial root yield in tons per hectare (cytha.aj):")
+  spc05(fb, f, "high", "cytha.aj", "- Extreme high values for commercial root yield in tons per hectare (cytha.aj):")
   spc04(fb, "lower", "rytha", "- Out of range values for total root yield in tons per hectare (rytha):")
   spc05(fb, f, "low", "rytha", "- Extreme low values for total root yield in tons per hectare (rytha):")
   spc05(fb, f, "high", "rytha", "- Extreme high values for total root yield in tons per hectare (rytha):")
