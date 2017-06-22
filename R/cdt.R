@@ -95,7 +95,14 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$ypp[fb$noph == 0] <- NA
   }
 
-  if (exists("nocr", fb) & exists("nonc", fb)) {
+  if (exists("vw", fb) & exists("noph", fb)) {
+    if (exists("vpp", fb))
+      ow <- c(ow, "vpp")
+    fb$vpp <- fb$vw / fb$noph
+    fb$vpp[fb$noph == 0] <- NA
+  }
+
+    if (exists("nocr", fb) & exists("nonc", fb)) {
     if (exists("ci", fb))
       ow <- c(ow, "ci")
     fb$ci <- fb$nocr / fb$tnr * 100
@@ -137,7 +144,7 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$trw.d <- fb$trw * fb$dm / 100
   }
 
-  if (exists("vw.d", fb) & exists("dmv", fb)) {
+  if (exists("vw", fb) & exists("dmv", fb)) {
     if (exists("vw.d", fb))
       ow <- c(ow, "vw.d")
     fb$vw.d <- fb$vw * fb$dmv / 100
@@ -206,6 +213,7 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
         fb$dmvy.aj[fb$noph == 0] <- NA
       }
     }
+  
   }
   
   # Computations based on number of plants
@@ -302,6 +310,18 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$biom.aj <- suma(fb$rytha.aj, fb$fytha.aj)
   }
   
+  if (exists("rytha", fb) & exists("fytha", fb) & exists("dm", fb) & exists("dmv", fb)) {
+    if (exists("dmbiom", fb))
+      ow <- c(ow, "dmbiom")
+    fb$dmbiom <- suma(fb$rytha * fb$dm, fb$fytha * fb$dmv)
+  }
+  
+  if (exists("rytha.aj", fb) & exists("fytha.aj", fb) & exists("dm", fb) & exists("dmv", fb)) {
+    if (exists("dmbiom.aj", fb))
+      ow <- c(ow, "dmbiom.aj")
+    fb$dmbiom.aj <- suma(fb$rytha.aj * fb$dm, fb$fytha.aj * fb$dmv)
+  }
+
   if (exists("trw.d", fb) & exists("vw.d", fb)) {
     if (exists("rfr", fb))
       ow <- c(ow, "rfr")
