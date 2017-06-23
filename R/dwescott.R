@@ -64,20 +64,21 @@ dw <- function(geno, ch1, ch2, nr, nc) {
   if (nrc <= nr)
     fp[nrc:nr, tnc] <- NA
   
-  # Row and column names
+  # row and column names
   
   rownames(fp) <- paste("row", 1:nr)
   colnames(fp) <- paste("col", 1:tnc)
 
   # Create fielbook
   
-  row <- rep(1:dim(fp)[1], dim(fp)[2])
-  column <- as.integer(gl(dim(fp)[2], dim(fp)[1]))
-  fb <- data.frame(row, column, geno = c(fp), stringsAsFactors = F)
-  fb <- fb[!is.na(fb$geno), ]
-  rownames(fb) <- 1:dim(fb)[1]
+  row <- as.integer(gl(dim(fp)[1], dim(fp)[2]))
+  col <- rep(1:dim(fp)[2], dim(fp)[1])
+  book <- data.frame(plot = 1:(dim(fp)[1] * dim(fp)[2]),
+                     row, col, geno = c(t(fp)), stringsAsFactors = F)
+  book <- book[!is.na(book$geno), ]
+  rownames(book) <- 1:dim(book)[1]
   
   # Return
   
-  list(fp = fp, fb = fb)
+  list(fp = fp, book = book)
 }
