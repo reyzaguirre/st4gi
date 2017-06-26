@@ -27,6 +27,7 @@ The genotypes are randomly allocated on a field following a RCBD.
 }
 \examples{
 drcb(1:20, 3, 12, TRUE)
+drcb(1:20, 2, 7, FALSE)
 }
 \author{
 Raul Eyzaguirre.

@@ -11,6 +11,7 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
 #' drcb(1:20, 3, 12, TRUE)
+#' drcb(1:20, 2, 7, FALSE)
 #' @export
 
 drcb <- function(geno, nb, nr, byrow = TRUE) {
@@ -54,19 +55,19 @@ drcb <- function(geno, nb, nr, byrow = TRUE) {
   # Create fielbook
   
   if (byrow == TRUE) {
-    row <- as.integer(gl(dim(plan)[1], dim(plan)[2]))
-    col <- rep(1:dim(plan)[2], dim(plan)[1])
+    row <- as.integer(gl(nr, nc))
+    col <- rep(1:nc, nr)
     genoplan <- t(plan)
   } else {
-    row <- rep(1:dim(plan)[1], dim(plan)[2])
-    col <- as.integer(gl(dim(plan)[2], dim(plan)[1]))
+    row <- rep(1:nr, nc)
+    col <- as.integer(gl(nc, nr))
     genoplan <- plan
   }
 
   block <- as.integer(gl(nb, ng))
-  length(block) <- dim(plan)[1] * dim(plan)[2]
+  length(block) <- nr * nc
 
-  book <- data.frame(plot = 1:(dim(plan)[1] * dim(plan)[2]),
+  book <- data.frame(plot = 1:(nr * nc),
                      row, col, block, geno = c(genoplan), stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
 

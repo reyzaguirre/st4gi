@@ -42,10 +42,10 @@ dunrep <- function(geno, nr) {
 
   # Create fielbook
   
-  row <- as.integer(gl(dim(plan)[1], dim(plan)[2]))
-  col <- rep(1:dim(plan)[2], dim(plan)[1])
+  row <- as.integer(gl(nr, nc))
+  col <- rep(1:nc, nr)
   
-  book <- data.frame(plot = 1:(dim(plan)[1] * dim(plan)[2]),
+  book <- data.frame(plot = 1:(nr * nc),
                      row, col, geno = c(t(plan)), stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
 
