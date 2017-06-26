@@ -35,14 +35,14 @@ dw <- function(geno, ch1, ch2, nr, nc) {
   
   # fieldplan array
   
-  fp <- array(dim = c(nr, tnc))
+  plan <- array(dim = c(nr, tnc))
   
   # Include checks, selected columns
   
-  fp[seq(1, nr, 2), seq(1, tnc, 2 + 2 * nc)] <- ch1
-  fp[seq(2, nr, 2), seq(1, tnc, 2 + 2 * nc)] <- ch2
-  fp[seq(1, nr, 2), seq(2 + nc, tnc, 2 + 2 * nc)] <- ch2
-  fp[seq(2, nr, 2), seq(2 + nc, tnc, 2 + 2 * nc)] <- ch1
+  plan[seq(1, nr, 2), seq(1, tnc, 2 + 2 * nc)] <- ch1
+  plan[seq(2, nr, 2), seq(1, tnc, 2 + 2 * nc)] <- ch2
+  plan[seq(1, nr, 2), seq(2 + nc, tnc, 2 + 2 * nc)] <- ch2
+  plan[seq(2, nr, 2), seq(2 + nc, tnc, 2 + 2 * nc)] <- ch1
   
   # Include genotypes at random
   
@@ -52,33 +52,33 @@ dw <- function(geno, ch1, ch2, nr, nc) {
   for (b in 1:nb)
     for (i in 1:nr)
       for (j in (b + 1 + (b - 1) * nc):(b * (1 + nc))) {
-        if (is.na(fp[i, j])) {
-          fp[i, j] <- geno[k]
+        if (is.na(plan[i, j])) {
+          plan[i, j] <- geno[k]
           k <- k + 1
         }
       }
   
   # Delete non necessary checks
   
-  nrc <- sum(!is.na(fp[, tnc - 1])) + 1 # number of rows with clones in the last column
+  nrc <- sum(!is.na(plan[, tnc - 1])) + 1 # number of rows with clones in the last column
   if (nrc <= nr)
-    fp[nrc:nr, tnc] <- NA
+    plan[nrc:nr, tnc] <- NA
   
   # row and column names
   
-  rownames(fp) <- paste("row", 1:nr)
-  colnames(fp) <- paste("col", 1:tnc)
+  rownames(plan) <- paste("row", 1:nr)
+  colnames(plan) <- paste("col", 1:tnc)
 
   # Create fielbook
   
-  row <- as.integer(gl(dim(fp)[1], dim(fp)[2]))
-  col <- rep(1:dim(fp)[2], dim(fp)[1])
-  book <- data.frame(plot = 1:(dim(fp)[1] * dim(fp)[2]),
-                     row, col, geno = c(t(fp)), stringsAsFactors = F)
+  row <- as.integer(gl(dim(plan)[1], dim(plan)[2]))
+  col <- rep(1:dim(plan)[2], dim(plan)[1])
+  book <- data.frame(plot = 1:(dim(plan)[1] * dim(plan)[2]),
+                     row, col, geno = c(t(plan)), stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
   rownames(book) <- 1:dim(book)[1]
   
   # Return
   
-  list(fp = fp, book = book)
+  list(plan = plan, book = book)
 }
