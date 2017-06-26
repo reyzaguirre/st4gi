@@ -64,7 +64,7 @@ dw <- function(geno, ch1, ch2, nr, ncb) {
   if (nrc <= nr)
     plan[nrc:nr, nc] <- NA
   
-  # row and column names
+  # Row and column names
   
   rownames(plan) <- paste("row", 1:nr)
   colnames(plan) <- paste("col", 1:nc)
