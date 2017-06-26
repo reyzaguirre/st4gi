@@ -26,6 +26,7 @@ dunrep <- function(geno, nr) {
   # Include genotypes at random
   
   geno <- sample(geno)
+
   k <- 1
 
   for (i in 1:nr)
@@ -43,6 +44,7 @@ dunrep <- function(geno, nr) {
   
   row <- as.integer(gl(dim(plan)[1], dim(plan)[2]))
   col <- rep(1:dim(plan)[2], dim(plan)[1])
+  
   book <- data.frame(plot = 1:(dim(plan)[1] * dim(plan)[2]),
                      row, col, geno = c(t(plan)), stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]

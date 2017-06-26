@@ -47,6 +47,7 @@ dw <- function(geno, ch1, ch2, nr, ncb) {
   # Include genotypes at random
   
   geno <- sample(geno)
+  
   k <- 1
   
   for (b in 1:nb)
@@ -73,6 +74,7 @@ dw <- function(geno, ch1, ch2, nr, ncb) {
   
   row <- as.integer(gl(dim(plan)[1], dim(plan)[2]))
   col <- rep(1:dim(plan)[2], dim(plan)[1])
+  
   book <- data.frame(plot = 1:(dim(plan)[1] * dim(plan)[2]),
                      row, col, geno = c(t(plan)), stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
