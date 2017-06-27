@@ -17,8 +17,8 @@ drcb <- function(geno, nb, nr, byrow = FALSE) {
   
   # Dimensions
   
-  ng <- length(geno)      # Number of genotypes
-  nr <- ceiling(ng * nb / nc)  # Number of rows
+  ng <- length(geno)          # Number of genotypes
+  nr <- ceiling(ng * nb / nc) # Number of rows
   
   # Fieldplan array
   
