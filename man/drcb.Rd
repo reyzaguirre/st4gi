@@ -4,17 +4,14 @@
 \alias{drcb}
 \title{Randomized Complete Block Design}
 \usage{
-drcb(geno, nb, nr, byrow = TRUE)
+drcb(geno, nb, nr, byrow = FALSE)
 }
 \arguments{
 \item{geno}{The list of genotypes.}
 
 \item{nb}{Number of blocks.}
 
-\item{nr}{Number of rows.}
-
-\item{byrow}{Logical. If \code{"TRUE"} (the default) the blocks are
-allocated alongside the rows.}
+\item{nc}{Number of columns.}
 }
 \value{
 It returns the fieldbook and fieldplan.
@@ -24,10 +21,11 @@ This function creates the fieldbook and fieldplan for a RCBD.
 }
 \details{
 The genotypes are randomly allocated on a field following a RCBD.
+The blocks are disposed alongside the rows.
 }
 \examples{
-drcb(1:20, 3, 12, TRUE)
-drcb(1:20, 2, 7, FALSE)
+drcb(1:20, 3, 12)
+drcb(1:20, 2, 7)
 }
 \author{
 Raul Eyzaguirre.
