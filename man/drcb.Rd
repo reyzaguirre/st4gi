@@ -4,7 +4,7 @@
 \alias{drcb}
 \title{Randomized Complete Block Design}
 \usage{
-drcb(geno, nb, nr, byrow = FALSE)
+drcb(geno, nb, nc)
 }
 \arguments{
 \item{geno}{The list of genotypes.}

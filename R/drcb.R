@@ -13,7 +13,7 @@
 #' drcb(1:20, 2, 7)
 #' @export
 
-drcb <- function(geno, nb, nr, byrow = FALSE) {
+drcb <- function(geno, nb, nc) {
   
   # Dimensions
   
