@@ -4,12 +4,12 @@
 \alias{dunrep}
 \title{Unreplicated design}
 \usage{
-dunrep(geno, nr)
+dunrep(geno, nc)
 }
 \arguments{
 \item{geno}{The list of genotypes.}
 
-\item{nr}{Number of rows.}
+\item{nc}{Number of columns.}
 }
 \value{
 It returns the fieldbook and fieldplan.

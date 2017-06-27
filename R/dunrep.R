@@ -3,7 +3,7 @@
 #' This function creates the fieldbook and fieldplan for an unreplicated design
 #' with genotypes randomly allocated on a field.
 #' @param geno The list of genotypes.
-#' @param nr Number of rows.
+#' @param nc Number of columns.
 #' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field.
 #' @return It returns the fieldbook and fieldplan.
@@ -12,12 +12,12 @@
 #' dunrep(1:100, 7)
 #' @export
 
-dunrep <- function(geno, nr) {
+dunrep <- function(geno, nc) {
   
   # Dimensions
   
   ng <- length(geno)      # Number of genotypes
-  nc <- ceiling(ng / nr)  # Number of columns
+  nr <- ceiling(ng / nc)  # Number of rows
   
   # Fieldplan array
   
@@ -45,8 +45,8 @@ dunrep <- function(geno, nr) {
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
   
-  book <- data.frame(plot = 1:(nr * nc),
-                     row, col, geno = c(t(plan)), stringsAsFactors = F)
+  book <- data.frame(plot = 1:(nr * nc), row, col, geno = c(t(plan)),
+                     stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
 
   # Return
