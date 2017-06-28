@@ -4,7 +4,7 @@
 \alias{dw}
 \title{Unreplicated design with a grid of checks}
 \usage{
-dw(geno, ch1, ch2, nr, ncb)
+dw(geno, ch1, ch2, nr, ncb = 10)
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -15,7 +15,7 @@ dw(geno, ch1, ch2, nr, ncb)
 
 \item{nr}{Number of rows.}
 
-\item{ncb}{Number of columns between two check columns.}
+\item{ncb}{Number of columns between two check columns (default is 10).}
 }
 \value{
 It returns the fieldbook and fieldplan.
@@ -30,7 +30,7 @@ The genotypes are randomly allocated on a field with equally spaced
 columns of two alternating check varieties.
 }
 \examples{
-dw(1:100, "A", "B", 5, 10)
+dw(1:100, "A", "B", 5)
 }
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.

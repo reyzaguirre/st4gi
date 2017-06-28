@@ -7,7 +7,7 @@
 #' @param ch1 Name of check 1.
 #' @param ch2 Name of check 2.
 #' @param nr Number of rows.
-#' @param ncb Number of columns between two check columns.
+#' @param ncb Number of columns between two check columns (default is 10).
 #' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field with equally spaced
 #' columns of two alternating check varieties.
@@ -17,10 +17,10 @@
 #' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
 #' INRA Poitier, France, pp 91-95.
 #' @examples
-#' dw(1:100, "A", "B", 5, 10)
+#' dw(1:100, "A", "B", 5)
 #' @export
 
-dw <- function(geno, ch1, ch2, nr, ncb) {
+dw <- function(geno, ch1, ch2, nr, ncb = 10) {
   
   # Check ncb is even
   
@@ -62,8 +62,8 @@ dw <- function(geno, ch1, ch2, nr, ncb) {
   # Delete non necessary checks
   
   nrc <- sum(!is.na(plan[, nc - 1])) + 1 # number of rows with clones in the last column
-  if (nrc <= nr)
-    plan[nrc:nr, nc] <- NA
+  if (nrc < nr)
+    plan[(nrc + 1):nr, nc] <- NA
   
   # Row and column names
   
