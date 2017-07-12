@@ -22,22 +22,26 @@ Check that fieldbook traits names correspond with the names defined in the docum
 \details{
 The data frame must use the following labels (lower or upper case):
 \itemize{
+ \item \code{plot}     : Plot number
+ \item \code{row}      : Row number
+ \item \code{col}      : Column number
  \item \code{l}        : Locations (\code{loc} is also valid)
  \item \code{y}        : Years
  \item \code{s}        : Seasons
+ \item \code{e}        : Environments (\code{env} is also valid)
  \item \code{g}        : Genotypes (\code{geno} is also valid)
  \item \code{name}     : Names for genotypes
- \item \code{e}        : Environments (\code{env} is also valid)
  \item \code{r}        : Replications (\code{rep} is also valid)
+ \item \code{b}        : Blocks (\code{block} is also valid)
  \item \code{nops}     : Number of plants sowed
  \item \code{nope}     : Number of plants established
+ \item \code{noph}     : Number of plants harvested
  \item \code{vir1}     : Virus symptoms (1-9), first evaluation, 4-8 weeks after planting (\code{vir} is also valid)
  \item \code{vir2}     : Virus symptoms (1-9), second evaluation, 1 month before harvest
  \item \code{alt1}     : Alternaria symptoms (1-9), first evaluation, 4-8 weeks after planting (\code{alt} is also valid)
  \item \code{alt2}     : Alternaria symptoms (1-9), second evaluation, 1 month before harvest
  \item \code{vv}       : Vine vigor (1-9), first evaluation, 1 month before harvest
  \item \code{vw}       : Vine weight (kg/plot)
- \item \code{noph}     : Number of plants harvested
  \item \code{nopr}     : Number of plants with roots
  \item \code{nocr}     : Number of commercial roots
  \item \code{nonc}     : Number of non commercial roots

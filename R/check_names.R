@@ -6,22 +6,26 @@
 #' @param aqt Additional quantitative traits.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
+#'  \item \code{plot}     : Plot number
+#'  \item \code{row}      : Row number
+#'  \item \code{col}      : Column number
 #'  \item \code{l}        : Locations (\code{loc} is also valid)
 #'  \item \code{y}        : Years
 #'  \item \code{s}        : Seasons
+#'  \item \code{e}        : Environments (\code{env} is also valid)
 #'  \item \code{g}        : Genotypes (\code{geno} is also valid)
 #'  \item \code{name}     : Names for genotypes
-#'  \item \code{e}        : Environments (\code{env} is also valid)
 #'  \item \code{r}        : Replications (\code{rep} is also valid)
+#'  \item \code{b}        : Blocks (\code{block} is also valid)
 #'  \item \code{nops}     : Number of plants sowed
 #'  \item \code{nope}     : Number of plants established
+#'  \item \code{noph}     : Number of plants harvested
 #'  \item \code{vir1}     : Virus symptoms (1-9), first evaluation, 4-8 weeks after planting (\code{vir} is also valid)
 #'  \item \code{vir2}     : Virus symptoms (1-9), second evaluation, 1 month before harvest
 #'  \item \code{alt1}     : Alternaria symptoms (1-9), first evaluation, 4-8 weeks after planting (\code{alt} is also valid)
 #'  \item \code{alt2}     : Alternaria symptoms (1-9), second evaluation, 1 month before harvest
 #'  \item \code{vv}       : Vine vigor (1-9), first evaluation, 1 month before harvest
 #'  \item \code{vw}       : Vine weight (kg/plot)
-#'  \item \code{noph}     : Number of plants harvested
 #'  \item \code{nopr}     : Number of plants with roots
 #'  \item \code{nocr}     : Number of commercial roots
 #'  \item \code{nonc}     : Number of non commercial roots
@@ -109,19 +113,24 @@
 #' @export
 
 checknames <- function(fb, aqt = NULL) {
-
-  colnames.valid <- c("l", "loc", "y", "s", "g", "geno", "name", "e", "env", "r", "rep", "nops",
-                      "nope", "vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv", "vw", "noph",
-                      "nopr", "nocr", "nonc", "crw", "ncrw", "rfcp.cc", "rfcs.cc", "scol", "fcol",
-                      "rfcp", "rfcs", "rs", "rf", "damr", "rspr", "wed", "dmf", "dmd", "dm", "dmvf",
-                      "dmvd", "dmv", "fraw", "fraw1", "suraw", "suraw1", "straw", "straw1", "coof",
-                      "coof1", "coosu", "coosu1", "coost", "coost1", "coot", "coot1", "cooap",
-                      "cooap1", "fraw2", "suraw2", "straw2", "coof2", "coosu2", "coost2", "coot2",
-                      "cooap2", "prot", "fe", "zn", "ca", "mg", "bc", "bc.cc", "tc", "star", "fruc",
-                      "gluc", "sucr", "malt", "tnr", "trw", "trw.d", "cytha", "cytha.aj", "rytha",
-                      "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha", "fytha.aj", "dmvy", "dmvy.aj",
-                      "biom", "biom.aj", "dmbiom", "dmbiom.aj", "acrw", "nrpp", "ncrpp", "ypp",
-                      "vpp", "ci", "hi", "shi", "rfr", tolower(aqt))
+  
+  plot.id <- c("plot", "row", "col")
+  
+  factors <- c("l", "loc", "y", "s", "g", "e", "env", "geno", "name", "r", "rep", "b", "block")
+  
+  traits <- c("nops", "nope", "noph", "vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv",
+              "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "rfcp.cc", "rfcs.cc", "scol",
+              "fcol", "rfcp", "rfcs", "rs", "rf", "damr", "rspr", "wed", "dmf", "dmd", "dm",
+              "dmvf", "dmvd", "dmv", "fraw", "fraw1", "suraw", "suraw1", "straw", "straw1",
+              "coof", "coof1", "coosu", "coosu1", "coost", "coost1", "coot", "coot1", "cooap",
+              "cooap1", "fraw2", "suraw2", "straw2", "coof2", "coosu2", "coost2", "coot2",
+              "cooap2", "prot", "fe", "zn", "ca", "mg", "bc", "bc.cc", "tc", "star", "fruc",
+              "gluc", "sucr", "malt", "tnr", "trw", "trw.d", "cytha", "cytha.aj", "rytha",
+              "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha", "fytha.aj", "dmvy", "dmvy.aj",
+              "biom", "biom.aj", "dmbiom", "dmbiom.aj", "acrw", "nrpp", "ncrpp", "ypp",
+              "vpp", "ci", "hi", "shi", "rfr")
+  
+  colnames.valid <- c(plot.id, factors, traits, tolower(aqt))
     
   colnames.list <- colnames(fb)
   
