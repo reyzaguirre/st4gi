@@ -4,7 +4,7 @@
 \alias{dw}
 \title{Unreplicated design with a grid of checks}
 \usage{
-dw(geno, ch1, ch2, nr, ncb = 10)
+dw(geno, ch1, ch2, nc, ncb = 10)
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -13,7 +13,7 @@ dw(geno, ch1, ch2, nr, ncb = 10)
 
 \item{ch2}{Name of check 2.}
 
-\item{nr}{Number of rows.}
+\item{nc}{Number of columns.}
 
 \item{ncb}{Number of columns between two check columns (default is 10).}
 }
@@ -26,11 +26,13 @@ with genotypes randomly allocated on a field with checks following
 the method described on Westcott (1981).
 }
 \details{
-The genotypes are randomly allocated on a field with equally spaced
-columns of two alternating check varieties.
+The genotypes are randomly allocated on a field between equally spaced
+columns of two alternating check varieties. Check columns are planted each
+\code{ncb} columns where \code{ncb} must be even. The specified total number of
+columns \code{nc} is the maximum available number, the actual number could be less.
 }
 \examples{
-dw(1:100, "A", "B", 5)
+dw(1:100, "A", "B", 100)
 }
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
