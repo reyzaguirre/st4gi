@@ -19,10 +19,10 @@
 #' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
 #' INRA Poitier, France, pp 91-95.
 #' @examples
-#' dw(1:100, "A", "B", 100)
+#' cd.w(1:100, "A", "B", 100)
 #' @export
 
-dw <- function(geno, ch1, ch2, nc, ncb = 10) {
+cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   
   # Check ncb is even
   

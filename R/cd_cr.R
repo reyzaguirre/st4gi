@@ -8,11 +8,11 @@
 #' @details The genotypes are randomly allocated on a field following a CRD.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' dcr(1:20, 3, 12)
-#' dcr(1:20, 2, 7)
+#' cd.cr(1:20, 3, 12)
+#' cd.cr(1:20, 2, 7)
 #' @export
 
-dcr <- function(geno, nrep, nc) {
+cd.cr <- function(geno, nrep, nc) {
   
   # Dimensions
   

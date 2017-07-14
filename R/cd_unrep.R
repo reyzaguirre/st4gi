@@ -8,11 +8,11 @@
 #' @details The genotypes are randomly allocated on a field.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' dunrep(1:100, 5)
-#' dunrep(1:100, 7)
+#' cd.unrep(1:100, 5)
+#' cd.unrep(1:100, 7)
 #' @export
 
-dunrep <- function(geno, nc) {
+cd.unrep <- function(geno, nc) {
   
   # Dimensions
   
