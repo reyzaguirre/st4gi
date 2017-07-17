@@ -8,16 +8,21 @@
 #' @details The genotypes are randomly allocated on a field.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' cd.unrep(1:100, 5)
-#' cd.unrep(1:100, 7)
+#' cd.ur(1:100, 5)
+#' cd.ur(1:100, 7)
 #' @export
 
-cd.unrep <- function(geno, nc) {
+cd.ur <- function(geno, nc) {
   
-  # Dimensions
+  # Error messages
   
-  ng <- length(geno)      # Number of genotypes
-  nr <- ceiling(ng / nc)  # Number of rows
+  ng <- length(geno)
+  if (ng < 2)
+    stop("Include at least 2 genotypes.")
+  
+  # Number of rows
+  
+  nr <- ceiling(ng / nc)
   
   # Fieldplan array
   

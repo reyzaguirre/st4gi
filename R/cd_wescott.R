@@ -24,14 +24,17 @@
 
 cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   
-  # Check ncb is even
+  # Error messages
   
   if (ncb %% 2 == 1)
     stop("The number of columns must be even.")
   
+  ng <- length(geno)
+  if (ng < ncb)
+    stop(paste("Include at least", ncb, "genotypes."))
+  
   # Dimensions
   
-  ng <- length(geno)                 # Number of genotypes
   nb <- ceiling(ng / ncb)            # Number of blocks
   nbr <- floor((nc - 1) / (ncb + 1)) # Number of blocks per row
   nc <- nbr * (ncb + 1) + 1          # Actual number of columns
@@ -44,9 +47,12 @@ cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   # Include checks, selected columns
   
   plan[seq(1, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ch1
-  plan[seq(2, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ch2
   plan[seq(1, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ch2
-  plan[seq(2, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ch1
+  
+  if (nr > 1) {
+    plan[seq(2, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ch2
+    plan[seq(2, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ch1
+  }
   
   # Include genotypes at random
   

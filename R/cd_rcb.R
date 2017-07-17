@@ -15,10 +15,18 @@
 
 cd.rcb <- function(geno, nb, nc) {
   
-  # Dimensions
+  # Error messages
   
-  ng <- length(geno)          # Number of genotypes
-  nr <- ceiling(ng * nb / nc) # Number of rows
+  if (nb < 2)
+    stop("Include at least 2 blocks.")
+  
+  ng <- length(geno)
+  if (ng < 2)
+    stop("Include at least 2 genotypes.")
+  
+  # Number of rows
+  
+  nr <- ceiling(ng * nb / nc)
   
   # Fieldplan array
   

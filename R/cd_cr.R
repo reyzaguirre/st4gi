@@ -14,11 +14,19 @@
 
 cd.cr <- function(geno, nrep, nc) {
   
-  # Dimensions
+  # Error messages
   
-  ng <- length(geno)          # Number of genotypes
-  nr <- ceiling(ng * nrep / nc) # Number of rows
+  if (nrep < 2)
+    stop("Include at least 2 replications.")
+
+  ng <- length(geno)
+  if (ng < 2)
+    stop("Include at least 2 genotypes.")
+
+  # Number of rows
   
+  nr <- ceiling(ng * nrep / nc)
+
   # Fieldplan array
   
   plan <- array(dim = c(nr, nc))
