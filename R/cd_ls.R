@@ -24,7 +24,7 @@ cd.ls <- function(geno) {
   plan[1, ] <- 1:ng
   for (i in 2:ng)
     plan[i, ] <- plan[i - 1, ] + 1
-  plan <- plan%%ng
+  plan <- plan %% ng
   plan[plan == 0] <- ng
   
   # Randomize rows and columns
