@@ -1,9 +1,9 @@
 #' Strip-Split-Plot Design
 #'
 #' This function creates the fieldbook and fieldplan for a Strip-Split-Plot design.
-#' @param A The levels of factor A.
-#' @param B The levels of factor B.
-#' @param nrep Number of replications (blocks).
+#' @param A The levels of factor A (row factor).
+#' @param B The levels of factor B (column factor).
+#' @param nrep Number of replications (or blocks).
 #' @author Raul Eyzaguirre.
 #' @details The levels of the factors are randomly allocated on a field
 #' following a Strip-Split-Plot design. Row and column numbers are specific
@@ -32,51 +32,39 @@ cd.str <- function(A, B, nrep) {
 
   # Fieldplan array
   
-  plan <- array(dim = c(nb, na, nrep))
+  plan <- array(dim = c(na, nb, nrep))
+
+  rownames(plan) <- paste("row", 1:na)
+  colnames(plan) <- paste("col", 1:nb)
+  dimnames(plan)[[3]] <- paste("rep", 1:nrep)
   
-  # Include treatments at random
+  # Random order for A and B levels
   
-  ta <- as.integer(gl(length(A), length(B)))
-  ta <- A[ta]
-  tb <- rep(B, length(A))
-  tab <- paste(ta, tb, sep = "_")
-  
-  ran <- sample(1:nt)
-  
-  for (i in 2:nb)
-    ran <- c(ran, sample(1:nt))
-  
-  ta <- ta[ran]
-  tb <- tb[ran]
-  tab <- tab[ran]
-  
-  k <- 1
-  
-  for (i in 1:nr)
-    for (j in 1:nc) {
-      plan[i, j] <- tab[k]
-      k <- k + 1
-    }
-  
-  # Row and column names
-  
-  rownames(plan) <- paste("row", 1:nr)
-  colnames(plan) <- paste("col", 1:nc)
-  
+  for (i in 1:nrep) {
+    ta <- A[sample(1:na)]
+    tb <- B[sample(1:nb)]
+    plan[, , i] <- outer(ta, tb, paste, sep = "_")
+  }
+   
   # Create fielbook
   
-  row <- as.integer(gl(nr, nc))
-  col <- rep(1:nc, nr)
-  block <- as.integer(gl(nb, nt))
+  row <- rep(as.integer(gl(na, nb)), nrep)
+  col <- rep(rep(1:nb, na), nrep)
+  r <- as.integer(gl(nrep, na * nb))
   
-  length(ta) <- nr * nc
-  length(tb) <- nr * nc
-  length(block) <- nr * nc
+  tab <- c(t(plan[, , 1]))
+
+  for (i in 2:nrep)
+    tab <- c(tab, c(t(plan[, , i])))
   
-  book <- data.frame(plot = 1:(nr * nc), row, col, block, A = ta, B = tb,
-                     treat = c(t(plan)), stringsAsFactors = F)
-  book <- book[!is.na(book$treat), ]
+  for (i in 1:length(tab)) {
+    ta[i] <- unlist(strsplit(tab[i], "_"))[1]
+    tb[i] <- unlist(strsplit(tab[i], "_"))[2]
+  }
   
+  book <- data.frame(plot = 1:(na * nb * nrep), r, row, col, A = ta, B = tb,
+                     treat = tab, stringsAsFactors = F)
+
   # Return
   
   list(plan = plan, book = book)
