@@ -33,7 +33,7 @@ cd.2fcr <- function(A, B, nrep, nc) {
 
   # Number of rows
   
-  nt <- length(A) * length(B)
+  nt <- na * nb
   nr <- ceiling(nt * nrep / nc)
 
   # Fieldplan array
@@ -45,9 +45,9 @@ cd.2fcr <- function(A, B, nrep, nc) {
   
   # Include treatments at random
   
-  ta <- as.integer(gl(length(A), length(B)))
+  ta <- as.integer(gl(na, nb))
   ta <- rep(A[ta], nrep)
-  tb <- rep(rep(B, length(A)), nrep)
+  tb <- rep(rep(B, na), nrep)
   tab <- paste(ta, tb, sep = "_")
   
   ran <- sample(1:(nt * nrep))

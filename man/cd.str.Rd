@@ -22,7 +22,8 @@ This function creates the fieldbook and fieldplan for a Strip-Split-Plot design.
 \details{
 The levels of the factors are randomly allocated on a field
 following a Strip-Split-Plot design. Row and column numbers are specific
-to each replication.
+to each replication. Each replication is a complete block for factor A
+and for factor B.
 }
 \examples{
 A <- paste("a", 1:4, sep = "")

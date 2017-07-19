@@ -7,7 +7,8 @@
 #' @author Raul Eyzaguirre.
 #' @details The levels of the factors are randomly allocated on a field
 #' following a Strip-Split-Plot design. Row and column numbers are specific
-#' to each replication.
+#' to each replication. Each replication is a complete block for factor A
+#' and for factor B.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
 #' A <- paste("a", 1:4, sep = "")
@@ -50,7 +51,7 @@ cd.str <- function(A, B, nrep) {
   
   row <- rep(as.integer(gl(na, nb)), nrep)
   col <- rep(rep(1:nb, na), nrep)
-  r <- as.integer(gl(nrep, na * nb))
+  block <- as.integer(gl(nrep, na * nb))
   
   tab <- c(t(plan[, , 1]))
 
@@ -62,8 +63,8 @@ cd.str <- function(A, B, nrep) {
     tb[i] <- unlist(strsplit(tab[i], "_"))[2]
   }
   
-  book <- data.frame(plot = 1:(na * nb * nrep), r, row, col, A = ta, B = tb,
-                     treat = tab, stringsAsFactors = F)
+  book <- data.frame(plot = 1:(na * nb * nrep), block, row, col,
+                     A = ta, B = tb, treat = tab, stringsAsFactors = F)
 
   # Return
   
