@@ -31,6 +31,9 @@ cd.rcb <- function(geno, nb, nc) {
   # Fieldplan array
   
   plan <- array(dim = c(nr, nc))
+
+  rownames(plan) <- paste("row", 1:nr)
+  colnames(plan) <- paste("col", 1:nc)
   
   # Include genotypes at random
   
@@ -46,11 +49,6 @@ cd.rcb <- function(geno, nb, nc) {
       k <- k + 1
     }
   
-  # Row and column names
-  
-  rownames(plan) <- paste("row", 1:nr)
-  colnames(plan) <- paste("col", 1:nc)
-
   # Create fielbook
 
   row <- as.integer(gl(nr, nc))

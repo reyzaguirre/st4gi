@@ -128,6 +128,9 @@ cd.a01 <- function(geno, nrep, k, nc) {
   # Fieldplan array
   
   plan <- array(dim = c(nr, nc))
+
+  rownames(plan) <- paste("row", 1:nr)
+  colnames(plan) <- paste("col", 1:nc)
   
   # Allocate genotypes in the fieldplan
   
@@ -143,11 +146,6 @@ cd.a01 <- function(geno, nrep, k, nc) {
       l <- l + 1
     }
   
-  # Row and column names
-  
-  rownames(plan) <- paste("row", 1:nr)
-  colnames(plan) <- paste("col", 1:nc)
-
   # Create fielbook
 
   row <- as.integer(gl(nr, nc))

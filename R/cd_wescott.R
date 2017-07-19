@@ -44,6 +44,9 @@ cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   
   plan <- array(dim = c(nr, nc))
   
+  rownames(plan) <- paste("row", 1:nr)
+  colnames(plan) <- paste("col", 1:nc)
+
   # Include checks, selected columns
   
   plan[seq(1, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ch1
@@ -72,11 +75,6 @@ cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   neb <- nbr * nr - nb  # Number of empty blocks
   if (neb > 0)
     plan[nr, (nc - (ncb + 1) * neb + 1):nc] <- NA
-
-  # Row and column names
-  
-  rownames(plan) <- paste("row", 1:nr)
-  colnames(plan) <- paste("col", 1:nc)
 
   # Create fielbook
   

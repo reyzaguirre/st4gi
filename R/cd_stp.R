@@ -1,22 +1,21 @@
-#' Completely Randomized Design for a two-factor factorial
+#' Strip-Split-Plot Design
 #'
-#' This function creates the fieldbook and fieldplan for a two-factor
-#' factorial with a CRD.
+#' This function creates the fieldbook and fieldplan for a Strip-Split-Plot design.
 #' @param A The levels of factor A.
 #' @param B The levels of factor B.
-#' @param nrep Number of replications.
-#' @param nc Number of columns.
+#' @param nrep Number of replications (blocks).
 #' @author Raul Eyzaguirre.
-#' @details The treatments are randomly allocated on a field following a CRD.
+#' @details The levels of the factors are randomly allocated on a field
+#' following a Strip-Split-Plot design. Row and column numbers are specific
+#' to each replication.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' A <- paste("a", 1:5, sep = "")
+#' A <- paste("a", 1:4, sep = "")
 #' B <- paste("b", 1:3, sep = "")
-#' cd.2fcr(A, B, 3, 12)
-#' cd.2fcr(A, B, 2, 7)
+#' cd.str(A, B, 3)
 #' @export
 
-cd.2fcr <- function(A, B, nrep, nc) {
+cd.str <- function(A, B, nrep) {
   
   # Error messages
   
@@ -31,26 +30,21 @@ cd.2fcr <- function(A, B, nrep, nc) {
   if (nb < 2)
     stop("Include at least 2 levels for factor B.")
 
-  # Number of rows
-  
-  nt <- length(A) * length(B)
-  nr <- ceiling(nt * nrep / nc)
-
   # Fieldplan array
   
-  plan <- array(dim = c(nr, nc))
-
-  rownames(plan) <- paste("row", 1:nr)
-  colnames(plan) <- paste("col", 1:nc)
+  plan <- array(dim = c(nb, na, nrep))
   
   # Include treatments at random
   
   ta <- as.integer(gl(length(A), length(B)))
-  ta <- rep(A[ta], nrep)
-  tb <- rep(rep(B, length(A)), nrep)
+  ta <- A[ta]
+  tb <- rep(B, length(A))
   tab <- paste(ta, tb, sep = "_")
   
-  ran <- sample(1:(nt * nrep))
+  ran <- sample(1:nt)
+  
+  for (i in 2:nb)
+    ran <- c(ran, sample(1:nt))
   
   ta <- ta[ran]
   tb <- tb[ran]
@@ -64,15 +58,22 @@ cd.2fcr <- function(A, B, nrep, nc) {
       k <- k + 1
     }
   
+  # Row and column names
+  
+  rownames(plan) <- paste("row", 1:nr)
+  colnames(plan) <- paste("col", 1:nc)
+  
   # Create fielbook
   
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
+  block <- as.integer(gl(nb, nt))
   
   length(ta) <- nr * nc
   length(tb) <- nr * nc
+  length(block) <- nr * nc
   
-  book <- data.frame(plot = 1:(nr * nc), row, col, A = ta, B = tb,
+  book <- data.frame(plot = 1:(nr * nc), row, col, block, A = ta, B = tb,
                      treat = c(t(plan)), stringsAsFactors = F)
   book <- book[!is.na(book$treat), ]
   
