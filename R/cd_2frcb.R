@@ -24,63 +24,65 @@ cd.2frcb <- function(A, B, nb, nc) {
   if (nb < 2)
     stop("Include at least 2 blocks.")
   
-  na <- length(A)
-  if (na < 2)
+  nla <- length(A)
+  if (nla < 2)
     stop("Include at least 2 levels for factor A.")
   
-  nb <- length(B)
-  if (nb < 2)
+  nlb <- length(B)
+  if (nlb < 2)
     stop("Include at least 2 levels for factor B.")
   
-  # Number of rows
+  # Number of rows for each plot
   
-  nt <- na * nb
-  nr <- ceiling(nt * nb / nc)
-
+  nt <- nla * nlb
+  nr <- ceiling(nt / nc)
+  
   # Fieldplan array
   
-  plan <- array(dim = c(nr, nc))
-
+  plan <- array(dim = c(nr, nc, nb))
+  
   rownames(plan) <- paste("row", 1:nr)
   colnames(plan) <- paste("col", 1:nc)
+  dimnames(plan)[[3]] <- paste("block", 1:nb)
   
   # Include treatments at random
   
-  ta <- as.integer(gl(na, nb))
+  ta <- as.integer(gl(nla, nlb))
   ta <- A[ta]
-  tb <- rep(B, na)
+  tb <- rep(B, nla)
   tab <- paste(ta, tb, sep = "_")
 
-  ran <- sample(1:nt)
-
-  for (i in 2:nb)
-    ran <- c(ran, sample(1:nt))
-
-  ta <- ta[ran]
-  tb <- tb[ran]
-  tab <- tab[ran]
-  
-  k <- 1
-  
-  for (i in 1:nr)
-    for (j in 1:nc) {
-      plan[i, j] <- tab[k]
-      k <- k + 1
-    }
+  for (i in 1:nb) {
+    st <- sample(tab)
+    k <- 1
+    for (j in 1:nr)
+      for (l in 1:nc) {
+        plan[j, l, i] <- st[k]
+        k <- k + 1
+      }
+  }
   
   # Create fielbook
 
-  row <- as.integer(gl(nr, nc))
-  col <- rep(1:nc, nr)
-  block <- as.integer(gl(nb, nt))
+  block <- as.integer(gl(nb, nr * nc))
+  row <- rep(as.integer(gl(nr, nc)), nb)
+  col <- rep(rep(1:nc, nr), nb)
   
-  length(ta) <- nr * nc
-  length(tb) <- nr * nc
-  length(block) <- nr * nc
-  
-  book <- data.frame(plot = 1:(nr * nc), row, col, block, A = ta, B = tb,
-                     treat = c(t(plan)), stringsAsFactors = F)
+  tab <- c(t(plan[, , 1]))
+  for (i in 2:nb)
+    tab <- c(tab, c(t(plan[, , i])))
+
+  for (i in 1:length(tab)) {
+    ta[i] <- unlist(strsplit(tab[i], "_"))[1]
+    tb[i] <- unlist(strsplit(tab[i], "_"))[2]
+  }
+
+  book <- data.frame(block, row, col, A = ta, B = tb, treat = tab,
+                     stringsAsFactors = F)
   book <- book[!is.na(book$treat), ]
+  book$plot <- 1:dim(book)[1]
+  book <- book[, c(7, 1, 2, 3, 4, 5, 6)]
+  rownames(book) <- 1:dim(book)[1]
 
   # Return
   

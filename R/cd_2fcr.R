@@ -23,17 +23,17 @@ cd.2fcr <- function(A, B, nrep, nc) {
   if (nrep < 2)
     stop("Include at least 2 replications.")
 
-  na <- length(A)
-  if (na < 2)
+  nla <- length(A)
+  if (nla < 2)
     stop("Include at least 2 levels for factor A.")
 
-  nb <- length(B)
-  if (nb < 2)
+  nlb <- length(B)
+  if (nlb < 2)
     stop("Include at least 2 levels for factor B.")
 
   # Number of rows
   
-  nt <- na * nb
+  nt <- nla * nlb
   nr <- ceiling(nt * nrep / nc)
 
   # Fieldplan array
@@ -45,9 +45,9 @@ cd.2fcr <- function(A, B, nrep, nc) {
   
   # Include treatments at random
   
-  ta <- as.integer(gl(na, nb))
+  ta <- as.integer(gl(nla, nlb))
   ta <- rep(A[ta], nrep)
-  tb <- rep(rep(B, na), nrep)
+  tb <- rep(rep(B, nla), nrep)
   tab <- paste(ta, tb, sep = "_")
   
   ran <- sample(1:(nt * nrep))

@@ -9,7 +9,7 @@
 #' The blocks are disposed alongside the rows.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' cd.rcb(1:20, 3, 12)
+#' cd.rcb(1:20, 3, 10)
 #' cd.rcb(1:20, 2, 7)
 #' @export
 
@@ -24,40 +24,45 @@ cd.rcb <- function(geno, nb, nc) {
   if (ng < 2)
     stop("Include at least 2 genotypes.")
   
-  # Number of rows
+  # Number of rows for each plot
   
-  nr <- ceiling(ng * nb / nc)
+  nr <- ceiling(ng / nc)
   
   # Fieldplan array
   
-  plan <- array(dim = c(nr, nc))
-
+  plan <- array(dim = c(nr, nc, nb))
+  
   rownames(plan) <- paste("row", 1:nr)
   colnames(plan) <- paste("col", 1:nc)
-  
-  # Include genotypes at random
-  
-  sg <- sample(geno) # sorted genotypes
-  for (i in 2:nb)
-    sg <- c(sg, sample(geno))
+  dimnames(plan)[[3]] <- paste("block", 1:nb)
 
-  k <- 1
-  
-  for (i in 1:nr)
-    for (j in 1:nc) {
-      plan[i, j] <- sg[k]
-      k <- k + 1
-    }
+  # Include genotypes at random
+
+  for (i in 1:nb) {
+    sg <- sample(geno)
+    k <- 1
+    for (j in 1:nr)
+      for (l in 1:nc) {
+        plan[j, l, i] <- sg[k]
+        k <- k + 1
+      }
+  }
   
   # Create fielbook
 
-  row <- as.integer(gl(nr, nc))
-  col <- rep(1:nc, nr)
-  block <- as.integer(gl(nb, ng))
-  length(block) <- nr * nc
-  book <- data.frame(plot = 1:(nr * nc), row, col, block,
-                     geno = c(t(plan)), stringsAsFactors = F)
+  block <- as.integer(gl(nb, nr * nc))
+  row <- rep(as.integer(gl(nr, nc)), nb)
+  col <- rep(rep(1:nc, nr), nb)
+  
+  geno <- c(t(plan[, , 1]))
+  for (i in 2:nb)
+    geno <- c(geno, c(t(plan[, , i])))
+  
+  book <- data.frame(block, row, col, geno, stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
+  book$plot <- 1:dim(book)[1]
+  book <- book[, c(5, 1, 2, 3, 4)]
+  rownames(book) <- 1:dim(book)[1]
 
   # Return
   

@@ -42,8 +42,8 @@ cd.str <- function(A, B, nrep) {
   # Random order for A and B levels
   
   for (i in 1:nrep) {
-    ta <- A[sample(1:na)]
-    tb <- B[sample(1:nb)]
+    ta <- sample(A)
+    tb <- sample(B)
     plan[, , i] <- outer(ta, tb, paste, sep = "_")
   }
    

@@ -51,9 +51,9 @@ cd.spl <- function(A, B, nrep, nc = NULL) {
   # Include treatments at random
 
   for (i in 1:nrep) {
-    ta <- A[sample(1:na)]
+    ta <- sample(A)
     for (j in 1:na) {
-      tb <- B[sample(1:nb)]
+      tb <- sample(B)
       tab <- paste(ta[j], tb, sep = "_")
       k <- 1
       for (l in ((j - 1) * nr + 1):(j * nr))
@@ -66,10 +66,10 @@ cd.spl <- function(A, B, nrep, nc = NULL) {
   
   # Create fielbook
   
+  plot <- as.integer(gl(na * nrep, nr * nc))
+  block <- as.integer(gl(nrep, na * nr * nc))
   row <- rep(as.integer(gl(na * nr, nc)), nrep)
   col <- rep(rep(1:nc, na * nr), nrep)
-  block <- as.integer(gl(nrep, na * nr * nc))
-  plot <- as.integer(gl(na * nrep, nr * nc))
   
   tab <- c(t(plan[, , 1]))
   

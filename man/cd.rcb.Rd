@@ -24,7 +24,7 @@ The genotypes are randomly allocated on a field following a RCBD.
 The blocks are disposed alongside the rows.
 }
 \examples{
-cd.rcb(1:20, 3, 12)
+cd.rcb(1:20, 3, 10)
 cd.rcb(1:20, 2, 7)
 }
 \author{
