@@ -24,6 +24,7 @@ cd.cr <- function(geno, nrep, nc) {
     stop("Include at least 2 replications.")
 
   ng <- length(geno)
+
   if (ng < 2)
     stop("Include at least 2 genotypes.")
 
@@ -54,8 +55,9 @@ cd.cr <- function(geno, nrep, nc) {
   
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
-  book <- data.frame(plot = 1:(nr * nc), row, col,
-                     geno = c(t(plan)), stringsAsFactors = F)
+
+  book <- data.frame(plot = 1:(nr * nc), row, col, geno = c(t(plan)),
+                     stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
   
   # Return
