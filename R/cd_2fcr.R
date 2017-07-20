@@ -25,14 +25,15 @@ cd.2fcr <- function(A, B, nrep, nc) {
 
   # Error messages
   
+  nla <- length(A)
+  nlb <- length(B)
+  
   if (nrep < 2)
     stop("Include at least 2 replications.")
 
-  nla <- length(A)
   if (nla < 2)
     stop("Include at least 2 levels for factor A.")
 
-  nlb <- length(B)
   if (nlb < 2)
     stop("Include at least 2 levels for factor B.")
 
@@ -48,7 +49,7 @@ cd.2fcr <- function(A, B, nrep, nc) {
   rownames(plan) <- paste("row", 1:nr)
   colnames(plan) <- paste("col", 1:nc)
   
-  # Include treatments at random
+  # Randomize treatments
   
   ta <- as.integer(gl(nla, nlb))
   ta <- rep(A[ta], nrep)
@@ -60,6 +61,8 @@ cd.2fcr <- function(A, B, nrep, nc) {
   ta <- ta[ran]
   tb <- tb[ran]
   tab <- tab[ran]
+  
+  # Include treatments in fieldplan
   
   k <- 1
   
