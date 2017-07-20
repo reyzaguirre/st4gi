@@ -19,7 +19,7 @@ cd.ab(geno, checks, nb, nc)
 It returns the fieldbook and fieldplan.
 }
 \description{
-This function creates the fieldbook and fieldplan for an ABD
+This function creates the fieldbook and fieldplan for an ABD.
 }
 \details{
 The genotypes are randomly allocated on a field following an ABD.

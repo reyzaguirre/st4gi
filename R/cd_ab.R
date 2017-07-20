@@ -1,6 +1,6 @@
 #' Augmented Block Design
 #'
-#' This function creates the fieldbook and fieldplan for an ABD
+#' This function creates the fieldbook and fieldplan for an ABD.
 #' @param geno The list of genotypes.
 #' @param checks The list of checks.
 #' @param nb Number of blocks.
@@ -28,14 +28,16 @@ cd.ab <- function(geno, checks, nb, nc) {
     stop("Include at least 2 blocks.")
     
   nch <- length(checks)
+  
   if (nch < 2)
     stop("Include at least 2 checks.")
   
   ng <- length(geno)
+  
   if (ng < nb)
     stop(paste("Include at least", nb, "genotypes."))
 
-  # Create full blocks
+  # Create blocks with checks
   
   blocks <- list()
   
@@ -47,8 +49,7 @@ cd.ab <- function(geno, checks, nb, nc) {
   sg <- sample(geno)
 
   for (i in 1:ng) {
-    j <- i %% nb
-    if (j == 0) j <- nb
+    j <- ((i - 1) %% nb) + 1
     blocks[[j]] <- c(blocks[[j]], sg[i])
   }
   
@@ -56,11 +57,9 @@ cd.ab <- function(geno, checks, nb, nc) {
   
   blocks <- lapply(blocks, sample)
   
-  # Number of rows for each plot
+  # Number of rows for each block
   
-  mnb <- max(unlist(lapply(blocks, length)))
-    
-  nr <- ceiling(mnb / nc)
+  nr <- ceiling(max(unlist(lapply(blocks, length))) / nc)
   
   # Fieldplan array
   
@@ -73,11 +72,10 @@ cd.ab <- function(geno, checks, nb, nc) {
   # Add genotypes and checks to the fieldplan
 
   for (i in 1:nb) {
-    sg <- blocks[[i]]
     k <- 1
     for (j in 1:nr)
       for (l in 1:nc) {
-        plan[j, l, i] <- sg[k]
+        plan[j, l, i] <- blocks[[i]][k]
         k <- k + 1
       }
   }
@@ -89,6 +87,7 @@ cd.ab <- function(geno, checks, nb, nc) {
   col <- rep(rep(1:nc, nr), nb)
   
   geno <- c(t(plan[, , 1]))
+
   for (i in 2:nb)
     geno <- c(geno, c(t(plan[, , i])))
   
