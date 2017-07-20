@@ -24,6 +24,10 @@
 
 cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   
+  # As character
+  
+  geno <- as.character(geno)
+
   # Error messages
   
   if (ncb %% 2 == 1)

@@ -19,6 +19,11 @@
 
 cd.2frcb <- function(A, B, nb, nc) {
   
+  # As character
+  
+  A <- as.character(A)
+  B <- as.character(B)
+
   # Error messages
   
   if (nb < 2)

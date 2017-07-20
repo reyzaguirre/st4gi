@@ -28,7 +28,7 @@ The blocks are disposed alongside the rows.
 \examples{
 checks <- paste("ch", 1:4, sep = "_")
 cd.ab(1:40, checks, 4, 10)
-cd.ab(1:40, checks, 4, 7)
+cd.ab(1:50, checks, 3, 7)
 }
 \author{
 Raul Eyzaguirre.

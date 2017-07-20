@@ -18,6 +18,11 @@
 
 cd.str <- function(A, B, nrep) {
   
+  # As character
+  
+  A <- as.character(A)
+  B <- as.character(B)
+
   # Error messages
   
   if (nrep < 2)

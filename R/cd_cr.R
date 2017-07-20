@@ -14,6 +14,10 @@
 
 cd.cr <- function(geno, nrep, nc) {
   
+  # As character
+  
+  geno <- as.character(geno)
+
   # Error messages
   
   if (nrep < 2)

@@ -15,6 +15,10 @@
 
 cd.rcb <- function(geno, nb, nc) {
   
+  # As character
+  
+  geno <- as.character(geno)
+
   # Error messages
   
   if (nb < 2)

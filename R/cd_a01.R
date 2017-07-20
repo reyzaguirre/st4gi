@@ -26,6 +26,10 @@
 
 cd.a01 <- function(geno, nrep, k, nc) {
   
+  # As character
+  
+  geno <- as.character(geno)
+
   # Number of treatments and blocks
   
   ng <- length(geno)

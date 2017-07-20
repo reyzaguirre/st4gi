@@ -18,6 +18,11 @@
 
 cd.2fcr <- function(A, B, nrep, nc) {
   
+  # As character
+  
+  A <- as.character(A)
+  B <- as.character(B)
+
   # Error messages
   
   if (nrep < 2)

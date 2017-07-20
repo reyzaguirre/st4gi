@@ -20,6 +20,11 @@
 
 cd.spl <- function(A, B, nrep, nc = NULL) {
   
+  # As character
+  
+  A <- as.character(A)
+  B <- as.character(B)
+
   # Error messages
   
   if (nrep < 2)

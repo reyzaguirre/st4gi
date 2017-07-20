@@ -12,6 +12,10 @@
 
 cd.ls <- function(geno) {
   
+  # As character
+  
+  geno <- as.character(geno)
+
   # Error messages
   
   ng <- length(geno)
