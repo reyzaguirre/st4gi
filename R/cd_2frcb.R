@@ -26,18 +26,19 @@ cd.2frcb <- function(A, B, nb, nc) {
 
   # Error messages
   
+  nla <- length(A)
+  nlb <- length(B)
+
   if (nb < 2)
     stop("Include at least 2 blocks.")
   
-  nla <- length(A)
   if (nla < 2)
     stop("Include at least 2 levels for factor A.")
   
-  nlb <- length(B)
   if (nlb < 2)
     stop("Include at least 2 levels for factor B.")
   
-  # Number of rows for each plot
+  # Number of rows for each block
   
   nt <- nla * nlb
   nr <- ceiling(nt / nc)
@@ -56,15 +57,19 @@ cd.2frcb <- function(A, B, nb, nc) {
   ta <- A[ta]
   tb <- rep(B, nla)
   tab <- paste(ta, tb, sep = "_")
+  
+  ran <- array(dim = c(nr * nc, nb))
 
   for (i in 1:nb) {
-    st <- sample(tab)
+    st <- sample(1:nt)
+    length(st) <- nr * nc
     k <- 1
     for (j in 1:nr)
       for (l in 1:nc) {
-        plan[j, l, i] <- st[k]
+        plan[j, l, i] <- tab[st[k]]
         k <- k + 1
       }
+    ran[, i] <- st
   }
   
   # Create fielbook
@@ -73,16 +78,17 @@ cd.2frcb <- function(A, B, nb, nc) {
   row <- rep(as.integer(gl(nr, nc)), nb)
   col <- rep(rep(1:nc, nr), nb)
   
-  tab <- c(t(plan[, , 1]))
-  for (i in 2:nb)
-    tab <- c(tab, c(t(plan[, , i])))
-
-  for (i in 1:length(tab)) {
-    ta[i] <- unlist(strsplit(tab[i], "_"))[1]
-    tb[i] <- unlist(strsplit(tab[i], "_"))[2]
+  sta <- ta[ran[, 1]]
+  stb <- tb[ran[, 1]]
+  stab <- tab[ran[, 1]]
+  
+  for (i in 2:nb) {
+    sta <- c(sta, ta[ran[, i]])
+    stb <- c(stb, tb[ran[, i]])
+    stab <- c(stab, tab[ran[, i]])
   }
 
-  book <- data.frame(block, row, col, A = ta, B = tb, treat = tab,
+  book <- data.frame(block, row, col, A = sta, B = stb, treat = stab,
                      stringsAsFactors = F)
   book <- book[!is.na(book$treat), ]
   book$plot <- 1:dim(book)[1]
