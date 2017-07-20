@@ -21,6 +21,7 @@ cd.ur <- function(geno, nc) {
   # Error messages
   
   ng <- length(geno)
+  
   if (ng < 2)
     stop("Include at least 2 genotypes.")
   
