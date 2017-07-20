@@ -19,16 +19,21 @@ cd.ls <- function(geno) {
   # Error messages
   
   ng <- length(geno)
+  
   if (ng < 2)
     stop("Include at least 2 genotypes.")
   
   # Fieldplan array
   
   plan <- array(dim = c(ng, ng))
+  
+  # Create the latin square
+  
   plan[1, ] <- 1:ng
+
   for (i in 2:ng)
-    plan[i, ] <- plan[i - 1, ] + 1
-  plan <- plan %% ng
+    plan[i, ] <- (plan[i - 1, ] + 1) %% ng
+  
   plan[plan == 0] <- ng
   
   # Randomize rows and columns
@@ -49,8 +54,9 @@ cd.ls <- function(geno) {
 
   row <- as.integer(gl(ng, ng))
   col <- rep(1:ng, ng)
-  book <- data.frame(plot = 1:(ng * ng), row, col,
-                     geno = c(t(plan)), stringsAsFactors = F)
+
+  book <- data.frame(plot = 1:(ng * ng), row, col, geno = c(t(plan)),
+                     stringsAsFactors = F)
 
   # Return
   
