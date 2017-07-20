@@ -25,10 +25,11 @@ cd.rcb <- function(geno, nb, nc) {
     stop("Include at least 2 blocks.")
   
   ng <- length(geno)
+  
   if (ng < 2)
     stop("Include at least 2 genotypes.")
   
-  # Number of rows for each plot
+  # Number of rows for each block
   
   nr <- ceiling(ng / nc)
   
@@ -59,6 +60,7 @@ cd.rcb <- function(geno, nb, nc) {
   col <- rep(rep(1:nc, nr), nb)
   
   geno <- c(t(plan[, , 1]))
+
   for (i in 2:nb)
     geno <- c(geno, c(t(plan[, , i])))
   
