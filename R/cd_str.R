@@ -24,52 +24,56 @@ cd.str <- function(A, B, nrep) {
   B <- as.character(B)
 
   # Error messages
+
+  nla <- length(A)
+  nlb <- length(B)
   
   if (nrep < 2)
     stop("Include at least 2 replications.")
 
-  na <- length(A)
-  if (na < 2)
+  if (nla < 2)
     stop("Include at least 2 levels for factor A.")
 
-  nb <- length(B)
-  if (nb < 2)
+  if (nlb < 2)
     stop("Include at least 2 levels for factor B.")
 
   # Fieldplan array
   
-  plan <- array(dim = c(na, nb, nrep))
+  plan <- array(dim = c(nla, nlb, nrep))
 
-  rownames(plan) <- paste("row", 1:na)
-  colnames(plan) <- paste("col", 1:nb)
+  rownames(plan) <- paste("row", 1:nla)
+  colnames(plan) <- paste("col", 1:nlb)
   dimnames(plan)[[3]] <- paste("rep", 1:nrep)
   
   # Random order for A and B levels
   
+  rana <- array(dim = c(nla, nrep))
+  ranb <- array(dim = c(nlb, nrep))
+  
   for (i in 1:nrep) {
-    ta <- sample(A)
-    tb <- sample(B)
-    plan[, , i] <- outer(ta, tb, paste, sep = "_")
+    rana[, i] <- sample(1:nla)
+    ranb[, i] <- sample(1:nlb)
+    plan[, , i] <- outer(A[rana[, i]], B[ranb[, i]], paste, sep = "_")
   }
    
   # Create fielbook
   
-  row <- rep(as.integer(gl(na, nb)), nrep)
-  col <- rep(rep(1:nb, na), nrep)
-  block <- as.integer(gl(nrep, na * nb))
+  row <- rep(as.integer(gl(nla, nlb)), nrep)
+  col <- rep(rep(1:nlb, nla), nrep)
+  block <- as.integer(gl(nrep, nla * nlb))
   
-  tab <- c(t(plan[, , 1]))
+  sta <- c(sapply(A[rana[, 1]], rep, nlb))
+  stb <- rep(B[ranb[, 1]], nla)
+  stab <- c(t(plan[, , 1]))
 
-  for (i in 2:nrep)
-    tab <- c(tab, c(t(plan[, , i])))
-  
-  for (i in 1:length(tab)) {
-    ta[i] <- unlist(strsplit(tab[i], "_"))[1]
-    tb[i] <- unlist(strsplit(tab[i], "_"))[2]
+  for (i in 2:nrep) {
+    sta <- c(sta, c(sapply(A[rana[, i]], rep, nlb)))
+    stb <- c(stb, rep(B[ranb[, i]], nla))
+    stab <- c(stab, c(t(plan[, , i])))
   }
   
-  book <- data.frame(plot = 1:(na * nb * nrep), block, row, col,
-                     A = ta, B = tb, treat = tab, stringsAsFactors = F)
+  book <- data.frame(plot = 1:(nla * nlb * nrep), block, row, col,
+                     A = sta, B = stb, treat = stab, stringsAsFactors = F)
 
   # Return
   
