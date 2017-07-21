@@ -86,9 +86,9 @@ cd.ab <- function(geno, checks, nb, nc) {
   row <- rep(as.integer(gl(nr, nc)), nb)
   col <- rep(rep(1:nc, nr), nb)
   
-  geno <- c(t(plan[, , 1]))
+  geno <- NULL
 
-  for (i in 2:nb)
+  for (i in i:nb)
     geno <- c(geno, c(t(plan[, , i])))
   
   book <- data.frame(block, row, col, geno, stringsAsFactors = F)

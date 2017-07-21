@@ -78,11 +78,11 @@ cd.2frcb <- function(A, B, nb, nc) {
   row <- rep(as.integer(gl(nr, nc)), nb)
   col <- rep(rep(1:nc, nr), nb)
   
-  sta <- ta[ran[, 1]]
-  stb <- tb[ran[, 1]]
-  stab <- tab[ran[, 1]]
+  sta <- NULL
+  stb <- NULL
+  stab <- NULL
   
-  for (i in 2:nb) {
+  for (i in 1:nb) {
     sta <- c(sta, ta[ran[, i]])
     stb <- c(stb, tb[ran[, i]])
     stab <- c(stab, tab[ran[, i]])

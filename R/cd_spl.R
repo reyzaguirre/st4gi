@@ -27,43 +27,47 @@ cd.spl <- function(A, B, nrep, nc = NULL) {
 
   # Error messages
   
+  nla <- length(A)
+  nlb <- length(B)
+  
   if (nrep < 2)
     stop("Include at least 2 replications.")
 
-  na <- length(A)
-  if (na < 2)
+  if (nla < 2)
     stop("Include at least 2 levels for factor A.")
 
-  nb <- length(B)
-  if (nb < 2)
+  if (nlb < 2)
     stop("Include at least 2 levels for factor B.")
   
   # Number of rows for each plot
   
   if (is.null(nc))
-    nc <- nb
+    nc <- nlb
 
-  nr <- ceiling(nb / nc)
+  nr <- ceiling(nlb / nc)
 
   # Fieldplan array
   
-  plan <- array(dim = c(na * nr, nc, nrep))
+  plan <- array(dim = c(nla * nr, nc, nrep))
 
-  rownames(plan) <- paste("row", 1:(na * nr))
+  rownames(plan) <- paste("row", 1:(nla * nr))
   colnames(plan) <- paste("col", 1:nc)
   dimnames(plan)[[3]] <- paste("rep", 1:nrep)
   
   # Include treatments at random
 
+  rana <- array(dim = c(nla, nrep))
+  ranb <- array(dim = c(nlb, nla, nrep))
+  
   for (i in 1:nrep) {
-    ta <- sample(A)
-    for (j in 1:na) {
-      tb <- sample(B)
-      tab <- paste(ta[j], tb, sep = "_")
+    rana[, i] <- sample(1:nla)
+    for (j in 1:nla) {
+      ranb[, j, i] <- sample(1:nlb)
+      stab <- paste(A[rana[j, i]], B[ranb[, j, i]], sep = "_")
       k <- 1
       for (l in ((j - 1) * nr + 1):(j * nr))
         for (m in 1:nc) {
-          plan[l, m, i] <- tab[k]
+          plan[l, m, i] <- stab[k]
           k <- k + 1
         }
     }
@@ -71,26 +75,31 @@ cd.spl <- function(A, B, nrep, nc = NULL) {
   
   # Create fielbook
   
-  plot <- as.integer(gl(na * nrep, nr * nc))
-  block <- as.integer(gl(nrep, na * nr * nc))
-  row <- rep(as.integer(gl(na * nr, nc)), nrep)
-  col <- rep(rep(1:nc, na * nr), nrep)
+  plot <- as.integer(gl(nla * nrep, nr * nc))
+  block <- as.integer(gl(nrep, nla * nr * nc))
+  row <- rep(as.integer(gl(nla * nr, nc)), nrep)
+  col <- rep(rep(1:nc, nla * nr), nrep)
   
-  tab <- c(t(plan[, , 1]))
+  sta <- NULL
+  stb <- NULL
+  stab <- NULL
   
-  for (i in 2:nrep)
-    tab <- c(tab, c(t(plan[, , i])))
-  
-  for (i in 1:length(tab)) {
-    ta[i] <- unlist(strsplit(tab[i], "_"))[1]
-    tb[i] <- unlist(strsplit(tab[i], "_"))[2]
+  for (i in 1:nrep) {
+    sta <- c(sta, c(sapply(A[rana[, i]], rep, nr * nc)))
+    for (j in 1:nla) {
+      temp <- B[c(ranb[, j, i])]
+      length(temp) <- nr * nc
+      stb <- c(stb, temp)
+    }
+    stab <- c(stab, c(t(plan[, , i])))
   }
   
-  book <- data.frame(plot, block, row, col, A = ta, B = tb,
-                     treat = tab, stringsAsFactors = F)
+  book <- data.frame(plot, block, row, col, A = sta, B = stb,
+                     treat = stab, stringsAsFactors = F)
   book <- book[!is.na(book$treat), ]
   book$subplot <- 1:dim(book)[1]
   book <- book[, c(1, 8, 2, 3, 4, 5, 6, 7)]
+  rownames(book) <- 1:dim(book)[1]
   
   # Return
   

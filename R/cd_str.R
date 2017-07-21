@@ -62,11 +62,11 @@ cd.str <- function(A, B, nrep) {
   col <- rep(rep(1:nlb, nla), nrep)
   block <- as.integer(gl(nrep, nla * nlb))
   
-  sta <- c(sapply(A[rana[, 1]], rep, nlb))
-  stb <- rep(B[ranb[, 1]], nla)
-  stab <- c(t(plan[, , 1]))
+  sta <- NULL
+  stb <- NULL
+  stab <- NULL
 
-  for (i in 2:nrep) {
+  for (i in 1:nrep) {
     sta <- c(sta, c(sapply(A[rana[, i]], rep, nlb)))
     stb <- c(stb, rep(B[ranb[, i]], nla))
     stab <- c(stab, c(t(plan[, , i])))
