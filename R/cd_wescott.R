@@ -30,10 +30,11 @@ cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
 
   # Error messages
   
+  ng <- length(geno)
+
   if (ncb %% 2 == 1)
     stop("The number of columns must be even.")
   
-  ng <- length(geno)
   if (ng < ncb)
     stop(paste("Include at least", ncb, "genotypes."))
   
