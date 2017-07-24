@@ -30,13 +30,13 @@ cd.a01 <- function(geno, nrep, k, nc) {
   
   geno <- as.character(geno)
 
-  # Number of treatments and blocks
+  # Number of genotypes and blocks
   
   ng <- length(geno)
   s <- ng / k
   
   if (ng %% k != 0)
-    stop("The size of the blocks is not appropriate. The number of treatments must be a multiple of k.")
+    stop("The size of the blocks is not appropriate. The number of genotypes must be a multiple of k.")
 
   # Actual number of columns
   
@@ -94,9 +94,11 @@ cd.a01 <- function(geno, nrep, k, nc) {
   
   # Repeat desin generator s times
   
-  ad <- rep(alpha[, 1], s)
-  for (i in 2:nrep)
+  ad <- NULL
+  
+  for (i in 1:nrep)
     ad <- c(ad, rep(alpha[, i], s))
+
   dim(ad) <- c(k, s, nrep)
   
   # Cyclic substitution
@@ -125,42 +127,49 @@ cd.a01 <- function(geno, nrep, k, nc) {
   for (i in 1:nrep)
     ad[, , i] <- ad[, sample(1:s), i]
 
-  # Number of rows
+  # Number of rows for each rep
   
-  nr <- ceiling(ng * nrep / nc)
+  nr <- ceiling(ng / nc)
   
   # Fieldplan array
   
-  plan <- array(dim = c(nr, nc))
+  plan <- array(dim = c(nr, nc, nrep))
 
   rownames(plan) <- paste("row", 1:nr)
   colnames(plan) <- paste("col", 1:nc)
+  dimnames(plan)[[3]] <- paste("rep", 1:nrep)
   
   # Allocate genotypes in the fieldplan
   
-  sg <- c(ad[, , 1])
-  for (i in 2:nrep)
-    sg <- c(sg, c(ad[, , i]))
-
-  l <- 1
-  
-  for (i in 1:nr)
-    for (j in 1:nc) {
-      plan[i, j] <- geno[sg[l]]
-      l <- l + 1
-    }
+  for (i in 1:nrep) {
+    sg <- c(ad[, , i])
+    m <- 1
+    for (j in 1:nr)
+      for (l in 1:nc) {
+        plan[j, l, i] <- geno[sg[m]]
+        m <- m + 1
+      }
+  }
   
   # Create fielbook
 
-  row <- as.integer(gl(nr, nc))
-  col <- rep(1:nc, nr)
-  r <- as.integer(gl(nrep, ng))
-  block <- rep(as.integer(gl(s, k)), nrep)
-  length(r) <- nr * nc
+  r <- as.integer(gl(nrep, nr * nc))
+  row <- rep(as.integer(gl(nr, nc)), nrep)
+  col <- rep(rep(1:nc, nr), nrep)
+  block <- as.integer(gl(s, k))
   length(block) <- nr * nc
-  book <- data.frame(plot = 1:(nr * nc), row, col, r, block,
-                     geno = c(t(plan)), stringsAsFactors = F)
+  block <- rep(block, nrep)
+  
+  geno <- NULL
+  
+  for (i in 1:nrep)
+    geno <- c(geno, c(t(plan[, , i])))
+  
+  book <- data.frame(r, block, row, col, geno, stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
+  book$plot <- 1:dim(book)[1]
+  book <- book[, c(6, 1, 2, 3, 4, 5)]
+  rownames(book) <- 1:dim(book)[1]
 
   # Return
   
