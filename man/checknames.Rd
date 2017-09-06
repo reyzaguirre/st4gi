@@ -112,10 +112,14 @@ The data frame must use the following labels (lower or upper case):
  \item \code{dmbiom}   : Dry matter biomass (t/ha)
  \item \code{dmbiom.aj}: Dry matter biomass (t/ha) adjusted by number of harvested plants
  \item \code{acrw}     : Average commercial root weight (kg/root)
- \item \code{nrpp}     : Number of roots per plant
- \item \code{ncrpp}    : Number of commercial roots per plant
- \item \code{ypp}      : Yield per plant (kg/plant)
- \item \code{vpp}      : Vine weight per plant (kg/plant)
+ \item \code{nrpp}     : Number of roots per harvested plant
+ \item \code{nrpsp}    : Number of roots per sowed plant
+ \item \code{ncrpp}    : Number of commercial roots per harvested plant
+ \item \code{ncrpsp}   : Number of commercial roots per sowed plant
+ \item \code{ypp}      : Yield per harvested plant (kg/plant)
+ \item \code{ypsp}     : Yield per sowed plant (kg/plant)
+ \item \code{vpp}      : Vine weight per harvested plant (kg/plant)
+ \item \code{vpsp}     : Vine weight per sowed plant (kg/plant)
  \item \code{ci}       : Commercial index (\%)
  \item \code{hi}       : Harvest index (\%)
  \item \code{shi}      : Harvest sowing index (\%)

@@ -81,6 +81,12 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$nrpp[fb$noph == 0] <- NA
   }
 
+  if (exists("tnr", fb) & exists("nops", fb)) {
+    if (exists("nrpsp", fb))
+      ow <- c(ow, "nrpsp")
+    fb$nrpsp <- fb$tnr / fb$nops
+  }
+
   if (exists("nocr", fb) & exists("noph", fb)) {
     if (exists("ncrpp", fb))
       ow <- c(ow, "ncrpp")
@@ -88,11 +94,23 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$ncrpp[fb$noph == 0] <- NA
   }
 
+  if (exists("nocr", fb) & exists("noph", fb)) {
+    if (exists("ncrpsp", fb))
+      ow <- c(ow, "ncrpsp")
+    fb$ncrpsp <- fb$nocr / fb$nops
+  }
+  
   if (exists("trw", fb) & exists("noph", fb)) {
     if (exists("ypp", fb))
       ow <- c(ow, "ypp")
     fb$ypp <- fb$trw / fb$noph
     fb$ypp[fb$noph == 0] <- NA
+  }
+
+  if (exists("trw", fb) & exists("nops", fb)) {
+    if (exists("ypsp", fb))
+      ow <- c(ow, "ypsp")
+    fb$ypsp <- fb$trw / fb$nops
   }
 
   if (exists("vw", fb) & exists("noph", fb)) {
@@ -102,7 +120,13 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$vpp[fb$noph == 0] <- NA
   }
 
-    if (exists("nocr", fb) & exists("nonc", fb)) {
+  if (exists("vw", fb) & exists("nops", fb)) {
+    if (exists("vpsp", fb))
+      ow <- c(ow, "vpsp")
+    fb$vpsp <- fb$vw / fb$nops
+  }
+  
+  if (exists("nocr", fb) & exists("nonc", fb)) {
     if (exists("ci", fb))
       ow <- c(ow, "ci")
     fb$ci <- fb$nocr / fb$tnr * 100

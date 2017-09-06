@@ -96,10 +96,14 @@
 #'  \item \code{dmbiom}   : Dry matter biomass (t/ha)
 #'  \item \code{dmbiom.aj}: Dry matter biomass (t/ha) adjusted by number of harvested plants
 #'  \item \code{acrw}     : Average commercial root weight (kg/root)
-#'  \item \code{nrpp}     : Number of roots per plant
-#'  \item \code{ncrpp}    : Number of commercial roots per plant
-#'  \item \code{ypp}      : Yield per plant (kg/plant)
-#'  \item \code{vpp}      : Vine weight per plant (kg/plant)
+#'  \item \code{nrpp}     : Number of roots per harvested plant
+#'  \item \code{nrpsp}    : Number of roots per sowed plant
+#'  \item \code{ncrpp}    : Number of commercial roots per harvested plant
+#'  \item \code{ncrpsp}   : Number of commercial roots per sowed plant
+#'  \item \code{ypp}      : Yield per harvested plant (kg/plant)
+#'  \item \code{ypsp}     : Yield per sowed plant (kg/plant)
+#'  \item \code{vpp}      : Vine weight per harvested plant (kg/plant)
+#'  \item \code{vpsp}     : Vine weight per sowed plant (kg/plant)
 #'  \item \code{ci}       : Commercial index (\%)
 #'  \item \code{hi}       : Harvest index (\%)
 #'  \item \code{shi}      : Harvest sowing index (\%)
@@ -127,8 +131,8 @@ checknames <- function(fb, aqt = NULL) {
               "cooap2", "prot", "fe", "zn", "ca", "mg", "bc", "bc.cc", "tc", "star", "fruc",
               "gluc", "sucr", "malt", "tnr", "trw", "trw.d", "cytha", "cytha.aj", "rytha",
               "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha", "fytha.aj", "dmvy", "dmvy.aj",
-              "biom", "biom.aj", "dmbiom", "dmbiom.aj", "acrw", "nrpp", "ncrpp", "ypp",
-              "vpp", "ci", "hi", "shi", "rfr")
+              "biom", "biom.aj", "dmbiom", "dmbiom.aj", "acrw", "nrpp", "nrpsp", "ncrpp",
+              "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "ci", "hi", "shi", "rfr")
   
   colnames.valid <- c(plot.id, factors, traits, tolower(aqt))
     
