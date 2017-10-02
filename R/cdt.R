@@ -94,7 +94,7 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
     fb$ncrpp[fb$noph == 0] <- NA
   }
 
-  if (exists("nocr", fb) & exists("noph", fb)) {
+  if (exists("nocr", fb) & exists("nops", fb)) {
     if (exists("ncrpsp", fb))
       ow <- c(ow, "ncrpsp")
     fb$ncrpsp <- fb$nocr / fb$nops
