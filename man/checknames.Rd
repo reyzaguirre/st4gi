@@ -47,10 +47,9 @@ The data frame must use the following labels (lower or upper case):
  \item \code{nonc}     : Number of non commercial roots
  \item \code{crw}      : Commercial root weight (kg/plot)
  \item \code{ncrw}     : Non commercial root weight (kg/plot)
- \item \code{rfcp.cc}  : Root primary flesh color using CIP color charts
- \item \code{rfcs.cc}  : Root secondary flesh color using CIP color charts
  \item \code{scol}     : Storage root skin color (1-9)
  \item \code{fcol}     : Storage root flesh color (1-9)
+ \item \code{rfc.cc}   : Root flesh color using CIP color charts (1-30)
  \item \code{rfcp}     : Storage root primary flesh color (1-9)
  \item \code{rfcs}     : Storage root secondary flesh color (1-9)
  \item \code{rs}       : Root size (1-9)

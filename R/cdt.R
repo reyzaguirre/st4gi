@@ -349,10 +349,47 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
   if (exists("trw.d", fb) & exists("vw.d", fb)) {
     if (exists("rfr", fb))
       ow <- c(ow, "rfr")
-      fb$rfr <- fb$trw.d / fb$vw.d
-      fb$rfr[fb$vw.d == 0] <- NA
-    }
+    fb$rfr <- fb$trw.d / fb$vw.d
+    fb$rfr[fb$vw.d == 0] <- NA
+  }
 
+  # Betacarotene from color chart
+  
+  if (exists("rfc.cc", fb)) {
+    if (exists("bc.cc", fb))
+      ow <- c(ow, "bc.cc")
+    fb$bc_cc[fb$rfc.cc == "1"] <- 0.03
+    fb$bc_cc[fb$rfc.cc == "2"] <- 0
+    fb$bc_cc[fb$rfc.cc == "3"] <- 0.12
+    fb$bc_cc[fb$rfc.cc == "4"] <- 0.02
+    fb$bc_cc[fb$rfc.cc == "5"] <- 0
+    fb$bc_cc[fb$rfc.cc == "6"] <- 0.15
+    fb$bc_cc[fb$rfc.cc == "7"] <- 1.38
+    fb$bc_cc[fb$rfc.cc == "8"] <- 1.65
+    fb$bc_cc[fb$rfc.cc == "9"] <- 1.5
+    fb$bc_cc[fb$rfc.cc == "10"] <- 1.74
+    fb$bc_cc[fb$rfc.cc == "11"] <- 1.76
+    fb$bc_cc[fb$rfc.cc == "12"] <- 0.69
+    fb$bc_cc[fb$rfc.cc == "13"] <- 1.17
+    fb$bc_cc[fb$rfc.cc == "14"] <- 1.32
+    fb$bc_cc[fb$rfc.cc == "15"] <- 1.04
+    fb$bc_cc[fb$rfc.cc == "16"] <- 4.41
+    fb$bc_cc[fb$rfc.cc == "17"] <- 4.92
+    fb$bc_cc[fb$rfc.cc == "18"] <- 6.12
+    fb$bc_cc[fb$rfc.cc == "19"] <- 5.46
+    fb$bc_cc[fb$rfc.cc == "20"] <- 3.96
+    fb$bc_cc[fb$rfc.cc == "21"] <- 5.49
+    fb$bc_cc[fb$rfc.cc == "22"] <- 3.03
+    fb$bc_cc[fb$rfc.cc == "23"] <- 3.76
+    fb$bc_cc[fb$rfc.cc == "24"] <- 4.61
+    fb$bc_cc[fb$rfc.cc == "25"] <- 7.23
+    fb$bc_cc[fb$rfc.cc == "26"] <- 7.76
+    fb$bc_cc[fb$rfc.cc == "27"] <- 10.5
+    fb$bc_cc[fb$rfc.cc == "28"] <- 11.03
+    fb$bc_cc[fb$rfc.cc == "29"] <- 12.39
+    fb$bc_cc[fb$rfc.cc == "30"] <- 14.37
+  }
+  
   # Warning: Overwritten traits
   
   if (length(ow) > 0)
