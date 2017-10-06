@@ -337,13 +337,13 @@ cdt <- function(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
   if (exists("rytha", fb) & exists("fytha", fb) & exists("dm", fb) & exists("dmv", fb)) {
     if (exists("dmbiom", fb))
       ow <- c(ow, "dmbiom")
-    fb$dmbiom <- suma(fb$rytha * fb$dm, fb$fytha * fb$dmv)
+    fb$dmbiom <- suma(fb$rytha * fb$dm / 100, fb$fytha * fb$dmv / 100)
   }
   
   if (exists("rytha.aj", fb) & exists("fytha.aj", fb) & exists("dm", fb) & exists("dmv", fb)) {
     if (exists("dmbiom.aj", fb))
       ow <- c(ow, "dmbiom.aj")
-    fb$dmbiom.aj <- suma(fb$rytha.aj * fb$dm, fb$fytha.aj * fb$dmv)
+    fb$dmbiom.aj <- suma(fb$rytha.aj * fb$dm / 100, fb$fytha.aj * fb$dmv / 100)
   }
 
   if (exists("trw.d", fb) & exists("vw.d", fb)) {
