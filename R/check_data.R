@@ -246,54 +246,96 @@ check.pos <- function(row, col, rep, data) {
 
 check.design <- function(trait, A, B = NULL, rep, data) {
   
+  data[, rep] <- factor(data[, rep])
+  lr <- levels(data[, rep])
+
+  cat('------------------------------\n')
+  cat('Check design for trait', trait, '\n')
+  cat('------------------------------\n')
+  cat('\n')
+
   if (is.null(B)) {
+    
     lc <- check.rcbd(trait, A, rep, data)
-    cat('------------------------------\n')
-    cat('Check design for trait', trait, '\n')
-    cat('------------------------------\n')
-    cat('\n')
+  
     if (lc$c1 == 0) {
-      cat('There are genotypes without data \n')
+      lista <- apply(lc$tfreq, 1, sum)
+      lista <- names(lista[lista == 0])
+      cat('There are genotypes without data: \n', lista, '\n')
       cat('\n')
     }
+
     if (lc$c2 == 0) {
       cat('There is only one replication \n')
       cat('\n')
     }
+    
     if (lc$c3 == 0) {
-      cat('There are genotypes that appear more than once in a given replication \n')
+      tf <- lc$tfreq > 1
+      cat('There are genotypes that appear more than once in a given replication: \n')
+      for (i in 1:lc$nr) {
+        if (sum(tf[, i]) > 0) {
+          lista <- rownames(tf)[tf[, i]]
+          cat(paste('- Replication ', lr[i], ':', sep = ""), lista, '\n')
+        }
+      }
       cat('\n')
     }
+    
     if (lc$c4 == 0) {
       cat("There are missing values:", format(lc$pmis * 100, digits = 3), '%')
       cat('\n')
     }
+    
     if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1) {
       cat('OK \n')
       cat('\n')
     }
+    
   } else {
+    
+    data[, B] <- factor(data[, B])
+    le <- levels(data[, B])
+
     lc <- check.2f(trait, A, B, rep, data)
-    cat('------------------------------\n')
-    cat('Check design for trait', trait, '\n')
-    cat('------------------------------\n')
-    cat('\n')
+
     if (lc$c1 == 0) {
-      cat('There are genotypes without data in a given environment \n')
+      tf <- lc$tfreq == 0
+      cat('There are genotypes without data in a given environment: \n')
+      for (i in 1:lc$nb) {
+        if (sum(tf[, i]) > 0) {
+          lista <- rownames(tf)[tf[, i]]
+          cat(paste('- Environment ', le[i], ':', sep = ""), lista, '\n')
+        }
+      }
       cat('\n')
     }
+    
     if (lc$c2 == 0) {
       cat('There is only one replication \n')
       cat('\n')
     }
+    
     if (lc$c3 == 0) {
-      cat('There are genotypes that appear more than once in a given replication \n')
+      tf <- lc$tfreqr > 1
+      cat('There are genotypes that appear more than once in a given replication: \n')
+      for (i in 1:lc$nb) {
+        for (j in 1:lc$nr) {
+          if (sum(tf[, i, j]) > 0) {
+            lista <- rownames(tf)[tf[, i, j]]
+            cat(paste('- Environment ', le[i], ', replication ', lr[j], ':', sep = ""),
+                lista, '\n')
+          }
+        }
+      }
       cat('\n')
     }
+    
     if (lc$c4 == 0) {
       cat("There are missing values:", format(lc$pmis * 100, digits = 3), '%')
       cat('\n')
     }
+    
     if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1) {
       cat('OK \n')
       cat('\n')
