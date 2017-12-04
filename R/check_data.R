@@ -191,3 +191,112 @@ check.2f <- function(trait, A, B, rep, data) {
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        na = na, nb = nb, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
 }
+
+#' Check rows and columns
+#'
+#' This function checks that there is only one genotype in each row and column position.
+#' @param row Label for rows.
+#' @param col Label for columns.
+#' @param rep Label for replications.
+#' @param data The name of the data frame.
+#' @return For each replication, a list of row and column positions with more than
+#' one genotype.
+#' @author Raul Eyzaguirre.
+#' @export
+
+check.pos <- function(row, col, rep, data) {
+  
+  # Number of replications
+  
+  data[, rep] <- factor(data[, rep])
+  lr <- levels(data[, rep])
+  nr <- nlevels(data[, rep])
+  
+  # Check frequencies
+  
+  for (i in 1:nr) {
+    temp <- data[data$rep == lr[i], ]
+    ttt <- as.data.frame(table(temp$row, temp$col))
+    colnames(ttt) <- c('Row', 'Column', 'Freq')
+    dimt <- dim(ttt[ttt$Freq > 1, ])
+    cat('------------------------------\n')
+    cat('Replication', lr[i], '\n')
+    cat('------------------------------\n')
+    if (dimt[1] > 0) {
+      print(ttt[ttt$Freq > 1, ])
+      cat('\n')
+    } else {
+      cat('OK \n')
+      cat('\n')
+    }
+  }
+}
+
+#' Check design
+#'
+#' Check frequencies for designs with complete replications and one or two factors.
+#' @param trait The trait to analyze.
+#' @param A Factor A.
+#' @param B Factor B.
+#' @param rep The replications.
+#' @param data The name of the data frame.
+#' @return Information about the balance, missing values, and replications of the design.
+#' @author Raul Eyzaguirre.
+#' @export
+
+check.design <- function(trait, A, B = NULL, rep, data) {
+  
+  if (is.null(B)) {
+    lc <- check.rcbd(trait, A, rep, data)
+    cat('------------------------------\n')
+    cat('Check design for trait', trait, '\n')
+    cat('------------------------------\n')
+    cat('\n')
+    if (lc$c1 == 0) {
+      cat('There are genotypes without data \n')
+      cat('\n')
+    }
+    if (lc$c2 == 0) {
+      cat('There is only one replication \n')
+      cat('\n')
+    }
+    if (lc$c3 == 0) {
+      cat('There are genotypes that appear more than once in a given replication \n')
+      cat('\n')
+    }
+    if (lc$c4 == 0) {
+      cat("There are missing values:", format(lc$pmis * 100, digits = 3), '%')
+      cat('\n')
+    }
+    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1) {
+      cat('OK \n')
+      cat('\n')
+    }
+  } else {
+    lc <- check.2f(trait, A, B, rep, data)
+    cat('------------------------------\n')
+    cat('Check design for trait', trait, '\n')
+    cat('------------------------------\n')
+    cat('\n')
+    if (lc$c1 == 0) {
+      cat('There are genotypes without data in a given environment \n')
+      cat('\n')
+    }
+    if (lc$c2 == 0) {
+      cat('There is only one replication \n')
+      cat('\n')
+    }
+    if (lc$c3 == 0) {
+      cat('There are genotypes that appear more than once in a given replication \n')
+      cat('\n')
+    }
+    if (lc$c4 == 0) {
+      cat("There are missing values:", format(lc$pmis * 100, digits = 3), '%')
+      cat('\n')
+    }
+    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1) {
+      cat('OK \n')
+      cat('\n')
+    }    
+  }
+}
