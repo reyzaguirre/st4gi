@@ -236,15 +236,15 @@ check.pos <- function(row, col, rep, data) {
 #'
 #' Check frequencies for designs with complete replications and one or two factors.
 #' @param trait The trait to analyze.
-#' @param A Factor A.
-#' @param B Factor B.
+#' @param geno Genotypes.
+#' @param env Environments.
 #' @param rep The replications.
 #' @param data The name of the data frame.
 #' @return Information about the balance, missing values, and replications of the design.
 #' @author Raul Eyzaguirre.
 #' @export
 
-check.design <- function(trait, A, B = NULL, rep, data) {
+check.design <- function(trait, geno, env = NULL, rep, data) {
   
   data[, rep] <- factor(data[, rep])
   lr <- levels(data[, rep])
@@ -254,9 +254,9 @@ check.design <- function(trait, A, B = NULL, rep, data) {
   cat('------------------------------\n')
   cat('\n')
 
-  if (is.null(B)) {
+  if (is.null(env)) {
     
-    lc <- check.rcbd(trait, A, rep, data)
+    lc <- check.rcbd(trait, geno, rep, data)
   
     if (lc$c1 == 0) {
       lista <- apply(lc$tfreq, 1, sum)
@@ -294,10 +294,10 @@ check.design <- function(trait, A, B = NULL, rep, data) {
     
   } else {
     
-    data[, B] <- factor(data[, B])
-    le <- levels(data[, B])
+    data[, env] <- factor(data[, env])
+    le <- levels(data[, env])
 
-    lc <- check.2f(trait, A, B, rep, data)
+    lc <- check.2f(trait, geno, env, rep, data)
 
     if (lc$c1 == 0) {
       tf <- lc$tfreq == 0

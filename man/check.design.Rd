@@ -4,14 +4,14 @@
 \alias{check.design}
 \title{Check design}
 \usage{
-check.design(trait, A, B = NULL, rep, data)
+check.design(trait, geno, env = NULL, rep, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
-\item{A}{Factor A.}
+\item{geno}{Genotypes.}
 
-\item{B}{Factor B.}
+\item{env}{Environments.}
 
 \item{rep}{The replications.}
 
