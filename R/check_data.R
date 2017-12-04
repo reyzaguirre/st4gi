@@ -215,7 +215,7 @@ check.pos <- function(row, col, rep, data) {
   # Check frequencies
   
   for (i in 1:nr) {
-    temp <- data[data$rep == lr[i], ]
+    temp <- data[data[, rep] == lr[i], ]
     ttt <- as.data.frame(table(temp$row, temp$col))
     colnames(ttt) <- c('Row', 'Column', 'Freq')
     dimt <- dim(ttt[ttt$Freq > 1, ])
