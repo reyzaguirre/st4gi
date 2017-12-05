@@ -284,7 +284,7 @@ check.design <- function(trait, geno, env = NULL, rep, data) {
     }
     
     if (lc$c4 == 0) {
-      cat("There are missing values:", format(lc$pmis * 100, digits = 3), '%')
+      cat("There are missing values:", format(lc$pmis * 100, digits = 3), '% \n')
       cat('\n')
     }
     
@@ -333,7 +333,7 @@ check.design <- function(trait, geno, env = NULL, rep, data) {
     }
     
     if (lc$c4 == 0) {
-      cat("There are missing values:", format(lc$pmis * 100, digits = 3), '%')
+      cat("There are missing values:", format(lc$pmis * 100, digits = 3), '% \n')
       cat('\n')
     }
     
