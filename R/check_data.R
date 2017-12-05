@@ -223,6 +223,7 @@ check.pos <- function(row, col, rep, data) {
     cat('Replication', lr[i], '\n')
     cat('------------------------------\n')
     if (dimt[1] > 0) {
+      cat('More than one genotype in the same position: \n')
       print(ttt[ttt$Freq > 1, ])
       cat('\n')
     } else {
