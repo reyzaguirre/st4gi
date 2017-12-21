@@ -46,12 +46,14 @@ check.abd <- function(trait, treat, rep, data) {
   nmis.new <- sum(is.na(temp[, trait]))
   
   temp <- subset(data, data[, treat] %in% checks)
-  nmis.check <- sum(is.na(temp[, trait]))
-  
-  # Number of checks without data, and 1 and more data
-
   temp[, treat] <- as.factor(temp[, treat])
+  temp[, rep] <- as.factor(temp[, rep])
   temp <- subset(temp, !is.na(temp[, trait]))
+  tfreq <- table(temp[, treat], temp[, rep])
+  nmis.check <- sum(tfreq == 0)
+
+  # Number of checks without data, with 1 and more data
+
   tfreq <- data.frame(table(temp[, treat]))
   
   nt.check.0 <- sum(tfreq$Freq == 0)
@@ -108,11 +110,11 @@ check.rcbd <- function(trait, treat, rep, data) {
 
   # Check frequencies by treat
   
-  nmis <- sum(is.na(data[, trait]))
-  pmis <- mean(is.na(data[, trait]))
   subdata <- subset(data, is.na(data[, trait]) == 0)
   tfreq <- table(subdata[, treat], subdata[, rep])
-
+  nmis <- sum(tfreq == 0)
+  pmis <- mean(tfreq == 0)
+  
   # Controls
   
   c1 <- 1 # Check for zeros. Initial state no zeros
