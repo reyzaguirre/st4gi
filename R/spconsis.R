@@ -600,7 +600,7 @@ spc05 <- function(fb, f, ex, t1, tx) {
 # Outliers' detection
 spc06 <- function(fb, geno, env, rep, t1, out.mod, out.max, tx) {
   if (exists(t1, fb)) {
-    fb$id <- as.numeric(row.names(fb))
+    fb$id <- 1:dim(fb)[1]
     if (out.mod == "rcbd")
       model <- aov(fb[, t1] ~ geno + rep)
     if (out.mod == "met")
