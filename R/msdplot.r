@@ -39,25 +39,29 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
                     xlab = "groups", ylab = "", colors = c("orange", "orange", "black"),
                     pch = 4, lwd = 2, x.las = 1, jf = 0.1, dist = 0.1) {
 
-  # match arguments
+  # Match arguments
 
   sort.means <- match.arg(sort.means)
+  
+  # Delete missing values
 
+  data <- data[!is.na(data[, trait]), ]
+  
   # Groups as factor
   
   data[, groups] <- as.factor(data[, groups])
 
-  # means and standard deviations
+  # Means and standard deviations
 
   means <- tapply(data[, trait], data[, groups], mean, na.rm = TRUE)
   sdev <- tapply(data[, trait], data[, groups], sd, na.rm = TRUE)
 
   resu <- data.frame(means, sdev)
 
-  # compute confidence intervals
+  # Compute confidence intervals
 
   if (conf < 1) {
-    resu$n <- tapply(is.na(data[, trait]) == 0, data[, groups], sum)
+    resu$n <- table(data[, groups])
     resu$li <- resu$means - qt((1 + conf) / 2, resu$n - 1) * resu$sdev / sqrt(resu$n)
     resu$ls <- resu$means + qt((1 + conf) / 2, resu$n - 1) * resu$sdev / sqrt(resu$n)
     msg <- paste("Dotplot with means and ", conf * 100, "% confidence limits", sep = "")
@@ -85,8 +89,8 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
 
   # limits for plot
   
-  a <- min(resu$li)
-  b <- max(resu$ls)
+  a <- min(resu$li, na.rm = T)
+  b <- max(resu$ls, na.rm = T)
   
   for (i in 1:length(resu$means)) {
     subdata <- subset(data, data[, groups] == resu$orden[i])
