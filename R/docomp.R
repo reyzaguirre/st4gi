@@ -72,7 +72,7 @@ docomp <- function(do, traits, factors, addcol = NULL, data) {
     }
   }
   
-  # return data.frame with maxima
+  # return data.frame
     
   dataout
 }
