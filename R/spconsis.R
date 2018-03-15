@@ -142,9 +142,7 @@ spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
     do <- TRUE
   }
 
-  spc02(fb, temp, do, "rfc.cc", "- There are no roots but there is data for root flesh color using CIP color charts (rfc.cc):")
-  spc02(fb, temp, do, "rfcp", "- There are no roots but there is data for root primary flesh color (rfcp):")
-  spc02(fb, temp, do, "rfcs", "- There are no roots but there is data for root secondary flesh color (rfcs):")
+  spc02(fb, temp, do, "fcol.cc", "- There are no roots but there is data for root flesh color using RHS color charts (fcol.cc):")
   spc02(fb, temp, do, "scol", "- There are no roots but there is data for storage root skin color (scol):")
   spc02(fb, temp, do, "fcol", "- There are no roots but there is data for storage root flesh color (fcol):")
   spc02(fb, temp, do, "rs", "- There are no roots but there is data for root size (rs):")
@@ -220,9 +218,7 @@ spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
   spc04(fb, "lower", "ncrw", "- Out of range values for non commercial root weight (ncrw):")
   spc05(fb, f, "low", "ncrw", "- Extreme low values for non commercial root weight (ncrw):")
   spc05(fb, f, "high", "ncrw", "- Extreme high values for non commercial root weight (ncrw):")
-  spc03(fb, c(1:30, NA), "rfc.cc", "- Out of range values for root flesh color using CIP color charts (rfcp):")
-  spc03(fb, c(1:9, NA), "rfcp", "- Out of range values for storage root primary flesh color (rfcp):")
-  spc03(fb, c(1:9, NA), "rfcs", "- Out of range values for storage root secondary flesh color (rfcs):")
+  spc03(fb, c(1:30, NA), "fcol.cc", "- Out of range values for root flesh color using RHS color charts (fcol.cc):")
   spc03(fb, c(1:9, NA), "scol", "- Out of range values for storage root skin color (scol):")
   spc03(fb, c(1:9, NA), "fcol", "- Out of range values for storage root flesh color (fcol):")
   spc03(fb, c(1:9, NA), "rs", "- Out of range values for root size (rs):")

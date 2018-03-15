@@ -33,9 +33,7 @@
 #'  \item \code{ncrw}     : Non commercial root weight (kg/plot)
 #'  \item \code{scol}     : Storage root skin color (1-9)
 #'  \item \code{fcol}     : Storage root flesh color (1-9)
-#'  \item \code{rfc.cc}   : Root flesh color using CIP color charts (1-30)
-#'  \item \code{rfcp}     : Storage root primary flesh color (1-9)
-#'  \item \code{rfcs}     : Storage root secondary flesh color (1-9)
+#'  \item \code{fcol.cc}  : Root flesh color using RHS color charts (1-30)
 #'  \item \code{rs}       : Root size (1-9)
 #'  \item \code{rf}       : Root form (1-9)
 #'  \item \code{damr}     : Root defects (1-9)
@@ -122,12 +120,12 @@ checknames <- function(fb, aqt = NULL) {
   factors <- c("l", "loc", "y", "s", "g", "e", "env", "geno", "name", "r", "rep", "b", "block")
   
   traits <- c("nops", "nope", "noph", "vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv",
-              "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "rfcp.cc", "rfcs.cc", "scol",
-              "fcol", "rfc.cc", "rfcp", "rfcs", "rs", "rf", "damr", "rspr", "wed", "dmf",
-              "dmd", "dm", "dmvf", "dmvd", "dmv", "fraw", "fraw1", "suraw", "suraw1", "straw",
-              "straw1", "coof", "coof1", "coosu", "coosu1", "coost", "coost1", "coot", "coot1",
-              "cooap", "cooap1", "fraw2", "suraw2", "straw2", "coof2", "coosu2", "coost2",
-              "coot2", "cooap2", "prot", "fe", "zn", "ca", "mg", "bc", "bc.cc", "tc", "star",
+              "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "scol", "fcol", "fcol.cc",
+              "rs", "rf", "damr", "rspr", "wed", "dmf", "dmd", "dm", "dmvf", "dmvd",
+              "dmv", "fraw", "fraw1", "suraw", "suraw1", "straw", "straw1", "coof",
+              "coof1", "coosu", "coosu1", "coost", "coost1", "coot", "coot1", "cooap",
+              "cooap1", "fraw2", "suraw2", "straw2", "coof2", "coosu2", "coost2", "coot2",
+              "cooap2", "prot", "fe", "zn", "ca", "mg", "bc", "bc.cc", "tc", "star",
               "fruc", "gluc", "sucr", "malt", "tnr", "trw", "trw.d", "cytha", "cytha.aj",
               "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha", "fytha.aj", "dmvy",
               "dmvy.aj", "biom", "biom.aj", "dmbiom", "dmbiom.aj", "acrw", "nrpp", "nrpsp",
