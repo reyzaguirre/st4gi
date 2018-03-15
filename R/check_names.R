@@ -67,7 +67,7 @@
 #'  \item \code{ca}       : Calcium (mg/100g dry weight)
 #'  \item \code{mg}       : Magnesium (mg/100g dry weight)
 #'  \item \code{bc}       : Beta-carotene (mg/100g dry weight)
-#'  \item \code{bc.cc}    : Beta-carotene with color charts (mg/100g fresh weight)
+#'  \item \code{bc.cc}    : Beta-carotene with RHS color charts (mg/100g fresh weight)
 #'  \item \code{tc}       : Total carotenoids (mg/100g dry weight)
 #'  \item \code{star}     : Starch (\%)
 #'  \item \code{fruc}     : Fructose (\%)
