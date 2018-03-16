@@ -110,10 +110,10 @@
 #' traits with names not included in the list shown above.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' checknames(pjpz09)
+#' check.names(pjpz09)
 #' @export
 
-checknames <- function(fb, aqt = NULL) {
+check.names <- function(fb, aqt = NULL) {
   
   plot.id <- c("plot", "row", "col")
   

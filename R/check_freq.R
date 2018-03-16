@@ -1,4 +1,4 @@
-#' Check design
+#' Check frequencies
 #'
 #' Check frequencies for designs with complete replications and one or two factors.
 #' @param trait The trait to analyze.
@@ -10,7 +10,7 @@
 #' @author Raul Eyzaguirre.
 #' @export
 
-check.design <- function(trait, geno, env = NULL, rep, data) {
+check.freq <- function(trait, geno, env = NULL, rep, data) {
   
   data[, rep] <- factor(data[, rep])
   lr <- levels(data[, rep])

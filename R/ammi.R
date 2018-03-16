@@ -82,10 +82,10 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
     rms <- NULL
   }
 
-  # Run ammigxe
+  # Run ammi.gxe
 
-  ammigxe(int.mean, trait = trait, nr = lc$nr, rdf = rdf, rms = rms,
-          method = method, f = f)
+  ammi.gxe(int.mean, trait = trait, nr = lc$nr, rdf = rdf, rms = rms,
+           method = method, f = f)
 }
 
 #' AMMI or GGE with data from an interaction means matrix
@@ -120,17 +120,17 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
 #' int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
 #' 
 #' ## Run AMMI with GxE means matrix
-#' model.ammi <- ammigxe(int.mean, trait = "y")
+#' model.ammi <- ammi.gxe(int.mean, trait = "y")
 #' model.ammi
 #' 
 #' ## Run GGE with GxE means matrix
-#' model.gge <- ammigxe(int.mean, trait = "y", method = "gge")
+#' model.gge <- ammi.gxe(int.mean, trait = "y", method = "gge")
 #' model.gge
 #' @importFrom stats pf
 #' @export
 
-ammigxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
-                    method = c("ammi", "gge"), f = 0.5) {
+ammi.gxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
+                     method = c("ammi", "gge"), f = 0.5) {
 
   # match arguments
   
