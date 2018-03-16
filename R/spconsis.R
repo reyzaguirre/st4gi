@@ -10,8 +10,8 @@
 #' @param aqt Additional quantitative traits.
 #' @param width Number of columns for the output.
 #' @param file Logigal, if TRUE the output goes to a file with name output.txt.
-#' @details The data frame must use the labels (lower or upper case) listed in function \code{checknames}.
-#' See \code{?checknames} for details.
+#' @details The data frame must use the labels (lower or upper case) listed in function \code{check.names}.
+#' See \code{?check.names} for details.
 #' 
 #' Extreme low and high values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
@@ -37,7 +37,7 @@ spconsis <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
   
   out.mod = match.arg(out.mod)
   
-  fb <- checknames(fb, aqt)
+  fb <- check.names(fb, aqt)
   if (!is.null(aqt))
     aqt <- tolower(aqt)
 
