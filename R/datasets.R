@@ -1,9 +1,9 @@
-#' @name alpha01data
+#' @name a01data
 #' @title Data for an alpha (0,1) design
 #' @docType data
 #' @aliases alpha01data
 #' @description This data set contains data for al alpha (0,1) design.
-#' @usage alpha01data
+#' @usage a01data
 #' @format A data frame.
 #' @source International Potato Center, sweetpotato experimental data.
 NULL
