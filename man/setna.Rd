@@ -4,14 +4,10 @@
 \alias{setna}
 \title{Set values to NA or zero.}
 \usage{
-setna(traits, vines = NULL, roots = NULL, fb)
+setna(traits, fb)
 }
 \arguments{
 \item{traits}{List of traits.}
-
-\item{vines}{Trait for vines.}
-
-\item{roots}{Trait for roots.}
 
 \item{fb}{The name of the fieldbook data frame.}
 }
@@ -24,17 +20,18 @@ Set values to NA or zero for selected traits.
 \details{
 This function sets values to NA or zero with the following rules:
 \itemize{
- \item If \code{noph = 0} then all traits are set to \code{NA}.
- \item If \code{noph > 0} then all traits with \code{NA} are set to zero.
- \item If \code{is.na(noph)} and \code{vines = 0} and \code{roots = 0} then set
- \code{noph} to zero and all traits to \code{NA}.
- \item If \code{is.na(noph)} and \code{vines > 0} or \code{roots > 0} then set
- all traits to zero.
+ \item If all traits are zero or NA, then all traits are set to NA, and if \code{noph}
+ exists and it is zero or NA, then it is set to zero.
+ \item If there is at least one trait with data and \code{noph} is zero, then
+ it is set to NA.
  }
 }
 \examples{
-traits <- c('nocr', 'nonc', 'crw', 'ncrw', 'trw', 'vw')
-setna(traits, 'vw', 'trw', pjpz09)
+ddd <- data.frame(noph = c(2, 0, 0, 2, 1),
+                  trt1 = c(1, 0, 0, 0, NA),
+                  trt2 = c(3, 0, 1, NA, 2),
+                  trt3 = c(4, 0, 5, 0, 0))
+setna(c('trt1', 'trt2', 'trt3'), ddd)
 }
 \author{
 Raul Eyzaguirre

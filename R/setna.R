@@ -2,70 +2,44 @@
 #'
 #' Set values to NA or zero for selected traits.
 #' @param traits List of traits.
-#' @param vines Trait for vines.
-#' @param roots Trait for roots. 
 #' @param fb The name of the fieldbook data frame.
 #' @author Raul Eyzaguirre
 #' @details This function sets values to NA or zero with the following rules:
 #' \itemize{
-#'  \item If \code{noph = 0} then all traits are set to \code{NA}.
-#'  \item If \code{noph > 0} then all traits with \code{NA} are set to zero.
-#'  \item If \code{is.na(noph)} and \code{vines = 0} and \code{roots = 0} then set
-#'  \code{noph} to zero and all traits to \code{NA}.
-#'  \item If \code{is.na(noph)} and \code{vines > 0} or \code{roots > 0} then set
-#'  all traits to zero.
+#'  \item If all traits are zero or NA, then all traits are set to NA, and if \code{noph}
+#'  exists and it is zero or NA, then it is set to zero.
+#'  \item If there is at least one trait with data and \code{noph} is zero, then
+#'  it is set to NA.
 #'  }
 #' @return It returns a data frame.
 #' @examples
-#' traits <- c('nocr', 'nonc', 'crw', 'ncrw', 'trw', 'vw')
-#' setna(traits, 'vw', 'trw', pjpz09)
+#' ddd <- data.frame(noph = c(2, 0, 0, 2, 1),
+#'                   trt1 = c(1, 0, 0, 0, NA),
+#'                   trt2 = c(3, 0, 1, NA, 2),
+#'                   trt3 = c(4, 0, 5, 0, 0))
+#' setna(c('trt1', 'trt2', 'trt3'), ddd)
 #' @export
 
-setna <- function(traits, vines = NULL, roots = NULL, fb) {
+setna <- function(traits, fb) {
   
   # Number of traits
   
   nt <- length(traits)
 
-  # Check there is noph on data frame
+  ## 1. All traits = 0 or NA
   
-  if (!exists("noph", fb))
-    stop("Number of plants harvested, noph, is missing.")
-  
-  # 1. noph = 0
-  
-  cond <- fb[, 'noph'] == 0 & !is.na(fb[, 'noph'])
+  cond <- apply(fb[, traits] == 0 | is.na(fb[, traits]), 1, sum) == nt
+
   fb[cond, traits] <- NA
   
-  # 2. noph > 0
+  if (exists('noph', fb))
+    fb[cond & is.na(fb[, 'noph']), 'noph'] <- 0
   
-  for (i in 1:nt) {
-    cond <- fb[, 'noph'] > 0 & !is.na(fb[, 'noph']) & is.na(fb[, traits[i]])
-    fb[cond, traits[i]] <- 0
-  }
+  ## 2. At least one trait with data
   
-  # 3. is.na(noph)
+  if (exists('noph', fb))
+    fb[!cond & fb[, 'noph'] == 0 & !is.na(fb[, 'noph']), 'noph'] <- NA
   
-  if (!is.null(vines) & !is.null(roots)) {
-    
-    c1 <- is.na(fb[, 'noph'])
-
-    # 3.1. no vines no roots
-    
-    c2 <- fb[, vines] == 0 | is.na(fb[, vines])
-    c3 <- fb[, roots] == 0 | is.na(fb[, roots])
-    fb[c1 & c2 & c3, 'noph'] <- 0
-    fb[c1 & c2 & c3, traits] <- NA
-    
-    # 3.2. vines or roots
-
-    c2 <- fb[, vines] > 0 & !is.na(fb[, vines])
-    c3 <- fb[, roots] > 0 & !is.na(fb[, roots])
-    for (i in 1:nt)
-      fb[c1 & (c2 | c3) & is.na(fb[, traits[i]]), traits[i]] <- 0
-    
-  }
-    
   # return data.frame
     
   fb
