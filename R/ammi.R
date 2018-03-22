@@ -132,7 +132,7 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
 ammi.gxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
                      method = c("ammi", "gge"), f = 0.5) {
 
-  # match arguments
+  # Match arguments
   
   method <- match.arg(method)
 
