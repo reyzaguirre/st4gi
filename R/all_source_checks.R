@@ -1,3 +1,55 @@
+#' Check rows and columns
+#'
+#' This function checks that there is only one genotype in each row and column position.
+#' @param row Label for rows.
+#' @param col Label for columns.
+#' @param rep Label for replications.
+#' @param data The name of the data frame.
+#' @return For each replication, the number (\code{nplot}) and list (\code{lplot})
+#' of plots (unique row and column position) with more than one genotype.
+#' @author Raul Eyzaguirre.
+#' @export
+
+check.rc <- function(row, col, rep = NULL, data) {
+  
+  # Number of replications
+  
+  if (is.null(rep)) {
+    data[, "rep"] <- 1
+    rep <- "rep"
+  }
+  data[, rep] <- factor(data[, rep])
+  lr <- levels(data[, rep])
+  nr <- nlevels(data[, rep])
+  
+  # Check row and column
+  
+  nplot <- NULL
+  lplot <- list()
+  
+  for (i in 1:nr) {
+    
+    # Compute frequencies
+    
+    temp <- data[data[, rep] == lr[i], ]
+    ttt <- as.data.frame(table(temp[, row], temp[, col]))
+    colnames(ttt) <- c('Row', 'Column', 'Freq')
+    
+    # Save number of plots with problems
+    
+    nplot[i] <- dim(ttt[ttt$Freq > 1, ])[1]
+    
+    # Save list of plots with problems if any
+    
+    if (nplot[i] > 0)
+      lplot[[i]] <- ttt[ttt$Freq > 1, ] 
+  }
+  
+  # Return
+  
+  list(nplot = nplot, lplot = lplot, lr = lr, nr = nr)
+}
+
 #' Check data for an ABD
 #'
 #' This function checks the frequencies of genotypes in an ABD.
@@ -110,7 +162,7 @@ check.rcbd <- function(trait, treat, rep, data) {
 
   # Check frequencies by treat
   
-  subdata <- subset(data, is.na(data[, trait]) == 0)
+  subdata <- subset(data, !is.na(data[, trait]))
   tfreq <- table(subdata[, treat], subdata[, rep])
   nmis <- sum(tfreq == 0)
   pmis <- mean(tfreq == 0)
@@ -172,7 +224,7 @@ check.2f <- function(trait, A, B, rep, data) {
   
   nmis <- sum(is.na(data[, trait]))
   pmis <- mean(is.na(data[, trait]))
-  subdata <- subset(data, is.na(data[, trait]) == 0)
+  subdata <- subset(data, !is.na(data[, trait]))
   tfreq <- table(subdata[, A], subdata[, B])
   tfreqr <- table(subdata[, A], subdata[, B], subdata[, rep])
   
@@ -192,4 +244,113 @@ check.2f <- function(trait, A, B, rep, data) {
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        na = na, nb = nb, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
+}
+
+#' Check data for a Wescott design
+#'
+#' This function checks the grid of checks on the Wescott design and
+#' the number of missing values.
+#' @param trait The trait to analyze.
+#' @param geno The genotypes.
+#' @param ch1 Name of check 1.
+#' @param ch2 Name of check 2.
+#' @param row Label for rows.
+#' @param col Label for columns.
+#' @param ncb Number of columns between two check columns.
+#' @param data The name of the data frame.
+#' @return Five control values (\code{c1}, \code{c2}, \code{c3}, \code{c4}, \code{c5})
+#' for the grid of checks, the number of missing values for checks (\code{nmis.check})
+#' and genotypes \code{nmis}, and the proportion of missing values for checks
+#' (\code{pmis.check}) and genotypes (\code{pmis}).
+#' @author Raul Eyzaguirre.
+#' @details 
+#' @export
+
+check.wd <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
+  
+  # Checks
+  
+  checks <- c(ch1, ch2)
+  
+  # Numbers and characters
+  
+  data[, row] <- as.numeric(data[, row])
+  data[, col] <- as.numeric(data[, col])
+  data[, geno] <- as.character(data[, geno])
+  
+  # Number of rows and columns
+  
+  nr.min <- min(data[, row])
+  nc.min <- min(data[, col])
+  
+  nc.max <- max(data[, col])
+  
+  # Controls
+  
+  c1 <- 0 # All column checks with checks
+  c2 <- 0 # Last column with checks
+  c3 <- 0 # All column genotypes with genotypes
+  c4 <- 0 # Alternating checks without in correlative row order
+  c5 <- 0 # All genotypes with checks to the left and right
+
+  # Columns with checks
+  
+  cch <- seq(nc.min, nc.max, ncb + 1)
+  
+  # Check columns with checks
+  
+  if (sum(!(data[data[, col] %in% cch, geno] %in% checks)) > 0)
+    c1 <- 1
+  
+  # Last column with checks
+  
+  if (max(cch) != nc.max)
+    c2 <- 1
+  
+  # Check columns with genotypes
+  
+  if (sum(data[!(data[, col] %in% cch), geno] %in% checks) > 0)
+    c3 <- 1
+  
+  # Alternating checks
+  
+  for (i in cch)
+    for (j in (min(data[data[, col] == i, row]) + 1):max(data[data[, col] == i, row]))
+      if (data[data[, col] == i & data[, row] == j, geno] == data[data[, col] == i & data[, row] == j - 1, geno])
+        c4 <- 1
+  
+  for (i in 2:length(cch))
+    if (data[data[, col] == cch[i] & data[, row] == nr.min, geno] == data[data[, col] == cch[i - 1] & data[, row] == nr.min, geno])
+      c4 <- 1
+  
+  # All genotypes must have one check to the left and one to the right
+  
+  for(i in 1:dim(data)[1]) {
+    rows <- data[i, row]
+    columns <- (data[i, col] - ncb):(data[i, col] + ncb)
+    temp <- data[data[, row] == rows & data[, col] %in% columns, geno]
+    if (sum(temp %in% checks) == 0)
+      c5 <- 1
+  }
+
+  # Number of missing values for checks
+  
+  temp <- data[data[, col] %in% cch, ]
+  total.checks <- dim(temp)[1]
+  temp <- temp[is.na(temp[, trait]), ]
+  nmis.checks <- dim(temp)[1]
+  pmis.checks <- nmis.checks / total.checks
+  
+  # Number of missing values for genotypes
+  
+  temp <- data[!(data[, col] %in% cch), ]
+  total.geno <- dim(temp)[1]
+  temp <- temp[is.na(temp[, trait]), ]
+  nmis <- dim(temp)[1]
+  pmis <- nmis / total.geno
+  
+  # Return
+  
+  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, c5 = c5, nmis = nmis, pmis = pmis,
+       nmis.check = nmis.check, pmis.check = pmis.check)
 }
