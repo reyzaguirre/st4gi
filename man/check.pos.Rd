@@ -2,9 +2,9 @@
 % Please edit documentation in R/check_pos.R
 \name{check.pos}
 \alias{check.pos}
-\title{Check rows and columns}
+\title{Check row and column positions}
 \usage{
-check.pos(row, col, rep = NULL, data)
+check.pos(row, col, rep, data)
 }
 \arguments{
 \item{row}{Label for rows.}
@@ -16,8 +16,8 @@ check.pos(row, col, rep = NULL, data)
 \item{data}{The name of the data frame.}
 }
 \value{
-For each replication, a list of row and column positions with more than
-one genotype.
+For each replication a list of plots (unique row and column position)
+with more than one genotype.
 }
 \description{
 This function checks that there is only one genotype in each row and column position.
