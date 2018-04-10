@@ -8,10 +8,8 @@
 #' @param out.mod Statistical model for outliers' detection. See details.
 #' @param out.max Threshold for outliers' detection.
 #' @param aqt Additional quantitative traits.
-#' @param width Number of columns for the output.
-#' @param file Logigal, if TRUE the output goes to a file with name output.txt.
-#' @details The data frame must use the labels (lower or upper case) listed in function \code{check.names}.
-#' See \code{?check.names} for details.
+#' @details The data frame must use the labels (lower or upper case) listed in function
+#' \code{check.names}. See \code{?check.names} for details.
 #' 
 #' Extreme low and high values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
@@ -21,9 +19,7 @@
 #' Options are \code{'rcbd'} and \code{'met'} for a randomized complete block design
 #' and a multi environment trial with RCBD in each environment. By default the threshold
 #' value is \code{out.max = 4}.
-#' @return If \code{file = TRUE} it returns a file with name checks.txt with a list of
-#' all rows with some kind of inconsistency and all rows with outliers. If \code{file = FALSE}
-#' the output is shown in the R console.
+#' @return It returns all rows with some kind of inconsistency or outliers.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' check.data(pjpz09)
@@ -31,17 +27,15 @@
 #' @export
 
 check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
-                       out.max = 4, aqt = NULL, width = 240, file = FALSE) {
-
-  options(width = width)
+                       out.max = 4, aqt = NULL) {
   
   out.mod = match.arg(out.mod)
+  
+  # Check names
   
   fb <- check.names(fb, aqt)
   if (!is.null(aqt))
     aqt <- tolower(aqt)
-
-  if (file == TRUE) sink(paste(getwd(), "/checks.txt", sep = ""))
 
   # Inconsistencies for nops > nope > noph > nopr.
 
@@ -530,11 +524,10 @@ check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
         sp6(fb, geno, env, rep, aqt[i], out.mod, out.max, paste("- Outlilers for (", aqt[i], "):", sep = ""))
     
   }
-  
-  if (file == TRUE) sink()
 }
 
-# Print results
+# Print results function
+
 output <- function(fb, cond, tx) {
   if (sum(cond, na.rm = TRUE) > 0) {
     cat("\n", tx, "\n", sep = "")
@@ -543,6 +536,7 @@ output <- function(fb, cond, tx) {
 }
 
 # Two traits conditions
+
 sp1 <- function(fb, type, t1, t2, tx) {
   if (exists(t1, fb) & exists(t2, fb)) {
     if (type == 1)
@@ -556,6 +550,7 @@ sp1 <- function(fb, type, t1, t2, tx) {
 }
 
 # Roots and dependencies
+
 sp2 <- function(fb, temp, do, t1, tx) {
   if (exists(t1, fb) & do == TRUE) {
     cond <- (temp == FALSE) & (fb[, t1] > 0)
@@ -564,6 +559,7 @@ sp2 <- function(fb, temp, do, t1, tx) {
 }
 
 # Detect out of discrete range
+
 sp3 <- function(fb, vv, t1, tx) {
   if (exists(t1, fb)) {
     cond <- !(fb[, t1] %in% vv)
@@ -572,6 +568,7 @@ sp3 <- function(fb, vv, t1, tx) {
 }
 
 # Detect out of continous range
+
 sp4 <- function(fb, ex, t1, tx) { 
   if (exists(t1, fb)) {
     if (ex == "lower")
@@ -583,6 +580,7 @@ sp4 <- function(fb, ex, t1, tx) {
 }
 
 # Extreme values
+
 sp5 <- function(fb, f, ex, t1, tx) { 
   if (exists(t1, fb)) {
     if (ex == "low")
@@ -594,6 +592,7 @@ sp5 <- function(fb, f, ex, t1, tx) {
 }
 
 # Outliers' detection
+
 sp6 <- function(fb, geno, env, rep, t1, out.mod, out.max, tx) {
   if (exists(t1, fb)) {
     fb$id <- 1:dim(fb)[1]
