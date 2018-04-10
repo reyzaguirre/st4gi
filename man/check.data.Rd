@@ -5,7 +5,7 @@
 \title{Check consistency for sweetpotato experimental data}
 \usage{
 check.data(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
-  aqt = NULL, width = 240, file = FALSE)
+  aqt = NULL)
 }
 \arguments{
 \item{fb}{The name of the fieldbook data frame.}
@@ -17,15 +17,9 @@ check.data(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
 \item{out.max}{Threshold for outliers' detection.}
 
 \item{aqt}{Additional quantitative traits.}
-
-\item{width}{Number of columns for the output.}
-
-\item{file}{Logigal, if TRUE the output goes to a file with name output.txt.}
 }
 \value{
-If \code{file = TRUE} it returns a file with name checks.txt with a list of
-all rows with some kind of inconsistency and all rows with outliers. If \code{file = FALSE}
-the output is shown in the R console.
+It returns all rows with some kind of inconsistency or outliers.
 }
 \description{
 Set of rules to check for consistency of sweetpotato experimental data.
@@ -33,8 +27,8 @@ Data labels must be defined as specified in the PROCEDURES FOR THE EVALUATION
 AND ANALYSIS OF SWEETPOTATO TRIALS document.
 }
 \details{
-The data frame must use the labels (lower or upper case) listed in function \code{check.names}.
-See \code{?check.names} for details.
+The data frame must use the labels (lower or upper case) listed in function
+\code{check.names}. See \code{?check.names} for details.
 
 Extreme low and high values are detected using the interquartile range.
 The rule is to detect any value out of the interval 
