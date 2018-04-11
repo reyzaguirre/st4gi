@@ -4,7 +4,7 @@
 \alias{aj.wd}
 \title{Adjust values with a grid of checks}
 \usage{
-aj.wd(trait, geno, ch1, ch2, row, col, ncb, data)
+aj.wd(trait, geno, ch1, ch2, row, col, ncb, method = 1, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -21,6 +21,8 @@ aj.wd(trait, geno, ch1, ch2, row, col, ncb, data)
 
 \item{ncb}{Number of columns between two check columns.}
 
+\item{method}{The method to fit the values. See details.}
+
 \item{data}{The name of the data frame.}
 }
 \value{
@@ -32,7 +34,8 @@ the method described on Wescott (1981) with a grid of checks.
 }
 \details{
 The values of the selected \code{trait} are adjusted following different
-methods.
+methods. For \code{method = 1} each value is adjusted with the mean of the checks
+located to the left and right.
 }
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.

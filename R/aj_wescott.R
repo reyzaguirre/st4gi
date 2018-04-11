@@ -8,11 +8,13 @@
 #' @param ch2 Name of check 2.
 #' @param row Label for rows.
 #' @param col Label for columns.
-#' @param ncb Number of columns between two check columns. 
+#' @param ncb Number of columns between two check columns.
+#' @param method The method to fit the values. See details.
 #' @param data The name of the data frame.
 #' @author Raul Eyzaguirre.
 #' @details The values of the selected \code{trait} are adjusted following different
-#' methods. 
+#' methods. For \code{method = 1} each value is adjusted with the mean of the checks
+#' located to the left and right.
 #' @return It returns the adjusted values.
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
@@ -20,7 +22,7 @@
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
+aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, data) {
   
   # Error messages
   
@@ -46,14 +48,14 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   if (out$c5 == 1)
     stop("There are plots with genotypes without a check plot to the left or to the right.")
   
-  # Checks
+  # Save column names
   
-  checks <- c(ch1, ch2)
-
+  col.names <- colnames(data)
+    
   # Get a copy of trait for the adjusted values
   
-  trait_aj <- paste(trait, 'aj', sep = '_') 
-  data[, trait_aj ] <- data[, trait]
+  trait.aj <- paste(trait, 'aj', sep = '.') 
+  data[, trait.aj] <- data[, trait]
 
   # Compute means for checks
   
@@ -62,37 +64,75 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
   # Center check values
   
-  data[data[, geno] == ch1, trait_aj] <- data[data[, geno] == ch1, trait_aj] - ch1.mean
-  data[data[, geno] == ch2, trait_aj] <- data[data[, geno] == ch2, trait_aj] - ch2.mean
+  data[data[, geno] == ch1, trait.aj] <- data[data[, geno] == ch1, trait.aj] - ch1.mean
+  data[data[, geno] == ch2, trait.aj] <- data[data[, geno] == ch2, trait.aj] - ch2.mean
   
   # Replace missing values with 0 (this is the centered mean)
   
-  data[data[, geno] %in% checks & is.na(data[, trait_aj]), trait_aj] <- 0  
+  data[data[, geno] %in% c(ch1, ch2) & is.na(data[, trait.aj]), trait.aj] <- 0
   
   # Create columns for check centered values
-
+  
   data[, ch1] <- NA
   data[, ch2] <- NA
+
+  # Adjust values for method 1
   
-  # Arrange check values properly
-  
-  for(i in 1:dim(data)[1]) {
-    rows <- data[i, row]
-    columns <- (data[i, col] - ncb):(data[i, col] + ncb)
-    temp <- data[data[, row] == rows & data[, col] %in% columns, c(geno, trait_aj)]
-    temp <- temp[temp[, geno] %in% checks, ]
-    if (dim(temp)[1] == 2) {
-      data[i, ch1] <- temp[temp[, geno] == ch1, trait_aj]
-      data[i, ch2] <- temp[temp[, geno] == ch2, trait_aj]
+  if (method == 1) {
+
+    # Arrange check values properly
+    
+    for(i in 1:dim(data)[1]) {
+      geno.row <- data[i, row]
+      columns <- (data[i, col] - ncb):(data[i, col] + ncb)
+      temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj)]
+      if (dim(temp)[1] == 2) {
+        data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
+        data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
+      }
     }
+    
+    # Adjust values with the mean of the centered check values
+    
+    data[, trait.aj] <- data[, trait.aj] - (data[, ch1] + data[, ch2]) / 2
+    
   }
   
-  # Adjust values with the mean of the centered check values
+  # Adjust values for method 2
   
-  data[, trait_aj] <- data[, trait_aj] - (data[, ch1] + data[, ch2]) / 2
+  if (method == 2) {
+    
+    # Create columns for weigths
+
+    ch1.w <- paste(ch1, 'w', sep = '.')
+    data[, ch1.w] <- NA
+    ch2.w <- paste(ch2, 'w', sep = '.')
+    data[, ch2.w] <- NA
+    
+    # Arrange check values properly
+    
+    for(i in 1:dim(data)[1]) {
+      geno.row <- data[i, row]
+      geno.col <- data[i, col]
+      columns <- (geno.col - ncb):(geno.col + ncb)
+      temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+      if (dim(temp)[1] == 2) {
+        data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
+        data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
+        data[i, ch1.w] <- ncb + 1 - abs(temp[temp[, geno] == ch1, col] - geno.col)
+        data[i, ch2.w] <- ncb + 1 - abs(temp[temp[, geno] == ch2, col] - geno.col)        
+      }
+    }
+    
+    # Adjust values with the linear interpolation of the centered check values
+    
+    data[, trait.aj] <- data[, trait.aj] - (data[, ch1] * data[, ch1.w] + data[, ch2] * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+    
+  }
   
   # Return
   
-  data[, !(colnames(data) %in% checks)]
-
+  data[, c(col.names, trait.aj)]
+  
 }
+
