@@ -263,7 +263,8 @@ check.2f <- function(trait, A, B, rep, data) {
 #' and genotypes \code{nmis}, and the proportion of missing values for checks
 #' (\code{pmis.check}) and genotypes (\code{pmis}).
 #' @author Raul Eyzaguirre.
-#' @details 
+#' @details This function checks the grid of checks for the Wescoot design anc
+#' calculates the number of missing values.
 #' @export
 
 check.wd <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
@@ -336,10 +337,10 @@ check.wd <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   # Number of missing values for checks
   
   temp <- data[data[, col] %in% cch, ]
-  total.checks <- dim(temp)[1]
+  total.check <- dim(temp)[1]
   temp <- temp[is.na(temp[, trait]), ]
-  nmis.checks <- dim(temp)[1]
-  pmis.checks <- nmis.checks / total.checks
+  nmis.check <- dim(temp)[1]
+  pmis.check <- nmis.check / total.check
   
   # Number of missing values for genotypes
   

@@ -33,6 +33,10 @@ and genotypes \code{nmis}, and the proportion of missing values for checks
 This function checks the grid of checks on the Wescott design and
 the number of missing values.
 }
+\details{
+This function checks the grid of checks for the Wescoot design anc
+calculates the number of missing values.
+}
 \author{
 Raul Eyzaguirre.
 }
