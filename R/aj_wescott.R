@@ -132,7 +132,7 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, data) {
   
   # Return
   
-  data[, c(col.names, trait.aj)]
+  data[, unique(c(col.names, trait.aj))]
   
 }
 
