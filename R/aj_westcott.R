@@ -10,11 +10,17 @@
 #' @param col Label for columns.
 #' @param ncb Number of columns between two check columns.
 #' @param method The method to fit the values. See details.
+#' @param w The weight from 0 to 1 given to the check values for the adjustment. See details.
 #' @param data The name of the data frame.
 #' @author Raul Eyzaguirre.
 #' @details The values of the selected \code{trait} are adjusted following different
 #' methods. For \code{method = 1} each value is adjusted with the mean of the checks
-#' located to the left and right.
+#' located to the left and right. For \code{method = 2} each value is adjusted with an
+#' interpolating line drawn between the two checks, so the closer check gets more weight.
+#' 
+#' \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
+#' values are adjusted in the same proportion that the checks vary around the field. For
+#' values lower than 1 the values are adjusted based on that proportion over the checks variation.
 #' @return It returns the adjusted values.
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
@@ -22,7 +28,7 @@
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, data) {
+aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, data) {
   
   # Error messages
   
@@ -62,10 +68,10 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, data) {
   ch1.mean <- mean(data[data[, geno] == ch1, trait], na.rm = TRUE)
   ch2.mean <- mean(data[data[, geno] == ch2, trait], na.rm = TRUE)
   
-  # Center check values
+  # Center check values and compute %
   
-  data[data[, geno] == ch1, trait.aj] <- data[data[, geno] == ch1, trait.aj] - ch1.mean
-  data[data[, geno] == ch2, trait.aj] <- data[data[, geno] == ch2, trait.aj] - ch2.mean
+  data[data[, geno] == ch1, trait.aj] <- (data[data[, geno] == ch1, trait.aj] - ch1.mean) / ch1.mean * w
+  data[data[, geno] == ch2, trait.aj] <- (data[data[, geno] == ch2, trait.aj] - ch2.mean) / ch2.mean * w  
   
   # Replace missing values with 0 (this is the centered mean)
   
@@ -94,7 +100,7 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, data) {
     
     # Adjust values with the mean of the centered check values
     
-    data[, trait.aj] <- data[, trait.aj] - (data[, ch1] + data[, ch2]) / 2
+    data[, trait.aj] <- data[, trait.aj] * (1 - (data[, ch1] + data[, ch2]) / 2)
     
   }
   
@@ -126,7 +132,7 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, data) {
     
     # Adjust values with the linear interpolation of the centered check values
     
-    data[, trait.aj] <- data[, trait.aj] - (data[, ch1] * data[, ch1.w] + data[, ch2] * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+    data[, trait.aj] <- data[, trait.aj] * (1 - (data[, ch1] * data[, ch1.w] + data[, ch2] * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w]))
     
   }
   
@@ -135,4 +141,3 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, data) {
   data[, unique(c(col.names, trait.aj))]
   
 }
-
