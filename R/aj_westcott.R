@@ -1,7 +1,7 @@
 #' Adjust values with a grid of checks
 #'
 #' This function adjust the observed values of an experiment planted following
-#' the method described on Wescott (1981) with a grid of checks.
+#' the method described on Westcott (1981) with a grid of checks.
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
 #' @param ch1 Name of check 1.
