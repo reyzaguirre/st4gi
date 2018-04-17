@@ -17,6 +17,8 @@
 #' methods. For \code{method = 1} each value is adjusted with the mean of the checks
 #' located to the left and right. For \code{method = 2} each value is adjusted with an
 #' interpolating line drawn between the two checks, so the closer check gets more weight.
+#' For \code{method = 3} a surface is fitted using the the checks to the left and right, and
+#' the two checks on the previous and next row.
 #' 
 #' \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
 #' values are adjusted in the same proportion that the checks vary around the field. For
@@ -71,7 +73,7 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, dat
   # Center check values and compute %
   
   data[data[, geno] == ch1, trait.aj] <- (data[data[, geno] == ch1, trait.aj] - ch1.mean) / ch1.mean * w
-  data[data[, geno] == ch2, trait.aj] <- (data[data[, geno] == ch2, trait.aj] - ch2.mean) / ch2.mean * w  
+  data[data[, geno] == ch2, trait.aj] <- (data[data[, geno] == ch2, trait.aj] - ch2.mean) / ch2.mean * w
   
   # Replace missing values with 0 (this is the centered mean)
   
@@ -133,6 +135,78 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, dat
     # Adjust values with the linear interpolation of the centered check values
     
     data[, trait.aj] <- data[, trait.aj] * (1 - (data[, ch1] * data[, ch1.w] + data[, ch2] * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w]))
+    
+  }
+  
+  # Adjust values for method 3
+  
+  if (method == 3) {
+    
+    # Create columns for prior and posterior check centered values
+    
+    ch1.pri <- paste(ch1, 'pri', sep = '.')
+    data[, ch1.pri] <- NA
+    ch1.pos <- paste(ch1, 'pos', sep = '.')
+    data[, ch1.pos] <- NA
+    ch2.pri <- paste(ch2, 'pri', sep = '.')
+    data[, ch2.pri] <- NA
+    ch2.pos <- paste(ch2, 'pos', sep = '.')
+    data[, ch2.pos] <- NA
+    
+    # Create columns for weigths
+    
+    ch1.w <- paste(ch1, 'w', sep = '.')
+    data[, ch1.w] <- NA
+    ch2.w <- paste(ch2, 'w', sep = '.')
+    data[, ch2.w] <- NA
+    
+    # Arrange check values properly
+    
+    for(i in 1:dim(data)[1]) {
+      
+      geno.row <- data[i, row]
+      geno.col <- data[i, col]
+      columns <- (geno.col - ncb):(geno.col + ncb)
+      
+      temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+      
+      if (dim(temp)[1] == 2) {
+        
+        data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
+        data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
+        
+        temp.pri <- data[data[, row] == geno.row - 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+        
+        if (dim(temp.pri)[1] == 2) {
+          data[i, ch1.pri] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
+          data[i, ch2.pri] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
+        }
+        
+        temp.pos <- data[data[, row] == geno.row + 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+        
+        if (dim(temp.pos)[1] == 2) {
+          data[i, ch1.pos] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
+          data[i, ch2.pos] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
+        }
+        
+        data[i, ch1.w] <- ncb + 1 - abs(temp[temp[, geno] == ch1, col] - geno.col)
+        data[i, ch2.w] <- ncb + 1 - abs(temp[temp[, geno] == ch2, col] - geno.col)        
+      }
+    }
+    
+    # Adjust values with the two linear interpolations of the centered check values
+    
+    m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)
+    m.pri.2 <- apply(data[, c(ch2, ch2.pri)], 1, mean, na.rm = TRUE)
+    m.pos.1 <- apply(data[, c(ch1, ch1.pos)], 1, mean, na.rm = TRUE)
+    m.pos.2 <- apply(data[, c(ch2, ch2.pos)], 1, mean, na.rm = TRUE)
+    
+    l.pri <- (m.pri.1 * data[, ch1.w] + m.pri.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+    l.pos <- (m.pos.1 * data[, ch1.w] + m.pos.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+    
+    l.mean <- apply(cbind(l.pri, l.pos), 1, mean)
+    
+    data[, trait.aj] <- data[, trait.aj] * (1 - l.mean)
     
   }
   

@@ -39,6 +39,8 @@ The values of the selected \code{trait} are adjusted following different
 methods. For \code{method = 1} each value is adjusted with the mean of the checks
 located to the left and right. For \code{method = 2} each value is adjusted with an
 interpolating line drawn between the two checks, so the closer check gets more weight.
+For \code{method = 3} a surface is fitted using the the checks to the left and right, and
+the two checks on the previous and next row.
 
 \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
 values are adjusted in the same proportion that the checks vary around the field. For
