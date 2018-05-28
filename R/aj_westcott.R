@@ -11,14 +11,18 @@
 #' @param ncb Number of columns between two check columns.
 #' @param method The method to fit the values. See details.
 #' @param w The weight from 0 to 1 given to the check values for the adjustment. See details.
+#' @param ind Logical. If TRUE each check is centered around its own mean. If FALSE both
+#' checks are centered around the overall mean.
 #' @param data The name of the data frame.
 #' @author Raul Eyzaguirre.
 #' @details The values of the selected \code{trait} are adjusted following different
-#' methods. For \code{method = 1} each value is adjusted with the mean of the checks
-#' located to the left and right. For \code{method = 2} each value is adjusted with an
+#' methods. For \code{method = 1} each plot is adjusted with the mean of the checks
+#' located to the left and right. For \code{method = 2} each plot is adjusted with an
 #' interpolating line drawn between the two checks, so the closer check gets more weight.
-#' For \code{method = 3} a surface is fitted using the the checks to the left and right, and
-#' the two checks on the previous and next row.
+#' For \code{method = 3} each plot is adjusted with the mean of the six checks located
+#' in the three rows spanning it (this is the method proposed by Westcott).
+#' For \code{method = 4} each plot is adjusted with the value of his position on the
+#' surface fitted using the six checks located in the three rows spanning it.
 #' 
 #' \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
 #' values are adjusted in the same proportion that the checks vary around the field. For
@@ -30,7 +34,8 @@
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, data) {
+aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 4, w = 0.5,
+                  ind = TRUE, data) {
   
   # Error messages
   
@@ -67,8 +72,13 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, dat
 
   # Compute means for checks
   
-  ch1.mean <- mean(data[data[, geno] == ch1, trait], na.rm = TRUE)
-  ch2.mean <- mean(data[data[, geno] == ch2, trait], na.rm = TRUE)
+  if (ind) {
+    ch1.mean <- mean(data[data[, geno] == ch1, trait], na.rm = TRUE)
+    ch2.mean <- mean(data[data[, geno] == ch2, trait], na.rm = TRUE)
+  } else {
+    ch1.mean <- mean(data[data[, geno] %in% c(ch1, ch2), trait], na.rm = TRUE)
+    ch2.mean <- mean(data[data[, geno] %in% c(ch1, ch2), trait], na.rm = TRUE)
+  }
   
   # Center check values and compute %
   
@@ -84,46 +94,27 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, dat
   data[, ch1] <- NA
   data[, ch2] <- NA
 
-  # Adjust values for method 1
+  # Adjust values for methods 1 and 2
   
-  if (method == 1) {
-
-    # Arrange check values properly
-    
-    for(i in 1:dim(data)[1]) {
-      geno.row <- data[i, row]
-      columns <- (data[i, col] - ncb):(data[i, col] + ncb)
-      temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj)]
-      if (dim(temp)[1] == 2) {
-        data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
-        data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
-      }
-    }
-    
-    # Adjust values with the mean of the centered check values
-    
-    data[, trait.aj] <- data[, trait.aj] * (1 - (data[, ch1] + data[, ch2]) / 2)
-    
-  }
-  
-  # Adjust values for method 2
-  
-  if (method == 2) {
+  if (method %in% c(1, 2)) {
     
     # Create columns for weigths
-
+    
     ch1.w <- paste(ch1, 'w', sep = '.')
     data[, ch1.w] <- NA
     ch2.w <- paste(ch2, 'w', sep = '.')
     data[, ch2.w] <- NA
-    
-    # Arrange check values properly
+
+    # Arrange check values and weights
     
     for(i in 1:dim(data)[1]) {
+
       geno.row <- data[i, row]
       geno.col <- data[i, col]
       columns <- (geno.col - ncb):(geno.col + ncb)
+
       temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+      
       if (dim(temp)[1] == 2) {
         data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
         data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
@@ -132,15 +123,20 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, dat
       }
     }
     
-    # Adjust values with the linear interpolation of the centered check values
+    # Adjust values for method 1
     
-    data[, trait.aj] <- data[, trait.aj] * (1 - (data[, ch1] * data[, ch1.w] + data[, ch2] * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w]))
-    
+    if (method == 1)
+      af <- (data[, ch1] + data[, ch2]) / 2
+
+    # Adjust values for method 2
+
+    if (method == 2)
+      af <- (data[, ch1] * data[, ch1.w] + data[, ch2] * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
   }
   
-  # Adjust values for method 3
+  # Adjust values for methods 3 and 4
   
-  if (method == 3) {
+  if (method %in% c(3, 4)) {
     
     # Create columns for prior and posterior check centered values
     
@@ -160,7 +156,7 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, dat
     ch2.w <- paste(ch2, 'w', sep = '.')
     data[, ch2.w] <- NA
     
-    # Arrange check values properly
+    # Arrange check values and weights
     
     for(i in 1:dim(data)[1]) {
       
@@ -194,21 +190,29 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.5, dat
       }
     }
     
-    # Adjust values with the two linear interpolations of the centered check values
+    # Adjust values with method 3
     
-    m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)
-    m.pri.2 <- apply(data[, c(ch2, ch2.pri)], 1, mean, na.rm = TRUE)
-    m.pos.1 <- apply(data[, c(ch1, ch1.pos)], 1, mean, na.rm = TRUE)
-    m.pos.2 <- apply(data[, c(ch2, ch2.pos)], 1, mean, na.rm = TRUE)
-    
-    l.pri <- (m.pri.1 * data[, ch1.w] + m.pri.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
-    l.pos <- (m.pos.1 * data[, ch1.w] + m.pos.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
-    
-    l.mean <- apply(cbind(l.pri, l.pos), 1, mean)
-    
-    data[, trait.aj] <- data[, trait.aj] * (1 - l.mean)
-    
+    if (method == 3)
+      af <- apply(data[, c(ch1, ch2, ch1.pri, ch2.pri, ch1.pos, ch2.pos)], 1, mean, na.rm = TRUE)
+
+    # Adjust values with method 4
+      
+    if (method == 4) {
+      m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)
+      m.pri.2 <- apply(data[, c(ch2, ch2.pri)], 1, mean, na.rm = TRUE)
+      m.pos.1 <- apply(data[, c(ch1, ch1.pos)], 1, mean, na.rm = TRUE)
+      m.pos.2 <- apply(data[, c(ch2, ch2.pos)], 1, mean, na.rm = TRUE)
+      
+      l.pri <- (m.pri.1 * data[, ch1.w] + m.pri.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+      l.pos <- (m.pos.1 * data[, ch1.w] + m.pos.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+      
+      af <- apply(cbind(l.pri, l.pos), 1, mean)
+    }
   }
+  
+  # Make adjustment
+  
+  data[, trait.aj] <- data[, trait.aj] / (1 + af)
   
   # Return
   
