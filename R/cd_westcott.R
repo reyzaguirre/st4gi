@@ -11,8 +11,8 @@
 #' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field between equally spaced
 #' columns of two alternating check varieties. Check columns are planted each
-#' \code{ncb} columns where \code{ncb} must be even. The specified total number of
-#' columns \code{nc} is the maximum available number, the actual number could be less. 
+#' \code{ncb} columns. The specified total number of columns \code{nc} is the maximum
+#' available number on the field, the actual number could be less. 
 #' @return It returns the fieldbook and fieldplan.
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
@@ -32,9 +32,6 @@ cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   
   ng <- length(geno)
 
-  if (ncb %% 2 == 1)
-    stop("The number of columns must be even.")
-  
   if (ng < ncb)
     stop(paste("Include at least", ncb, "genotypes."))
   

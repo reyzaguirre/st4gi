@@ -28,8 +28,8 @@ the method described on Westcott (1981).
 \details{
 The genotypes are randomly allocated on a field between equally spaced
 columns of two alternating check varieties. Check columns are planted each
-\code{ncb} columns where \code{ncb} must be even. The specified total number of
-columns \code{nc} is the maximum available number, the actual number could be less.
+\code{ncb} columns. The specified total number of columns \code{nc} is the maximum
+available number on the field, the actual number could be less.
 }
 \examples{
 cd.w(1:100, "A", "B", 100)
