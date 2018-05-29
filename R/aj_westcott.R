@@ -146,12 +146,12 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.25,
     
   # Adjust values with method 3
     
-  if (method == 3)
+  if (method == 1)
     af <- apply(data[, c(ch1, ch2, ch1.pri, ch2.pri, ch1.pos, ch2.pos)], 1, mean, na.rm = TRUE)
 
   # Adjust values with method 4
       
-  if (method == 4) {
+  if (method == 2) {
     m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)
     m.pri.2 <- apply(data[, c(ch2, ch2.pri)], 1, mean, na.rm = TRUE)
     m.pos.1 <- apply(data[, c(ch1, ch1.pos)], 1, mean, na.rm = TRUE)
