@@ -16,13 +16,11 @@
 #' @param data The name of the data frame.
 #' @author Raul Eyzaguirre.
 #' @details The values of the selected \code{trait} are adjusted following different
-#' methods. For \code{method = 1} each plot is adjusted with the mean of the checks
-#' located to the left and right. For \code{method = 2} each plot is adjusted with an
-#' interpolating line drawn between the two checks, so the closer check gets more weight.
-#' For \code{method = 3} each plot is adjusted with the mean of the six checks located
-#' in the three rows spanning it (this is the method proposed by Westcott).
-#' For \code{method = 4} each plot is adjusted with the value of his position on the
-#' surface fitted using the six checks located in the three rows spanning it.
+#' methods. For \code{method = 1} each plot is adjusted with the mean of the six checks
+#' located in the three rows spanning it (this is the method proposed by Westcott).
+#' For \code{method = 2} each plot is adjusted with the value of his position on the
+#' surface fitted using the six checks located in the three rows spanning it, so the closest
+#' checks receive more weight.
 #' 
 #' \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
 #' values are adjusted in the same proportion that the checks vary around the field. For
@@ -34,7 +32,7 @@
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 4, w = 0.5,
+aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.25,
                   ind = TRUE, data) {
   
   # Error messages
@@ -94,122 +92,77 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 4, w = 0.5,
   data[, ch1] <- NA
   data[, ch2] <- NA
 
-  # Adjust values for methods 1 and 2
-  
-  if (method %in% c(1, 2)) {
+  # Create columns for prior and posterior check centered values
     
-    # Create columns for weigths
+  ch1.pri <- paste(ch1, 'pri', sep = '.')
+  data[, ch1.pri] <- NA
+  ch1.pos <- paste(ch1, 'pos', sep = '.')
+  data[, ch1.pos] <- NA
+  ch2.pri <- paste(ch2, 'pri', sep = '.')
+  data[, ch2.pri] <- NA
+  ch2.pos <- paste(ch2, 'pos', sep = '.')
+  data[, ch2.pos] <- NA
     
-    ch1.w <- paste(ch1, 'w', sep = '.')
-    data[, ch1.w] <- NA
-    ch2.w <- paste(ch2, 'w', sep = '.')
-    data[, ch2.w] <- NA
-
-    # Arrange check values and weights
+  # Create columns for weigths
     
-    for(i in 1:dim(data)[1]) {
-
-      geno.row <- data[i, row]
-      geno.col <- data[i, col]
-      columns <- (geno.col - ncb):(geno.col + ncb)
-
-      temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+  ch1.w <- paste(ch1, 'w', sep = '.')
+  data[, ch1.w] <- NA
+  ch2.w <- paste(ch2, 'w', sep = '.')
+  data[, ch2.w] <- NA
+    
+  # Arrange check values and weights
+    
+  for(i in 1:dim(data)[1]) {
       
-      if (dim(temp)[1] == 2) {
-        data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
-        data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
-        data[i, ch1.w] <- ncb + 1 - abs(temp[temp[, geno] == ch1, col] - geno.col)
-        data[i, ch2.w] <- ncb + 1 - abs(temp[temp[, geno] == ch2, col] - geno.col)        
+    geno.row <- data[i, row]
+    geno.col <- data[i, col]
+    columns <- (geno.col - ncb):(geno.col + ncb)
+      
+    temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+      
+    if (dim(temp)[1] == 2) {
+        
+      data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
+      data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
+        
+      temp.pri <- data[data[, row] == geno.row - 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+        
+      if (dim(temp.pri)[1] == 2) {
+        data[i, ch1.pri] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
+        data[i, ch2.pri] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
       }
-    }
-    
-    # Adjust values for method 1
-    
-    if (method == 1)
-      af <- (data[, ch1] + data[, ch2]) / 2
-
-    # Adjust values for method 2
-
-    if (method == 2)
-      af <- (data[, ch1] * data[, ch1.w] + data[, ch2] * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
-  }
-  
-  # Adjust values for methods 3 and 4
-  
-  if (method %in% c(3, 4)) {
-    
-    # Create columns for prior and posterior check centered values
-    
-    ch1.pri <- paste(ch1, 'pri', sep = '.')
-    data[, ch1.pri] <- NA
-    ch1.pos <- paste(ch1, 'pos', sep = '.')
-    data[, ch1.pos] <- NA
-    ch2.pri <- paste(ch2, 'pri', sep = '.')
-    data[, ch2.pri] <- NA
-    ch2.pos <- paste(ch2, 'pos', sep = '.')
-    data[, ch2.pos] <- NA
-    
-    # Create columns for weigths
-    
-    ch1.w <- paste(ch1, 'w', sep = '.')
-    data[, ch1.w] <- NA
-    ch2.w <- paste(ch2, 'w', sep = '.')
-    data[, ch2.w] <- NA
-    
-    # Arrange check values and weights
-    
-    for(i in 1:dim(data)[1]) {
-      
-      geno.row <- data[i, row]
-      geno.col <- data[i, col]
-      columns <- (geno.col - ncb):(geno.col + ncb)
-      
-      temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
-      
-      if (dim(temp)[1] == 2) {
         
-        data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
-        data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
+      temp.pos <- data[data[, row] == geno.row + 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
         
-        temp.pri <- data[data[, row] == geno.row - 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
-        
-        if (dim(temp.pri)[1] == 2) {
-          data[i, ch1.pri] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
-          data[i, ch2.pri] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
-        }
-        
-        temp.pos <- data[data[, row] == geno.row + 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
-        
-        if (dim(temp.pos)[1] == 2) {
-          data[i, ch1.pos] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
-          data[i, ch2.pos] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
-        }
-        
-        data[i, ch1.w] <- ncb + 1 - abs(temp[temp[, geno] == ch1, col] - geno.col)
-        data[i, ch2.w] <- ncb + 1 - abs(temp[temp[, geno] == ch2, col] - geno.col)        
+      if (dim(temp.pos)[1] == 2) {
+        data[i, ch1.pos] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
+        data[i, ch2.pos] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
       }
-    }
-    
-    # Adjust values with method 3
-    
-    if (method == 3)
-      af <- apply(data[, c(ch1, ch2, ch1.pri, ch2.pri, ch1.pos, ch2.pos)], 1, mean, na.rm = TRUE)
-
-    # Adjust values with method 4
-      
-    if (method == 4) {
-      m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)
-      m.pri.2 <- apply(data[, c(ch2, ch2.pri)], 1, mean, na.rm = TRUE)
-      m.pos.1 <- apply(data[, c(ch1, ch1.pos)], 1, mean, na.rm = TRUE)
-      m.pos.2 <- apply(data[, c(ch2, ch2.pos)], 1, mean, na.rm = TRUE)
-      
-      l.pri <- (m.pri.1 * data[, ch1.w] + m.pri.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
-      l.pos <- (m.pos.1 * data[, ch1.w] + m.pos.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
-      
-      af <- apply(cbind(l.pri, l.pos), 1, mean)
+        
+      data[i, ch1.w] <- ncb + 1 - abs(temp[temp[, geno] == ch1, col] - geno.col)
+      data[i, ch2.w] <- ncb + 1 - abs(temp[temp[, geno] == ch2, col] - geno.col)        
     }
   }
-  
+    
+  # Adjust values with method 3
+    
+  if (method == 3)
+    af <- apply(data[, c(ch1, ch2, ch1.pri, ch2.pri, ch1.pos, ch2.pos)], 1, mean, na.rm = TRUE)
+
+  # Adjust values with method 4
+      
+  if (method == 4) {
+    m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)
+    m.pri.2 <- apply(data[, c(ch2, ch2.pri)], 1, mean, na.rm = TRUE)
+    m.pos.1 <- apply(data[, c(ch1, ch1.pos)], 1, mean, na.rm = TRUE)
+    m.pos.2 <- apply(data[, c(ch2, ch2.pos)], 1, mean, na.rm = TRUE)
+      
+    l.pri <- (m.pri.1 * data[, ch1.w] + m.pri.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+    l.pos <- (m.pos.1 * data[, ch1.w] + m.pos.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+      
+    af <- apply(cbind(l.pri, l.pos), 1, mean)
+  }
+
   # Make adjustment
   
   data[, trait.aj] <- data[, trait.aj] / (1 + af)

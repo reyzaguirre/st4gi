@@ -4,7 +4,7 @@
 \alias{aj.wd}
 \title{Adjust values with a grid of checks}
 \usage{
-aj.wd(trait, geno, ch1, ch2, row, col, ncb, method = 4, w = 0.5,
+aj.wd(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.25,
   ind = TRUE, data)
 }
 \arguments{
@@ -40,13 +40,11 @@ the method described on Westcott (1981) with a grid of checks.
 }
 \details{
 The values of the selected \code{trait} are adjusted following different
-methods. For \code{method = 1} each plot is adjusted with the mean of the checks
-located to the left and right. For \code{method = 2} each plot is adjusted with an
-interpolating line drawn between the two checks, so the closer check gets more weight.
-For \code{method = 3} each plot is adjusted with the mean of the six checks located
-in the three rows spanning it (this is the method proposed by Westcott).
-For \code{method = 4} each plot is adjusted with the value of his position on the
-surface fitted using the six checks located in the three rows spanning it.
+methods. For \code{method = 1} each plot is adjusted with the mean of the six checks
+located in the three rows spanning it (this is the method proposed by Westcott).
+For \code{method = 2} each plot is adjusted with the value of his position on the
+surface fitted using the six checks located in the three rows spanning it, so the closest
+checks receive more weight.
 
 \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
 values are adjusted in the same proportion that the checks vary around the field. For
