@@ -32,7 +32,7 @@
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 1, w = 0.25,
+aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 2, w = 0.4,
                   ind = TRUE, data) {
   
   # Error messages
