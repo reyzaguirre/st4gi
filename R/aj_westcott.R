@@ -23,8 +23,9 @@
 #' checks receive more weight.
 #' 
 #' \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
-#' values are adjusted in the same proportion that the checks vary around the field. For
-#' values lower than 1 the values are adjusted based on that proportion over the checks variation.
+#' values are adjusted in the same proportion that the checks vary around the field.
+#' For values lower than 1 the values are adjusted based on that proportion over the
+#' checks variation.
 #' @return It returns the adjusted values.
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
@@ -117,22 +118,25 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 2, w = 0.4,
     geno.row <- data[i, row]
     geno.col <- data[i, col]
     columns <- (geno.col - ncb):(geno.col + ncb)
+    
+    cond1 <- data[, col] %in% columns
+    cond2 <- data[, geno] %in% c(ch1, ch2)
       
-    temp <- data[data[, row] == geno.row & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+    temp <- data[data[, row] == geno.row & cond1 & cond2, c(geno, trait.aj, col)]
       
     if (dim(temp)[1] == 2) {
         
       data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
       data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
         
-      temp.pri <- data[data[, row] == geno.row - 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+      temp.pri <- data[data[, row] == geno.row - 1 & cond1 & cond2, c(geno, trait.aj, col)]
         
       if (dim(temp.pri)[1] == 2) {
         data[i, ch1.pri] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
         data[i, ch2.pri] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
       }
         
-      temp.pos <- data[data[, row] == geno.row + 1 & data[, col] %in% columns & data[, geno] %in% c(ch1, ch2), c(geno, trait.aj, col)]
+      temp.pos <- data[data[, row] == geno.row + 1 & cond1 & cond2, c(geno, trait.aj, col)]
         
       if (dim(temp.pos)[1] == 2) {
         data[i, ch1.pos] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
@@ -144,12 +148,12 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb, method = 2, w = 0.4,
     }
   }
     
-  # Adjust values with method 3
+  # Adjust values with method 1
     
   if (method == 1)
     af <- apply(data[, c(ch1, ch2, ch1.pri, ch2.pri, ch1.pos, ch2.pos)], 1, mean, na.rm = TRUE)
 
-  # Adjust values with method 4
+  # Adjust values with method 2
       
   if (method == 2) {
     m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)

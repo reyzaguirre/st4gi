@@ -47,8 +47,9 @@ surface fitted using the six checks located in the three rows spanning it, so th
 checks receive more weight.
 
 \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
-values are adjusted in the same proportion that the checks vary around the field. For
-values lower than 1 the values are adjusted based on that proportion over the checks variation.
+values are adjusted in the same proportion that the checks vary around the field.
+For values lower than 1 the values are adjusted based on that proportion over the
+checks variation.
 }
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
