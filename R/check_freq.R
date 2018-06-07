@@ -1,6 +1,7 @@
 #' Check frequencies
 #'
 #' Check frequencies for designs with complete replications and one or two factors.
+#' This is a wrapper for \code{check.rcbd} and \code{check.2f} functions.
 #' @param trait The trait to analyze.
 #' @param geno Genotypes.
 #' @param env Environments.

@@ -21,6 +21,7 @@ with more than one genotype.
 }
 \description{
 This function checks that there is only one genotype in each row and column position.
+This is a wrapper for \code{check.rc} function.
 }
 \author{
 Raul Eyzaguirre.
