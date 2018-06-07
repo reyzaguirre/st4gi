@@ -131,6 +131,49 @@ check.abd <- function(trait, treat, rep, data) {
        nt.check.2 = nt.check.2)
 }
 
+#' Check data for a CRD
+#'
+#' This function checks the frequencies of genotypes in a CRD.
+#' @param trait The trait to analyze.
+#' @param treat The treatments.
+#' @param data The name of the data frame.
+#' @return Two control values (\code{c1} and \code{c2},
+#' the number of treatments (\code{nt}), the number of replications (\code{nr}),
+#' and a table with frequencies of valid cases for each treatment.
+#' @author Raul Eyzaguirre.
+#' @details This function checks if there is more than one replication in a CRD and
+#' if there is any treatment without data.
+#' @export
+
+check.crd <- function(trait, treat, data) {
+  
+  # Everything as factor
+  
+  data[, treat] <- factor(data[, treat])
+
+  # Check frequencies by treat
+  
+  subdata <- subset(data, !is.na(data[, trait]))
+  tfreq <- table(subdata[, treat])
+
+  # Number of levels
+  
+  nt <- nlevels(data[, treat])
+  nr <- max(tfreq)
+
+  # Controls
+  
+  c1 <- 1 # Check for zeros. Initial state no zeros
+  c2 <- 0 # Check for replicates. Initial state only one replication
+
+  if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
+  if (nr > 1) c2 <- 1 # State 1: more than one replication
+
+  # Return
+  
+  list(c1 = c1, c2 = c2, nt = nt, nr = nr, tfreq = tfreq)
+}
+
 #' Check data for a RCBD
 #'
 #' This function checks the frequencies of genotypes in a RCBD.
@@ -141,7 +184,7 @@ check.abd <- function(trait, treat, rep, data) {
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
 #' of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
 #' of treatments (\code{nt}), the number of replications (\code{nr}), and a table with
-#' frequencies of valid cases for each genotype.
+#' frequencies of valid cases for each treatment.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any treatment without data or with more data than replications, and
