@@ -4,7 +4,7 @@
 \alias{aj.wd}
 \title{Adjust values with a grid of checks}
 \usage{
-aj.wd(trait, geno, ch1, ch2, row, col, ncb, method = 2, w = 0.4,
+aj.wd(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4,
   ind = TRUE, data)
 }
 \arguments{
