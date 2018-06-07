@@ -4,8 +4,8 @@
 \alias{aj.wd}
 \title{Adjust values with a grid of checks}
 \usage{
-aj.wd(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4,
-  ind = TRUE, data)
+aj.wd(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
+  w = 0.4, ind = TRUE, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -19,6 +19,8 @@ aj.wd(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4,
 \item{row}{Label for rows.}
 
 \item{col}{Label for columns.}
+
+\item{nr}{Number of rows used to fit values, 3 or 5.}
 
 \item{ncb}{Number of columns between two check columns.}
 

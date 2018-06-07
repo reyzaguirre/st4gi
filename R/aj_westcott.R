@@ -9,6 +9,7 @@
 #' @param row Label for rows.
 #' @param col Label for columns.
 #' @param ncb Number of columns between two check columns.
+#' @param nr Number of rows used to fit values, 3 or 5.
 #' @param method The method to fit the values. See details.
 #' @param w The weight from 0 to 1 given to the check values for the adjustment. See details.
 #' @param ind Logical. If TRUE each check is centered around its own mean. If FALSE both
@@ -33,8 +34,8 @@
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4,
-                  ind = TRUE, data) {
+aj.wd <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
+                  w = 0.4, ind = TRUE, data) {
   
   # Error messages
   
@@ -81,8 +82,11 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4
   
   # Center check values and compute %
   
-  data[data[, geno] == ch1, trait.aj] <- (data[data[, geno] == ch1, trait.aj] - ch1.mean) / ch1.mean * w
-  data[data[, geno] == ch2, trait.aj] <- (data[data[, geno] == ch2, trait.aj] - ch2.mean) / ch2.mean * w
+  cond1 <- data[, geno] == ch1
+  cond2 <- data[, geno] == ch2
+
+  data[cond1, trait.aj] <- (data[cond1, trait.aj] - ch1.mean) / ch1.mean * w
+  data[cond2, trait.aj] <- (data[cond2, trait.aj] - ch2.mean) / ch2.mean * w
   
   # Replace missing values with 0 (this is the centered mean)
   
@@ -95,15 +99,23 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4
 
   # Create columns for prior and posterior check centered values
     
-  ch1.pri <- paste(ch1, 'pri', sep = '.')
-  data[, ch1.pri] <- NA
-  ch1.pos <- paste(ch1, 'pos', sep = '.')
-  data[, ch1.pos] <- NA
-  ch2.pri <- paste(ch2, 'pri', sep = '.')
-  data[, ch2.pri] <- NA
-  ch2.pos <- paste(ch2, 'pos', sep = '.')
-  data[, ch2.pos] <- NA
-    
+  ch1.pri.1 <- paste(ch1, 'pri.1', sep = '.')
+  data[, ch1.pri.1] <- NA
+  ch1.pri.2 <- paste(ch1, 'pri.2', sep = '.')
+  data[, ch1.pri.2] <- NA
+  ch1.pos.1 <- paste(ch1, 'pos.1', sep = '.')
+  data[, ch1.pos.1] <- NA
+  ch1.pos.2 <- paste(ch1, 'pos.2', sep = '.')
+  data[, ch1.pos.2] <- NA
+  ch2.pri.1 <- paste(ch2, 'pri.1', sep = '.')
+  data[, ch2.pri.1] <- NA
+  ch2.pri.2 <- paste(ch2, 'pri.2', sep = '.')
+  data[, ch2.pri.2] <- NA
+  ch2.pos.1 <- paste(ch2, 'pos.1', sep = '.')
+  data[, ch2.pos.1] <- NA
+  ch2.pos.2 <- paste(ch2, 'pos.2', sep = '.')
+  data[, ch2.pos.2] <- NA
+  
   # Create columns for weigths
     
   ch1.w <- paste(ch1, 'w', sep = '.')
@@ -125,24 +137,50 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4
     temp <- data[data[, row] == geno.row & cond1 & cond2, c(geno, trait.aj, col)]
       
     if (dim(temp)[1] == 2) {
-        
+      
+      # Checks on the row
+      
       data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
       data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
-        
-      temp.pri <- data[data[, row] == geno.row - 1 & cond1 & cond2, c(geno, trait.aj, col)]
+      
+      # Checks on row -2
+      
+      temp.pri <- data[data[, row] == geno.row - 2 & cond1 & cond2, c(geno, trait.aj, col)]
         
       if (dim(temp.pri)[1] == 2) {
-        data[i, ch1.pri] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
-        data[i, ch2.pri] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
+        data[i, ch1.pri.2] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
+        data[i, ch2.pri.2] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
       }
-        
+      
+      # Checks on row -1
+      
+      temp.pri <- data[data[, row] == geno.row - 1 & cond1 & cond2, c(geno, trait.aj, col)]
+      
+      if (dim(temp.pri)[1] == 2) {
+        data[i, ch1.pri.1] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
+        data[i, ch2.pri.1] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
+      }
+      
+      # Checks on row +1
+
       temp.pos <- data[data[, row] == geno.row + 1 & cond1 & cond2, c(geno, trait.aj, col)]
         
       if (dim(temp.pos)[1] == 2) {
-        data[i, ch1.pos] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
-        data[i, ch2.pos] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
+        data[i, ch1.pos.1] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
+        data[i, ch2.pos.1] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
       }
-        
+      
+      # Checks on row +2  
+
+      temp.pos <- data[data[, row] == geno.row + 2 & cond1 & cond2, c(geno, trait.aj, col)]
+      
+      if (dim(temp.pos)[1] == 2) {
+        data[i, ch1.pos.2] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
+        data[i, ch2.pos.2] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
+      }
+      
+      # Weights for closest checks
+
       data[i, ch1.w] <- ncb + 1 - abs(temp[temp[, geno] == ch1, col] - geno.col)
       data[i, ch2.w] <- ncb + 1 - abs(temp[temp[, geno] == ch2, col] - geno.col)        
     }
@@ -150,17 +188,38 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, ncb = 10, method = 2, w = 0.4
     
   # Adjust values with method 1
     
-  if (method == 1)
-    af <- apply(data[, c(ch1, ch2, ch1.pri, ch2.pri, ch1.pos, ch2.pos)], 1, mean, na.rm = TRUE)
-
+  if (method == 1) {
+    chs <- c(ch1, ch2, ch1.pri.1, ch2.pri.1, ch1.pos.1, ch2.pos.1)
+    if (nr == 5)
+      chs <- c(chs, ch1.pri.2, ch2.pri.2, ch1.pos.2, ch2.pos.2)
+    af <- apply(data[, chs], 1, mean, na.rm = TRUE)
+  }
+    
   # Adjust values with method 2
       
   if (method == 2) {
-    m.pri.1 <- apply(data[, c(ch1, ch1.pri)], 1, mean, na.rm = TRUE)
-    m.pri.2 <- apply(data[, c(ch2, ch2.pri)], 1, mean, na.rm = TRUE)
-    m.pos.1 <- apply(data[, c(ch1, ch1.pos)], 1, mean, na.rm = TRUE)
-    m.pos.2 <- apply(data[, c(ch2, ch2.pos)], 1, mean, na.rm = TRUE)
+    
+    if (nr == 3) {
+      m.pri.1 <- apply(data[, c(ch1, ch1.pri.1)], 1, mean, na.rm = TRUE)
+      m.pri.2 <- apply(data[, c(ch2, ch2.pri.1)], 1, mean, na.rm = TRUE)
+      m.pos.1 <- apply(data[, c(ch1, ch1.pos.1)], 1, mean, na.rm = TRUE)
+      m.pos.2 <- apply(data[, c(ch2, ch2.pos.1)], 1, mean, na.rm = TRUE)
+    }
       
+    if (nr == 5) {
+      data[, ch1] <- 1.5 * data[, ch1]
+      data[, ch2] <- 1.5 * data[, ch2]
+      data[, ch1.pri.1] <- 2 * data[, ch1.pri.1]
+      data[, ch2.pri.1] <- 2 * data[, ch2.pri.1]
+      data[, ch1.pos.1] <- 2 * data[, ch1.pos.1]
+      data[, ch2.pos.1] <- 2 * data[, ch2.pos.1]
+      
+      m.pri.1 <- apply(data[, c(ch1, ch1.pri.1, ch1.pri.2)], 1, mean, na.rm = TRUE)
+      m.pri.2 <- apply(data[, c(ch2, ch2.pri.1, ch2.pri.2)], 1, mean, na.rm = TRUE)
+      m.pos.1 <- apply(data[, c(ch1, ch1.pos.1, ch1.pos.2)], 1, mean, na.rm = TRUE)
+      m.pos.2 <- apply(data[, c(ch2, ch2.pos.1, ch2.pos.2)], 1, mean, na.rm = TRUE)
+    }
+
     l.pri <- (m.pri.1 * data[, ch1.w] + m.pri.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
     l.pos <- (m.pos.1 * data[, ch1.w] + m.pos.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
       
