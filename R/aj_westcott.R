@@ -11,22 +11,25 @@
 #' @param ncb Number of columns between two check columns.
 #' @param nr Number of rows used to fit values, 3 or 5.
 #' @param method The method to fit the values. See details.
-#' @param w The weight from 0 to 1 given to the check values for the adjustment. See details.
-#' @param ind Logical. If TRUE each check is centered around its own mean. If FALSE both
-#' checks are centered around the overall mean.
+#' @param p The proportion of the check values differences used for the adjustment.
+#' See details.
+#' @param ind Logical. If TRUE each check is centered around its own mean.
+#' If FALSE both checks are centered around the overall mean.
 #' @param data The name of the data frame.
 #' @author Raul Eyzaguirre.
-#' @details The values of the selected \code{trait} are adjusted following different
-#' methods. For \code{method = 1} each plot is adjusted with the mean of the six checks
-#' located in the three rows spanning it (this is the method proposed by Westcott).
-#' For \code{method = 2} each plot is adjusted with the value of his position on the
-#' surface fitted using the six checks located in the three rows spanning it, so the closest
+#' @details The values of the selected \code{trait} are adjusted following
+#' different methods. For \code{method = 1} each plot is adjusted with the
+#' mean of the six or ten checks located in the three (if \code{nr = 3}) or
+#' five (if \code{nr = 5}) rows spanning it (with \code{nr = 3} it corresponds
+#' tp the method proposed by Westcott). For \code{method = 2} each plot is
+#' adjusted with the value of his position on the surface fitted using the six
+#' or then checks located in the three or five rows spanning it, so the closest
 #' checks receive more weight.
 #' 
-#' \code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
-#' values are adjusted in the same proportion that the checks vary around the field.
-#' For values lower than 1 the values are adjusted based on that proportion over the
-#' checks variation.
+#' If \code{p = 1} then the values are adjusted in the same
+#' proportion that the checks vary around the field. For values lower than 1
+#' the values are adjusted based on that proportion over the checks variation.
+#' If \code{p = 0} then there is no adjustment.
 #' @return It returns the adjusted values.
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
@@ -35,7 +38,7 @@
 #' @export
 
 aj.wd <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
-                  w = 0.4, ind = TRUE, data) {
+                  p = 0.4, ind = TRUE, data) {
   
   # Error messages
   
@@ -85,8 +88,8 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   cond1 <- data[, geno] == ch1
   cond2 <- data[, geno] == ch2
 
-  data[cond1, trait.aj] <- (data[cond1, trait.aj] - ch1.mean) / ch1.mean * w
-  data[cond2, trait.aj] <- (data[cond2, trait.aj] - ch2.mean) / ch2.mean * w
+  data[cond1, trait.aj] <- (data[cond1, trait.aj] - ch1.mean) / ch1.mean * p
+  data[cond2, trait.aj] <- (data[cond2, trait.aj] - ch2.mean) / ch2.mean * p
   
   # Replace missing values with 0 (this is the centered mean)
   
@@ -200,28 +203,42 @@ aj.wd <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   if (method == 2) {
     
     if (nr == 3) {
-      m.pri.1 <- apply(data[, c(ch1, ch1.pri.1)], 1, mean, na.rm = TRUE)
-      m.pri.2 <- apply(data[, c(ch2, ch2.pri.1)], 1, mean, na.rm = TRUE)
-      m.pos.1 <- apply(data[, c(ch1, ch1.pos.1)], 1, mean, na.rm = TRUE)
-      m.pos.2 <- apply(data[, c(ch2, ch2.pos.1)], 1, mean, na.rm = TRUE)
+      ch1.m.pri <- apply(data[, c(ch1, ch1.pri.1)], 1, mean, na.rm = TRUE)
+      ch2.m.pri <- apply(data[, c(ch2, ch2.pri.1)], 1, mean, na.rm = TRUE)
+      ch1.m.pos <- apply(data[, c(ch1, ch1.pos.1)], 1, mean, na.rm = TRUE)
+      ch2.m.pos <- apply(data[, c(ch2, ch2.pos.1)], 1, mean, na.rm = TRUE)
     }
       
     if (nr == 5) {
-      data[, ch1] <- 1.5 * data[, ch1]
-      data[, ch2] <- 1.5 * data[, ch2]
-      data[, ch1.pri.1] <- 2 * data[, ch1.pri.1]
-      data[, ch2.pri.1] <- 2 * data[, ch2.pri.1]
-      data[, ch1.pos.1] <- 2 * data[, ch1.pos.1]
-      data[, ch2.pos.1] <- 2 * data[, ch2.pos.1]
+      foo <- function(x) x * c(1.5, 2, 1)
+      ch1.w.pri <- t(apply(!is.na(data[, c(ch1, ch1.pri.1, ch1.pri.2)]), 1, foo))
+      ch2.w.pri <- t(apply(!is.na(data[, c(ch2, ch2.pri.1, ch2.pri.2)]), 1, foo))
+      ch1.w.pos <- t(apply(!is.na(data[, c(ch1, ch1.pos.1, ch1.pos.2)]), 1, foo))
+      ch2.w.pos <- t(apply(!is.na(data[, c(ch2, ch2.pos.1, ch2.pos.2)]), 1, foo))
       
-      m.pri.1 <- apply(data[, c(ch1, ch1.pri.1, ch1.pri.2)], 1, mean, na.rm = TRUE)
-      m.pri.2 <- apply(data[, c(ch2, ch2.pri.1, ch2.pri.2)], 1, mean, na.rm = TRUE)
-      m.pos.1 <- apply(data[, c(ch1, ch1.pos.1, ch1.pos.2)], 1, mean, na.rm = TRUE)
-      m.pos.2 <- apply(data[, c(ch2, ch2.pos.1, ch2.pos.2)], 1, mean, na.rm = TRUE)
+      ch1.m.pri <- data[, c(ch1, ch1.pri.1, ch1.pri.2)] * ch1.w.pri
+      ch2.m.pri <- data[, c(ch2, ch2.pri.1, ch2.pri.2)] * ch2.w.pri
+      ch1.m.pos <- data[, c(ch1, ch1.pos.1, ch1.pos.2)] * ch1.w.pos
+      ch2.m.pos <- data[, c(ch2, ch2.pos.1, ch2.pos.2)] * ch2.w.pos
+      
+      ch1.m.pri <- apply(ch1.m.pri, 1, sum, na.rm = TRUE)
+      ch2.m.pri <- apply(ch2.m.pri, 1, sum, na.rm = TRUE)
+      ch1.m.pos <- apply(ch1.m.pos, 1, sum, na.rm = TRUE)
+      ch2.m.pos <- apply(ch2.m.pos, 1, sum, na.rm = TRUE)
+      
+      ch1.w.pri <- apply(ch1.w.pri, 1, sum, na.rm = TRUE)
+      ch2.w.pri <- apply(ch2.w.pri, 1, sum, na.rm = TRUE)
+      ch1.w.pos <- apply(ch1.w.pos, 1, sum, na.rm = TRUE)
+      ch2.w.pos <- apply(ch2.w.pos, 1, sum, na.rm = TRUE)
+      
+      ch1.m.pri <- ch1.m.pri / ch1.w.pri
+      ch2.m.pri <- ch2.m.pri / ch2.w.pri
+      ch1.m.pos <- ch1.m.pos / ch1.w.pos
+      ch2.m.pos <- ch2.m.pos / ch2.w.pos
     }
 
-    l.pri <- (m.pri.1 * data[, ch1.w] + m.pri.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
-    l.pos <- (m.pos.1 * data[, ch1.w] + m.pos.2 * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+    l.pri <- (ch1.m.pri * data[, ch1.w] + ch2.m.pri * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+    l.pos <- (ch1.m.pos * data[, ch1.w] + ch2.m.pos * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
       
     af <- apply(cbind(l.pri, l.pos), 1, mean)
   }

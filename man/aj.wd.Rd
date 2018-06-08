@@ -5,7 +5,7 @@
 \title{Adjust values with a grid of checks}
 \usage{
 aj.wd(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
-  w = 0.4, ind = TRUE, data)
+  p = 0.4, ind = TRUE, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -26,10 +26,11 @@ aj.wd(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
 
 \item{method}{The method to fit the values. See details.}
 
-\item{w}{The weight from 0 to 1 given to the check values for the adjustment. See details.}
+\item{p}{The proportion of the check values differences used for the adjustment.
+See details.}
 
-\item{ind}{Logical. If TRUE each check is centered around its own mean. If FALSE both
-checks are centered around the overall mean.}
+\item{ind}{Logical. If TRUE each check is centered around its own mean.
+If FALSE both checks are centered around the overall mean.}
 
 \item{data}{The name of the data frame.}
 }
@@ -41,17 +42,19 @@ This function adjust the observed values of an experiment planted following
 the method described on Westcott (1981) with a grid of checks.
 }
 \details{
-The values of the selected \code{trait} are adjusted following different
-methods. For \code{method = 1} each plot is adjusted with the mean of the six checks
-located in the three rows spanning it (this is the method proposed by Westcott).
-For \code{method = 2} each plot is adjusted with the value of his position on the
-surface fitted using the six checks located in the three rows spanning it, so the closest
+The values of the selected \code{trait} are adjusted following
+different methods. For \code{method = 1} each plot is adjusted with the
+mean of the six or ten checks located in the three (if \code{nr = 3}) or
+five (if \code{nr = 5}) rows spanning it (with \code{nr = 3} it corresponds
+tp the method proposed by Westcott). For \code{method = 2} each plot is
+adjusted with the value of his position on the surface fitted using the six
+or then checks located in the three or five rows spanning it, so the closest
 checks receive more weight.
 
-\code{w} gives the weight given to the checks for the adjustmen. If \code{w = 1} then the
-values are adjusted in the same proportion that the checks vary around the field.
-For values lower than 1 the values are adjusted based on that proportion over the
-checks variation.
+If \code{p = 1} then the values are adjusted in the same
+proportion that the checks vary around the field. For values lower than 1
+the values are adjusted based on that proportion over the checks variation.
+If \code{p = 0} then there is no adjustment.
 }
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
