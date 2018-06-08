@@ -38,7 +38,7 @@
 #' @export
 
 aj.wd <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
-                  p = 0.4, ind = TRUE, data) {
+                  p = 0.5, ind = TRUE, data) {
   
   # Error messages
   
