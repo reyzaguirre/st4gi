@@ -88,10 +88,10 @@ cr.f <- function(A, B, C = NULL, D = NULL, E = NULL,
   # Create fielbook and fieldplan
   
   if (design == "crd")
-    output <- cd.cr(trt, nrep, nc)
+    output <- cr.crd(trt, nrep, nc)
   
   if (design == "rcbd")
-    output <- cd.rcb(trt, nrep, nc)
+    output <- cr.rcbd(trt, nrep, nc)
   
   # Add columns to fielbook
   
