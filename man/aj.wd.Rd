@@ -5,7 +5,7 @@
 \title{Adjust values with a grid of checks}
 \usage{
 aj.wd(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
-  p = 0.4, ind = TRUE, data)
+  p = 0.5, ind = TRUE, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
