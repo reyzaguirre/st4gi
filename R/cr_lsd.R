@@ -6,11 +6,11 @@
 #' @details The genotypes are randomly allocated on a field following a LSD.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' cd.ls(c("A", "B", "C"))
-#' cd.ls(c("A", "B", "C", "D", "E"))
+#' cr.lsd(c("A", "B", "C"))
+#' cr.lsd(c("A", "B", "C", "D", "E"))
 #' @export
 
-cd.ls <- function(geno) {
+cr.lsd <- function(geno) {
   
   # As character
   

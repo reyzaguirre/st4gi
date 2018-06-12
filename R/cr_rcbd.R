@@ -9,11 +9,11 @@
 #' The blocks are disposed alongside the rows.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' cd.rcb(1:20, 3, 10)
-#' cd.rcb(1:20, 2, 7)
+#' cr.rcbd(1:20, 3, 10)
+#' cr.rcbd(1:20, 2, 7)
 #' @export
 
-cd.rcb <- function(geno, nb, nc) {
+cr.rcbd <- function(geno, nb, nc) {
   
   # As character
   

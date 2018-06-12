@@ -1,8 +1,8 @@
-#' Unreplicated design with a grid of checks
+#' Unreplicated experiment with a grid of checks
 #'
-#' This function creates the fieldbook and fieldplan for an unreplicated design
-#' with genotypes randomly allocated on a field with checks following
-#' the method described on Westcott (1981).
+#' This function creates the fieldbook and fieldplan for an unreplicated
+#' experiment with genotypes randomly allocated on a field with checks
+#' following the method described by Westcott (1981).
 #' @param geno The list of genotypes.
 #' @param ch1 Name of check 1.
 #' @param ch2 Name of check 2.
@@ -19,10 +19,10 @@
 #' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
 #' INRA Poitier, France, pp 91-95.
 #' @examples
-#' cd.w(1:100, "A", "B", 100)
+#' cr.w(1:100, "A", "B", 100)
 #' @export
 
-cd.w <- function(geno, ch1, ch2, nc, ncb = 10) {
+cr.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   
   # As character
   

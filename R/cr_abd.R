@@ -11,11 +11,11 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
 #' checks <- paste("ch", 1:4, sep = "_")
-#' cd.ab(1:40, checks, 4, 10)
-#' cd.ab(1:50, checks, 3, 7)
+#' cr.abd(1:40, checks, 4, 10)
+#' cr.abd(1:50, checks, 3, 7)
 #' @export
 
-cd.ab <- function(geno, checks, nb, nc) {
+cr.abd <- function(geno, checks, nb, nc) {
   
   # As character
   

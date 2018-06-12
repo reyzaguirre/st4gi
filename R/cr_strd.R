@@ -13,10 +13,10 @@
 #' @examples
 #' A <- paste("a", 1:4, sep = "")
 #' B <- paste("b", 1:3, sep = "")
-#' cd.str(A, B, 3)
+#' cr.strd(A, B, 3)
 #' @export
 
-cd.str <- function(A, B, nrep) {
+cr.strd <- function(A, B, nrep) {
   
   # As character
   

@@ -15,10 +15,10 @@
 #' @examples
 #' A <- paste("a", 1:4, sep = "")
 #' B <- paste("b", 1:3, sep = "")
-#' cd.spl(A, B, 3)
+#' cr.spld(A, B, 3)
 #' @export
 
-cd.spl <- function(A, B, nrep, nc = NULL) {
+cr.spld <- function(A, B, nrep, nc = NULL) {
   
   # As character
   

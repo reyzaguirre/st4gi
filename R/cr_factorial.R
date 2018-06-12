@@ -16,11 +16,11 @@
 #' @examples
 #' A <- paste("a", 1:5, sep = "")
 #' B <- paste("b", 1:3, sep = "")
-#' cd.factorial(A, B, design = "rcbd", nrep = 3, nc = 12)
+#' cr.f(A, B, design = "rcbd", nrep = 3, nc = 12)
 #' @export
 
-cd.factorial <- function(A, B, C = NULL, D = NULL, E = NULL,
-                         design = c("crd", "rcbd"), nrep, nc) {
+cr.f <- function(A, B, C = NULL, D = NULL, E = NULL,
+                 design = c("crd", "rcbd"), nrep, nc) {
   
   # Match arguments
   

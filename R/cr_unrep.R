@@ -1,18 +1,18 @@
-#' Unreplicated design
+#' Unreplicated experiment
 #'
-#' This function creates the fieldbook and fieldplan for an unreplicated design
-#' with genotypes randomly allocated on a field.
+#' This function creates the fieldbook and fieldplan for an unreplicated
+#' experiment with genotypes randomly allocated on a field.
 #' @param geno The list of genotypes.
 #' @param nc Number of columns.
 #' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' cd.ur(1:100, 5)
-#' cd.ur(1:100, 7)
+#' cr.ur(1:100, 5)
+#' cr.ur(1:100, 7)
 #' @export
 
-cd.ur <- function(geno, nc) {
+cr.ur <- function(geno, nc) {
   
   # As character
   

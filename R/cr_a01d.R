@@ -20,11 +20,11 @@
 #' The replications and blocks inside replications are disposed alongside the rows.
 #' @return It returns the fieldbook and fieldplan.
 #' @examples
-#' cd.a01(1:100, 2, 5, 40)
-#' cd.a01(1:100, 3, 5, 28)
+#' cr.a01d(1:100, 2, 5, 40)
+#' cr.a01d(1:100, 3, 5, 28)
 #' @export
 
-cd.a01 <- function(geno, nrep, k, nc) {
+cr.a01d <- function(geno, nrep, k, nc) {
   
   # As character
   

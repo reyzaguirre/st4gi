@@ -1,7 +1,7 @@
 #' Adjust values with a grid of checks
 #'
 #' This function adjust the observed values of an experiment planted following
-#' the method described on Westcott (1981) with a grid of checks.
+#' the method described by Westcott (1981) with a grid of checks.
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
 #' @param ch1 Name of check 1.
@@ -37,8 +37,8 @@
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.wd <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
-                  p = 0.5, ind = TRUE, data) {
+aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
+                 p = 0.5, ind = TRUE, data) {
   
   # Error messages
   
