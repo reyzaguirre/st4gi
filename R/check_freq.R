@@ -1,7 +1,7 @@
 #' Check frequencies
 #'
 #' Check frequencies for designs with complete replications and one or two factors.
-#' This is a wrapper for \code{check.rcbd} and \code{check.2f} functions.
+#' This is a wrapper for \code{ck.rcbd} and \code{ck.2f} functions.
 #' @param trait The trait to analyze.
 #' @param geno Genotypes.
 #' @param env Environments.
@@ -23,7 +23,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
 
   if (is.null(env)) {
     
-    lc <- check.rcbd(trait, geno, rep, data)
+    lc <- ck.rcbd(trait, geno, rep, data)
   
     if (lc$c1 == 0) {
       lista <- apply(lc$tfreq, 1, sum)
@@ -64,7 +64,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     data[, env] <- factor(data[, env])
     le <- levels(data[, env])
 
-    lc <- check.2f(trait, geno, env, rep, data)
+    lc <- ck.2f(trait, geno, env, rep, data)
 
     if (lc$c1 == 0) {
       tf <- lc$tfreq == 0
