@@ -1,4 +1,4 @@
-#' Check rows and columns
+#' Check row and column positions
 #'
 #' This function checks that there is only one genotype in each row and column position.
 #' @param row Label for rows.
@@ -10,7 +10,7 @@
 #' @author Raul Eyzaguirre.
 #' @export
 
-check.rc <- function(row, col, rep = NULL, data) {
+ck.pos <- function(row, col, rep = NULL, data) {
   
   # Number of replications
   
@@ -70,7 +70,7 @@ check.rc <- function(row, col, rep = NULL, data) {
 #' For an ANOVA in an ABD it is needed at least two checks with at least 2 valid cases each.
 #' @export
 
-check.abd <- function(trait, treat, rep, data) {
+ck.abd <- function(trait, treat, rep, data) {
   
   # Everything as character
   
@@ -145,7 +145,7 @@ check.abd <- function(trait, treat, rep, data) {
 #' if there is any treatment without data.
 #' @export
 
-check.crd <- function(trait, treat, data) {
+ck.crd <- function(trait, treat, data) {
   
   # Everything as factor
   
@@ -191,7 +191,7 @@ check.crd <- function(trait, treat, data) {
 #' if the design is balanced.
 #' @export
 
-check.rcbd <- function(trait, treat, rep, data) {
+ck.rcbd <- function(trait, treat, rep, data) {
   
   # Everything as factor
   
@@ -249,7 +249,7 @@ check.rcbd <- function(trait, treat, rep, data) {
 #' replications, and if the design is balanced.
 #' @export
 
-check.2f <- function(trait, A, B, rep, data) {
+ck.2f <- function(trait, A, B, rep, data) {
   
   # Everything as factor
   
@@ -310,7 +310,7 @@ check.2f <- function(trait, A, B, rep, data) {
 #' calculates the number of missing values.
 #' @export
 
-check.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
+ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
   # Checks
   
