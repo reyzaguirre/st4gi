@@ -301,7 +301,7 @@ ck.2f <- function(trait, A, B, rep, data) {
 #' @param col Label for columns.
 #' @param ncb Number of columns between two check columns.
 #' @param data The name of the data frame.
-#' @return Five control values (\code{c1}, \code{c2}, \code{c3}, \code{c4}, \code{c5})
+#' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},
 #' for the grid of checks, the number of missing values for checks (\code{nmis.check})
 #' and genotypes \code{nmis}, and the proportion of missing values for checks
 #' (\code{pmis.check}) and genotypes (\code{pmis}).
@@ -332,10 +332,9 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   # Controls
   
   c1 <- 0 # All column checks with checks
-  c2 <- 0 # Last column with checks
-  c3 <- 0 # All column genotypes with genotypes
-  c4 <- 0 # Alternating checks without in correlative row order
-  c5 <- 0 # All genotypes with checks to the left and right
+  c2 <- 0 # All column genotypes with genotypes
+  c3 <- 0 # Alternating checks without in correlative row order
+  c4 <- 0 # All genotypes with checks to the left and right
 
   # Columns with checks
   
@@ -346,26 +345,21 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   if (sum(!(data[data[, col] %in% cch, geno] %in% checks)) > 0)
     c1 <- 1
   
-  # Last column with checks
-  
-  if (max(cch) != nc.max)
-    c2 <- 1
-  
   # Check columns with genotypes
   
   if (sum(data[!(data[, col] %in% cch), geno] %in% checks) > 0)
-    c3 <- 1
+    c2 <- 1
   
   # Alternating checks
   
   for (i in cch)
     for (j in (min(data[data[, col] == i, row]) + 1):max(data[data[, col] == i, row]))
       if (data[data[, col] == i & data[, row] == j, geno] == data[data[, col] == i & data[, row] == j - 1, geno])
-        c4 <- 1
+        c3 <- 1
   
   for (i in 2:length(cch))
     if (data[data[, col] == cch[i] & data[, row] == nr.min, geno] == data[data[, col] == cch[i - 1] & data[, row] == nr.min, geno])
-      c4 <- 1
+      c3 <- 1
   
   # All genotypes must have one check to the left and one to the right
   
@@ -374,7 +368,7 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
     columns <- (data[i, col] - ncb):(data[i, col] + ncb)
     temp <- data[data[, row] == rows & data[, col] %in% columns, geno]
     if (sum(temp %in% checks) == 0)
-      c5 <- 1
+      c4 <- 1
   }
 
   # Number of missing values for checks
@@ -395,6 +389,6 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, c5 = c5, nmis = nmis, pmis = pmis,
+  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        nmis.check = nmis.check, pmis.check = pmis.check)
 }

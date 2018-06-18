@@ -2,13 +2,13 @@
 % Please edit documentation in R/aj_westcott.R
 \name{aj.w}
 \alias{aj.w}
-\title{Adjust values with a grid of checks}
+\title{Adjust values following the method of Westcott}
 \usage{
 aj.w(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   p = 0.5, ind = TRUE, data)
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The trait to adjust.}
 
 \item{geno}{The genotypes.}
 
@@ -55,6 +55,9 @@ If \code{p = 1} then the values are adjusted in the same
 proportion that the checks vary around the field. For values lower than 1
 the values are adjusted based on that proportion over the checks variation.
 If \code{p = 0} then there is no adjustment.
+
+If the layout does not correspond with the Westcott method, then the observed values
+are adjusted with the values of the checks planted nearby and a warning is issued.
 }
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.

@@ -24,7 +24,7 @@ ck.w(trait, geno, ch1, ch2, row, col, ncb, data)
 \item{data}{The name of the data frame.}
 }
 \value{
-Five control values (\code{c1}, \code{c2}, \code{c3}, \code{c4}, \code{c5})
+Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},
 for the grid of checks, the number of missing values for checks (\code{nmis.check})
 and genotypes \code{nmis}, and the proportion of missing values for checks
 (\code{pmis.check}) and genotypes (\code{pmis}).
