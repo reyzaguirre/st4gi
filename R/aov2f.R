@@ -31,7 +31,7 @@ aov.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
 
   # Check data and estimate missing values
 
-  lc <- check.2f(trait, A, B, rep, data)
+  lc <- ck.2f(trait, A, B, rep, data)
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
     data[, trait] <- mve.2f(trait, A, B, rep, design, data, maxp, tol = 1e-06)[, 5]

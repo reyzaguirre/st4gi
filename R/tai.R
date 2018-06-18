@@ -30,7 +30,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Check data
 
-  lc <- check.2f(trait, geno, env, rep, data)
+  lc <- ck.2f(trait, geno, env, rep, data)
 
   # Error messages and warnings
 

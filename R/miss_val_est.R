@@ -24,7 +24,7 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- check.rcbd(trait, treat, rep, data)
+  lc <- ck.rcbd(trait, treat, rep, data)
 
   # Error messages
 
@@ -109,7 +109,7 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- check.2f(trait, geno, env, rep, data)
+  lc <- ck.2f(trait, geno, env, rep, data)
 
   # Error messages
 
@@ -207,7 +207,7 @@ mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
   
   # Check data
   
-  lc <- check.2f(trait, A, B, rep, data)
+  lc <- ck.2f(trait, A, B, rep, data)
   
   # Error messages
   
