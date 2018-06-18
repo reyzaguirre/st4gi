@@ -47,7 +47,7 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   if (out$nplot > 0)
     stop("More than one genotype in the same position. Run check.pos to see.")
   
-  out <- check.wd(trait, geno, ch1, ch2, row, col, ncb, data)
+  out <- check.w(trait, geno, ch1, ch2, row, col, ncb, data)
   
   if (out$c1 == 1)
     stop("There are plots in the columns of checks with other genotypes planted.")

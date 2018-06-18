@@ -289,9 +289,9 @@ check.2f <- function(trait, A, B, rep, data) {
        na = na, nb = nb, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
 }
 
-#' Check data for a Wescott design
+#' Check data for a Wescott layout
 #'
-#' This function checks the grid of checks on the Wescott design and
+#' This function checks the grid of checks on the Wescott layout and
 #' the number of missing values.
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
@@ -306,11 +306,11 @@ check.2f <- function(trait, A, B, rep, data) {
 #' and genotypes \code{nmis}, and the proportion of missing values for checks
 #' (\code{pmis.check}) and genotypes (\code{pmis}).
 #' @author Raul Eyzaguirre.
-#' @details This function checks the grid of checks for the Wescoot design anc
+#' @details This function checks the grid of checks for the Wescoot layout and
 #' calculates the number of missing values.
 #' @export
 
-check.wd <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
+check.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
   # Checks
   
