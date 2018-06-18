@@ -53,21 +53,21 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   out <- ck.w(trait, geno, ch1, ch2, row, col, ncb, data)
   
   if (out$c1 == 1)
-    warning("There are plots in the columns of checks with other genotypes planted.
-            Adjusted values are obtained with the values of the checks nearby.")
+    warning("There are plots in the columns of checks with other genotypes planted.")
   
   if (out$c2 == 1)
-    warning("There are plots in the columns of genotypes with checks planted.
-            Adjusted values are obtained with the values of the checks nearby.")
+    warning("There are plots in the columns of genotypes with checks planted.")
   
   if (out$c3 == 1)
-    warning("There are columns of checks without alternating checks.
-            Adjusted values are obtained with the values of the checks nearby.")
+    warning("There are columns of checks without alternating checks.")
   
   if (out$c4 == 1)
-    warning("There are plots with genotypes without a check plot to the left or to the right.
-            Adjusted values are obtained with the values of the checks nearby.")
+    warning("There are plots with genotypes without a check plot to the left or to the right.")
   
+  if (out$c1 == 1 | out$c2 == 1 | out$c3 == 1 | out$c4 == 1)
+    warning("Adjusted values are obtained with the values of the checks nearby.")
+  
+    
   # Save column names
   
   col.names <- colnames(data)
