@@ -22,7 +22,7 @@ Information about the balance, missing values, and replications of the design.
 }
 \description{
 Check frequencies for designs with complete replications and one or two factors.
-This is a wrapper for \code{ck.rcbd} and \code{ck.2f} functions.
+This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
 }
 \author{
 Raul Eyzaguirre.

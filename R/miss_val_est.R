@@ -109,7 +109,7 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- ck.2f(trait, geno, env, rep, data)
+  lc <- ck.f(trait, c(geno, env), rep, data)
 
   # Error messages
 
@@ -129,7 +129,7 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
     stop(paste("Too many missing values (",
                format(lc$pmis * 100, digits = 3), "%).", sep = ""))
 
-  if (lc$na < 2 | lc$nb < 2)
+  if (lc$nl[1] < 2 | lc$nl[2] < 2)
     stop("This is not a MET experiment.")
 
   # Estimation
@@ -153,9 +153,9 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
         sum1 <- tapply(data[, "ytemp"], list(data[, geno], data[, env]), sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], list(data[, env], data[, rep]), sum, na.rm = TRUE)
         sum3 <- tapply(data[, "ytemp"], data[, env], sum, na.rm = TRUE)
-        data[i, trait.est] <- (lc$na * sum1[data[i, geno], data[i, env]] +
+        data[i, trait.est] <- (lc$nl[1] * sum1[data[i, geno], data[i, env]] +
                                  lc$nr * sum2[data[i, env], data[i, rep]] -
-                                 sum3[data[i, env]]) / (lc$na * lc$nr - lc$na - lc$nr + 1)
+                                 sum3[data[i, env]]) / (lc$nl[1] * lc$nr - lc$nl[1] - lc$nr + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
@@ -207,7 +207,7 @@ mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
   
   # Check data
   
-  lc <- ck.2f(trait, A, B, rep, data)
+  lc <- ck.f(trait, c(A, B), rep, data)
   
   # Error messages
   
@@ -227,7 +227,7 @@ mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
     stop(paste("Too many missing values (",
                format(lc$pmis * 100, digits = 3), "%).", sep = ""))
   
-  if (lc$na < 2 | lc$nb < 2)
+  if (lc$nl[1] < 2 | lc$nl[2] < 2)
     stop("This is not a 2-factor factorial experiment.")
   
   # Estimation
@@ -255,9 +255,9 @@ mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
           sum1 <- tapply(data[, "ytemp"], list(data[, A], data[, B]), sum, na.rm = TRUE)
           sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
           sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
-          data[i, trait.est] <- (lc$na * lc$nb * sum1[data[i, A], data[i, B]] +
+          data[i, trait.est] <- (lc$nl[1] * lc$nl[2] * sum1[data[i, A], data[i, B]] +
                                    lc$nr * sum2[data[i, rep]] - sum3) /
-            (lc$na * lc$nb * lc$nr - lc$na * lc$nb - lc$nr + 1)
+            (lc$nl[1] * lc$nl[2] * lc$nr - lc$nl[1] * lc$nl[2] - lc$nr + 1)
           data[i, "ytemp"] <- data[i, trait.est]
         }
       lc1 <- lc2

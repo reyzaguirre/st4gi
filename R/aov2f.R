@@ -31,7 +31,7 @@ aov.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
 
   # Check data and estimate missing values
 
-  lc <- ck.2f(trait, A, B, rep, data)
+  lc <- ck.f(trait, c(A, B), rep, data)
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
     data[, trait] <- mve.2f(trait, A, B, rep, design, data, maxp, tol = 1e-06)[, 5]
@@ -42,7 +42,7 @@ aov.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
 
   # Error messages
 
-  if (lc$na < 2 | lc$nb < 2)
+  if (lc$nl[1] < 2 | lc$nl[2] < 2)
     stop("This is not a 2-factor factorial.")
 
   # ANOVA

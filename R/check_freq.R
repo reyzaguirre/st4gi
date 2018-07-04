@@ -1,7 +1,7 @@
 #' Check frequencies
 #'
 #' Check frequencies for designs with complete replications and one or two factors.
-#' This is a wrapper for \code{ck.rcbd} and \code{ck.2f} functions.
+#' This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
 #' @param trait The trait to analyze.
 #' @param geno Genotypes.
 #' @param env Environments.
@@ -64,12 +64,12 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     data[, env] <- factor(data[, env])
     le <- levels(data[, env])
 
-    lc <- ck.2f(trait, geno, env, rep, data)
+    lc <- ck.f(trait, c(geno, env), rep, data)
 
     if (lc$c1 == 0) {
       tf <- lc$tfreq == 0
       cat('There are genotypes without data in a given environment: \n')
-      for (i in 1:lc$nb) {
+      for (i in 1:lc$nl[2]) {
         if (sum(tf[, i]) > 0) {
           lista <- rownames(tf)[tf[, i]]
           cat(paste('- Environment ', le[i], ':', sep = ""), lista, '\n')
@@ -86,7 +86,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     if (lc$c3 == 0) {
       tf <- lc$tfreqr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
-      for (i in 1:lc$nb) {
+      for (i in 1:lc$nl[2]) {
         for (j in 1:lc$nr) {
           if (sum(tf[, i, j]) > 0) {
             lista <- rownames(tf)[tf[, i, j]]

@@ -56,9 +56,9 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   # Error messages
   
-  lc <- ck.2f(trait, geno, env, rep, data)
+  lc <- ck.f(trait, c(geno, env), rep, data)
   
-  if (lc$na == 2 & lc$nb == 2)
+  if (lc$nl[1] == 2 & lc$nl[2] == 2)
     stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")
 
   # Compute ANOVA
@@ -91,24 +91,24 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   MSinter <- NULL  # variance of the interaction effects
   ssr <- NULL      # residual sum of squares
 
-  for (i in 1:lc$na) {
+  for (i in 1:lc$nl[1]) {
     modelo <- lm(int.mean[i, ] ~ I(env.mean - overall.mean))
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
     se[i] <- summary.lm(modelo)$coefficients[2, 2]
     MSe[i] <- anova(modelo)[2, 3]
-    MSentry[i] <- sum((int.mean[i, ] - geno.mean[i])^2) / (lc$nb - 1)
-    MSinter[i] <- sum((int.mean[i, ] - geno.mean[i] - env.mean + overall.mean)^2) / (lc$nb - 1)
+    MSentry[i] <- sum((int.mean[i, ] - geno.mean[i])^2) / (lc$nl[2] - 1)
+    MSinter[i] <- sum((int.mean[i, ] - geno.mean[i] - env.mean + overall.mean)^2) / (lc$nl[2] - 1)
     ssr[i] <- anova(modelo)[2, 2] * lc$nr
   }
   stab.geno <- cbind(a, b, se, MSe, MSentry, MSinter)
   row.names(stab.geno) <- row.names(int.mean)
   
-  if (lc$nb > 2) {
+  if (lc$nl[2] > 2) {
     drg.sc <- sum(ssr)
     hrg.sc <- at[4, 2] - drg.sc
-    hrg.gl <- lc$na - 1
-    drg.gl <- (lc$na - 1) * (lc$nb - 1) - hrg.gl
+    hrg.gl <- lc$nl[1] - 1
+    drg.gl <- (lc$nl[1] - 1) * (lc$nl[2] - 1) - hrg.gl
     drg.cm <- drg.sc / drg.gl
     hrg.cm <- hrg.sc / hrg.gl
     drg.f <- drg.cm / at[5, 3]
@@ -138,24 +138,24 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   MSinter <- NULL  # variance of the interaction effects
   ssr <- NULL      # residual sum of squares
   
-  for (i in 1:lc$nb) {
+  for (i in 1:lc$nl[2]) {
     modelo <- lm(int.mean[, i] ~ I(geno.mean - overall.mean))
     a[i] <- coef(modelo)[1]
     b[i] <- coef(modelo)[2]
     se[i] <- summary.lm(modelo)$coefficients[2, 2]
     MSe[i] <- anova(modelo)[2, 3]
-    MSentry[i] <- sum((int.mean[, i] - env.mean[i])^2) / (lc$na - 1)
-    MSinter[i] <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (lc$na - 1)
+    MSentry[i] <- sum((int.mean[, i] - env.mean[i])^2) / (lc$nl[1] - 1)
+    MSinter[i] <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (lc$nl[1] - 1)
     ssr[i] <- anova(modelo)[2, 2] * lc$nr
   }
   stab.env <- cbind(a, b, se, MSe, MSentry, MSinter)
   row.names(stab.env) <- colnames(int.mean)
 
-  if (lc$na > 2) {
+  if (lc$nl[1] > 2) {
     dre.sc <- sum(ssr)
     hre.sc <- at[4, 2] - dre.sc
-    hre.gl <- lc$nb - 1
-    dre.gl <- (lc$na - 1) * (lc$nb - 1) - hre.gl
+    hre.gl <- lc$nl[2] - 1
+    dre.gl <- (lc$nl[1] - 1) * (lc$nl[2] - 1) - hre.gl
     dre.cm <- dre.sc / dre.gl
     hre.cm <- hre.sc / hre.gl
     dre.f <- dre.cm / at[5, 3]

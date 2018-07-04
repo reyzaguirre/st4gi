@@ -228,65 +228,81 @@ ck.rcbd <- function(trait, treat, rep, data) {
        nt = nt, nr = nr, tfreq = tfreq)
 }
 
-#' Check data for a 2-factor factorial
+#' Check data for a full factorial
 #'
-#' This function checks the frequencies for a 2-factor factorial.
+#' This function checks the frequencies for a full factorial.
 #' @param trait The trait to analyze.
-#' @param A Factor A.
-#' @param B Factor B.
+#' @param factors List of factors.
 #' @param rep The replications.
 #' @param data The name of the data frame.
-#' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
-#' of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-#' of levels of factor A (\code{na}), the number of levels of factor B (\code{nb}),
-#' the number of replications (\code{nr}), a table with frequencies of valid cases
-#' for each combination of the levels of both factors (\code{tfreq}), and a table with
-#' frequencies of valid cases for each combination of the levels of both factors in each
-#' replication (\code{tfreqr}).
+#' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}),
+#' the number of missing values \code{nmis}, the proportion of missing values
+#' (\code{pmis}), the number of levels of each factor (\code{nl}), the number of
+#' replications (\code{nr}), a table with frequencies of valid cases for each
+#' combination of the levels of the factors (\code{tfreq}), and a table with
+#' frequencies of valid cases for each combination of the levels of the factors
+#' in each replication (\code{tfreqr}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication, if there is
-#' any combination of the levels of both factors without data or with more data then
+#' any combination of the levels of the factors without data or with more data than
 #' replications, and if the design is balanced.
 #' @export
 
-ck.2f <- function(trait, A, B, rep, data) {
+ck.f <- function(trait, factors, rep, data) {
+  
+  # Number of factors
+  
+  nf <- length(factors)
   
   # Everything as factor
   
-  data[, A] <- factor(data[, A])
-  data[, B] <- factor(data[, B])
+  for (i in 1:nf)
+    data[, factors[i]] <- factor(data[, factors[i]])
   data[, rep] <- factor(data[, rep])
   
   # Number of levels
   
-  na <- nlevels(data[, A])
-  nb <- nlevels(data[, B])
+  nl <- NULL
+  
+  for (i in 1:nf)
+    nl[i] <- nlevels(data[, factors[i]])
+
   nr <- nlevels(data[, rep])
 
-  # Check frequencies by A and B
+  # Check frequencies
   
   nmis <- sum(is.na(data[, trait]))
   pmis <- mean(is.na(data[, trait]))
-  subdata <- subset(data, !is.na(data[, trait]))
-  tfreq <- table(subdata[, A], subdata[, B])
-  tfreqr <- table(subdata[, A], subdata[, B], subdata[, rep])
   
+  subdata <- subset(data, !is.na(data[, trait]))
+  
+  expr <- 'table(subdata[, factors[1]]'
+  
+  for (i in 2:nf)
+    expr <- paste(expr, ', subdata[, factors[', i, ']]', sep = "")
+  
+  expr1 <- paste(expr, ')', sep = "")
+  expr2 <- paste(expr, ', subdata[, rep])', sep = "")
+  
+  tfreq <- eval(parse(text = expr1))
+  tfreqr <- eval(parse(text = expr2))
+
   # Controls
   
-  c1 <- 1 # Check for zeros. Initial state no zeros
+  c1 <- 1 # Check for zero frequencies. Initial state no zeros
   c2 <- 0 # Check for replicates. Initial state only one replicate
   c3 <- 1 # Check for genotypes with more than one datum in a replication of one environment
   c4 <- 1 # Check for missing values. Initial state no missing values
     
-  if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
-  if (nr > 1) c2 <- 1 # State 1: more than one replicate
-  if (max(tfreqr) > 1) c3 <- 0 # State 0: some genotypes with addional data
+  if (min(tfreq) == 0) c1 <- 0  # State 0: there are zeros
+  if (nr > 1) c2 <- 1           # State 1: more than one replicate
+  if (max(tfreqr) > 1) c3 <- 0  # State 0: some genotypes with addional data
   if (min(tfreqr) == 0) c4 <- 0 # State 0: missing values
     
   # Return
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
-       na = na, nb = nb, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
+       nl = nl, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
 }
 
 #' Check data for a Wescott layout
