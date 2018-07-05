@@ -4,19 +4,12 @@
 \alias{cr.f}
 \title{Create design for a factorial experiment}
 \usage{
-cr.f(A, B, C = NULL, D = NULL, E = NULL, design = c("crd", "rcbd"),
-  nrep, nc)
+cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc)
 }
 \arguments{
-\item{A}{The levels of factor A.}
+\item{fnames}{Factor's names.}
 
-\item{B}{The levels of factor B.}
-
-\item{C}{The levels of factor C.}
-
-\item{D}{The levels of factor D.}
-
-\item{E}{The levels of factor E.}
+\item{flevels}{A list with the factor's levels.}
 
 \item{design}{The design, a crd or a rcbd.}
 
@@ -29,7 +22,7 @@ It returns the fieldbook and fieldplan.
 }
 \description{
 This function creates the fieldbook and fieldplan for a factorial experiment
-with 2 to 5 factors following a CRD or a RCBD.
+following a CRD or a RCBD.
 }
 \details{
 The treatments are randomly allocated on a field following a CRD or a RCBD.
@@ -37,7 +30,8 @@ The treatments are randomly allocated on a field following a CRD or a RCBD.
 \examples{
 A <- paste("a", 1:5, sep = "")
 B <- paste("b", 1:3, sep = "")
-cr.f(A, B, design = "rcbd", nrep = 3, nc = 12)
+C <- paste("c", 1:2, sep = "")
+cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12)
 }
 \author{
 Raul Eyzaguirre.
