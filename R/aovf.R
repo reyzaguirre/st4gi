@@ -28,7 +28,7 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
 
   # Everything as factor
   
-  for(i in 1:nf)
+  for (i in 1:nf)
     data[, factors[i]] <- factor(data[, factors[i]])
 
   data[, rep] <- factor(data[, rep])
@@ -51,7 +51,7 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   # ANOVA
   
   expr <- paste(trait, '~', factors[1])
-  for(i in 2:nf)
+  for (i in 2:nf)
     expr <- paste(expr, '*', factors[i])
 
   if (design == "crd") {
@@ -82,7 +82,7 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
     
     # Correction for F and p values
     
-    for(i in 1:(rr - 1)) {
+    for (i in 1:(rr - 1)) {
       at[i, 4] <- at[i, 3] / at[rr, 3]
       at[i, 5] <- pf(at[i, 4], at[i, 1], at[rr, 1], lower.tail = FALSE)
     }
