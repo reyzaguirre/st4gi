@@ -9,7 +9,7 @@ ck.f(trait, factors, rep, data)
 \arguments{
 \item{trait}{The trait to analyze.}
 
-\item{factors}{List of factors.}
+\item{factors}{The factors.}
 
 \item{rep}{The replications.}
 

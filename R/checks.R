@@ -232,7 +232,7 @@ ck.rcbd <- function(trait, treat, rep, data) {
 #'
 #' This function checks the frequencies for a full factorial.
 #' @param trait The trait to analyze.
-#' @param factors List of factors.
+#' @param factors The factors.
 #' @param rep The replications.
 #' @param data The name of the data frame.
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}),

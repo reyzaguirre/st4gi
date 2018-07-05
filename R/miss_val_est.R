@@ -114,13 +114,13 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   # Error messages
 
   if (lc$c1 == 0)
-    stop("Some GxE cells have zero frequency. Remove genotypes or environments to proceed.")
+    stop("Some GxE cells have zero frequency.")
 
   if (lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
 
   if (lc$c3 == 0)
-    stop("Some genotypes have additional replications. Remove those replications to proceed.")
+    stop("Some genotypes have additional replications.")
 
   if (lc$c4 == 1)
     stop("There are no missing values to estimate.")
@@ -168,13 +168,12 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   data[, c(geno, env, rep, trait, trait.est)]
 }
 
-#' Estimation of missing values for a 2-factor factorial
+#' Estimation of missing values for a factorial experiment
 #'
-#' Function to estimate missing values for a 2-factor factorial with a CRD
+#' Function to estimate missing values for factorial experiment with a CRD
 #' or a RCBD by the least squares method.
 #' @param trait The trait to estimate missing values.
-#' @param A Factor A.
-#' @param B Factor B.
+#' @param factors The factors.
 #' @param rep The replications or blocks.
 #' @param design The statistical design, \code{crd} or \code{rcbd}.
 #' @param data The name of the data frame.
@@ -183,7 +182,7 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 #' @return It returns a data frame with the experimental layout and columns \code{trait}
 #' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
-#' @details A \code{data.frame} with data for a 2-factor factorial with at least two
+#' @details A \code{data.frame} with data for a factorial experiment with at least two
 #' replications and at least one datum for each factor levels' combination must be loaded.
 #' Experimental data with only one replication, any factor levels' combination without data,
 #' or more missing values than specified in \code{maxp} will generate an error message.
@@ -196,10 +195,10 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 #' temp$dm[c(3, 10, 115)] <- NA
 #'
 #' # Estimate the missing values
-#' mve.2f("dm", "geno", "treat", "rep", "crd", temp)
+#' mve.f("dm", c("geno", "treat"), "rep", "crd", temp)
 #' @export
 
-mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1, tol = 1e-06) {
+mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1, tol = 1e-06) {
   
   # match arguments
   
@@ -207,18 +206,18 @@ mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
   
   # Check data
   
-  lc <- ck.f(trait, c(A, B), rep, data)
+  lc <- ck.f(trait, factors, rep, data)
   
   # Error messages
   
   if (lc$c1 == 0)
-    stop("Some factor levels' combinations have zero frequency. Remove levels of factor A or B to proceed.")
+    stop("Some factor levels' combinations have zero frequency.")
   
   if (lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
   
   if (lc$c3 == 0)
-    stop("Some factor levels' combinations have additional replications. Remove those replications to proceed.")
+    stop("Some factor levels' combinations have additional replications.")
 
   if (lc$c4 == 1)
     stop("The data set is balanced. There are no missing values to estimate.")
@@ -227,46 +226,107 @@ mve.2f <- function(trait, A, B, rep, design = c("crd", "rcbd"), data, maxp = 0.1
     stop(paste("Too many missing values (",
                format(lc$pmis * 100, digits = 3), "%).", sep = ""))
   
-  if (lc$nl[1] < 2 | lc$nl[2] < 2)
-    stop("This is not a 2-factor factorial experiment.")
+  if (sum(lc$nl < 2) > 0)
+    stop("There are factors with only one level. This is is not a factorial experiment.")
   
-  # Estimation
+  # Number of factors
+  
+  nf <- length(factors)
+
+  # Get a copy of trait for estimated values and for temporary values
   
   trait.est <- paste(trait, ".est", sep = "")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
-  mAB <- tapply(data[, trait], list(data[, A], data[, B]), mean, na.rm = TRUE)
+  
+  # Create expression for list of factors
+  
+  lf.expr <- 'list(data[, factors[1]]'
+  
+  for (i in 2:nf)
+    lf.expr <- paste(lf.expr, ', data[, factors[', i, ']]', sep = "")
+  
+  lf.expr <- paste(lf.expr, ')', sep = "")
+  
+  # Compute means over replications
+
+  tmeans <- tapply(data[, trait], eval(parse(text = lf.expr)), mean, na.rm = TRUE)
+
+  # Store means in ytemp for missing values
+  
   for (i in 1:length(data[, trait]))
     if (is.na(data[i, trait])) {
-      data[i, "ytemp"] <- mAB[data[i, A], data[i, B]]
-      if (design == "crd")
-        data[i, trait.est] <- mAB[data[i, A], data[i, B]]
+      expr <- paste('tmeans[data[', i, ', factors[1]]', sep = "")
+      for (j in 2:nf)
+        expr <- paste(expr, ', data[', i, ', factors[', j, ']]', sep = "")
+      expr <- paste(expr, ']', sep = "")
+      data[i, "ytemp"] <- eval(parse(text = expr))
     }
+  
+  # Estimate missing values for a crd
+  
+  if (design == "crd")
+    data[, trait.est] <- data[, "ytemp"]
+  
+  # Estimate missing values for a rcbd
+  
   if (design == "rcbd"){
-    lc1 <- array(0, lc$nmis)
-    lc2 <- array(0, lc$nmis)
+    
+    # Total number of treatments
+    
+    nt <- prod(lc$nl)
+    
+    # Vectors of estimated missing values to check convergence
+    
+    emv1 <- array(0, lc$nmis)
+    emv2 <- array(0, lc$nmis)
+    
+    # Value to control convergence
+    
     cc <- max(data[, trait], na.rm = TRUE)
+    
+    # Maximum number of iteration control
+    
     cont <- 0
+    
+    # Iterate
+    
     while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
+      
       cont <- cont + 1
+      
       for (i in 1:length(data[, trait]))
         if (is.na(data[i, trait])) {
-          data[i, "ytemp"] <- data[i, trait]
-          sum1 <- tapply(data[, "ytemp"], list(data[, A], data[, B]), sum, na.rm = TRUE)
+      
+          # Compute sums
+          
+          data[i, "ytemp"] <- NA
+          sum1 <- tapply(data[, "ytemp"], eval(parse(text = lf.expr)), sum, na.rm = TRUE)
           sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
           sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
-          data[i, trait.est] <- (lc$nl[1] * lc$nl[2] * sum1[data[i, A], data[i, B]] +
-                                   lc$nr * sum2[data[i, rep]] - sum3) /
-            (lc$nl[1] * lc$nl[2] * lc$nr - lc$nl[1] * lc$nl[2] - lc$nr + 1)
+          
+          # Get estimate
+          
+          expr <- paste('sum1[data[', i, ', factors[1]]', sep = "")
+          for (j in 2:nf)
+            expr <- paste(expr, ', data[', i, ', factors[', j, ']]', sep = "")
+          expr <- paste(expr, ']', sep = "")
+          
+          mv.num <- nt * eval(parse(text = expr)) + lc$nr * sum2[data[i, rep]] - sum3
+          mv.den <- nt * lc$nr - nt - lc$nr + 1
+
+          data[i, trait.est] <- mv.num / mv.den
+          
           data[i, "ytemp"] <- data[i, trait.est]
         }
-      lc1 <- lc2
-      lc2 <- subset(data, is.na(data[, trait]) == 1)[, trait.est]
-      cc <- max(abs(lc1 - lc2))
+      
+      emv1 <- emv2
+      emv2 <- subset(data, is.na(data[, trait]) == 1)[, trait.est]
+      cc <- max(abs(emv1 - emv2))
     }
   }
   
   # Return
   
-  data[, c(A, B, rep, trait, trait.est)]
+  data[, c(factors, rep, trait, trait.est)]
 }
