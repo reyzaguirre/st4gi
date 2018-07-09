@@ -41,12 +41,11 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
     stop("There are no missing values to estimate.")
 
     if (lc$pmis > maxp)
-    stop(paste("Too many missing values (",
-               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
+    stop(paste0("Too many missing values (", format(lc$pmis * 100, digits = 3), "%)."))
 
   # Estimation
 
-  trait.est <- paste(trait, ".est", sep = "")
+  trait.est <- paste0(trait, ".est")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
   mG <- tapply(data[, trait], data[, treat], mean, na.rm = TRUE)
@@ -126,15 +125,14 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
     stop("There are no missing values to estimate.")
 
   if (lc$pmis > maxp)
-    stop(paste("Too many missing values (",
-               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
+    stop(paste0("Too many missing values (", format(lc$pmis * 100, digits = 3), "%)."))
 
   if (lc$nl[1] < 2 | lc$nl[2] < 2)
     stop("This is not a MET experiment.")
 
   # Estimation
 
-  trait.est <- paste(trait, ".est", sep = "")
+  trait.est <- paste0(trait, ".est")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
   mGE <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = TRUE)
@@ -223,8 +221,7 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
     stop("The data set is balanced. There are no missing values to estimate.")
 
   if (lc$pmis > maxp)
-    stop(paste("Too many missing values (",
-               format(lc$pmis * 100, digits = 3), "%).", sep = ""))
+    stop(paste0("Too many missing values (", format(lc$pmis * 100, digits = 3), "%)."))
   
   if (sum(lc$nl < 2) > 0)
     stop("There are factors with only one level. This is is not a factorial experiment.")
@@ -235,7 +232,7 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
 
   # Get a copy of trait for estimated values and for temporary values
   
-  trait.est <- paste(trait, ".est", sep = "")
+  trait.est <- paste0(trait, ".est")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
   
@@ -244,9 +241,9 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   lf.expr <- 'list(data[, factors[1]]'
   
   for (i in 2:nf)
-    lf.expr <- paste(lf.expr, ', data[, factors[', i, ']]', sep = "")
+    lf.expr <- paste0(lf.expr, ', data[, factors[', i, ']]')
   
-  lf.expr <- paste(lf.expr, ')', sep = "")
+  lf.expr <- paste0(lf.expr, ')')
   
   # Compute means over replications
 
@@ -256,10 +253,10 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   
   for (i in 1:length(data[, trait]))
     if (is.na(data[i, trait])) {
-      expr <- paste('tmeans[data[', i, ', factors[1]]', sep = "")
+      expr <- paste0('tmeans[data[', i, ', factors[1]]')
       for (j in 2:nf)
-        expr <- paste(expr, ', data[', i, ', factors[', j, ']]', sep = "")
-      expr <- paste(expr, ']', sep = "")
+        expr <- paste0(expr, ', data[', i, ', factors[', j, ']]')
+      expr <- paste0(expr, ']')
       data[i, "ytemp"] <- eval(parse(text = expr))
     }
   
@@ -307,10 +304,10 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
           
           # Get estimate
           
-          expr <- paste('sum1[data[', i, ', factors[1]]', sep = "")
+          expr <- paste0('sum1[data[', i, ', factors[1]]')
           for (j in 2:nf)
-            expr <- paste(expr, ', data[', i, ', factors[', j, ']]', sep = "")
-          expr <- paste(expr, ']', sep = "")
+            expr <- paste0(expr, ', data[', i, ', factors[', j, ']]')
+          expr <- paste0(expr, ']')
           
           mv.num <- nt * eval(parse(text = expr)) + lc$nr * sum2[data[i, rep]] - sum3
           mv.den <- nt * lc$nr - nt - lc$nr + 1

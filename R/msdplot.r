@@ -64,7 +64,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
     resu$n <- table(data[, groups])
     resu$li <- resu$means - qt((1 + conf) / 2, resu$n - 1) * resu$sdev / sqrt(resu$n)
     resu$ls <- resu$means + qt((1 + conf) / 2, resu$n - 1) * resu$sdev / sqrt(resu$n)
-    msg <- paste("Dotplot with means and ", conf * 100, "% confidence limits", sep = "")
+    msg <- paste0("Dotplot with means and ", conf * 100, "% confidence limits")
   } else {
     resu$li <- resu$means - conf * resu$sdev
     resu$ls <- resu$means + conf * resu$sdev

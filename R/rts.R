@@ -12,7 +12,7 @@
 #' @export
 
 rts1 <- function () {
-  dirfiles <- paste(system.file(package = "st4gi"), "/shinyapps/rts1", sep="")
+  dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts1")
   shiny::runApp(dirfiles)
 }
 
@@ -31,7 +31,7 @@ rts1 <- function () {
 #' @export
 
 rts2 <- function () {
-  dirfiles <- paste(system.file(package = "st4gi"), "/shinyapps/rts2", sep="")
+  dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts2")
   shiny::runApp(dirfiles)
 }
 
@@ -51,7 +51,7 @@ rts2 <- function () {
 #' @export
 
 rts3 <- function () {
-  dirfiles <- paste(system.file(package = "st4gi"), "/shinyapps/rts3", sep="")
+  dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts3")
   shiny::runApp(dirfiles)
 }
 
@@ -70,6 +70,6 @@ rts3 <- function () {
 #' @export
 
 rts4 <- function () {
-  dirfiles <- paste(system.file(package = "st4gi"), "/shinyapps/rts4", sep="")
+  dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts4")
   shiny::runApp(dirfiles)
 }

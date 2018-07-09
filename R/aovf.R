@@ -35,13 +35,13 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
 
   # Estimate missing values and report errors from mve.f
   
-  trait.est <- paste(trait, ".est", sep = "")
+  trait.est <- paste0(trait, ".est")
   
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
     data[, trait] <- mve.f(trait, factors, rep, design, data, maxp)[, trait.est]
-    warning(paste("The data set is unbalanced, ",
-                  format(lc$pmis * 100, digits = 3),
-                  "% missing values estimated.", sep = ""))
+    warning(paste0("The data set is unbalanced, ",
+                   format(lc$pmis * 100, digits = 3),
+                   "% missing values estimated."))
   }
 
   # ANOVA

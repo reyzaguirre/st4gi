@@ -394,8 +394,8 @@ check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
   
   if (!is.null(aqt)) {
     for (i in 1:length(aqt)) {
-      sp5(fb, f, "low", aqt[i], paste("- Extreme low values for (", aqt[i], "):", sep = ""))
-      sp5(fb, f, "high", aqt[i], paste("- Extreme high values for (", aqt[i], "):", sep = ""))
+      sp5(fb, f, "low", aqt[i], paste0("- Extreme low values for (", aqt[i], "):"))
+      sp5(fb, f, "high", aqt[i], paste0("- Extreme high values for (", aqt[i], "):"))
     }
   }
   
@@ -521,7 +521,7 @@ check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
     
     if (!is.null(aqt))
       for (i in 1:length(aqt))
-        sp6(fb, geno, env, rep, aqt[i], out.mod, out.max, paste("- Outlilers for (", aqt[i], "):", sep = ""))
+        sp6(fb, geno, env, rep, aqt[i], out.mod, out.max, paste0("- Outlilers for (", aqt[i], "):"))
     
   }
 }

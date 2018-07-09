@@ -43,7 +43,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
       for (i in 1:lc$nr) {
         if (sum(tf[, i]) > 0) {
           lista <- rownames(tf)[tf[, i]]
-          cat(paste('- Replication ', lr[i], ':', sep = ""), lista, '\n')
+          cat(paste0('- Replication ', lr[i], ':'), lista, '\n')
         }
       }
       cat('\n')
@@ -72,7 +72,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
       for (i in 1:lc$nl[2]) {
         if (sum(tf[, i]) > 0) {
           lista <- rownames(tf)[tf[, i]]
-          cat(paste('- Environment ', le[i], ':', sep = ""), lista, '\n')
+          cat(paste0('- Environment ', le[i], ':'), lista, '\n')
         }
       }
       cat('\n')
@@ -90,8 +90,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
         for (j in 1:lc$nr) {
           if (sum(tf[, i, j]) > 0) {
             lista <- rownames(tf)[tf[, i, j]]
-            cat(paste('- Environment ', le[i], ', replication ', lr[j], ':', sep = ""),
-                lista, '\n')
+            cat(paste0('- Environment ', le[i], ', replication ', lr[j], ':'), lista, '\n')
           }
         }
       }

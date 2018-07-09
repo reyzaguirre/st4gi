@@ -60,10 +60,10 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
     warning("The data set is unbalanced. Significance of PCs is not evaluated.")
 
   if (lc$nl[1] < 2 | lc$nl[2] < 2)
-    stop(paste("This is not a MET experiment."))
+    stop("This is not a MET experiment.")
 
   if (lc$nl[1] < 3 | lc$nl[2] < 3)
-    stop(paste("You need at least 3 genotypes and 3 environments to run AMMI or GGE."))
+    stop("You need at least 3 genotypes and 3 environments to run AMMI or GGE.")
 
   # Compute interaction means matrix
 
@@ -165,7 +165,7 @@ ammi.gxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
   dimnames(PC.geno) <- list(rownames(int.mean), c("PC1", "PC2"))
   PC.env <- cbind(E[, 1], E[, 2])
   dimnames(PC.env) <- list(colnames(int.mean), c("PC1", "PC2"))
-  PC.num <- paste("PC", c(1:PC), sep = "")
+  PC.num <- paste0("PC", c(1:PC))
   PC.sv <- dec$d[1:PC]^2
 
   # Contribution of PCs
@@ -259,7 +259,7 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
   if (biplot == 1) {
     
     if (is.null(title))
-      title <- paste(method, " biplot1 for ", trait, sep = "")
+      title <- paste0(method, " biplot1 for ", trait)
     
     if (biplot1 == "effects") {
       minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.1
@@ -299,7 +299,7 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
   if (biplot == 2) {
     
     if (is.null(title))
-      title <- paste(method, " biplot2 for ", trait, sep = "")
+      title <- paste0(method, " biplot2 for ", trait)
     
     limx <- range(c(E[, 1], G[, 1]))
     limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.1

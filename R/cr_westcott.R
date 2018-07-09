@@ -83,7 +83,7 @@ cr.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
   
-  book <- data.frame(plot = NA, row, col, geno = c(t(plan)), stringsAsFactors = F)
+  book <- data.frame(plot = NA, row, col, geno = c(t(plan)), stringsAsFactors = FALSE)
   book <- book[!is.na(book$geno), ]
   book$plot <- 1:dim(book)[1]
   rownames(book) <- 1:dim(book)[1]

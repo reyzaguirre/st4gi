@@ -42,9 +42,9 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
     data[, trait] <- mve.met(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
-    warning(paste("The data set is unbalanced, ",
-                  format(lc$pmis * 100, digits = 3),
-                  "% missing values estimated.", sep = ""))
+    warning(paste0("The data set is unbalanced, ",
+                   format(lc$pmis * 100, digits = 3),
+                   "% missing values estimated."))
   }
 
   # Compute interaction effects matrix
@@ -147,7 +147,7 @@ plot.tai <- function(x, conf = 0.95, title = NULL, color = c("darkorange", "blac
   # Tai plot
   
   if (is.null(title))
-    title <- paste("Tai stability analysis for ", trait, sep = "")
+    title <- paste0("Tai stability analysis for ", trait)
   
   plot(1, type = "n", xlim = c(-0.05 * lmax, lmax), ylim = c(-amax, amax),
        main = title, xlab = expression(lambda), ylab = expression(alpha))
@@ -220,7 +220,7 @@ ggtai <- function(x, conf = 0.95, title = NULL) {
   # Tai ggplot
   
   if (is.null(title))
-    title <- paste("Tai stability analysis for ", trait, sep = "")
+    title <- paste0("Tai stability analysis for ", trait)
   
   gg <- ggplot2::ggplot(data = dat, ggplot2::aes(x = lambda, y = alpha)) +
     ggplot2::ggtitle(title) +

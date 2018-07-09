@@ -32,9 +32,9 @@ aov.met <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
     data[, trait] <- mve.met(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
-    warning(paste("The data set is unbalanced, ",
-                  format(lc$pmis * 100, digits = 3),
-                  "% missing values estimated.", sep = ""))
+    warning(paste0("The data set is unbalanced, ",
+                   format(lc$pmis * 100, digits = 3),
+                   "% missing values estimated."))
   }
 
   # Error messages
@@ -50,8 +50,7 @@ aov.met <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
   at <- anova(model)
   
-  rownames(at)[1:4] <- c(geno, env, paste(rep, "(", env, ")", sep = ""),
-                         paste(geno, ":", env, sep = ""))
+  rownames(at)[1:4] <- c(geno, env, paste0(rep, "(", env, ")"), paste0(geno, ":", env))
   
   # Correction for missing values
   

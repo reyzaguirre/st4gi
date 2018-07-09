@@ -26,8 +26,8 @@ to each replication. Each replication is a complete block for factor A
 and for factor B.
 }
 \examples{
-A <- paste("a", 1:4, sep = "")
-B <- paste("b", 1:3, sep = "")
+A <- paste0("a", 1:4)
+B <- paste0("b", 1:3)
 cr.strd(A, B, 3)
 }
 \author{

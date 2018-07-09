@@ -39,19 +39,23 @@ elston <- function(traits, geno, env = NULL, rep = NULL, data,
   # match arguments
 
   means <- match.arg(means)
+  
+  # as factor
+  
+  data[, geno] <- factor(data[, geno])
 
   # inits
 
   nt <- length(traits) # number of traits
   k <- NULL
-  ng <- nlevels(factor(data[, geno])) # number of genotypes
+  ng <- nlevels(data[, geno]) # number of genotypes
 
   # compute means
   
   if (means == "fitted" & is.null(env) & is.null(rep))
     means <- "single"
 
-  outind <- data.frame(geno = levels(factor(data[, geno])))
+  outind <- data.frame(geno = levels(data[, geno]))
   colnames(outind) <- geno
 
   if (means == "single" & is.null(env)) {

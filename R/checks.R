@@ -281,10 +281,10 @@ ck.f <- function(trait, factors, rep, data) {
   expr <- 'table(subdata[, factors[1]]'
   
   for (i in 2:nf)
-    expr <- paste(expr, ', subdata[, factors[', i, ']]', sep = "")
+    expr <- paste0(expr, ', subdata[, factors[', i, ']]')
   
-  expr1 <- paste(expr, ')', sep = "")
-  expr2 <- paste(expr, ', subdata[, rep])', sep = "")
+  expr1 <- paste0(expr, ')')
+  expr2 <- paste0(expr, ', subdata[, rep])')
   
   tfreq <- eval(parse(text = expr1))
   tfreqr <- eval(parse(text = expr2))

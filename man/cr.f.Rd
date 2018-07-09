@@ -28,9 +28,9 @@ following a CRD or a RCBD.
 The treatments are randomly allocated on a field following a CRD or a RCBD.
 }
 \examples{
-A <- paste("a", 1:5, sep = "")
-B <- paste("b", 1:3, sep = "")
-C <- paste("c", 1:2, sep = "")
+A <- paste0("a", 1:5)
+B <- paste0("b", 1:3)
+C <- paste0("c", 1:2)
 cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12)
 }
 \author{
