@@ -22,20 +22,16 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   
   design <- match.arg(design)
 
-  # Number of factors
+  # Check data
   
-  nf <- length(factors)
+  lc <- ck.f(trait, factors, rep, data)
 
   # Everything as factor
   
-  for (i in 1:nf)
+  for (i in 1:lc$nf)
     data[, factors[i]] <- factor(data[, factors[i]])
 
   data[, rep] <- factor(data[, rep])
-
-  # Check data
-
-  lc <- ck.f(trait, factors, rep, data)
 
   # Estimate missing values and report errors from mve.f
   
@@ -51,7 +47,7 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   # ANOVA
   
   expr <- paste(trait, '~', factors[1])
-  for (i in 2:nf)
+  for (i in 2:lc$nf)
     expr <- paste(expr, '*', factors[i])
 
   if (design == "crd") {

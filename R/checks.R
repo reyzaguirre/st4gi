@@ -237,11 +237,11 @@ ck.rcbd <- function(trait, treat, rep, data) {
 #' @param data The name of the data frame.
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}),
 #' the number of missing values \code{nmis}, the proportion of missing values
-#' (\code{pmis}), the number of levels of each factor (\code{nl}), the number of
-#' replications (\code{nr}), a table with frequencies of valid cases for each
-#' combination of the levels of the factors (\code{tfreq}), and a table with
+#' (\code{pmis}), the number of factors (\code{nf}), the number of levels of each
+#' factor (\code{nl}), the number of replications (\code{nr}), a table with
 #' frequencies of valid cases for each combination of the levels of the factors
-#' in each replication (\code{tfreqr}).
+#' (\code{tfreq}), and a table with frequencies of valid cases for each combination
+#' of the levels of the factors in each replication (\code{tfreqr}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication, if there is
 #' any combination of the levels of the factors without data or with more data than
@@ -266,6 +266,8 @@ ck.f <- function(trait, factors, rep, data) {
   
   for (i in 1:nf)
     nl[i] <- nlevels(data[, factors[i]])
+  
+  # Number of replications
 
   nr <- nlevels(data[, rep])
 
@@ -302,7 +304,7 @@ ck.f <- function(trait, factors, rep, data) {
   # Return
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
-       nl = nl, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
+       nf = nf, nl = nl, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
 }
 
 #' Check data for a Wescott layout

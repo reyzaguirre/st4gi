@@ -31,13 +31,15 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc) {
   
   flevels <- lapply(flevels, as.character)
   
+  # Number of levels
+  
+  nl <- sapply(flevels, length)
+  
   # Error messages
   
   if (nf != length(flevels))
     stop("Number of factor's names does not match with the list of factor's levels")
     
-  nl <- sapply(flevels, length)
-  
   for (i in 1:nf)
     if (nl[i] < 2)
       stop(paste("Include at least 2 levels for factor", i))
