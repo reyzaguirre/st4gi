@@ -22,11 +22,11 @@
 
 tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
-  # Everything as factor
+  # Everything as character
 
-  data[, geno] <- factor(data[, geno])
-  data[, env] <- factor(data[, env])
-  data[, rep] <- factor(data[, rep])
+  data[, geno] <- as.character(data[, geno])
+  data[, env] <- as.character(data[, env])
+  data[, rep] <- as.character(data[, rep])
 
   # Check data
 
@@ -89,6 +89,7 @@ tai <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
   class(output) <- "tai"
   invisible(output)
+  
 }
 
 #' Tai plot
@@ -162,6 +163,7 @@ plot.tai <- function(x, conf = 0.95, title = NULL, color = c("darkorange", "blac
          lty = 5, col = color[3])
   abline(v = qf(1 - (1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nr - 1)),
          lty = 5, col = color[3])
+  
 }
 
 #' Tai ggplot
@@ -252,4 +254,5 @@ ggtai <- function(x, conf = 0.95, title = NULL) {
     ggplot2::theme(legend.position = 'none')
   
   gg
+  
 }

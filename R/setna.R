@@ -29,7 +29,7 @@ setna <- function(traits, add = NULL, fb) {
   
   nt <- length(traits)
 
-  ## 1. All traits = 0 or NA
+  # 1. All traits = 0 or NA
   
   cond <- apply(fb[, traits] == 0 | is.na(fb[, traits]), 1, sum) == nt
 
@@ -38,7 +38,7 @@ setna <- function(traits, add = NULL, fb) {
   if (exists('noph', fb))
     fb[cond & is.na(fb[, 'noph']), 'noph'] <- 0
   
-  ## 2. At least one trait with data
+  # 2. At least one trait with data
   
   if (exists('noph', fb))
     fb[!cond & fb[, 'noph'] == 0 & !is.na(fb[, 'noph']), 'noph'] <- NA
@@ -46,4 +46,5 @@ setna <- function(traits, add = NULL, fb) {
   # return data.frame
     
   fb
+
 }

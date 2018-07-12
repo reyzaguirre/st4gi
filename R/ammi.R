@@ -38,11 +38,11 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
   
   method <- match.arg(method)
 
-  # Everything as factor
+  # Everything as character
 
-  data[, geno] <- factor(data[, geno])
-  data[, env] <- factor(data[, env])
-  data[, rep] <- factor(data[, rep])
+  data[, geno] <- as.character(data[, geno])
+  data[, env] <- as.character(data[, env])
+  data[, rep] <- as.character(data[, rep])
 
   # Check data
 
@@ -86,6 +86,7 @@ ammi <- function(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5
 
   ammi.gxe(int.mean, trait = trait, nr = lc$nr, rdf = rdf, rms = rms,
            method = method, f = f)
+  
 }
 
 #' AMMI or GGE with data from an interaction means matrix
@@ -202,6 +203,7 @@ ammi.gxe <- function(int.mean, trait = NULL, nr = NULL, rdf = NULL, rms = NULL,
   
   class(output) <- "ammi"
   invisible(output)
+  
 }
 
 #' AMMI or GGE biplots
@@ -318,4 +320,5 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
     abline(h = 0, v = 0, col = color[3], lty = 5)
     for (i in 1:env.num) lines(c(0, E[i, 1]), c(0, E[i, 2]), col = color[1], lty = 2)
   }
+  
 }

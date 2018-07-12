@@ -12,8 +12,10 @@
 #' @export
 
 rts1 <- function () {
+  
   dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts1")
   shiny::runApp(dirfiles)
+
 }
 
 #' Response to selection with several locations
@@ -31,8 +33,10 @@ rts1 <- function () {
 #' @export
 
 rts2 <- function () {
+  
   dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts2")
   shiny::runApp(dirfiles)
+  
 }
 
 #' Response to selection with several locations and years
@@ -51,8 +55,10 @@ rts2 <- function () {
 #' @export
 
 rts3 <- function () {
+  
   dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts3")
   shiny::runApp(dirfiles)
+  
 }
 
 #' Response to selection with several locations in two steps (two years)
@@ -70,6 +76,8 @@ rts3 <- function () {
 #' @export
 
 rts4 <- function () {
+  
   dirfiles <- paste0(system.file(package = "st4gi"), "/shinyapps/rts4")
   shiny::runApp(dirfiles)
+  
 }

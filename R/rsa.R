@@ -48,11 +48,11 @@
 
 rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
-  # Everything as factor
+  # Everything as character
   
-  data[, geno] <- factor(data[, geno])
-  data[, env] <- factor(data[, env])
-  data[, rep] <- factor(data[, rep])
+  data[, geno] <- as.character(data[, geno])
+  data[, env] <- as.character(data[, env])
+  data[, rep] <- as.character(data[, rep])
 
   # Error messages
   
@@ -192,4 +192,5 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
 
   list(ANOVA = at, CV = cv, Stability_for_genotypes = stab.geno,
        Stability_for_environments = stab.env)
+  
 }

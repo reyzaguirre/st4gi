@@ -26,12 +26,12 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   
   lc <- ck.f(trait, factors, rep, data)
 
-  # Everything as factor
+  # Everything as character
   
   for (i in 1:lc$nf)
-    data[, factors[i]] <- factor(data[, factors[i]])
+    data[, factors[i]] <- as.character(data[, factors[i]])
 
-  data[, rep] <- factor(data[, rep])
+  data[, rep] <- as.character(data[, rep])
 
   # Estimate missing values and report errors from mve.f
   
@@ -87,4 +87,5 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   # Return
   
   at
+  
 }

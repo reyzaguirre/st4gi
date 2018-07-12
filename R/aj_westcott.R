@@ -66,8 +66,7 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   
   if (out$c1 == 1 | out$c2 == 1 | out$c3 == 1 | out$c4 == 1)
     warning("Adjusted values are obtained with the values of the checks nearby.")
-  
-    
+
   # Save column names
   
   col.names <- colnames(data)

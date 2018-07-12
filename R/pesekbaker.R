@@ -60,6 +60,10 @@ pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", 
   
   means <- match.arg(means)
   units <- match.arg(units)
+  
+  # As character
+  
+  data[, geno] <- as.character(data[, geno])
 
   # inits
 

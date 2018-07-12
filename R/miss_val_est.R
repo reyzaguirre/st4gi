@@ -76,6 +76,7 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
   # Return
 
   data[, c(treat, rep, trait, trait.est)]
+  
 }
 
 #' Estimation of missing values for a MET in a RCBD
@@ -164,6 +165,7 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   # Return
 
   data[, c(geno, env, rep, trait, trait.est)]
+  
 }
 
 #' Estimation of missing values for a factorial experiment
@@ -196,7 +198,8 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
 #' mve.f("dm", c("geno", "treat"), "rep", "crd", temp)
 #' @export
 
-mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1, tol = 1e-06) {
+mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
+                  data, maxp = 0.1, tol = 1e-06) {
   
   # match arguments
   
@@ -326,4 +329,5 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   # Return
   
   data[, c(factors, rep, trait, trait.est)]
+  
 }

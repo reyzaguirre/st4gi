@@ -31,4 +31,5 @@ check.pos <- function(row, col, rep, data) {
       cat('\n')
     }
   }
+  
 }

@@ -12,8 +12,10 @@
 #' suma(pjpz09$trw, pjpz09$vw)
 #' @export
 
-suma <- function(a, b){
-  c <- apply(cbind(a, b), 1, sum, na.rm = T)
-  c[is.na(a) & is.na(b)] <- NA
-  c
+suma <- function(a, b) {
+  
+  s <- apply(cbind(a, b), 1, sum, na.rm = TRUE)
+  s[is.na(a) & is.na(b)] <- NA
+  s
+  
 }
