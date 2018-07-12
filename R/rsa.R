@@ -48,12 +48,6 @@
 
 rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
-  # Everything as character
-  
-  data[, geno] <- as.character(data[, geno])
-  data[, env] <- as.character(data[, env])
-  data[, rep] <- as.character(data[, rep])
-
   # Error messages
   
   lc <- ck.f(trait, c(geno, env), rep, data)
