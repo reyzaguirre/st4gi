@@ -15,10 +15,6 @@
 
 cr.rcbd <- function(geno, nb, nc) {
   
-  # As character
-  
-  geno <- as.character(geno)
-
   # Error messages
   
   if (nb < 2)
@@ -73,4 +69,5 @@ cr.rcbd <- function(geno, nb, nc) {
   # Return
   
   list(plan = plan, book = book)
+  
 }

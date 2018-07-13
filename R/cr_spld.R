@@ -20,11 +20,6 @@
 
 cr.spld <- function(A, B, nrep, nc = NULL) {
   
-  # As character
-  
-  A <- as.character(A)
-  B <- as.character(B)
-
   # Error messages
   
   nla <- length(A)
@@ -104,4 +99,5 @@ cr.spld <- function(A, B, nrep, nc = NULL) {
   # Return
   
   list(plan = plan, book = book)
+  
 }

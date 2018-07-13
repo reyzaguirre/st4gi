@@ -18,11 +18,6 @@
 
 cr.strd <- function(A, B, nrep) {
   
-  # As character
-  
-  A <- as.character(A)
-  B <- as.character(B)
-
   # Error messages
 
   nla <- length(A)
@@ -78,4 +73,5 @@ cr.strd <- function(A, B, nrep) {
   # Return
   
   list(plan = plan, book = book)
+  
 }

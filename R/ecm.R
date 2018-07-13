@@ -22,22 +22,22 @@
 
 ecm <- function(traits, geno, env = NULL, rep, data, method = 1) {
 
-  # Everything as factor
+  # Everything as character
 
-  g <- factor(data[, geno])
+  g <- as.character(data[, geno])
   if (!is.null(env))
-    e <- factor(data[, env])
-  r <- factor(data[, rep])
+    e <- as.character(data[, env])
+  r <- as.character(data[, rep])
 
   # Inits
   
   nt <- length(traits) # number of traits
   G <- matrix(nrow = nt, ncol = nt) # genotypic covariance matrix
   P <- matrix(nrow = nt, ncol = nt) # phenotypic covariance matrix
-  ng <- nlevels(g) # number of genotypes
+  ng <- length(unique(g)) # number of genotypes
   if (!is.null(env))
-    ne <- nlevels(e) # number of environments
-  nr <- nlevels(r) # number of replications in each environment
+    ne <- length(unique(e)) # number of environments
+  nr <- length(unique(r)) # number of replications in each environment
 
   # Fitted models by REML for variance components
   

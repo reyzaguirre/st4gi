@@ -14,10 +14,6 @@
 
 cr.ur <- function(geno, nc) {
   
-  # As character
-  
-  geno <- as.character(geno)
-  
   # Error messages
   
   ng <- length(geno)
@@ -60,4 +56,5 @@ cr.ur <- function(geno, nc) {
   # Return
   
   list(plan = plan, book = book)
+  
 }

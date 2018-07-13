@@ -12,7 +12,7 @@
 #' @details The genotypes are randomly allocated on a field between equally spaced
 #' columns of two alternating check varieties. Check columns are planted each
 #' \code{ncb} columns. The specified total number of columns \code{nc} is the maximum
-#' available number on the field, the actual number could be less. 
+#' available number on the field, the actual number could be less.
 #' @return It returns the fieldbook and fieldplan.
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
@@ -24,10 +24,6 @@
 
 cr.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   
-  # As character
-  
-  geno <- as.character(geno)
-
   # Error messages
   
   ng <- length(geno)
@@ -91,4 +87,5 @@ cr.w <- function(geno, ch1, ch2, nc, ncb = 10) {
   # Return
   
   list(plan = plan, book = book)
+  
 }

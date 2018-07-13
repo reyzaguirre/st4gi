@@ -117,4 +117,5 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # results
   
   data
+  
 }

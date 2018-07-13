@@ -12,10 +12,6 @@
 
 cr.lsd <- function(geno) {
   
-  # As character
-  
-  geno <- as.character(geno)
-
   # Error messages
   
   ng <- length(geno)
@@ -61,4 +57,5 @@ cr.lsd <- function(geno) {
   # Return
   
   list(plan = plan, book = book)
+  
 }
