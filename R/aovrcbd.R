@@ -19,10 +19,10 @@
 
 aov.rcbd <- function(trait, treat, rep, data, maxp = 0.1) {
 
-  # Everything as factor
+  # Everything as character
 
-  data[, treat] <- factor(data[, treat])
-  data[, rep] <- factor(data[, rep])
+  data[, treat] <- as.character(data[, treat])
+  data[, rep] <- as.character(data[, rep])
 
   # Check data and estimate missing values
 
@@ -56,4 +56,5 @@ aov.rcbd <- function(trait, treat, rep, data, maxp = 0.1) {
   # Return
 
   at
+  
 }

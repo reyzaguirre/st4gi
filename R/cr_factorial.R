@@ -26,11 +26,7 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc) {
   # Number of factors
   
   nf <- length(fnames)
-  
-  # Factor levels as characters
-  
-  flevels <- lapply(flevels, as.character)
-  
+
   # Number of levels
   
   nl <- sapply(flevels, length)
@@ -85,4 +81,5 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc) {
   # Return
   
   list(plan = output$plan, book = output$book)
+
 }

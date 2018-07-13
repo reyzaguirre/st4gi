@@ -606,4 +606,5 @@ sp6 <- function(fb, geno, env, rep, t1, out.mod, out.max, tx) {
     cond <- abs(fb[, 'residual']) > out.max
     output(fb, cond, tx)
   }
+  
 }

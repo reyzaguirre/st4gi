@@ -14,10 +14,6 @@
 
 cr.crd <- function(geno, nrep, nc) {
   
-  # As character
-  
-  geno <- as.character(geno)
-
   # Error messages
   
   if (nrep < 2)
@@ -63,4 +59,5 @@ cr.crd <- function(geno, nrep, nc) {
   # Return
   
   list(plan = plan, book = book)
+  
 }

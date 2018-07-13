@@ -17,11 +17,6 @@
 
 cr.abd <- function(geno, checks, nb, nc) {
   
-  # As character
-  
-  geno <- as.character(geno)
-  checks <- as.character(checks)
-
   # Error messages
 
   if (nb < 2)
@@ -100,4 +95,5 @@ cr.abd <- function(geno, checks, nb, nc) {
   # Return
   
   list(plan = plan, book = book)
+  
 }

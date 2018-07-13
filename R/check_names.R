@@ -150,4 +150,5 @@ check.names <- function(fb, aqt = NULL) {
     warning("Some labels converted to lower case: ", list(temp[check.list.2]), call. = FALSE)
   
   fb
+  
 }

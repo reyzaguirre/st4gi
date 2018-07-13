@@ -18,9 +18,8 @@ ck.pos <- function(row, col, rep = NULL, data) {
     data[, "rep"] <- 1
     rep <- "rep"
   }
-  data[, rep] <- factor(data[, rep])
-  lr <- levels(data[, rep])
-  nr <- nlevels(data[, rep])
+  lr <- unique(data[, rep])
+  nr <- length(lr)
   
   # Check row and column
   
@@ -48,6 +47,7 @@ ck.pos <- function(row, col, rep = NULL, data) {
   # Return
   
   list(nplot = nplot, lplot = lplot, lr = lr, nr = nr)
+  
 }
 
 #' Check data for an ABD
@@ -72,20 +72,15 @@ ck.pos <- function(row, col, rep = NULL, data) {
 
 ck.abd <- function(trait, treat, rep, data) {
   
-  # Everything as character
-  
-  data[, treat] <- as.character(data[, treat])
-  data[, rep] <- as.character(data[, rep])
-  
   # Number of replications
   
-  nr <- nlevels(as.factor(data[, rep]))
+  nr <- length(unique(data[, rep]))
 
   # Identify checks and no checks
   
   tfreq <- data.frame(table(data[, treat]))
-  checks <- as.character(tfreq[tfreq$Freq > 1, 1])
-  newmat <- as.character(tfreq[tfreq$Freq == 1, 1])
+  checks <- tfreq[tfreq$Freq > 1, 1]
+  newmat <- tfreq[tfreq$Freq == 1, 1]
   
   # Number of treatments
   
@@ -98,8 +93,6 @@ ck.abd <- function(trait, treat, rep, data) {
   nmis.new <- sum(is.na(temp[, trait]))
   
   temp <- subset(data, data[, treat] %in% checks)
-  temp[, treat] <- as.factor(temp[, treat])
-  temp[, rep] <- as.factor(temp[, rep])
   temp <- subset(temp, !is.na(temp[, trait]))
   tfreq <- table(temp[, treat], temp[, rep])
   nmis.check <- sum(tfreq == 0)
@@ -116,11 +109,11 @@ ck.abd <- function(trait, treat, rep, data) {
   
   check.0 <- NULL
   if (nt.check.0 > 0 )
-    check.0 <- as.character(tfreq[tfreq$Freq == 0, 1])
+    check.0 <- tfreq[tfreq$Freq == 0, 1]
   
   check.1 <- NULL
   if (nt.check.1 > 0)
-    check.1 <- as.character(tfreq[tfreq$Freq == 1, 1])
+    check.1 <- tfreq[tfreq$Freq == 1, 1]
 
   # Return
   
@@ -129,6 +122,7 @@ ck.abd <- function(trait, treat, rep, data) {
        nt.check.0 = nt.check.0, check.0 = check.0,
        nt.check.1 = nt.check.1, check.1 = check.1,
        nt.check.2 = nt.check.2)
+  
 }
 
 #' Check data for a CRD
@@ -147,10 +141,6 @@ ck.abd <- function(trait, treat, rep, data) {
 
 ck.crd <- function(trait, treat, data) {
   
-  # Everything as factor
-  
-  data[, treat] <- factor(data[, treat])
-
   # Check frequencies by treat
   
   subdata <- subset(data, !is.na(data[, trait]))
@@ -158,7 +148,7 @@ ck.crd <- function(trait, treat, data) {
 
   # Number of levels
   
-  nt <- nlevels(data[, treat])
+  nt <- length(unique(data[, treat]))
   nr <- max(tfreq)
 
   # Controls
@@ -172,6 +162,7 @@ ck.crd <- function(trait, treat, data) {
   # Return
   
   list(c1 = c1, c2 = c2, nt = nt, nr = nr, tfreq = tfreq)
+  
 }
 
 #' Check data for a RCBD
@@ -193,15 +184,10 @@ ck.crd <- function(trait, treat, data) {
 
 ck.rcbd <- function(trait, treat, rep, data) {
   
-  # Everything as factor
-  
-  data[, treat] <- factor(data[, treat])
-  data[, rep] <- factor(data[, rep])
-  
   # Number of levels
   
-  nt <- nlevels(data[, treat])
-  nr <- nlevels(data[, rep])
+  nt <- length(unique(data[, treat]))
+  nr <- length(unique(data[, rep]))
 
   # Check frequencies by treat
   
@@ -226,6 +212,7 @@ ck.rcbd <- function(trait, treat, rep, data) {
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        nt = nt, nr = nr, tfreq = tfreq)
+  
 }
 
 #' Check data for a full factorial
@@ -254,22 +241,16 @@ ck.f <- function(trait, factors, rep, data) {
   
   nf <- length(factors)
   
-  # Everything as factor
-  
-  for (i in 1:nf)
-    data[, factors[i]] <- factor(data[, factors[i]])
-  data[, rep] <- factor(data[, rep])
-  
   # Number of levels
   
   nl <- NULL
   
   for (i in 1:nf)
-    nl[i] <- nlevels(data[, factors[i]])
+    nl[i] <- length(unique(data[, factors[i]]))
   
   # Number of replications
 
-  nr <- nlevels(data[, rep])
+  nr <- length(unique(data[, rep]))
 
   # Check frequencies
   
@@ -305,6 +286,7 @@ ck.f <- function(trait, factors, rep, data) {
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        nf = nf, nl = nl, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
+  
 }
 
 #' Check data for a Wescott layout
@@ -334,17 +316,15 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
   checks <- c(ch1, ch2)
   
-  # Numbers and characters
+  # Rows and columns as numbers
   
   data[, row] <- as.numeric(data[, row])
   data[, col] <- as.numeric(data[, col])
-  data[, geno] <- as.character(data[, geno])
-  
+
   # Number of rows and columns
   
   nr.min <- min(data[, row])
   nc.min <- min(data[, col])
-  
   nc.max <- max(data[, col])
   
   # Controls
@@ -409,4 +389,5 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
        nmis.check = nmis.check, pmis.check = pmis.check)
+  
 }

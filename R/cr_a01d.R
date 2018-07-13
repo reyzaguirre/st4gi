@@ -26,10 +26,6 @@
 
 cr.a01d <- function(geno, nrep, k, nc) {
   
-  # As character
-  
-  geno <- as.character(geno)
-
   # Number of genotypes and blocks
   
   ng <- length(geno)
@@ -174,4 +170,5 @@ cr.a01d <- function(geno, nrep, k, nc) {
   # Return
   
   list(plan = plan, book = book)
+  
 }
