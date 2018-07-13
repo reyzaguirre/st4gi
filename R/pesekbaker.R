@@ -95,7 +95,7 @@ pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", 
 
   # index calculation
   
-  outind <- data.frame(geno = levels(factor(data[, geno])))
+  outind <- data.frame(geno = unique(data[, geno]))
   colnames(outind) <- geno
   
   if (means == "single") {

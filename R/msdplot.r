@@ -47,10 +47,6 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
 
   data <- data[!is.na(data[, trait]), ]
   
-  # Groups as character
-  
-  data[, groups] <- as.character(data[, groups])
-
   # Means and standard deviations
 
   means <- tapply(data[, trait], data[, groups], mean, na.rm = TRUE)
