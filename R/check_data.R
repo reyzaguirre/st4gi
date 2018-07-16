@@ -103,35 +103,35 @@ check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 
   do <- FALSE
   
   if (exists("nopr", fb)) {
-    temp <- temp | (is.na(fb$nopr) & fb$nopr > 0)
+    temp <- temp | (is.na(fb$nopr) | fb$nopr > 0)
     do <- TRUE
   }
   if (exists("nocr", fb)) {
-    temp <- temp | (is.na(fb$nocr) & fb$nocr > 0)
+    temp <- temp | (is.na(fb$nocr) | fb$nocr > 0)
     do <- TRUE
   }
   if (exists("nonc", fb)) {
-    temp <- temp | (is.na(fb$nonc) & fb$nonc > 0)
+    temp <- temp | (is.na(fb$nonc) | fb$nonc > 0)
     do <- TRUE
   }
   if (exists("crw", fb)) {
-    temp <- temp | (is.na(fb$crw) & fb$crw > 0)
+    temp <- temp | (is.na(fb$crw) | fb$crw > 0)
     do <- TRUE
   }
   if (exists("ncrw", fb)) {
-    temp <- temp | (is.na(fb$ncrw) & fb$ncrw > 0)
+    temp <- temp | (is.na(fb$ncrw) | fb$ncrw > 0)
     do <- TRUE
   }
   if (exists("trw", fb)) {
-    temp <- temp | (is.na(fb$trw) & fb$trw > 0)
+    temp <- temp | (is.na(fb$trw) | fb$trw > 0)
     do <- TRUE
   }
   if (exists("rytha", fb)) {
-    temp <- temp | (is.na(fb$rytha) & fb$rytha > 0)
+    temp <- temp | (is.na(fb$rytha) | fb$rytha > 0)
     do <- TRUE
   }
   if (exists("rytha.aj", fb)) {
-    temp <- temp | (is.na(fb$rytha.aj) & fb$rytha.aj > 0)
+    temp <- temp | (is.na(fb$rytha.aj) | fb$rytha.aj > 0)
     do <- TRUE
   }
 
