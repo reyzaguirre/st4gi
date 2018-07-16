@@ -26,8 +26,7 @@
 #' @importFrom stats IQR quantile rstandard
 #' @export
 
-check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
-                       out.max = 4, aqt = NULL) {
+check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4, aqt = NULL) {
   
   out.mod = match.arg(out.mod)
   
@@ -48,55 +47,55 @@ check.data <- function(fb, f = 3, out.mod = c("none", "rcbd", "met"),
 
   # Inconsistencies for nope and dependencies.
 
-  sp1(fb, 2, "nope", "vir", "- Number of plants established (nope) is zero or NA but there is data for virus symptoms (vir):")
-  sp1(fb, 2, "nope", "vir1", "- Number of plants established (nope) is zero or NA but there is data for virus symptoms first evaluation (vir1):")
-  sp1(fb, 2, "nope", "vir2", "- Number of plants established (nope) is zero or NA but there is data for virus symptoms second evaluation (vir2):")
-  sp1(fb, 2, "nope", "alt", "- Number of plants established (nope) is zero or NA but there is data for alternaria symptoms (alt):")
-  sp1(fb, 2, "nope", "alt1", "- Number of plants established (nope) is zero or NA but there is data for alternaria symptoms first evaluation (alt1):")
-  sp1(fb, 2, "nope", "alt2", "- Number of plants established (nope) is zero or NA but there is data for alternaria symptoms second evaluation (alt2):")
-  sp1(fb, 2, "nope", "vv", "- Number of plants established (nope) is zero or NA but there is data for vine vigor (vv):")
+  sp1(fb, 2, "nope", "vir", "- Number of plants established (nope) is zero but there is data for virus symptoms (vir):")
+  sp1(fb, 2, "nope", "vir1", "- Number of plants established (nope) is zero but there is data for virus symptoms first evaluation (vir1):")
+  sp1(fb, 2, "nope", "vir2", "- Number of plants established (nope) is zero but there is data for virus symptoms second evaluation (vir2):")
+  sp1(fb, 2, "nope", "alt", "- Number of plants established (nope) is zero but there is data for alternaria symptoms (alt):")
+  sp1(fb, 2, "nope", "alt1", "- Number of plants established (nope) is zero but there is data for alternaria symptoms first evaluation (alt1):")
+  sp1(fb, 2, "nope", "alt2", "- Number of plants established (nope) is zero but there is data for alternaria symptoms second evaluation (alt2):")
+  sp1(fb, 2, "nope", "vv", "- Number of plants established (nope) is zero but there is data for vine vigor (vv):")
 
   # noph and vw
   
-  sp1(fb, 3, "noph", "vw", "- Number of plants harvested (noph) is zero or NA but vine weight (vw) is greater than zero:") 
-  sp1(fb, 3, "vw", "noph", "- Vine weight (vw) is zero or NA but the number of plants harvested (noph) is greater than zero:") 
-  sp1(fb, 3, "noph", "fytha", "- Number of plants harvested (noph) is zero or NA but foliage yield in tons per hectare (fytha) is greater than zero:") 
-  sp1(fb, 3, "fytha", "noph", "- Foliage yield in tons per hectare (fytha) is zero or NA but the number of plants harvested (noph) is greater than zero:") 
-  sp1(fb, 3, "noph", "fytha.aj", "- Number of plants harvested (noph) is zero or NA but foliage yield in tons per hectare (fytha.aj) is greater than zero:") 
-  sp1(fb, 3, "fytha.aj", "noph", "- Foliage yield in tons per hectare (fytha.aj) is zero or NA but the number of plants harvested (noph) is greater than zero:") 
+  sp1(fb, 3, "noph", "vw", "- Number of plants harvested (noph) is zero but vine weight (vw) is greater than zero:") 
+  sp1(fb, 3, "vw", "noph", "- Vine weight (vw) is zero but number of plants harvested (noph) is greater than zero:") 
+  sp1(fb, 3, "noph", "fytha", "- Number of plants harvested (noph) is zero but foliage yield in tons per hectare (fytha) is greater than zero:") 
+  sp1(fb, 3, "fytha", "noph", "- Foliage yield in tons per hectare (fytha) is zero but number of plants harvested (noph) is greater than zero:") 
+  sp1(fb, 3, "noph", "fytha.aj", "- Number of plants harvested (noph) is zero but foliage yield in tons per hectare (fytha.aj) is greater than zero:") 
+  sp1(fb, 3, "fytha.aj", "noph", "- Foliage yield in tons per hectare (fytha.aj) is zero but number of plants harvested (noph) is greater than zero:") 
   
   # vw and dependencies
   
-  sp1(fb, 3, "vw", "dmvf", "- Vine weight (vw) is zero or NA but there is fresh weight vines for dry matter assessment (dmvf):") 
-  sp1(fb, 3, "vw", "dmvd", "- Vine weight (vw) is zero or NA but there is dry weight vines for dry matter assessment (dmvd):") 
+  sp1(fb, 3, "vw", "dmvf", "- Vine weight (vw) is zero but there is fresh weight vines for dry matter assessment (dmvf):") 
+  sp1(fb, 3, "vw", "dmvd", "- Vine weight (vw) is zero but there is dry weight vines for dry matter assessment (dmvd):") 
   sp1(fb, 1, "dmvd", "dmvf", "- Dry weight vines for dry matter assessment (dmvd) is greater than fresh weight vines for dry matter assessment (dmvf):")
 
   # nopr and roots
   
-  sp1(fb, 3, "nopr", "tnr", "- Number of plants with roots (nopr) is zero or NA but total number of roots (tnr) is greater than zero:")
-  sp1(fb, 3, "tnr", "nopr", "- Number of roots (tnr) is zero or NA but number of plants with roots (nopr) is greater than zero:")
-  sp1(fb, 3, "nopr", "trw", "- Number of plants with roots (nopr) is zero or NA but total root weight (trw) is greater than zero::")
-  sp1(fb, 3, "trw", "nopr", "- Total root weight (trw) is zero or NA but number of plants with roots (nopr) is greater than zero:")
-  sp1(fb, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero or NA but root yield in tons per hectare (rytha) is greater than zero::")
-  sp1(fb, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero or NA but number of plants with roots (nopr) is greater than zero:")
-  sp1(fb, 3, "nopr", "rytha.aj", "- Number of plants with roots (nopr) is zero or NA but root yield in tons per hectare (rytha.aj) is greater than zero::")
-  sp1(fb, 3, "rytha.aj", "nopr", "- Root yield in tons per hectare (rytha.aj) is zero or NA but number of plants with roots (nopr) is greater than zero:")
-  sp1(fb, 3, "nopr", "cytha", "- Number of plants with roots (nopr) is zero or NA but commercial root yield in tons per hectare (cytha) is greater than zero::")
-  sp1(fb, 3, "nopr", "cytha.aj", "- Number of plants with roots (nopr) is zero or NA but commercial root yield in tons per hectare (cytha.aj) is greater than zero::")
-  sp1(fb, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero or NA but there is data for weevil damage (wed):")
+  sp1(fb, 3, "nopr", "tnr", "- Number of plants with roots (nopr) is zero but total number of roots (tnr) is greater than zero:")
+  sp1(fb, 3, "tnr", "nopr", "- Number of roots (tnr) is zero but number of plants with roots (nopr) is greater than zero:")
+  sp1(fb, 3, "nopr", "trw", "- Number of plants with roots (nopr) is zero but total root weight (trw) is greater than zero:")
+  sp1(fb, 3, "trw", "nopr", "- Total root weight (trw) is zero but number of plants with roots (nopr) is greater than zero:")
+  sp1(fb, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
+  sp1(fb, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero but number of plants with roots (nopr) is greater than zero:")
+  sp1(fb, 3, "nopr", "rytha.aj", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha.aj) is greater than zero:")
+  sp1(fb, 3, "rytha.aj", "nopr", "- Root yield in tons per hectare (rytha.aj) is zero but number of plants with roots (nopr) is greater than zero:")
+  sp1(fb, 3, "nopr", "cytha", "- Number of plants with roots (nopr) is zero but commercial root yield in tons per hectare (cytha) is greater than zero:")
+  sp1(fb, 3, "nopr", "cytha.aj", "- Number of plants with roots (nopr) is zero but commercial root yield in tons per hectare (cytha.aj) is greater than zero:")
+  sp1(fb, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
   
   # Number of roots and root weight
   
-  sp1(fb, 3, "nocr", "crw", "- Number of commercial roots (nocr) is zero or NA but the commercial root weight (crw) is greater than zero:") 
-  sp1(fb, 3, "crw", "nocr", "- Commercial root weight (crw) is zero or NA but the number of commercial roots (nocr) is greater than zero:") 
-  sp1(fb, 3, "nocr", "cytha", "- Number of commercial roots (nocr) is zero or NA but the commercial root yield in tons per hectare (cytha) is greater than zero:") 
-  sp1(fb, 3, "cytha", "nocr", "- Commercial root yield in tons per hectare (cytha) is zero or NA but the number of commercial roots (nocr) is greater than zero:") 
-  sp1(fb, 3, "nocr", "cytha.aj", "- Number of commercial roots (nocr) is zero or NA but the commercial root yield in tons per hectare (cytha.aj) is greater than zero:") 
-  sp1(fb, 3, "cytha.aj", "nocr", "- Commercial root yield in tons per hectare (cytha.aj) is zero or NA but the number of commercial roots (nocr) is greater than zero:") 
-  sp1(fb, 3, "nonc", "ncrw", "- Number of non commercial roots (nonc) is zero or NA but the non commercial root weight (ncrw) is greater than zero:")
-  sp1(fb, 3, "ncrw", "nonc", "- Non commercial root weight (ncrw) is zero or NA but the number of non commercial roots (nonc) is greater than zero:")
-  sp1(fb, 3, "trw", "tnr", "- Total root weight (trw) is zero or NA but total number of roots (tnr) is greater than zero:")
-  sp1(fb, 3, "tnr", "trw", "- Total number of roots (tnr) is zero or NA but total root weight (trw) is greater than zero:")
+  sp1(fb, 3, "nocr", "crw", "- Number of commercial roots (nocr) is zero but commercial root weight (crw) is greater than zero:") 
+  sp1(fb, 3, "crw", "nocr", "- Commercial root weight (crw) is zero but number of commercial roots (nocr) is greater than zero:") 
+  sp1(fb, 3, "nocr", "cytha", "- Number of commercial roots (nocr) is zero but commercial root yield in tons per hectare (cytha) is greater than zero:") 
+  sp1(fb, 3, "cytha", "nocr", "- Commercial root yield in tons per hectare (cytha) is zero but number of commercial roots (nocr) is greater than zero:") 
+  sp1(fb, 3, "nocr", "cytha.aj", "- Number of commercial roots (nocr) is zero but commercial root yield in tons per hectare (cytha.aj) is greater than zero:") 
+  sp1(fb, 3, "cytha.aj", "nocr", "- Commercial root yield in tons per hectare (cytha.aj) is zero but number of commercial roots (nocr) is greater than zero:") 
+  sp1(fb, 3, "nonc", "ncrw", "- Number of non commercial roots (nonc) is zero but non commercial root weight (ncrw) is greater than zero:")
+  sp1(fb, 3, "ncrw", "nonc", "- Non commercial root weight (ncrw) is zero but number of non commercial roots (nonc) is greater than zero:")
+  sp1(fb, 3, "trw", "tnr", "- Total root weight (trw) is zero but total number of roots (tnr) is greater than zero:")
+  sp1(fb, 3, "tnr", "trw", "- Total number of roots (tnr) is zero but total root weight (trw) is greater than zero:")
   
   # Roots and dependencies
 
@@ -542,9 +541,9 @@ sp1 <- function(fb, type, t1, t2, tx) {
     if (type == 1)
       cond <- fb[, t1] > fb[, t2]
     if (type == 2)
-      cond <- (fb[, t1] == 0 | is.na(fb[, t1])) & !is.na(fb[, t2])
+      cond <- (fb[, t1] == 0 & !is.na(fb[, t1])) & !is.na(fb[, t2])
     if (type == 3)
-      cond <- (fb[, t1] == 0 | is.na(fb[, t1])) & fb[, t2] > 0
+      cond <- (fb[, t1] == 0 & !is.na(fb[, t1])) & fb[, t2] > 0
     output(fb, cond, tx)
   }
 }
