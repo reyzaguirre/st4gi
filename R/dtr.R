@@ -59,7 +59,7 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
     data[, nn] <- log(data[, nn], base)
   }
 
-  if (type == "logy1"){
+  if (type == "logy1") {
     nn <- paste("log", trait, sep = "_")
     data[, nn] <- data[, trait]
     if (sum(data[, nn] + 1 <= 0, na.rm = T) > 0) {

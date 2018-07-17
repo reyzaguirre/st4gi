@@ -108,7 +108,7 @@ ck.abd <- function(trait, treat, rep, data) {
   # Checks to remove
   
   check.0 <- NULL
-  if (nt.check.0 > 0 )
+  if (nt.check.0 > 0)
     check.0 <- tfreq[tfreq$Freq == 0, 1]
   
   check.1 <- NULL
@@ -156,8 +156,10 @@ ck.crd <- function(trait, treat, data) {
   c1 <- 1 # Check for zeros. Initial state no zeros
   c2 <- 0 # Check for replicates. Initial state only one replication
 
-  if (min(tfreq) == 0) c1 <- 0 # State 0: there are zeros
-  if (nr > 1) c2 <- 1 # State 1: more than one replication
+  if (min(tfreq) == 0)
+    c1 <- 0 # State 0: there are zeros
+  if (nr > 1)
+    c2 <- 1 # State 1: more than one replication
 
   # Return
   
@@ -203,10 +205,14 @@ ck.rcbd <- function(trait, treat, rep, data) {
   c3 <- 1 # Check for genotypes with more than one datum in a replication
   c4 <- 1 # Check for missing values. Initial state no missing values
   
-  if (min(table(subdata[, treat])) == 0) c1 <- 0 # State 0: there are zeros
-  if (nr > 1) c2 <- 1 # State 1: more than one replication
-  if (max(tfreq) > 1) c3 <- 0 # State 0: some genotypes with addional data
-  if (min(tfreq) == 0) c4 <- 0 # State 0: missing values
+  if (min(table(subdata[, treat])) == 0)
+    c1 <- 0 # State 0: there are zeros
+  if (nr > 1)
+    c2 <- 1 # State 1: more than one replication
+  if (max(tfreq) > 1)
+    c3 <- 0 # State 0: some genotypes with addional data
+  if (min(tfreq) == 0)
+    c4 <- 0 # State 0: missing values
   
   # Return
   
@@ -277,10 +283,14 @@ ck.f <- function(trait, factors, rep, data) {
   c3 <- 1 # Check for genotypes with more than one datum in a replication of one environment
   c4 <- 1 # Check for missing values. Initial state no missing values
     
-  if (min(tfreq) == 0) c1 <- 0  # State 0: there are zeros
-  if (nr > 1) c2 <- 1           # State 1: more than one replicate
-  if (max(tfreqr) > 1) c3 <- 0  # State 0: some genotypes with addional data
-  if (min(tfreqr) == 0) c4 <- 0 # State 0: missing values
+  if (min(tfreq) == 0)
+    c1 <- 0 # State 0: there are zeros
+  if (nr > 1)
+    c2 <- 1 # State 1: more than one replicate
+  if (max(tfreqr) > 1)
+    c3 <- 0 # State 0: some genotypes with addional data
+  if (min(tfreqr) == 0)
+    c4 <- 0 # State 0: missing values
     
   # Return
   
@@ -361,7 +371,7 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
   # All genotypes must have one check to the left and one to the right
   
-  for(i in 1:dim(data)[1]) {
+  for (i in 1:dim(data)[1]) {
     rows <- data[i, row]
     columns <- (data[i, col] - ncb):(data[i, col] + ncb)
     temp <- data[data[, row] == rows & data[, col] %in% columns, geno]

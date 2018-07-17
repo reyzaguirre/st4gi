@@ -48,7 +48,7 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   out <- ck.pos(row, col, data = data)
   
   if (out$nplot > 0)
-    stop("More than one genotype in the same position. Run check.pos to see.")
+    stop("More than one genotype in the same position. Run check.pos to look over.")
   
   out <- ck.w(trait, geno, ch1, ch2, row, col, ncb, data)
   
@@ -100,7 +100,7 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
   
   # Run Westcott adjustment or modify adjustment
   
-  if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0){
+  if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0) {
     
     # Create columns for check centered values
     
@@ -135,7 +135,7 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
     
     # Arrange check values and weights
     
-    for(i in 1:dim(data)[1]) {
+    for (i in 1:dim(data)[1]) {
       
       geno.row <- data[i, row]
       geno.col <- data[i, col]
@@ -256,7 +256,7 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
     
   } else { 
 
-    for(i in 1:dim(data)[1]) {
+    for (i in 1:dim(data)[1]) {
       
       geno.row <- data[i, row]
       geno.col <- data[i, col]

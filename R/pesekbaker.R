@@ -79,8 +79,10 @@ pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", 
   if (is.null(dgg)) {
     dgg <- diag(cm$G.Cov)^0.5
   } else {
-      if (units == "sdu") dgg <- dgg * diag(cm$G.Cov)^0.5
+    if (units == "sdu")
+      dgg <- dgg * diag(cm$G.Cov)^0.5
   }
+  
   b <- solve(cm$G.Cov) %*% dgg
   dimnames(b) <- list(traits, "coef")
 

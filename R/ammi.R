@@ -318,7 +318,8 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
     text(E[, 1], E[, 2], labels = colnames(int.mean), col = color[1], pos = 1,
          offset = 0.3, cex = size[2])
     abline(h = 0, v = 0, col = color[3], lty = 5)
-    for (i in 1:env.num) lines(c(0, E[i, 1]), c(0, E[i, 2]), col = color[1], lty = 2)
+    for (i in 1:env.num)
+      lines(c(0, E[i, 1]), c(0, E[i, 2]), col = color[1], lty = 2)
   }
   
 }
