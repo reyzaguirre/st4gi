@@ -18,6 +18,7 @@ ck.pos <- function(row, col, rep = NULL, data) {
     data[, "rep"] <- 1
     rep <- "rep"
   }
+  
   lr <- sort(unique(data[, rep]))
   nr <- length(lr)
   
@@ -36,11 +37,11 @@ ck.pos <- function(row, col, rep = NULL, data) {
     ttt <- as.data.frame(table(temp[, row], temp[, col]))
     colnames(ttt) <- c('Row', 'Column', 'Freq')
     
-    # Save number of plots with problems
+    # Number of plots with problems
     
     nplot[i] <- dim(ttt[ttt$Freq > 1, ])[1]
     
-    # Save list of plots with problems if any
+    # List of plots with problems if any
     
     if (nplot[i] > 0)
       lplot[[i]] <- ttt[ttt$Freq > 1, ] 
@@ -176,10 +177,10 @@ ck.crd <- function(trait, treat, data) {
 #' @param treat The treatments.
 #' @param rep The replications.
 #' @param data The name of the data frame.
-#' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}), the number
-#' of missing values \code{nmis}, the proportion of missing values (\code{pmis}), the number
-#' of treatments (\code{nt}), the number of replications (\code{nr}), and a table with
-#' frequencies of valid cases for each treatment.
+#' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}),
+#' the number of missing values \code{nmis}, the proportion of missing values
+#' (\code{pmis}), the number of treatments (\code{nt}), the number of replications
+#' (\code{nr}), and a table with frequencies of valid cases for each treatment.
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
 #' if there is any treatment without data or with more data than replications, and
@@ -192,7 +193,7 @@ ck.rcbd <- function(trait, treat, rep, data) {
   
   nt <- length(unique(data[, treat]))
   nr <- length(unique(data[, rep]))
-
+  
   # Check frequencies by treat
   
   subdata <- subset(data, !is.na(data[, trait]))
@@ -249,7 +250,7 @@ ck.f <- function(trait, factors, rep, data) {
   
   nf <- length(factors)
   
-  # Number of levels
+  # Number of levels for factors
   
   nl <- apply(data[, factors], 2, function(x) length(unique(x)))
   
