@@ -13,8 +13,6 @@
 
 check.freq <- function(trait, geno, env = NULL, rep, data) {
   
-  lr <- length(unique(data[, rep]))
-
   cat('------------------------------\n')
   cat('Check design for trait', trait, '\n')
   cat('------------------------------\n')
@@ -60,7 +58,9 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     
   } else {
     
-    le <- length(unique(data[, env]))
+    # Levels of environments
+    
+    le <- sort(unique(data[, env]))
 
     lc <- ck.f(trait, c(geno, env), rep, data)
 

@@ -12,20 +12,22 @@
 
 ck.pos <- function(row, col, rep = NULL, data) {
   
-  # Number of replications
+  # Number of replications and levels
   
   if (is.null(rep)) {
     data[, "rep"] <- 1
     rep <- "rep"
   }
-  lr <- unique(data[, rep])
+  lr <- sort(unique(data[, rep]))
   nr <- length(lr)
   
-  # Check row and column
+  # Number and list of plots with more than one genotype
   
   nplot <- NULL
   lplot <- list()
   
+  # Check row and column
+
   for (i in 1:nr) {
     
     # Compute frequencies
@@ -249,10 +251,7 @@ ck.f <- function(trait, factors, rep, data) {
   
   # Number of levels
   
-  nl <- NULL
-  
-  for (i in 1:nf)
-    nl[i] <- length(unique(data[, factors[i]]))
+  nl <- apply(data[, factors], 2, function(x) length(unique(x)))
   
   # Number of replications
 
