@@ -189,10 +189,15 @@ ck.crd <- function(trait, treat, data) {
 
 ck.rcbd <- function(trait, treat, rep, data) {
   
+  # Everything as factor
+  
+  data[, treat] <- factor(data[, treat])
+  data[, rep] <- factor(data[, rep])
+  
   # Number of levels
   
-  nt <- length(unique(data[, treat]))
-  nr <- length(unique(data[, rep]))
+  nt <- nlevels(data[, treat])
+  nr <- nlevels(data[, rep])
   
   # Check frequencies by treat
   
@@ -201,7 +206,7 @@ ck.rcbd <- function(trait, treat, rep, data) {
   nmis <- sum(tfreq == 0)
   pmis <- mean(tfreq == 0)
   
-  # Controls
+  # Controls (1 good, 0 bad)
   
   c1 <- 1 # Check for zeros. Initial state no zeros
   c2 <- 0 # Check for replicates. Initial state only one replication
