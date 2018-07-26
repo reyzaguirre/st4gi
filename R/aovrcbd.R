@@ -2,7 +2,7 @@
 #'
 #' Fit an analysis of variance model for a RCBD.
 #' @param trait The trait to analyze.
-#' @param treat The treatments.
+#' @param geno The genotypes.
 #' @param rep The replications.
 #' @param data The name of the data frame containing the data.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
@@ -17,19 +17,19 @@
 #' aov.rcbd("trw", "geno", "rep", temp)
 #' @export
 
-aov.rcbd <- function(trait, treat, rep, data, maxp = 0.1) {
+aov.rcbd <- function(trait, geno, rep, data, maxp = 0.1) {
 
   # Everything as character
 
-  data[, treat] <- as.character(data[, treat])
+  data[, geno] <- as.character(data[, geno])
   data[, rep] <- as.character(data[, rep])
 
   # Check data and estimate missing values
 
-  lc <- ck.rcbd(trait, treat, rep, data)
+  lc <- ck.rcbd(trait, geno, rep, data)
 
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
-    data[, trait] <- mve.rcbd(trait, treat, rep, data, maxp, tol = 1e-06)[, 4]
+  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0 | lc$nmis.fact > 0) {
+    data[, trait] <- mve.rcbd(trait, geno, rep, data, maxp, tol = 1e-06)[, 4]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -37,12 +37,12 @@ aov.rcbd <- function(trait, treat, rep, data, maxp = 0.1) {
 
   # ANOVA
 
-  model <- aov(data[, trait] ~ data[, treat] + data[, rep])
+  model <- aov(data[, trait] ~ data[, geno] + data[, rep])
   model$terms[[2]] <- trait
   
   at <- anova(model)
   
-  rownames(at)[1:2] <- c(treat, rep)
+  rownames(at)[1:2] <- c(geno, rep)
   
   # Correction for missing values
   

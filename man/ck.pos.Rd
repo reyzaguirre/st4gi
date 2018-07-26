@@ -17,7 +17,9 @@ ck.pos(row, col, rep = NULL, data)
 }
 \value{
 For each replication, the number (\code{nplot}) and list (\code{lplot})
-of plots (unique row and column position) with more than one genotype.
+of plots (unique row and column position) with more than one genotype, the 
+number (\code{nr}) and list (\code{lr}) of replications, and the number of rows
+in the data frame with missing values for factors (\code{nmis.fact}).
 }
 \description{
 This function checks that there is only one genotype in each row and column position.

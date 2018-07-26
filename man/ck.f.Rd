@@ -21,8 +21,9 @@ the number of missing values \code{nmis}, the proportion of missing values
 (\code{pmis}), the number of factors (\code{nf}), the number of levels of each
 factor (\code{nl}), the number of replications (\code{nr}), a table with
 frequencies of valid cases for each combination of the levels of the factors
-(\code{tfreq}), and a table with frequencies of valid cases for each combination
-of the levels of the factors in each replication (\code{tfreqr}).
+(\code{tfreq}), a table with frequencies of valid cases for each combination
+of the levels of the factors in each replication (\code{tfreqr}), and the
+number of rows in the data frame with missing values for factors (\code{nmis.fact}).
 }
 \description{
 This function checks the frequencies for a full factorial.

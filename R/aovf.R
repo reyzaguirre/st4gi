@@ -37,7 +37,7 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
   
   trait.est <- paste0(trait, ".est")
   
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
+  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0 | lc$nmis.fact > 0) {
     data[, trait] <- mve.f(trait, factors, rep, design, data, maxp)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),

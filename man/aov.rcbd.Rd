@@ -4,12 +4,12 @@
 \alias{aov.rcbd}
 \title{ANOVA for a RCBD}
 \usage{
-aov.rcbd(trait, treat, rep, data, maxp = 0.1)
+aov.rcbd(trait, geno, rep, data, maxp = 0.1)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
-\item{treat}{The treatments.}
+\item{geno}{The genotypes.}
 
 \item{rep}{The replications.}
 

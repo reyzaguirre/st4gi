@@ -4,26 +4,26 @@
 \alias{ck.abd}
 \title{Check data for an ABD}
 \usage{
-ck.abd(trait, treat, rep, data)
+ck.abd(trait, geno, rep, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
-\item{treat}{The treatments.}
+\item{geno}{The genotypes including checks.}
 
 \item{rep}{The replications.}
 
 \item{data}{The name of the data frame.}
 }
 \value{
-A list of treatments \code{newmat}, a list of checks \code{checks},
-the number of treatments \code{nt.new}, the number of checks \code{nt.check},
-the number of missing values for treatments \code{nmis.new}),
-the number of missing values for checks \code{nmis.check},
-the number \code{nt.check.0} and the list \code{check.0} of checks without data,
-the number \code{nt.check.0} and the list \code{check.1} of checks with only one datum,
-the number of checks with at least two data \code{nt.check.2},
-and the number of replications \code{nr}.
+The number of checks \code{ng.check}, the number of no checks \code{ng},
+the number of missing values for checks \code{nmis.check}), the number of
+missing values for no checks \code{nmis}, the number \code{n.check.0}
+and list \code{check.0} of checks without data, the number \code{n.check.1}
+and list \code{check.1} of checks with only one datum, the number of checks
+with at least two data \code{n.check.2}, the number of replications \code{nr},
+and the number of rows in the data frame with missing values for factors
+(\code{nmis.fact}).
 }
 \description{
 This function checks the frequencies of genotypes in an ABD.

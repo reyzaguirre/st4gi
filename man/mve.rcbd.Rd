@@ -4,12 +4,12 @@
 \alias{mve.rcbd}
 \title{Estimation of missing values for a RCBD}
 \usage{
-mve.rcbd(trait, treat, rep, data, maxp = 0.1, tol = 1e-06)
+mve.rcbd(trait, geno, rep, data, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
 \item{trait}{The trait to estimate missing values.}
 
-\item{treat}{The treatments.}
+\item{geno}{The genotypes.}
 
 \item{rep}{The replications.}
 
@@ -29,8 +29,8 @@ the least squares method.
 }
 \details{
 A \code{data.frame} with data for a RCBD with at least two replications
-and at least one datum for each treatment must be loaded. Experimental data
-with only one replication, any treatment without data, or more missing values than
+and at least one datum for each genotype must be loaded. Experimental data
+with only one replication, any genotype without data, or more missing values than
 specified in \code{maxp} will generate an error message.
 }
 \examples{

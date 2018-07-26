@@ -3,7 +3,7 @@
 #' Function to estimate missing values for a Randomized Complete Block Design (RCBD) by
 #' the least squares method.
 #' @param trait The trait to estimate missing values.
-#' @param treat The treatments.
+#' @param geno The genotypes.
 #' @param rep The replications.
 #' @param data The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
@@ -12,35 +12,38 @@
 #' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a RCBD with at least two replications
-#' and at least one datum for each treatment must be loaded. Experimental data
-#' with only one replication, any treatment without data, or more missing values than
+#' and at least one datum for each genotype must be loaded. Experimental data
+#' with only one replication, any genotype without data, or more missing values than
 #' specified in \code{maxp} will generate an error message.
 #' @examples
 #' temp <- subset(met8x12, env == "TM80N")
 #' mve.rcbd("y", "geno", "rep", temp)
 #' @export
 
-mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
+mve.rcbd <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- ck.rcbd(trait, treat, rep, data)
+  lc <- ck.rcbd(trait, geno, rep, data)
 
   # Error messages
 
+  if (lc$nmis.fact > 0)
+    stop("There are missing values for classification factors.")
+
   if (lc$c1 == 0)
-    stop("Some treatments have zero frequency. Remove treatments to proceed.")
+    stop("Some genotypes have zero frequency.")
 
   if (lc$c2 == 0)
     stop("There is only one replication. Inference is not possible with one replication.")
 
   if (lc$c3 == 0)
-    stop("Some treatments have additional replications. Remove those replications to proceed.")
+    stop("Some genotypes have additional replications.")
 
   if (lc$c4 == 1)
     stop("There are no missing values to estimate.")
 
-    if (lc$pmis > maxp)
+  if (lc$pmis > maxp)
     stop(paste0("Too many missing values (", format(lc$pmis * 100, digits = 3), "%)."))
 
   # Estimation
@@ -48,10 +51,10 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
   trait.est <- paste0(trait, ".est")
   data[, trait.est] <- data[, trait]
   data[, "ytemp"] <- data[, trait]
-  mG <- tapply(data[, trait], data[, treat], mean, na.rm = TRUE)
+  mG <- tapply(data[, trait], data[, geno], mean, na.rm = TRUE)
   for (i in 1:length(data[, trait]))
     if (is.na(data[i, trait]))
-      data[i, "ytemp"] <- mG[data[i, treat]]
+      data[i, "ytemp"] <- mG[data[i, geno]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
   cc <- max(data[, trait], na.rm = TRUE)
@@ -61,11 +64,11 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
     for (i in 1:length(data[, trait]))
       if (is.na(data[i, trait])) {
         data[i, "ytemp"] <- data[i, trait]
-        sum1 <- tapply(data[, "ytemp"], data[, treat], sum, na.rm = TRUE)
+        sum1 <- tapply(data[, "ytemp"], data[, geno], sum, na.rm = TRUE)
         sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
         sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
-        data[i, trait.est] <- (lc$nt * sum1[data[i, treat]] + lc$nr * sum2[data[i, rep]] - sum3) /
-          (lc$nt * lc$nr - lc$nt - lc$nr + 1)
+        data[i, trait.est] <- (lc$ng * sum1[data[i, geno]] + lc$nr * sum2[data[i, rep]] - sum3) /
+          (lc$ng * lc$nr - lc$ng - lc$nr + 1)
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
@@ -75,7 +78,7 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 
   # Return
 
-  data[, c(treat, rep, trait, trait.est)]
+  data[, c(geno, rep, trait, trait.est)]
   
 }
 
@@ -94,8 +97,8 @@ mve.rcbd <- function(trait, treat, rep, data, maxp = 0.1, tol = 1e-06) {
 #' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @details A \code{data.frame} with data for a MET in a RCBD with at least two replications
-#' and at least one datum for each treatment must be loaded. Experimental data
-#' with only one replication, any treatment without data, or more missing values than
+#' and at least one datum for each genotype must be loaded. Experimental data
+#' with only one replication, any genotype without data, or more missing values than
 #' specified in \code{maxp} will generate an error message.
 #' @examples
 #' # The data
@@ -112,6 +115,9 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
   lc <- ck.f(trait, c(geno, env), rep, data)
 
   # Error messages
+
+  if (lc$nmis.fact > 0)
+    stop("There are missing values for classification factors.")
 
   if (lc$c1 == 0)
     stop("Some GxE cells have zero frequency.")
@@ -211,6 +217,9 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
   
   # Error messages
   
+  if (lc$nmis.fact > 0)
+    stop("There are missing values for classification factors.")
+
   if (lc$c1 == 0)
     stop("Some factor levels' combinations have zero frequency.")
   

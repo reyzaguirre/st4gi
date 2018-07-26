@@ -16,6 +16,8 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
   # Levels for replications
   
   lr <- sort(unique(data[, rep]))
+  
+  # Main text
 
   cat('------------------------------\n')
   cat('Check design for trait', trait, '\n')
@@ -24,7 +26,16 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
 
   if (is.null(env)) {
     
+    # Run check for rcbd
+    
     lc <- ck.rcbd(trait, geno, rep, data)
+    
+    # Write warnings
+    
+    if (lc$nmis.fact > 0) {
+      cat('There are missing values for classification factors. \n')
+      cat('\n')
+    }
   
     if (lc$c1 == 0) {
       lista <- apply(lc$tfreq, 1, sum)
@@ -34,7 +45,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     }
 
     if (lc$c2 == 0) {
-      cat('There is only one replication \n')
+      cat('There is only one replication. \n')
       cat('\n')
     }
     
@@ -55,7 +66,9 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
       cat('\n')
     }
     
-    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1) {
+    # OK message
+    
+    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1 & lc$nmis.fact == 0) {
       cat('OK \n')
       cat('\n')
     }
@@ -65,8 +78,17 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     # Levels for environments
     
     le <- sort(unique(data[, env]))
+    
+    # Run check for factorial
 
     lc <- ck.f(trait, c(geno, env), rep, data)
+    
+    # Write warnings
+    
+    if (lc$nmis.fact > 0) {
+      cat('There are missing values for classification factors. \n')
+      cat('\n')
+    }
 
     if (lc$c1 == 0) {
       tf <- lc$tfreq == 0
@@ -81,7 +103,7 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     }
     
     if (lc$c2 == 0) {
-      cat('There is only one replication \n')
+      cat('There is only one replication. \n')
       cat('\n')
     }
     
@@ -104,7 +126,9 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
       cat('\n')
     }
     
-    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1) {
+    # OK message
+    
+    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1 & lc$nmis.fact == 0) {
       cat('OK \n')
       cat('\n')
     }    

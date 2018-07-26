@@ -4,26 +4,27 @@
 \alias{ck.crd}
 \title{Check data for a CRD}
 \usage{
-ck.crd(trait, treat, data)
+ck.crd(trait, geno, data)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
-\item{treat}{The treatments.}
+\item{geno}{The genotypes.}
 
 \item{data}{The name of the data frame.}
 }
 \value{
 Two control values (\code{c1} and \code{c2},
-the number of treatments (\code{nt}), the number of replications (\code{nr}),
-and a table with frequencies of valid cases for each treatment.
+the number of genotypes (\code{ng}), the number of replications (\code{nr}),
+a table with frequencies of valid cases for each genotype, and the number of
+rows in the data frame with missing values for factors (\code{nmis.fact}).
 }
 \description{
 This function checks the frequencies of genotypes in a CRD.
 }
 \details{
 This function checks if there is more than one replication in a CRD and
-if there is any treatment without data.
+if there is any genotype without data.
 }
 \author{
 Raul Eyzaguirre.

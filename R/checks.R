@@ -6,19 +6,30 @@
 #' @param rep Label for replications.
 #' @param data The name of the data frame.
 #' @return For each replication, the number (\code{nplot}) and list (\code{lplot})
-#' of plots (unique row and column position) with more than one genotype.
+#' of plots (unique row and column position) with more than one genotype, the 
+#' number (\code{nr}) and list (\code{lr}) of replications, and the number of rows
+#' in the data frame with missing values for factors (\code{nmis.fact}).
 #' @author Raul Eyzaguirre.
 #' @export
 
 ck.pos <- function(row, col, rep = NULL, data) {
   
-  # Number of replications and levels
+  # Define replications
   
   if (is.null(rep)) {
     data[, "rep"] <- 1
     rep <- "rep"
   }
   
+  # Check and delete rows with missing values for factors
+  
+  nmis.fact <- nrow(data[is.na(data[, row]) | is.na(data[, col]) | is.na(data[, rep]), ])
+  
+  if (nmis.fact > 0)
+    data <- data[!(is.na(data[, row]) | is.na(data[, col]) | is.na(data[, rep])), ]
+
+  # Number of replications and levels
+
   lr <- sort(unique(data[, rep]))
   nr <- length(lr)
   
@@ -49,7 +60,7 @@ ck.pos <- function(row, col, rep = NULL, data) {
   
   # Return
   
-  list(nplot = nplot, lplot = lplot, lr = lr, nr = nr)
+  list(nplot = nplot, lplot = lplot, nr = nr, lr = lr, nmis.fact = nmis.fact)
   
 }
 
@@ -57,23 +68,30 @@ ck.pos <- function(row, col, rep = NULL, data) {
 #'
 #' This function checks the frequencies of genotypes in an ABD.
 #' @param trait The trait to analyze.
-#' @param treat The treatments.
+#' @param geno The genotypes including checks.
 #' @param rep The replications.
 #' @param data The name of the data frame.
-#' @return A list of treatments \code{newmat}, a list of checks \code{checks},
-#' the number of treatments \code{nt.new}, the number of checks \code{nt.check},
-#' the number of missing values for treatments \code{nmis.new}),
-#' the number of missing values for checks \code{nmis.check},
-#' the number \code{nt.check.0} and the list \code{check.0} of checks without data,
-#' the number \code{nt.check.0} and the list \code{check.1} of checks with only one datum,
-#' the number of checks with at least two data \code{nt.check.2},
-#' and the number of replications \code{nr}.
+#' @return The number of checks \code{ng.check}, the number of no checks \code{ng},
+#' the number of missing values for checks \code{nmis.check}), the number of
+#' missing values for no checks \code{nmis}, the number \code{n.check.0}
+#' and list \code{check.0} of checks without data, the number \code{n.check.1}
+#' and list \code{check.1} of checks with only one datum, the number of checks
+#' with at least two data \code{n.check.2}, the number of replications \code{nr},
+#' and the number of rows in the data frame with missing values for factors
+#' (\code{nmis.fact}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks the frequencies and number of missing values in an ABD.
 #' For an ANOVA in an ABD it is needed at least two checks with at least 2 valid cases each.
 #' @export
 
-ck.abd <- function(trait, treat, rep, data) {
+ck.abd <- function(trait, geno, rep, data) {
+  
+  # Check and delete rows with missing values for factors
+  
+  nmis.fact <- nrow(data[is.na(data[, geno]) | is.na(data[, rep]), ])
+  
+  if (nmis.fact > 0)
+    data <- data[!(is.na(data[, geno]) | is.na(data[, rep])), ]
   
   # Number of replications
   
@@ -81,50 +99,53 @@ ck.abd <- function(trait, treat, rep, data) {
 
   # Identify checks and no checks
   
-  tfreq <- data.frame(table(data[, treat]))
-  checks <- tfreq[tfreq$Freq > 1, 1]
-  newmat <- tfreq[tfreq$Freq == 1, 1]
+  tfreq <- data.frame(table(data[, geno]))
+  check <- tfreq[tfreq$Freq > 1, 1]
+  nocheck <- tfreq[tfreq$Freq == 1, 1]
   
-  # Number of treatments
+  # Number of checks and no checks
   
-  nt.check <- length(checks)
-  nt.new <- length(newmat)
+  ng.check <- length(check)
+  ng <- length(nocheck)
   
-  # Number of missing values
+  # Number of missing values for no checks
   
-  temp <- subset(data, !(data[, treat] %in% checks))
-  nmis.new <- sum(is.na(temp[, trait]))
+  temp <- subset(data, !(data[, geno] %in% check))
+  nmis <- sum(is.na(temp[, trait]))
   
-  temp <- subset(data, data[, treat] %in% checks)
+  # Number of missing values for checks
+  # Factor format to preserve levels in the table of frequencies
+  
+  temp <- subset(data, data[, geno] %in% check)
+  temp$geno <- factor(temp$geno)
+
   temp <- subset(temp, !is.na(temp[, trait]))
-  tfreq <- table(temp[, treat], temp[, rep])
+  tfreq <- table(temp[, geno], temp[, rep])
   nmis.check <- sum(tfreq == 0)
 
-  # Number of checks without data, with 1 and more data
+  # Number of checks without data, with 1, and more data
 
-  tfreq <- data.frame(table(temp[, treat]))
+  tfreq <- data.frame(table(temp[, geno]))
   
-  nt.check.0 <- sum(tfreq$Freq == 0)
-  nt.check.1 <- sum(tfreq$Freq == 1)
-  nt.check.2 <- sum(tfreq$Freq > 1)
+  n.check.0 <- sum(tfreq$Freq == 0)
+  n.check.1 <- sum(tfreq$Freq == 1)
+  n.check.2 <- sum(tfreq$Freq > 1)
   
-  # Checks to remove
+  # List of checks witout data or only one datum
   
   check.0 <- NULL
-  if (nt.check.0 > 0)
+  if (n.check.0 > 0)
     check.0 <- tfreq[tfreq$Freq == 0, 1]
   
   check.1 <- NULL
-  if (nt.check.1 > 0)
+  if (n.check.1 > 0)
     check.1 <- tfreq[tfreq$Freq == 1, 1]
 
   # Return
   
-  list(checks = checks, newmat = newmat, nt.check = nt.check, nt.new = nt.new,
-       nmis.check = nmis.check, nmis.new = nmis.new, nr = nr,
-       nt.check.0 = nt.check.0, check.0 = check.0,
-       nt.check.1 = nt.check.1, check.1 = check.1,
-       nt.check.2 = nt.check.2)
+  list(ng.check = ng.check, ng = ng, nmis.check = nmis.check, nmis = nmis, nr = nr,
+       n.check.0 = n.check.0, check.0 = check.0, n.check.1 = n.check.1,
+       check.1 = check.1, n.check.2 = n.check.2, nmis.fact = nmis.fact)
   
 }
 
@@ -132,26 +153,38 @@ ck.abd <- function(trait, treat, rep, data) {
 #'
 #' This function checks the frequencies of genotypes in a CRD.
 #' @param trait The trait to analyze.
-#' @param treat The treatments.
+#' @param geno The genotypes.
 #' @param data The name of the data frame.
 #' @return Two control values (\code{c1} and \code{c2},
-#' the number of treatments (\code{nt}), the number of replications (\code{nr}),
-#' and a table with frequencies of valid cases for each treatment.
+#' the number of genotypes (\code{ng}), the number of replications (\code{nr}),
+#' a table with frequencies of valid cases for each genotype, and the number of
+#' rows in the data frame with missing values for factors (\code{nmis.fact}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a CRD and
-#' if there is any treatment without data.
+#' if there is any genotype without data.
 #' @export
 
-ck.crd <- function(trait, treat, data) {
+ck.crd <- function(trait, geno, data) {
   
-  # Check frequencies by treat
+  # Check and delete rows with missing values for factors
+  
+  nmis.fact <- nrow(data[is.na(data[, geno]), ])
+  
+  if (nmis.fact > 0)
+    data <- data[!(is.na(data[, geno])), ]
+
+  # Genotypes as factor to preserve levels in the table of frequencies
+  
+  data[, geno] <- factor(data[, geno])
+
+  # Check frequencies by genotype
   
   subdata <- subset(data, !is.na(data[, trait]))
-  tfreq <- table(subdata[, treat])
+  tfreq <- table(subdata[, geno])
 
   # Number of levels
   
-  nt <- length(unique(data[, treat]))
+  ng <- nlevels(data[, geno])
   nr <- max(tfreq)
 
   # Controls
@@ -166,7 +199,7 @@ ck.crd <- function(trait, treat, data) {
 
   # Return
   
-  list(c1 = c1, c2 = c2, nt = nt, nr = nr, tfreq = tfreq)
+  list(c1 = c1, c2 = c2, ng = ng, nr = nr, tfreq = tfreq, nmis.fact = nmis.fact)
   
 }
 
@@ -174,35 +207,44 @@ ck.crd <- function(trait, treat, data) {
 #'
 #' This function checks the frequencies of genotypes in a RCBD.
 #' @param trait The trait to analyze.
-#' @param treat The treatments.
+#' @param geno The genotypes.
 #' @param rep The replications.
 #' @param data The name of the data frame.
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4}),
 #' the number of missing values \code{nmis}, the proportion of missing values
-#' (\code{pmis}), the number of treatments (\code{nt}), the number of replications
-#' (\code{nr}), and a table with frequencies of valid cases for each treatment.
+#' (\code{pmis}), the number of genotypes (\code{ng}), the number of replications
+#' (\code{nr}), a table with frequencies of valid cases for each genotype, and
+#' the number of rows in the data frame with missing values for factors
+#' (\code{nmis.fact}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication in a RCBD,
-#' if there is any treatment without data or with more data than replications, and
+#' if there is any genotype without data or with more data than replications, and
 #' if the design is balanced.
 #' @export
 
-ck.rcbd <- function(trait, treat, rep, data) {
+ck.rcbd <- function(trait, geno, rep, data) {
   
-  # Everything as factor
+  # Check and delete rows with missing values for factors
   
-  data[, treat] <- factor(data[, treat])
+  nmis.fact <- nrow(data[is.na(data[, geno]) | is.na(data[, rep]), ])
+  
+  if (nmis.fact > 0)
+    data <- data[!(is.na(data[, geno]) | is.na(data[, rep])), ]
+  
+  # Everything as factor to preserve levels in the table of frequencies
+  
+  data[, geno] <- factor(data[, geno])
   data[, rep] <- factor(data[, rep])
   
   # Number of levels
   
-  nt <- nlevels(data[, treat])
+  ng <- nlevels(data[, geno])
   nr <- nlevels(data[, rep])
   
-  # Check frequencies by treat
+  # Check frequencies by geno
   
   subdata <- subset(data, !is.na(data[, trait]))
-  tfreq <- table(subdata[, treat], subdata[, rep])
+  tfreq <- table(subdata[, geno], subdata[, rep])
   nmis <- sum(tfreq == 0)
   pmis <- mean(tfreq == 0)
   
@@ -213,7 +255,7 @@ ck.rcbd <- function(trait, treat, rep, data) {
   c3 <- 1 # Check for genotypes with more than one datum in a replication
   c4 <- 1 # Check for missing values. Initial state no missing values
   
-  if (min(table(subdata[, treat])) == 0)
+  if (min(table(subdata[, geno])) == 0)
     c1 <- 0 # State 0: there are zeros
   if (nr > 1)
     c2 <- 1 # State 1: more than one replication
@@ -225,7 +267,7 @@ ck.rcbd <- function(trait, treat, rep, data) {
   # Return
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
-       nt = nt, nr = nr, tfreq = tfreq)
+       ng = ng, nr = nr, tfreq = tfreq, nmis.fact = nmis.fact)
   
 }
 
@@ -241,8 +283,9 @@ ck.rcbd <- function(trait, treat, rep, data) {
 #' (\code{pmis}), the number of factors (\code{nf}), the number of levels of each
 #' factor (\code{nl}), the number of replications (\code{nr}), a table with
 #' frequencies of valid cases for each combination of the levels of the factors
-#' (\code{tfreq}), and a table with frequencies of valid cases for each combination
-#' of the levels of the factors in each replication (\code{tfreqr}).
+#' (\code{tfreq}), a table with frequencies of valid cases for each combination
+#' of the levels of the factors in each replication (\code{tfreqr}), and the
+#' number of rows in the data frame with missing values for factors (\code{nmis.fact}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks if there is more than one replication, if there is
 #' any combination of the levels of the factors without data or with more data than
@@ -250,6 +293,15 @@ ck.rcbd <- function(trait, treat, rep, data) {
 #' @export
 
 ck.f <- function(trait, factors, rep, data) {
+  
+  # Check and delete rows with missing values for factors
+  
+  cond <- apply(data[, c(factors, rep)], 1, function(x) sum(is.na(x)) > 0)
+  
+  nmis.fact <- sum(cond)
+  
+  if (nmis.fact > 0)
+    data <- data[!cond, ]
   
   # Number of factors
   
@@ -299,8 +351,8 @@ ck.f <- function(trait, factors, rep, data) {
     
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
-       nf = nf, nl = nl, nr = nr, tfreq = tfreq, tfreqr = tfreqr)
+  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis, nf = nf,
+       nl = nl, nr = nr, tfreq = tfreq, tfreqr = tfreqr, nmis.fact = nmis.fact)
   
 }
 
@@ -318,8 +370,9 @@ ck.f <- function(trait, factors, rep, data) {
 #' @param data The name of the data frame.
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},
 #' for the grid of checks, the number of missing values for checks (\code{nmis.check})
-#' and genotypes \code{nmis}, and the proportion of missing values for checks
-#' (\code{pmis.check}) and genotypes (\code{pmis}).
+#' and genotypes \code{nmis}, the proportion of missing values for checks
+#' (\code{pmis.check}) and genotypes (\code{pmis}), and the number of rows
+#' in the data frame with missing values for factors (\code{nmis.fact}).
 #' @author Raul Eyzaguirre.
 #' @details This function checks the grid of checks for the Wescoot layout and
 #' calculates the number of missing values.
@@ -327,6 +380,12 @@ ck.f <- function(trait, factors, rep, data) {
 
 ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   
+  # Check and delete rows with missing values for factors
+  
+  nmis.fact <- nrow(data[is.na(data[, geno]) | is.na(data[, row]) | is.na(data[, col]), ])
+  
+  if (nmis.fact > 0)
+    data <- data[!(is.na(data[, geno]) | is.na(data[, rep]) | is.na(data[, col])), ]
   # Checks
   
   checks <- c(ch1, ch2)
@@ -403,6 +462,6 @@ ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
   # Return
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
-       nmis.check = nmis.check, pmis.check = pmis.check)
+       nmis.check = nmis.check, pmis.check = pmis.check, nmis.fact = nmis.fact)
   
 }
