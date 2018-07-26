@@ -100,8 +100,8 @@ ck.abd <- function(trait, geno, rep, data) {
   # Identify checks and no checks
   
   tfreq <- data.frame(table(data[, geno]))
-  check <- tfreq[tfreq$Freq > 1, 1]
-  nocheck <- tfreq[tfreq$Freq == 1, 1]
+  check <- as.character(tfreq[tfreq$Freq > 1, 1])
+  nocheck <- as.character(tfreq[tfreq$Freq == 1, 1])
   
   # Number of checks and no checks
   
@@ -110,16 +110,16 @@ ck.abd <- function(trait, geno, rep, data) {
   
   # Number of missing values for no checks
   
-  temp <- subset(data, !(data[, geno] %in% check))
+  temp <- data[!(data[, geno] %in% check), ]
   nmis <- sum(is.na(temp[, trait]))
   
   # Number of missing values for checks
   # Factor format to preserve levels in the table of frequencies
   
-  temp <- subset(data, data[, geno] %in% check)
+  temp <- data[data[, geno] %in% check, ]
   temp$geno <- factor(temp$geno)
 
-  temp <- subset(temp, !is.na(temp[, trait]))
+  temp <- temp[!is.na(temp[, trait]), ]
   tfreq <- table(temp[, geno], temp[, rep])
   nmis.check <- sum(tfreq == 0)
 
