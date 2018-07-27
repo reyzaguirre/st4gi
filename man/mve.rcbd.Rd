@@ -34,7 +34,7 @@ with only one replication, any genotype without data, or more missing values tha
 specified in \code{maxp} will generate an error message.
 }
 \examples{
-temp <- subset(met8x12, env == "TM80N")
+temp <- met8x12[met8x12$env == "TM80N", ]
 mve.rcbd("y", "geno", "rep", temp)
 }
 \author{

@@ -16,7 +16,7 @@
 #' with only one replication, any genotype without data, or more missing values than
 #' specified in \code{maxp} will generate an error message.
 #' @examples
-#' temp <- subset(met8x12, env == "TM80N")
+#' temp <- met8x12[met8x12$env == "TM80N", ]
 #' mve.rcbd("y", "geno", "rep", temp)
 #' @export
 
@@ -72,7 +72,7 @@ mve.rcbd <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
-    lc2 <- subset(data, is.na(data[, trait]))[, trait.est]
+    lc2 <- data[is.na(data[, trait]), trait.est]
     cc <- max(abs(lc1 - lc2))
   }
 
@@ -164,7 +164,7 @@ mve.met <- function(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06) {
         data[i, "ytemp"] <- data[i, trait.est]
       }
     lc1 <- lc2
-    lc2 <- subset(data, is.na(data[, trait]))[, trait.est]
+    lc2 <- data[is.na(data[, trait]), trait.est]
     cc <- max(abs(lc1 - lc2))
   }
 
@@ -330,7 +330,7 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
         }
       
       emv1 <- emv2
-      emv2 <- subset(data, is.na(data[, trait]) == 1)[, trait.est]
+      emv2 <- data[is.na(data[, trait]), trait.est]
       cc <- max(abs(emv1 - emv2))
     }
   }

@@ -89,7 +89,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
   b <- max(resu$ls, na.rm = T)
   
   for (i in 1:length(resu$means)) {
-    subdata <- subset(data, data[, groups] == resu$orden[i])
+    subdata <- data[data[, groups] == resu$orden[i], ]
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax) {
       a <- min(a, subdata[, trait])
       b <- max(b, subdata[, trait])
@@ -107,7 +107,7 @@ msdplot <- function(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
 
   for (i in 1:length(resu$means)) {
     lines(c(i, i), c(resu$li[i], resu$ls[i]), col = colors[2])
-    subdata <- subset(data, data[, groups] == resu$orden[i])
+    subdata <- data[data[, groups] == resu$orden[i], ]
     if (dotplot == "TRUE" | length(subdata[, trait]) <= nmax)
       points(jitter(rep(i + dist, length(subdata[, trait])), factor = jf),
              subdata[, trait], col = colors[3])

@@ -179,7 +179,7 @@ ck.crd <- function(trait, geno, data) {
 
   # Check frequencies by genotype
   
-  subdata <- subset(data, !is.na(data[, trait]))
+  subdata <- data[!is.na(data[, trait]), ]
   tfreq <- table(subdata[, geno])
 
   # Number of levels
@@ -243,7 +243,7 @@ ck.rcbd <- function(trait, geno, rep, data) {
   
   # Check frequencies by geno
   
-  subdata <- subset(data, !is.na(data[, trait]))
+  subdata <- data[!is.na(data[, trait]), ]
   tfreq <- table(subdata[, geno], subdata[, rep])
   nmis <- sum(tfreq == 0)
   pmis <- mean(tfreq == 0)
@@ -320,7 +320,7 @@ ck.f <- function(trait, factors, rep, data) {
   nmis <- sum(is.na(data[, trait]))
   pmis <- mean(is.na(data[, trait]))
   
-  subdata <- subset(data, !is.na(data[, trait]))
+  subdata <- data[!is.na(data[, trait]), ]
   
   expr <- 'table(subdata[, factors[1]]'
   
