@@ -32,8 +32,7 @@ docomp <- function(do, traits, factors, addcol = NULL, data) {
   
   dataout <- data.frame(data[, c(factors, addcol)])
   colnames(dataout) <- c(factors, addcol)
-  dataout <- data.frame(dataout[!duplicated(dataout[, factors]), ])
-  colnames(dataout) <- c(factors, addcol)
+  dataout <- subset(dataout, !duplicated(dataout[, factors]))
   
   # Number of factors and traits
   
