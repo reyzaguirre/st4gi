@@ -4,7 +4,7 @@
 \alias{ck.gr}
 \title{Check number of genotypes and replications}
 \usage{
-ck.gr(geno, design = c("crd", "rcbd", "abd"), dfr)
+ck.gr(geno, rep = NULL, design = c("crd", "rcbd", "abd"), dfr)
 }
 \arguments{
 \item{geno}{The genotypes}
@@ -15,6 +15,7 @@ ck.gr(geno, design = c("crd", "rcbd", "abd"), dfr)
 }
 \value{
 The number of genotypes (\code{ng}), the number of checks (\code{ng.check}),
+the list of genotypes (\code{nocheck}), the list of checks (\code{check}),
 and the number of replications (\code{nr}).
 }
 \description{
