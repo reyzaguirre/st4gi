@@ -4,7 +4,7 @@
 \alias{check.pos}
 \title{Check row and column positions}
 \usage{
-check.pos(row, col, rep, data)
+check.pos(row, col, rep, dfr)
 }
 \arguments{
 \item{row}{Label for rows.}
@@ -13,7 +13,7 @@ check.pos(row, col, rep, data)
 
 \item{rep}{Label for replications.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 For each replication a list of plots (unique row and column position)
