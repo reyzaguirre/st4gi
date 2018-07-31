@@ -22,10 +22,6 @@ of rows in the data frame with missing values for factors (\code{nmis.fac}).
 \description{
 This function checks the frequencies of genotypes in a CRD.
 }
-\details{
-This function checks if there is more than one replication in a CRD and
-if there is any genotype without data.
-}
 \author{
 Raul Eyzaguirre.
 }

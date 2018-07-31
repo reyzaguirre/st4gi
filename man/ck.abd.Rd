@@ -29,9 +29,8 @@ and the number of rows in the data frame with missing values for factors
 This function checks the frequencies of genotypes in an ABD.
 }
 \details{
-This function checks the frequencies and number of missing values
-in an ABD. For an ANOVA in an ABD it is needed at least two checks with at
-least 2 valid cases each.
+For an ANOVA in an ABD it is needed at least two checks each with at
+least 2 valid cases.
 }
 \author{
 Raul Eyzaguirre.
