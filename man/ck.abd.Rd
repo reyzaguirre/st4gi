@@ -4,7 +4,7 @@
 \alias{ck.abd}
 \title{Check data for an ABD}
 \usage{
-ck.abd(trait, geno, rep, data)
+ck.abd(trait, geno, rep, dfr)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -13,7 +13,7 @@ ck.abd(trait, geno, rep, data)
 
 \item{rep}{The replications.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of checks \code{ng.check}, the number of no checks \code{ng},
@@ -23,14 +23,15 @@ and list \code{check.0} of checks without data, the number \code{n.check.1}
 and list \code{check.1} of checks with only one datum, the number of checks
 with at least two data \code{n.check.2}, the number of replications \code{nr},
 and the number of rows in the data frame with missing values for factors
-(\code{nmis.fact}).
+(\code{nmis.fac}).
 }
 \description{
 This function checks the frequencies of genotypes in an ABD.
 }
 \details{
-This function checks the frequencies and number of missing values in an ABD.
-For an ANOVA in an ABD it is needed at least two checks with at least 2 valid cases each.
+This function checks the frequencies and number of missing values
+in an ABD. For an ANOVA in an ABD it is needed at least two checks with at
+least 2 valid cases each.
 }
 \author{
 Raul Eyzaguirre.
