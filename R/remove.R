@@ -13,7 +13,7 @@ rm.fna <- function(factors, dfr) {
   
   # Check missing values for factors
   
-  cond <- apply(dfr[, c(factors)], 1, function(x) sum(is.na(x)) > 0)
+  cond <- apply(data.frame(dfr[, c(factors)]), 1, function(x) sum(is.na(x)) > 0)
   
   # Number of missing values for factors
   
@@ -46,7 +46,7 @@ rm.lna <- function(trait, factors, dfr) {
   
   # Remove rows with missing values for factors and get a copy
   
-  dfr <- ck.fna(factors, dfr)$dfr
+  dfr <- rm.fna(factors, dfr)$dfr
   temp <- dfr
   
   # To factor to preserve levels
