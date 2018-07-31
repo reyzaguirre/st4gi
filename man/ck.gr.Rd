@@ -15,7 +15,7 @@ ck.gr(geno, rep = NULL, design = c("crd", "rcbd", "abd"), dfr)
 }
 \value{
 The number of genotypes (\code{ng}), the number of checks (\code{ng.check}),
-the list of genotypes (\code{nocheck}), the list of checks (\code{check}),
+the list of genotypes (\code{lg}), the list of checks (\code{lg.check}),
 and the number of replications (\code{nr}).
 }
 \description{
