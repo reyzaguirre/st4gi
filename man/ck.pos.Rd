@@ -4,7 +4,7 @@
 \alias{ck.pos}
 \title{Check row and column positions}
 \usage{
-ck.pos(row, col, rep = NULL, data)
+ck.pos(row, col, rep = NULL, dfr)
 }
 \arguments{
 \item{row}{Label for rows.}
@@ -13,13 +13,12 @@ ck.pos(row, col, rep = NULL, data)
 
 \item{rep}{Label for replications.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 For each replication, the number (\code{nplot}) and list (\code{lplot})
-of plots (unique row and column position) with more than one genotype, the 
-number (\code{nr}) and list (\code{lr}) of replications, and the number of rows
-in the data frame with missing values for factors (\code{nmis.fact}).
+of plots (unique row and column position) with more than one genotype, and the 
+number (\code{nr}) and list (\code{lr}) of replications.
 }
 \description{
 This function checks that there is only one genotype in each row and column position.
