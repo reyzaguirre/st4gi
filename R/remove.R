@@ -7,6 +7,16 @@
 #' @return The number of rows in the data frame with missing values for factors
 #' (\code{nmis.fac}), and the data frame after removal of all these rows.
 #' @author Raul Eyzaguirre.
+#' @examples
+#' # Create a design
+#' dfr <- cr.crd(1:10, 3, 10)
+#' dfr <- dfr$book
+#' # Delete some values for classification factors
+#' dfr[5, 2] <- NA
+#' dfr[7, 3] <- NA
+#' dfr[11, 4] <- NA
+#' # Check missing values
+#' rm.fna(c('row', 'col', 'geno'), dfr)
 #' @export
 
 rm.fna <- function(factors, dfr) {
@@ -40,6 +50,16 @@ rm.fna <- function(factors, dfr) {
 #' @return The number of rows in the data frame with factor levels without data
 #' (\code{nmis.lev}), and the data frame after removal of all these rows.
 #' @author Raul Eyzaguirre.
+#' @examples
+#' # Create a design
+#' dfr <- cr.crd(1:10, 3, 10)
+#' dfr <- dfr$book
+#' # Create some random data
+#' dfr$y <- rnorm(30)
+#' # Delete values for some factor levels
+#' dfr[dfr$geno == 5, 'y'] <- NA
+#' # Check missing values
+#' rm.lna('y', 'geno', dfr)
 #' @export
 
 rm.lna <- function(trait, factors, dfr) {

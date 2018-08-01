@@ -23,6 +23,13 @@ number (\code{nr}) and list (\code{lr}) of replications.
 \description{
 This function checks that there is only one genotype in each row and column position.
 }
+\examples{
+# Create a design
+dfr <- cr.rcbd(1:20, 3, 10)
+dfr <- dfr$book
+# Check positions
+ck.pos('row', 'col', 'block', dfr = dfr)
+}
 \author{
 Raul Eyzaguirre.
 }

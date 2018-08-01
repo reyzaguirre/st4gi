@@ -22,6 +22,19 @@ of rows in the data frame with missing values for factors (\code{nmis.fac}).
 \description{
 This function checks the frequencies of genotypes in a CRD.
 }
+\examples{
+# Create design
+dfr <- cr.crd(1:50, 3, 10)
+dfr <- dfr$book
+# Create some random data
+dfr$y <- rnorm(150)
+# Delete some values
+dfr[c(1, 5, 56, 77, 111), 'y'] <- NA
+# Delete some values for classification factors
+dfr[c(27, 48), 'geno'] <- NA
+# Check the design
+ck.crd('y', 'geno', dfr)
+}
 \author{
 Raul Eyzaguirre.
 }

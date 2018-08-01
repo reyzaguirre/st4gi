@@ -21,6 +21,13 @@ and the number of replications (\code{nr}).
 \description{
 This function cheks the number of genotypes and replications for different designs.
 }
+\examples{
+# Create a design
+dfr <- cr.rcbd(1:20, 3, 10)
+dfr <- dfr$book
+# Check the design
+ck.gr('geno', 'block', 'rcbd', dfr = dfr)
+}
 \author{
 Raul Eyzaguirre.
 }

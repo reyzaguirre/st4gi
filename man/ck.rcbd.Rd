@@ -26,6 +26,17 @@ rows in the data frame with missing values for factors (\code{nmis.fac}).
 \description{
 This function checks the frequencies of genotypes in a RCBD.
 }
+\examples{
+# Create design
+dfr <- cr.rcbd(1:20, 3, 10)
+dfr <- dfr$book
+# Create some random data
+dfr$y <- rnorm(60)
+# Delete some values
+dfr[c(1, 5, 16, 17), 'y'] <- NA
+# Check the design
+ck.rcbd('y', 'geno', 'block', dfr)
+}
 \author{
 Raul Eyzaguirre.
 }

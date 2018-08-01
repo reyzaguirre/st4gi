@@ -20,6 +20,17 @@ The number of rows in the data frame with factor levels without data
 \description{
 This function removes rows for factors' levels without data.
 }
+\examples{
+# Create a design
+dfr <- cr.crd(1:10, 3, 10)
+dfr <- dfr$book
+# Create some random data
+dfr$y <- rnorm(30)
+# Delete values for some factor levels
+dfr[dfr$geno == 5, 'y'] <- NA
+# Check missing values
+rm.lna('y', 'geno', dfr)
+}
 \author{
 Raul Eyzaguirre.
 }

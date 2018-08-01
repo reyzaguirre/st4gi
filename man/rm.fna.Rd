@@ -18,6 +18,17 @@ The number of rows in the data frame with missing values for factors
 \description{
 This function removes rows for factors with missing values.
 }
+\examples{
+# Create a design
+dfr <- cr.crd(1:10, 3, 10)
+dfr <- dfr$book
+# Delete some values for classification factors
+dfr[5, 2] <- NA
+dfr[7, 3] <- NA
+dfr[11, 4] <- NA
+# Check missing values
+rm.fna(c('row', 'col', 'geno'), dfr)
+}
 \author{
 Raul Eyzaguirre.
 }

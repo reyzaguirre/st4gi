@@ -28,9 +28,18 @@ and the number of rows in the data frame with missing values for factors
 \description{
 This function checks the frequencies of genotypes in an ABD.
 }
-\details{
-For an ANOVA in an ABD it is needed at least two checks each with at
-least 2 valid cases.
+\examples{
+# Create design
+dfr <- cr.abd(1:50, c('a', 'b', 'd'), 5, 10)
+dfr <- dfr$book
+# Create some random data
+dfr$y <- rnorm(65)
+# Delete some values
+dfr[c(1, 5, 7, 56), 'y'] <- NA
+# Delete some values for classification factors
+dfr[64, 'geno'] <- NA
+# Check the design
+ck.abd('y', 'geno', 'block', dfr)
 }
 \author{
 Raul Eyzaguirre.
