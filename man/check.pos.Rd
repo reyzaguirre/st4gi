@@ -23,6 +23,13 @@ with more than one genotype.
 This function checks that there is only one genotype in each row and column position.
 This is a wrapper for \code{ck.pos} function.
 }
+\examples{
+# Create a design
+dfr <- cr.rcbd(1:20, 3, 10)
+dfr <- dfr$book
+# Check positions
+check.pos('row', 'col', 'block', dfr)
+}
 \author{
 Raul Eyzaguirre.
 }
