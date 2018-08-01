@@ -38,11 +38,11 @@ ck.abd <- function(trait, geno, rep, dfr) {
 
   # Number and list of checks and nochecks, and number of replications
   
-  out <- ck.gr(geno, rep, 'abd', dfr)
-  ng <- out$ng
-  lg <- out$lg
-  ng.check <- out$ng.check
-  lg.check <- out$lg.check
+  out <- ck.fs(geno, rep, 'abd', dfr)
+  ng <- out$nt
+  lg <- out$lt
+  ng.check <- out$nt.check
+  lg.check <- out$lt.check
   nr <- out$nr
   
   # Number of missing values for no checks
@@ -51,22 +51,19 @@ ck.abd <- function(trait, geno, rep, dfr) {
   nmis <- sum(is.na(temp[, trait]))
   
   # Number of missing values for checks
-  # Factor format to preserve levels in the table of frequencies
-  
+
   temp <- dfr[dfr[, geno] %in% lg.check, ]
-  temp[, geno] <- factor(temp[, geno])
-  temp[, rep] <- factor(temp[, rep])
-  temp <- temp[!is.na(temp[, trait]), ]
-  tfreq <- table(temp[, geno], temp[, rep])
-  nmis.check <- sum(tfreq == 0)
+  out <- ck.fq(trait, geno, rep, temp)
+  tfr <- out$tfr
+  nmis.check <- sum(tfr == 0)
 
   # Number of checks without data, with 1, and more data
 
-  tfreq <- data.frame(table(temp[, geno]))
+  tf <- data.frame(out$tf)
   
-  ncheck.0 <- sum(tfreq$Freq == 0)
-  ncheck.1 <- sum(tfreq$Freq == 1)
-  ncheck.2 <- sum(tfreq$Freq > 1)
+  ncheck.0 <- sum(tf$Freq == 0)
+  ncheck.1 <- sum(tf$Freq == 1)
+  ncheck.2 <- sum(tf$Freq > 1)
   
   # List of checks witout data or only one datum
   
