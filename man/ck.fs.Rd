@@ -4,22 +4,19 @@
 \alias{ck.fs}
 \title{Check factors structure}
 \usage{
-ck.fs(factors, rep = NULL, design = c("crd", "rcbd", "abd"), dfr)
+ck.fs(factors, rep = NULL, dfr)
 }
 \arguments{
 \item{factors}{The factors}
 
 \item{rep}{The replications}
 
-\item{design}{The statistical design}
-
 \item{dfr}{The name of the data frame}
 }
 \value{
 The number of factors (\code{nf}), the number of levels of the factors
-(\code{nl}), the number of treatments (\code{nt}), the number of checks
-(\code{nt.ck}), the list of treatments (\code{lt}), the list of checks
-(\code{lt.ck}), and the number of replications (\code{nr}).
+(\code{nl}), the number of treatments (\code{nt}), the list of treatments (\code{lt}),
+the number of replications (\code{nr}), and the list of replications (\code{lr}).
 }
 \description{
 This function cheks the number of treatments and replications for different designs.
@@ -30,7 +27,7 @@ This function cheks the number of treatments and replications for different desi
 dfr <- cr.rcbd(1:20, 3, 10)
 dfr <- dfr$book
 # Check the design
-ck.fs("geno", "block", "rcbd", dfr)
+ck.fs("geno", "block", dfr)
 
 ## Example 2
 # Create a design
@@ -39,7 +36,7 @@ B <- paste0("b", 1:3)
 dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
 dfr <- dfr$book
 # Check the design
-ck.fs(c("A", "B"), "block", "rcbd", dfr)
+ck.fs(c("A", "B"), "block", dfr)
 }
 \author{
 Raul Eyzaguirre.
