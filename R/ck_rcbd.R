@@ -38,28 +38,28 @@ ck.rcbd <- function(trait, geno, rep, data) {
   ng <- out$nt
   nr <- out$nr
 
+  # Number of missing values
+  
+  nmis <- sum(is.na(dfr[, trait]))
+  pmis <- mean(is.na(dfr[, trait]))
+
   # Frequencies for genotypes and replications
   
   out <- ck.fq(trait, geno, rep, dfr)
   tf <- out$tf
   tfr <- out$tfr
   
-  # Number of missing values
-  
-  nmis <- sum(tfr == 0)
-  pmis <- mean(tfr == 0)
-  
-  # Number of genotypes with more than one plot in a given block
-  
-  ng.2 <- sum(tfr > 1)
-  
   # Number of genotypes without data
   
   ng.0 <- sum(tf == 0)
 
+  # Number of genotypes that appear more than once in a given replication
+
+  ng.mult <- sum(tfr > 1)
+  
   # Return
   
-  list(ng.0 = ng.0, ng.2 = ng.2, nmis = nmis, pmis = pmis, ng = ng,
+  list(ng.0 = ng.0, ng.mult = ng.mult, nmis = nmis, pmis = pmis, ng = ng,
        nr = nr, nmis.fac = nmis.fac)
   
 }
