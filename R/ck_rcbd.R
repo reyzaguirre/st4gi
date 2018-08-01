@@ -9,8 +9,9 @@
 #' genotypes with more than one plot in a given block (\code{ng.2}), the number
 #' of missing values \code{nmis}, the proportion of missing values (\code{pmis}),
 #' the number of genotypes (\code{ng}), the number of replications (\code{nr}),
-#' and the number of rows in the data frame with missing values for factors
-#' (\code{nmis.fac}).
+#' a table with valid cases for each genotype (\code{tf}), a table with valid 
+#' cases for each genotype in each replication (\code{tfr}), and the number of
+#' rows in the data frame with missing values for factors (\code{nmis.fac}).
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' # Create design
@@ -60,6 +61,6 @@ ck.rcbd <- function(trait, geno, rep, data) {
   # Return
   
   list(ng.0 = ng.0, ng.mult = ng.mult, nmis = nmis, pmis = pmis, ng = ng,
-       nr = nr, nmis.fac = nmis.fac)
+       nr = nr, tf = tf, tfr = tfr, nmis.fac = nmis.fac)
   
 }
