@@ -20,8 +20,9 @@ The number of genotypes without data (\code{ng.0}), the number of
 genotypes with more than one plot in a given block (\code{ng.2}), the number
 of missing values \code{nmis}, the proportion of missing values (\code{pmis}),
 the number of genotypes (\code{ng}), the number of replications (\code{nr}),
-and the number of rows in the data frame with missing values for factors
-(\code{nmis.fac}).
+a table with valid cases for each genotype (\code{tf}), a table with valid 
+cases for each genotype in each replication (\code{tfr}), and the number of
+rows in the data frame with missing values for factors (\code{nmis.fac}).
 }
 \description{
 This function checks the frequencies of genotypes in a RCBD.
