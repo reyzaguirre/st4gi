@@ -33,7 +33,7 @@ dfr$y <- rnorm(60)
 # Delete some values
 dfr[c(1, 5, 16, 17), 'y'] <- NA
 # Check the frequencies
-ck.fq("y", "geno", "block", dfr = dfr)
+ck.fq("y", "geno", "block", dfr)
 
 ## Example 2
 # Create a design
@@ -46,7 +46,7 @@ dfr$y <- rnorm(45)
 # Delete some values
 dfr[c(5, 10, 24), 'y'] <- NA
 # Check the frequencies
-ck.fq("y", c("A", "B"), "block", dfr = dfr)
+ck.fq("y", c("A", "B"), "block", dfr)
 }
 \author{
 Raul Eyzaguirre.

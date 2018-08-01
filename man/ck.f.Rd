@@ -28,6 +28,19 @@ missing values for factors (\code{nmis.fact}).
 \description{
 This function checks the frequencies for a full factorial.
 }
+\examples{
+Create a design
+A <- paste0("a", 1:5)
+B <- paste0("b", 1:3)
+dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
+dfr <- dfr$book
+# Create some random data
+dfr$y <- rnorm(45)
+# Delete some values
+dfr[c(4, 5, 12), 'y'] <- NA
+# Check the design
+ck.f("y", c("A", "B"), "block", dfr)
+}
 \author{
 Raul Eyzaguirre.
 }

@@ -18,8 +18,8 @@ ck.fs(factors, rep = NULL, design = c("crd", "rcbd", "abd"), dfr)
 \value{
 The number of factors (\code{nf}), the number of levels of the factors
 (\code{nl}), the number of treatments (\code{nt}), the number of checks
-(\code{nt.chk}), the list of treatments (\code{lt}), the list of checks
-(\code{lt.chk}), and the number of replications (\code{nr}).
+(\code{nt.ck}), the list of treatments (\code{lt}), the list of checks
+(\code{lt.ck}), and the number of replications (\code{nr}).
 }
 \description{
 This function cheks the number of treatments and replications for different designs.
@@ -30,7 +30,7 @@ This function cheks the number of treatments and replications for different desi
 dfr <- cr.rcbd(1:20, 3, 10)
 dfr <- dfr$book
 # Check the design
-ck.fs("geno", "block", "rcbd", dfr = dfr)
+ck.fs("geno", "block", "rcbd", dfr)
 
 ## Example 2
 # Create a design
@@ -39,7 +39,7 @@ B <- paste0("b", 1:3)
 dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
 dfr <- dfr$book
 # Check the design
-ck.fs(c("A", "B"), "block", "rcbd", dfr = dfr)
+ck.fs(c("A", "B"), "block", "rcbd", dfr)
 }
 \author{
 Raul Eyzaguirre.

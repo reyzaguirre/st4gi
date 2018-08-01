@@ -4,107 +4,112 @@
 #' the number of missing values.
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
-#' @param ch1 Name of check 1.
-#' @param ch2 Name of check 2.
+#' @param ck1 Name of check 1.
+#' @param ck2 Name of check 2.
 #' @param row Label for rows.
 #' @param col Label for columns.
 #' @param ncb Number of columns between two check columns.
-#' @param data The name of the data frame.
+#' @param dfr The name of the data frame.
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},
-#' for the grid of checks, the number of missing values for checks (\code{nmis.check})
+#' for the grid of checks, the number of missing values for checks (\code{nmis.ck})
 #' and genotypes \code{nmis}, the proportion of missing values for checks
-#' (\code{pmis.check}) and genotypes (\code{pmis}), and the number of rows
-#' in the data frame with missing values for factors (\code{nmis.fact}).
+#' (\code{pmis.ck}) and genotypes (\code{pmis}), and the number of rows
+#' in the data frame with missing values for factors (\code{nmis.fac}).
 #' @author Raul Eyzaguirre.
-#' @details This function checks the grid of checks for the Wescoot layout and
-#' calculates the number of missing values.
+#' @examples
+#' # Create a design
+#' dfr <- cr.w(1:1000, "A", "B", 50, 10)
+#' dfr <- dfr$book
+#' # Create some random data
+#' dfr$y <- rnorm(1125)
+#' # Delete some values
+#' dfr[c(11, 165, 569, 914), 'y'] <- NA
+#' # Check the design
+#' ck.w("y", "geno", "A", "B", "row", "col", 10, dfr)
 #' @export
 
-ck.w <- function(trait, geno, ch1, ch2, row, col, ncb, data) {
+ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
   
-  # Check and delete rows with missing values for factors
+  # Check and remove rows with missing values for factors
   
-  nmis.fact <- nrow(data[is.na(data[, geno]) | is.na(data[, row]) | is.na(data[, col]), ])
-  
-  if (nmis.fact > 0)
-    data <- data[!(is.na(data[, geno]) | is.na(data[, rep]) | is.na(data[, col])), ]
-  
+  out <- rm.fna(c(geno, row, col), dfr)
+  dfr <- out$dfr
+  nmis.fac <- out$nmis.fac
+
   # Checks
   
-  checks <- c(ch1, ch2)
+  checks <- c(ck1, ck2)
   
   # Rows and columns as numbers
   
-  data[, row] <- as.numeric(data[, row])
-  data[, col] <- as.numeric(data[, col])
+  dfr[, row] <- as.numeric(dfr[, row])
+  dfr[, col] <- as.numeric(dfr[, col])
 
   # Number of rows and columns
   
-  nr.min <- min(data[, row])
-  nc.min <- min(data[, col])
-  nc.max <- max(data[, col])
+  nr.min <- min(dfr[, row])
+  nc.min <- min(dfr[, col])
+  nc.max <- max(dfr[, col])
   
   # Controls
   
   c1 <- 0 # All column checks with checks
   c2 <- 0 # All column genotypes with genotypes
-  c3 <- 0 # Alternating checks without in correlative row order
+  c3 <- 0 # Alternating checks in rows and columns
   c4 <- 0 # All genotypes with checks to the left and right
 
   # Columns with checks
   
-  cch <- seq(nc.min, nc.max, ncb + 1)
+  cck <- seq(nc.min, nc.max, ncb + 1)
   
   # Check columns with checks
   
-  if (sum(!(data[data[, col] %in% cch, geno] %in% checks)) > 0)
+  if (sum(!(dfr[dfr[, col] %in% cck, geno] %in% checks)) > 0)
     c1 <- 1
   
   # Check columns with genotypes
   
-  if (sum(data[!(data[, col] %in% cch), geno] %in% checks) > 0)
+  if (sum(dfr[!(dfr[, col] %in% cck), geno] %in% checks) > 0)
     c2 <- 1
   
-  # Alternating checks
+  # Alternating checks on columns
   
-  for (i in cch)
-    for (j in (min(data[data[, col] == i, row]) + 1):max(data[data[, col] == i, row]))
-      if (data[data[, col] == i & data[, row] == j, geno] == data[data[, col] == i & data[, row] == j - 1, geno])
+  for (i in cck)
+    for (j in (min(dfr[dfr[, col] == i, row]) + 1):max(dfr[dfr[, col] == i, row]))
+      if (dfr[dfr[, col] == i & dfr[, row] == j, geno] == dfr[dfr[, col] == i & dfr[, row] == j - 1, geno])
         c3 <- 1
   
-  for (i in 2:length(cch))
-    if (data[data[, col] == cch[i] & data[, row] == nr.min, geno] == data[data[, col] == cch[i - 1] & data[, row] == nr.min, geno])
+  # Alternating checks on rows
+
+  for (i in 2:length(cck))
+    if (dfr[dfr[, col] == cck[i] & dfr[, row] == nr.min, geno] == dfr[dfr[, col] == cck[i - 1] & dfr[, row] == nr.min, geno])
       c3 <- 1
   
   # All genotypes must have one check to the left and one to the right
   
-  for (i in 1:dim(data)[1]) {
-    rows <- data[i, row]
-    columns <- (data[i, col] - ncb):(data[i, col] + ncb)
-    temp <- data[data[, row] == rows & data[, col] %in% columns, geno]
+  for (i in 1:dim(dfr)[1]) {
+    rows <- dfr[i, row]
+    columns <- (dfr[i, col] - ncb):(dfr[i, col] + ncb)
+    temp <- dfr[dfr[, row] == rows & dfr[, col] %in% columns, geno]
     if (sum(temp %in% checks) == 0)
       c4 <- 1
   }
 
   # Number of missing values for checks
   
-  temp <- data[data[, col] %in% cch, ]
-  total.check <- dim(temp)[1]
-  temp <- temp[is.na(temp[, trait]), ]
-  nmis.check <- dim(temp)[1]
-  pmis.check <- nmis.check / total.check
-  
+  temp <- dfr[dfr[, col] %in% cck, ]
+  nmis.ck <- sum(is.na(temp[, trait]))
+  pmis.ck <- mean(is.na(temp[, trait]))
+
   # Number of missing values for genotypes
   
-  temp <- data[!(data[, col] %in% cch), ]
-  total.geno <- dim(temp)[1]
-  temp <- temp[is.na(temp[, trait]), ]
-  nmis <- dim(temp)[1]
-  pmis <- nmis / total.geno
+  temp <- dfr[!(dfr[, col] %in% cck), ]
+  nmis <- sum(is.na(temp[, trait]))
+  pmis <- mean(is.na(temp[, trait]))
   
   # Return
   
   list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
-       nmis.check = nmis.check, pmis.check = pmis.check, nmis.fact = nmis.fact)
+       nmis.ck = nmis.ck, pmis.ck = pmis.ck, nmis.fac = nmis.fac)
   
 }

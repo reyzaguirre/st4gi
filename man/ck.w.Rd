@@ -4,16 +4,16 @@
 \alias{ck.w}
 \title{Check data for a Wescott layout}
 \usage{
-ck.w(trait, geno, ch1, ch2, row, col, ncb, data)
+ck.w(trait, geno, ck1, ck2, row, col, ncb, dfr)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
 \item{geno}{The genotypes.}
 
-\item{ch1}{Name of check 1.}
+\item{ck1}{Name of check 1.}
 
-\item{ch2}{Name of check 2.}
+\item{ck2}{Name of check 2.}
 
 \item{row}{Label for rows.}
 
@@ -21,22 +21,29 @@ ck.w(trait, geno, ch1, ch2, row, col, ncb, data)
 
 \item{ncb}{Number of columns between two check columns.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},
-for the grid of checks, the number of missing values for checks (\code{nmis.check})
+for the grid of checks, the number of missing values for checks (\code{nmis.ck})
 and genotypes \code{nmis}, the proportion of missing values for checks
-(\code{pmis.check}) and genotypes (\code{pmis}), and the number of rows
-in the data frame with missing values for factors (\code{nmis.fact}).
+(\code{pmis.ck}) and genotypes (\code{pmis}), and the number of rows
+in the data frame with missing values for factors (\code{nmis.fac}).
 }
 \description{
 This function checks the grid of checks on the Wescott layout and
 the number of missing values.
 }
-\details{
-This function checks the grid of checks for the Wescoot layout and
-calculates the number of missing values.
+\examples{
+# Create a design
+dfr <- cr.w(1:1000, "A", "B", 50, 10)
+dfr <- dfr$book
+# Create some random data
+dfr$y <- rnorm(1125)
+# Delete some values
+dfr[c(11, 165, 569, 914), 'y'] <- NA
+# Check the design
+ck.w("y", "geno", "A", "B", "row", "col", 10, dfr)
 }
 \author{
 Raul Eyzaguirre.

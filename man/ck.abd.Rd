@@ -16,12 +16,12 @@ ck.abd(trait, geno, rep, dfr)
 \item{dfr}{The name of the data frame.}
 }
 \value{
-The number of checks \code{ng.check}, the number of no checks \code{ng},
-the number of missing values for checks \code{nmis.check}), the number of
-missing values for no checks \code{nmis}, the number \code{ncheck.0}
-and list \code{check.0} of checks without data, the number \code{ncheck.1}
-and list \code{check.1} of checks with only one datum, the number of checks
-with at least two data \code{ncheck.2}, the number of replications \code{nr},
+The number of checks \code{ng.ck}, the number of no checks \code{ng},
+the number of missing values for checks \code{nmis.ck}), the number of
+missing values for no checks \code{nmis}, the number \code{nck.0}
+and list \code{ck.0} of checks without data, the number \code{nck.1}
+and list \code{ck.1} of checks with only one datum, the number of checks
+with at least two data \code{nck.2}, the number of replications \code{nr},
 and the number of rows in the data frame with missing values for factors
 (\code{nmis.fac}).
 }
