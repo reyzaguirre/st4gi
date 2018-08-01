@@ -1,58 +1,73 @@
-#' Check number of genotypes and replications
+#' Check frequencies
 #' 
-#' This function cheks the number of genotypes and replications for different designs.
+#' This function cheks the frequencies of valid cases for treatments and replications.
 #' 
-#' @param geno The genotypes
-#' @param design The statistical design
+#' @param trait The trait
+#' @param factors The factors
+#' @param rep The replications
 #' @param dfr The name of the data frame
-#' @return The number of genotypes (\code{ng}), the number of checks (\code{ng.check}),
-#' the list of genotypes (\code{lg}), the list of checks (\code{lg.check}),
-#' and the number of replications (\code{nr}).
+#' @return A table of frequencies of valid cases for all factors' levels combinations
+#' (\code{tf}) and a table of frequencies of valid cases for all factors' levels and
+#' replications combinations (\code{tfr}).
 #' @author Raul Eyzaguirre.
 #' @examples 
+#' ## Example 1
 #' # Create a design
 #' dfr <- cr.rcbd(1:20, 3, 10)
 #' dfr <- dfr$book
-#' # Check the design
-#' ck.gr('geno', 'block', 'rcbd', dfr = dfr)
+#' # Create some random data
+#' dfr$y <- rnorm(60)
+#' # Delete some values
+#' dfr[c(1, 5, 16, 17), 'y'] <- NA
+#' # Check the frequencies
+#' ck.fq("y", "geno", "block", dfr = dfr)
+#' 
+#' ## Example 2
+#' # Create a design
+#' A <- paste0("a", 1:5)
+#' B <- paste0("b", 1:3)
+#' dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
+#' dfr <- dfr$book
+#' # Create some random data
+#' dfr$y <- rnorm(45)
+#' # Delete some values
+#' dfr[c(5, 10, 24), 'y'] <- NA
+#' # Check the frequencies
+#' ck.fq("y", c("A", "B"), "block", dfr = dfr)
 #' @export
 
-ck.gr <- function(geno, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
-
-  # match arguments
+ck.fq <- function(trait, factors, rep, dfr) {
   
-  design <- match.arg(design)
+  # Number of factors
   
-  # Check and remove rows with missing values for factors
+  nf <- length(factors)
   
-  dfr <- rm.fna(c(geno, rep), dfr)$dfr
-
-  # Number of genotypes and checks
+  # Factors and replications as factors to preserve levels in the table of frequencies
   
-  if (design == 'abd') {
-    tfreq <- data.frame(table(dfr[, geno]))
-    lg.check <- as.character(tfreq[tfreq$Freq > 1, 1])
-    lg <- as.character(tfreq[tfreq$Freq == 1, 1])
-    ng.check <- length(lg.check)
-    ng <- length(lg)
+  temp <- dfr
+  for (i in 1:nf)
+    temp[, factors[i]] <- factor(temp[, factors[i]])
+  temp[, rep] <- factor(temp[, rep])
+  
+  # Calculate frequencies
+  
+  temp <- temp[!is.na(temp[, trait]), ]
+  
+  if (nf == 1) {
+    tf <- table(temp[, factors])
+    tfr <- table(temp[, factors], temp[, rep])
   } else {
-    lg <- as.character(unique(dfr[, geno]))
-    ng <- length(lg)
-    lg.check <- NULL
-    ng.check <- NULL
-  }
-  
-  # Number of replications
-  
-  if (design %in% c('abd', 'rcbd')) {
-    nr <- length(unique(dfr[, rep]))
-  } else {
-    tfreq <- table(dfr[, geno])
-    nr <- max(tfreq)
+    expr <- 'table(temp[, factors[1]]'
+    for (i in 2:nf)
+      expr <- paste0(expr, ', temp[, factors[', i, ']]')
+    expr1 <- paste0(expr, ')')
+    expr2 <- paste0(expr, ', temp[, rep])')
+    tf <- eval(parse(text = expr1))
+    tfr <- eval(parse(text = expr2))
   }
   
   # Return
   
-  list(ng = ng, ng.check = ng.check, lg = lg, lg.check = lg.check, nr = nr)
+  list(tf = tf, tfr = tfr)
   
 }
