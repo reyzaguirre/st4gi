@@ -33,26 +33,21 @@ ck.crd <- function(trait, geno, dfr) {
 
   # Number of genotypes and replications
   
-  out <- ck.gr(geno, NULL, 'crd', dfr)
-  ng <- out$ng
+  out <- ck.fs(geno, NULL, 'crd', dfr)
+  ng <- out$nt
   nr <- out$nr
 
-  # Genotypes as factor to preserve levels in the table of frequencies
-  
-  temp <- dfr
-  temp[, geno] <- factor(temp[, geno])
-  
   # Frequencies for genotypes
   
-  temp <- temp[!is.na(temp[, trait]), ]
-  tfreq <- table(temp[, geno])
+  out <- ck.fq(trait, geno, NULL, dfr)
+  tf <- out$tf
 
   # Number of genotypes without data
   
-  ng.0 <- sum(tfreq == 0)
+  ng.0 <- sum(tf == 0)
   
   # Return
   
-  list(ng.0 = ng.0, ng = ng, nr = nr, tfreq = tfreq, nmis.fac = nmis.fac)
+  list(ng.0 = ng.0, ng = ng, nr = nr, tf = tf, nmis.fac = nmis.fac)
   
 }
