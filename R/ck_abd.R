@@ -36,15 +36,21 @@ ck.abd <- function(trait, geno, rep, dfr) {
   dfr <- out$dfr
   nmis.fac <- out$nmis.fac
 
-  # Number and list of checks and nochecks, and number of replications
+  # Identify checks and no checks
   
-  out <- ck.fs(geno, rep, 'abd', dfr)
-  ng <- out$nt
-  lg <- out$lt
-  ng.ck <- out$nt.ck
-  lg.ck <- out$lt.ck
-  nr <- out$nr
+  temp <- data.frame(table(dfr[, geno]))
+  lg.ck <- temp[temp$Freq > 1, 1]
+  lg <- temp[temp$Freq == 1, 1]
   
+  # Number of checks and no checks
+  
+  ng.ck <- length(lg.ck)
+  ng <- length(lg)
+  
+  # Number of replications
+  
+  nr <- length(unique(dfr[, rep]))
+
   # Number of missing values for no checks
   
   temp <- dfr[dfr[, geno] %in% lg, ]
