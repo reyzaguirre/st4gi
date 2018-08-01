@@ -14,6 +14,19 @@
 #' each replication (\code{tfreqr}), and the number of rows in the data frame with
 #' missing values for factors (\code{nmis.fact}).
 #' @author Raul Eyzaguirre.
+#' @examples 
+#' Create a design
+#' A <- paste0("a", 1:5)
+#' B <- paste0("b", 1:3)
+#' dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
+#' dfr <- dfr$book
+#' # Create some random data
+#' dfr$y <- rnorm(45)
+#' # Delete some values
+#' dfr[c(4, 5, 12), 'y'] <- NA
+#' # Check the design
+#' ck.f("y", c("A", "B"), "block", dfr)
+
 #' @export
 
 ck.f <- function(trait, factors, rep, dfr) {
@@ -24,58 +37,35 @@ ck.f <- function(trait, factors, rep, dfr) {
   dfr <- out$dfr
   nmis.fac <- out$nmis.fac
   
-  # Number of factors
+  # Number of factors, levels and replications
   
-  nf <- length(factors)
-  
-  # Number of levels for factors
-  
-  nl <- apply(dfr[, factors], 2, function(x) length(unique(x)))
-  
-  # Number of replications
-
-  nr <- length(unique(dfr[, rep]))
+  out <- ck.fs(factors, rep, 'rcbd', dfr)
+  nf <- out$nf
+  nl <- out$nl
+  nr <- out$nr
 
   # Number of missing values
   
   nmis <- sum(is.na(dfr[, trait]))
   pmis <- mean(is.na(dfr[, trait]))
-  
-  # Factors and replications as factors to preserve levels in the table of frequencies
-  
-  temp <- dfr
-  for (i in 1:nf)
-    temp[, factors[i]] <- factor(temp[, factors[i]])
-  temp[, rep] <- factor(temp[, rep])
 
-  # Calculate frequencies
+  # Frequencies for factors and replications
   
-  temp <- temp[!is.na(temp[, trait]), ]
-  
-  expr <- 'table(temp[, factors[1]]'
-  
-  for (i in 2:nf)
-    expr <- paste0(expr, ', temp[, factors[', i, ']]')
-  
-  expr1 <- paste0(expr, ')')
-  expr2 <- paste0(expr, ', temp[, rep])')
-  
-  tfreq <- eval(parse(text = expr1))
-  tfreqr <- eval(parse(text = expr2))
+  out <- ck.fq(trait, factors, rep, dfr)
+  tf <- out$tf
+  tfr <- out$tfr
 
-  # Controls
-
-  c1 <- 1 # State 1: No zeros
-  c3 <- 1 # State 1: Each genotype only once in each replication in each environment
-
-  if (min(tfreq) == 0)
-    c1 <- 0 # State 0: There are zeros
-  if (max(tfreqr) > 1)
-    c3 <- 0 # State 0: Some genotypes with addional data
+  # Number of treatments without data
+  
+  nt.0 <- sum(tf == 0)
+  
+  # Number of treatments that appear more than once in a given replication
+  
+  nt.mult <- sum(tfr > 1)
 
   # Return
   
-  list(c1 = c1, c3 = c3, nmis = nmis, pmis = pmis, nf = nf, nl = nl,
-       nr = nr, tfreq = tfreq, tfreqr = tfreqr, nmis.fact = nmis.fact)
+  list(nt.0 = nt.0, nt.mult = nt.mult, nmis = nmis, pmis = pmis, nf = nf, nl = nl,
+       nr = nr, nmis.fac = nmis.fac)
   
 }
