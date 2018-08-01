@@ -26,7 +26,6 @@
 #' dfr[c(4, 5, 12), 'y'] <- NA
 #' # Check the design
 #' ck.f("y", c("A", "B"), "block", dfr)
-
 #' @export
 
 ck.f <- function(trait, factors, rep, dfr) {
