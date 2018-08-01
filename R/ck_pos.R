@@ -14,7 +14,7 @@
 #' dfr <- cr.rcbd(1:20, 3, 10)
 #' dfr <- dfr$book
 #' # Check positions
-#' ck.pos('row', 'col', 'block', dfr = dfr)
+#' ck.pos('row', 'col', 'block', dfr)
 #' @export
 
 ck.pos <- function(row, col, rep = NULL, dfr) {

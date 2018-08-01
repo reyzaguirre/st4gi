@@ -28,7 +28,7 @@ This function checks that there is only one genotype in each row and column posi
 dfr <- cr.rcbd(1:20, 3, 10)
 dfr <- dfr$book
 # Check positions
-ck.pos('row', 'col', 'block', dfr = dfr)
+ck.pos('row', 'col', 'block', dfr)
 }
 \author{
 Raul Eyzaguirre.
