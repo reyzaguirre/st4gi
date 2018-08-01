@@ -40,17 +40,12 @@ rm.lna <- function(trait, factors, dfr) {
     
   temp <- temp[!is.na(temp[, trait]), ]
     
-  # Check factor levels
+  # Check factor levels and remove levels without data
     
   for (i in 1:length(factors)) {
-      
     tfreq <- data.frame(table(temp[, factors[i]]))
-      
-    # Identify and remove levels without data
-      
     nodata <- as.character(tfreq[tfreq$Freq == 0, 'Var1'])
     dfr <- dfr[!(dfr[, factors[i]] %in% nodata), ]
-      
   }
     
   # Number of rows after
