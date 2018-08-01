@@ -18,8 +18,8 @@ ck.fs(factors, rep = NULL, design = c("crd", "rcbd", "abd"), dfr)
 \value{
 The number of factors (\code{nf}), the number of levels of the factors
 (\code{nl}), the number of treatments (\code{nt}), the number of checks
-(\code{nt.check}), the list of treatments (\code{lt}), the list of checks
-(\code{lt.check}), and the number of replications (\code{nr}).
+(\code{nt.chk}), the list of treatments (\code{lt}), the list of checks
+(\code{lt.chk}), and the number of replications (\code{nr}).
 }
 \description{
 This function cheks the number of treatments and replications for different designs.
