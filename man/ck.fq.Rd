@@ -4,7 +4,7 @@
 \alias{ck.fq}
 \title{Check frequencies}
 \usage{
-ck.fq(trait, factors, rep, dfr)
+ck.fq(trait, factors, rep = NULL, dfr)
 }
 \arguments{
 \item{trait}{The trait}

@@ -36,7 +36,11 @@
 #' ck.fq("y", c("A", "B"), "block", dfr = dfr)
 #' @export
 
-ck.fq <- function(trait, factors, rep, dfr) {
+ck.fq <- function(trait, factors, rep = NULL, dfr) {
+  
+  # tfr NULL for rep = NULL
+  
+  tfr <- NULL
   
   # Number of factors
   
@@ -47,7 +51,8 @@ ck.fq <- function(trait, factors, rep, dfr) {
   temp <- dfr
   for (i in 1:nf)
     temp[, factors[i]] <- factor(temp[, factors[i]])
-  temp[, rep] <- factor(temp[, rep])
+  if (!is.null(rep))
+    temp[, rep] <- factor(temp[, rep])
   
   # Calculate frequencies
   
@@ -55,15 +60,18 @@ ck.fq <- function(trait, factors, rep, dfr) {
   
   if (nf == 1) {
     tf <- table(temp[, factors])
-    tfr <- table(temp[, factors], temp[, rep])
+    if (!is.null(rep))
+      tfr <- table(temp[, factors], temp[, rep])
   } else {
     expr <- 'table(temp[, factors[1]]'
     for (i in 2:nf)
       expr <- paste0(expr, ', temp[, factors[', i, ']]')
     expr1 <- paste0(expr, ')')
-    expr2 <- paste0(expr, ', temp[, rep])')
     tf <- eval(parse(text = expr1))
-    tfr <- eval(parse(text = expr2))
+    if (!is.null(rep)) {
+      expr2 <- paste0(expr, ', temp[, rep])')
+      tfr <- eval(parse(text = expr2))
+    }
   }
   
   # Return
