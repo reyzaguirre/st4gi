@@ -9,8 +9,8 @@
 #' genotypes with more than one plot in a given block (\code{ng.2}), the number
 #' of missing values \code{nmis}, the proportion of missing values (\code{pmis}),
 #' the number of genotypes (\code{ng}), the number of replications (\code{nr}),
-#' a table with frequencies of valid cases for each genotype, and the number of
-#' rows in the data frame with missing values for factors (\code{nmis.fac}).
+#' and the number of rows in the data frame with missing values for factors
+#' (\code{nmis.fac}).
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' # Create design
@@ -34,38 +34,32 @@ ck.rcbd <- function(trait, geno, rep, data) {
   
   # Number of genotypes and replications
   
-  out <- ck.gr(geno, rep, 'rcbd', dfr)
-  ng <- out$ng
+  out <- ck.fs(geno, rep, 'rcbd', dfr)
+  ng <- out$nt
   nr <- out$nr
 
-  # Genotypes and replications as factors to preserve levels in the table of frequencies
+  # Frequencies for genotypes and replications
   
-  temp <- dfr
-  temp[, geno] <- factor(temp[, geno])
-  temp[, rep] <- factor(temp[, rep])
-
-  # Frequencies by geno
-  
-  temp <- temp[!is.na(temp[, trait]), ]
-  tfreq <- table(temp[, geno], temp[, rep])
+  out <- ck.fq(trait, geno, rep, dfr)
+  tf <- out$tf
+  tfr <- out$tfr
   
   # Number of missing values
   
-  nmis <- sum(tfreq == 0)
-  pmis <- mean(tfreq == 0)
+  nmis <- sum(tfr == 0)
+  pmis <- mean(tfr == 0)
   
   # Number of genotypes with more than one plot in a given block
   
-  ng.2 <- sum(tfreq > 1)
+  ng.2 <- sum(tfr > 1)
   
   # Number of genotypes without data
   
-  tfreq <- table(temp[, geno])
-  ng.0 <- sum(tfreq == 0)
+  ng.0 <- sum(tf == 0)
 
   # Return
   
-  list(ng.0 = ng.0, ng.2 = ng.2, nmis = nmis, pmis = pmis,
-       ng = ng, nr = nr, tfreq = tfreq, nmis.fac = nmis.fac)
+  list(ng.0 = ng.0, ng.2 = ng.2, nmis = nmis, pmis = pmis, ng = ng,
+       nr = nr, nmis.fac = nmis.fac)
   
 }
