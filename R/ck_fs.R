@@ -4,12 +4,10 @@
 #' 
 #' @param factors The factors
 #' @param rep The replications
-#' @param design The statistical design
 #' @param dfr The name of the data frame
 #' @return The number of factors (\code{nf}), the number of levels of the factors
-#' (\code{nl}), the number of treatments (\code{nt}), the number of checks
-#' (\code{nt.ck}), the list of treatments (\code{lt}), the list of checks
-#' (\code{lt.ck}), and the number of replications (\code{nr}).
+#' (\code{nl}), the number of treatments (\code{nt}), the list of treatments (\code{lt}),
+#' the number of replications (\code{nr}), and the list of replications (\code{lr}).
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' ## Example 1
@@ -17,7 +15,7 @@
 #' dfr <- cr.rcbd(1:20, 3, 10)
 #' dfr <- dfr$book
 #' # Check the design
-#' ck.fs("geno", "block", "rcbd", dfr)
+#' ck.fs("geno", "block", dfr)
 #' 
 #' ## Example 2
 #' # Create a design
@@ -26,15 +24,11 @@
 #' dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
 #' dfr <- dfr$book
 #' # Check the design
-#' ck.fs(c("A", "B"), "block", "rcbd", dfr)
+#' ck.fs(c("A", "B"), "block", dfr)
 #' @export
 
-ck.fs <- function(factors, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
+ck.fs <- function(factors, rep = NULL, dfr) {
 
-  # match arguments
-  
-  design <- match.arg(design)
-  
   # Check and remove rows with missing values for factors
   
   dfr <- rm.fna(c(factors, rep), dfr)$dfr
@@ -61,32 +55,24 @@ ck.fs <- function(factors, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
     for (i in 2:nf)
       dfr[, treat] <- paste(dfr[, treat], dfr[, factors[i]], sep = "_")
 
-  # Number of treatments and checks
+  # Number of treatments
   
-  if (design == 'abd') {
-    tfreq <- data.frame(table(dfr[, treat]))
-    lt.ck <- as.character(tfreq[tfreq$Freq > 1, 1])
-    lt <- as.character(tfreq[tfreq$Freq == 1, 1])
-    nt.ck <- length(lt.ck)
-    nt <- length(lt)
-  } else {
-    lt <- as.character(unique(dfr[, treat]))
-    nt <- length(lt)
-    lt.ck <- NULL
-    nt.ck <- NULL
-  }
+  lt <- unique(dfr[, treat])
+  nt <- length(lt)
+
+  # Number and levels of replications
   
-  # Number of replications
-  
-  if (design %in% c('abd', 'rcbd')) {
-    nr <- length(unique(dfr[, rep]))
-  } else {
+  if (is.null(rep)) {
     tfreq <- table(dfr[, treat])
+    lr <- NULL
     nr <- max(tfreq)
+  } else {
+    lr <- unique(dfr[, rep])
+    nr <- length(lr)
   }
   
   # Return
   
-  list(nf = nf, nl = nl, nt = nt, nt.ck = nt.ck, lt = lt, lt.ck = lt.ck, nr = nr)
+  list(nf = nf, nl = nl, nt = nt, lt = lt, nr = nr, lr = lr)
   
 }
