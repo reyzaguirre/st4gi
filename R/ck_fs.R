@@ -8,8 +8,8 @@
 #' @param dfr The name of the data frame
 #' @return The number of factors (\code{nf}), the number of levels of the factors
 #' (\code{nl}), the number of treatments (\code{nt}), the number of checks
-#' (\code{nt.check}), the list of treatments (\code{lt}), the list of checks
-#' (\code{lt.check}), and the number of replications (\code{nr}).
+#' (\code{nt.chk}), the list of treatments (\code{lt}), the list of checks
+#' (\code{lt.chk}), and the number of replications (\code{nr}).
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' ## Example 1
@@ -17,7 +17,7 @@
 #' dfr <- cr.rcbd(1:20, 3, 10)
 #' dfr <- dfr$book
 #' # Check the design
-#' ck.fs("geno", "block", "rcbd", dfr = dfr)
+#' ck.fs("geno", "block", "rcbd", dfr)
 #' 
 #' ## Example 2
 #' # Create a design
@@ -26,7 +26,7 @@
 #' dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
 #' dfr <- dfr$book
 #' # Check the design
-#' ck.fs(c("A", "B"), "block", "rcbd", dfr = dfr)
+#' ck.fs(c("A", "B"), "block", "rcbd", dfr)
 #' @export
 
 ck.fs <- function(factors, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
@@ -65,15 +65,15 @@ ck.fs <- function(factors, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
   
   if (design == 'abd') {
     tfreq <- data.frame(table(dfr[, treat]))
-    lt.check <- as.character(tfreq[tfreq$Freq > 1, 1])
+    lt.chk <- as.character(tfreq[tfreq$Freq > 1, 1])
     lt <- as.character(tfreq[tfreq$Freq == 1, 1])
-    nt.check <- length(lt.check)
+    nt.chk <- length(lt.chk)
     nt <- length(lt)
   } else {
     lt <- as.character(unique(dfr[, treat]))
     nt <- length(lt)
-    lt.check <- NULL
-    nt.check <- NULL
+    lt.chk <- NULL
+    nt.chk <- NULL
   }
   
   # Number of replications
@@ -87,7 +87,7 @@ ck.fs <- function(factors, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
   
   # Return
   
-  list(nf = nf, nl = nl, nt = nt, nt.check = nt.check,
-       lt = lt, lt.check = lt.check, nr = nr)
+  list(nf = nf, nl = nl, nt = nt, nt.chk = nt.chk,
+       lt = lt, lt.chk = lt.chk, nr = nr)
   
 }
