@@ -8,8 +8,8 @@
 #' @param dfr The name of the data frame
 #' @return The number of factors (\code{nf}), the number of levels of the factors
 #' (\code{nl}), the number of treatments (\code{nt}), the number of checks
-#' (\code{nt.chk}), the list of treatments (\code{lt}), the list of checks
-#' (\code{lt.chk}), and the number of replications (\code{nr}).
+#' (\code{nt.ck}), the list of treatments (\code{lt}), the list of checks
+#' (\code{lt.ck}), and the number of replications (\code{nr}).
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' ## Example 1
@@ -65,15 +65,15 @@ ck.fs <- function(factors, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
   
   if (design == 'abd') {
     tfreq <- data.frame(table(dfr[, treat]))
-    lt.chk <- as.character(tfreq[tfreq$Freq > 1, 1])
+    lt.ck <- as.character(tfreq[tfreq$Freq > 1, 1])
     lt <- as.character(tfreq[tfreq$Freq == 1, 1])
-    nt.chk <- length(lt.chk)
+    nt.ck <- length(lt.ck)
     nt <- length(lt)
   } else {
     lt <- as.character(unique(dfr[, treat]))
     nt <- length(lt)
-    lt.chk <- NULL
-    nt.chk <- NULL
+    lt.ck <- NULL
+    nt.ck <- NULL
   }
   
   # Number of replications
@@ -87,7 +87,6 @@ ck.fs <- function(factors, rep = NULL, design = c('crd', 'rcbd', 'abd'), dfr) {
   
   # Return
   
-  list(nf = nf, nl = nl, nt = nt, nt.chk = nt.chk,
-       lt = lt, lt.chk = lt.chk, nr = nr)
+  list(nf = nf, nl = nl, nt = nt, nt.ck = nt.ck, lt = lt, lt.ck = lt.ck, nr = nr)
   
 }
