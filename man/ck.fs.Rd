@@ -2,31 +2,44 @@
 % Please edit documentation in R/ck_fs.R
 \name{ck.fs}
 \alias{ck.fs}
-\title{Check number of genotypes and replications}
+\title{Check factors structure}
 \usage{
-ck.fs(geno, rep = NULL, design = c("crd", "rcbd", "abd"), dfr)
+ck.fs(factors, rep = NULL, design = c("crd", "rcbd", "abd"), dfr)
 }
 \arguments{
-\item{geno}{The genotypes}
+\item{factors}{The factors}
+
+\item{rep}{The replications}
 
 \item{design}{The statistical design}
 
 \item{dfr}{The name of the data frame}
 }
 \value{
-The number of genotypes (\code{ng}), the number of checks (\code{ng.check}),
-the list of genotypes (\code{lg}), the list of checks (\code{lg.check}),
-and the number of replications (\code{nr}).
+The number of factors (\code{nf}), the number of levels of the factors
+(\code{nl}), the number of treatments (\code{nt}), the number of checks
+(\code{nt.check}), the list of treatments (\code{lt}), the list of checks
+(\code{lt.check}), and the number of replications (\code{nr}).
 }
 \description{
-This function cheks the number of genotypes and replications for different designs.
+This function cheks the number of treatments and replications for different designs.
 }
 \examples{
+## Example 1
 # Create a design
 dfr <- cr.rcbd(1:20, 3, 10)
 dfr <- dfr$book
 # Check the design
-ck.fs('geno', 'block', 'rcbd', dfr = dfr)
+ck.fs("geno", "block", "rcbd", dfr = dfr)
+
+## Example 2
+# Create a design
+A <- paste0("a", 1:5)
+B <- paste0("b", 1:3)
+dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
+dfr <- dfr$book
+# Check the design
+ck.fs(c("A", "B"), "block", "rcbd", dfr = dfr)
 }
 \author{
 Raul Eyzaguirre.
