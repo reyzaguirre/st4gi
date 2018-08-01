@@ -2,7 +2,7 @@
 #'
 #' Check that fieldbook traits names correspond with the names defined in the document
 #' "PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
-#' @param fb The name of the fieldbook data frame.
+#' @param dfr The name of the data frame.
 #' @param aqt Additional quantitative traits.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
@@ -113,7 +113,7 @@
 #' check.names(pjpz09)
 #' @export
 
-check.names <- function(fb, aqt = NULL) {
+check.names <- function(dfr, aqt = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
@@ -133,13 +133,13 @@ check.names <- function(fb, aqt = NULL) {
   
   colnames.valid <- c(plot.id, factors, traits, tolower(aqt))
     
-  colnames.list <- colnames(fb)
+  colnames.list <- colnames(dfr)
   
   check.list.1 <- !(tolower(colnames.list) %in% colnames.valid) # which are not valid
   temp <- colnames.list[!check.list.1]                          # list of valid names
   check.list.2 <- !(temp %in% colnames.valid)                   # which are valid but lower case
   
-  colnames(fb) <- tolower(colnames(fb))
+  colnames(dfr) <- tolower(colnames(dfr))
     
   # Warnings
   
@@ -149,6 +149,8 @@ check.names <- function(fb, aqt = NULL) {
   if (max(check.list.2) == 1)
     warning("Some labels converted to lower case: ", list(temp[check.list.2]), call. = FALSE)
   
-  fb
+  # Return
+  
+  dfr
   
 }

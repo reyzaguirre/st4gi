@@ -4,10 +4,10 @@
 \alias{check.names}
 \title{Check fieldbook traits names}
 \usage{
-check.names(fb, aqt = NULL)
+check.names(dfr, aqt = NULL)
 }
 \arguments{
-\item{fb}{The name of the fieldbook data frame.}
+\item{dfr}{The name of the data frame.}
 
 \item{aqt}{Additional quantitative traits.}
 }

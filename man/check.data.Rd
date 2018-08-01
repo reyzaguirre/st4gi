@@ -4,11 +4,11 @@
 \alias{check.data}
 \title{Check consistency for sweetpotato experimental data}
 \usage{
-check.data(fb, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
+check.data(dfr, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
   aqt = NULL)
 }
 \arguments{
-\item{fb}{The name of the fieldbook data frame.}
+\item{dfr}{The name of the data frame.}
 
 \item{f}{Factor for extreme values detection. See details.}
 
