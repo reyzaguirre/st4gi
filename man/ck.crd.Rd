@@ -15,8 +15,7 @@ ck.crd(trait, geno, dfr)
 }
 \value{
 The number of genotypes (\code{ng}), the number of genotypes without
-data (\code{ng.0}), the number of replications (\code{nr}), a table with
-frequencies of valid cases for each genotype (\code{tfreq}), and the number
+data (\code{ng.0}), the number of replications (\code{nr}), and the number
 of rows in the data frame with missing values for factors (\code{nmis.fac}).
 }
 \description{
