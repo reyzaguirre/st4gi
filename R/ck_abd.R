@@ -41,8 +41,8 @@ ck.abd <- function(trait, geno, rep, dfr) {
   out <- ck.fs(geno, rep, 'abd', dfr)
   ng <- out$nt
   lg <- out$lt
-  ng.check <- out$nt.check
-  lg.check <- out$lt.check
+  ng.chk <- out$nt.chk
+  lg.chk <- out$lt.chk
   nr <- out$nr
   
   # Number of missing values for no checks
@@ -52,33 +52,40 @@ ck.abd <- function(trait, geno, rep, dfr) {
   
   # Number of missing values for checks
 
-  temp <- dfr[dfr[, geno] %in% lg.check, ]
-  out <- ck.fq(trait, geno, rep, temp)
-  tfr <- out$tfr
-  nmis.check <- sum(tfr == 0)
+  temp <- dfr[dfr[, geno] %in% lg.chk, ]
+  nmis.chk <- sum(is.na(temp[, trait]))
 
+  # Frequencies
+
+  out <- ck.fq(trait, geno, rep, temp)
+  tf <- data.frame(out$tf)
+  tfr <- out$tfr
+  
   # Number of checks without data, with 1, and more data
 
-  tf <- data.frame(out$tf)
-  
-  ncheck.0 <- sum(tf$Freq == 0)
-  ncheck.1 <- sum(tf$Freq == 1)
-  ncheck.2 <- sum(tf$Freq > 1)
+  nchk.0 <- sum(tf$Freq == 0)
+  nchk.1 <- sum(tf$Freq == 1)
+  nchk.2 <- sum(tf$Freq > 1)
   
   # List of checks witout data or only one datum
   
-  check.0 <- NULL
-  if (ncheck.0 > 0)
-    check.0 <- tfreq[tfreq$Freq == 0, 1]
+  chk.0 <- NULL
+  if (nchk.0 > 0)
+    chk.0 <- tf[tf$Freq == 0, 1]
   
-  check.1 <- NULL
-  if (ncheck.1 > 0)
-    check.1 <- tfreq[tfreq$Freq == 1, 1]
+  chk.1 <- NULL
+  if (nchk.1 > 0)
+    chk.1 <- tf[tf$Freq == 1, 1]
 
+  # Number of checks that appear more than once in a given replication
+  
+  nchk.mult <- sum(tfr > 1)
+  
   # Return
   
-  list(ng.check = ng.check, ng = ng, nmis.check = nmis.check, nmis = nmis,
-       ncheck.0 = ncheck.0, check.0 = check.0, ncheck.1 = ncheck.1,
-       check.1 = check.1, ncheck.2 = ncheck.2, nmis.fac = nmis.fac, nr = nr)
+  list(ng.chk = ng.chk, ng = ng, nmis.chk = nmis.chk, nmis = nmis,
+       nchk.0 = nchk.0, chk.0 = chk.0, nchk.1 = nchk.1,
+       chk.1 = chk.1, nchk.2 = nchk.2, nchk.mult = nchk.mult,
+       nmis.fac = nmis.fac, nr = nr)
   
 }
