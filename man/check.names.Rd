@@ -4,12 +4,12 @@
 \alias{check.names}
 \title{Check fieldbook traits names}
 \usage{
-check.names(dfr, aqt = NULL)
+check.names(dfr, adt = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
 
-\item{aqt}{Additional quantitative traits.}
+\item{adt}{Additional quantitative traits.}
 }
 \value{
 It returns a data frame with all traits names in lower case, and a list of the

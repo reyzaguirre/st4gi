@@ -4,7 +4,7 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5)
+ammi(trait, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -15,7 +15,7 @@ ammi(trait, geno, env, rep, data, method = c("ammi", "gge"), f = 0.5)
 
 \item{rep}{The replications or blocks. A RCBD is assumed.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 
 \item{method}{\code{"ammi"} or \code{"gge"}.}
 
