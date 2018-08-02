@@ -25,7 +25,7 @@
 #' ck.rcbd('y', 'geno', 'block', dfr)
 #' @export
 
-ck.rcbd <- function(trait, geno, rep, data) {
+ck.rcbd <- function(trait, geno, rep, dfr) {
   
   # Check and remove rows with missing values for factors
   
@@ -35,7 +35,7 @@ ck.rcbd <- function(trait, geno, rep, data) {
   
   # Number of genotypes and replications
   
-  out <- ck.fs(geno, rep, 'rcbd', dfr)
+  out <- ck.fs(geno, rep, dfr)
   ng <- out$nt
   nr <- out$nr
 

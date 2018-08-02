@@ -4,7 +4,7 @@
 \alias{ck.rcbd}
 \title{Check data for a RCBD}
 \usage{
-ck.rcbd(trait, geno, rep, data)
+ck.rcbd(trait, geno, rep, dfr)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
