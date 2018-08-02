@@ -4,10 +4,10 @@
 \alias{cdt}
 \title{Compute derived traits}
 \usage{
-cdt(fb, method = c("none", "ps", "np"), value = NULL, nops = NULL)
+cdt(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL)
 }
 \arguments{
-\item{fb}{The name of the fieldbook data frame.}
+\item{dfr}{The name of the fieldbook data frame.}
 
 \item{method}{Method to scale data from plot to hectare level. Options are plot size
 \code{"ps"} and number of plants for a full hectare \code{"np"}. See details.}
@@ -21,7 +21,7 @@ and in number of plants per hectare if \code{method = "np"}.}
 It returns a data frame with the original and derived traits.
 }
 \description{
-Compute derived traits for a given fieldbook.
+Compute derived traits for a given fieldbook data frame.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in function
