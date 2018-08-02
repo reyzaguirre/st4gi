@@ -4,7 +4,7 @@
 \alias{docomp}
 \title{Do computations over some factors}
 \usage{
-docomp(do, traits, factors, addcol = NULL, data)
+docomp(do, traits, factors, adc = NULL, dfr)
 }
 \arguments{
 \item{do}{The computation to perform. Implemented options are \code{count},
@@ -15,9 +15,9 @@ and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
 
 \item{factors}{List of factors.}
 
-\item{addcol}{Additional columns to keep.}
+\item{adc}{Additional columns to keep.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 }
 \value{
 It returns a data frame with the computations.
@@ -28,19 +28,18 @@ Do computations for several traits for some specific factors.
 \details{
 This function do a specific computation for all the \code{traits}
 for each level's combination of the \code{factors}. Additional columns can be
-kept if specified in \code{addcol}. All \code{factors} and \code{addcol} values
+kept if specified in \code{adc}. All \code{factors} and \code{adc} values
 are converted to character. \code{do = "count"} counts the number
 of valid cases (excluding missing values).
 }
 \examples{
-## Compute means across replications and then across locations for each genotype
+# Compute means across replications and then across locations for each genotype
 traits <- c("rytha", "bc", "dm", "star", "nocr")
 factors <- c("geno", "loc")
-output1 <- docomp("mean", traits, factors, data = spg)
-docomp("mean", traits, "geno", data = output1)
-
-## Compute maxima across replications for each genotype and location.
-docomp("max", traits, factors, data = spg)
+output1 <- docomp("mean", traits, factors, dfr = spg)
+docomp("mean", traits, "geno", dfr = output1)#' 
+# Compute maxima across replications for each genotype and location.
+docomp("max", traits, factors, dfr = spg)
 }
 \author{
 Raul Eyzaguirre

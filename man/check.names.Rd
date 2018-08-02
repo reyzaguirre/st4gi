@@ -9,7 +9,7 @@ check.names(dfr, adt = NULL)
 \arguments{
 \item{dfr}{The name of the data frame.}
 
-\item{adt}{Additional quantitative traits.}
+\item{adt}{Additional traits.}
 }
 \value{
 It returns a data frame with all traits names in lower case, and a list of the

@@ -5,7 +5,7 @@
 \title{Check consistency for sweetpotato experimental data}
 \usage{
 check.data(dfr, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
-  aqt = NULL)
+  adt = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -16,7 +16,7 @@ check.data(dfr, f = 3, out.mod = c("none", "rcbd", "met"), out.max = 4,
 
 \item{out.max}{Threshold for outliers' detection.}
 
-\item{aqt}{Additional quantitative traits.}
+\item{adt}{Additional quantitative traits.}
 }
 \value{
 It returns all rows with some kind of inconsistency or outliers.

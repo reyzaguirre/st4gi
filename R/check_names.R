@@ -3,7 +3,7 @@
 #' Check that fieldbook traits names correspond with the names defined in the document
 #' "PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
 #' @param dfr The name of the data frame.
-#' @param adt Additional quantitative traits.
+#' @param adt Additional traits.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
 #'  \item \code{plot}     : Plot number

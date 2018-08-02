@@ -28,7 +28,7 @@ If data is unbalanced, missing values are estimated up to an specified maximum
 proportion, 10\% by default.
 }
 \examples{
-## Get a copy with some missing values for trw and run ANOVA
+# Get a copy with some missing values for trw and run ANOVA
 temp <- pjpz09
 temp[c(10, 20, 30), "trw"] <- NA
 aov.rcbd("trw", "geno", "rep", temp)
