@@ -17,13 +17,13 @@ ck.abd(trait, geno, rep, dfr)
 }
 \value{
 The number of checks \code{ng.ck}, the number of no checks \code{ng},
-the number of missing values for checks \code{nmis.ck}), the number of
-missing values for no checks \code{nmis}, the number \code{nck.0}
-and list \code{ck.0} of checks without data, the number \code{nck.1}
-and list \code{ck.1} of checks with only one datum, the number of checks
-with at least two data \code{nck.2}, the number of replications \code{nr},
-and the number of rows in the data frame with missing values for factors
-(\code{nmis.fac}).
+the number of missing values for checks \code{nmis.ck}), the number of missing
+values for no checks \code{nmis}, the number \code{nck.0} and list \code{ck.0}
+of checks without data, the number \code{nck.1} and list \code{ck.1} of checks
+with only one datum, the number of checks with at least two data \code{nck.2},
+the number of checks that appear more than once in a given replication
+(\code{nck.mult}), the number of replications \code{nr}, and the number of rows
+in the data frame with missing values for factors (\code{nmis.fac}).
 }
 \description{
 This function checks the frequencies of genotypes in an ABD.
