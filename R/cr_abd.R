@@ -5,10 +5,10 @@
 #' @param checks The list of checks.
 #' @param nb Number of blocks.
 #' @param nc Number of columns.
-#' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field following an ABD.
 #' The blocks are disposed alongside the rows.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' checks <- paste("ch", 1:4, sep = "_")
 #' cr.abd(1:40, checks, 4, 10)
