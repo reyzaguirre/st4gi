@@ -7,9 +7,9 @@
 #' @param design The design, a crd or a rcbd.
 #' @param nrep Number of replications or blocks.
 #' @param nc Number of columns.
-#' @author Raul Eyzaguirre.
 #' @details The treatments are randomly allocated on a field following a CRD or a RCBD.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' A <- paste0("a", 1:5)
 #' B <- paste0("b", 1:3)
