@@ -42,6 +42,12 @@ ck.fs <- function(factors, rep = NULL, dfr) {
   nl <- apply(data.frame(dfr[, factors]), 2, function(x) length(unique(x)))
   names(nl) <- factors
   
+  # Levels of factors
+  
+  lf <- apply(data.frame(dfr[, factors]), 2, function(x) unique(x))
+  if (nf == 1)
+    colnames(lf) <- factors
+
   # Define treatments
   
   treat <- factors[1]
@@ -73,6 +79,6 @@ ck.fs <- function(factors, rep = NULL, dfr) {
   
   # Return
   
-  list(nf = nf, nl = nl, nt = nt, lt = lt, nr = nr, lr = lr)
+  list(nf = nf, nl = nl, lf = lf, nt = nt, lt = lt, nr = nr, lr = lr)
   
 }
