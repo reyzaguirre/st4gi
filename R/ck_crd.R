@@ -32,7 +32,7 @@ ck.crd <- function(trait, geno, dfr) {
 
   # Number of genotypes and replications
   
-  out <- ck.fs(geno, NULL, 'crd', dfr)
+  out <- ck.fs(geno, NULL, dfr)
   ng <- out$nt
   nr <- out$nr
 
