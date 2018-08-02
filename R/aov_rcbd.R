@@ -11,7 +11,7 @@
 #' @return It returns an ANOVA table.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' ## Get a copy with some missing values for trw and run ANOVA
+#' # Get a copy with some missing values for trw and run ANOVA
 #' temp <- pjpz09
 #' temp[c(10, 20, 30), "trw"] <- NA
 #' aov.rcbd("trw", "geno", "rep", temp)
@@ -24,12 +24,16 @@ aov.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1) {
   dfr[, geno] <- as.character(dfr[, geno])
   dfr[, rep] <- as.character(dfr[, rep])
 
-  # Check data and estimate missing values
-
+  # Check data
+  
   lc <- ck.rcbd(trait, geno, rep, dfr)
 
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0 | lc$nmis.fact > 0) {
-    dfr[, trait] <- mve.rcbd(trait, geno, rep, dfr, maxp, tol = 1e-06)[, 4]
+  # Estimate missing values and report errors from mve.rcbd
+  
+  trait.est <- paste0(trait, ".est")
+  
+  if (lc$ng.0 > 0 | lc$nr == 1 | lc$ng.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
+    dfr[, trait] <- mve.rcbd(trait, geno, rep, dfr, maxp, tol = 1e-06)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))

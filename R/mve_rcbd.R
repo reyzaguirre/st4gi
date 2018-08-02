@@ -5,42 +5,38 @@
 #' @param trait The trait to estimate missing values.
 #' @param geno The genotypes.
 #' @param rep The replications.
-#' @param data The name of the data frame.
+#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with the experimental layout and columns \code{trait}
 #' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
-#' @details A \code{data.frame} with data for a RCBD with at least two replications
-#' and at least one datum for each genotype must be loaded. Experimental data
-#' with only one replication, any genotype without data, or more missing values than
-#' specified in \code{maxp} will generate an error message.
 #' @examples
 #' temp <- met8x12[met8x12$env == "TM80N", ]
 #' mve.rcbd("y", "geno", "rep", temp)
 #' @export
 
-mve.rcbd <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
+mve.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- ck.rcbd(trait, geno, rep, data)
+  lc <- ck.rcbd(trait, geno, rep, dfr)
 
   # Error messages
 
-  if (lc$nmis.fact > 0)
+  if (lc$nmis.fac > 0)
     stop("There are missing values for classification factors.")
 
-  if (lc$c1 == 0)
+  if (lc$ng.0 > 0)
     stop("Some genotypes have zero frequency.")
 
-  if (lc$c2 == 0)
+  if (lc$nr == 1)
     stop("There is only one replication. Inference is not possible with one replication.")
 
-  if (lc$c3 == 0)
+  if (lc$ng.mult > 0)
     stop("Some genotypes have additional replications.")
 
-  if (lc$c4 == 1)
+  if (lc$nmis == 0)
     stop("There are no missing values to estimate.")
 
   if (lc$pmis > maxp)
@@ -49,35 +45,35 @@ mve.rcbd <- function(trait, geno, rep, data, maxp = 0.1, tol = 1e-06) {
   # Estimation
 
   trait.est <- paste0(trait, ".est")
-  data[, trait.est] <- data[, trait]
-  data[, "ytemp"] <- data[, trait]
-  mG <- tapply(data[, trait], data[, geno], mean, na.rm = TRUE)
-  for (i in 1:length(data[, trait]))
-    if (is.na(data[i, trait]))
-      data[i, "ytemp"] <- mG[data[i, geno]]
+  dfr[, trait.est] <- dfr[, trait]
+  dfr[, "ytemp"] <- dfr[, trait]
+  mG <- tapply(dfr[, trait], dfr[, geno], mean, na.rm = TRUE)
+  for (i in 1:length(dfr[, trait]))
+    if (is.na(dfr[i, trait]))
+      dfr[i, "ytemp"] <- mG[dfr[i, geno]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
-  cc <- max(data[, trait], na.rm = TRUE)
+  cc <- max(dfr[, trait], na.rm = TRUE)
   cont <- 0
-  while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
+  while (cc > max(dfr[, trait], na.rm = TRUE) * tol & cont < 100) {
     cont <- cont + 1
-    for (i in 1:length(data[, trait]))
-      if (is.na(data[i, trait])) {
-        data[i, "ytemp"] <- data[i, trait]
-        sum1 <- tapply(data[, "ytemp"], data[, geno], sum, na.rm = TRUE)
-        sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
-        sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
-        data[i, trait.est] <- (lc$ng * sum1[data[i, geno]] + lc$nr * sum2[data[i, rep]] - sum3) /
+    for (i in 1:length(dfr[, trait]))
+      if (is.na(dfr[i, trait])) {
+        dfr[i, "ytemp"] <- dfr[i, trait]
+        sum1 <- tapply(dfr[, "ytemp"], dfr[, geno], sum, na.rm = TRUE)
+        sum2 <- tapply(dfr[, "ytemp"], dfr[, rep], sum, na.rm = TRUE)
+        sum3 <- sum(dfr[, "ytemp"], na.rm = TRUE)
+        dfr[i, trait.est] <- (lc$ng * sum1[dfr[i, geno]] + lc$nr * sum2[dfr[i, rep]] - sum3) /
           (lc$ng * lc$nr - lc$ng - lc$nr + 1)
-        data[i, "ytemp"] <- data[i, trait.est]
+        dfr[i, "ytemp"] <- dfr[i, trait.est]
       }
     lc1 <- lc2
-    lc2 <- data[is.na(data[, trait]), trait.est]
+    lc2 <- dfr[is.na(dfr[, trait]), trait.est]
     cc <- max(abs(lc1 - lc2))
   }
 
   # Return
 
-  data[, c(geno, rep, trait, trait.est)]
+  dfr[, c(geno, rep, trait, trait.est)]
   
 }

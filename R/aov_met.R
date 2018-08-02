@@ -20,15 +20,15 @@
 
 aov.met <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
-  # Check data
-  
-  lc <- ck.f(trait, c(geno, env), rep, dfr)
-  
   # Everything as character
 
   dfr[, geno] <- as.character(dfr[, geno])
   dfr[, env] <- as.character(dfr[, env])
   dfr[, rep] <- as.character(dfr[, rep])
+
+  # Check data
+  
+  lc <- ck.f(trait, c(geno, env), rep, dfr)
 
   # Estimate missing values and report errors from mve.met
   

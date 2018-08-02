@@ -29,9 +29,6 @@ Fit an analysis of variance model for a factorial experiment with a CRD or RCBD.
 If data is unbalanced, missing values are estimated up to an specified maximum
 proportion, 10\% by default.
 }
-\examples{
-aov.f("asc.dw", c("geno", "treat"), "rep", "crd", asc)
-}
 \author{
 Raul Eyzaguirre.
 }
