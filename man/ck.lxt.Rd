@@ -25,6 +25,10 @@ and the number of testers (\code{ntes}). The control values are:
 \description{
 This function checks the data structure for a line by tester genetic design.
 }
+\examples{
+library(pepa)
+ck.lxt("line", "tester", lxt)
+}
 \author{
 Raul Eyzaguirre.
 }
