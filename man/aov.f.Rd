@@ -4,7 +4,7 @@
 \alias{aov.f}
 \title{ANOVA for a factorial experiment}
 \usage{
-aov.f(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1)
+aov.f(trait, factors, rep, design = c("crd", "rcbd"), dfr, maxp = 0.1)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -15,7 +15,7 @@ aov.f(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1)
 
 \item{design}{The statistical design, \code{crd} or \code{rcbd}.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
@@ -23,7 +23,7 @@ aov.f(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1)
 It returns the ANOVA table.
 }
 \description{
-Fit an analysis of variance model for a factorial experiment with a CRD or RCBD
+Fit an analysis of variance model for a factorial experiment with a CRD or RCBD.
 }
 \details{
 If data is unbalanced, missing values are estimated up to an specified maximum

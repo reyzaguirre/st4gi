@@ -1,22 +1,22 @@
 #' ANOVA for a factorial experiment
 #'
-#' Fit an analysis of variance model for a factorial experiment with a CRD or RCBD
+#' Fit an analysis of variance model for a factorial experiment with a CRD or RCBD.
 #' @param trait The trait to analyze.
 #' @param factors The factors.
 #' @param rep The replications or blocks.
 #' @param design The statistical design, \code{crd} or \code{rcbd}.
-#' @param data The name of the data frame.
+#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
-#' @author Raul Eyzaguirre.
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default.
 #' @return It returns the ANOVA table.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' aov.f("asc.dw", c("geno", "treat"), "rep", "crd", asc)
 #' @importFrom stats anova
 #' @export
 
-aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1) {
+aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), dfr, maxp = 0.1) {
 
   # match arguments
   
@@ -24,21 +24,21 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
 
   # Check data
   
-  lc <- ck.f(trait, factors, rep, data)
+  lc <- ck.f(trait, factors, rep, dfr)
 
   # Everything as character
   
   for (i in 1:lc$nf)
-    data[, factors[i]] <- as.character(data[, factors[i]])
+    dfr[, factors[i]] <- as.character(dfr[, factors[i]])
 
-  data[, rep] <- as.character(data[, rep])
+  dfr[, rep] <- as.character(dfr[, rep])
 
   # Estimate missing values and report errors from mve.f
   
   trait.est <- paste0(trait, ".est")
   
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0 | lc$nmis.fact > 0) {
-    data[, trait] <- mve.f(trait, factors, rep, design, data, maxp)[, trait.est]
+  if (lc$nt.0 > 0 | lc$nr == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
+    dfr[, trait] <- mve.f(trait, factors, rep, design, dfr, maxp)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -52,13 +52,13 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0
 
   if (design == "crd") {
     ff <- as.formula(expr)
-    model <- aov(ff, data = data)
+    model <- aov(ff, dfr)
   }
   
   if (design == "rcbd") {
     expr <- paste(expr, '+', rep)
     ff <- as.formula(expr)
-    model <- aov(ff, data = data)
+    model <- aov(ff, dfr)
   }
   
   at <- anova(model)

@@ -4,7 +4,7 @@
 \alias{mve.f}
 \title{Estimation of missing values for a factorial experiment}
 \usage{
-mve.f(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1,
+mve.f(trait, factors, rep, design = c("crd", "rcbd"), dfr, maxp = 0.1,
   tol = 1e-06)
 }
 \arguments{
@@ -16,7 +16,7 @@ mve.f(trait, factors, rep, design = c("crd", "rcbd"), data, maxp = 0.1,
 
 \item{design}{The statistical design, \code{crd} or \code{rcbd}.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 
@@ -30,20 +30,10 @@ and \code{trait.est} with the original data and the original data plus the estim
 Function to estimate missing values for factorial experiment with a CRD
 or a RCBD by the least squares method.
 }
-\details{
-A \code{data.frame} with data for a factorial experiment with at least two
-replications and at least one datum for each factor levels' combination must be loaded.
-Experimental data with only one replication, any factor levels' combination without data,
-or more missing values than specified in \code{maxp} will generate an error message.
-}
 \examples{
-# The data
-str(asc)
-
-# A copy with some missing values
+# A data frame with some missing values
 temp <- asc
 temp$dm[c(3, 10, 115)] <- NA
-
 # Estimate the missing values
 mve.f("dm", c("geno", "treat"), "rep", "crd", temp)
 }

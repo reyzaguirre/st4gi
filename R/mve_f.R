@@ -6,30 +6,22 @@
 #' @param factors The factors.
 #' @param rep The replications or blocks.
 #' @param design The statistical design, \code{crd} or \code{rcbd}.
-#' @param data The name of the data frame.
+#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with the experimental layout and columns \code{trait}
 #' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
-#' @details A \code{data.frame} with data for a factorial experiment with at least two
-#' replications and at least one datum for each factor levels' combination must be loaded.
-#' Experimental data with only one replication, any factor levels' combination without data,
-#' or more missing values than specified in \code{maxp} will generate an error message.
 #' @examples
-#' # The data
-#' str(asc)
-#' 
-#' # A copy with some missing values
+#' # A data frame with some missing values
 #' temp <- asc
 #' temp$dm[c(3, 10, 115)] <- NA
-#'
 #' # Estimate the missing values
 #' mve.f("dm", c("geno", "treat"), "rep", "crd", temp)
 #' @export
 
-mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
-                  data, maxp = 0.1, tol = 1e-06) {
+mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), dfr,
+                  maxp = 0.1, tol = 1e-06) {
   
   # match arguments
   
@@ -37,23 +29,23 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
   
   # Check data
   
-  lc <- ck.f(trait, factors, rep, data)
+  lc <- ck.f(trait, factors, rep, dfr)
   
   # Error messages
   
-  if (lc$nmis.fact > 0)
+  if (lc$nmis.fac > 0)
     stop("There are missing values for classification factors.")
 
-  if (lc$c1 == 0)
+  if (lc$nt.0 > 0)
     stop("Some factor levels' combinations have zero frequency.")
   
-  if (lc$c2 == 0)
+  if (lc$nr == 1)
     stop("There is only one replication. Inference is not possible with one replication.")
   
-  if (lc$c3 == 0)
+  if (lc$nt.mult > 0)
     stop("Some factor levels' combinations have additional replications.")
 
-  if (lc$c4 == 1)
+  if (lc$nmis == 0)
     stop("The data set is balanced. There are no missing values to estimate.")
 
   if (lc$pmis > maxp)
@@ -62,44 +54,40 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
   if (sum(lc$nl < 2) > 0)
     stop("There are factors with only one level. This is is not a factorial experiment.")
   
-  # Number of factors
-  
-  nf <- length(factors)
-
   # Get a copy of trait for estimated values and for temporary values
   
   trait.est <- paste0(trait, ".est")
-  data[, trait.est] <- data[, trait]
-  data[, "ytemp"] <- data[, trait]
+  dfr[, trait.est] <- dfr[, trait]
+  dfr[, "ytemp"] <- dfr[, trait]
   
   # Create expression for list of factors
   
-  lf.expr <- 'list(data[, factors[1]]'
+  lf.expr <- 'list(dfr[, factors[1]]'
   
-  for (i in 2:nf)
-    lf.expr <- paste0(lf.expr, ', data[, factors[', i, ']]')
+  for (i in 2:lc$nf)
+    lf.expr <- paste0(lf.expr, ', dfr[, factors[', i, ']]')
   
   lf.expr <- paste0(lf.expr, ')')
   
   # Compute means over replications
 
-  tmeans <- tapply(data[, trait], eval(parse(text = lf.expr)), mean, na.rm = TRUE)
+  tmeans <- tapply(dfr[, trait], eval(parse(text = lf.expr)), mean, na.rm = TRUE)
 
   # Store means in ytemp for missing values
   
-  for (i in 1:length(data[, trait]))
-    if (is.na(data[i, trait])) {
-      expr <- paste0('tmeans[data[', i, ', factors[1]]')
-      for (j in 2:nf)
-        expr <- paste0(expr, ', data[', i, ', factors[', j, ']]')
+  for (i in 1:length(dfr[, trait]))
+    if (is.na(dfr[i, trait])) {
+      expr <- paste0('tmeans[dfr[', i, ', factors[1]]')
+      for (j in 2:lc$nf)
+        expr <- paste0(expr, ', dfr[', i, ', factors[', j, ']]')
       expr <- paste0(expr, ']')
-      data[i, "ytemp"] <- eval(parse(text = expr))
+      dfr[i, "ytemp"] <- eval(parse(text = expr))
     }
   
   # Estimate missing values for a crd
   
   if (design == "crd")
-    data[, trait.est] <- data[, "ytemp"]
+    dfr[, trait.est] <- dfr[, "ytemp"]
   
   # Estimate missing values for a rcbd
   
@@ -116,7 +104,7 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
     
     # Value to control convergence
     
-    cc <- max(data[, trait], na.rm = TRUE)
+    cc <- max(dfr[, trait], na.rm = TRUE)
     
     # Maximum number of iteration control
     
@@ -124,43 +112,43 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"),
     
     # Iterate
     
-    while (cc > max(data[, trait], na.rm = TRUE) * tol & cont < 100) {
+    while (cc > max(dfr[, trait], na.rm = TRUE) * tol & cont < 100) {
       
       cont <- cont + 1
       
-      for (i in 1:length(data[, trait]))
-        if (is.na(data[i, trait])) {
+      for (i in 1:length(dfr[, trait]))
+        if (is.na(dfr[i, trait])) {
       
           # Compute sums
           
-          data[i, "ytemp"] <- NA
-          sum1 <- tapply(data[, "ytemp"], eval(parse(text = lf.expr)), sum, na.rm = TRUE)
-          sum2 <- tapply(data[, "ytemp"], data[, rep], sum, na.rm = TRUE)
-          sum3 <- sum(data[, "ytemp"], na.rm = TRUE)
+          dfr[i, "ytemp"] <- NA
+          sum1 <- tapply(dfr[, "ytemp"], eval(parse(text = lf.expr)), sum, na.rm = TRUE)
+          sum2 <- tapply(dfr[, "ytemp"], dfr[, rep], sum, na.rm = TRUE)
+          sum3 <- sum(dfr[, "ytemp"], na.rm = TRUE)
           
           # Get estimate
           
-          expr <- paste0('sum1[data[', i, ', factors[1]]')
-          for (j in 2:nf)
-            expr <- paste0(expr, ', data[', i, ', factors[', j, ']]')
+          expr <- paste0('sum1[dfr[', i, ', factors[1]]')
+          for (j in 2:lc$nf)
+            expr <- paste0(expr, ', dfr[', i, ', factors[', j, ']]')
           expr <- paste0(expr, ']')
           
-          mv.num <- nt * eval(parse(text = expr)) + lc$nr * sum2[data[i, rep]] - sum3
+          mv.num <- nt * eval(parse(text = expr)) + lc$nr * sum2[dfr[i, rep]] - sum3
           mv.den <- nt * lc$nr - nt - lc$nr + 1
 
-          data[i, trait.est] <- mv.num / mv.den
+          dfr[i, trait.est] <- mv.num / mv.den
           
-          data[i, "ytemp"] <- data[i, trait.est]
+          dfr[i, "ytemp"] <- dfr[i, trait.est]
         }
       
       emv1 <- emv2
-      emv2 <- data[is.na(data[, trait]), trait.est]
+      emv2 <- dfr[is.na(dfr[, trait]), trait.est]
       cc <- max(abs(emv1 - emv2))
     }
   }
   
   # Return
   
-  data[, c(factors, rep, trait, trait.est)]
+  dfr[, c(factors, rep, trait, trait.est)]
   
 }
