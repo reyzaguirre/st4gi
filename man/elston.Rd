@@ -4,7 +4,7 @@
 \alias{elston}
 \title{Elston Index}
 \usage{
-elston(traits, geno, env = NULL, rep = NULL, data, means = c("single",
+elston(traits, geno, env = NULL, rep = NULL, dfr, means = c("single",
   "fitted"), lb = 1)
 }
 \arguments{
@@ -16,7 +16,7 @@ elston(traits, geno, env = NULL, rep = NULL, data, means = c("single",
 
 \item{rep}{The replications.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 
 \item{means}{The genotypic means to compute the index, \code{"single"} or
 \code{"fitted"}. The default is \code{"single"}. See details for more information.}
@@ -46,7 +46,7 @@ If \code{means = "single"} and \code{env} is not specified, then single arithmet
 means are computed over all the observations for each genotype.
 }
 \examples{
-elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", data = spg)
+elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", dfr = spg)
 }
 \references{
 Elston, R. C. (1963). A weight-free index for the purpose of ranking or selection

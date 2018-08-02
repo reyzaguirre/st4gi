@@ -4,7 +4,7 @@
 \alias{ecm}
 \title{Estimate Genotypic and Phenotypic Covariance and Correlation Matrices}
 \usage{
-ecm(traits, geno, env = NULL, rep, data, method = 1)
+ecm(traits, geno, env = NULL, rep, dfr, method = 1)
 }
 \arguments{
 \item{traits}{The traits to include.}
@@ -15,7 +15,7 @@ ecm(traits, geno, env = NULL, rep, data, method = 1)
 
 \item{rep}{The replications or blocks. A RCBD is assumed.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 
 \item{method}{The method to compute genotypic covariances. See details.}
 }
