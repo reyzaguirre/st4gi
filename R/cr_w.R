@@ -4,8 +4,8 @@
 #' experiment with genotypes randomly allocated on a field with checks
 #' following the method described by Westcott (1981).
 #' @param geno The list of genotypes.
-#' @param ch1 Name of check 1.
-#' @param ch2 Name of check 2.
+#' @param ck1 Name of check 1.
+#' @param ck2 Name of check 2.
 #' @param nc Number of columns.
 #' @param ncb Number of columns between two check columns (default is 10).
 #' @author Raul Eyzaguirre.
@@ -22,7 +22,7 @@
 #' cr.w(1:100, "A", "B", 100)
 #' @export
 
-cr.w <- function(geno, ch1, ch2, nc, ncb = 10) {
+cr.w <- function(geno, ck1, ck2, nc, ncb = 10) {
   
   # Error messages
   
@@ -47,12 +47,12 @@ cr.w <- function(geno, ch1, ch2, nc, ncb = 10) {
 
   # Include checks, selected columns
   
-  plan[seq(1, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ch1
-  plan[seq(1, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ch2
+  plan[seq(1, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ck1
+  plan[seq(1, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ck2
   
   if (nr > 1) {
-    plan[seq(2, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ch2
-    plan[seq(2, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ch1
+    plan[seq(2, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ck2
+    plan[seq(2, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ck1
   }
   
   # Include genotypes at random
