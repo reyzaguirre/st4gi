@@ -4,10 +4,10 @@
 #' @param geno The list of genotypes.
 #' @param nb Number of blocks.
 #' @param nc Number of columns.
-#' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field following a RCBD.
 #' The blocks are disposed alongside the rows.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' cr.rcbd(1:20, 3, 10)
 #' cr.rcbd(1:20, 2, 7)

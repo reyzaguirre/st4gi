@@ -2,9 +2,9 @@
 #'
 #' This function creates the fieldbook and fieldplan for a LSD.
 #' @param geno The list of genotypes.
-#' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field following a LSD.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' cr.lsd(c("A", "B", "C"))
 #' cr.lsd(c("A", "B", "C", "D", "E"))
@@ -52,7 +52,7 @@ cr.lsd <- function(geno) {
   col <- rep(1:ng, ng)
 
   book <- data.frame(plot = 1:(ng * ng), row, col, geno = c(t(plan)),
-                     stringsAsFactors = F)
+                     stringsAsFactors = FALSE)
 
   # Return
   

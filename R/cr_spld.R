@@ -6,12 +6,12 @@
 #' @param nrep Number of replications (or blocks).
 #' @param nc Number of columns in each replication. Default is the
 #' number of levels of factor B.
-#' @author Raul Eyzaguirre.
 #' @details The levels of the factors are randomly allocated on a field
 #' following a Split-Plot design. Row and column numbers are specific
 #' to each replication and identify subplots. Each replication is a
 #' complete block for factor A.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' A <- paste0("a", 1:4)
 #' B <- paste0("b", 1:3)
