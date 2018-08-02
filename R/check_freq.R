@@ -1,21 +1,24 @@
 #' Check frequencies
 #'
-#' Check frequencies for designs with complete replications and one or two factors.
-#' This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
+#' Check frequencies for designs with complete replications and one or several
+#' environments. This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
 #' @param trait The trait to analyze.
 #' @param geno Genotypes.
 #' @param env Environments.
 #' @param rep The replications.
-#' @param data The name of the data frame.
+#' @param dfr The name of the data frame.
 #' @return Information about the balance, missing values, and replications of the design.
 #' @author Raul Eyzaguirre.
+#' @examples
+#' check.freq("trw", "geno", NULL, "rep", pjpz09)
+#' check.freq("rytha", "geno", "env", "rep", megaclones)
 #' @export
 
-check.freq <- function(trait, geno, env = NULL, rep, data) {
+check.freq <- function(trait, geno, env = NULL, rep, dfr) {
   
   # Levels for replications
   
-  lr <- sort(unique(data[, rep]))
+  lr <- sort(unique(dfr[, rep]))
   
   # Main text
 
@@ -28,47 +31,46 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     
     # Run check for rcbd
     
-    lc <- ck.rcbd(trait, geno, rep, data)
+    lc <- ck.rcbd(trait, geno, rep, dfr)
     
     # Write warnings
     
-    if (lc$nmis.fact > 0) {
+    if (lc$nmis.fac > 0) {
       cat('There are missing values for classification factors. \n')
       cat('\n')
     }
   
-    if (lc$c1 == 0) {
-      lista <- apply(lc$tfreq, 1, sum)
-      lista <- names(lista[lista == 0])
+    if (lc$ng.0 > 0) {
+      lista <- names(lc$tf[lc$tf == 0])
       cat('There are genotypes without data: \n', lista, '\n')
       cat('\n')
     }
 
-    if (lc$c2 == 0) {
+    if (lc$nr == 1) {
       cat('There is only one replication. \n')
       cat('\n')
     }
     
-    if (lc$c3 == 0) {
-      tf <- lc$tfreq > 1
+    if (lc$ng.mult > 0) {
+      temp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
       for (i in 1:lc$nr) {
-        if (sum(tf[, i]) > 0) {
-          lista <- rownames(tf)[tf[, i]]
+        if (sum(temp[, i]) > 0) {
+          lista <- rownames(temp)[temp[, i]]
           cat(paste0('- Replication ', lr[i], ':'), lista, '\n')
         }
       }
       cat('\n')
     }
     
-    if (lc$c4 == 0) {
+    if (lc$nmis > 0) {
       cat("There are missing values:", format(lc$pmis * 100, digits = 3), '% \n')
       cat('\n')
     }
     
     # OK message
     
-    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1 & lc$nmis.fact == 0) {
+    if (lc$ng.0 == 0 & lc$nr > 1 & lc$ng.mult == 0 & lc$nmis == 0 & lc$nmis.fac == 0) {
       cat('OK \n')
       cat('\n')
     }
@@ -77,43 +79,43 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
     
     # Levels for environments
     
-    le <- sort(unique(data[, env]))
+    le <- sort(unique(dfr[, env]))
     
     # Run check for factorial
 
-    lc <- ck.f(trait, c(geno, env), rep, data)
+    lc <- ck.f(trait, c(geno, env), rep, dfr)
     
     # Write warnings
     
-    if (lc$nmis.fact > 0) {
+    if (lc$nmis.fac > 0) {
       cat('There are missing values for classification factors. \n')
       cat('\n')
     }
 
-    if (lc$c1 == 0) {
-      tf <- lc$tfreq == 0
+    if (lc$nt.0 > 0) {
+      temp <- lc$tf == 0
       cat('There are genotypes without data in a given environment: \n')
       for (i in 1:lc$nl[2]) {
-        if (sum(tf[, i]) > 0) {
-          lista <- rownames(tf)[tf[, i]]
+        if (sum(temp[, i]) > 0) {
+          lista <- rownames(temp)[temp[, i]]
           cat(paste0('- Environment ', le[i], ':'), lista, '\n')
         }
       }
       cat('\n')
     }
     
-    if (lc$c2 == 0) {
+    if (lc$nr == 0) {
       cat('There is only one replication. \n')
       cat('\n')
     }
     
-    if (lc$c3 == 0) {
-      tf <- lc$tfreqr > 1
+    if (lc$nt.mult > 0) {
+      temp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
       for (i in 1:lc$nl[2]) {
         for (j in 1:lc$nr) {
-          if (sum(tf[, i, j]) > 0) {
-            lista <- rownames(tf)[tf[, i, j]]
+          if (sum(temp[, i, j]) > 0) {
+            lista <- rownames(temp)[temp[, i, j]]
             cat(paste0('- Environment ', le[i], ', replication ', lr[j], ':'), lista, '\n')
           }
         }
@@ -121,14 +123,14 @@ check.freq <- function(trait, geno, env = NULL, rep, data) {
       cat('\n')
     }
     
-    if (lc$c4 == 0) {
+    if (lc$nmis > 0) {
       cat("There are missing values:", format(lc$pmis * 100, digits = 3), '% \n')
       cat('\n')
     }
     
     # OK message
     
-    if (lc$c1 == 1 & lc$c2 == 1 & lc$c3 == 1 & lc$c4 == 1 & lc$nmis.fact == 0) {
+    if (lc$nt.0 == 0 & lc$nr > 1 & lc$nt.mult == 0 & lc$nmis == 0 & lc$nmis.fac == 0) {
       cat('OK \n')
       cat('\n')
     }    

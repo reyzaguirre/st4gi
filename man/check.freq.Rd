@@ -4,7 +4,7 @@
 \alias{check.freq}
 \title{Check frequencies}
 \usage{
-check.freq(trait, geno, env = NULL, rep, data)
+check.freq(trait, geno, env = NULL, rep, dfr)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -15,14 +15,18 @@ check.freq(trait, geno, env = NULL, rep, data)
 
 \item{rep}{The replications.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 Information about the balance, missing values, and replications of the design.
 }
 \description{
-Check frequencies for designs with complete replications and one or two factors.
-This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
+Check frequencies for designs with complete replications and one or several
+environments. This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
+}
+\examples{
+check.freq("trw", "geno", NULL, "rep", pjpz09)
+check.freq("rytha", "geno", "env", "rep", megaclones)
 }
 \author{
 Raul Eyzaguirre.
