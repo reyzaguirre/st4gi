@@ -4,12 +4,12 @@
 #' @param trait The trait to analyze.
 #' @param geno The genotypes.
 #' @param rep The replications.
-#' @param data The name of the data frame containing the data.
+#' @param dfr The name of the data frame containing the data.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
-#' @author Raul Eyzaguirre.
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default.
-#' @return It returns ANOVA table.
+#' @return It returns an ANOVA table.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' ## Get a copy with some missing values for trw and run ANOVA
 #' temp <- pjpz09
@@ -17,19 +17,19 @@
 #' aov.rcbd("trw", "geno", "rep", temp)
 #' @export
 
-aov.rcbd <- function(trait, geno, rep, data, maxp = 0.1) {
+aov.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1) {
 
   # Everything as character
 
-  data[, geno] <- as.character(data[, geno])
-  data[, rep] <- as.character(data[, rep])
+  dfr[, geno] <- as.character(dfr[, geno])
+  dfr[, rep] <- as.character(dfr[, rep])
 
   # Check data and estimate missing values
 
-  lc <- ck.rcbd(trait, geno, rep, data)
+  lc <- ck.rcbd(trait, geno, rep, dfr)
 
   if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0 | lc$nmis.fact > 0) {
-    data[, trait] <- mve.rcbd(trait, geno, rep, data, maxp, tol = 1e-06)[, 4]
+    dfr[, trait] <- mve.rcbd(trait, geno, rep, dfr, maxp, tol = 1e-06)[, 4]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -37,7 +37,7 @@ aov.rcbd <- function(trait, geno, rep, data, maxp = 0.1) {
 
   # ANOVA
 
-  model <- aov(data[, trait] ~ data[, geno] + data[, rep])
+  model <- aov(dfr[, trait] ~ dfr[, geno] + dfr[, rep])
   model$terms[[2]] <- trait
   
   at <- anova(model)
