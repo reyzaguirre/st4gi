@@ -57,7 +57,7 @@ ck.fs <- function(factors, rep = NULL, dfr) {
 
   # Number of treatments
   
-  lt <- unique(dfr[, treat])
+  lt <- sort(unique(dfr[, treat]))
   nt <- length(lt)
 
   # Number and levels of replications
@@ -67,7 +67,7 @@ ck.fs <- function(factors, rep = NULL, dfr) {
     lr <- NULL
     nr <- max(tfreq)
   } else {
-    lr <- unique(dfr[, rep])
+    lr <- sort(unique(dfr[, rep]))
     nr <- length(lr)
   }
   
