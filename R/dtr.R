@@ -6,7 +6,6 @@
 #' @param base Base for the logarithmic transformation. Base 10 by default.
 #' @param n Additional parameter for arc-sine transformation. See details.
 #' @param dfr The name of the data frame containing the data.
-#' @author Raul Eyzaguirre.
 #' @details Available transformations are:
 #' 
 #' \code{none} for no transformation.
@@ -36,6 +35,7 @@
 #' 0.8 to 1 a square root transformation could be useful. Finally, Note that for binomial
 #' data, a binomial regression model could be a better option.
 #' @return It returns the transformed trait.
+#' @author Raul Eyzaguirre.
 #' @example
 #' dtr("nonc", "logy", dfr = pjpz09)
 #' @export
