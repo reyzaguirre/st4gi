@@ -4,23 +4,22 @@
 #' the method described by Westcott (1981) with a grid of checks.
 #' @param trait The trait to adjust.
 #' @param geno The genotypes.
-#' @param ch1 Name of check 1.
-#' @param ch2 Name of check 2.
+#' @param ck1 Name of check 1.
+#' @param ck2 Name of check 2.
 #' @param row Label for rows.
 #' @param col Label for columns.
 #' @param ncb Number of columns between two check columns.
-#' @param nr Number of rows used to fit values, 3 or 5.
+#' @param nrs Number of rows spanning the row of the plot, 3 or 5.
 #' @param method The method to fit the values. See details.
 #' @param p The proportion of the check values differences used for the adjustment.
 #' See details.
 #' @param ind Logical. If TRUE each check is centered around its own mean.
 #' If FALSE both checks are centered around the overall mean.
-#' @param data The name of the data frame.
-#' @author Raul Eyzaguirre.
+#' @param dfr The name of the data frame.
 #' @details The values of the selected \code{trait} are adjusted following
 #' different methods. For \code{method = 1} each plot is adjusted with the
-#' mean of the six or ten checks located in the three (if \code{nr = 3}) or
-#' five (if \code{nr = 5}) rows spanning it (with \code{nr = 3} it corresponds
+#' mean of the six or ten checks located in the three (if \code{nrs = 3}) or
+#' five (if \code{nrs = 5}) rows spanning it (with \code{nrs = 3} it corresponds
 #' tp the method proposed by Westcott). For \code{method = 2} each plot is
 #' adjusted with the value of his position on the surface fitted using the six
 #' or then checks located in the three or five rows spanning it, so the closest
@@ -34,23 +33,32 @@
 #' If the layout does not correspond with the Westcott method, then the observed values
 #' are adjusted with the values of the checks planted nearby and a warning is issued.
 #' @return It returns the adjusted values.
+#' @author Raul Eyzaguirre.
+#' @examples 
+#' # Create design
+#' dfr <- cr.w(1:1000, "Dag", "Cem", 40, 10)
+#' dfr <- dfr$book
+#' # Create some random data
+#' dfr$y <- rnorm(1134)
+#' # Run adjustment
+#' aj.w("y", "geno", "Dag", "Cem", "row", "col", dfr = dfr)
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
 #' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
 #' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
-                 p = 0.5, ind = TRUE, data) {
+aj.w <- function(trait, geno, ck1, ck2, row, col, nrs = 5, ncb = 10, method = 2,
+                 p = 0.5, ind = TRUE, dfr) {
   
   # Error and warning messages
   
-  out <- ck.pos(row, col, data = data)
+  out <- ck.pos(row, col, NULL, dfr)
   
   if (out$nplot > 0)
     stop("More than one genotype in the same position. Run check.pos to look over.")
   
-  out <- ck.w(trait, geno, ch1, ch2, row, col, ncb, data)
+  out <- ck.w(trait, geno, ck1, ck2, row, col, ncb, dfr)
   
   if (out$c1 == 1)
     warning("There are plots in the columns of checks with other genotypes planted.")
@@ -69,34 +77,34 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
 
   # Save column names
   
-  col.names <- colnames(data)
+  col.names <- colnames(dfr)
     
   # Get a copy of trait for the adjusted values
   
   trait.aj <- paste(trait, 'aj', sep = '.') 
-  data[, trait.aj] <- data[, trait]
+  dfr[, trait.aj] <- dfr[, trait]
 
   # Compute means for checks
   
   if (ind) {
-    ch1.mean <- mean(data[data[, geno] == ch1, trait], na.rm = TRUE)
-    ch2.mean <- mean(data[data[, geno] == ch2, trait], na.rm = TRUE)
+    ck1.mean <- mean(dfr[dfr[, geno] == ck1, trait], na.rm = TRUE)
+    ck2.mean <- mean(dfr[dfr[, geno] == ck2, trait], na.rm = TRUE)
   } else {
-    ch1.mean <- mean(data[data[, geno] %in% c(ch1, ch2), trait], na.rm = TRUE)
-    ch2.mean <- mean(data[data[, geno] %in% c(ch1, ch2), trait], na.rm = TRUE)
+    ck1.mean <- mean(dfr[dfr[, geno] %in% c(ck1, ck2), trait], na.rm = TRUE)
+    ck2.mean <- mean(dfr[dfr[, geno] %in% c(ck1, ck2), trait], na.rm = TRUE)
   }
   
   # Center check values and compute %
   
-  cond1 <- data[, geno] == ch1
-  cond2 <- data[, geno] == ch2
+  cond1 <- dfr[, geno] == ck1
+  cond2 <- dfr[, geno] == ck2
 
-  data[cond1, trait.aj] <- (data[cond1, trait.aj] - ch1.mean) / ch1.mean * p
-  data[cond2, trait.aj] <- (data[cond2, trait.aj] - ch2.mean) / ch2.mean * p
+  dfr[cond1, trait.aj] <- (dfr[cond1, trait.aj] - ck1.mean) / ck1.mean * p
+  dfr[cond2, trait.aj] <- (dfr[cond2, trait.aj] - ck2.mean) / ck2.mean * p
   
   # Replace missing values with 0 (this is the centered mean)
   
-  data[data[, geno] %in% c(ch1, ch2) & is.na(data[, trait.aj]), trait.aj] <- 0
+  dfr[dfr[, geno] %in% c(ck1, ck2) & is.na(dfr[, trait.aj]), trait.aj] <- 0
   
   # Run Westcott adjustment or modify adjustment
   
@@ -104,179 +112,179 @@ aj.w <- function(trait, geno, ch1, ch2, row, col, nr = 5, ncb = 10, method = 2,
     
     # Create columns for check centered values
     
-    data[, ch1] <- NA
-    data[, ch2] <- NA
+    dfr[, ck1] <- NA
+    dfr[, ck2] <- NA
     
     # Create columns for prior and posterior check centered values
     
-    ch1.pri.1 <- paste(ch1, 'pri.1', sep = '.')
-    data[, ch1.pri.1] <- NA
-    ch1.pri.2 <- paste(ch1, 'pri.2', sep = '.')
-    data[, ch1.pri.2] <- NA
-    ch1.pos.1 <- paste(ch1, 'pos.1', sep = '.')
-    data[, ch1.pos.1] <- NA
-    ch1.pos.2 <- paste(ch1, 'pos.2', sep = '.')
-    data[, ch1.pos.2] <- NA
-    ch2.pri.1 <- paste(ch2, 'pri.1', sep = '.')
-    data[, ch2.pri.1] <- NA
-    ch2.pri.2 <- paste(ch2, 'pri.2', sep = '.')
-    data[, ch2.pri.2] <- NA
-    ch2.pos.1 <- paste(ch2, 'pos.1', sep = '.')
-    data[, ch2.pos.1] <- NA
-    ch2.pos.2 <- paste(ch2, 'pos.2', sep = '.')
-    data[, ch2.pos.2] <- NA
+    ck1.pri.1 <- paste(ck1, 'pri.1', sep = '.')
+    dfr[, ck1.pri.1] <- NA
+    ck1.pri.2 <- paste(ck1, 'pri.2', sep = '.')
+    dfr[, ck1.pri.2] <- NA
+    ck1.pos.1 <- paste(ck1, 'pos.1', sep = '.')
+    dfr[, ck1.pos.1] <- NA
+    ck1.pos.2 <- paste(ck1, 'pos.2', sep = '.')
+    dfr[, ck1.pos.2] <- NA
+    ck2.pri.1 <- paste(ck2, 'pri.1', sep = '.')
+    dfr[, ck2.pri.1] <- NA
+    ck2.pri.2 <- paste(ck2, 'pri.2', sep = '.')
+    dfr[, ck2.pri.2] <- NA
+    ck2.pos.1 <- paste(ck2, 'pos.1', sep = '.')
+    dfr[, ck2.pos.1] <- NA
+    ck2.pos.2 <- paste(ck2, 'pos.2', sep = '.')
+    dfr[, ck2.pos.2] <- NA
     
     # Create columns for weigths
     
-    ch1.w <- paste(ch1, 'w', sep = '.')
-    data[, ch1.w] <- NA
-    ch2.w <- paste(ch2, 'w', sep = '.')
-    data[, ch2.w] <- NA
+    ck1.w <- paste(ck1, 'w', sep = '.')
+    dfr[, ck1.w] <- NA
+    ck2.w <- paste(ck2, 'w', sep = '.')
+    dfr[, ck2.w] <- NA
     
     # Arrange check values and weights
     
-    for (i in 1:dim(data)[1]) {
+    for (i in 1:dim(dfr)[1]) {
       
-      geno.row <- data[i, row]
-      geno.col <- data[i, col]
+      geno.row <- dfr[i, row]
+      geno.col <- dfr[i, col]
       columns <- (geno.col - ncb):(geno.col + ncb)
       
-      cond1 <- data[, col] %in% columns
-      cond2 <- data[, geno] %in% c(ch1, ch2)
+      cond1 <- dfr[, col] %in% columns
+      cond2 <- dfr[, geno] %in% c(ck1, ck2)
       
-      temp <- data[data[, row] == geno.row & cond1 & cond2, c(geno, trait.aj, col)]
+      temp <- dfr[dfr[, row] == geno.row & cond1 & cond2, c(geno, trait.aj, col)]
       
       if (dim(temp)[1] == 2) {
         
         # Checks on the row
         
-        data[i, ch1] <- temp[temp[, geno] == ch1, trait.aj]
-        data[i, ch2] <- temp[temp[, geno] == ch2, trait.aj]
+        dfr[i, ck1] <- temp[temp[, geno] == ck1, trait.aj]
+        dfr[i, ck2] <- temp[temp[, geno] == ck2, trait.aj]
         
         # Checks on row -2
         
-        temp.pri <- data[data[, row] == geno.row - 2 & cond1 & cond2, c(geno, trait.aj, col)]
+        temp.pri <- dfr[dfr[, row] == geno.row - 2 & cond1 & cond2, c(geno, trait.aj, col)]
         
         if (dim(temp.pri)[1] == 2) {
-          data[i, ch1.pri.2] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
-          data[i, ch2.pri.2] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
+          dfr[i, ck1.pri.2] <- temp.pri[temp.pri[, geno] == ck1, trait.aj]
+          dfr[i, ck2.pri.2] <- temp.pri[temp.pri[, geno] == ck2, trait.aj]
         }
         
         # Checks on row -1
         
-        temp.pri <- data[data[, row] == geno.row - 1 & cond1 & cond2, c(geno, trait.aj, col)]
+        temp.pri <- dfr[dfr[, row] == geno.row - 1 & cond1 & cond2, c(geno, trait.aj, col)]
         
         if (dim(temp.pri)[1] == 2) {
-          data[i, ch1.pri.1] <- temp.pri[temp.pri[, geno] == ch2, trait.aj]
-          data[i, ch2.pri.1] <- temp.pri[temp.pri[, geno] == ch1, trait.aj]
+          dfr[i, ck1.pri.1] <- temp.pri[temp.pri[, geno] == ck2, trait.aj]
+          dfr[i, ck2.pri.1] <- temp.pri[temp.pri[, geno] == ck1, trait.aj]
         }
         
         # Checks on row +1
         
-        temp.pos <- data[data[, row] == geno.row + 1 & cond1 & cond2, c(geno, trait.aj, col)]
+        temp.pos <- dfr[dfr[, row] == geno.row + 1 & cond1 & cond2, c(geno, trait.aj, col)]
         
         if (dim(temp.pos)[1] == 2) {
-          data[i, ch1.pos.1] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
-          data[i, ch2.pos.1] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
+          dfr[i, ck1.pos.1] <- temp.pos[temp.pos[, geno] == ck2, trait.aj]
+          dfr[i, ck2.pos.1] <- temp.pos[temp.pos[, geno] == ck1, trait.aj]
         }
         
         # Checks on row +2  
         
-        temp.pos <- data[data[, row] == geno.row + 2 & cond1 & cond2, c(geno, trait.aj, col)]
+        temp.pos <- dfr[dfr[, row] == geno.row + 2 & cond1 & cond2, c(geno, trait.aj, col)]
         
         if (dim(temp.pos)[1] == 2) {
-          data[i, ch1.pos.2] <- temp.pos[temp.pos[, geno] == ch1, trait.aj]
-          data[i, ch2.pos.2] <- temp.pos[temp.pos[, geno] == ch2, trait.aj]
+          dfr[i, ck1.pos.2] <- temp.pos[temp.pos[, geno] == ck1, trait.aj]
+          dfr[i, ck2.pos.2] <- temp.pos[temp.pos[, geno] == ck2, trait.aj]
         }
         
         # Weights for closest checks
         
-        data[i, ch1.w] <- ncb + 1 - abs(temp[temp[, geno] == ch1, col] - geno.col)
-        data[i, ch2.w] <- ncb + 1 - abs(temp[temp[, geno] == ch2, col] - geno.col)        
+        dfr[i, ck1.w] <- ncb + 1 - abs(temp[temp[, geno] == ck1, col] - geno.col)
+        dfr[i, ck2.w] <- ncb + 1 - abs(temp[temp[, geno] == ck2, col] - geno.col)        
       }
     }
     
     # Adjust values with method 1
     
     if (method == 1) {
-      chs <- c(ch1, ch2, ch1.pri.1, ch2.pri.1, ch1.pos.1, ch2.pos.1)
-      if (nr == 5)
-        chs <- c(chs, ch1.pri.2, ch2.pri.2, ch1.pos.2, ch2.pos.2)
-      af <- apply(data[, chs], 1, mean, na.rm = TRUE)
+      chs <- c(ck1, ck2, ck1.pri.1, ck2.pri.1, ck1.pos.1, ck2.pos.1)
+      if (nrs == 5)
+        chs <- c(chs, ck1.pri.2, ck2.pri.2, ck1.pos.2, ck2.pos.2)
+      af <- apply(dfr[, chs], 1, mean, na.rm = TRUE)
     }
     
     # Adjust values with method 2
     
     if (method == 2) {
       
-      if (nr == 3) {
-        ch1.m.pri <- apply(data[, c(ch1, ch1.pri.1)], 1, mean, na.rm = TRUE)
-        ch2.m.pri <- apply(data[, c(ch2, ch2.pri.1)], 1, mean, na.rm = TRUE)
-        ch1.m.pos <- apply(data[, c(ch1, ch1.pos.1)], 1, mean, na.rm = TRUE)
-        ch2.m.pos <- apply(data[, c(ch2, ch2.pos.1)], 1, mean, na.rm = TRUE)
+      if (nrs == 3) {
+        ck1.m.pri <- apply(dfr[, c(ck1, ck1.pri.1)], 1, mean, na.rm = TRUE)
+        ck2.m.pri <- apply(dfr[, c(ck2, ck2.pri.1)], 1, mean, na.rm = TRUE)
+        ck1.m.pos <- apply(dfr[, c(ck1, ck1.pos.1)], 1, mean, na.rm = TRUE)
+        ck2.m.pos <- apply(dfr[, c(ck2, ck2.pos.1)], 1, mean, na.rm = TRUE)
       }
       
-      if (nr == 5) {
+      if (nrs == 5) {
         foo <- function(x) x * c(1.5, 2, 1)
-        ch1.w.pri <- t(apply(!is.na(data[, c(ch1, ch1.pri.1, ch1.pri.2)]), 1, foo))
-        ch2.w.pri <- t(apply(!is.na(data[, c(ch2, ch2.pri.1, ch2.pri.2)]), 1, foo))
-        ch1.w.pos <- t(apply(!is.na(data[, c(ch1, ch1.pos.1, ch1.pos.2)]), 1, foo))
-        ch2.w.pos <- t(apply(!is.na(data[, c(ch2, ch2.pos.1, ch2.pos.2)]), 1, foo))
+        ck1.w.pri <- t(apply(!is.na(dfr[, c(ck1, ck1.pri.1, ck1.pri.2)]), 1, foo))
+        ck2.w.pri <- t(apply(!is.na(dfr[, c(ck2, ck2.pri.1, ck2.pri.2)]), 1, foo))
+        ck1.w.pos <- t(apply(!is.na(dfr[, c(ck1, ck1.pos.1, ck1.pos.2)]), 1, foo))
+        ck2.w.pos <- t(apply(!is.na(dfr[, c(ck2, ck2.pos.1, ck2.pos.2)]), 1, foo))
         
-        ch1.m.pri <- data[, c(ch1, ch1.pri.1, ch1.pri.2)] * ch1.w.pri
-        ch2.m.pri <- data[, c(ch2, ch2.pri.1, ch2.pri.2)] * ch2.w.pri
-        ch1.m.pos <- data[, c(ch1, ch1.pos.1, ch1.pos.2)] * ch1.w.pos
-        ch2.m.pos <- data[, c(ch2, ch2.pos.1, ch2.pos.2)] * ch2.w.pos
+        ck1.m.pri <- dfr[, c(ck1, ck1.pri.1, ck1.pri.2)] * ck1.w.pri
+        ck2.m.pri <- dfr[, c(ck2, ck2.pri.1, ck2.pri.2)] * ck2.w.pri
+        ck1.m.pos <- dfr[, c(ck1, ck1.pos.1, ck1.pos.2)] * ck1.w.pos
+        ck2.m.pos <- dfr[, c(ck2, ck2.pos.1, ck2.pos.2)] * ck2.w.pos
         
-        ch1.m.pri <- apply(ch1.m.pri, 1, sum, na.rm = TRUE)
-        ch2.m.pri <- apply(ch2.m.pri, 1, sum, na.rm = TRUE)
-        ch1.m.pos <- apply(ch1.m.pos, 1, sum, na.rm = TRUE)
-        ch2.m.pos <- apply(ch2.m.pos, 1, sum, na.rm = TRUE)
+        ck1.m.pri <- apply(ck1.m.pri, 1, sum, na.rm = TRUE)
+        ck2.m.pri <- apply(ck2.m.pri, 1, sum, na.rm = TRUE)
+        ck1.m.pos <- apply(ck1.m.pos, 1, sum, na.rm = TRUE)
+        ck2.m.pos <- apply(ck2.m.pos, 1, sum, na.rm = TRUE)
         
-        ch1.w.pri <- apply(ch1.w.pri, 1, sum, na.rm = TRUE)
-        ch2.w.pri <- apply(ch2.w.pri, 1, sum, na.rm = TRUE)
-        ch1.w.pos <- apply(ch1.w.pos, 1, sum, na.rm = TRUE)
-        ch2.w.pos <- apply(ch2.w.pos, 1, sum, na.rm = TRUE)
+        ck1.w.pri <- apply(ck1.w.pri, 1, sum, na.rm = TRUE)
+        ck2.w.pri <- apply(ck2.w.pri, 1, sum, na.rm = TRUE)
+        ck1.w.pos <- apply(ck1.w.pos, 1, sum, na.rm = TRUE)
+        ck2.w.pos <- apply(ck2.w.pos, 1, sum, na.rm = TRUE)
         
-        ch1.m.pri <- ch1.m.pri / ch1.w.pri
-        ch2.m.pri <- ch2.m.pri / ch2.w.pri
-        ch1.m.pos <- ch1.m.pos / ch1.w.pos
-        ch2.m.pos <- ch2.m.pos / ch2.w.pos
+        ck1.m.pri <- ck1.m.pri / ck1.w.pri
+        ck2.m.pri <- ck2.m.pri / ck2.w.pri
+        ck1.m.pos <- ck1.m.pos / ck1.w.pos
+        ck2.m.pos <- ck2.m.pos / ck2.w.pos
       }
       
-      l.pri <- (ch1.m.pri * data[, ch1.w] + ch2.m.pri * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
-      l.pos <- (ch1.m.pos * data[, ch1.w] + ch2.m.pos * data[, ch2.w]) / (data[, ch1.w] + data[, ch2.w])
+      l.pri <- (ck1.m.pri * dfr[, ck1.w] + ck2.m.pri * dfr[, ck2.w]) / (dfr[, ck1.w] + dfr[, ck2.w])
+      l.pos <- (ck1.m.pos * dfr[, ck1.w] + ck2.m.pos * dfr[, ck2.w]) / (dfr[, ck1.w] + dfr[, ck2.w])
       
       af <- apply(cbind(l.pri, l.pos), 1, mean)
     }
     
     # Make adjustment
     
-    data[, trait.aj] <- data[, trait.aj] / (1 + af)
+    dfr[, trait.aj] <- dfr[, trait.aj] / (1 + af)
     
   } else { 
 
-    for (i in 1:dim(data)[1]) {
+    for (i in 1:dim(dfr)[1]) {
       
-      geno.row <- data[i, row]
-      geno.col <- data[i, col]
-      rows <- (geno.row - nr %/% 2):(geno.row + nr %/% 2)
+      geno.row <- dfr[i, row]
+      geno.col <- dfr[i, col]
+      rows <- (geno.row - nrs %/% 2):(geno.row + nrs %/% 2)
       columns <- (geno.col - ncb):(geno.col + ncb)
       
-      cond1 <- data[, col] %in% columns & data[, row] %in% rows
-      cond2 <- data[, geno] %in% c(ch1, ch2)
+      cond1 <- dfr[, col] %in% columns & dfr[, row] %in% rows
+      cond2 <- dfr[, geno] %in% c(ck1, ck2)
       
-      temp <- data[cond1 & cond2, trait.aj]
+      temp <- dfr[cond1 & cond2, trait.aj]
       
-      if (length(temp) > 0 & !(data[i, geno] %in% c(ch1, ch2))) {
+      if (length(temp) > 0 & !(dfr[i, geno] %in% c(ck1, ck2))) {
         af <- mean(temp)
-        data[i, trait.aj] <- data[i, trait.aj] / (1 + af)
+        dfr[i, trait.aj] <- dfr[i, trait.aj] / (1 + af)
       }
     }
   }
   
   # Return
   
-  data[, unique(c(col.names, trait.aj))]
+  dfr[, unique(c(col.names, trait.aj))]
   
 }
