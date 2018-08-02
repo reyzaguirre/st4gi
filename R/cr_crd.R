@@ -4,9 +4,9 @@
 #' @param geno The list of genotypes.
 #' @param nrep Number of replications.
 #' @param nc Number of columns.
-#' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field following a CRD.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' cr.crd(1:20, 3, 12)
 #' cr.crd(1:20, 2, 7)
