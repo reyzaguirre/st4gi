@@ -4,29 +4,26 @@
 \alias{ck.lxt}
 \title{Check data for a line by tester genetic design}
 \usage{
-ck.lxt(line, tester, data)
+ck.lxt(line, tester, dfr)
 }
 \arguments{
 \item{line}{The lines.}
 
 \item{tester}{The testers.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
-Three control values (\code{c1}, \code{c2}, and \code{c3},
-the number of lines (\code{nl}), and the number of testers (\code{nt}).
-}
-\description{
-This function checks the data structure for a line by tester genetic design.
-}
-\details{
-The control values are:
+Three control values, the number of lines (\code{nlin}),
+and the number of testers (\code{ntes}). The control values are:
 \itemize{
  \item \code{c1}: TRUE if all lines appear as parents.
  \item \code{c2}: TRUE if all testers appear as parents.
  \item \code{c3}: TRUE if all lines x testers are in the crosses.
 }
+}
+\description{
+This function checks the data structure for a line by tester genetic design.
 }
 \author{
 Raul Eyzaguirre.
