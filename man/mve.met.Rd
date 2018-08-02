@@ -4,7 +4,7 @@
 \alias{mve.met}
 \title{Estimation of missing values for a MET in a RCBD}
 \usage{
-mve.met(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06)
+mve.met(trait, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
 \item{trait}{The trait to estimate missing values.}
@@ -15,7 +15,7 @@ mve.met(trait, geno, env, rep, data, maxp = 0.1, tol = 1e-06)
 
 \item{rep}{The replications.}
 
-\item{data}{The name of the data frame.}
+\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 
@@ -28,19 +28,6 @@ and \code{trait.est} with the original data and the original data plus the estim
 \description{
 Function to estimate missing values for a Multi Environment Trial (MET) with a
 Randomized Complete Block Design (RCBD) by the least squares method.
-}
-\details{
-A \code{data.frame} with data for a MET in a RCBD with at least two replications
-and at least one datum for each genotype must be loaded. Experimental data
-with only one replication, any genotype without data, or more missing values than
-specified in \code{maxp} will generate an error message.
-}
-\examples{
-# The data
-str(met8x12)
-
-# Estimate the missing values
-mve.met("y", "geno", "env", "rep", met8x12)
 }
 \author{
 Raul Eyzaguirre.

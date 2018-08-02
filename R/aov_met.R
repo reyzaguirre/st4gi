@@ -6,46 +6,46 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications or blocks.
-#' @param data The name of the data frame containing the data.
+#' @param dfr The name of the data frame containing the data.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
-#' @author Raul Eyzaguirre.
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default. Genotypes and environments are considered as fixed
 #' factors while the blocks are considered as random and nested into the environments.
 #' @return It returns the ANOVA table.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' aov.met("y", "geno", "env", "rep", met8x12)
 #' @importFrom stats anova
 #' @export
 
-aov.met <- function(trait, geno, env, rep, data, maxp = 0.1) {
+aov.met <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
+  # Check data
+  
+  lc <- ck.f(trait, c(geno, env), rep, dfr)
+  
   # Everything as character
 
-  data[, geno] <- as.character(data[, geno])
-  data[, env] <- as.character(data[, env])
-  data[, rep] <- as.character(data[, rep])
+  dfr[, geno] <- as.character(dfr[, geno])
+  dfr[, env] <- as.character(dfr[, env])
+  dfr[, rep] <- as.character(dfr[, rep])
 
-  # Check data and estimate missing values
+  # Estimate missing values and report errors from mve.met
+  
+  trait.est <- paste0(trait, ".est")
 
-  lc <- ck.f(trait, c(geno, env), rep, data)
-
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0 | lc$nmis.fact > 0) {
-    data[, trait] <- mve.met(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
+  if (lc$nt.0 > 0 | lc$nr == 1 | lc$nt.mult > 0 | lc$nmis > 0 |
+      lc$nmis.fac > 0 | lc$nl[1] < 2 | lc$nl[2] < 2) {
+    dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp, tol = 1e-06)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
   }
 
-  # Error messages
-
-  if (lc$nl[1] < 2 | lc$nl[2] < 2)
-    stop("This is not a MET experiment.")
-
   # ANOVA
 
-  model <- aov(data[, trait] ~ data[, geno] + data[, env]
-               + data[, rep] %in% data[, env] + data[, geno]:data[, env])
+  model <- aov(dfr[, trait] ~ dfr[, geno] + dfr[, env]
+               + dfr[, rep] %in% dfr[, env] + dfr[, geno]:dfr[, env])
   model$terms[[2]] <- trait
   
   at <- anova(model)
