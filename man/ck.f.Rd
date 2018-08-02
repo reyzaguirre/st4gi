@@ -16,14 +16,15 @@ ck.f(trait, factors, rep, dfr)
 \item{dfr}{The name of the data frame.}
 }
 \value{
-control values (\code{c1}, and \code{c3}, the number
-of missing values \code{nmis}, the proportion of missing values (\code{pmis}),
-the number of factors (\code{nf}), the number of levels of each factor (\code{nl}),
-the number of replications (\code{nr}), a table with frequencies of valid cases
-for each combination of the levels of the factors (\code{tfreq}), a table with
-frequencies of valid cases for each combination of the levels of the factors in
-each replication (\code{tfreqr}), and the number of rows in the data frame with
-missing values for factors (\code{nmis.fact}).
+The number of treatments without data (\code{nt.0}), the number of
+treatments that appear more than once in a given replication (\code{nt.mult}),
+the number of missing values \code{nmis}, the proportion of missing values
+(\code{pmis}), the number of factors (\code{nf}), the number of levels of each
+factor (\code{nl}), the number of replications (\code{nr}), a table with frequencies
+of valid cases for each combination of the levels of the factors (\code{tf}), a table
+with frequencies of valid cases for each combination of the levels of the factors in
+each replication (\code{tfr}), and the number of rows in the data frame with
+missing values for factors (\code{nmis.fac}).
 }
 \description{
 This function checks the frequencies for a full factorial.

@@ -47,6 +47,6 @@ ck.crd <- function(trait, geno, dfr) {
   
   # Return
   
-  list(ng.0 = ng.0, ng = ng, nr = nr, nmis.fac = nmis.fac)
+  list(ng.0 = ng.0, ng = ng, nr = nr, tf = tf, nmis.fac = nmis.fac)
   
 }
