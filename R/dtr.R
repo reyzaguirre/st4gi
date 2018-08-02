@@ -5,7 +5,7 @@
 #' @param type The transformation type. See details.
 #' @param base Base for the logarithmic transformation. Base 10 by default.
 #' @param n Additional parameter for arc-sine transformation. See details.
-#' @param data The name of the data frame containing the data.
+#' @param dfr The name of the data frame containing the data.
 #' @author Raul Eyzaguirre.
 #' @details Available transformations are:
 #' 
@@ -36,12 +36,12 @@
 #' 0.8 to 1 a square root transformation could be useful. Finally, Note that for binomial
 #' data, a binomial regression model could be a better option.
 #' @return It returns the transformed trait.
-#' @examples
-#' dtr("nonc", "logy", data = pjpz09)
+#' @example
+#' dtr("nonc", "logy", dfr = pjpz09)
 #' @export
 
 dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
-                base = 10, n = NULL, data) {
+                base = 10, n = NULL, dfr) {
 
   # match arguments
   
@@ -51,71 +51,71 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
 
   if (type == "logy") {
     nn <- paste("log", trait, sep = "_")
-    data[, nn] <- data[, trait]
-    if (sum(data[, nn] <= 0, na.rm = T) > 0) {
-      data[data[, nn] <= 0 & !is.na(data[, nn]), nn] <- NA
+    dfr[, nn] <- dfr[, trait]
+    if (sum(dfr[, nn] <= 0, na.rm = TRUE) > 0) {
+      dfr[dfr[, nn] <= 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values <= 0 converted to NA", call. = FALSE)
     }
-    data[, nn] <- log(data[, nn], base)
+    dfr[, nn] <- log(dfr[, nn], base)
   }
 
   if (type == "logy1") {
     nn <- paste("log", trait, sep = "_")
-    data[, nn] <- data[, trait]
-    if (sum(data[, nn] + 1 <= 0, na.rm = T) > 0) {
-      data[data[, nn] + 1 <= 0 & !is.na(data[, nn]), nn] <- NA
+    dfr[, nn] <- dfr[, trait]
+    if (sum(dfr[, nn] + 1 <= 0, na.rm = TRUE) > 0) {
+      dfr[dfr[, nn] + 1 <= 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values <= -1 converted to NA", call. = FALSE)
     }
-    data[, nn] <- log(data[, nn] + 1, base)
+    dfr[, nn] <- log(dfr[, nn] + 1, base)
   }
   
   # sqrt transformation
 
   if (type == "sqrty") {
     nn <- paste("sqrt", trait, sep = "_")
-    data[, nn] <- data[, trait]
-    if (sum(data[, nn] < 0, na.rm = T) > 0) {
-      data[data[, nn] < 0 & !is.na(data[, nn]), nn] <- NA
+    dfr[, nn] <- dfr[, trait]
+    if (sum(dfr[, nn] < 0, na.rm = TRUE) > 0) {
+      dfr[dfr[, nn] < 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values < 0 converted to NA", call. = FALSE)
     }
-    data[, nn] <- sqrt(data[, nn])
+    dfr[, nn] <- sqrt(dfr[, nn])
   }
   
   if (type == "sqrty1") {
     nn <- paste("sqrt", trait, sep = "_")
-    data[, nn] <- data[, trait]
-    if (sum(data[, nn] + 0.5 < 0, na.rm = T) > 0) {
-      data[data[, nn] + 0.5 < 0 & !is.na(data[, nn]), nn] <- NA
+    dfr[, nn] <- dfr[, trait]
+    if (sum(dfr[, nn] + 0.5 < 0, na.rm = TRUE) > 0) {
+      dfr[dfr[, nn] + 0.5 < 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values < -0.5 converted to NA", call. = FALSE)
     }
-    data[, nn] <- sqrt(data[, nn] + 0.5)
+    dfr[, nn] <- sqrt(dfr[, nn] + 0.5)
   }
   
   # arc-sine transformation
   
   if (type == "arcsin") {
     nn <- paste("arcsin", trait, sep = "_")
-    data[, nn] <- data[, trait]
-    if (sum(data[, nn] < 0, na.rm = T) > 0 | sum(data[, nn] > 1, na.rm = T) > 0) {
-      data[data[, nn] < 0 & !is.na(data[, nn]), nn] <- NA
-      data[data[, nn] > 1 & !is.na(data[, nn]), nn] <- NA
+    dfr[, nn] <- dfr[, trait]
+    if (sum(dfr[, nn] < 0, na.rm = TRUE) > 0 | sum(dfr[, nn] > 1, na.rm = TRUE) > 0) {
+      dfr[dfr[, nn] < 0 & !is.na(dfr[, nn]), nn] <- NA
+      dfr[dfr[, nn] > 1 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values < 0 or > 1 converted to NA", call. = FALSE)
     }
-    if (sum(data[, nn] == 0, na.rm = T) > 0 | sum(data[, nn] == 1, na.rm = T) > 0) {
+    if (sum(dfr[, nn] == 0, na.rm = TRUE) > 0 | sum(dfr[, nn] == 1, na.rm = TRUE) > 0) {
       if (!is.null(n)) {
-        data[data[, nn] == 0 & !is.na(data[, nn]), nn] <- 1/(4*n)
-        data[data[, nn] == 1 & !is.na(data[, nn]), nn] <- 1 - 1/(4*n)
+        dfr[dfr[, nn] == 0 & !is.na(dfr[, nn]), nn] <- 1/(4*n)
+        dfr[dfr[, nn] == 1 & !is.na(dfr[, nn]), nn] <- 1 - 1/(4*n)
         warning("Values = 0 and = 1 replaced with 1/4n and 1 - 1/4n", call. = FALSE)
       }
       if (is.null(n)) {
         warning("n is not specified. Values = 0 or = 1 are not replaced", call. = FALSE)
       }
     }
-    data[, nn] <- asin(sqrt(data[, nn]))
+    dfr[, nn] <- asin(sqrt(dfr[, nn]))
   }
 
   # results
   
-  data
+  dfr
   
 }

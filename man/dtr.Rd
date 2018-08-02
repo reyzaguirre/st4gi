@@ -5,7 +5,7 @@
 \title{Data transformations}
 \usage{
 dtr(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
-  base = 10, n = NULL, data)
+  base = 10, n = NULL, dfr)
 }
 \arguments{
 \item{trait}{The trait to transform.}
@@ -16,7 +16,7 @@ dtr(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
 
 \item{n}{Additional parameter for arc-sine transformation. See details.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 }
 \value{
 It returns the transformed trait.
@@ -55,7 +55,7 @@ no transformation could be needed, and where some are on either the range 0 to 0
 data, a binomial regression model could be a better option.
 }
 \examples{
-dtr("nonc", "logy", data = pjpz09)
+dtr("nonc", "logy", dfr = pjpz09)
 }
 \author{
 Raul Eyzaguirre.

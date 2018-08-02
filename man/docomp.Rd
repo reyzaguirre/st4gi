@@ -37,7 +37,7 @@ of valid cases (excluding missing values).
 traits <- c("rytha", "bc", "dm", "star", "nocr")
 factors <- c("geno", "loc")
 output1 <- docomp("mean", traits, factors, dfr = spg)
-docomp("mean", traits, "geno", dfr = output1)#' 
+docomp("mean", traits, "geno", dfr = output1) 
 # Compute maxima across replications for each genotype and location.
 docomp("max", traits, factors, dfr = spg)
 }
