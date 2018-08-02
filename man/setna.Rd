@@ -4,14 +4,14 @@
 \alias{setna}
 \title{Set values to NA or zero.}
 \usage{
-setna(traits, add = NULL, fb)
+setna(traits, adt = NULL, dfr)
 }
 \arguments{
 \item{traits}{List of traits.}
 
-\item{add}{Additional traits.}
+\item{adt}{List of additional traits.}
 
-\item{fb}{The name of the fieldbook data frame.}
+\item{dfr}{The name of the fieldbook data frame.}
 }
 \value{
 It returns a data frame.
@@ -23,19 +23,19 @@ Set values to NA or zero for selected traits.
 This function sets values to NA or zero with the following rules:
 \itemize{
  \item If all traits in \code{traits} are zero or NA, then all traits in \code{traits}
- and \code{add} are set to NA, and if \code{noph} exists and it is zero or NA,
+ and \code{adt} are set to NA, and if \code{noph} exists and it is zero or NA,
  then it is set to zero.
  \item If there is at least one trait in \code{traits} with data and \code{noph} is zero,
  then \code{noph} is set to NA.
  }
 }
 \examples{
-ddd <- data.frame(noph = c(2, 0, 0, 2, 1),
+dfr <- data.frame(noph = c(2, 0, 0, 2, 1),
                   trt1 = c(1, 0, 0, 0, NA),
                   trt2 = c(3, 0, 1, NA, 2),
                   trt3 = c(4, 0, 5, 0, 0),
                   trt4 = c(1, NA, 2, 4, 5))
-setna(c('trt1', 'trt2', 'trt3'), 'trt4', ddd)
+setna(c('trt1', 'trt2', 'trt3'), 'trt4', dfr)
 }
 \author{
 Raul Eyzaguirre

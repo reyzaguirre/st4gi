@@ -16,6 +16,9 @@ suma <- function(a, b) {
   
   s <- apply(cbind(a, b), 1, sum, na.rm = TRUE)
   s[is.na(a) & is.na(b)] <- NA
+  
+  # Return
+  
   s
   
 }
