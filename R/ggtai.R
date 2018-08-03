@@ -4,11 +4,11 @@
 #' using the ggplot2 package.
 #' @param x An object of class \code{tai}.
 #' @param conf Probability for the Tai limits.
-#' @author Raul Eyzaguirre.
 #' @details The limits for alpha and lambda are computed using the mean squares from
 #' an ANOVA table for a RCBD with blocks nested into environments.See \code{?tai} for
 #' additional details.
 #' @return It returns the Tai graph for stability analysis using the ggplot2 package.
+#' @author Raul Eyzaguirre.
 #' @references
 #' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 #' Regional Trials, Crop Science, Vol 11.

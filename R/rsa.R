@@ -6,7 +6,7 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details The regression stability analysis is evaluated with a balanced data set.
 #' If data is unbalanced, missing values are estimated up to an specified maximum proportion,

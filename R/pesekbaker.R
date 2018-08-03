@@ -5,7 +5,7 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
 #' @param dgg Desired genetic gains. The default is one standard deviation for each trait.

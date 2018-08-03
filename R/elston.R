@@ -5,7 +5,7 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @param means The genotypic means to compute the index, \code{"single"} or
 #' \code{"fitted"}. The default is \code{"single"}. See details for more information.
 #' @param lb Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for

@@ -1,7 +1,7 @@
 #' Compute derived traits
 #'
 #' Compute derived traits for a given fieldbook data frame.
-#' @param dfr The name of the fieldbook data frame.
+#' @param dfr The name of the data frame.
 #' @param method Method to scale data from plot to hectare level. Options are plot size
 #' \code{"ps"} and number of plants for a full hectare \code{"np"}. See details.
 #' @param value Value for the method selected in square meters if \code{method = "ps"}

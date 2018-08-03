@@ -7,14 +7,14 @@
 #' @param traits List of traits. 
 #' @param factors List of factors.
 #' @param add Additional columns to keep.
-#' @param dfr The name of the data frame containing the data.
-#' @author Raul Eyzaguirre
+#' @param dfr The name of the data frame.
 #' @details This function do a specific computation for all the \code{traits}
 #' for each level's combination of the \code{factors}. Additional columns can be
 #' kept if specified in \code{add}. All \code{factors} and \code{add} values
 #' are converted to character. \code{do = "count"} counts the number
 #' of valid cases (excluding missing values).
 #' @return It returns a data frame with the computations.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' # Compute means across replications and then across locations for each genotype
 #' traits <- c("rytha", "bc", "dm", "star", "nocr")

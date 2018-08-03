@@ -15,7 +15,7 @@ ammi(trait, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5)
 
 \item{rep}{The replications or blocks. A RCBD is assumed.}
 
-\item{dfr}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame.}
 
 \item{method}{\code{"ammi"} or \code{"gge"}.}
 

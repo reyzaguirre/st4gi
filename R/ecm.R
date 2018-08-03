@@ -6,7 +6,7 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications or blocks. A RCBD is assumed.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @param method The method to compute genotypic covariances. See details.
 #' @details If \code{env = NULL} a RCBD with one environment is considered.
 #' If \code{method = 1} the covariances between each pair of traits are computed

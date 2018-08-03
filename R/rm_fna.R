@@ -2,8 +2,8 @@
 #' 
 #' This function removes rows for factors with missing values.
 #' 
-#' @param factors The factors
-#' @param dfr The name of the data frame
+#' @param factors The factors.
+#' @param dfr The name of the data frame.
 #' @return The number of rows in the data frame with missing values for factors
 #' (\code{nmis.fac}), and the data frame after removal of all these rows.
 #' @author Raul Eyzaguirre.

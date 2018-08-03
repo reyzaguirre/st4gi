@@ -7,11 +7,11 @@
 rm.lna(trait, factors, dfr)
 }
 \arguments{
-\item{trait}{The trait}
+\item{trait}{The trait.}
 
-\item{factors}{The factors}
+\item{factors}{The factors.}
 
-\item{dfr}{The name of the data frame}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of rows in the data frame with factor levels without data

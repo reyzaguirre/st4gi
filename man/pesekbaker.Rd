@@ -17,7 +17,7 @@ pesekbaker(traits, geno, env = NULL, rep, dfr, means = c("single",
 
 \item{rep}{The replications.}
 
-\item{dfr}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame.}
 
 \item{means}{The genotypic means to compute the index, \code{"single"}
 or \code{"fitted"}. The default is \code{"single"}. See details for more information.}

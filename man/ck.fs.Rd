@@ -7,11 +7,11 @@
 ck.fs(factors, rep = NULL, dfr)
 }
 \arguments{
-\item{factors}{The factors}
+\item{factors}{The factors.}
 
-\item{rep}{The replications}
+\item{rep}{The replications.}
 
-\item{dfr}{The name of the data frame}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of factors (\code{nf}), the number of levels of the factors

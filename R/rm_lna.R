@@ -2,9 +2,9 @@
 #' 
 #' This function removes rows for factors' levels without data.
 #' 
-#' @param trait The trait
-#' @param factors The factors
-#' @param dfr The name of the data frame
+#' @param trait The trait.
+#' @param factors The factors.
+#' @param dfr The name of the data frame.
 #' @return The number of rows in the data frame with factor levels without data
 #' (\code{nmis.lev}), and the data frame after removal of all these rows.
 #' @author Raul Eyzaguirre.

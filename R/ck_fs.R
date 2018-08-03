@@ -2,9 +2,9 @@
 #' 
 #' This function cheks the number of treatments and replications for different designs.
 #' 
-#' @param factors The factors
-#' @param rep The replications
-#' @param dfr The name of the data frame
+#' @param factors The factors.
+#' @param rep The replications.
+#' @param dfr The name of the data frame.
 #' @return The number of factors (\code{nf}), the number of levels of the factors
 #' (\code{nl}), the number of treatments (\code{nt}), the list of treatments (\code{lt}),
 #' the number of replications (\code{nrep}), and the list of replications (\code{lrep}).

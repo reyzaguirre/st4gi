@@ -17,7 +17,7 @@ and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
 
 \item{add}{Additional columns to keep.}
 
-\item{dfr}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 It returns a data frame with the computations.
@@ -42,5 +42,5 @@ docomp("mean", traits, "geno", dfr = output1)
 docomp("max", traits, factors, dfr = spg)
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }

@@ -7,13 +7,13 @@
 ck.fq(trait, factors, rep = NULL, dfr)
 }
 \arguments{
-\item{trait}{The trait}
+\item{trait}{The trait.}
 
-\item{factors}{The factors}
+\item{factors}{The factors.}
 
-\item{rep}{The replications}
+\item{rep}{The replications.}
 
-\item{dfr}{The name of the data frame}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 A table of frequencies of valid cases for all factors' levels combinations

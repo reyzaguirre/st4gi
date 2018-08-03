@@ -3,7 +3,7 @@
 #' Function to plot means and confidence limits.
 #' @param trait The trait to plot.
 #' @param groups The grouping factor.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @param conf Probability for the confidence limits or number of standard deviations.
 #' @param dotplot Logical. If \code{TRUE}, a dotplot is shown.
 #' @param sort.means Sort for means. Options are \code{"none"}, \code{"increasing"},

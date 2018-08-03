@@ -15,7 +15,7 @@ ecm(traits, geno, env = NULL, rep, dfr, method = 1)
 
 \item{rep}{The replications or blocks. A RCBD is assumed.}
 
-\item{dfr}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame.}
 
 \item{method}{The method to compute genotypic covariances. See details.}
 }

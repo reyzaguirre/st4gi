@@ -3,12 +3,12 @@
 #' It finds the optimum number of replications to get the maximum response
 #' to selection for a single experiment for a given plot capacity,
 #' number of selected genotypes, genotypic variance and error variance.
-#' @author Raul Eyzaguirre.
 #' @details It uses package \code{shiny} for the web layout.
 #' Type \code{rts1()} in the R console to run the app.
 #' @return It returns a plot of response to seleccion versus number of replications
 #' and computes the optimum number of replications and the response to selection
 #' at this optimum value.
+#' @author Raul Eyzaguirre.
 #' @export
 
 rts1 <- function () {
@@ -24,12 +24,12 @@ rts1 <- function () {
 #' to selection with several locations for a given plot capacity,
 #' number of locations, number of selected genotypes, genotypic variance,
 #' genotypic by location variance, and error variance.
-#' @author Raul Eyzaguirre.
 #' @details It uses package \code{shiny} for the web layout.
 #' Type \code{rts2()} in the R console to run the app.
 #' @return It returns a plot of response to seleccion versus number of replications
 #' and computes the optimum number of replications and the response to selection
 #' at this optimum value.
+#' @author Raul Eyzaguirre.
 #' @export
 
 rts2 <- function () {
@@ -46,12 +46,12 @@ rts2 <- function () {
 #' number of locations, number of years, number of selected genotypes, genotypic variance,
 #' genotypic by location variance, genotypic by year variance, genotypic by location by
 #' year variance, and error variance.
-#' @author Raul Eyzaguirre.
 #' @details It uses package \code{shiny} for the web layout.
 #' Type \code{rts3()} in the R console to run the app.
 #' @return It returns a plot of response to seleccion versus number of replications
 #' and computes the optimum number of replications and the response to selection
 #' at this optimum value.
+#' @author Raul Eyzaguirre.
 #' @export
 
 rts3 <- function () {
@@ -69,10 +69,10 @@ rts3 <- function () {
 #' the number of locations, replications and selected genotypes at step 2,
 #' and the genotypic, genotypic by location, genotypic by year,
 #' genotypic by location by year, and error variances.
-#' @author Raul Eyzaguirre.
 #' @details It uses package \code{shiny} for the web layout.
 #' Type \code{rts4()} in the R console to run the app.
 #' @return It returns the response to selection at step 1 and 2.
+#' @author Raul Eyzaguirre.
 #' @export
 
 rts4 <- function () {

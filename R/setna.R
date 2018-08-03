@@ -3,7 +3,7 @@
 #' Set values to NA or zero for selected traits.
 #' @param traits List of traits.
 #' @param add List of additional traits.
-#' @param dfr The name of the fieldbook data frame.
+#' @param dfr The name of the data frame.
 #' @details This function sets values to NA or zero with the following rules:
 #' \itemize{
 #'  \item If all traits in \code{traits} are zero or NA, then all traits in \code{traits}

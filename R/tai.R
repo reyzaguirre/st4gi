@@ -6,7 +6,7 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details If the data set is unbalanced, a warning is produced.
 #' @return It returns the alpha and lambda values for each genotype for the Tai

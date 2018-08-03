@@ -15,7 +15,7 @@ aov.met(trait, geno, env, rep, dfr, maxp = 0.1)
 
 \item{rep}{The replications or blocks.}
 
-\item{dfr}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }

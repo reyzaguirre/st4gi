@@ -7,7 +7,7 @@
 cdt(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL)
 }
 \arguments{
-\item{dfr}{The name of the fieldbook data frame.}
+\item{dfr}{The name of the data frame.}
 
 \item{method}{Method to scale data from plot to hectare level. Options are plot size
 \code{"ps"} and number of plants for a full hectare \code{"np"}. See details.}

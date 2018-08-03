@@ -7,9 +7,9 @@
 rm.fna(factors, dfr)
 }
 \arguments{
-\item{factors}{The factors}
+\item{factors}{The factors.}
 
-\item{dfr}{The name of the data frame}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of rows in the data frame with missing values for factors

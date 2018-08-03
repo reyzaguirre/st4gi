@@ -13,7 +13,7 @@ msdplot(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
 
 \item{groups}{The grouping factor.}
 
-\item{dfr}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame.}
 
 \item{conf}{Probability for the confidence limits or number of standard deviations.}
 

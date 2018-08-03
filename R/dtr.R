@@ -5,7 +5,7 @@
 #' @param type The transformation type. See details.
 #' @param base Base for the logarithmic transformation. Base 10 by default.
 #' @param n Additional parameter for arc-sine transformation. See details.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @details Available transformations are:
 #' 
 #' \code{none} for no transformation.

@@ -11,7 +11,7 @@ setna(traits, add = NULL, dfr)
 
 \item{add}{List of additional traits.}
 
-\item{dfr}{The name of the fieldbook data frame.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 It returns a data frame.

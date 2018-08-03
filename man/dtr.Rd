@@ -16,7 +16,7 @@ dtr(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
 
 \item{n}{Additional parameter for arc-sine transformation. See details.}
 
-\item{dfr}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame.}
 }
 \value{
 It returns the transformed trait.

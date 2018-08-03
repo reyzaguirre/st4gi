@@ -6,7 +6,7 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications or blocks. A RCBD is assumed.
-#' @param dfr The name of the data frame containing the data.
+#' @param dfr The name of the data frame.
 #' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
 #' @details Significance of PCs are evaluated only with \code{method = "ammi"} and if
