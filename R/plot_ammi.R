@@ -5,6 +5,7 @@
 #' @param biplot Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
 #' @param biplot1 Choose "effects" or "means" for biplot1.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
+#' @param ... Additional plot arguments.
 #' @details It produces a biplot for an object of class \code{ammi}. See \code{?ammi}
 #' for additional details.
 #' @return It returns a dispersion plot of means or effects against the first PC,
@@ -24,7 +25,7 @@
 #' @export
 
 plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
-                      color = c("darkorange", "black", "gray")) {
+                      color = c("darkorange", "black", "gray"), ...) {
   
   # match arguments
   

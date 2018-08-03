@@ -13,7 +13,6 @@
 #' }
 #' @author Raul Eyzaguirre.
 #' @examples
-#' library(pepa)
 #' ck.lxt("line", "tester", lxt)
 #' @export
 

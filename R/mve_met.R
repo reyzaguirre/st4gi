@@ -12,7 +12,7 @@
 #' @return It returns a data frame with the experimental layout and columns \code{trait}
 #' and \code{trait.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
-#' @example
+#' @examples
 #' mve.met("y", "geno", "env", "rep", met8x12)
 #' @export
 

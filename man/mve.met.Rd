@@ -29,6 +29,9 @@ and \code{trait.est} with the original data and the original data plus the estim
 Function to estimate missing values for a Multi Environment Trial (MET) with a
 Randomized Complete Block Design (RCBD) by the least squares method.
 }
+\examples{
+mve.met("y", "geno", "env", "rep", met8x12)
+}
 \author{
 Raul Eyzaguirre.
 }

@@ -11,7 +11,7 @@
 #' proportion, 10\% by default.
 #' @return It returns the ANOVA table.
 #' @author Raul Eyzaguirre.
-#' @example
+#' @examples
 #' aov.f("asc.dw", c("geno", "treat"), "rep", "crd", asc)
 #' @importFrom stats anova
 #' @export
@@ -22,16 +22,16 @@ aov.f <- function(trait, factors, rep, design = c("crd", "rcbd"), dfr, maxp = 0.
   
   design <- match.arg(design)
 
+  # Check data
+  
+  lc <- ck.f(trait, factors, rep, dfr)
+
   # Everything as character
   
   for (i in 1:lc$nf)
     dfr[, factors[i]] <- as.character(dfr[, factors[i]])
 
   dfr[, rep] <- as.character(dfr[, rep])
-
-  # Check data
-  
-  lc <- ck.f(trait, factors, rep, dfr)
 
   # Estimate missing values and report errors from mve.f
   

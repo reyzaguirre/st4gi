@@ -54,6 +54,9 @@ no transformation could be needed, and where some are on either the range 0 to 0
 0.8 to 1 a square root transformation could be useful. Finally, Note that for binomial
 data, a binomial regression model could be a better option.
 }
+\examples{
+dtr("nonc", "logy", dfr = pjpz09)
+}
 \author{
 Raul Eyzaguirre.
 }

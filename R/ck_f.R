@@ -16,7 +16,7 @@
 #' missing values for factors (\code{nmis.fac}).
 #' @author Raul Eyzaguirre.
 #' @examples 
-#' Create a design
+#' # Create a design
 #' A <- paste0("a", 1:5)
 #' B <- paste0("b", 1:3)
 #' dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)

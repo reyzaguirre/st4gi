@@ -36,7 +36,7 @@
 #' data, a binomial regression model could be a better option.
 #' @return It returns the transformed trait.
 #' @author Raul Eyzaguirre.
-#' @example
+#' @examples
 #' dtr("nonc", "logy", dfr = pjpz09)
 #' @export
 
