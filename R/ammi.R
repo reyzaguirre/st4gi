@@ -53,7 +53,7 @@ ammi <- function(trait, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5)
   if (lc$nt.0 > 0)
     stop("Some GxE cells have zero frequency.")
 
-  if (lc$nr == 1)
+  if (lc$nrep == 1)
     warning("There is only one replication. Inference is not possible with one replication.")
   
   if (method == "ammi" & (lc$nt.mult > 0 | lc$nmis > 0))
@@ -71,18 +71,18 @@ ammi <- function(trait, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5)
 
   # Compute ANOVA
 
-  if (lc$nr > 1 & lc$nt.mult == 0 & lc$nmis == 0) {
+  if (lc$nrep > 1 & lc$nt.mult == 0 & lc$nmis == 0) {
     model <- aov(dfr[, trait] ~ dfr[, geno] + dfr[, env] + dfr[, rep] %in% dfr[, env] + dfr[, geno]:dfr[, env])
     rdf <- model$df.residual
     rms <- deviance(model) / rdf
   } else {
-    lc$nr <- NULL
+    lc$nrep <- NULL
     rdf <- NULL
     rms <- NULL
   }
 
   # Run ammi.gxe
 
-  ammi.gxe(int.mean, trait, lc$nr, rdf, rms, method, f)
+  ammi.gxe(int.mean, trait, lc$nrep, rdf, rms, method, f)
   
 }

@@ -5,7 +5,7 @@
 #' @param geno The genotypes.
 #' @param dfr The name of the data frame.
 #' @return The number of genotypes (\code{ng}), the number of genotypes without
-#' data (\code{ng.0}), the number of replications (\code{nr}), and the number
+#' data (\code{ng.0}), the number of replications (\code{nrep}), and the number
 #' of rows in the data frame with missing values for factors (\code{nmis.fac}).
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -34,7 +34,7 @@ ck.crd <- function(trait, geno, dfr) {
   
   out <- ck.fs(geno, NULL, dfr)
   ng <- out$nt
-  nr <- out$nr
+  nrep <- out$nrep
 
   # Frequencies for genotypes
   
@@ -47,6 +47,6 @@ ck.crd <- function(trait, geno, dfr) {
   
   # Return
   
-  list(ng.0 = ng.0, ng = ng, nr = nr, tf = tf, nmis.fac = nmis.fac)
+  list(ng.0 = ng.0, ng = ng, nrep = nrep, tf = tf, nmis.fac = nmis.fac)
   
 }

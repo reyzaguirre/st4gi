@@ -4,7 +4,7 @@
 \alias{docomp}
 \title{Do computations over some factors}
 \usage{
-docomp(do, traits, factors, adc = NULL, dfr)
+docomp(do, traits, factors, add = NULL, dfr)
 }
 \arguments{
 \item{do}{The computation to perform. Implemented options are \code{count},
@@ -15,7 +15,7 @@ and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
 
 \item{factors}{List of factors.}
 
-\item{adc}{Additional columns to keep.}
+\item{add}{Additional columns to keep.}
 
 \item{dfr}{The name of the data frame containing the data.}
 }
@@ -28,7 +28,7 @@ Do computations for several traits for some specific factors.
 \details{
 This function do a specific computation for all the \code{traits}
 for each level's combination of the \code{factors}. Additional columns can be
-kept if specified in \code{adc}. All \code{factors} and \code{adc} values
+kept if specified in \code{add}. All \code{factors} and \code{add} values
 are converted to character. \code{do = "count"} counts the number
 of valid cases (excluding missing values).
 }

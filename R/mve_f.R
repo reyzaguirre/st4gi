@@ -39,7 +39,7 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), dfr,
   if (lc$nt.0 > 0)
     stop("Some factor levels' combinations have zero frequency.")
   
-  if (lc$nr == 1)
+  if (lc$nrep == 1)
     stop("There is only one replication. Inference is not possible with one replication.")
   
   if (lc$nt.mult > 0)
@@ -133,8 +133,8 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), dfr,
             expr <- paste0(expr, ', dfr[', i, ', factors[', j, ']]')
           expr <- paste0(expr, ']')
           
-          mv.num <- nt * eval(parse(text = expr)) + lc$nr * sum2[dfr[i, rep]] - sum3
-          mv.den <- nt * lc$nr - nt - lc$nr + 1
+          mv.num <- nt * eval(parse(text = expr)) + lc$nrep * sum2[dfr[i, rep]] - sum3
+          mv.den <- nt * lc$nrep - nt - lc$nrep + 1
 
           dfr[i, trait.est] <- mv.num / mv.den
           

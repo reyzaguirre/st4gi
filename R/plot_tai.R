@@ -31,7 +31,7 @@ plot.tai <- function(x, conf = 0.95, color = c("darkorange", "black", "gray"), .
   # plot lambda limits
   
   lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$nl[2] - 2,
-                           lc$nl[2] * (lc$nl[1] - 1) * (lc$nr - 1)))) * 1.1
+                           lc$nl[2] * (lc$nl[1] - 1) * (lc$nrep - 1)))) * 1.1
   
   # Prediction interval for alpha
   
@@ -60,9 +60,9 @@ plot.tai <- function(x, conf = 0.95, color = c("darkorange", "black", "gray"), .
     points(lx, pi.alpha, type = "l", lty = 5, col = color[3])
     points(lx, -pi.alpha, type = "l", lty = 5, col = color[3])
   }
-  abline(v = qf((1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nr - 1)),
+  abline(v = qf((1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
          lty = 5, col = color[3])
-  abline(v = qf(1 - (1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nr - 1)),
+  abline(v = qf(1 - (1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
          lty = 5, col = color[3])
   
 }

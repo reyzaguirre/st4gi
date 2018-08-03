@@ -37,7 +37,7 @@ ecm <- function(traits, geno, env = NULL, rep, dfr, method = 1) {
   ng <- length(unique(g)) # number of genotypes
   if (!is.null(env))
     ne <- length(unique(e)) # number of environments
-  nr <- length(unique(r)) # number of replications in each environment
+  nrep <- length(unique(r)) # number of replications in each environment
 
   # Fitted models by REML for variance components
   
@@ -47,7 +47,7 @@ ecm <- function(traits, geno, env = NULL, rep, dfr, method = 1) {
       fm <- lme4::lmer(y ~ (1|g) + (1|g:e) + (1|e/r))
       vc <- lme4::VarCorr(fm)
       G[i, i] <- vc$g[1]
-      P[i, i] <- vc$g[1] + vc$e[1] / ne + attr(vc, "sc")^2 / ne / nr
+      P[i, i] <- vc$g[1] + vc$e[1] / ne + attr(vc, "sc")^2 / ne / nrep
     }
   }
   if (is.null(env)) {
@@ -56,7 +56,7 @@ ecm <- function(traits, geno, env = NULL, rep, dfr, method = 1) {
       fm <- lme4::lmer(y ~ (1|g) + (1|r))
       vc <- lme4::VarCorr(fm)
       G[i, i] <- vc$g[1]
-      P[i, i] <- vc$g[1] + attr(vc, "sc")^2 / nr
+      P[i, i] <- vc$g[1] + attr(vc, "sc")^2 / nrep
     }
   }
   
@@ -70,7 +70,7 @@ ecm <- function(traits, geno, env = NULL, rep, dfr, method = 1) {
           fm <- lme4::lmer(z ~ (1|g) + (1|g:e) + (1|e/r))
           vcz <- lme4::VarCorr(fm) # variance components for z = x + y
           G[i, j] <- G[j, i] <- (vcz$g[1] - G[i, i] - G[j, j]) / 2
-          P[i, j] <- P[j, i] <- (vcz$g[1] + vcz$e[1] / ne + attr(vcz, "sc")^2 / ne / nr -
+          P[i, j] <- P[j, i] <- (vcz$g[1] + vcz$e[1] / ne + attr(vcz, "sc")^2 / ne / nrep -
                                    P[i, i] - P[j, j]) / 2
         }
       }
@@ -82,7 +82,7 @@ ecm <- function(traits, geno, env = NULL, rep, dfr, method = 1) {
           fm <- lme4::lmer(z ~ (1|g) + (1|r))
           vcz <- lme4::VarCorr(fm) # variance components for z = x + y
           G[i, j] <- G[j, i] <- (vcz$g[1] - G[i, i] - G[j, j]) / 2
-          P[i, j] <- P[j, i] <- (vcz$g[1] + attr(vcz, "sc")^2 / nr - P[i, i] - P[j, j]) / 2
+          P[i, j] <- P[j, i] <- (vcz$g[1] + attr(vcz, "sc")^2 / nrep - P[i, i] - P[j, j]) / 2
         }
       }
     }

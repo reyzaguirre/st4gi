@@ -21,12 +21,12 @@ check.pos <- function(row, col, rep, dfr) {
   
   out <- ck.pos(row, col, rep, dfr)
   
-  for (i in 1:out$nr) {
+  for (i in 1:out$nrep) {
     
     # Print list of plots with problems
     
     cat('------------------------------\n')
-    cat('Replication', out$lr[i], '\n')
+    cat('Replication', out$lrep[i], '\n')
     cat('------------------------------\n')
     if (out$nplot[i] > 0) {
       cat('More than one genotype in the same position: \n')

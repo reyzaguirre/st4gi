@@ -8,7 +8,7 @@
 #' @return The number of genotypes without data (\code{ng.0}), the number of
 #' genotypes with more than one plot in a given block (\code{ng.2}), the number
 #' of missing values \code{nmis}, the proportion of missing values (\code{pmis}),
-#' the number of genotypes (\code{ng}), the number of replications (\code{nr}),
+#' the number of genotypes (\code{ng}), the number of replications (\code{nrep}),
 #' a table with valid cases for each genotype (\code{tf}), a table with valid 
 #' cases for each genotype in each replication (\code{tfr}), and the number of
 #' rows in the data frame with missing values for factors (\code{nmis.fac}).
@@ -37,7 +37,7 @@ ck.rcbd <- function(trait, geno, rep, dfr) {
   
   out <- ck.fs(geno, rep, dfr)
   ng <- out$nt
-  nr <- out$nr
+  nrep <- out$nrep
 
   # Number of missing values
   
@@ -61,6 +61,6 @@ ck.rcbd <- function(trait, geno, rep, dfr) {
   # Return
   
   list(ng.0 = ng.0, ng.mult = ng.mult, nmis = nmis, pmis = pmis, ng = ng,
-       nr = nr, tf = tf, tfr = tfr, nmis.fac = nmis.fac)
+       nrep = nrep, tf = tf, tfr = tfr, nmis.fac = nmis.fac)
   
 }

@@ -4,15 +4,15 @@
 \alias{plot.ammi}
 \title{AMMI or GGE biplots}
 \usage{
-\method{plot}{ammi}(x, biplot = 2, biplot1 = c("effects", "means"),
+\method{plot}{ammi}(x, bp.type = 2, bp1.type = c("effects", "means"),
   color = c("darkorange", "black", "gray"), ...)
 }
 \arguments{
 \item{x}{An object of class \code{ammi}.}
 
-\item{biplot}{Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.}
+\item{bp.type}{Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.}
 
-\item{biplot1}{Choose "effects" or "means" for biplot1.}
+\item{bp1.type}{Choose "effects" or "means" for biplot-1.}
 
 \item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes.}
 
@@ -32,7 +32,7 @@ for additional details.
 \examples{
 model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 plot(model.ammi)
-plot(model.ammi, biplot = 1)
+plot(model.ammi, bp.type = 1)
 }
 \references{
 Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic

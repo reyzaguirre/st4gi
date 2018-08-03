@@ -30,7 +30,7 @@ mve.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1, tol = 1e-06) {
   if (lc$ng.0 > 0)
     stop("Some genotypes have zero frequency.")
 
-  if (lc$nr == 1)
+  if (lc$nrep == 1)
     stop("There is only one replication. Inference is not possible with one replication.")
 
   if (lc$ng.mult > 0)
@@ -63,8 +63,8 @@ mve.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1, tol = 1e-06) {
         sum1 <- tapply(dfr[, "ytemp"], dfr[, geno], sum, na.rm = TRUE)
         sum2 <- tapply(dfr[, "ytemp"], dfr[, rep], sum, na.rm = TRUE)
         sum3 <- sum(dfr[, "ytemp"], na.rm = TRUE)
-        dfr[i, trait.est] <- (lc$ng * sum1[dfr[i, geno]] + lc$nr * sum2[dfr[i, rep]] - sum3) /
-          (lc$ng * lc$nr - lc$ng - lc$nr + 1)
+        dfr[i, trait.est] <- (lc$ng * sum1[dfr[i, geno]] + lc$nrep * sum2[dfr[i, rep]] - sum3) /
+          (lc$ng * lc$nrep - lc$ng - lc$nrep + 1)
         dfr[i, "ytemp"] <- dfr[i, trait.est]
       }
     lc1 <- lc2

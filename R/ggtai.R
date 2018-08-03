@@ -33,7 +33,7 @@ ggtai <- function(x, conf = 0.95) {
   # plot lambda limits
   
   lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$nl[2] - 2,
-                           lc$nl[2] * (lc$nl[1] - 1) * (lc$nr - 1)))) * 1.1
+                           lc$nl[2] * (lc$nl[1] - 1) * (lc$nrep - 1)))) * 1.1
   
   # Prediction interval for alpha
   
@@ -72,9 +72,9 @@ ggtai <- function(x, conf = 0.95) {
   # lambda limits
   
   gg <- gg +
-    ggplot2::geom_vline(xintercept = qf((1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nr - 1)),
+    ggplot2::geom_vline(xintercept = qf((1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
                         col = "gray") +
-    ggplot2::geom_vline(xintercept = qf(1 - (1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nr - 1)),
+    ggplot2::geom_vline(xintercept = qf(1 - (1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
                         col = "gray")
   
   # points

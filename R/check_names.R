@@ -3,7 +3,7 @@
 #' Check that fieldbook traits names correspond with the names defined in the document
 #' "PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
 #' @param dfr The name of the data frame.
-#' @param adt Additional traits.
+#' @param add Additional traits.
 #' @details The data frame must use the following labels (lower or upper case):
 #' \itemize{
 #'  \item \code{plot}     : Plot number
@@ -113,7 +113,7 @@
 #' check.names(pjpz09)
 #' @export
 
-check.names <- function(dfr, adt = NULL) {
+check.names <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
@@ -131,7 +131,7 @@ check.names <- function(dfr, adt = NULL) {
               "dmvy.aj", "biom", "biom.aj", "dmbiom", "dmbiom.aj", "acrw", "nrpp", "nrpsp",
               "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "ci", "hi", "shi", "rfr")
   
-  colnames.valid <- c(plot.id, factors, traits, tolower(adt))
+  colnames.valid <- c(plot.id, factors, traits, tolower(add))
     
   colnames.list <- colnames(dfr)
   

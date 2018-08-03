@@ -41,7 +41,7 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
   
   trait.est <- paste0(trait, ".est")
   
-  if (lc$nt.0 > 0 | lc$nr == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
+  if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
     dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp, tol = 1e-06)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
@@ -76,12 +76,12 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   slgl <- int.eff
   slgl <- t(t(slgl) * (env.mean - overall.mean) / (lc$nl[2] - 1))
-  alpha <- apply(slgl, 1, sum) / (at[2, 3] - at[3, 3]) * lc$nl[1] * lc$nr
+  alpha <- apply(slgl, 1, sum) / (at[2, 3] - at[3, 3]) * lc$nl[1] * lc$nrep
 
   s2gl <- int.eff
   s2gl <- s2gl^2 / (lc$nl[2] - 1)
   lambda <- (apply(s2gl, 1, sum) - alpha * apply(slgl, 1, sum)) / 
-    (lc$nl[1] - 1) / at[5, 3] * lc$nl[1] * lc$nr
+    (lc$nl[1] - 1) / at[5, 3] * lc$nl[1] * lc$nrep
   lambda[lambda < 0] <- 0
 
   # Output

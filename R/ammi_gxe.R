@@ -4,18 +4,18 @@
 #' with data from an interaction means matrix.
 #' @param int.mean GxE means matrix, genotypes in rows, environments in columns.
 #' @param trait.name Name of the trait.
-#' @param nr Number of replications.
+#' @param nrep Number of replications.
 #' @param rdf Residual degrees of freedom.
 #' @param rms Residual mean square.
 #' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
 #' @details Significance of PCs are evaluated only with \code{method = "ammi"} and if
-#' \code{nr}, \code{rms} and \code{rdf} are specified.
+#' \code{nrep}, \code{rms} and \code{rdf} are specified.
 #' @return It returns an object of class ammi with the overall, genotype,
 #' environment and interaction means, the interaction effects matrix, the
 #' first and second PC values for genotypes and environments, and a table
 #' with the contribution of each PC. Significance of PCs are included in the
-#' contributions table only if \code{method = "ammi"} and \code{nr}, \code{rms}
+#' contributions table only if \code{method = "ammi"} and \code{nrep}, \code{rms}
 #' and \code{rdf} are specified.
 #' @author Raul Eyzaguirre.
 #' @references
@@ -37,8 +37,8 @@
 #' @importFrom stats pf
 #' @export
 
-ammi.gxe <- function(int.mean, trait.name = NULL, nr = NULL, rdf = NULL, rms = NULL,
-                     method = c("ammi", "gge"), f = 0.5) {
+ammi.gxe <- function(int.mean, trait.name = NULL, nrep = NULL, rdf = NULL,
+                     rms = NULL, method = c("ammi", "gge"), f = 0.5) {
 
   # Match arguments
   
@@ -82,12 +82,12 @@ ammi.gxe <- function(int.mean, trait.name = NULL, nr = NULL, rdf = NULL, rms = N
   PC.acum <- cumsum(PC.cont)
   tablaPC <- data.frame(PC = PC.num, SV = PC.sv, Cont = PC.cont, CumCont = PC.acum)
 
-  # Significance of PCs, only for AMMI and if nr, rms and rdf are known
+  # Significance of PCs, only for AMMI and if nrep, rms and rdf are known
 
   if (method == "ammi") {
-    if (!is.null(nr)) {
-      int.SS <- (t(as.vector(svd.mat)) %*% as.vector(svd.mat)) * nr
-      PC.SS <- (dec$d[1:PC]^2) * nr
+    if (!is.null(nrep)) {
+      int.SS <- (t(as.vector(svd.mat)) %*% as.vector(svd.mat)) * nrep
+      PC.SS <- (dec$d[1:PC]^2) * nrep
       PC.DF <- env.num + geno.num - 1 - 2 * c(1:PC)
       MS <- PC.SS / PC.DF
     }

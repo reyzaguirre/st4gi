@@ -11,7 +11,7 @@
 #' @param color Color for mean symbols, confidence interval lines, and data points.
 #' @param x.las x axes labels orientation.
 #' @param jf Jitter factor for dots.
-#' @param dist Horizontal distance between the means and the dots.
+#' @param hsep Horizontal separation between the means and the dots.
 #' @param ... Additional plot arguments.
 #' @details An alternative to the controversial dynamite plots.
 #' If \code{conf} is set to a value greater than or equal to 1, then it is interpreted
@@ -31,7 +31,7 @@
 msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
                     sort.means = c("none", "increasing", "decreasing"),
                     color = c("orange", "orange", "black"),
-                    x.las = 1, jf = 0.1, dist = 0.1, ...) {
+                    x.las = 1, jf = 0.1, hsep = 0.1, ...) {
 
   # Match arguments
 
@@ -99,7 +99,7 @@ msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
     lines(c(i, i), c(resu$li[i], resu$ls[i]), col = color[2])
     subdata <- dfr[dfr[, groups] == resu$orden[i], ]
     if (dotplot == "TRUE")
-      points(jitter(rep(i + dist, length(subdata[, trait])), factor = jf),
+      points(jitter(rep(i + hsep, length(subdata[, trait])), factor = jf),
              subdata[, trait], col = color[3])
   }
   

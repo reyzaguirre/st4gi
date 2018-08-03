@@ -7,7 +7,7 @@
 #' @param dfr The name of the data frame
 #' @return The number of factors (\code{nf}), the number of levels of the factors
 #' (\code{nl}), the number of treatments (\code{nt}), the list of treatments (\code{lt}),
-#' the number of replications (\code{nr}), and the list of replications (\code{lr}).
+#' the number of replications (\code{nrep}), and the list of replications (\code{lrep}).
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' ## Example 1
@@ -70,15 +70,15 @@ ck.fs <- function(factors, rep = NULL, dfr) {
   
   if (is.null(rep)) {
     tfreq <- table(dfr[, treat])
-    lr <- NULL
-    nr <- max(tfreq)
+    lrep <- NULL
+    nrep <- max(tfreq)
   } else {
-    lr <- sort(unique(dfr[, rep]))
-    nr <- length(lr)
+    lrep <- sort(unique(dfr[, rep]))
+    nrep <- length(lrep)
   }
   
   # Return
   
-  list(nf = nf, nl = nl, lf = lf, nt = nt, lt = lt, nr = nr, lr = lr)
+  list(nf = nf, nl = nl, lf = lf, nt = nt, lt = lt, nrep = nrep, lrep = lrep)
   
 }

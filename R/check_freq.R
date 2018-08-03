@@ -18,7 +18,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
   
   # Levels for replications
   
-  lr <- sort(unique(dfr[, rep]))
+  lrep <- sort(unique(dfr[, rep]))
   
   # Main text
 
@@ -46,7 +46,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
       cat('\n')
     }
 
-    if (lc$nr == 1) {
+    if (lc$nrep == 1) {
       cat('There is only one replication. \n')
       cat('\n')
     }
@@ -54,10 +54,10 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
     if (lc$ng.mult > 0) {
       temp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
-      for (i in 1:lc$nr) {
+      for (i in 1:lc$nrep) {
         if (sum(temp[, i]) > 0) {
           lista <- rownames(temp)[temp[, i]]
-          cat(paste0('- Replication ', lr[i], ':'), lista, '\n')
+          cat(paste0('- Replication ', lrep[i], ':'), lista, '\n')
         }
       }
       cat('\n')
@@ -70,7 +70,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
     
     # OK message
     
-    if (lc$ng.0 == 0 & lc$nr > 1 & lc$ng.mult == 0 & lc$nmis == 0 & lc$nmis.fac == 0) {
+    if (lc$ng.0 == 0 & lc$nrep > 1 & lc$ng.mult == 0 & lc$nmis == 0 & lc$nmis.fac == 0) {
       cat('OK \n')
       cat('\n')
     }
@@ -104,7 +104,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
       cat('\n')
     }
     
-    if (lc$nr == 0) {
+    if (lc$nrep == 0) {
       cat('There is only one replication. \n')
       cat('\n')
     }
@@ -113,10 +113,10 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
       temp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
       for (i in 1:lc$nl[2]) {
-        for (j in 1:lc$nr) {
+        for (j in 1:lc$nrep) {
           if (sum(temp[, i, j]) > 0) {
             lista <- rownames(temp)[temp[, i, j]]
-            cat(paste0('- Environment ', le[i], ', replication ', lr[j], ':'), lista, '\n')
+            cat(paste0('- Environment ', le[i], ', replication ', lrep[j], ':'), lista, '\n')
           }
         }
       }
@@ -130,7 +130,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
     
     # OK message
     
-    if (lc$nt.0 == 0 & lc$nr > 1 & lc$nt.mult == 0 & lc$nmis == 0 & lc$nmis.fac == 0) {
+    if (lc$nt.0 == 0 & lc$nrep > 1 & lc$nt.mult == 0 & lc$nmis == 0 & lc$nmis.fac == 0) {
       cat('OK \n')
       cat('\n')
     }    

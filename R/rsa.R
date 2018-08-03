@@ -63,7 +63,7 @@ rsa <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   trait.est <- paste0(trait, ".est")
   
-  if (lc$nt.0 > 0 | lc$nr == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
+  if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
     dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp, tol = 1e-06)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
@@ -95,7 +95,7 @@ rsa <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
     MSe[i] <- anova(modelo)[2, 3]
     MSentry[i] <- sum((int.mean[i, ] - geno.mean[i])^2) / (lc$nl[2] - 1)
     MSinter[i] <- sum((int.mean[i, ] - geno.mean[i] - env.mean + overall.mean)^2) / (lc$nl[2] - 1)
-    ssr[i] <- anova(modelo)[2, 2] * lc$nr
+    ssr[i] <- anova(modelo)[2, 2] * lc$nrep
   }
   stab.geno <- cbind(a, b, se, MSe, MSentry, MSinter)
   row.names(stab.geno) <- row.names(int.mean)
@@ -142,7 +142,7 @@ rsa <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
     MSe[i] <- anova(modelo)[2, 3]
     MSentry[i] <- sum((int.mean[, i] - env.mean[i])^2) / (lc$nl[1] - 1)
     MSinter[i] <- sum((int.mean[, i] - env.mean[i] - geno.mean + overall.mean)^2) / (lc$nl[1] - 1)
-    ssr[i] <- anova(modelo)[2, 2] * lc$nr
+    ssr[i] <- anova(modelo)[2, 2] * lc$nrep
   }
   stab.env <- cbind(a, b, se, MSe, MSentry, MSinter)
   row.names(stab.env) <- colnames(int.mean)

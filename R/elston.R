@@ -55,18 +55,18 @@ elston <- function(traits, geno, env = NULL, rep = NULL, dfr,
   if (means == "fitted" & is.null(env) & is.null(rep))
     means <- "single"
 
-  outind <- data.frame(geno = unique(dfr[, geno]))
-  colnames(outind) <- geno
+  dfr.out <- data.frame(geno = unique(dfr[, geno]))
+  colnames(dfr.out) <- geno
 
   if (means == "single" & is.null(env)) {
-    outind <- docomp("mean", traits, geno, dfr = dfr)
-    colnames(outind) <- c("geno", paste("m", traits, sep = "."))
+    dfr.out <- docomp("mean", traits, geno, dfr = dfr)
+    colnames(dfr.out) <- c("geno", paste("m", traits, sep = "."))
   }
 
   if (means == "single" & !is.null(env)) {
-    outind <- docomp("mean", traits, c(geno, env), dfr = dfr)
-    outind <- docomp("mean", traits, geno, dfr = outind)
-    colnames(outind) <- c("geno", paste("m", traits, sep = "."))
+    dfr.out <- docomp("mean", traits, c(geno, env), dfr = dfr)
+    dfr.out <- docomp("mean", traits, geno, dfr = dfr.out)
+    colnames(dfr.out) <- c("geno", paste("m", traits, sep = "."))
   }
 
   if (means == "fitted") {
@@ -83,39 +83,39 @@ elston <- function(traits, geno, env = NULL, rep = NULL, dfr,
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
       temp[, geno] <- substring(rownames(temp), nchar(geno) + 1)
-      outind <- merge(outind, temp, all = TRUE)
+      dfr.out <- merge(dfr.out, temp, all = TRUE)
     }
   }
 
   # Standardized means
 
   for (i in 2:(1 + nt))
-    outind[, i + nt] <- (outind[, i] - mean(outind[, i], na.rm = TRUE)) / sd(outind[, i], na.rm = TRUE)
-  colnames(outind)[(2 + nt):(1 + 2 * nt)] <- c(paste("s", traits, sep = "."))
+    dfr.out[, i + nt] <- (dfr.out[, i] - mean(dfr.out[, i], na.rm = TRUE)) / sd(dfr.out[, i], na.rm = TRUE)
+  colnames(dfr.out)[(2 + nt):(1 + 2 * nt)] <- c(paste("s", traits, sep = "."))
 
   # compute lower bounds
 
   if (lb == 1)
     for (i in 1:nt)
-      k[i] <- min(outind[, 1 + nt + i], na.rm = TRUE)
+      k[i] <- min(dfr.out[, 1 + nt + i], na.rm = TRUE)
 
   if (lb == 2)
     for (i in 1:nt)
-      k[i] <- (ng * min(outind[, 1 + nt + i], na.rm = TRUE) -
-                 max(outind[, 1 + nt + i], na.rm = TRUE)) / (ng - 1)
+      k[i] <- (ng * min(dfr.out[, 1 + nt + i], na.rm = TRUE) -
+                 max(dfr.out[, 1 + nt + i], na.rm = TRUE)) / (ng - 1)
 
   # Elston index
 
-  outind$E.Index <- outind[, nt + 2] - k[1]
+  dfr.out$E.Index <- dfr.out[, nt + 2] - k[1]
   if (nt > 1)
     for (i in 2:nt)
-      outind$E.Index <- outind$E.Index * (outind[, 1 + nt + i] - k[i])
+      dfr.out$E.Index <- dfr.out$E.Index * (dfr.out[, 1 + nt + i] - k[i])
 
-  outind <- outind[, c(1:(1 + nt), 2 + 2 * nt)]
-  outind$E.Rank <- rank(-outind$E.Index, na.last = "keep")
+  dfr.out <- dfr.out[, c(1:(1 + nt), 2 + 2 * nt)]
+  dfr.out$E.Rank <- rank(-dfr.out$E.Index, na.last = "keep")
 
   # results
 
-  outind
+  dfr.out
   
 }

@@ -7,7 +7,7 @@
 #' @param dfr The name of the data frame.
 #' @return For each replication, the number (\code{nplot}) and list (\code{lplot})
 #' of plots (unique row and column position) with more than one genotype, and the 
-#' number (\code{nr}) and list (\code{lr}) of replications.
+#' number (\code{nrep}) and list (\code{lrep}) of replications.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # Create a design
@@ -32,8 +32,8 @@ ck.pos <- function(row, col, rep = NULL, dfr) {
   
   # Number of replications and levels
 
-  lr <- sort(unique(dfr[, rep]))
-  nr <- length(lr)
+  lrep <- sort(unique(dfr[, rep]))
+  nrep <- length(lrep)
   
   # Number and list of plots with more than one genotype
   
@@ -42,11 +42,11 @@ ck.pos <- function(row, col, rep = NULL, dfr) {
   
   # Check row and column
 
-  for (i in 1:nr) {
+  for (i in 1:nrep) {
     
     # Compute frequencies
     
-    temp <- dfr[dfr[, rep] == lr[i], ]
+    temp <- dfr[dfr[, rep] == lrep[i], ]
     ttt <- as.data.frame(table(temp[, row], temp[, col]))
     colnames(ttt) <- c('Row', 'Column', 'Freq')
     
@@ -62,6 +62,6 @@ ck.pos <- function(row, col, rep = NULL, dfr) {
   
   # Return
   
-  list(nplot = nplot, lplot = lplot, nr = nr, lr = lr)
+  list(nplot = nplot, lplot = lplot, nrep = nrep, lrep = lrep)
   
 }

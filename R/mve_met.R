@@ -30,7 +30,7 @@ mve.met <- function(trait, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06) {
   if (lc$nt.0 > 0)
     stop("Some GxE cells have zero frequency.")
 
-  if (lc$nr == 1)
+  if (lc$nrep == 1)
     stop("There is only one replication. Inference is not possible with one replication.")
 
   if (lc$nt.mult > 0)
@@ -67,8 +67,8 @@ mve.met <- function(trait, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06) {
         sum2 <- tapply(dfr[, "ytemp"], list(dfr[, env], dfr[, rep]), sum, na.rm = TRUE)
         sum3 <- tapply(dfr[, "ytemp"], dfr[, env], sum, na.rm = TRUE)
         dfr[i, trait.est] <- (lc$nl[1] * sum1[dfr[i, geno], dfr[i, env]] +
-                                 lc$nr * sum2[dfr[i, env], dfr[i, rep]] -
-                                 sum3[dfr[i, env]]) / (lc$nl[1] * lc$nr - lc$nl[1] - lc$nr + 1)
+                                 lc$nrep * sum2[dfr[i, env], dfr[i, rep]] -
+                                 sum3[dfr[i, env]]) / (lc$nl[1] * lc$nrep - lc$nl[1] - lc$nrep + 1)
         dfr[i, "ytemp"] <- dfr[i, trait.est]
       }
     lc1 <- lc2

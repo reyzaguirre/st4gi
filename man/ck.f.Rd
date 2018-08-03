@@ -20,7 +20,7 @@ The number of treatments without data (\code{nt.0}), the number of
 treatments that appear more than once in a given replication (\code{nt.mult}),
 the number of missing values \code{nmis}, the proportion of missing values
 (\code{pmis}), the number of factors (\code{nf}), the number of levels of each
-factor (\code{nl}), the number of replications (\code{nr}), a table with frequencies
+factor (\code{nl}), the number of replications (\code{nrep}), a table with frequencies
 of valid cases for each combination of the levels of the factors (\code{tf}), a table
 with frequencies of valid cases for each combination of the levels of the factors in
 each replication (\code{tfr}), and the number of rows in the data frame with

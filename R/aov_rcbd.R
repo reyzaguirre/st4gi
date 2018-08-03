@@ -32,7 +32,7 @@ aov.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1) {
   
   trait.est <- paste0(trait, ".est")
   
-  if (lc$ng.0 > 0 | lc$nr == 1 | lc$ng.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
+  if (lc$ng.0 > 0 | lc$nrep == 1 | lc$ng.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
     dfr[, trait] <- mve.rcbd(trait, geno, rep, dfr, maxp, tol = 1e-06)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),

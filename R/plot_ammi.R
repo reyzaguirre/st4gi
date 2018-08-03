@@ -2,8 +2,8 @@
 #'
 #' This function produces AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000) biplots.
 #' @param x An object of class \code{ammi}.
-#' @param biplot Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
-#' @param biplot1 Choose "effects" or "means" for biplot1.
+#' @param bp.type Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
+#' @param bp1.type Choose "effects" or "means" for biplot-1.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes.
 #' @param ... Additional plot arguments.
 #' @details It produces a biplot for an object of class \code{ammi}. See \code{?ammi}
@@ -20,16 +20,16 @@
 #' @examples
 #' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 #' plot(model.ammi)
-#' plot(model.ammi, biplot = 1)
+#' plot(model.ammi, bp.type = 1)
 #' @importFrom graphics abline text
 #' @export
 
-plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
+plot.ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
                       color = c("darkorange", "black", "gray"), ...) {
   
   # match arguments
   
-  biplot1 <- match.arg(biplot1)
+  bp1.type <- match.arg(bp1.type)
   
   # arguments
   
@@ -44,13 +44,13 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
   PC.cont <- x$Contribution_PCs$Cont
   env.num <- x$Number_of_environments
   
-  #  Biplot 1
+  #  Biplot-1
   
-  if (biplot == 1) {
+  if (bp.type == 1) {
     
-    main <- paste0(method, " biplot1 for ", trait.name)
+    main <- paste0(method, " biplot-1 for ", trait.name)
     
-    if (biplot1 == "effects") {
+    if (bp1.type == "effects") {
       minx <- min(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.1
       maxx <- max(c(env.mean - overall.mean, geno.mean - overall.mean)) * 1.1
       limx <- c(minx, maxx)
@@ -59,7 +59,7 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
       xcore <- env.mean - overall.mean
       xline <- 0
     }
-    if (biplot1 == "means") {
+    if (bp1.type == "means") {
       limx <- range(c(env.mean, geno.mean))
       limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.05
       xlab <- "Genotype and environment means"
@@ -79,11 +79,11 @@ plot.ammi <- function(x, biplot = 2, biplot1 = c("effects", "means"),
     abline(h = 0, v = xline, col = color[3], lty = 5)
   }
   
-  # Biplot 2
+  # Biplot-2
   
-  if (biplot == 2) {
+  if (bp.type == 2) {
     
-    main <- paste0(method, " biplot2 for ", trait.name)
+    main <- paste0(method, " biplot-2 for ", trait.name)
     
     limx <- range(c(E[, 1], G[, 1]))
     limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.1

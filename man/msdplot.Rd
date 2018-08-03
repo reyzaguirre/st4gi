@@ -6,7 +6,7 @@
 \usage{
 msdplot(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
   sort.means = c("none", "increasing", "decreasing"), color = c("orange",
-  "orange", "black"), x.las = 1, jf = 0.1, dist = 0.1, ...)
+  "orange", "black"), x.las = 1, jf = 0.1, hsep = 0.1, ...)
 }
 \arguments{
 \item{trait}{The trait to plot.}
@@ -28,7 +28,7 @@ and \code{"decreasing"}, \code{"none"} by default.}
 
 \item{jf}{Jitter factor for dots.}
 
-\item{dist}{Horizontal distance between the means and the dots.}
+\item{hsep}{Horizontal separation between the means and the dots.}
 
 \item{...}{Additional plot arguments.}
 }

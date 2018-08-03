@@ -4,15 +4,15 @@
 \alias{ammi.gxe}
 \title{AMMI or GGE with data from an interaction means matrix}
 \usage{
-ammi.gxe(int.mean, trait.name = NULL, nr = NULL, rdf = NULL, rms = NULL,
-  method = c("ammi", "gge"), f = 0.5)
+ammi.gxe(int.mean, trait.name = NULL, nrep = NULL, rdf = NULL,
+  rms = NULL, method = c("ammi", "gge"), f = 0.5)
 }
 \arguments{
 \item{int.mean}{GxE means matrix, genotypes in rows, environments in columns.}
 
 \item{trait.name}{Name of the trait.}
 
-\item{nr}{Number of replications.}
+\item{nrep}{Number of replications.}
 
 \item{rdf}{Residual degrees of freedom.}
 
@@ -27,7 +27,7 @@ It returns an object of class ammi with the overall, genotype,
 environment and interaction means, the interaction effects matrix, the
 first and second PC values for genotypes and environments, and a table
 with the contribution of each PC. Significance of PCs are included in the
-contributions table only if \code{method = "ammi"} and \code{nr}, \code{rms}
+contributions table only if \code{method = "ammi"} and \code{nrep}, \code{rms}
 and \code{rdf} are specified.
 }
 \description{
@@ -36,7 +36,7 @@ with data from an interaction means matrix.
 }
 \details{
 Significance of PCs are evaluated only with \code{method = "ammi"} and if
-\code{nr}, \code{rms} and \code{rdf} are specified.
+\code{nrep}, \code{rms} and \code{rdf} are specified.
 }
 \examples{
 # Compute GxE means

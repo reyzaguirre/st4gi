@@ -34,7 +34,7 @@ aov.met <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
   
   trait.est <- paste0(trait, ".est")
 
-  if (lc$nt.0 > 0 | lc$nr == 1 | lc$nt.mult > 0 | lc$nmis > 0 |
+  if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 |
       lc$nmis.fac > 0 | lc$nl[1] < 2 | lc$nl[2] < 2) {
     dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp, tol = 1e-06)[, trait.est]
     warning(paste0("The data set is unbalanced, ",

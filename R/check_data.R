@@ -7,7 +7,7 @@
 #' @param f Factor for extreme values detection. See details.
 #' @param out.mod Statistical model for outliers' detection. See details.
 #' @param out.max Threshold for outliers' detection.
-#' @param adt Additional quantitative traits.
+#' @param add Additional quantitative traits.
 #' @details The data frame must use the labels (lower or upper case) listed in function
 #' \code{check.names}. See \code{?check.names} for details.
 #' 
@@ -27,15 +27,15 @@
 #' @export
 
 check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
-                       out.max = 4, adt = NULL) {
+                       out.max = 4, add = NULL) {
   
   out.mod = match.arg(out.mod)
   
   # Check names
   
-  dfr <- check.names(dfr, adt)
-  if (!is.null(adt))
-    adt <- tolower(adt)
+  dfr <- check.names(dfr, add)
+  if (!is.null(add))
+    add <- tolower(add)
 
   # Inconsistencies for nops > nope > noph > nopr.
 
@@ -392,10 +392,10 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
 
   # Extreme values detection and values out of range for additional traits
   
-  if (!is.null(adt)) {
-    for (i in 1:length(adt)) {
-      sp5(dfr, f, "low", adt[i], paste0("- Extreme low values for (", adt[i], "):"))
-      sp5(dfr, f, "high", adt[i], paste0("- Extreme high values for (", adt[i], "):"))
+  if (!is.null(add)) {
+    for (i in 1:length(add)) {
+      sp5(dfr, f, "low", add[i], paste0("- Extreme low values for (", add[i], "):"))
+      sp5(dfr, f, "high", add[i], paste0("- Extreme high values for (", add[i], "):"))
     }
   }
   
@@ -519,9 +519,9 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
     
     # Outliers' detection for additional traits
     
-    if (!is.null(adt))
-      for (i in 1:length(adt))
-        sp6(dfr, geno, env, rep, adt[i], out.mod, out.max, paste0("- Outlilers for (", adt[i], "):"))
+    if (!is.null(add))
+      for (i in 1:length(add))
+        sp6(dfr, geno, env, rep, add[i], out.mod, out.max, paste0("- Outlilers for (", add[i], "):"))
     
   }
 }

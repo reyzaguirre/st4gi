@@ -99,14 +99,14 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
 
   # index calculation
   
-  outind <- data.frame(geno = unique(dfr[, geno]))
-  colnames(outind) <- geno
+  dfr.out <- data.frame(geno = unique(dfr[, geno]))
+  colnames(dfr.out) <- geno
   
   if (means == "single") {
     temp <- docomp("mean", traits, c(geno, env), dfr = dfr)
     temp <- docomp("mean", traits, geno, dfr = temp)
-    outind <- merge(outind, temp, all = TRUE)
-    colnames(outind) <- c("geno", paste("m", traits, sep = "."))
+    dfr.out <- merge(dfr.out, temp, all = TRUE)
+    colnames(dfr.out) <- c("geno", paste("m", traits, sep = "."))
   }
   
   if (means == "fitted") {
@@ -123,15 +123,15 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
       temp[, geno] <- substring(rownames(temp), nchar(geno) + 1)
-      outind <- merge(outind, temp, all = TRUE)
+      dfr.out <- merge(dfr.out, temp, all = TRUE)
     }
   }
 
-  m <- as.matrix(outind[, 2:(1 + nt)])
+  m <- as.matrix(dfr.out[, 2:(1 + nt)])
   indices <- m %*% b
-  outind <- cbind(outind, indices)
-  colnames(outind)[2 + nt] <- "PB.Index"
-  outind$PB.Rank <- rank(-outind$PB.Index, na.last = "keep")
+  dfr.out <- cbind(dfr.out, indices)
+  colnames(dfr.out)[2 + nt] <- "PB.Index"
+  dfr.out$PB.Rank <- rank(-dfr.out$PB.Index, na.last = "keep")
   
   # results
 
@@ -140,5 +140,5 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
        Index.Coefficients = b,
        Response.to.Selection = rsa,
        Std.Response.to.Selection = rs,
-       Pesek.Baker.Index = outind)
+       Pesek.Baker.Index = dfr.out)
 }

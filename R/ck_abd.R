@@ -11,7 +11,7 @@
 #' of checks without data, the number \code{nck.1} and list \code{ck.1} of checks
 #' with only one datum, the number of checks with at least two data \code{nck.2},
 #' the number of checks that appear more than once in a given replication
-#' (\code{nck.mult}), the number of replications \code{nr}, and the number of rows
+#' (\code{nck.mult}), the number of replications \code{nrep}, and the number of rows
 #' in the data frame with missing values for factors (\code{nmis.fac}).
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -49,7 +49,7 @@ ck.abd <- function(trait, geno, rep, dfr) {
   
   # Number of replications
   
-  nr <- length(unique(dfr[, rep]))
+  nrep <- length(unique(dfr[, rep]))
 
   # Number of missing values for no checks
   
@@ -91,6 +91,7 @@ ck.abd <- function(trait, geno, rep, dfr) {
   
   list(ng.ck = ng.ck, ng = ng, nmis.ck = nmis.ck, nmis = nmis,
        nck.0 = nck.0, ck.0 = ck.0, nck.1 = nck.1, ck.1 = ck.1,
-       nck.2 = nck.2, nck.mult = nck.mult, nmis.fac = nmis.fac, nr = nr)
+       nck.2 = nck.2, nck.mult = nck.mult, nmis.fac = nmis.fac,
+       nrep = nrep)
   
 }
