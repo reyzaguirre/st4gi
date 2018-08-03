@@ -6,9 +6,8 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications.
-#' @param data The name of the data frame containing the data.
+#' @param dfr The name of the data frame containing the data.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
-#' @author Raul Eyzaguirre.
 #' @details The regression stability analysis is evaluated with a balanced data set.
 #' If data is unbalanced, missing values are estimated up to an specified maximum proportion,
 #' 10\% by default. For the ANOVA table, genotypes and environments are considered as fixed
@@ -35,6 +34,7 @@
 #' \item \code{MSinter} the variance of the genotype interaction effects across environments and the
 #' environment interaction effects across genotypes.
 #' }
+#' @author Raul Eyzaguirre.
 #' @references
 #' Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.
 #' Aust. J. Agric. Res. 14: 742-754.
@@ -46,23 +46,25 @@
 #' @importFrom stats coef lm summary.lm
 #' @export
 
-rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
+rsa <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
   
   # Error messages
   
-  lc <- ck.f(trait, c(geno, env), rep, data)
+  lc <- ck.f(trait, c(geno, env), rep, dfr)
   
-  if (lc$nl[1] == 2 & lc$nl[2] == 2)
+  if (lc$nl[1] < 3 & lc$nl[2] < 3)
     stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")
 
-  # Compute ANOVA
-  
-  at <- suppressWarnings(aov.met(trait, geno, env, rep, data, maxp))
+  # Compute ANOVA and report errors from mve.met
+   
+  at <- suppressWarnings(aov.met(trait, geno, env, rep, dfr, maxp))
 
-  # Check data and estimate missing values
+  # Estimate missing values
+
+  trait.est <- paste0(trait, ".est")
   
-  if (lc$c1 == 0 | lc$c2 == 0 | lc$c3 == 0 | lc$c4 == 0) {
-    data[, trait] <- mve.met(trait, geno, env, rep, data, maxp, tol = 1e-06)[, 5]
+  if (lc$nt.0 > 0 | lc$nr == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
+    dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp, tol = 1e-06)[, trait.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -70,7 +72,7 @@ rsa <- function(trait, geno, env, rep, data, maxp = 0.1) {
   
   # Some statistics
 
-  int.mean <- tapply(data[, trait], list(data[, geno], data[, env]), mean, na.rm = TRUE)
+  int.mean <- tapply(dfr[, trait], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
   overall.mean <- mean(int.mean, na.rm = TRUE)
   env.mean <- apply(int.mean, 2, mean, na.rm = TRUE)
   geno.mean <- apply(int.mean, 1, mean, na.rm = TRUE)

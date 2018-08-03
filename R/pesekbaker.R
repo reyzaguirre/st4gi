@@ -68,17 +68,21 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
   nt <- length(traits) # number of traits
   rs <- NULL # response to selection
   
-  # run ecm
+  # run ecm to get covariance and correlationi matrices
   
   cm <- ecm(traits, geno, env, rep, dfr, method)
+  
+  # standard deviations for traits
+  
+  sdt <- diag(cm$G.Cov)^0.5
 
   # compute index coefficients
 
   if (is.null(dgg)) {
-    dgg <- diag(cm$G.Cov)^0.5
+    dgg <- sdt
   } else {
     if (units == "sdu")
-      dgg <- dgg * diag(cm$G.Cov)^0.5
+      dgg <- dgg * sdt
   }
   
   b <- solve(cm$G.Cov) %*% dgg
@@ -90,7 +94,7 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
   bPb <- t(b) %*% cm$P.Cov %*% b
   for (i in 1:nt)
     rs[i] <- si * t(b) %*% cm$G.Cov[, i] / sqrt(bPb * cm$G.Cov[i, i])
-  rsa <- rs * diag(cm$G.Cov)^0.5 # response to selection in actual units
+  rsa <- rs * sdt # response to selection in actual units
   names(rs) <- names(rsa)
 
   # index calculation
@@ -132,7 +136,7 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
   # results
 
   list(Desired.Genetic.Gains = dgg,
-       Standard.Deviations = diag(cm$G.Cov)^0.5,
+       Standard.Deviations = sdt,
        Index.Coefficients = b,
        Response.to.Selection = rsa,
        Std.Response.to.Selection = rs,

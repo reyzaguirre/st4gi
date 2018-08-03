@@ -75,5 +75,5 @@ Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection in
 Can. J. Plant. Sci. 9:803-804.
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }
