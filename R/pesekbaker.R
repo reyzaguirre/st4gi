@@ -5,14 +5,13 @@
 #' @param geno The genotypes.
 #' @param env The environments.
 #' @param rep The replications.
-#' @param data The name of the data frame containing the data.
+#' @param dfr The name of the data frame containing the data.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.
 #' @param dgg Desired genetic gains. The default is one standard deviation for each trait.
 #' @param units Units for dgg, \code{"actual"} or \code{"sdu"}. See details for more information.
 #' @param sf Selected fraction. The default is 0.1.
 #' @param method The method to compute genotypic covariances. See ?ecm for details.
-#' @author Raul Eyzaguirre
 #' @details The Pesek-Baker is an index where relative economic weights have been replaced
 #' by desired gains.
 #' 
@@ -30,7 +29,6 @@
 #' then this means a desired genetic gain of 2 kilograms. If \code{dgg = NULL} then the
 #' desired genetic gains will be one standard deviation, no matter if \code{units} is set
 #' as \code{"actual"} or \code{"sdu"}.
-#' 
 #' @return It returns:
 #' \itemize{
 #' \item \code{$Desired.Genetic.Gains}, the desired genetic gains in actual units,
@@ -41,19 +39,19 @@
 #' \item \code{$Pesek.Baker.Index}, a data frame with the genotypic means for each trait,
 #' the Pesek-Baker index, and the rank for each genotype according to the index.
 #' }
+#' @author Raul Eyzaguirre.
 #' @references
 #' Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.
 #' Can. J. Plant. Sci. 9:803-804.
 #' @examples
 #' traits <- c("rytha", "bc", "dm", "star", "nocr")
 #' pesekbaker(traits, "geno", "loc", "rep", spg)
-#'
-#' ## More weight on bc and dm, less on star and nocr
+#' # More weight on bc and dm, less on star and nocr
 #' pesekbaker(traits, "geno", "loc", "rep", spg, dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 #' @importFrom stats cor dnorm qnorm
 #' @export
 
-pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", "fitted"),
+pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "fitted"),
                        dgg = NULL, units = c("sdu", "actual"), sf = 0.1, method = 1) {
 
   # match arguments
@@ -63,7 +61,7 @@ pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", 
   
   # As character
   
-  data[, geno] <- as.character(data[, geno])
+  dfr[, geno] <- as.character(dfr[, geno])
 
   # inits
 
@@ -72,7 +70,7 @@ pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", 
   
   # run ecm
   
-  cm <- ecm(traits, geno, env, rep, data, method)
+  cm <- ecm(traits, geno, env, rep, dfr, method)
 
   # compute index coefficients
 
@@ -97,12 +95,12 @@ pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", 
 
   # index calculation
   
-  outind <- data.frame(geno = unique(data[, geno]))
+  outind <- data.frame(geno = unique(dfr[, geno]))
   colnames(outind) <- geno
   
   if (means == "single") {
-    temp <- docomp("mean", traits, c(geno, env), data = data)
-    temp <- docomp("mean", traits, geno, data = temp)
+    temp <- docomp("mean", traits, c(geno, env), dfr = dfr)
+    temp <- docomp("mean", traits, geno, dfr = temp)
     outind <- merge(outind, temp, all = TRUE)
     colnames(outind) <- c("geno", paste("m", traits, sep = "."))
   }
@@ -112,11 +110,11 @@ pesekbaker <- function(traits, geno, env = NULL, rep, data, means = c("single", 
       if (!is.null(env)) {
         ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", geno, ":", env,
                                ") + (1|", env, "/", rep, ")"))
-        fm <- lme4::lmer(ff, data = data)
+        fm <- lme4::lmer(ff, dfr)
         }
       if (is.null(env)) {
         ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", rep, ")"))
-        fm <- lme4::lmer(ff, data = data)
+        fm <- lme4::lmer(ff, dfr)
       }
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")

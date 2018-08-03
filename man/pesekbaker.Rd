@@ -4,7 +4,7 @@
 \alias{pesekbaker}
 \title{Pesek-Baker Index}
 \usage{
-pesekbaker(traits, geno, env = NULL, rep, data, means = c("single",
+pesekbaker(traits, geno, env = NULL, rep, dfr, means = c("single",
   "fitted"), dgg = NULL, units = c("sdu", "actual"), sf = 0.1,
   method = 1)
 }
@@ -17,7 +17,7 @@ pesekbaker(traits, geno, env = NULL, rep, data, means = c("single",
 
 \item{rep}{The replications.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 
 \item{means}{The genotypic means to compute the index, \code{"single"}
 or \code{"fitted"}. The default is \code{"single"}. See details for more information.}
@@ -67,8 +67,7 @@ as \code{"actual"} or \code{"sdu"}.
 \examples{
 traits <- c("rytha", "bc", "dm", "star", "nocr")
 pesekbaker(traits, "geno", "loc", "rep", spg)
-
-## More weight on bc and dm, less on star and nocr
+# More weight on bc and dm, less on star and nocr
 pesekbaker(traits, "geno", "loc", "rep", spg, dgg = c(1, 1.5, 1.5, 0.8, 0.8))
 }
 \references{
