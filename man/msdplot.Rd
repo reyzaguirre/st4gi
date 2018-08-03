@@ -4,45 +4,33 @@
 \alias{msdplot}
 \title{Plot means and standard deviations with a dotplot}
 \usage{
-msdplot(trait, groups, data, conf = 0.95, nmax = 10, dotplot = TRUE,
-  sort.means = c("none", "increasing", "decreasing"), main = NULL,
-  xlab = "groups", ylab = "", colors = c("orange", "orange", "black"),
-  pch = 4, lwd = 2, x.las = 1, jf = 0.1, dist = 0.1)
+msdplot(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
+  sort.means = c("none", "increasing", "decreasing"), color = c("orange",
+  "orange", "black"), x.las = 1, jf = 0.1, dist = 0.1, ...)
 }
 \arguments{
 \item{trait}{The trait to plot.}
 
 \item{groups}{The grouping factor.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 
 \item{conf}{Probability for the confidence limits or number of standard deviations.}
 
-\item{nmax}{Maximum number of points for the compulsory dotplot, default is 10.}
-
-\item{dotplot}{Logical. If \code{TRUE}, a dotplot is shown. If \code{FALSE}
-it will only suppress the dots if the number of data points is larger than \code{nmax}.}
+\item{dotplot}{Logical. If \code{TRUE}, a dotplot is shown.}
 
 \item{sort.means}{Sort for means. Options are \code{"none"}, \code{"increasing"},
 and \code{"decreasing"}, \code{"none"} by default.}
 
-\item{main}{Main title.}
-
-\item{xlab}{Title for x axis.}
-
-\item{ylab}{Title for y axis.}
-
-\item{colors}{Color for mean symbols, confidence interval lines, and data points.}
-
-\item{pch}{Ploting character for means.}
-
-\item{lwd}{Width for ploting characters for means.}
+\item{color}{Color for mean symbols, confidence interval lines, and data points.}
 
 \item{x.las}{x axes labels orientation.}
 
 \item{jf}{Jitter factor for dots.}
 
 \item{dist}{Horizontal distance between the means and the dots.}
+
+\item{...}{Additional plot arguments.}
 }
 \value{
 It returns a plot with the means represented by horizontal lines, a vertical
@@ -58,10 +46,10 @@ If \code{conf} is set to a value greater than or equal to 1, then it is interpre
 as number of standard deviations.
 }
 \examples{
-## Simulate some data
-mydata <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
-                     g = rep(1:5, 10))
-msdplot("y", "g", mydata)
+# Simulate some data
+dfr <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
+                  g = rep(1:5, 10))
+msdplot("y", "g", dfr, lwd = 2, pch = 4)
 }
 \author{
 Raul Eyzaguirre

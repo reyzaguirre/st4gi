@@ -5,8 +5,7 @@
 \title{AMMI or GGE biplots}
 \usage{
 \method{plot}{ammi}(x, biplot = 2, biplot1 = c("effects", "means"),
-  main = NULL, xlab = NULL, color = c("darkorange", "black", "gray"),
-  size = c(1, 1), ...)
+  color = c("darkorange", "black", "gray"))
 }
 \arguments{
 \item{x}{An object of class \code{ammi}.}
@@ -15,15 +14,7 @@
 
 \item{biplot1}{Choose "effects" or "means" for biplot1.}
 
-\item{main}{Main title for biplot1 or biplot2.}
-
-\item{xlab}{Xlab for biplot1.}
-
 \item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes.}
-
-\item{size}{Relative size for symbols and labels.}
-
-\item{...}{Additional plot arguments.}
 }
 \value{
 It returns a dispersion plot of means or effects against the first PC,
