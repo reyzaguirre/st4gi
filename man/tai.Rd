@@ -4,7 +4,7 @@
 \alias{tai}
 \title{Tai's stability analysis}
 \usage{
-tai(trait, geno, env, rep, data, maxp = 0.1)
+tai(trait, geno, env, rep, dfr, maxp = 0.1)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -15,7 +15,7 @@ tai(trait, geno, env, rep, data, maxp = 0.1)
 
 \item{rep}{The replications.}
 
-\item{data}{The name of the data frame containing the data.}
+\item{dfr}{The name of the data frame containing the data.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
