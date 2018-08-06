@@ -15,8 +15,10 @@ ck.fs(factors, rep = NULL, dfr)
 }
 \value{
 The number of factors (\code{nf}), the number of levels of the factors
-(\code{nl}), the number of treatments (\code{nt}), the list of treatments (\code{lt}),
-the number of replications (\code{nrep}), and the list of replications (\code{lrep}).
+(\code{nl}), the lists of levels of factors (\code{lf}), the number of treatments
+(\code{nt}), the list of treatments (\code{lt}), the number of replications
+(\code{nrep}), the list of replications (\code{lrep}), and the number of rows
+with missing values for factors (\code{nmis.fac}).
 }
 \description{
 This function cheks the number of treatments and replications for different designs.
