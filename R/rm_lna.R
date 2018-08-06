@@ -1,7 +1,6 @@
 #' Remove factors' levels without data
 #' 
-#' This function removes rows for factors' levels without data.
-#' 
+#' This function removes rows for factors' levels without data. 
 #' @param trait The trait.
 #' @param factors The factors.
 #' @param dfr The name of the data frame.

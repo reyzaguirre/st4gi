@@ -1,7 +1,6 @@
 #' Remove factors with NA values
 #' 
-#' This function removes rows for factors with missing values.
-#' 
+#' This function removes rows for factors with missing values. 
 #' @param factors The factors.
 #' @param dfr The name of the data frame.
 #' @return The number of rows in the data frame with missing values for factors
