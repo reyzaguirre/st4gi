@@ -31,29 +31,22 @@
 
 ck.f <- function(trait, factors, rep, dfr) {
   
-  # Check and remove rows with missing values for factors
-  
-  out <- rm.fna(c(factors, rep), dfr)
-  dfr <- out$dfr
-  nmis.fac <- out$nmis.fac
-  
-  # Number of factors, levels and replications
-  
+  # Check factor structure
+
   out <- ck.fs(factors, rep, dfr)
+  dfr <- out$dfr
   nf <- out$nf
   nl <- out$nl
   nrep <- out$nrep
-
-  # Number of missing values
+  nmis.fac <- out$nmis.fac
   
-  nmis <- sum(is.na(dfr[, trait]))
-  pmis <- mean(is.na(dfr[, trait]))
-
   # Frequencies for factors and replications
   
   out <- ck.fq(trait, factors, rep, dfr)
   tf <- out$tf
   tfr <- out$tfr
+  nmis <- out$nmis
+  pmis <- out$pmis
 
   # Number of treatments without data
   

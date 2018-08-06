@@ -7,8 +7,9 @@
 #' @param rep The replications.
 #' @param dfr The name of the data frame.
 #' @return A table of frequencies of valid cases for all factors' levels combinations
-#' (\code{tf}) and a table of frequencies of valid cases for all factors' levels and
-#' replications combinations (\code{tfr}).
+#' (\code{tf}), a table of frequencies of valid cases for all factors' levels and
+#' replications combinations (\code{tfr}), the number of missing values \code{nmis},
+#' and the proportion of missing values (\code{pmis}).
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' ## Example 1
@@ -38,6 +39,11 @@
 
 ck.fq <- function(trait, factors, rep = NULL, dfr) {
   
+  # Number of missing values
+  
+  nmis <- sum(is.na(dfr[, trait]))
+  pmis <- mean(is.na(dfr[, trait]))
+  
   # tfr NULL for rep = NULL
   
   tfr <- NULL
@@ -57,7 +63,7 @@ ck.fq <- function(trait, factors, rep = NULL, dfr) {
   # Calculate frequencies
   
   temp <- temp[!is.na(temp[, trait]), ]
-  
+
   if (nf == 1) {
     tf <- table(temp[, factors])
     if (!is.null(rep))
@@ -76,6 +82,6 @@ ck.fq <- function(trait, factors, rep = NULL, dfr) {
   
   # Return
   
-  list(tf = tf, tfr = tfr)
+  list(tf = tf, tfr = tfr, nmis = nmis, pmis = pmis)
   
 }

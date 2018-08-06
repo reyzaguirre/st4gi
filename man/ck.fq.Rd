@@ -17,8 +17,9 @@ ck.fq(trait, factors, rep = NULL, dfr)
 }
 \value{
 A table of frequencies of valid cases for all factors' levels combinations
-(\code{tf}) and a table of frequencies of valid cases for all factors' levels and
-replications combinations (\code{tfr}).
+(\code{tf}), a table of frequencies of valid cases for all factors' levels and
+replications combinations (\code{tfr}), the number of missing values \code{nmis},
+and the proportion of missing values (\code{pmis}).
 }
 \description{
 This function cheks the frequencies of valid cases for treatments and replications.

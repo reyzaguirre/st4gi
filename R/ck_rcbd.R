@@ -27,28 +27,21 @@
 
 ck.rcbd <- function(trait, geno, rep, dfr) {
   
-  # Check and remove rows with missing values for factors
-  
-  out <- rm.fna(c(geno, rep), dfr)
-  dfr <- out$dfr
-  nmis.fac <- out$nmis.fac
-  
-  # Number of genotypes and replications
+  # Check factor structure
   
   out <- ck.fs(geno, rep, dfr)
+  dfr <- out$dfr
   ng <- out$nt
   nrep <- out$nrep
-
-  # Number of missing values
+  nmis.fac <- out$nmis.fac
   
-  nmis <- sum(is.na(dfr[, trait]))
-  pmis <- mean(is.na(dfr[, trait]))
-
   # Frequencies for genotypes and replications
   
   out <- ck.fq(trait, geno, rep, dfr)
   tf <- out$tf
   tfr <- out$tfr
+  nmis <- out$nmis
+  pmis <- out$pmis
   
   # Number of genotypes without data
   

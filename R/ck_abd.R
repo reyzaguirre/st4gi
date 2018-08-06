@@ -46,7 +46,7 @@ ck.abd <- function(trait, geno, rep, dfr) {
   
   ng.ck <- length(lg.ck)
   ng <- length(lg)
-  
+
   # Number of replications
   
   nrep <- length(unique(dfr[, rep]))
@@ -56,14 +56,17 @@ ck.abd <- function(trait, geno, rep, dfr) {
   temp <- dfr[dfr[, geno] %in% lg, ]
   nmis <- sum(is.na(temp[, trait]))
   
-  # Number of missing values for checks
-
+  # Evaluate checks
+  
   temp <- dfr[dfr[, geno] %in% lg.ck, ]
-  nmis.ck <- sum(is.na(temp[, trait]))
-
-  # Frequencies
-
   out <- ck.fq(trait, geno, rep, temp)
+  
+  # Number of missing values for checks
+  
+  nmis.ck <- out$nmis
+  
+  # Frequencies for checks
+
   tf <- data.frame(out$tf)
   tfr <- out$tfr
   
@@ -91,7 +94,7 @@ ck.abd <- function(trait, geno, rep, dfr) {
   
   list(ng.ck = ng.ck, ng = ng, nmis.ck = nmis.ck, nmis = nmis,
        nck.0 = nck.0, ck.0 = ck.0, nck.1 = nck.1, ck.1 = ck.1,
-       nck.2 = nck.2, nck.mult = nck.mult, nmis.fac = nmis.fac,
-       nrep = nrep)
+       nck.2 = nck.2, nck.mult = nck.mult, nrep = nrep,
+       nmis.fac = nmis.fac)
   
 }

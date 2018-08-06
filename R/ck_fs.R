@@ -8,8 +8,9 @@
 #' @return The number of factors (\code{nf}), the number of levels of the factors
 #' (\code{nl}), the lists of levels of factors (\code{lf}), the number of treatments
 #' (\code{nt}), the list of treatments (\code{lt}), the number of replications
-#' (\code{nrep}), the list of replications (\code{lrep}), and the number of rows
-#' with missing values for factors (\code{nmis.fac}).
+#' (\code{nrep}), the list of replications (\code{lrep}), the number of rows
+#' with missing values for factors (\code{nmis.fac})  and the data frame after
+#' removal of all these rows.
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' ## Example 1
@@ -83,7 +84,7 @@ ck.fs <- function(factors, rep = NULL, dfr) {
   
   # Return
   
-  list(nf = nf, nl = nl, lf = lf, nt = nt, lt = lt,
-       nrep = nrep, lrep = lrep, nmis.fac = nmis.fac)
+  list(nf = nf, nl = nl, lf = lf, nt = nt, lt = lt, nrep = nrep, lrep = lrep,
+       nmis.fac = nmis.fac, dfr = dfr)
   
 }

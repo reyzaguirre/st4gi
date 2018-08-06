@@ -24,18 +24,14 @@
 
 ck.crd <- function(trait, geno, dfr) {
   
-  # Check and remove rows with missing values for factors
-  
-  out <- rm.fna(geno, dfr)
-  dfr <- out$dfr
-  nmis.fac <- out$nmis.fac
-
-  # Number of genotypes and replications
+  # Check factor structure
   
   out <- ck.fs(geno, NULL, dfr)
+  dfr <- out$dfr
   ng <- out$nt
   nrep <- out$nrep
-
+  nmis.fac <- out$nmis.fac
+  
   # Frequencies for genotypes
   
   out <- ck.fq(trait, geno, NULL, dfr)
