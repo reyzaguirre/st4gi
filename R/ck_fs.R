@@ -29,10 +29,6 @@
 
 ck.fs <- function(factors, rep = NULL, dfr) {
 
-  # Check and remove rows with missing values for factors
-  
-  dfr <- rm.fna(c(factors, rep), dfr)$dfr
-
   # Number of factors
   
   nf <- length(factors)
