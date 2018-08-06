@@ -9,7 +9,7 @@
 #' (\code{nl}), the lists of levels of factors (\code{lf}), the number of treatments
 #' (\code{nt}), the list of treatments (\code{lt}), the number of replications
 #' (\code{nrep}), the list of replications (\code{lrep}), the number of rows
-#' with missing values for factors (\code{nmis.fac})  and the data frame after
+#' with missing values for factors (\code{nmis.fac}), and the data frame after
 #' removal of all these rows.
 #' @author Raul Eyzaguirre.
 #' @examples 
