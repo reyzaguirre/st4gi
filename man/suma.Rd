@@ -2,27 +2,26 @@
 % Please edit documentation in R/suma.R
 \name{suma}
 \alias{suma}
-\title{Compute sum of two traits}
+\title{Compute sum of two vectors}
 \usage{
-suma(a, b)
+suma(v1, v2)
 }
 \arguments{
-\item{a}{Name of trait 1 to sum}
+\item{v1}{Name of vector 1.}
 
-\item{b}{Name of trait 2 to sum.}
+\item{v2}{Name of vector 2.}
 }
 \value{
-It returns the sum of the two traits.
+It returns the sum of the two vectors elementwise.
 }
 \description{
-Compute the sum of two traits. Missing values do not propagate.
+Compute the sum of two vectors elementwise. Missing values do not propagate.
 }
 \details{
-Missing values do not propagate. If NA is present for both traits then NA
+Missing values do not propagate. If NA is present for both vectors then NA
 is applied to the sum.
 }
 \examples{
-## Compute total biomass as the sum of trw and vw
 suma(pjpz09$trw, pjpz09$vw)
 }
 \author{

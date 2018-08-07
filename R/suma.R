@@ -1,24 +1,23 @@
-#' Compute sum of two traits
+#' Compute sum of two vectors
 #'
-#' Compute the sum of two traits. Missing values do not propagate.
-#' @param a Name of trait 1 to sum
-#' @param b Name of trait 2 to sum.
-#' @details Missing values do not propagate. If NA is present for both traits then NA
+#' Compute the sum of two vectors elementwise. Missing values do not propagate.
+#' @param v1 Name of vector 1.
+#' @param v2 Name of vector 2.
+#' @details Missing values do not propagate. If NA is present for both vectors then NA
 #' is applied to the sum.
-#' @return It returns the sum of the two traits.
+#' @return It returns the sum of the two vectors elementwise.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' ## Compute total biomass as the sum of trw and vw
 #' suma(pjpz09$trw, pjpz09$vw)
 #' @export
 
-suma <- function(a, b) {
+suma <- function(v1, v2) {
   
-  s <- apply(cbind(a, b), 1, sum, na.rm = TRUE)
-  s[is.na(a) & is.na(b)] <- NA
+  v3 <- apply(cbind(v1, v2), 1, sum, na.rm = TRUE)
+  v3[is.na(v1) & is.na(v2)] <- NA
   
   # Return
   
-  s
+  v3
   
 }
