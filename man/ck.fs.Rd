@@ -22,7 +22,7 @@ with missing values for factors (\code{nmis.fac}), and the data frame after
 removal of all these rows.
 }
 \description{
-This function cheks the number of treatments and replications for different designs.
+This function cheks the structure of factors.
 }
 \examples{
 ## Example 1

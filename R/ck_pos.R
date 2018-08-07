@@ -28,12 +28,10 @@ ck.pos <- function(row, col, rep = NULL, dfr) {
   
   # Check and remove rows with missing values for factors
   
-  dfr <- rm.fna(c(row, col, rep), dfr)$dfr
-  
-  # Number of replications and levels
-
-  lrep <- sort(unique(dfr[, rep]))
-  nrep <- length(lrep)
+  out <- ck.fs(c(row, col), rep, dfr)
+  dfr <- out$dfr
+  nrep <- out$nrep
+  lrep <- out$lrep
   
   # Number and list of plots with more than one genotype
   

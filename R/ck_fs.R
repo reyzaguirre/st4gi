@@ -1,6 +1,6 @@
 #' Check factors structure
 #' 
-#' This function cheks the number of treatments and replications for different designs.
+#' This function cheks the structure of factors.
 #' 
 #' @param factors The factors.
 #' @param rep The replications.
@@ -32,12 +32,19 @@
 
 ck.fs <- function(factors, rep = NULL, dfr) {
 
-  # Check and remove rows with missing values for factors
+  # Check missing values for factors
   
-  out <- rm.fna(c(factors, rep), dfr)
-  dfr <- out$dfr
-  nmis.fac <- out$nmis.fac
+  cond <- apply(data.frame(dfr[, c(factors, rep)]), 1, function(x) sum(is.na(x)) > 0)
   
+  # Number of missing values for factors
+  
+  nmis.fac <- sum(cond)
+  
+  # Remove rows with missing values for factors
+  
+  if (nmis.fac > 0)
+    dfr <- dfr[!cond, ]
+
   # Number of factors
   
   nf <- length(factors)

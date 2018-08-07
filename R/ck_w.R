@@ -32,7 +32,7 @@ ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
   
   # Check and remove rows with missing values for factors
   
-  out <- rm.fna(c(geno, row, col), dfr)
+  out <- ck.fs(c(geno, row, col), NULL, dfr)
   dfr <- out$dfr
   nmis.fac <- out$nmis.fac
 
