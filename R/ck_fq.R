@@ -1,7 +1,6 @@
 #' Check frequencies
 #' 
 #' This function cheks the frequencies of valid cases for treatments and replications.
-#' 
 #' @param trait The trait.
 #' @param factors The factors.
 #' @param rep The replications.

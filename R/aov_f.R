@@ -7,8 +7,6 @@
 #' @param design The statistical design, \code{crd} or \code{rcbd}.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
-#' @details If data is unbalanced, missing values are estimated up to an specified maximum
-#' proportion, 10\% by default.
 #' @return It returns the ANOVA table.
 #' @author Raul Eyzaguirre.
 #' @examples

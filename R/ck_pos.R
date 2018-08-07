@@ -48,11 +48,11 @@ ck.pos <- function(row, col, rep = NULL, dfr) {
     ttt <- as.data.frame(table(temp[, row], temp[, col]))
     colnames(ttt) <- c('Row', 'Column', 'Freq')
     
-    # Number of plots with problems
+    # Number of plots with more than one genotype
     
     nplot[i] <- dim(ttt[ttt$Freq > 1, ])[1]
     
-    # List of plots with problems if any
+    # List of plots with more than one genotype if any
     
     if (nplot[i] > 0)
       lplot[[i]] <- ttt[ttt$Freq > 1, ] 

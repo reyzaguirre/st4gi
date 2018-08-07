@@ -3,9 +3,7 @@
 #' This function creates the fieldbook and fieldplan for a RCBD.
 #' @param geno The list of genotypes.
 #' @param nb Number of blocks.
-#' @param nc Number of columns.
-#' @details The genotypes are randomly allocated on a field following a RCBD.
-#' The blocks are disposed alongside the rows.
+#' @param nc Number of available columns on the field.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples

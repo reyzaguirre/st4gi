@@ -13,7 +13,7 @@ cr.a01d(geno, nrep, k, nc)
 
 \item{k}{Block size.}
 
-\item{nc}{Number of columns.}
+\item{nc}{Number of available columns on the field.}
 }
 \value{
 It returns the fieldbook and fieldplan.

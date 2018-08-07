@@ -15,9 +15,6 @@ It returns the fieldbook and fieldplan.
 \description{
 This function creates the fieldbook and fieldplan for a LSD.
 }
-\details{
-The genotypes are randomly allocated on a field following a LSD.
-}
 \examples{
 cr.lsd(c("A", "B", "C"))
 cr.lsd(c("A", "B", "C", "D", "E"))

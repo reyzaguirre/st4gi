@@ -13,7 +13,7 @@ cr.w(geno, ck1, ck2, nc, ncb = 10)
 
 \item{ck2}{Name of check 2.}
 
-\item{nc}{Number of columns.}
+\item{nc}{Number of available columns on the field.}
 
 \item{ncb}{Number of columns between two check columns (default is 10).}
 }
@@ -28,8 +28,7 @@ following the method described by Westcott (1981).
 \details{
 The genotypes are randomly allocated on a field between equally spaced
 columns of two alternating check varieties. Check columns are planted each
-\code{ncb} columns. The specified total number of columns \code{nc} is the maximum
-available number on the field, the actual number could be less.
+\code{ncb} columns.
 }
 \examples{
 cr.w(1:100, "A", "B", 100)

@@ -4,10 +4,6 @@
 #' @param A The levels of factor A (row factor).
 #' @param B The levels of factor B (column factor).
 #' @param nrep Number of replications (or blocks).
-#' @details The levels of the factors are randomly allocated on a field
-#' following a Strip-Split-Plot design. Row and column numbers are specific
-#' to each replication. Each replication is a complete block for factor A
-#' and for factor B.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples

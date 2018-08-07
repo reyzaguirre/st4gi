@@ -4,7 +4,7 @@
 #' @param geno The list of genotypes.
 #' @param nrep Number of replications.
 #' @param k Block size.
-#' @param nc Number of columns.
+#' @param nc Number of available columns on the field.
 #' @details The genotypes are randomly allocated on a field following an alpha
 #' (0,1) design. In this design each replication is a complete block and is
 #' divided into \code{s} incomplete blocks of size \code{k}. For any pair of

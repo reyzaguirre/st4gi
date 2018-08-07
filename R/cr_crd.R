@@ -3,8 +3,7 @@
 #' This function creates the fieldbook and fieldplan for a CRD.
 #' @param geno The list of genotypes.
 #' @param nrep Number of replications.
-#' @param nc Number of columns.
-#' @details The genotypes are randomly allocated on a field following a CRD.
+#' @param nc Number of available columns on the field.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples

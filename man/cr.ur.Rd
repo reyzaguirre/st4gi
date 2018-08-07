@@ -9,7 +9,7 @@ cr.ur(geno, nc)
 \arguments{
 \item{geno}{The list of genotypes.}
 
-\item{nc}{Number of columns.}
+\item{nc}{Number of available columns on the field.}
 }
 \value{
 It returns the fieldbook and fieldplan.
@@ -17,9 +17,6 @@ It returns the fieldbook and fieldplan.
 \description{
 This function creates the fieldbook and fieldplan for an unreplicated
 experiment with genotypes randomly allocated on a field.
-}
-\details{
-The genotypes are randomly allocated on a field.
 }
 \examples{
 cr.ur(1:100, 5)

@@ -2,7 +2,6 @@
 #'
 #' This function creates the fieldbook and fieldplan for a LSD.
 #' @param geno The list of genotypes.
-#' @details The genotypes are randomly allocated on a field following a LSD.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples

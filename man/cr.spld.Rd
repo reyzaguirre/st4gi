@@ -22,12 +22,6 @@ It returns the fieldbook and fieldplan.
 \description{
 This function creates the fieldbook and fieldplan for a Split-Plot design.
 }
-\details{
-The levels of the factors are randomly allocated on a field
-following a Split-Plot design. Row and column numbers are specific
-to each replication and identify subplots. Each replication is a
-complete block for factor A.
-}
 \examples{
 A <- paste0("a", 1:4)
 B <- paste0("b", 1:3)

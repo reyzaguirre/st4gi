@@ -11,16 +11,13 @@ cr.crd(geno, nrep, nc)
 
 \item{nrep}{Number of replications.}
 
-\item{nc}{Number of columns.}
+\item{nc}{Number of available columns on the field.}
 }
 \value{
 It returns the fieldbook and fieldplan.
 }
 \description{
 This function creates the fieldbook and fieldplan for a CRD.
-}
-\details{
-The genotypes are randomly allocated on a field following a CRD.
 }
 \examples{
 cr.crd(1:20, 3, 12)

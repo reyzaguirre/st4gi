@@ -11,11 +11,11 @@ cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc)
 
 \item{flevels}{A list with the factor's levels.}
 
-\item{design}{The design, a crd or a rcbd.}
+\item{design}{The design, \code{crd} or \code{rcbd}.}
 
 \item{nrep}{Number of replications or blocks.}
 
-\item{nc}{Number of columns.}
+\item{nc}{Number of available columns on the field.}
 }
 \value{
 It returns the fieldbook and fieldplan.
@@ -23,9 +23,6 @@ It returns the fieldbook and fieldplan.
 \description{
 This function creates the fieldbook and fieldplan for a factorial experiment
 following a CRD or a RCBD.
-}
-\details{
-The treatments are randomly allocated on a field following a CRD or a RCBD.
 }
 \examples{
 A <- paste0("a", 1:5)

@@ -4,10 +4,9 @@
 #' following a CRD or a RCBD.
 #' @param fnames Factor's names.
 #' @param flevels A list with the factor's levels.
-#' @param design The design, a crd or a rcbd.
+#' @param design The design, \code{crd} or \code{rcbd}.
 #' @param nrep Number of replications or blocks.
-#' @param nc Number of columns.
-#' @details The treatments are randomly allocated on a field following a CRD or a RCBD.
+#' @param nc Number of available columns on the field.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples

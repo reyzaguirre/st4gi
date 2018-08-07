@@ -24,7 +24,7 @@
 #' means are computed over all the observations for each genotype.
 #' @return It returns a data frame with the genotypic means for each trait,
 #' the Elston index, and the rank for each genotype according to the index.
-#' @author Raul Eyzaguirre
+#' @author Raul Eyzaguirre.
 #' @references
 #' Elston, R. C. (1963). A weight-free index for the purpose of ranking or selection
 #' with respect to several traits at a time. Biometrics. 19(1): 85-97.

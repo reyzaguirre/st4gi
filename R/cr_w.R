@@ -6,14 +6,13 @@
 #' @param geno The list of genotypes.
 #' @param ck1 Name of check 1.
 #' @param ck2 Name of check 2.
-#' @param nc Number of columns.
+#' @param nc Number of available columns on the field.
 #' @param ncb Number of columns between two check columns (default is 10).
-#' @author Raul Eyzaguirre.
 #' @details The genotypes are randomly allocated on a field between equally spaced
 #' columns of two alternating check varieties. Check columns are planted each
-#' \code{ncb} columns. The specified total number of columns \code{nc} is the maximum
-#' available number on the field, the actual number could be less.
+#' \code{ncb} columns.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @references
 #' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
 #' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.

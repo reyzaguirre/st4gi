@@ -3,10 +3,9 @@
 #' This function creates the fieldbook and fieldplan for an unreplicated
 #' experiment with genotypes randomly allocated on a field.
 #' @param geno The list of genotypes.
-#' @param nc Number of columns.
-#' @author Raul Eyzaguirre.
-#' @details The genotypes are randomly allocated on a field.
+#' @param nc Number of available columns on the field.
 #' @return It returns the fieldbook and fieldplan.
+#' @author Raul Eyzaguirre.
 #' @examples
 #' cr.ur(1:100, 5)
 #' cr.ur(1:100, 7)

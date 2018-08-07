@@ -11,17 +11,13 @@ cr.rcbd(geno, nb, nc)
 
 \item{nb}{Number of blocks.}
 
-\item{nc}{Number of columns.}
+\item{nc}{Number of available columns on the field.}
 }
 \value{
 It returns the fieldbook and fieldplan.
 }
 \description{
 This function creates the fieldbook and fieldplan for a RCBD.
-}
-\details{
-The genotypes are randomly allocated on a field following a RCBD.
-The blocks are disposed alongside the rows.
 }
 \examples{
 cr.rcbd(1:20, 3, 10)

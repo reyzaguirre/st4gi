@@ -1,7 +1,6 @@
 #' Check factors structure
 #' 
 #' This function cheks the structure of factors.
-#' 
 #' @param factors The factors.
 #' @param rep The replications.
 #' @param dfr The name of the data frame.

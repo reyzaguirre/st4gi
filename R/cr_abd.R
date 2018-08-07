@@ -4,9 +4,7 @@
 #' @param geno The list of genotypes.
 #' @param checks The list of checks.
 #' @param nb Number of blocks.
-#' @param nc Number of columns.
-#' @details The genotypes are randomly allocated on a field following an ABD.
-#' The blocks are disposed alongside the rows.
+#' @param nc Number of available columns on the field.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
