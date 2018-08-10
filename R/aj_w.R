@@ -205,7 +205,7 @@ foo.flat <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
 
   # Get adjustment factor
   
-  af <- mean(dfr[, trait.aj])
+  af <- mean(temp[, trait.aj])
   
   # Return
   
