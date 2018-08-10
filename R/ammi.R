@@ -34,7 +34,7 @@
 
 ammi <- function(trait, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5) {
 
-  # match arguments
+  # Match arguments
   
   method <- match.arg(method)
 
