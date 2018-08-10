@@ -9,31 +9,34 @@
 #' @param row Label for rows.
 #' @param col Label for columns.
 #' @param ncb Number of columns between two check columns.
-#' @param nrs Number of rows spanning the row of the plot, 3 or 5.
+#' @param nrs Number of rows to span the row of the plot.
 #' @param method The method to fit the values. See details.
 #' @param p The proportion of the check values differences used for the adjustment.
 #' See details.
-#' @param ind Logical. If TRUE each check is centered around its own mean.
-#' If FALSE both checks are centered around the overall mean.
+#' @param ind Logical. See details.
 #' @param dfr The name of the data frame.
-#' @details The values of the selected \code{trait} are adjusted following
-#' different methods. For \code{method = 1} each plot is adjusted with the
-#' mean of the six or ten checks located in the three (if \code{nrs = 3}) or
-#' five (if \code{nrs = 5}) rows spanning it (with \code{nrs = 3} it corresponds
-#' tp the method proposed by Westcott). For \code{method = 2} each plot is
-#' adjusted with the value of his position on the surface fitted using the six
-#' or then checks located in the three or five rows spanning it, so the closest
-#' checks receive more weight.
-#' 
-#' If \code{p = 1} then the values are adjusted in the same
-#' proportion that the checks vary around the field. For values lower than 1
-#' the values are adjusted based on that proportion over the checks variation.
-#' If \code{p = 0} then there is no adjustment.
-#' 
+#' @details The values of the selected \code{trait} are adjusted using some mean
+#' of the values of all the checks located on the row of the plot plus the \code{nrs}
+#' rows at each side of the row of the plot. If \code{method = "flat"} the simple mean
+#' of the checks is used for the adjustment, if \code{method = "weighted"} a weighted mean
+#' is used for the adjustmen, where the checks closer to the plot get more weight.
+#' If \code{p = 1} then the values are adjusted in the same proportion that the checks
+#' vary around the field, for values lower than 1 the values are adjusted based on that
+#' proportion over the checks variation, if \code{p = 0} then there is no adjustment.
+#' If \code{ind = TRUE}, each check is centered around its own mean before the adjustment,
+#' if \code{ind = FALSE}, then both checks are centered around the overall mean.
+#' If \code{method = "flat"}, \code{ncb = 5}, \code{nrs = 1}, and \code{ind = FALSE}, then
+#' it corresponds to the method proposed by Westcott.
 #' If the layout does not correspond with the Westcott method, then the observed values
-#' are adjusted with the values of the checks planted nearby and a warning is issued.
+#' are adjusted with the values of the checks planted nearby (this is in the rectangular
+#' region definied by \code{ceiling(ncb / 2)} columns and \code{nrs} rows at each side of
+#' the plot) and a warning is issued.
 #' @return It returns the adjusted values.
 #' @author Raul Eyzaguirre.
+#' @references
+#' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
+#' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
+#' INRA Poitier, France, pp 91-95.
 #' @examples 
 #' # Create design
 #' dfr <- cr.w(1:1000, "Dag", "Cem", 40, 10)
@@ -42,14 +45,14 @@
 #' dfr$y <- rnorm(1134)
 #' # Run adjustment
 #' aj.w("y", "geno", "Dag", "Cem", "row", "col", dfr = dfr)
-#' @references
-#' Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.
-#' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
-#' INRA Poitier, France, pp 91-95.
 #' @export
 
-aj.w <- function(trait, geno, ck1, ck2, row, col, nrs = 5, ncb = 10, method = 2,
-                 p = 0.5, ind = TRUE, dfr) {
+aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = 3,
+                 method = c("weighted", "flat"), p = 0.5, ind = TRUE, dfr) {
+  
+  # Match arguments
+  
+  method <- match.arg(method)
   
   # Error and warning messages
   
@@ -75,10 +78,6 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, nrs = 5, ncb = 10, method = 2,
   if (out$c1 == 1 | out$c2 == 1 | out$c3 == 1 | out$c4 == 1)
     warning("Adjusted values are obtained with the values of the checks nearby.")
 
-  # Save column names
-  
-  col.names <- colnames(dfr)
-    
   # Get a copy of trait for the adjusted values
   
   trait.aj <- paste(trait, 'aj', sep = '.') 
@@ -94,7 +93,7 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, nrs = 5, ncb = 10, method = 2,
     ck2.mean <- mean(dfr[dfr[, geno] %in% c(ck1, ck2), trait], na.rm = TRUE)
   }
   
-  # Center check values and compute %
+  # Center check values and compute relative variation adjusted by p
   
   cond1 <- dfr[, geno] == ck1
   cond2 <- dfr[, geno] == ck2
@@ -106,185 +105,110 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, nrs = 5, ncb = 10, method = 2,
   
   dfr[dfr[, geno] %in% c(ck1, ck2) & is.na(dfr[, trait.aj]), trait.aj] <- 0
   
-  # Run Westcott adjustment or modify adjustment
+  # Choose function for adjustment
   
-  if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0) {
-    
-    # Create columns for check centered values
-    
-    dfr[, ck1] <- NA
-    dfr[, ck2] <- NA
-    
-    # Create columns for prior and posterior check centered values
-    
-    ck1.pri.1 <- paste(ck1, 'pri.1', sep = '.')
-    dfr[, ck1.pri.1] <- NA
-    ck1.pri.2 <- paste(ck1, 'pri.2', sep = '.')
-    dfr[, ck1.pri.2] <- NA
-    ck1.pos.1 <- paste(ck1, 'pos.1', sep = '.')
-    dfr[, ck1.pos.1] <- NA
-    ck1.pos.2 <- paste(ck1, 'pos.2', sep = '.')
-    dfr[, ck1.pos.2] <- NA
-    ck2.pri.1 <- paste(ck2, 'pri.1', sep = '.')
-    dfr[, ck2.pri.1] <- NA
-    ck2.pri.2 <- paste(ck2, 'pri.2', sep = '.')
-    dfr[, ck2.pri.2] <- NA
-    ck2.pos.1 <- paste(ck2, 'pos.1', sep = '.')
-    dfr[, ck2.pos.1] <- NA
-    ck2.pos.2 <- paste(ck2, 'pos.2', sep = '.')
-    dfr[, ck2.pos.2] <- NA
-    
-    # Create columns for weigths
-    
-    ck1.w <- paste(ck1, 'w', sep = '.')
-    dfr[, ck1.w] <- NA
-    ck2.w <- paste(ck2, 'w', sep = '.')
-    dfr[, ck2.w] <- NA
-    
-    # Arrange check values and weights
-    
-    for (i in 1:dim(dfr)[1]) {
-      
-      geno.row <- dfr[i, row]
-      geno.col <- dfr[i, col]
-      columns <- (geno.col - ncb):(geno.col + ncb)
-      
-      cond1 <- dfr[, col] %in% columns
-      cond2 <- dfr[, geno] %in% c(ck1, ck2)
-      
-      temp <- dfr[dfr[, row] == geno.row & cond1 & cond2, c(geno, trait.aj, col)]
-      
-      if (dim(temp)[1] == 2) {
-        
-        # Checks on the row
-        
-        dfr[i, ck1] <- temp[temp[, geno] == ck1, trait.aj]
-        dfr[i, ck2] <- temp[temp[, geno] == ck2, trait.aj]
-        
-        # Checks on row -2
-        
-        temp.pri <- dfr[dfr[, row] == geno.row - 2 & cond1 & cond2, c(geno, trait.aj, col)]
-        
-        if (dim(temp.pri)[1] == 2) {
-          dfr[i, ck1.pri.2] <- temp.pri[temp.pri[, geno] == ck1, trait.aj]
-          dfr[i, ck2.pri.2] <- temp.pri[temp.pri[, geno] == ck2, trait.aj]
-        }
-        
-        # Checks on row -1
-        
-        temp.pri <- dfr[dfr[, row] == geno.row - 1 & cond1 & cond2, c(geno, trait.aj, col)]
-        
-        if (dim(temp.pri)[1] == 2) {
-          dfr[i, ck1.pri.1] <- temp.pri[temp.pri[, geno] == ck2, trait.aj]
-          dfr[i, ck2.pri.1] <- temp.pri[temp.pri[, geno] == ck1, trait.aj]
-        }
-        
-        # Checks on row +1
-        
-        temp.pos <- dfr[dfr[, row] == geno.row + 1 & cond1 & cond2, c(geno, trait.aj, col)]
-        
-        if (dim(temp.pos)[1] == 2) {
-          dfr[i, ck1.pos.1] <- temp.pos[temp.pos[, geno] == ck2, trait.aj]
-          dfr[i, ck2.pos.1] <- temp.pos[temp.pos[, geno] == ck1, trait.aj]
-        }
-        
-        # Checks on row +2  
-        
-        temp.pos <- dfr[dfr[, row] == geno.row + 2 & cond1 & cond2, c(geno, trait.aj, col)]
-        
-        if (dim(temp.pos)[1] == 2) {
-          dfr[i, ck1.pos.2] <- temp.pos[temp.pos[, geno] == ck1, trait.aj]
-          dfr[i, ck2.pos.2] <- temp.pos[temp.pos[, geno] == ck2, trait.aj]
-        }
-        
-        # Weights for closest checks
-        
-        dfr[i, ck1.w] <- ncb + 1 - abs(temp[temp[, geno] == ck1, col] - geno.col)
-        dfr[i, ck2.w] <- ncb + 1 - abs(temp[temp[, geno] == ck2, col] - geno.col)        
-      }
+  if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0 & method == "weighted")
+    foo <- foo.weig
+  if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0 & method == "flat")
+    foo <- foo.flat
+  if (out$c1 == 1 | out$c2 == 1 | out$c3 == 1 | out$c4 == 1) {
+    ncb <- ceiling(ncb / 2)
+    foo <- foo.flat
+  }
+  
+  # Make adjustment
+  
+  for (i in 1:dim(dfr)[1]) {
+    if (dfr[i, geno] %in% c(ck1, ck2)) {
+      af <- 0
+    } else {
+        af <- foo(i, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr)
     }
-    
-    # Adjust values with method 1
-    
-    if (method == 1) {
-      chs <- c(ck1, ck2, ck1.pri.1, ck2.pri.1, ck1.pos.1, ck2.pos.1)
-      if (nrs == 5)
-        chs <- c(chs, ck1.pri.2, ck2.pri.2, ck1.pos.2, ck2.pos.2)
-      af <- apply(dfr[, chs], 1, mean, na.rm = TRUE)
-    }
-    
-    # Adjust values with method 2
-    
-    if (method == 2) {
-      
-      if (nrs == 3) {
-        ck1.m.pri <- apply(dfr[, c(ck1, ck1.pri.1)], 1, mean, na.rm = TRUE)
-        ck2.m.pri <- apply(dfr[, c(ck2, ck2.pri.1)], 1, mean, na.rm = TRUE)
-        ck1.m.pos <- apply(dfr[, c(ck1, ck1.pos.1)], 1, mean, na.rm = TRUE)
-        ck2.m.pos <- apply(dfr[, c(ck2, ck2.pos.1)], 1, mean, na.rm = TRUE)
-      }
-      
-      if (nrs == 5) {
-        foo <- function(x) x * c(1.5, 2, 1)
-        ck1.w.pri <- t(apply(!is.na(dfr[, c(ck1, ck1.pri.1, ck1.pri.2)]), 1, foo))
-        ck2.w.pri <- t(apply(!is.na(dfr[, c(ck2, ck2.pri.1, ck2.pri.2)]), 1, foo))
-        ck1.w.pos <- t(apply(!is.na(dfr[, c(ck1, ck1.pos.1, ck1.pos.2)]), 1, foo))
-        ck2.w.pos <- t(apply(!is.na(dfr[, c(ck2, ck2.pos.1, ck2.pos.2)]), 1, foo))
-        
-        ck1.m.pri <- dfr[, c(ck1, ck1.pri.1, ck1.pri.2)] * ck1.w.pri
-        ck2.m.pri <- dfr[, c(ck2, ck2.pri.1, ck2.pri.2)] * ck2.w.pri
-        ck1.m.pos <- dfr[, c(ck1, ck1.pos.1, ck1.pos.2)] * ck1.w.pos
-        ck2.m.pos <- dfr[, c(ck2, ck2.pos.1, ck2.pos.2)] * ck2.w.pos
-        
-        ck1.m.pri <- apply(ck1.m.pri, 1, sum, na.rm = TRUE)
-        ck2.m.pri <- apply(ck2.m.pri, 1, sum, na.rm = TRUE)
-        ck1.m.pos <- apply(ck1.m.pos, 1, sum, na.rm = TRUE)
-        ck2.m.pos <- apply(ck2.m.pos, 1, sum, na.rm = TRUE)
-        
-        ck1.w.pri <- apply(ck1.w.pri, 1, sum, na.rm = TRUE)
-        ck2.w.pri <- apply(ck2.w.pri, 1, sum, na.rm = TRUE)
-        ck1.w.pos <- apply(ck1.w.pos, 1, sum, na.rm = TRUE)
-        ck2.w.pos <- apply(ck2.w.pos, 1, sum, na.rm = TRUE)
-        
-        ck1.m.pri <- ck1.m.pri / ck1.w.pri
-        ck2.m.pri <- ck2.m.pri / ck2.w.pri
-        ck1.m.pos <- ck1.m.pos / ck1.w.pos
-        ck2.m.pos <- ck2.m.pos / ck2.w.pos
-      }
-      
-      l.pri <- (ck1.m.pri * dfr[, ck1.w] + ck2.m.pri * dfr[, ck2.w]) / (dfr[, ck1.w] + dfr[, ck2.w])
-      l.pos <- (ck1.m.pos * dfr[, ck1.w] + ck2.m.pos * dfr[, ck2.w]) / (dfr[, ck1.w] + dfr[, ck2.w])
-      
-      af <- apply(cbind(l.pri, l.pos), 1, mean)
-    }
-    
-    # Make adjustment
-    
-    dfr[, trait.aj] <- dfr[, trait.aj] / (1 + af)
-    
-  } else { 
-
-    for (i in 1:dim(dfr)[1]) {
-      
-      geno.row <- dfr[i, row]
-      geno.col <- dfr[i, col]
-      rows <- (geno.row - nrs %/% 2):(geno.row + nrs %/% 2)
-      columns <- (geno.col - ncb):(geno.col + ncb)
-      
-      cond1 <- dfr[, col] %in% columns & dfr[, row] %in% rows
-      cond2 <- dfr[, geno] %in% c(ck1, ck2)
-      
-      temp <- dfr[cond1 & cond2, trait.aj]
-      
-      if (length(temp) > 0 & !(dfr[i, geno] %in% c(ck1, ck2))) {
-        af <- mean(temp)
-        dfr[i, trait.aj] <- dfr[i, trait.aj] / (1 + af)
-      }
-    }
+    dfr[i, trait.aj] <- dfr[i, trait.aj] / (1 + af)
   }
   
   # Return
   
-  dfr[, unique(c(col.names, trait.aj))]
+  dfr
+  
+}
+
+# A function for Westcott adjustment with method 2
+
+foo.weig <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
+  
+  # Identify row and column for plot
+  
+  geno.row <- dfr[x, row]
+  geno.col <- dfr[x, col]
+  
+  # Identify columns for checks (left and right)
+  
+  columns <- (geno.col - ncb):(geno.col + ncb)
+  temp <- dfr[dfr[, row] == geno.row & dfr[, col] %in% columns & dfr[, geno] %in% c(ck1, ck2), ]
+  col.lf <- min(temp[, col])
+  col.rg <- max(temp[, col])
+  
+  # Identify rows for checks and define weights
+  
+  row.ck <- (geno.row - nrs):(geno.row + nrs)
+  row.wg <- c(1:nrs, nrs + 1, nrs:1)
+  
+  # Delete nonexistent rows
+  
+  temp <- dfr[dfr[, col] == geno.col, ]
+  valid.rows <- row.ck %in% temp[, row]
+  row.ck <- row.ck[valid.rows]
+  row.wg <- row.wg[valid.rows]
+  
+  # Check values on the left and right
+  
+  ck.lf <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.lf, c(row, trait.aj)]
+  ck.rg <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.rg, c(row, trait.aj)]
+  
+  # Sort by row
+  
+  ck.lf <- ck.lf[sort.int(ck.lf[, row], index.return = TRUE)$ix, ]
+  ck.rg <- ck.rg[sort.int(ck.rg[, row], index.return = TRUE)$ix, ]
+  
+  # Get left and right means for adjustment
+  
+  m.ck.lf <- sum(ck.lf[, trait.aj] * row.wg) / sum(row.wg)
+  m.ck.rg <- sum(ck.rg[, trait.aj] * row.wg) / sum(row.wg)
+  
+  # Get adjustment factor
+  
+  af <- m.ck.lf + (geno.col - col.lf) * (m.ck.rg - m.ck.lf) / (col.rg - col.lf)
+  
+  # Return
+  
+  af
+  
+}
+
+# A function for Westcott adjustment with method 1 or
+# when layout does not follow the Westcott method
+
+foo.flat <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
+  
+  # Identify row and column for plot
+  
+  geno.row <- dfr[x, row]
+  geno.col <- dfr[x, col]
+  
+  # Identify all check values in the neighbourhood
+  
+  rows <- (geno.row - nrs):(geno.row + nrs)
+  columns <- (geno.col - ncb):(geno.col + ncb)
+
+  temp <- dfr[dfr[, row] %in% rows & dfr[, col] %in% columns & dfr[, geno] %in% c(ck1, ck2), ]
+
+  # Get adjustment factor
+  
+  af <- mean(dfr[, trait.aj])
+  
+  # Return
+  
+  af
   
 }
