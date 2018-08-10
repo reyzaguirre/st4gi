@@ -27,9 +27,10 @@
 #' if \code{ind = FALSE}, then both checks are centered around the overall mean.
 #' If \code{method = "flat"}, \code{ncb = 5}, \code{nrs = 1}, and \code{ind = FALSE}, then
 #' it corresponds to the method proposed by Westcott.
+#' If not specified, \code{nrs = floor(ncb / 2)}.
 #' If the layout does not correspond with the Westcott method, then the observed values
 #' are adjusted with the values of the checks planted nearby (this is in the rectangular
-#' region definied by \code{ceiling(ncb / 2)} columns and \code{nrs} rows at each side of
+#' region definied by \code{floor(ncb / 2)} columns and rows at each side of
 #' the plot) and a warning is issued.
 #' @return It returns the adjusted values.
 #' @author Raul Eyzaguirre.
@@ -47,12 +48,17 @@
 #' aj.w("y", "geno", "Dag", "Cem", "row", "col", dfr = dfr)
 #' @export
 
-aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = 3,
+aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
                  method = c("weighted", "flat"), p = 0.5, ind = TRUE, dfr) {
   
   # Match arguments
   
   method <- match.arg(method)
+  
+  # Define nrs
+  
+  if (is.null(nrs))
+    nrs <- floor(ncb / 2)
   
   # Error and warning messages
   
@@ -112,7 +118,8 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = 3,
   if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0 & method == "flat")
     foo <- foo.flat
   if (out$c1 == 1 | out$c2 == 1 | out$c3 == 1 | out$c4 == 1) {
-    ncb <- ceiling(ncb / 2)
+    nrs <- floor(ncb / 2)
+    ncb <- floor(ncb / 2)
     foo <- foo.flat
   }
   

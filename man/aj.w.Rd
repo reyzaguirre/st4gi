@@ -4,7 +4,7 @@
 \alias{aj.w}
 \title{Adjust values following the method of Westcott}
 \usage{
-aj.w(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = 3,
+aj.w(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
   method = c("weighted", "flat"), p = 0.5, ind = TRUE, dfr)
 }
 \arguments{
@@ -53,9 +53,10 @@ If \code{ind = TRUE}, each check is centered around its own mean before the adju
 if \code{ind = FALSE}, then both checks are centered around the overall mean.
 If \code{method = "flat"}, \code{ncb = 5}, \code{nrs = 1}, and \code{ind = FALSE}, then
 it corresponds to the method proposed by Westcott.
+If not specified, \code{nrs = floor(ncb / 2)}.
 If the layout does not correspond with the Westcott method, then the observed values
 are adjusted with the values of the checks planted nearby (this is in the rectangular
-region definied by \code{ceiling(ncb / 2)} columns and \code{nrs} rows at each side of
+region definied by \code{floor(ncb / 2)} columns and rows at each side of
 the plot) and a warning is issued.
 }
 \examples{
