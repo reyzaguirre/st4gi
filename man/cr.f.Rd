@@ -7,9 +7,9 @@
 cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc)
 }
 \arguments{
-\item{fnames}{Factor's names.}
+\item{fnames}{Factors' names.}
 
-\item{flevels}{A list with the factor's levels.}
+\item{flevels}{A list with the factors' levels.}
 
 \item{design}{The design, \code{crd} or \code{rcbd}.}
 

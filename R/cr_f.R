@@ -2,8 +2,8 @@
 #'
 #' This function creates the fieldbook and fieldplan for a factorial experiment
 #' following a CRD or a RCBD.
-#' @param fnames Factor's names.
-#' @param flevels A list with the factor's levels.
+#' @param fnames Factors' names.
+#' @param flevels A list with the factors' levels.
 #' @param design The design, \code{crd} or \code{rcbd}.
 #' @param nrep Number of replications or blocks.
 #' @param nc Number of available columns on the field.
@@ -32,8 +32,11 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc) {
   
   # Error messages
   
+  if (nf < 2)
+    stop("Include at least 2 factors.")
+  
   if (nf != length(flevels))
-    stop("Number of factor's names does not match with the list of factor's levels")
+    stop("Number of factors' names does not match with the list of factors' levels")
     
   for (i in 1:nf)
     if (nl[i] < 2)
