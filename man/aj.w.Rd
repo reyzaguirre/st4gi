@@ -5,7 +5,7 @@
 \title{Adjust values following the method of Westcott}
 \usage{
 aj.w(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
-  method = c("weighted", "flat"), p = 0.5, ind = TRUE, dfr)
+  method = c("weighted", "flat"), ind = TRUE, p = 0.5, dfr)
 }
 \arguments{
 \item{trait}{The trait to adjust.}
@@ -26,10 +26,10 @@ aj.w(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
 
 \item{method}{The method to fit the values. See details.}
 
+\item{ind}{Logical. See details.}
+
 \item{p}{The proportion of the check values differences used for the adjustment.
 See details.}
-
-\item{ind}{Logical. See details.}
 
 \item{dfr}{The name of the data frame.}
 }

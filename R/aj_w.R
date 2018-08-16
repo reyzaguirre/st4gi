@@ -11,9 +11,9 @@
 #' @param ncb Number of columns between two check columns.
 #' @param nrs Number of rows to span the row of the plot.
 #' @param method The method to fit the values. See details.
+#' @param ind Logical. See details.
 #' @param p The proportion of the check values differences used for the adjustment.
 #' See details.
-#' @param ind Logical. See details.
 #' @param dfr The name of the data frame.
 #' @details The values of the selected \code{trait} are adjusted using some mean
 #' of the values of all the checks located on the row of the plot plus the \code{nrs}
@@ -49,7 +49,7 @@
 #' @export
 
 aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
-                 method = c("weighted", "flat"), p = 0.5, ind = TRUE, dfr) {
+                 method = c("weighted", "flat"), ind = TRUE, p = 0.5, dfr) {
   
   # Match arguments
   
