@@ -20,7 +20,7 @@
 
 ggtai <- function(x, conf = 0.95) {
   
-  # arguments
+  # Arguments
   
   trait <- x$Trait
   alpha <- x$Tai_values[, 1]
@@ -29,7 +29,7 @@ ggtai <- function(x, conf = 0.95) {
   at <- x$ANOVA
   lc <- x$lc
   
-  # plot lambda limits
+  # Plot lambda limits
   
   lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$nl[2] - 2,
                            lc$nl[2] * (lc$nl[1] - 1) * (lc$nrep - 1))))
@@ -61,7 +61,7 @@ ggtai <- function(x, conf = 0.95) {
     ggplot2::xlab(expression(lambda)) +
     ggplot2::ylab(expression(alpha))
   
-  # alpha limits
+  # Alpha limits
   
   if (div2 > 0) {
     dt2 <- as.data.frame(cbind(lx, pi.alpha))
@@ -70,7 +70,7 @@ ggtai <- function(x, conf = 0.95) {
       ggplot2::geom_path(data = dt2, ggplot2::aes(x = dt2$lx, y = -dt2$pi.alpha, col = "black"))
   }
   
-  # lambda limits
+  # Lambda limits
   
   gg <- gg +
     ggplot2::geom_vline(xintercept = qf((1 - conf) / 2, lc$nl[2] - 2,
@@ -80,7 +80,7 @@ ggtai <- function(x, conf = 0.95) {
                                         lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
                         col = "gray")
   
-  # points
+  # Points
   
   gg <- gg +
     ggrepel::geom_text_repel(ggplot2::aes(x = lambda, y = alpha, label = rownames(dat))) +

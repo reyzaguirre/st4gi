@@ -102,7 +102,9 @@ ammi.gxe <- function(int.mean, trait.name = NULL, nrep = NULL, rdf = NULL,
 
   # Output
 
-  output <- list(Method = method, Trait = trait.name, Number_of_environments = env.num,
+  output <- list(Method = method, Trait = trait.name,
+                 Number_of_genotypes = geno.num,
+                 Number_of_environments = env.num,
                  Overall_mean = overall.mean, Genotype_means = geno.mean,
                  Environment_means = env.mean, Interaction_means = int.mean,
                  Interaction_effects = int.eff, PC_values_genotypes = PC.geno,

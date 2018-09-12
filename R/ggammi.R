@@ -23,11 +23,11 @@
 
 ggammi <- function(x, bp.type = 2, bp1.type = c("effects", "means")) {
   
-  # match arguments
+  # Match arguments
   
   bp1.type <- match.arg(bp1.type)
   
-  # arguments
+  # Arguments
   
   method <- x$Method
   trait.name <- x$Trait
@@ -38,9 +38,20 @@ ggammi <- function(x, bp.type = 2, bp1.type = c("effects", "means")) {
   G <- x$PC_values_genotypes
   E <- x$PC_values_environments
   PC.cont <- x$Contribution_PCs$Cont
+  geno.num <- x$Number_of_genotypes
   env.num <- x$Number_of_environments
   
-  #  Biplot-1
+  # Local variables
+  
+  xx <- NULL
+  x0 <- NULL
+  xe <- NULL
+  yy <- NULL
+  y0 <- NULL
+  ye <- NULL
+  type <- NULL
+  
+  # Biplot-1
   
   if (bp.type == 1) {
     
@@ -60,11 +71,11 @@ ggammi <- function(x, bp.type = 2, bp1.type = c("effects", "means")) {
     }
     
     dfr <- data.frame(xx = c(xcorg, xcore), yy = c(G[, 1], E[, 1]),
-                      type = c(rep("geno", length(xcorg)), rep("env", length(xcore))))
+                      type = c(rep("geno", geno.num), rep("env", env.num)))
 
     gg <- ggplot2::ggplot(dfr) +
       ggplot2::geom_point(ggplot2::aes(x = xx, y = yy, colour = type)) +
-      theme(legend.position = "none") +
+      ggplot2::theme(legend.position = "none") +
       ggplot2::ggtitle(main) +
       ggplot2::xlab(xlab) +
       ggplot2::ylab(paste("PC1 (", format(PC.cont[1], digits = 3), "%)")) +
@@ -81,13 +92,13 @@ ggammi <- function(x, bp.type = 2, bp1.type = c("effects", "means")) {
     main <- paste0(method, " biplot-2 for ", trait.name)
     
     dfr <- data.frame(xx = c(G[, 1], E[, 1]), yy = c(G[, 2], E[, 2]),
-                      type = c(rep("geno", length(G[, 1])), rep("env", length(E[, 1]))))
-    
+                      type = c(rep("geno", geno.num), rep("env", env.num)))
+
     dfr2 <- data.frame(x0 = rep(0, env.num), y0 = rep(0, env.num), xe = E[, 1], ye = E[, 2])
 
     gg <- ggplot2::ggplot(dfr) +
       ggplot2::geom_point(ggplot2::aes(x = xx, y = yy, colour = type)) +
-      theme(legend.position = "none") +
+      ggplot2::theme(legend.position = "none") +
       ggplot2::ggtitle(main) +
       ggplot2::xlab(paste("PC1 (", format(PC.cont[1], digits = 3), "%)")) +
       ggplot2::ylab(paste("PC2 (", format(PC.cont[2], digits = 3), "%)")) +
