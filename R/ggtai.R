@@ -26,14 +26,13 @@ ggtai <- function(x, conf = 0.95) {
   alpha <- x$Tai_values[, 1]
   lambda <- x$Tai_values[, 2] 
   dat <- as.data.frame(x$Tai_values)
-  dat$geno <- rownames(dat)
   at <- x$ANOVA
   lc <- x$lc
   
   # plot lambda limits
   
   lmax <- max(c(lambda, qf(1 - (1 - conf) / 2, lc$nl[2] - 2,
-                           lc$nl[2] * (lc$nl[1] - 1) * (lc$nrep - 1)))) * 1.1
+                           lc$nl[2] * (lc$nl[1] - 1) * (lc$nrep - 1))))
   
   # Prediction interval for alpha
   
@@ -43,10 +42,12 @@ ggtai <- function(x, conf = 0.95) {
   div2 <- (lc$nl[2] - 2) * at[2, 3] - (ta^2 + lc$nl[2] - 2) * at[3, 3]
   
   if (div2 < 0) {
-    warning("MS for blocks is too big in relation with MS for environments. Cannot compute prediction interval for alpha parameter.")
+    warning("MS for blocks is too big in relation with MS for environments.
+            Cannot compute prediction interval for alpha parameter.")
     amax <- max(abs(alpha)) * 1.05
   } else {
-    pi.alpha <- ta * ((lx * (lc$nl[1] - 1) * at[5, 3] * at[2, 3]) / ((at[2, 3] - at[3, 3]) * div2))^0.5
+    pi.alpha <- ta * ((lx * (lc$nl[1] - 1) * at[5, 3] * at[2, 3]) / 
+                        ((at[2, 3] - at[3, 3]) * div2))^0.5
     amax <- max(c(abs(alpha), pi.alpha))
   }
   
@@ -54,11 +55,11 @@ ggtai <- function(x, conf = 0.95) {
   
   main <- paste0("Tai stability analysis for ", trait)
   
-  gg <- ggplot2::ggplot(data = dat, ggplot2::aes(x = lambda, y = alpha)) +
+  gg <- ggplot2::ggplot(data = dat) +
+    ggplot2::geom_point(ggplot2::aes(x = lambda, y = alpha)) +
     ggplot2::ggtitle(main) +
     ggplot2::xlab(expression(lambda)) +
-    ggplot2::ylab(expression(alpha)) +
-    ggplot2::coord_cartesian(xlim = c(-0.05 * lmax, lmax), ylim = c(-amax, amax))
+    ggplot2::ylab(expression(alpha))
   
   # alpha limits
   
@@ -72,15 +73,17 @@ ggtai <- function(x, conf = 0.95) {
   # lambda limits
   
   gg <- gg +
-    ggplot2::geom_vline(xintercept = qf((1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
+    ggplot2::geom_vline(xintercept = qf((1 - conf) / 2, lc$nl[2] - 2,
+                                        lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
                         col = "gray") +
-    ggplot2::geom_vline(xintercept = qf(1 - (1 - conf) / 2, lc$nl[2] - 2, lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
+    ggplot2::geom_vline(xintercept = qf(1 - (1 - conf) / 2, lc$nl[2] - 2,
+                                        lc$nl[2] * lc$nl[1] * (lc$nrep - 1)),
                         col = "gray")
   
   # points
   
   gg <- gg +
-    ggrepel::geom_text_repel(ggplot2::aes(label = dat$geno, col = "blue")) +
+    ggrepel::geom_text_repel(ggplot2::aes(x = lambda, y = alpha, label = rownames(dat))) +
     ggplot2::theme(legend.position = 'none')
   
   gg
