@@ -1,4 +1,4 @@
-#' Check frequencies
+#' Check frequencies for complete replications
 #'
 #' Check frequencies for designs with complete replications and one or several
 #' environments. This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
@@ -22,9 +22,9 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
   
   # Main text
 
-  cat('------------------------------\n')
-  cat('Check design for trait', trait, '\n')
-  cat('------------------------------\n')
+  cat('----------------------------------------\n')
+  cat('Check frequencies for trait', trait, '\n')
+  cat('----------------------------------------\n')
   cat('\n')
 
   if (is.null(env)) {

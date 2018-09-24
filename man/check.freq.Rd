@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_freq.R
 \name{check.freq}
 \alias{check.freq}
-\title{Check frequencies}
+\title{Check frequencies for complete replications}
 \usage{
 check.freq(trait, geno, env = NULL, rep, dfr)
 }
