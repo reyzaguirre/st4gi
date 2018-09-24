@@ -406,13 +406,13 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
   if (out.mod == "rcbd") {
     oc <- 1
     if (exists('g', dfr)) {
-      geno <- dfr[, 'g']
+      geno <- as.character(dfr[, 'g'])
     } else {
       if (exists('geno', dfr)) {
-        geno <- dfr[, 'geno']
+        geno <- as.character(dfr[, 'geno'])
       } else {
         if (exists('name', dfr)) {
-          geno <- dfr[, 'name']
+          geno <- as.character(dfr[, 'name'])
         } else {
           oc <- 0
           warning("Genotypes are not defined. Use g or geno as labels.", call. = FALSE)  
@@ -420,10 +420,10 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
       }
     }
     if (exists('r', dfr)) {
-      rep <- dfr[, 'r']
+      rep <- as.character(dfr[, 'r'])
     } else {
       if (exists('rep', dfr)) {
-        rep <- dfr[, 'rep']
+        rep <- as.character(dfr[, 'rep'])
       } else {
         oc <- 0
         warning('Blocks are not defined. Use r or rep as labels.', call. = FALSE)
@@ -435,13 +435,13 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
   if (out.mod == "met") {
     oc <- 1
     if (exists('g', dfr)) {
-      geno <- dfr[, 'g']
+      geno <- as.character(dfr[, 'g'])
     } else {
       if (exists('geno', dfr)) {
-        geno <- dfr[, 'geno']
+        geno <- as.character(dfr[, 'geno'])
       } else {
         if (exists('name', dfr)) {
-          geno <- dfr[, 'name']
+          geno <- as.character(dfr[, 'name'])
         } else {
           oc <- 0
           warning("Genotypes are not defined. Use g or geno as labels.", call. = FALSE)  
@@ -449,20 +449,20 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
       }
     }
     if (exists('e', dfr)) {
-      env <- dfr[, 'e']
+      env <- as.character(dfr[, 'e'])
     } else {
       if (exists('env', dfr)) {
-        env <- dfr[, 'env']
+        env <- as.character(dfr[, 'env'])
       } else {
         oc <- 0
         warning('Environments are not defined. Use e or env as labels.', call. = FALSE)
       }
     }
     if (exists('r', dfr)) {
-      rep <- dfr[, 'r']
+      rep <- as.character(dfr[, 'r'])
     } else {
       if (exists('rep', dfr)) {
-        rep <- dfr[, 'rep']
+        rep <- as.character(dfr[, 'rep'])
       } else {
         oc <- 0
         warning('Blocks are not defined. Use r or rep as labels.', call. = FALSE)
@@ -595,15 +595,15 @@ sp5 <- function(dfr, f, ex, t1, tx) {
 
 sp6 <- function(dfr, geno, env, rep, t1, out.mod, out.max, tx) {
   if (exists(t1, dfr)) {
-    dfr$id <- 1:dim(dfr)[1]
+    dfr$id.res <- 1:dim(dfr)[1]
     if (out.mod == "rcbd")
       model <- aov(dfr[, t1] ~ geno + rep)
     if (out.mod == "met")
       model <- aov(dfr[, t1] ~ geno + env + rep %in% env + geno:env)
     res <- data.frame(residual = rstandard(model))
-    res$id <- as.numeric(row.names(res))
+    res$id.res <- as.numeric(row.names(res))
     dfr <- merge(dfr, res, all = T)[, -1]
-    cond <- abs(dfr[, 'residual']) > out.max
+    cond <- abs(dfr[, 'residual']) > out.max & !is.na(dfr[, 'residual'])
     output(dfr, cond, tx)
   }
   
