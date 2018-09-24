@@ -540,11 +540,11 @@ output <- function(dfr, cond, tx) {
 sp1 <- function(dfr, type, t1, t2, tx) {
   if (exists(t1, dfr) & exists(t2, dfr)) {
     if (type == 1)
-      cond <- dfr[, t1] > dfr[, t2]
+      cond <- dfr[, t1] > dfr[, t2] & !is.na(dfr[, t1]) & !is.na(dfr[, t2])
     if (type == 2)
-      cond <- (dfr[, t1] == 0 & !is.na(dfr[, t1])) & !is.na(dfr[, t2])
+      cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & !is.na(dfr[, t2])
     if (type == 3)
-      cond <- (dfr[, t1] == 0 & !is.na(dfr[, t1])) & dfr[, t2] > 0
+      cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & dfr[, t2] > 0 & !is.na(dfr[, t2])
     output(dfr, cond, tx)
   }
 }
@@ -553,7 +553,7 @@ sp1 <- function(dfr, type, t1, t2, tx) {
 
 sp2 <- function(dfr, temp, do, t1, tx) {
   if (exists(t1, dfr) & do == TRUE) {
-    cond <- (temp == FALSE) & (dfr[, t1] > 0)
+    cond <- temp == FALSE & dfr[, t1] > 0 & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   }
 }
@@ -562,7 +562,7 @@ sp2 <- function(dfr, temp, do, t1, tx) {
 
 sp3 <- function(dfr, vv, t1, tx) {
   if (exists(t1, dfr)) {
-    cond <- !(dfr[, t1] %in% vv)
+    cond <- !(dfr[, t1] %in% vv) & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   }
 }
@@ -572,9 +572,9 @@ sp3 <- function(dfr, vv, t1, tx) {
 sp4 <- function(dfr, ex, t1, tx) { 
   if (exists(t1, dfr)) {
     if (ex == "lower")
-      cond <- dfr[, t1] < 0
+      cond <- dfr[, t1] < 0 & !is.na(dfr[, t1])
     if (ex == "both")
-      cond <- dfr[, t1] < 0 | dfr[, t1] > 100
+      cond <- dfr[, t1] < 0 | dfr[, t1] > 100 & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   }
 }
@@ -584,9 +584,9 @@ sp4 <- function(dfr, ex, t1, tx) {
 sp5 <- function(dfr, f, ex, t1, tx) { 
   if (exists(t1, dfr)) {
     if (ex == "low")
-      cond <- dfr[, t1] < quantile(dfr[, t1], 0.25, na.rm = TRUE) - f * IQR(dfr[, t1], na.rm = TRUE)
+      cond <- dfr[, t1] < quantile(dfr[, t1], 0.25, na.rm = TRUE) - f * IQR(dfr[, t1], na.rm = TRUE) & !is.na(dfr[, t1])
     if (ex == "high")
-      cond <- dfr[, t1] > quantile(dfr[, t1], 0.75, na.rm = TRUE) + f * IQR(dfr[, t1], na.rm = TRUE)
+      cond <- dfr[, t1] > quantile(dfr[, t1], 0.75, na.rm = TRUE) + f * IQR(dfr[, t1], na.rm = TRUE) & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   } 
 }
