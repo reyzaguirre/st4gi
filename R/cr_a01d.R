@@ -34,6 +34,10 @@ cr.a01d <- function(geno, nrep, k, nc) {
   if (ng %% k != 0)
     stop("The size of the blocks is not appropriate. The number of genotypes must be a multiple of k.")
 
+  # Randomize list of genotypes
+
+  geno <- geno[sample(1:ng)]
+  
   # Actual number of columns
   
   nc <- floor(nc / k) * k
