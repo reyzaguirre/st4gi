@@ -4,7 +4,7 @@
 \alias{cr.rcbd}
 \title{Randomized Complete Block Design}
 \usage{
-cr.rcbd(geno, nb, nc)
+cr.rcbd(geno, nb, nc, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -12,6 +12,8 @@ cr.rcbd(geno, nb, nc)
 \item{nb}{Number of blocks.}
 
 \item{nc}{Number of available columns on the field.}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

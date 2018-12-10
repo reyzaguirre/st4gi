@@ -4,7 +4,7 @@
 \alias{cr.spld}
 \title{Split-Plot Design}
 \usage{
-cr.spld(A, B, nrep, nc = NULL)
+cr.spld(A, B, nrep, nc = NULL, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{A}{The levels of factor A (row factor to whole plots).}
@@ -15,6 +15,8 @@ cr.spld(A, B, nrep, nc = NULL)
 
 \item{nc}{Number of columns in each replication. Default is the
 number of levels of factor B.}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

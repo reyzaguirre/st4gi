@@ -4,7 +4,7 @@
 \alias{cr.a01d}
 \title{Alpha (0,1) design}
 \usage{
-cr.a01d(geno, nrep, k, nc)
+cr.a01d(geno, nrep, k, nc, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -14,6 +14,8 @@ cr.a01d(geno, nrep, k, nc)
 \item{k}{Block size.}
 
 \item{nc}{Number of available columns on the field.}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

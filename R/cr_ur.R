@@ -4,6 +4,7 @@
 #' experiment with genotypes randomly allocated on a field.
 #' @param geno The list of genotypes.
 #' @param nc Number of available columns on the field.
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -11,8 +12,12 @@
 #' cr.ur(1:100, 7)
 #' @export
 
-cr.ur <- function(geno, nc) {
+cr.ur <- function(geno, nc, serpentine = c("yes", "no")) {
   
+  # Match arguments
+  
+  serpentine <- match.arg(serpentine)
+
   # Error messages
   
   ng <- length(geno)
@@ -26,6 +31,12 @@ cr.ur <- function(geno, nc) {
   
   # Fieldplan array
   
+  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
+  
+  if (serpentine == 'yes' & nr > 1)
+    for (i in seq(2, nr, 2))
+      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+
   plan <- array(dim = c(nr, nc))
 
   rownames(plan) <- paste("row", 1:nr)
@@ -35,23 +46,28 @@ cr.ur <- function(geno, nc) {
   
   geno <- sample(geno)
 
-  k <- 1
-
   for (i in 1:nr)
-    for (j in 1:nc) {
-      plan[i, j] <- geno[k]
-      k <- k + 1
-    }
-
-  # Create fielbook
+    for (j in 1:nc)
+      plan[i, j] <- geno[plan.id[i, j]]
+  
+  # Rows and columns numbers
   
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
+
+  # Create fielbook
   
-  book <- data.frame(plot = 1:(nr * nc), row, col, geno = c(t(plan)),
+  book <- data.frame(plot.num = c(t(plan.id)), row, col, geno = c(t(plan)),
                      stringsAsFactors = F)
   book <- book[!is.na(book$geno), ]
 
+  # Sort by plot number
+  
+  if (serpentine == 'yes' & nr > 1) {
+    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+    rownames(book) <- 1:dim(book)[1]
+  }
+  
   # Return
   
   list(plan = plan, book = book)

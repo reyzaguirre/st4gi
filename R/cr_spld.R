@@ -6,6 +6,7 @@
 #' @param nrep Number of replications (or blocks).
 #' @param nc Number of columns in each replication. Default is the
 #' number of levels of factor B.
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -14,8 +15,12 @@
 #' cr.spld(A, B, 3)
 #' @export
 
-cr.spld <- function(A, B, nrep, nc = NULL) {
+cr.spld <- function(A, B, nrep, nc = NULL, serpentine = c("yes", "no")) {
   
+  # Match arguments
+  
+  serpentine <- match.arg(serpentine)
+
   # Error messages
   
   nla <- length(A)
@@ -39,6 +44,12 @@ cr.spld <- function(A, B, nrep, nc = NULL) {
 
   # Fieldplan array
   
+  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
+
+  if (serpentine == 'yes' & nr > 1)
+    for (i in seq(2, nr, 2))
+      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+  
   plan <- array(dim = c(nla * nr, nc, nrep))
 
   rownames(plan) <- paste("row", 1:(nla * nr))
@@ -47,49 +58,51 @@ cr.spld <- function(A, B, nrep, nc = NULL) {
   
   # Include treatments at random
 
-  rana <- array(dim = c(nla, nrep))
-  ranb <- array(dim = c(nlb, nla, nrep))
-  
-  for (i in 1:nrep) {
-    rana[, i] <- sample(1:nla)
-    for (j in 1:nla) {
-      ranb[, j, i] <- sample(1:nlb)
-      stab <- paste(A[rana[j, i]], B[ranb[, j, i]], sep = "_")
-      k <- 1
-      for (l in ((j - 1) * nr + 1):(j * nr))
-        for (m in 1:nc) {
-          plan[l, m, i] <- stab[k]
-          k <- k + 1
-        }
+  for (k in 1:nrep) {
+    rana <- sample(A)
+    for (l in 1:nla) {
+      ranb <- sample(B)
+      stab <- paste(rana[l], ranb, sep = "_")
+      for (i in 1:nr)
+        for (j in 1:nc)
+          plan[i + (l - 1) * nr, j, k] <- stab[plan.id[i, j]]
     }
   }
   
   # Create fielbook
   
-  plot <- as.integer(gl(nla * nrep, nr * nc))
-  block <- as.integer(gl(nrep, nla * nr * nc))
   row <- rep(as.integer(gl(nla * nr, nc)), nrep)
   col <- rep(rep(1:nc, nla * nr), nrep)
+  block <- as.integer(gl(nrep, nla * nr * nc))
   
-  sta <- NULL
-  stb <- NULL
-  stab <- NULL
+  treat <- NULL
+  subplot.num <- NULL
   
-  for (i in 1:nrep) {
-    sta <- c(sta, c(sapply(A[rana[, i]], rep, nr * nc)))
-    for (j in 1:nla) {
-      temp <- B[c(ranb[, j, i])]
-      length(temp) <- nr * nc
-      stb <- c(stb, temp)
-    }
-    stab <- c(stab, c(t(plan[, , i])))
+  for (k in 1:nrep) {
+    treat <- c(treat, c(t(plan[, , k])))
+    for (l in 1:nla)
+      subplot.num <- c(subplot.num, c(t(plan.id)) + (k - 1) * nlb * nla + nlb * (l - 1))
   }
   
-  book <- data.frame(plot, block, row, col, A = sta, B = stb,
-                     treat = stab, stringsAsFactors = F)
+  book <- data.frame(subplot.num, block, row, col, treat, stringsAsFactors = FALSE)
   book <- book[!is.na(book$treat), ]
-  book$subplot <- 1:dim(book)[1]
-  book <- book[, c(1, 8, 2, 3, 4, 5, 6, 7)]
+  
+  # Falta generar niveles de A y B
+  
+  book$A <- c(data.frame(sapply(book$treat, strsplit, "_"),
+                         stringsAsFactors = FALSE)[1, ])
+  book$B <- c(data.frame(sapply(book$treat, strsplit, "_"),
+                         stringsAsFactors = FALSE)[2, ])
+
+  # Reorder columns
+  
+  book <- book[, c(1, 2, 3, 4, 6, 7, 5)]
+
+  # Sort by plot number
+  
+  if (serpentine == 'yes' & nr > 1)
+    book <- book[sort(book$subplot.num, index.return = TRUE)$ix, ]
+  
   rownames(book) <- 1:dim(book)[1]
   
   # Return

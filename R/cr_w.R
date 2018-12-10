@@ -8,6 +8,7 @@
 #' @param ck2 Name of check 2.
 #' @param nc Number of available columns on the field.
 #' @param ncb Number of columns between two check columns (default is 10).
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @details The genotypes are randomly allocated on a field between equally spaced
 #' columns of two alternating check varieties. Check columns are planted each
 #' \code{ncb} columns.
@@ -18,11 +19,15 @@
 #' In: Proc. of the 4th meeting of the Biometrics in Plant Breeding Section of Eucarpia.
 #' INRA Poitier, France, pp 91-95.
 #' @examples
-#' cr.w(1:100, "A", "B", 100)
+#' cr.w(1:100, "A", "B", 23)
 #' @export
 
-cr.w <- function(geno, ck1, ck2, nc, ncb = 10) {
+cr.w <- function(geno, ck1, ck2, nc, ncb = 10, serpentine = c("yes", "no")) {
   
+  # Match arguments
+  
+  serpentine <- match.arg(serpentine)
+
   # Error messages
   
   ng <- length(geno)
@@ -39,11 +44,18 @@ cr.w <- function(geno, ck1, ck2, nc, ncb = 10) {
   
   # Fieldplan array
   
+  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
+
+  if (serpentine == 'yes' & nr > 1)
+    for (i in seq(2, nr, 2)) {
+      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+    }
+
   plan <- array(dim = c(nr, nc))
   
   rownames(plan) <- paste("row", 1:nr)
   colnames(plan) <- paste("col", 1:nc)
-
+  
   # Include checks, selected columns
   
   plan[seq(1, nr, 2), seq(1, nc, 2 + 2 * ncb)] <- ck1
@@ -54,33 +66,42 @@ cr.w <- function(geno, ck1, ck2, nc, ncb = 10) {
     plan[seq(2, nr, 2), seq(2 + ncb, nc, 2 + 2 * ncb)] <- ck1
   }
   
-  # Include genotypes at random
+  # Random order for genotypes
   
   geno <- sample(geno)
   
-  k <- 1
+  # Get positions for genotypes
   
-  for (i in 1:nr)
-    for (b in 1:nbr)
-      for (j in (b + 1 + (b - 1) * ncb):(b * (1 + ncb))) {
-        plan[i, j] <- geno[k]
-        k <- k + 1
-      }
+  temp <- plan.id
+  temp[!is.na(plan)] <- NA
+  temp <- c(temp)
+  temp <- sort(temp[!is.na(temp)])
+  temp <- temp[1:ng]
+  
+  # Create a data frame with positions and genotypes
+  
+  temp <- data.frame(temp, geno)
 
-  # Delete non necessary checks
-  
-  neb <- nbr * nr - nb  # Number of empty blocks
-  if (neb > 0)
-    plan[nr, (nc - (ncb + 1) * neb + 1):nc] <- NA
+  # Asign genotypes to field plan
+    
+  for (k in 1:ng) {
+    plan[plan.id == temp[k, 1]] <- temp[k, 2]
+  }
 
   # Create fielbook
   
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
   
-  book <- data.frame(plot = NA, row, col, geno = c(t(plan)), stringsAsFactors = FALSE)
+  book <- data.frame(plot.num = c(t(plan.id)), row, col,
+                     geno = c(t(plan)), stringsAsFactors = FALSE)
   book <- book[!is.na(book$geno), ]
-  book$plot <- 1:dim(book)[1]
+  
+  # Sort by plot number
+  
+  if (serpentine == 'yes' & nr > 1)
+    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+  
   rownames(book) <- 1:dim(book)[1]
   
   # Return

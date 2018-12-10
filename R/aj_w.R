@@ -43,7 +43,7 @@
 #' dfr <- cr.w(1:1000, "Dag", "Cem", 40, 10)
 #' dfr <- dfr$book
 #' # Create some random data
-#' dfr$y <- rnorm(1134)
+#' dfr$y <- rnorm(1136)
 #' # Run adjustment
 #' aj.w("y", "geno", "Dag", "Cem", "row", "col", dfr = dfr)
 #' @export

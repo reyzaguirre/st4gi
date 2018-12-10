@@ -5,6 +5,7 @@
 #' @param nrep Number of replications.
 #' @param k Block size.
 #' @param nc Number of available columns on the field.
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @details The genotypes are randomly allocated on a field following an alpha
 #' (0,1) design. In this design each replication is a complete block and is
 #' divided into \code{s} incomplete blocks of size \code{k}. For any pair of
@@ -24,8 +25,12 @@
 #' cr.a01d(1:100, 3, 5, 28)
 #' @export
 
-cr.a01d <- function(geno, nrep, k, nc) {
+cr.a01d <- function(geno, nrep, k, nc, serpentine = c("yes", "no")) {
   
+  # Match arguments
+  
+  serpentine <- match.arg(serpentine)
+
   # Number of genotypes and blocks
   
   ng <- length(geno)
@@ -133,6 +138,15 @@ cr.a01d <- function(geno, nrep, k, nc) {
   
   # Fieldplan array
   
+  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
+  plan.id.block <- t(array(c(sapply(1:16, rep, 5)), dim = c(nc, nr)))
+  
+  if (serpentine == 'yes' & nr > 1)
+    for (i in seq(2, nr, 2)) {
+      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+      plan.id.block[i, ] <- sort(plan.id.block[i, ], decreasing = TRUE)
+    }
+
   plan <- array(dim = c(nr, nc, nrep))
 
   rownames(plan) <- paste("row", 1:nr)
@@ -141,14 +155,11 @@ cr.a01d <- function(geno, nrep, k, nc) {
   
   # Allocate genotypes in the fieldplan
   
-  for (i in 1:nrep) {
-    sg <- c(ad[, , i])
-    m <- 1
-    for (j in 1:nr)
-      for (l in 1:nc) {
-        plan[j, l, i] <- geno[sg[m]]
-        m <- m + 1
-      }
+  for (l in 1:nrep) {
+    sg <- c(ad[, , l])
+    for (i in 1:nr)
+      for (j in 1:nc)
+        plan[i, j, l] <- sg[plan.id[i, j]]
   }
   
   # Create fielbook
@@ -156,19 +167,25 @@ cr.a01d <- function(geno, nrep, k, nc) {
   r <- as.integer(gl(nrep, nr * nc))
   row <- rep(as.integer(gl(nr, nc)), nrep)
   col <- rep(rep(1:nc, nr), nrep)
-  block <- as.integer(gl(s, k))
-  length(block) <- nr * nc
-  block <- rep(block, nrep)
-  
+
   geno <- NULL
+  plot.num <- NULL
+  block <- NULL
   
-  for (i in 1:nrep)
+  for (i in 1:nrep) {
     geno <- c(geno, c(t(plan[, , i])))
+    plot.num <- c(plot.num, c(t(plan.id)) + ng * (i - 1))
+    block <- c(block, c(t(plan.id.block)))
+  }
   
-  book <- data.frame(r, block, row, col, geno, stringsAsFactors = F)
+  book <- data.frame(plot.num, r, block, row, col, geno, stringsAsFactors = FALSE)
   book <- book[!is.na(book$geno), ]
-  book$plot <- 1:dim(book)[1]
-  book <- book[, c(6, 1, 2, 3, 4, 5)]
+
+  # Sort by plot number
+  
+  if (serpentine == 'yes' & nr > 1)
+    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+  
   rownames(book) <- 1:dim(book)[1]
 
   # Return

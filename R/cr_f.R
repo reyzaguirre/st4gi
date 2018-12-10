@@ -7,6 +7,7 @@
 #' @param design The design, \code{crd} or \code{rcbd}.
 #' @param nrep Number of replications or blocks.
 #' @param nc Number of available columns on the field.
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -16,11 +17,12 @@
 #' cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12)
 #' @export
 
-cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc) {
+cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc, serpentine = c("yes", "no")) {
   
   # Match arguments
   
   design <- match.arg(design)
+  serpentine <- match.arg(serpentine)
   
   # Number of factors
   
@@ -60,10 +62,10 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc) {
   # Create fielbook and fieldplan
   
   if (design == "crd")
-    output <- cr.crd(trt, nrep, nc)
+    output <- cr.crd(trt, nrep, nc, serpentine)
   
   if (design == "rcbd")
-    output <- cr.rcbd(trt, nrep, nc)
+    output <- cr.rcbd(trt, nrep, nc, serpentine)
   
   # Add columns to fielbook
   

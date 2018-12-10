@@ -4,12 +4,14 @@
 \alias{cr.ur}
 \title{Unreplicated experiment}
 \usage{
-cr.ur(geno, nc)
+cr.ur(geno, nc, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
 
 \item{nc}{Number of available columns on the field.}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

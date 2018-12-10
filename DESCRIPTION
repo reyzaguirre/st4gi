@@ -1,8 +1,8 @@
 Package: st4gi
 Type: Package
 Title: Statistical tools for genetic improvement
-Version: 2.2.2
-Date: 2018-09-12
+Version: 2.2.3
+Date: 2018-12-10
 Author: Raul Eyzaguirre
 Maintainer: Raul Eyzaguirre <R.EYZAGUIRRE@CGIAR.ORG>
 Description: Statistical tools for the analysis of experimental data for crop
@@ -19,4 +19,4 @@ Copyright: International Potato Center (2015)
 LazyData: true
 Suggests:
     testthat
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

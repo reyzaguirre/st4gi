@@ -4,7 +4,8 @@
 \alias{cr.f}
 \title{Create design for a factorial experiment}
 \usage{
-cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc)
+cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc,
+  serpentine = c("yes", "no"))
 }
 \arguments{
 \item{fnames}{Factors' names.}
@@ -16,6 +17,8 @@ cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc)
 \item{nrep}{Number of replications or blocks.}
 
 \item{nc}{Number of available columns on the field.}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

@@ -2,6 +2,7 @@
 #'
 #' This function creates the fieldbook and fieldplan for a LSD.
 #' @param geno The list of genotypes.
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -9,7 +10,11 @@
 #' cr.lsd(c("A", "B", "C", "D", "E"))
 #' @export
 
-cr.lsd <- function(geno) {
+cr.lsd <- function(geno, serpentine = c("yes", "no")) {
+  
+  # Match arguments
+  
+  serpentine <- match.arg(serpentine)
   
   # Error messages
   
@@ -50,8 +55,23 @@ cr.lsd <- function(geno) {
   row <- as.integer(gl(ng, ng))
   col <- rep(1:ng, ng)
 
-  book <- data.frame(plot = 1:(ng * ng), row, col, geno = c(t(plan)),
+  plan.id <- t(array(1:(ng*ng), dim = c(ng, ng)))
+  
+  if (serpentine == 'yes')
+    for (i in seq(2, ng, 2))
+      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+  
+  plot.num <- c(t(plan.id))
+  
+  book <- data.frame(plot.num, row, col, geno = c(t(plan)),
                      stringsAsFactors = FALSE)
+
+  # Sort by plot number
+  
+  if (serpentine == 'yes') {
+    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+    rownames(book) <- 1:dim(book)[1]
+  }
 
   # Return
   

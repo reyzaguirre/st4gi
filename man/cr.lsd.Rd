@@ -4,10 +4,12 @@
 \alias{cr.lsd}
 \title{Latin Square Design}
 \usage{
-cr.lsd(geno)
+cr.lsd(geno, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

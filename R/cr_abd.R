@@ -5,6 +5,7 @@
 #' @param checks The list of checks.
 #' @param nb Number of blocks.
 #' @param nc Number of available columns on the field.
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -13,7 +14,11 @@
 #' cr.abd(1:50, checks, 3, 7)
 #' @export
 
-cr.abd <- function(geno, checks, nb, nc) {
+cr.abd <- function(geno, checks, nb, nc, serpentine = c("yes", "no")) {
+  
+  # Match arguments
+  
+  serpentine <- match.arg(serpentine)
   
   # Error messages
 
@@ -56,6 +61,12 @@ cr.abd <- function(geno, checks, nb, nc) {
   
   # Fieldplan array
   
+  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
+  
+  if (serpentine == 'yes' & nr > 1)
+    for (i in seq(2, nr, 2))
+      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+  
   plan <- array(dim = c(nr, nc, nb))
   
   rownames(plan) <- paste("row", 1:nr)
@@ -64,13 +75,10 @@ cr.abd <- function(geno, checks, nb, nc) {
   
   # Add genotypes and checks to the fieldplan
 
-  for (i in 1:nb) {
-    k <- 1
-    for (j in 1:nr)
-      for (l in 1:nc) {
-        plan[j, l, i] <- blocks[[i]][k]
-        k <- k + 1
-      }
+  for (k in 1:nb) {
+    for (i in 1:nr)
+      for (j in 1:nc)
+        plan[i, j, k] <- blocks[[k]][plan.id[i, j]]
   }
   
   # Create fielbook
@@ -80,16 +88,25 @@ cr.abd <- function(geno, checks, nb, nc) {
   col <- rep(rep(1:nc, nr), nb)
   
   geno <- NULL
+  plot.num <- NULL
+  to.add <- 0
 
-  for (i in 1:nb)
+  for (i in 1:nb) {
     geno <- c(geno, c(t(plan[, , i])))
+    plot.num <- c(plot.num, c(t(plan.id)) + to.add)
+    to.add <- to.add + sum(!is.na(plan[, , i]))
+  }
   
-  book <- data.frame(block, row, col, geno, stringsAsFactors = F)
+  book <- data.frame(plot.num, block, row, col, geno, stringsAsFactors = FALSE)
   book <- book[!is.na(book$geno), ]
-  book$plot <- 1:dim(book)[1]
-  book <- book[, c(5, 1, 2, 3, 4)]
-  rownames(book) <- 1:dim(book)[1]
+
+  # Sort by plot number
   
+  if (serpentine == 'yes' & nr > 1)
+    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+  
+  rownames(book) <- 1:dim(book)[1]
+
   # Return
   
   list(plan = plan, book = book)

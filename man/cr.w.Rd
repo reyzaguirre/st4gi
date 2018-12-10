@@ -4,7 +4,7 @@
 \alias{cr.w}
 \title{Unreplicated experiment with a grid of checks}
 \usage{
-cr.w(geno, ck1, ck2, nc, ncb = 10)
+cr.w(geno, ck1, ck2, nc, ncb = 10, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -16,6 +16,8 @@ cr.w(geno, ck1, ck2, nc, ncb = 10)
 \item{nc}{Number of available columns on the field.}
 
 \item{ncb}{Number of columns between two check columns (default is 10).}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.
@@ -31,7 +33,7 @@ columns of two alternating check varieties. Check columns are planted each
 \code{ncb} columns.
 }
 \examples{
-cr.w(1:100, "A", "B", 100)
+cr.w(1:100, "A", "B", 23)
 }
 \references{
 Westcott, B. (1981). Two methods for early generation yield assessment in winter wheat.

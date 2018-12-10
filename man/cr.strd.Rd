@@ -4,7 +4,7 @@
 \alias{cr.strd}
 \title{Strip-Split-Plot Design}
 \usage{
-cr.strd(A, B, nrep)
+cr.strd(A, B, nrep, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{A}{The levels of factor A (row factor).}
@@ -12,6 +12,8 @@ cr.strd(A, B, nrep)
 \item{B}{The levels of factor B (column factor).}
 
 \item{nrep}{Number of replications (or blocks).}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

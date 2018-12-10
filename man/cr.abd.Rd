@@ -4,7 +4,7 @@
 \alias{cr.abd}
 \title{Augmented Block Design}
 \usage{
-cr.abd(geno, checks, nb, nc)
+cr.abd(geno, checks, nb, nc, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -14,6 +14,8 @@ cr.abd(geno, checks, nb, nc)
 \item{nb}{Number of blocks.}
 
 \item{nc}{Number of available columns on the field.}
+
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.
