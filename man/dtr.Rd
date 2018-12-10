@@ -4,8 +4,8 @@
 \alias{dtr}
 \title{Data transformations}
 \usage{
-dtr(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
-  base = 10, n = NULL, dfr)
+dtr(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1",
+  "arcsin"), base = 10, n = NULL, dfr)
 }
 \arguments{
 \item{trait}{The trait to transform.}

@@ -4,8 +4,8 @@
 \alias{plot.tai}
 \title{Tai plot}
 \usage{
-\method{plot}{tai}(x, conf = 0.95, color = c("darkorange", "black", "gray"),
-  ...)
+\method{plot}{tai}(x, conf = 0.95, color = c("darkorange", "black",
+  "gray"), ...)
 }
 \arguments{
 \item{x}{An object of class \code{tai}.}
