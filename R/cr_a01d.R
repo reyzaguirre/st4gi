@@ -139,7 +139,7 @@ cr.a01d <- function(geno, nrep, k, nc, serpentine = c("yes", "no")) {
   # Fieldplan array
   
   plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
-  plan.id.block <- t(array(c(sapply(1:16, rep, 5)), dim = c(nc, nr)))
+  plan.id.block <- t(array(c(sapply(1:s, rep, k)), dim = c(nc, nr)))
   
   if (serpentine == 'yes' & nr > 1)
     for (i in seq(2, nr, 2)) {
@@ -156,10 +156,8 @@ cr.a01d <- function(geno, nrep, k, nc, serpentine = c("yes", "no")) {
   # Allocate genotypes in the fieldplan
   
   for (l in 1:nrep) {
-    sg <- c(ad[, , l])
-    for (i in 1:nr)
-      for (j in 1:nc)
-        plan[i, j, l] <- sg[plan.id[i, j]]
+    sg <- geno[c(ad[, , l])]
+    plan[, , l] <- array(sg[plan.id], c(nr, nc))
   }
   
   # Create fielbook
