@@ -35,12 +35,8 @@ cr.strd <- function(A, B, nrep, serpentine = c("yes", "no")) {
 
   # Fieldplan array
   
-  plan.id <- t(array(1:(nlb*nla), dim = c(nlb, nla)))
-  
-  if (serpentine == 'yes')
-    for (i in seq(2, nla, 2))
-      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
-  
+  plan.id <- fp(nla, nlb, serpentine)
+
   plan <- array(dim = c(nla, nlb, nrep))
 
   rownames(plan) <- paste("row", 1:nla)

@@ -55,11 +55,7 @@ cr.lsd <- function(geno, serpentine = c("yes", "no")) {
   row <- as.integer(gl(ng, ng))
   col <- rep(1:ng, ng)
 
-  plan.id <- t(array(1:(ng*ng), dim = c(ng, ng)))
-  
-  if (serpentine == 'yes')
-    for (i in seq(2, ng, 2))
-      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+  plan.id <- fp(ng, ng, serpentine)
   
   plot.num <- c(t(plan.id))
   

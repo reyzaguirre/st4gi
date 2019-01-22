@@ -34,12 +34,10 @@ cr.rcbd <- function(geno, nb, nc, serpentine = c("yes", "no")) {
   
   # Fieldplan array
   
-  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
+  plan.id <- fp(nr, nc, serpentine)
   
-  if (serpentine == 'yes' & nr > 1)
-    for (i in seq(2, nr, 2))
-      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
-  
+  # Create fieldplan
+
   plan <- array(dim = c(nr, nc, nb))
   
   rownames(plan) <- paste("row", 1:nr)
@@ -50,9 +48,7 @@ cr.rcbd <- function(geno, nb, nc, serpentine = c("yes", "no")) {
 
   for (k in 1:nb) {
     sg <- sample(geno)
-    for (i in 1:nr)
-      for (j in 1:nc)
-        plan[i, j, k] <- sg[plan.id[i, j]]
+    plan[, , k] <- array(sg[plan.id], c(nr, nc))
   }
   
   # Create fielbook

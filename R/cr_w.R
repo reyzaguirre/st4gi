@@ -44,13 +44,8 @@ cr.w <- function(geno, ck1, ck2, nc, ncb = 10, serpentine = c("yes", "no")) {
   
   # Fieldplan array
   
-  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
-
-  if (serpentine == 'yes' & nr > 1)
-    for (i in seq(2, nr, 2)) {
-      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
-    }
-
+  plan.id <- fp(nr, nc, serpentine)
+  
   plan <- array(dim = c(nr, nc))
   
   rownames(plan) <- paste("row", 1:nr)

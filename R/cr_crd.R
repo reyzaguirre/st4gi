@@ -34,25 +34,19 @@ cr.crd <- function(geno, nrep, nc, serpentine = c("yes", "no")) {
 
   # Fieldplan array
   
-  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
-  
-  if (serpentine == 'yes' & nr > 1)
-    for (i in seq(2, nr, 2))
-      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
-    
-  plan <- array(dim = c(nr, nc))
+  plan.id <- fp(nr, nc, serpentine)
 
-  rownames(plan) <- paste("row", 1:nr)
-  colnames(plan) <- paste("col", 1:nc)
-  
-  # Include genotypes at random
+  # Sort genotypes
   
   geno <- sample(rep(geno, nrep))
   
-  for (i in 1:nr)
-    for (j in 1:nc)
-      plan[i, j] <- geno[plan.id[i, j]]
+  # Create fieldplan
   
+  plan <- array(geno[plan.id], c(nr, nc))
+      
+  rownames(plan) <- paste("row", 1:nr)
+  colnames(plan) <- paste("col", 1:nc)
+      
   # Rows and columns numbers
   
   row <- as.integer(gl(nr, nc))
@@ -74,5 +68,19 @@ cr.crd <- function(geno, nrep, nc, serpentine = c("yes", "no")) {
   # Return
   
   list(plan = plan, book = book)
+  
+}
+
+# Function to create fieldplan array
+
+fp <- function(nr, nc, serpentine) {
+  
+  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
+  
+  if (serpentine == 'yes' & nr > 1)
+    for (i in seq(2, nr, 2))
+      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
+    
+  plan.id 
   
 }
