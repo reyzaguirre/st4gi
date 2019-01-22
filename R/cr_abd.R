@@ -71,11 +71,8 @@ cr.abd <- function(geno, checks, nb, nc, serpentine = c("yes", "no")) {
   
   # Add genotypes and checks to the fieldplan
 
-  for (k in 1:nb) {
-    for (i in 1:nr)
-      for (j in 1:nc)
-        plan[i, j, k] <- blocks[[k]][plan.id[i, j]]
-  }
+  for (k in 1:nb)
+    plan[, , k] <- array(blocks[[k]][plan.id], c(nr, nc))
   
   # Create fielbook
   

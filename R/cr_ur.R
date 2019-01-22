@@ -42,9 +42,7 @@ cr.ur <- function(geno, nc, serpentine = c("yes", "no")) {
   
   geno <- sample(geno)
 
-  for (i in 1:nr)
-    for (j in 1:nc)
-      plan[i, j] <- geno[plan.id[i, j]]
+  plan <- array(geno[plan.id], c(nr, nc))
   
   # Rows and columns numbers
   
