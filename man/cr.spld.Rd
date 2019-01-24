@@ -4,17 +4,16 @@
 \alias{cr.spld}
 \title{Split-Plot Design}
 \usage{
-cr.spld(A, B, nrep, nc = NULL, serpentine = c("yes", "no"))
+cr.spld(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
 }
 \arguments{
-\item{A}{The levels of factor A (row factor to whole plots).}
+\item{fnames}{Factors' names for two or three factors. See details.}
 
-\item{B}{The levels of factor B (column factor to subplots).}
+\item{flevels}{A list with the factors' levels.}
 
-\item{nrep}{Number of replications (or blocks).}
+\item{nb}{Number of blocks for the first factor.}
 
-\item{nc}{Number of columns in each replication. Default is the
-number of levels of factor B.}
+\item{nc}{Number of columns. See details.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
@@ -22,12 +21,20 @@ number of levels of factor B.}
 It returns the fieldbook and fieldplan.
 }
 \description{
-This function creates the fieldbook and fieldplan for a Split-Plot design.
+This function creates the fieldbook and fieldplan for a Split-Plot 
+or a Split-Plit-Plot design with a RCBD for the whole plots.
+}
+\details{
+Two or three factors must be included. The first factor goes to the
+whole plots, the second to the sub-plots and the third, if any, to the sub-sub-plots.
+The number of columns \code{"nc"} is the maximum available number of columns on
+the field for the sub-plots or the sub-sub-plots if a third factor is provided.
+Default is the number of levels of the last factor.
 }
 \examples{
 A <- paste0("a", 1:4)
 B <- paste0("b", 1:3)
-cr.spld(A, B, 3)
+cr.spld(c("A", "B"), list(A, B), 3)
 }
 \author{
 Raul Eyzaguirre.
