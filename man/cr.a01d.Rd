@@ -4,14 +4,14 @@
 \alias{cr.a01d}
 \title{Alpha (0,1) design}
 \usage{
-cr.a01d(geno, nrep, k, nc, serpentine = c("yes", "no"))
+cr.a01d(geno, nb, k, nc, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
 
-\item{nrep}{Number of replications.}
+\item{nb}{Number of complete blocks.}
 
-\item{k}{Block size.}
+\item{k}{Size for the incomplete blocks (sub-blocks).}
 
 \item{nc}{Number of available columns on the field.}
 
@@ -25,17 +25,17 @@ This function creates the fieldbook and fieldplan for an alpha (0,1) design.
 }
 \details{
 The genotypes are randomly allocated on a field following an alpha
-(0,1) design. In this design each replication is a complete block and is
+(0,1) design. In this design each block is a complete replication that is
 divided into \code{s} incomplete blocks of size \code{k}. For any pair of
 genotypes, the number of times they concur into the same incomplete block
 is 0 or 1 (hence the name of the design). There are 4 options for this design:
 \itemize{
- \item \code{nrep = 2} and \code{k <= s}.
- \item \code{nrep = 3}, \code{s} odd, and \code{k <= s}.
- \item \code{nrep = 3}, \code{s} even, and \code{k <= s-1}.
- \item \code{nrep = 4}, \code{s} even and not a multiple of 3, and \code{k <= s}.
+ \item \code{nb = 2} and \code{k <= s}.
+ \item \code{nb = 3}, \code{s} odd, and \code{k <= s}.
+ \item \code{nb = 3}, \code{s} even, and \code{k <= s-1}.
+ \item \code{nb = 4}, \code{s} even and not a multiple of 3, and \code{k <= s}.
 }
-The replications and blocks inside replications are disposed alongside the rows.
+The blocks and incomplete blocks are disposed alongside the rows.
 }
 \examples{
 cr.a01d(1:100, 2, 5, 40)
