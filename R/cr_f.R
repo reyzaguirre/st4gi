@@ -17,7 +17,8 @@
 #' cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12)
 #' @export
 
-cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc, serpentine = c("yes", "no")) {
+cr.f <- function(fnames, flevels, design = c("crd", "rcbd"),
+                 nrep, nc, serpentine = c("yes", "no")) {
   
   # Match arguments
   
@@ -67,7 +68,7 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc, serpentin
   if (design == "rcbd")
     output <- cr.rcbd(trt, nrep, nc, serpentine)
   
-  # Add columns to fielbook
+  # Add columns for factor levels
   
   temp <- unlist(strsplit(output$book$geno, "_"))
   
@@ -75,6 +76,8 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc, serpentin
   
   for (i in 1:nf)
     output$book[, fnames[i]] <- fm[, i]
+  
+  # Rename geno by treat
   
   if (design == "crd")
     colnames(output$book)[4] <- "treat"
