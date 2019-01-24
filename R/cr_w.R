@@ -37,8 +37,8 @@ cr.w <- function(geno, ck1, ck2, nc, ncb = 10, serpentine = c("yes", "no")) {
   
   # Dimensions
   
-  nb <- ceiling(ng / ncb)            # Number of blocks
-  nbr <- floor((nc - 1) / (ncb + 1)) # Number of blocks per row
+  nb <- ceiling(ng / ncb)            # Number of incomplete blocks
+  nbr <- floor((nc - 1) / (ncb + 1)) # Number of incomplete blocks per row
   nc <- nbr * (ncb + 1) + 1          # Actual number of columns
   nr <- ceiling(ng / nbr / ncb)      # Number of rows
   
