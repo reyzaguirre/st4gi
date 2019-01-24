@@ -4,14 +4,14 @@
 \alias{cr.strd}
 \title{Strip-Split-Plot Design}
 \usage{
-cr.strd(A, B, nrep, serpentine = c("yes", "no"))
+cr.strd(A, B, nb, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{A}{The levels of factor A (row factor).}
 
 \item{B}{The levels of factor B (column factor).}
 
-\item{nrep}{Number of replications (or blocks).}
+\item{nb}{Number of blocks.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
