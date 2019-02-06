@@ -22,7 +22,7 @@ It returns the fieldbook and fieldplan.
 }
 \description{
 This function creates the fieldbook and fieldplan for a Split-Plot 
-or a Split-Plit-Plot design with a RCBD for the whole plots.
+or a Split-Split-Plot design with a RCBD for the whole plots.
 }
 \details{
 Two or three factors must be included. The first factor goes to the

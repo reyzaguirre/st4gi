@@ -1,7 +1,7 @@
 #' Split-Plot Design
 #'
 #' This function creates the fieldbook and fieldplan for a Split-Plot 
-#' or a Split-Plit-Plot design with a RCBD for the whole plots.
+#' or a Split-Split-Plot design with a RCBD for the whole plots.
 #' @param fnames Factors' names for two or three factors. See details.
 #' @param flevels A list with the factors' levels.
 #' @param nb Number of blocks for the first factor.
