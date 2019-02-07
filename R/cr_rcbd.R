@@ -31,7 +31,7 @@ cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no")) {
   # Number of rows and columns for each block
   
   if (is.null(nc))
-    nc <- round(sqrt(ng))
+    nc <- gnc(ng)
 
   nr <- ceiling(ng / nc)
   

@@ -11,3 +11,23 @@ fp <- function(nr, nc, serpentine) {
   plan.id 
   
 }
+
+# Get most rectangular field shape
+
+gnc <- function(nplot) {
+
+  foo <- function(x, nplot) {
+    if (nplot %% x == 0)
+      x
+  }
+  
+  f1 <- unlist(sapply(1:nplot, foo, nplot))
+  
+  d <- data.frame(f1, f2 = nplot / f1)
+  d$s <- d$f1 + d$f2
+  d <- d[d$s == min(d$s), ]
+  d <- d[1, ]
+  
+  d$f2
+  
+}

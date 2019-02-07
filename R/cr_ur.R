@@ -28,7 +28,7 @@ cr.ur <- function(geno, nc = NULL, serpentine = c("yes", "no")) {
   # Number of rows and columns
 
   if (is.null(nc))
-    nc <- round(sqrt(ng))
+    nc <- gnc(ng)
   
   nr <- ceiling(ng / nc)
   

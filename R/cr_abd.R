@@ -55,14 +55,14 @@ cr.abd <- function(geno, checks, nb, nc = NULL, serpentine = c("yes", "no")) {
   
   blocks <- lapply(blocks, sample)
   
-  # Maximum block size
+  # Get maximum block size
 
-  bs <- max(unlist(lapply(blocks, length))) 
+  bs <- max(unlist(lapply(blocks, length)))
   
   # Number of rows and columns for each block
 
   if (is.null(nc))
-    nc <-  round(sqrt(bs))
+    nc <-  gnc(bs)
   
   nr <- ceiling(bs / nc)
   

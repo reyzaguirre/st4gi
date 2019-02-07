@@ -52,7 +52,7 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   # Number of rows for each plot or sub-plot
   
   if (is.null(nc))
-    nc <- round(sqrt(nl[nf]))
+    nc <- gnc(nl[nf])
   
   nr <- ceiling(nl[nf] / nc)
 

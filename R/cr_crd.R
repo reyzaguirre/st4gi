@@ -31,7 +31,7 @@ cr.crd <- function(geno, nrep, nc = NULL, serpentine = c("yes", "no")) {
   # Number of rows and columns
   
   if (is.null(nc))
-    nc <- round(sqrt(ng * nrep))
+    nc <- gnc(ng * nrep)
   
   nr <- ceiling(ng * nrep / nc)
 
