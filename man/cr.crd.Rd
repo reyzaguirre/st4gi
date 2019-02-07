@@ -4,7 +4,7 @@
 \alias{cr.crd}
 \title{Completely Randomized Design}
 \usage{
-cr.crd(geno, nrep, nc, serpentine = c("yes", "no"))
+cr.crd(geno, nrep, nc = NULL, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}

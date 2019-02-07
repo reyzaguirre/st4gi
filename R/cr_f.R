@@ -17,8 +17,8 @@
 #' cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12)
 #' @export
 
-cr.f <- function(fnames, flevels, design = c("crd", "rcbd"),
-                 nrep, nc, serpentine = c("yes", "no")) {
+cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep,
+                 nc = NULL, serpentine = c("yes", "no")) {
   
   # Match arguments
   

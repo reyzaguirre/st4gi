@@ -22,7 +22,7 @@
 #' cr.w(1:100, "A", "B", 23)
 #' @export
 
-cr.w <- function(geno, ck1, ck2, nc, ncb = 10, serpentine = c("yes", "no")) {
+cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no")) {
   
   # Match arguments
   
@@ -34,6 +34,11 @@ cr.w <- function(geno, ck1, ck2, nc, ncb = 10, serpentine = c("yes", "no")) {
 
   if (ng < ncb)
     stop(paste("Include at least", ncb, "genotypes."))
+  
+  # Number of columns
+  
+  if (is.null(nc))
+    nc <- max(ncb + 2, round(sqrt(ng)))
   
   # Dimensions
   

@@ -12,7 +12,7 @@
 #' cr.crd(1:20, 2, 7)
 #' @export
 
-cr.crd <- function(geno, nrep, nc, serpentine = c("yes", "no")) {
+cr.crd <- function(geno, nrep, nc = NULL, serpentine = c("yes", "no")) {
   
   # Match arguments
   
@@ -28,7 +28,10 @@ cr.crd <- function(geno, nrep, nc, serpentine = c("yes", "no")) {
   if (ng < 2)
     stop("Include at least 2 genotypes.")
 
-  # Number of rows
+  # Number of rows and columns
+  
+  if (is.null(nc))
+    nc <- round(sqrt(ng * nrep))
   
   nr <- ceiling(ng * nrep / nc)
 
@@ -68,19 +71,5 @@ cr.crd <- function(geno, nrep, nc, serpentine = c("yes", "no")) {
   # Return
   
   list(plan = plan, book = book)
-  
-}
-
-# Function to create fieldplan array
-
-fp <- function(nr, nc, serpentine) {
-  
-  plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
-  
-  if (serpentine == 'yes' & nr > 1)
-    for (i in seq(2, nr, 2))
-      plan.id[i, ] <- sort(plan.id[i, ], decreasing = TRUE)
-    
-  plan.id 
   
 }

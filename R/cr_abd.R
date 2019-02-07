@@ -14,7 +14,7 @@
 #' cr.abd(1:50, checks, 3, 7)
 #' @export
 
-cr.abd <- function(geno, checks, nb, nc, serpentine = c("yes", "no")) {
+cr.abd <- function(geno, checks, nb, nc = NULL, serpentine = c("yes", "no")) {
   
   # Match arguments
   
@@ -55,9 +55,16 @@ cr.abd <- function(geno, checks, nb, nc, serpentine = c("yes", "no")) {
   
   blocks <- lapply(blocks, sample)
   
-  # Number of rows for each block
+  # Maximum block size
+
+  bs <- max(unlist(lapply(blocks, length))) 
   
-  nr <- ceiling(max(unlist(lapply(blocks, length))) / nc)
+  # Number of rows and columns for each block
+
+  if (is.null(nc))
+    nc <-  round(sqrt(bs))
+  
+  nr <- ceiling(bs / nc)
   
   # Fieldplan array
   

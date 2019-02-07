@@ -12,7 +12,7 @@
 #' cr.ur(1:100, 7)
 #' @export
 
-cr.ur <- function(geno, nc, serpentine = c("yes", "no")) {
+cr.ur <- function(geno, nc = NULL, serpentine = c("yes", "no")) {
   
   # Match arguments
   
@@ -25,7 +25,10 @@ cr.ur <- function(geno, nc, serpentine = c("yes", "no")) {
   if (ng < 2)
     stop("Include at least 2 genotypes.")
   
-  # Number of rows
+  # Number of rows and columns
+
+  if (is.null(nc))
+    nc <- round(sqrt(ng))
   
   nr <- ceiling(ng / nc)
   

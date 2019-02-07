@@ -4,7 +4,7 @@
 \alias{cr.f}
 \title{Create design for a factorial experiment}
 \usage{
-cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc,
+cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
   serpentine = c("yes", "no"))
 }
 \arguments{

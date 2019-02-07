@@ -4,7 +4,7 @@
 \alias{cr.ur}
 \title{Unreplicated experiment}
 \usage{
-cr.ur(geno, nc, serpentine = c("yes", "no"))
+cr.ur(geno, nc = NULL, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}

@@ -12,7 +12,7 @@
 #' cr.rcbd(1:20, 2, 7)
 #' @export
 
-cr.rcbd <- function(geno, nb, nc, serpentine = c("yes", "no")) {
+cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no")) {
   
   # Match arguments
   
@@ -28,8 +28,11 @@ cr.rcbd <- function(geno, nb, nc, serpentine = c("yes", "no")) {
   if (ng < 2)
     stop("Include at least 2 genotypes.")
   
-  # Number of rows for each block
+  # Number of rows and columns for each block
   
+  if (is.null(nc))
+    nc <- round(sqrt(ng))
+
   nr <- ceiling(ng / nc)
   
   # Fieldplan array

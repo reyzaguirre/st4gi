@@ -4,7 +4,7 @@
 \alias{cr.a01d}
 \title{Alpha (0,1) design}
 \usage{
-cr.a01d(geno, nb, k, nc, serpentine = c("yes", "no"))
+cr.a01d(geno, nb, k, nc = NULL, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -38,7 +38,7 @@ is 0 or 1 (hence the name of the design). There are 4 options for this design:
 The blocks and incomplete blocks are disposed alongside the rows.
 }
 \examples{
-cr.a01d(1:100, 2, 5, 40)
+cr.a01d(1:100, 2, 5)
 cr.a01d(1:100, 3, 5, 28)
 }
 \author{

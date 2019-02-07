@@ -4,7 +4,7 @@
 \alias{cr.abd}
 \title{Augmented Block Design}
 \usage{
-cr.abd(geno, checks, nb, nc, serpentine = c("yes", "no"))
+cr.abd(geno, checks, nb, nc = NULL, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}

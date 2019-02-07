@@ -21,11 +21,11 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cr.a01d(1:100, 2, 5, 40)
+#' cr.a01d(1:100, 2, 5)
 #' cr.a01d(1:100, 3, 5, 28)
 #' @export
 
-cr.a01d <- function(geno, nb, k, nc, serpentine = c("yes", "no")) {
+cr.a01d <- function(geno, nb, k, nc = NULL, serpentine = c("yes", "no")) {
   
   # Match arguments
   
@@ -45,6 +45,9 @@ cr.a01d <- function(geno, nb, k, nc, serpentine = c("yes", "no")) {
   geno <- geno[sample(1:ng)]
   
   # Actual number of columns
+  
+  if (is.null(nc))
+    nc <- round(sqrt(ng))
   
   nc <- floor(nc / k) * k
   
