@@ -146,13 +146,13 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   
   # Add columns for factor levels
   
-  book$f1 <- c(data.frame(sapply(book$treat, strsplit, "_"),
-                          stringsAsFactors = FALSE)[1, ])
-  book$f2 <- c(data.frame(sapply(book$treat, strsplit, "_"),
-                          stringsAsFactors = FALSE)[2, ])
+  book$f1 <- unlist(c(data.frame(sapply(book$treat, strsplit, "_"),
+                                 stringsAsFactors = FALSE)[1, ]))
+  book$f2 <- unlist(c(data.frame(sapply(book$treat, strsplit, "_"),
+                                 stringsAsFactors = FALSE)[2, ]))
   if (nf == 3)
-    book$f3 <- c(data.frame(sapply(book$treat, strsplit, "_"),
-                            stringsAsFactors = FALSE)[3, ])
+    book$f3 <- unlist(c(data.frame(sapply(book$treat, strsplit, "_"),
+                                   stringsAsFactors = FALSE)[3, ]))
   
   nc.book <- length(colnames(book))
   colnames(book)[(nc.book - nf + 1):nc.book] <- fnames
