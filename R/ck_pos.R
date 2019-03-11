@@ -1,6 +1,7 @@
 #' Check row and column positions
 #'
-#' This function checks that there is only one genotype in each row and column position.
+#' This function checks that there is only one genotype in each row and column position
+#' for each replication.
 #' @param row Label for rows.
 #' @param col Label for columns.
 #' @param rep Label for replications.

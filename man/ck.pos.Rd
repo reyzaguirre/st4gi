@@ -21,7 +21,8 @@ of plots (unique row and column position) with more than one genotype, and the
 number (\code{nrep}) and list (\code{lrep}) of replications.
 }
 \description{
-This function checks that there is only one genotype in each row and column position.
+This function checks that there is only one genotype in each row and column position
+for each replication.
 }
 \examples{
 # Create a design
