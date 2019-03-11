@@ -4,16 +4,14 @@
 \alias{aov.f}
 \title{ANOVA for a factorial experiment}
 \usage{
-aov.f(trait, factors, rep, design = c("crd", "rcbd"), dfr, maxp = 0.1)
+aov.f(trait, factors, rep, dfr, maxp = 0.1)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
 
 \item{factors}{The factors.}
 
-\item{rep}{The replications or blocks.}
-
-\item{design}{The statistical design, \code{crd} or \code{rcbd}.}
+\item{rep}{The replications or blocks, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 
@@ -26,7 +24,7 @@ It returns the ANOVA table.
 Fit an analysis of variance model for a factorial experiment with a CRD or RCBD.
 }
 \examples{
-aov.f("asc.dw", c("geno", "treat"), "rep", "crd", asc)
+aov.f("asc.dw", c("geno", "treat"), NULL, asc)
 }
 \author{
 Raul Eyzaguirre.

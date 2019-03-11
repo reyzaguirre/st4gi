@@ -4,28 +4,23 @@
 #' or a RCBD by the least squares method.
 #' @param trait The trait to estimate missing values.
 #' @param factors The factors.
-#' @param rep The replications or blocks.
-#' @param design The statistical design, \code{crd} or \code{rcbd}.
+#' @param rep The replications or blocks, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with the experimental layout and columns \code{trait}
-#' and \code{trait.est} with the original data and the original data plus the estimated values.
+#' and \code{trait.est} with the original data and the original data plus the estimated
+#' values.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # A data frame with some missing values
 #' temp <- asc
 #' temp$dm[c(3, 10, 115)] <- NA
 #' # Estimate the missing values
-#' mve.f("dm", c("geno", "treat"), "rep", "crd", temp)
+#' mve.f("dm", c("geno", "treat"), NULL, temp)
 #' @export
 
-mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), dfr,
-                  maxp = 0.1, tol = 1e-06) {
-  
-  # match arguments
-  
-  design <- match.arg(design)
+mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
   
   # Check data
   
@@ -86,12 +81,12 @@ mve.f <- function(trait, factors, rep, design = c("crd", "rcbd"), dfr,
   
   # Estimate missing values for a crd
   
-  if (design == "crd")
+  if (is.null(rep))
     dfr[, trait.est] <- dfr[, "ytemp"]
   
   # Estimate missing values for a rcbd
   
-  if (design == "rcbd"){
+  if (!is.null(rep)) {
     
     # Total number of treatments
     

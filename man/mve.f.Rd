@@ -4,17 +4,14 @@
 \alias{mve.f}
 \title{Estimation of missing values for a factorial experiment}
 \usage{
-mve.f(trait, factors, rep, design = c("crd", "rcbd"), dfr, maxp = 0.1,
-  tol = 1e-06)
+mve.f(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
 \item{trait}{The trait to estimate missing values.}
 
 \item{factors}{The factors.}
 
-\item{rep}{The replications or blocks.}
-
-\item{design}{The statistical design, \code{crd} or \code{rcbd}.}
+\item{rep}{The replications or blocks, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 
@@ -24,7 +21,8 @@ mve.f(trait, factors, rep, design = c("crd", "rcbd"), dfr, maxp = 0.1,
 }
 \value{
 It returns a data frame with the experimental layout and columns \code{trait}
-and \code{trait.est} with the original data and the original data plus the estimated values.
+and \code{trait.est} with the original data and the original data plus the estimated
+values.
 }
 \description{
 Function to estimate missing values for factorial experiment with a CRD
@@ -35,7 +33,7 @@ or a RCBD by the least squares method.
 temp <- asc
 temp$dm[c(3, 10, 115)] <- NA
 # Estimate the missing values
-mve.f("dm", c("geno", "treat"), "rep", "crd", temp)
+mve.f("dm", c("geno", "treat"), NULL, temp)
 }
 \author{
 Raul Eyzaguirre.
