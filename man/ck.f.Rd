@@ -11,7 +11,7 @@ ck.f(trait, factors, rep, dfr)
 
 \item{factors}{The factors.}
 
-\item{rep}{The replications.}
+\item{rep}{The replications, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 }

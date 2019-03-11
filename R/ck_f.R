@@ -3,7 +3,7 @@
 #' This function checks the frequencies for a full factorial.
 #' @param trait The trait to analyze.
 #' @param factors The factors.
-#' @param rep The replications.
+#' @param rep The replications, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
 #' @return The number of treatments without data (\code{nt.0}), the number of
 #' treatments that appear more than once in a given replication (\code{nt.mult}),
