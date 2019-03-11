@@ -4,12 +4,12 @@
 \alias{ck.fs}
 \title{Check factors structure}
 \usage{
-ck.fs(factors, rep = NULL, dfr)
+ck.fs(factors, rep, dfr)
 }
 \arguments{
 \item{factors}{The factors.}
 
-\item{rep}{The replications.}
+\item{rep}{The replications, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 }

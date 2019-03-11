@@ -11,7 +11,7 @@ check.freq(trait, geno, env = NULL, rep, dfr)
 
 \item{geno}{Genotypes.}
 
-\item{env}{Environments.}
+\item{env}{Environments, \code{NULL} if there are no environments.}
 
 \item{rep}{The replications.}
 

@@ -3,7 +3,7 @@
 #' This function cheks the frequencies of valid cases for treatments and replications.
 #' @param trait The trait.
 #' @param factors The factors.
-#' @param rep The replications.
+#' @param rep The replications, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
 #' @return A table of frequencies of valid cases for all factors' levels combinations
 #' (\code{tf}), a table of frequencies of valid cases for all factors' levels and
@@ -36,7 +36,7 @@
 #' ck.fq("y", c("A", "B"), "block", dfr)
 #' @export
 
-ck.fq <- function(trait, factors, rep = NULL, dfr) {
+ck.fq <- function(trait, factors, rep, dfr) {
   
   # Number of missing values
   

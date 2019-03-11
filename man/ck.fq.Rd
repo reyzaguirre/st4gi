@@ -4,14 +4,14 @@
 \alias{ck.fq}
 \title{Check frequencies}
 \usage{
-ck.fq(trait, factors, rep = NULL, dfr)
+ck.fq(trait, factors, rep, dfr)
 }
 \arguments{
 \item{trait}{The trait.}
 
 \item{factors}{The factors.}
 
-\item{rep}{The replications.}
+\item{rep}{The replications, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 }
