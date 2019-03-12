@@ -33,7 +33,11 @@ ck.fs <- function(factors, rep, dfr) {
 
   # Check missing values for factors
   
-  cond <- apply(data.frame(dfr[, c(factors, rep)]), 1, function(x) sum(is.na(x)) > 0)
+  if (is.null(rep)) {
+    cond <- apply(data.frame(dfr[, factors]), 1, function(x) sum(is.na(x)) > 0)
+  } else {
+    cond <- apply(data.frame(dfr[, c(factors, rep)]), 1, function(x) sum(is.na(x)) > 0)
+  }
   
   # Number of missing values for factors
   
