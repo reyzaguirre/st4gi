@@ -60,8 +60,10 @@ ck.fs <- function(factors, rep, dfr) {
   # Levels of factors
   
   lf <- apply(data.frame(dfr[, factors]), 2, function(x) unique(x))
-  if (nf == 1)
+  if (nf == 1 & length(lf) > 1)
     colnames(lf) <- factors
+  if (nf == 1 & length(lf) == 1)
+    names(lf) <- factors
 
   # Define treatments
   
