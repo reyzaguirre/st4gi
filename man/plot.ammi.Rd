@@ -28,7 +28,7 @@ or a dispersion plot of PC1 against PC2.
 }
 \description{
 This function produces AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000) biplots
-use the base system and ggplot2.
+using the base system and ggplot2.
 }
 \details{
 It produces a biplot for an object of class \code{ammi}. See \code{?ammi}

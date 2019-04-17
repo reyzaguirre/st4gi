@@ -1,7 +1,7 @@
 #' AMMI or GGE biplots
 #'
 #' This function produces AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000) biplots
-#' use the base system and ggplot2.
+#' using the base system and ggplot2.
 #' @param x An object of class \code{ammi}.
 #' @param bp.type Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
 #' @param bp1.type Choose "effects" or "means" for biplot-1.

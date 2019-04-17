@@ -4,23 +4,26 @@
 \alias{plot.tai}
 \title{Tai plot}
 \usage{
-\method{plot}{tai}(x, conf = 0.95, color = c("darkorange", "black",
-  "gray"), ...)
+\method{plot}{tai}(x, conf = 0.95, graph.type = c("base", "ggplot"),
+  color = c("darkorange", "black", "gray"), ...)
 }
 \arguments{
 \item{x}{An object of class \code{tai}.}
 
 \item{conf}{Probability for the Tai limits.}
 
-\item{color}{Color for symbols, labels and lines.}
+\item{graph.type}{\code{"base"} or \code{"ggplot"}.}
 
-\item{...}{Additional plot arguments.}
+\item{color}{Color for symbols, labels and lines (Only for the base system plot).}
+
+\item{...}{Additional plot arguments (Only for the base system plot).}
 }
 \value{
 It returns the Tai graph for stability analysis.
 }
 \description{
-This function produces a Tai's stability analysis plot (Tai, G. C. C., 1971).
+This function produces a Tai's stability analysis plot (Tai, G. C. C., 1971)
+using the base system and ggplot2.
 }
 \details{
 The limits for alpha and lambda are computed using the mean squares from
@@ -30,6 +33,7 @@ additional details.
 \examples{
 model.tai <- tai("y", "geno", "env", "rep", met8x12)
 plot(model.tai)
+plot(model.tai, graph.type = "ggplot")
 }
 \references{
 Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
