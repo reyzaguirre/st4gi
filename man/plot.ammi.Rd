@@ -5,7 +5,8 @@
 \title{AMMI or GGE biplots}
 \usage{
 \method{plot}{ammi}(x, bp.type = 2, bp1.type = c("effects", "means"),
-  color = c("darkorange", "black", "gray"), ...)
+  graph.type = c("base", "ggplot"), color = c("darkorange", "black",
+  "gray"), ...)
 }
 \arguments{
 \item{x}{An object of class \code{ammi}.}
@@ -14,16 +15,20 @@
 
 \item{bp1.type}{Choose "effects" or "means" for biplot-1.}
 
-\item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes.}
+\item{graph.type}{\code{"base"} or \code{"ggplot"}.}
 
-\item{...}{Additional plot arguments.}
+\item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes
+(Only for the base system plot).}
+
+\item{...}{Additional plot arguments (Only for the base system plot).}
 }
 \value{
 It returns a dispersion plot of means or effects against the first PC,
 or a dispersion plot of PC1 against PC2.
 }
 \description{
-This function produces AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000) biplots.
+This function produces AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000) biplots
+use the base system and ggplot2.
 }
 \details{
 It produces a biplot for an object of class \code{ammi}. See \code{?ammi}
@@ -33,6 +38,7 @@ for additional details.
 model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
 plot(model.ammi)
 plot(model.ammi, bp.type = 1)
+plot(model.ammi, graph.type = "ggplot")
 }
 \references{
 Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
