@@ -45,9 +45,6 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep,
     if (nl[i] < 2)
       stop(paste("Include at least 2 levels for factor", i))
 
-  if (nrep < 2)
-    stop("Include at least 2 replications.")
-  
   # Number of treatments
   
   nt <- prod(sapply(flevels, length))

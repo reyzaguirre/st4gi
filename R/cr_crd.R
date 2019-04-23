@@ -20,9 +20,6 @@ cr.crd <- function(geno, nrep, nc = NULL, serpentine = c("yes", "no")) {
 
   # Error messages
   
-  if (nrep < 2)
-    stop("Include at least 2 replications.")
-
   ng <- length(geno)
 
   if (ng < 2)
