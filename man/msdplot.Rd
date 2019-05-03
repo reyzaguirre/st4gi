@@ -6,8 +6,8 @@
 \usage{
 msdplot(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
   sort.means = c("none", "increasing", "decreasing"),
-  color = c("orange", "orange", "black"), x.las = 1, jf = 0.1,
-  hsep = 0.1, ...)
+  main.title = NULL, color = c("orange", "orange", "black"),
+  x.las = 1, jf = 0.1, hsep = 0.1, ...)
 }
 \arguments{
 \item{trait}{The trait to plot.}
@@ -22,6 +22,8 @@ msdplot(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
 
 \item{sort.means}{Sort for means. Options are \code{"none"}, \code{"increasing"},
 and \code{"decreasing"}, \code{"none"} by default.}
+
+\item{main.title}{Main title.}
 
 \item{color}{Color for mean symbols, confidence interval lines, and data points.}
 

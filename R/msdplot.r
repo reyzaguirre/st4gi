@@ -8,6 +8,7 @@
 #' @param dotplot Logical. If \code{TRUE}, a dotplot is shown.
 #' @param sort.means Sort for means. Options are \code{"none"}, \code{"increasing"},
 #' and \code{"decreasing"}, \code{"none"} by default.
+#' @param main.title Main title.
 #' @param color Color for mean symbols, confidence interval lines, and data points.
 #' @param x.las x axes labels orientation.
 #' @param jf Jitter factor for dots.
@@ -30,7 +31,7 @@
                          
 msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
                     sort.means = c("none", "increasing", "decreasing"),
-                    color = c("orange", "orange", "black"),
+                    main.title = NULL, color = c("orange", "orange", "black"),
                     x.las = 1, jf = 0.1, hsep = 0.1, ...) {
 
   # Match arguments
@@ -60,6 +61,9 @@ msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
     resu$ls <- resu$means + conf * resu$sdev
     msg <- paste("Dotplot with means +/-", conf, "standard deviations")
   }
+  
+  if (!is.null(main.title))
+    msg <- main.title
   
   resu$orden <- rownames(resu)
 
