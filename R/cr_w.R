@@ -80,7 +80,7 @@ cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"
   
   # Create a data frame with positions and genotypes
   
-  temp <- data.frame(temp, geno)
+  temp <- data.frame(temp, geno, stringsAsFactors = FALSE)
 
   # Asign genotypes to field plan
     
