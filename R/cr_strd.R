@@ -51,7 +51,7 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no")) {
   for (i in 1:nb) {
     rana[, i] <- sample(1:nla)
     ranb[, i] <- sample(1:nlb)
-    plan[, , i] <- outer(A[rana[, i]], B[ranb[, i]], paste, sep = "_")
+    plan[, , i] <- outer(A[rana[, i]], B[ranb[, i]], paste, sep = ":-p")
   }
    
   # Create fielbook
@@ -82,6 +82,10 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no")) {
   
   rownames(book) <- 1:dim(book)[1]
   
+  # Replace characters for treatment names
+  
+  book$treat <- gsub(":-p", "_", book$treat)
+
   # Return
   
   list(plan = plan, book = book)

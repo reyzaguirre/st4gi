@@ -84,13 +84,13 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
     ranf1 <- sample(flevels[[1]])
     for (l in 1:nl[1]) {
       ranf2 <- sample(flevels[[2]])
-      ranf12 <- paste(ranf1[l], ranf2, sep = "_")
+      ranf12 <- paste(ranf1[l], ranf2, sep = ":-p")
       if (nf == 2)
         plan[, , l, m] <- array(ranf12[plan.id], c(nr, nc))
       if (nf == 3)
         for (k in 1:nl[2]) {
           ranf3 <- sample(flevels[[3]])
-          ranf123 <- paste(ranf12[k], ranf3, sep = "_")
+          ranf123 <- paste(ranf12[k], ranf3, sep = ":-p")
           plan[, , k, l, m] <- array(ranf123[plan.id], c(nr, nc))
         }
     }
@@ -146,16 +146,22 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   
   # Add columns for factor levels
   
-  book$f1 <- unlist(c(data.frame(sapply(book$treat, strsplit, "_"),
+  book$f1 <- unlist(c(data.frame(sapply(book$treat, strsplit, ":-p"),
                                  stringsAsFactors = FALSE)[1, ]))
-  book$f2 <- unlist(c(data.frame(sapply(book$treat, strsplit, "_"),
+
+  book$f2 <- unlist(c(data.frame(sapply(book$treat, strsplit, ":-p"),
                                  stringsAsFactors = FALSE)[2, ]))
+
   if (nf == 3)
-    book$f3 <- unlist(c(data.frame(sapply(book$treat, strsplit, "_"),
+    book$f3 <- unlist(c(data.frame(sapply(book$treat, strsplit, ":-p"),
                                    stringsAsFactors = FALSE)[3, ]))
-  
+
   nc.book <- length(colnames(book))
   colnames(book)[(nc.book - nf + 1):nc.book] <- fnames
+
+  # Replace characters for treatment names
+  
+  book$treat <- gsub(":-p", "_", book$treat)
 
   # Sort by plot number
   
