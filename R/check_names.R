@@ -45,35 +45,35 @@
 #'  \item \code{dmvf}     : Fresh weight vines for dry matter assessment (g)
 #'  \item \code{dmvd}     : Dry weight vines for dry matter assessment (g)
 #'  \item \code{dmv}      : Vines dry matter content (\%)
-#'  \item \code{fraw1}    : Root fiber (1-9), first determination (\code{fraw} is also valid)
-#'  \item \code{suraw1}   : Root sugar (1-9), first determination (\code{suraw} is also valid)
-#'  \item \code{straw1}   : Root starch (1-9), first determination (\code{straw} is also valid)
-#'  \item \code{coof1}    : Cooked fiber (1-9), first evaluation (\code{coof} is also valid)
-#'  \item \code{coosu1}   : Cooked sugars (1-9), first evaluation (\code{coosu} is also valid)
-#'  \item \code{coost1}   : Cooked starch (1-9), first evaluation (\code{coost} is also valid)
-#'  \item \code{coot1}    : Cooked taste (1-9), first evaluation (\code{coot} is also valid)
-#'  \item \code{cooap1}   : Cooked appearance (1-9), first evaluation (\code{cooap} is also valid)
-#'  \item \code{fraw2}    : Root fiber (1-9), second determination
-#'  \item \code{suraw2}   : Root sugar (1-9), second determination
-#'  \item \code{straw2}   : Root starch (1-9), second determination
-#'  \item \code{coof2}    : Cooked fiber (1-9), second evaluation
-#'  \item \code{coosu2}   : Cooked sugars (1-9), second evaluation
-#'  \item \code{coost2}   : Cooked starch (1-9), second evaluation
-#'  \item \code{coot2}    : Cooked taste (1-9), second evaluation
-#'  \item \code{cooap2}   : Cooked appearance (1-9), second evaluation
-#'  \item \code{prot}     : Protein (\%)
-#'  \item \code{fe}       : Iron (mg/100g dry weight)
-#'  \item \code{zn}       : Zinc (mg/100g dry weight)
-#'  \item \code{ca}       : Calcium (mg/100g dry weight)
-#'  \item \code{mg}       : Magnesium (mg/100g dry weight)
-#'  \item \code{bc}       : Beta-carotene (mg/100g dry weight)
-#'  \item \code{bc.cc}    : Beta-carotene with RHS color charts (mg/100g fresh weight)
-#'  \item \code{tc}       : Total carotenoids (mg/100g dry weight)
-#'  \item \code{star}     : Starch (\%)
-#'  \item \code{fruc}     : Fructose (\%)
-#'  \item \code{gluc}     : Glucose (\%)
-#'  \item \code{sucr}     : Sucrose (\%)
-#'  \item \code{malt}     : Maltose (\%)
+#'  \item \code{fraw1}    : Raw root fiber (1-9), first determination (\code{fraw} is also valid)
+#'  \item \code{suraw1}   : Raw root sugar (1-9), first determination (\code{suraw} is also valid)
+#'  \item \code{straw1}   : Raw root starch (1-9), first determination (\code{straw} is also valid)
+#'  \item \code{coof1}    : Cooked root fiber (1-9), first evaluation (\code{coof} is also valid)
+#'  \item \code{coosu1}   : Cooked root sugars (1-9), first evaluation (\code{coosu} is also valid)
+#'  \item \code{coost1}   : Cooked root starch (1-9), first evaluation (\code{coost} is also valid)
+#'  \item \code{coot1}    : Cooked root taste (1-9), first evaluation (\code{coot} is also valid)
+#'  \item \code{cooap1}   : Cooked root appearance (1-9), first evaluation (\code{cooap} is also valid)
+#'  \item \code{fraw2}    : Raw root fiber (1-9), second determination
+#'  \item \code{suraw2}   : Raw root sugar (1-9), second determination
+#'  \item \code{straw2}   : Raw root starch (1-9), second determination
+#'  \item \code{coof2}    : Cooked root fiber (1-9), second evaluation
+#'  \item \code{coosu2}   : Cooked root sugars (1-9), second evaluation
+#'  \item \code{coost2}   : Cooked root starch (1-9), second evaluation
+#'  \item \code{coot2}    : Cooked root taste (1-9), second evaluation
+#'  \item \code{cooap2}   : Cooked root appearance (1-9), second evaluation
+#'  \item \code{prot}     : Protein (\% raw fresh)
+#'  \item \code{fe}       : Iron (mg/100g raw dry weight)
+#'  \item \code{zn}       : Zinc (mg/100g raw dry weight)
+#'  \item \code{ca}       : Calcium (mg/100g raw dry weight)
+#'  \item \code{mg}       : Magnesium (mg/100g raw dry weight)
+#'  \item \code{bc}       : Beta-carotene (mg/100g raw dry weight)
+#'  \item \code{bc.cc}    : Beta-carotene with RHS color charts (mg/100g raw fresh weight)
+#'  \item \code{tc}       : Total carotenoids (mg/100g raw dry weight)
+#'  \item \code{star}     : Starch (\% raw fresh)
+#'  \item \code{fruc}     : Fructose (\% raw fresh)
+#'  \item \code{gluc}     : Glucose (\% raw fresh)
+#'  \item \code{sucr}     : Sucrose (\% raw fresh)
+#'  \item \code{malt}     : Maltose (\% raw fresh)
 #'  \item \code{tnr}      : Total number of roots per plot
 #'  \item \code{trw}      : Total root weight (kg/plot)
 #'  \item \code{trw.d}    : Total root dry weight (kg/plot)
