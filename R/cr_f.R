@@ -51,11 +51,11 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep,
 
   # Treatment labels
   
-  trt <- c(outer(flevels[[1]], flevels[[2]], paste, sep = "_"))
+  trt <- c(outer(flevels[[1]], flevels[[2]], paste, sep = ":-p"))
   
   if (nf > 2)
     for (i in 3:nf)
-      trt <- c(outer(trt, flevels[[i]], paste, sep = "_"))
+      trt <- c(outer(trt, flevels[[i]], paste, sep = ":-p"))
   
   # Create fielbook and fieldplan
   
@@ -67,7 +67,7 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep,
   
   # Add columns for factor levels
   
-  temp <- unlist(strsplit(output$book$geno, "_"))
+  temp <- unlist(strsplit(output$book$geno, ":-p"))
   
   fm <- matrix(temp, nrow = length(temp) / nf, ncol = nf, byrow = TRUE)
   
@@ -82,6 +82,10 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep,
   if (design == "rcbd")
     colnames(output$book)[5] <- "treat"
 
+  # Replace characters for treatment names
+  
+  output$book$treat <- gsub(":-p", "_", output$book$treat)
+    
   # Return
   
   list(plan = output$plan, book = output$book)
