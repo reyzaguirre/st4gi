@@ -110,7 +110,7 @@ ammi.gxe <- function(int.mean, trait.name = NULL, nrep = NULL, rdf = NULL,
                  Interaction_effects = int.eff, PC_values_genotypes = PC.geno,
                  PC_values_environments = PC.env, Contribution_PCs = tablaPC)
   
-  class(output) <- "ammi"
+  class(output) <- "st4gi_ammi"
   invisible(output)
   
 }

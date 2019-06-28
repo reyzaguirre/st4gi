@@ -28,9 +28,9 @@
 #' @importFrom graphics abline text
 #' @export
 
-plot.ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
-                      graph.type = c("base", "ggplot"),
-                      color = c("darkorange", "black", "gray"), ...) {
+plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
+                            graph.type = c("base", "ggplot"),
+                            color = c("darkorange", "black", "gray"), ...) {
   
   # match arguments
   

@@ -88,7 +88,7 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   output <- list(Trait = trait, Tai_values = cbind(alpha, lambda), ANOVA = at, lc = lc)
   
-  class(output) <- "tai"
+  class(output) <- "st4gi_tai"
   invisible(output)
   
 }

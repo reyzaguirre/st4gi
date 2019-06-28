@@ -22,8 +22,8 @@
 #' @importFrom stats qf qt
 #' @export
 
-plot.tai <- function(x, conf = 0.95, graph.type = c("base", "ggplot"),
-                     color = c("darkorange", "black", "gray"), ...) {
+plot.st4gi_tai <- function(x, conf = 0.95, graph.type = c("base", "ggplot"),
+                           color = c("darkorange", "black", "gray"), ...) {
 
   # match arguments
   
