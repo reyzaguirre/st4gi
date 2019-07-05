@@ -68,6 +68,7 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
     stop("More than one genotype in the same position. Run check.pos to look over.")
   
   out <- ck.w(trait, geno, ck1, ck2, row, col, ncb, dfr)
+  eval.cond <- sum(out$c1, out$c2, out$c3, out$c4, out$c5)
   
   if (out$c1 == 1)
     warning("There are plots in the columns of checks with other genotypes planted.")
@@ -76,12 +77,15 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
     warning("There are plots in the columns of genotypes with checks planted.")
   
   if (out$c3 == 1)
+    warning("There are columns of checks with missing plots.")
+
+  if (out$c4 == 1)
     warning("There are columns of checks without alternating checks.")
   
-  if (out$c4 == 1)
+  if (out$c5 == 1)
     warning("There are plots with genotypes without a check plot to the left or to the right.")
   
-  if (out$c1 == 1 | out$c2 == 1 | out$c3 == 1 | out$c4 == 1)
+  if (eval.cond > 0)
     warning("Adjusted values are obtained with the values of the checks nearby.")
 
   # Get a copy of trait for the adjusted values
@@ -113,11 +117,11 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
   
   # Choose function for adjustment
   
-  if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0 & method == "weighted")
+  if (eval.cond == 0 & method == "weighted")
     foo <- foo.weig
-  if (out$c1 == 0 & out$c2 == 0 & out$c3 == 0 & out$c4 == 0 & method == "flat")
+  if (eval.cond == 0 & method == "flat")
     foo <- foo.flat
-  if (out$c1 == 1 | out$c2 == 1 | out$c3 == 1 | out$c4 == 1) {
+  if (eval.cond > 0) {
     nrs <- floor(ncb / 2)
     ncb <- floor(ncb / 2)
     foo <- foo.flat

@@ -53,10 +53,11 @@ ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
   
   # Controls
   
-  c1 <- 0 # All column checks with checks
-  c2 <- 0 # All column genotypes with genotypes
-  c3 <- 0 # Alternating checks in rows and columns
-  c4 <- 0 # All genotypes with checks to the left and right
+  c1 <- 0 # All column checks with checks (no genotypes)
+  c2 <- 0 # All column genotypes with genotypes (no checks)
+  c3 <- 0 # All column checks with checks (no missing plots)
+  c4 <- 0 # Alternating checks in rows and columns
+  c5 <- 0 # All genotypes with checks to the left and right
 
   # Columns with checks
   
@@ -75,15 +76,26 @@ ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
   # Alternating checks on columns
   
   for (i in cck)
-    for (j in (min(dfr[dfr[, col] == i, row]) + 1):max(dfr[dfr[, col] == i, row]))
-      if (dfr[dfr[, col] == i & dfr[, row] == j, geno] == dfr[dfr[, col] == i & dfr[, row] == j - 1, geno])
+    for (j in (min(dfr[dfr[, col] == i, row]) + 1):max(dfr[dfr[, col] == i, row])) {
+      val1 <- dfr[dfr[, col] == i & dfr[, row] == j, geno]
+      val2 <- dfr[dfr[, col] == i & dfr[, row] == j - 1, geno]
+      if (length(val1) == 0 | length(val2) == 0) {
         c3 <- 1
+      } else {
+        if (val1 == val2)
+          c4 <- 1
+      }
+    }
   
   # Alternating checks on rows
 
-  for (i in 2:length(cck))
-    if (dfr[dfr[, col] == cck[i] & dfr[, row] == nr.min, geno] == dfr[dfr[, col] == cck[i - 1] & dfr[, row] == nr.min, geno])
-      c3 <- 1
+  for (i in 2:length(cck)) {
+    val1 <- dfr[dfr[, col] == cck[i] & dfr[, row] == nr.min, geno]
+    val2 <- dfr[dfr[, col] == cck[i - 1] & dfr[, row] == nr.min, geno]
+    if (length(val1) == 1 & length(val2) == 1)
+      if (val1 == val2)
+        c4 <- 1
+  }
   
   # All genotypes must have one check to the left and one to the right
   
@@ -92,7 +104,7 @@ ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
     columns <- (dfr[i, col] - ncb):(dfr[i, col] + ncb)
     temp <- dfr[dfr[, row] == rows & dfr[, col] %in% columns, geno]
     if (sum(temp %in% checks) == 0)
-      c4 <- 1
+      c5 <- 1
   }
 
   # Number of missing values for checks
@@ -109,7 +121,7 @@ ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
   
   # Return
   
-  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, nmis = nmis, pmis = pmis,
+  list(c1 = c1, c2 = c2, c3 = c3, c4 = c4, c5 = c5, nmis = nmis, pmis = pmis,
        nmis.ck = nmis.ck, pmis.ck = pmis.ck, nmis.fac = nmis.fac)
   
 }
