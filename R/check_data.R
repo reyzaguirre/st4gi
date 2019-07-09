@@ -595,16 +595,17 @@ sp5 <- function(dfr, f, ex, t1, tx) {
 
 sp6 <- function(dfr, geno, env, rep, t1, out.mod, out.max, tx) {
   if (exists(t1, dfr)) {
-    dfr$id.res <- 1:dim(dfr)[1]
-    if (out.mod == "rcbd")
-      model <- aov(dfr[, t1] ~ geno + rep)
-    if (out.mod == "met")
-      model <- aov(dfr[, t1] ~ geno + env + rep %in% env + geno:env)
-    res <- data.frame(residual = rstandard(model))
-    res$id.res <- as.numeric(row.names(res))
-    dfr <- merge(dfr, res, all = T)[, -1]
-    cond <- abs(dfr[, 'residual']) > out.max & !is.na(dfr[, 'residual'])
-    output(dfr, cond, tx)
+    if (is.numeric(dfr[, t1])) {
+      dfr$id.res <- 1:dim(dfr)[1]
+      if (out.mod == "rcbd")
+        model <- aov(dfr[, t1] ~ geno + rep)
+      if (out.mod == "met")
+        model <- aov(dfr[, t1] ~ geno + env + rep %in% env + geno:env)
+      res <- data.frame(residual = rstandard(model))
+      res$id.res <- as.numeric(row.names(res))
+      dfr <- merge(dfr, res, all = T)[, -1]
+      cond <- abs(dfr[, 'residual']) > out.max & !is.na(dfr[, 'residual'])
+      output(dfr, cond, tx)
+    }
   }
-  
 }
