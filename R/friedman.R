@@ -27,8 +27,9 @@
 friedman.t <- function(trait, treat, block, dfr, alpha = 0.05, print.text = TRUE) {
   
   # Create a data matrix
+  # compute means if more of one evaluation
   
-  dmx <- by(dfr[, trait], dfr[, c(block, treat)], I)
+  dmx <- by(dfr[, trait], dfr[, c(block, treat)], mean, na.rm = TRUE)
   dmx <- as.data.frame(dmx[, ])
   
   # Number of treatments and blocks
