@@ -79,8 +79,8 @@ friedman.t <- function(trait, treat, block, dfr, alpha = 0.05, print.text = TRUE
   l <- 1
   pos <- 1
   
-  while (pos < k) {
-    for (i in 1:(k - 1)) {
+  for (i in 1:(k - 1)) {
+    if (pos < k) {
       if (abs(groups[i, 1] - groups[pos + 1, 1]) < lsd) {
         if (i > 1)
           for (m in 1:(i-1))
