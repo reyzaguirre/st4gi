@@ -69,7 +69,42 @@ friedman.t <- function(trait, treat, block, dfr, alpha = 0.05, print.text = TRUE
   
   std.diff <- (2 * (b * A1 - sum(R^2)) / dfd)^0.5
   lsd <- qt(1 - alpha/2, dfd) * std.diff
+ 
+  # Create groups of non-significant differences
   
+  groups <- data.frame(sort(R), '')
+  groups[, 2] <- as.character(groups[, 2])
+  
+  i <- 1
+  l <- 1
+  pos <- 1
+  
+  while (pos < k) {
+    for (i in 1:(k - 1)) {
+      if (abs(groups[i, 1] - groups[pos + 1, 1]) < lsd) {
+        if (i > 1)
+          for (m in 1:(i-1))
+            groups[m, 2] <- paste0(groups[m, 2], ' ')
+        groups[i, 2] <- paste0(groups[i, 2], letters[l])
+        for (j in (i + 1):k)
+          if (abs(groups[i, 1] - groups[j, 1]) < lsd) {
+            groups[j, 2] <- paste0(groups[j, 2], letters[l])
+            pos <- j
+          } 
+        l <- l + 1
+      } else {
+        if (pos == k - 1 & i == k - 1) {
+          for (n in 1:pos)
+            groups[n, 2] <- paste0(groups[n, 2], ' ')
+          groups[pos + 1, 2] <- paste0(groups[pos + 1, 2], letters[l])
+          pos <- pos + 1
+        }
+      }
+    }
+  }
+  
+  colnames(groups) <- c('Sum of ranks', 'Groups')
+
   # Generate all pairwise comparisons
   
   comb <- utils::combn(k, 2)
@@ -106,16 +141,18 @@ friedman.t <- function(trait, treat, block, dfr, alpha = 0.05, print.text = TRUE
   if (print.text == TRUE) {
     cat("\n     Friedman rank sum test\n\n")
     cat('Chi-square statistic = ', T1, ', df = ', dfn,
-        ', p-value = ', p.T1, '\n\n', sep = '')
+        ', p-value = ', p.T1, '\n', sep = '')
     cat('F statistic = ', T2, ', num.df = ', dfn, ', den.df = ', dfd,
-        ', p-value = ', p.T2, '\n\n', sep = '')
+        ', p-value = ', p.T2, '\n', sep = '')
     cat("\n     Multiple comparisons\n\n")
-    cat('alpha = ', alpha, '\n')
+    cat('alpha = ', alpha, ' LSD = ', lsd, '\n\n')
+    print(groups)
+    cat('\n')
     print(compar)
   }
 
   output <- list(T1 = T1, p.T1 = p.T1, T2 = T2, p.T2 = p.T2, dfn = dfn, dfd = dfd,
-                 lsd = lsd, compar = compar)
+                 lsd = lsd, groups = groups, compar = compar)
   
   invisible(output)
   
