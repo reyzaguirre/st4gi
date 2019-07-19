@@ -146,9 +146,8 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   if (exists("trw", dfr) & exists("vw", dfr)) {
     if ("hi" %in% on)
       ow <- c(ow, "hi")
-    temp <- suma(dfr$vw, dfr$trw)
-    dfr$hi <- dfr$trw / temp * 100
-    dfr$hi[temp == 0] <- NA
+    dfr$hi <- dfr$trw / dfr$biom * 100
+    dfr$hi[dfr$biom == 0] <- NA
   }
   
   if (exists("noph", dfr) & exists("nops", dfr)) {
