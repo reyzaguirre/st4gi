@@ -78,6 +78,20 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
     dfr$acrw[dfr$nocr == 0] <- NA
   }
   
+  if (exists("ncrw", dfr) & exists("nonc", dfr)) {
+    if ("ancrw" %in% on)
+      ow <- c(ow, "ancrw")
+    dfr$ancrw <- dfr$ncrw / dfr$nonc
+    dfr$ancrw[dfr$nonc == 0] <- NA
+  }
+
+  if (exists("trw", dfr) & exists("tnr", dfr)) {
+    if ("atrw" %in% on)
+      ow <- c(ow, "atrw")
+    dfr$atrw <- dfr$trw / dfr$tnr
+    dfr$atrw[dfr$tnr == 0] <- NA
+  }
+
   if (exists("nocr", dfr) & exists("nonc", dfr)) {
     if ("tnr" %in% on)
       ow <- c(ow, "tnr")

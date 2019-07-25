@@ -111,6 +111,8 @@ The data frame must use the following labels (lower or upper case):
  \item \code{dmby}      : Dry matter biomass (t/ha)
  \item \code{dmby.aj}   : Dry matter biomass (t/ha) adjusted by number of harvested plants
  \item \code{acrw}      : Average commercial root weight (kg/root)
+ \item \code{ancrw}     : Average non commercial root weight (kg/root)
+ \item \code{atrw}      : Average total root weight (kg/root)
  \item \code{nrpp}      : Number of roots per harvested plant
  \item \code{nrpsp}     : Number of roots per sowed plant
  \item \code{ncrpp}     : Number of commercial roots per harvested plant

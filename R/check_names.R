@@ -95,6 +95,8 @@
 #'  \item \code{dmby}      : Dry matter biomass (t/ha)
 #'  \item \code{dmby.aj}   : Dry matter biomass (t/ha) adjusted by number of harvested plants
 #'  \item \code{acrw}      : Average commercial root weight (kg/root)
+#'  \item \code{ancrw}     : Average non commercial root weight (kg/root)
+#'  \item \code{atrw}      : Average total root weight (kg/root)
 #'  \item \code{nrpp}      : Number of roots per harvested plant
 #'  \item \code{nrpsp}     : Number of roots per sowed plant
 #'  \item \code{ncrpp}     : Number of commercial roots per harvested plant
@@ -131,8 +133,8 @@ check.names <- function(dfr, add = NULL) {
               "fruc", "gluc", "sucr", "malt", "tnr", "trw", "trw.d", "biom", "biom.d",
               "cytha", "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha",
               "fytha.aj", "dmvy", "dmvy.aj", "bytha", "bytha.aj", "dmby", "dmby.aj", "acrw",
-              "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "ci", "hi",
-              "shi", "rfr")
+              "ancrw", "atrw", "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp",
+              "vpsp", "ci", "hi", "shi", "rfr")
   
   colnames.valid <- c(plot.id, factors, traits, tolower(add))
     
