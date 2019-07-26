@@ -124,7 +124,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{ci}        : Commercial index (\%)
  \item \code{hi}        : Harvest index (\%)
  \item \code{shi}       : Harvest sowing index (\%)
- \item \code{rfr}       : Root foliage ratio
+ \item \code{rfr}       : Root foliage ratio (\%)
  }
 }
 \examples{

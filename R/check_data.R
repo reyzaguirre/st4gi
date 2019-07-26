@@ -395,7 +395,7 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
   sp4(dfr, "lower", "fytha.aj", "- Out of range values for foliage total yield adjusted in tons per hectare (fytha.aj):")
   sp5(dfr, f, "low", "fytha.aj", "- Extreme low values for foliage total yield adjusted in tons per hectare (fytha.aj):")
   sp5(dfr, f, "high", "fytha.aj", "- Extreme high values for foliage total yield adjusted in tons per hectare (fytha.aj):")
-  sp4(dfr, "both", "rfr", "- Out of range values for root foliage ratio (rfr):")
+  sp4(dfr, "lower", "rfr", "- Out of range values for root foliage ratio (rfr):")
   sp5(dfr, f, "low", "rfr", "- Extreme low values for root foliage ratio (rfr):")
   sp5(dfr, f, "high", "rfr", "- Extreme high values for root foliage ratio (rfr):")
 

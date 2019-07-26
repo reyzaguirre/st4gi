@@ -108,7 +108,7 @@
 #'  \item \code{ci}        : Commercial index (\%)
 #'  \item \code{hi}        : Harvest index (\%)
 #'  \item \code{shi}       : Harvest sowing index (\%)
-#'  \item \code{rfr}       : Root foliage ratio
+#'  \item \code{rfr}       : Root foliage ratio (\%)
 #'  }
 #' @return It returns a data frame with all traits names in lower case, and a list of the
 #' traits with names not included in the list shown above.

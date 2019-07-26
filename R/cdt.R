@@ -378,7 +378,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   if (exists("trw.d", dfr) & exists("vw.d", dfr)) {
     if ("rfr" %in% on)
       ow <- c(ow, "rfr")
-    dfr$rfr <- dfr$trw.d / dfr$vw.d
+    dfr$rfr <- dfr$trw.d / dfr$vw.d * 100
     dfr$rfr[dfr$vw.d == 0] <- NA
   }
 
