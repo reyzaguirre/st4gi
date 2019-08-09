@@ -188,50 +188,33 @@
 
 check.names.pt <- function(dfr, add = NULL) {
   
-  leaflet_tw.i = c("leaflet_tw", sprintf("leaflet_tw%s", c(1:5))) 
-  insnpp.i = c(    "insnpp", sprintf(    "insnpp%s", c(1:5))) 
-  insd.i = c(      "insd", sprintf(      "insd%s", c(1:5)))
-  inrwc.i = c(     "inrwc", sprintf(     "inrwc%s", c(1:5)))
-  pw_ev.i = c(        "pw", sprintf(     "pw_ev%s", c(1:5)))
-  inplahe.i = c(   "inplahe", sprintf(   "inplahe%s", c(1:5)))
-  snpp_ev.i = c(      "snpp", sprintf(   "snpp_ev%s", c(1:5)))
-  leaflet_fw.i = c("leaflet_fw", sprintf("leaflet_fw%s", c(1:5)))
-  leaflet_dw.i = c("leaflet_dw", sprintf("leaflet_dw%s", c(1:5)))
-  chc.i = c(       "chc", sprintf(       "chc%s", c(1:5)))
-  inchc.i = c(     "inchc", sprintf(     "inchc%s", c(1:5)))
-  leafsd.i = c(    "leafsd", sprintf(    "leafsd%s", c(1:5)))
-  plahe_ev.i = c(     "plahe", sprintf(  "plahe_ev%s", c(1:5)))
-  sd_ev.i = c(        "sd", sprintf(     "sd_ev%s", c(1:5)))
-  cc_ev.i = c(        "cc", sprintf(     "cc_ev%s", c(1:5)))
-  chlspad_ev.i = c(   "chlspad", sprintf("chlspad_ev%s", c(1:5)))
-  cr_ev.i = c(        "cr", sprintf(     "cr_ev%s", c(1:5)))
-  lfa_ev.i = c(       "lfa", sprintf(    "lfa_ev%s", c(1:5)))
-  rwc_ev.i = c(       "rwc", sprintf(    "rwc_ev%s", c(1:5)))
-  sla_ev.i = c(       "sla", sprintf(    "sla_ev%s", c(1:5)))
-  
   plot.id <- c("plot", "row", "col")
   
   factors <- c("l", "loc", "y", "s", "g", "e", "env", "geno", "name", "r", "rep", "b", "block",
                "treatment", "type", "instn")
   
-  traits <- c("ntp", "npe", "nph", "ppe", "pph",                                                        ## N1
-              "snpp", "nipp", "nfwp", "nlpp", "num_stolon", "leng_stolon",                              ## N2
-              "tntp", "tntpl", "nmtp", "nmtpl", "nnomtp", "nmtci", "nmtcii",                            ## N3
-              "ttwp", "ttwpl", "mtwp", "mtwpl", "nomtwp", "mtwci", "mtwcii",                            ## N4
-              "ttya", "ttyna", "mtya", "mtyna", "atw", "mwt", "atmw", "mwmt",                           ## N5
-              "stlfw", "sfw", "stfw", "lfw", "rfw", "tfw", "tbfw", "hi_fw", "fwts",                     ## N6
-              "stldw", "sdw", "stdw", "ldw", "rdw", "tdw", "tbdw", "hi_dw", "dwts",                     ## N7
-              "ldmcp", "sdmcp", "rdmcp", "tdmcp", "pdm", "dm",                                          ## N8
-              "twa", "tww", "rsdw", "rd", "rl", "sg", "dsi", "dti",                                     ## N9
-              "pro", "protein", "star", "fruc", "gluc", "sucr", "malt", "fiber",                        ## N10
-              "plant_unif", "plant_vigor", "op", "tlwp", "ltp", "dap_chl", "dap_tc",                    ## N11
-              "tuber_apper", "tub_unif", "tub_size",
-              leaflet_tw.i, insnpp.i, insd.i, inrwc.i,                                                  ## N12
-              pw_ev.i, inplahe.i, snpp_ev.i, leaflet_fw.i, leaflet_dw.i,                                ## N13
-              chc.i, inchc.i, leafsd.i, "av_leafsd",                                                    ## N14
-              plahe_ev.i, sd_ev.i, cc_ev.i, chlspad_ev.i, cr_ev.i, lfa_ev.i, rwc_ev.i, sla_ev.i,        ## N15
-              "plahe_slp", "sd_slp", "cc_slp", "chlspad_slp", "cr_slp", "lfa_slp", "rwc_slp", "sla_slp" ## N16
-  )
+  # Repeated measures traits
+  
+  rm.traits <- c("leaflet_tw", "insnpp", "insd", "inrwc", "pw", "inplahe",
+                 "snpp", "leaflet_fw", "leaflet_dw", "chc", "inchc", "leafsd",
+                 "plahe", "sd", "cc", "chlspad", "cr", "lfa", "rwc", "sla")
+  
+  rm.traits <- c(rm.traits, sapply(rm.traits, function(x) paste0(x, 1:5)))
+  
+  traits <- c("ntp", "npe", "nph", "ppe", "pph",
+              "snpp", "nipp", "nfwp", "nlpp", "num_stolon", "leng_stolon",
+              "tntp", "tntpl", "nmtp", "nmtpl", "nnomtp", "nmtci", "nmtcii",
+              "ttwp", "ttwpl", "mtwp", "mtwpl", "nomtwp", "mtwci", "mtwcii",
+              "ttya", "ttyna", "mtya", "mtyna", "atw", "mwt", "atmw", "mwmt",
+              "stlfw", "sfw", "stfw", "lfw", "rfw", "tfw", "tbfw", "hi_fw", "fwts",
+              "stldw", "sdw", "stdw", "ldw", "rdw", "tdw", "tbdw", "hi_dw", "dwts",
+              "ldmcp", "sdmcp", "rdmcp", "tdmcp", "pdm", "dm",
+              "twa", "tww", "rsdw", "rd", "rl", "sg", "dsi", "dti",
+              "pro", "protein", "star", "fruc", "gluc", "sucr", "malt", "fiber",
+              "plant_unif", "plant_vigor", "op", "tlwp", "ltp", "dap_chl", "dap_tc",
+              "tuber_apper", "tub_unif", "tub_size", "av_leafsd", "plahe_slp",
+              "sd_slp", "cc_slp", "chlspad_slp", "cr_slp", "lfa_slp", "rwc_slp", "sla_slp",
+              rm.traits)
   
   colnames.valid <- c(plot.id, factors, traits, tolower(add))
   
