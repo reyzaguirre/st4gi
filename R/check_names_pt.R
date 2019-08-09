@@ -7,6 +7,7 @@
 #' @details The data frame must use the following labels (lower or upper case):
 #' 
 #'  -------------------- Plot identifiers --------------------
+#'  \itemize{
 #'  \item \code{plot}        : Plot number
 #'  \item \code{row}         : Row number
 #'  \item \code{col}         : Column number
