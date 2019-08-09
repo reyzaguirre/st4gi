@@ -2,8 +2,9 @@
 #'
 #' This function creates the fieldbook and fieldplan for an alpha (0,1) design.
 #' @param geno The list of genotypes.
+#' @param check The list of checks to repeat in each incomplete block (optional).
 #' @param nb Number of complete blocks.
-#' @param k Size for the incomplete blocks (sub-blocks).
+#' @param k Size for the incomplete blocks.
 #' @param nc Number of available columns on the field.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @details The genotypes are randomly allocated on a field following an alpha
@@ -21,24 +22,29 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cr.a01d(1:100, 2, 5)
-#' cr.a01d(1:100, 3, 5, 28)
+#' cr.a01d(1:100, NULL, 2, 5)
+#' cr.a01d(1:100, NULL, 3, 5, 28)
 #' @export
 
-cr.a01d <- function(geno, nb, k, nc = NULL, serpentine = c("yes", "no")) {
+cr.a01d <- function(geno, check, nb, k, nc = NULL, serpentine = c("yes", "no")) {
   
   # Match arguments
   
   serpentine <- match.arg(serpentine)
 
-  # Number of genotypes and incomplete blocks
+  # Number of genotypes, checks, and incomplete blocks
   
+  nck <- length(check)
   ng <- length(geno)
   s <- ng / k
   
   if (ng %% k != 0)
     stop("The size of the incomplete blocks is not appropriate.
          The number of genotypes must be a multiple of k.")
+  
+  # Number of genotypes plus checks
+  
+  ngc <- ng + nck * s
 
   # Randomize list of genotypes
 
@@ -47,7 +53,7 @@ cr.a01d <- function(geno, nb, k, nc = NULL, serpentine = c("yes", "no")) {
   # Actual number of columns
   
   if (is.null(nc))
-    nc <- round(sqrt(ng))
+    nc <- round(sqrt(ngc))
   
   nc <- floor(nc / k) * k
   
@@ -130,6 +136,16 @@ cr.a01d <- function(geno, nb, k, nc = NULL, serpentine = c("yes", "no")) {
   
   ad <- ad + 1
   
+  # Add checks
+  
+  if (nck > 0) {
+    ad2 <- array(NA, c(k + nck, s, nb))
+    ad2[1:k, 1:s, 1:nb] <- ad
+    for (i in 1:nck)
+      ad2[k + i, , ] <- ng + i
+    ad <- ad2
+  }
+   
   # Randomize genotypes inside each incomplete block
   
   for (i in 1:nb)
@@ -143,12 +159,12 @@ cr.a01d <- function(geno, nb, k, nc = NULL, serpentine = c("yes", "no")) {
 
   # Number of rows for each complete block
   
-  nr <- ceiling(ng / nc)
+  nr <- ceiling(ngc / nc)
   
   # Fieldplan array
   
   plan.id <- t(array(1:(nr*nc), dim = c(nc, nr)))
-  plan.id.sb <- t(array(c(sapply(1:s, rep, k)), dim = c(nc, nr)))
+  plan.id.sb <- t(array(c(sapply(1:s, rep, k + nck)), dim = c(nc, nr)))
   
   if (serpentine == 'yes' & nr > 1)
     for (i in seq(2, nr, 2)) {
@@ -163,6 +179,8 @@ cr.a01d <- function(geno, nb, k, nc = NULL, serpentine = c("yes", "no")) {
   dimnames(plan)[[3]] <- paste("block", 1:nb)
   
   # Allocate genotypes in the fieldplan
+  
+  geno <- c(geno, check)
   
   for (l in 1:nb) {
     sg <- geno[c(ad[, , l])]
@@ -181,7 +199,7 @@ cr.a01d <- function(geno, nb, k, nc = NULL, serpentine = c("yes", "no")) {
   
   for (i in 1:nb) {
     geno <- c(geno, c(t(plan[, , i])))
-    plot.num <- c(plot.num, c(t(plan.id)) + ng * (i - 1))
+    plot.num <- c(plot.num, c(t(plan.id)) + ngc * (i - 1))
     sub.block <- c(sub.block, c(t(plan.id.sb)))
   }
   

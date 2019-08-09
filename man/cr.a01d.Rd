@@ -4,14 +4,16 @@
 \alias{cr.a01d}
 \title{Alpha (0,1) design}
 \usage{
-cr.a01d(geno, nb, k, nc = NULL, serpentine = c("yes", "no"))
+cr.a01d(geno, check, nb, k, nc = NULL, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
 
+\item{check}{The list of checks to repeat in each incomplete block (optional).}
+
 \item{nb}{Number of complete blocks.}
 
-\item{k}{Size for the incomplete blocks (sub-blocks).}
+\item{k}{Size for the incomplete blocks.}
 
 \item{nc}{Number of available columns on the field.}
 
@@ -38,8 +40,8 @@ is 0 or 1 (hence the name of the design). There are 4 options for this design:
 The blocks and incomplete blocks are disposed alongside the rows.
 }
 \examples{
-cr.a01d(1:100, 2, 5)
-cr.a01d(1:100, 3, 5, 28)
+cr.a01d(1:100, NULL, 2, 5)
+cr.a01d(1:100, NULL, 3, 5, 28)
 }
 \author{
 Raul Eyzaguirre.
