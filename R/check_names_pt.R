@@ -7,7 +7,6 @@
 #' @details The data frame must use the following labels (lower or upper case):
 #' 
 #'  -------------------- Plot identifiers --------------------
-#'  \itemize{
 #'  \item \code{plot}        : Plot number
 #'  \item \code{row}         : Row number
 #'  \item \code{col}         : Column number
@@ -38,7 +37,7 @@
 #'  \itemize{
 #'  \item \code{snpp}        : Stem number per plant
 #'  \item \code{nipp}        : Number of inflorescences per plant
-#'  \iten \code{nfwp}        : Number of flowers per main inflorescence
+#'  \item \code{nfwp}        : Number of flowers per main inflorescence
 #'  \item \code{nlpp}        : Number of leaves per plant
 #'  \item \code{Num_Stolon}  : Number of stolons
 #'  \item \code{Leng_Stolon} : Number of stolons
