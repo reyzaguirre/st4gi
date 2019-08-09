@@ -1,4 +1,4 @@
-#' Compute derived traits
+#' Compute derived traits for sweetpotato
 #'
 #' Compute derived traits for a given fieldbook data frame.
 #' @param dfr The name of the data frame.
@@ -8,7 +8,7 @@
 #' and in number of plants per hectare if \code{method = "np"}.
 #' @param nops Number of plants sowed per plot.
 #' @details The data frame must use the labels (lower or upper case) listed in function
-#' \code{check.names}. See \code{?check.names} for details.
+#' \code{check.names.sp}. See \code{?check.names.sp} for details.
 #' 
 #' Conversion from kilograms per plot to tons per hectare can be done using \code{ps}, the
 #' plot size, or \code{np}, the total number of plants that are expected to be allocated in a
@@ -25,7 +25,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   
   # Check names
   
-  dfr <- check.names(dfr)
+  dfr <- check.names.sp(dfr)
   
   # Original trait names
   

@@ -9,7 +9,7 @@
 #' @param out.max Threshold for outliers' detection.
 #' @param add Additional quantitative traits.
 #' @details The data frame must use the labels (lower or upper case) listed in function
-#' \code{check.names}. See \code{?check.names} for details.
+#' \code{check.names.sp}. See \code{?check.names.sp} for details.
 #' 
 #' Extreme low and high values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
@@ -33,7 +33,7 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
   
   # Check names
   
-  dfr <- check.names(dfr, add)
+  dfr <- check.names.sp(dfr, add)
   if (!is.null(add))
     add <- tolower(add)
 

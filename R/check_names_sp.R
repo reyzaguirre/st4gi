@@ -1,4 +1,4 @@
-#' Check fieldbook traits names
+#' Check fieldbook traits names for sweetpotato
 #'
 #' Check that fieldbook traits names correspond with the names defined in the document
 #' "PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
@@ -114,10 +114,10 @@
 #' traits with names not included in the list shown above.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' check.names(pjpz09)
+#' check.names.sp(pjpz09)
 #' @export
 
-check.names <- function(dfr, add = NULL) {
+check.names.sp <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
