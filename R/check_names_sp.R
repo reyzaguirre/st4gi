@@ -1,7 +1,7 @@
 #' Check fieldbook traits names for sweetpotato
 #'
-#' Check that fieldbook traits names correspond with the names defined in the document
-#' "PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
+#' Check that fieldbook traits names correspond with the names defined in 
+#' Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-9060-522-5.
 #' @param dfr The name of the data frame.
 #' @param add Additional traits.
 #' @details The data frame must use the following labels (lower or upper case):
