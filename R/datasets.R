@@ -63,6 +63,16 @@ NULL
 #' @format A data frame with 4 columns and 288 rows.
 #' @source International Potato Center, sweetpotato experimental data.
 NULL
+#' @name potatoyield
+#' @title Data for a yield trial
+#' @docType data
+#' @aliases potatoyield
+#' @description This data set contains data for 39 traits in a potato trial
+#' with 258 genotypes, 3 irrigation treatments, and 6 blocks.
+#' @usage potatoyield
+#' @format A data frame with 46 columns and 972 rows.
+#' @source International Potato Center, potato experimental data.
+NULL
 #' @name pjpz09
 #' @title Data for a yield trial
 #' @docType data
