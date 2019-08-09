@@ -21,10 +21,15 @@ Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-90
 }
 \details{
 The data frame must use the following labels (lower or upper case):
-\itemize{
+
+ -------------------- Plot identifiers --------------------
+ \itemize{
  \item \code{plot}      : Plot number
  \item \code{row}       : Row number
  \item \code{col}       : Column number
+ }
+-------------------- Classification factors --------------------
+ \itemize{
  \item \code{l}         : Locations (\code{loc} is also valid)
  \item \code{y}         : Years
  \item \code{s}         : Seasons
@@ -33,6 +38,9 @@ The data frame must use the following labels (lower or upper case):
  \item \code{name}      : Names for genotypes
  \item \code{r}         : Replications (\code{rep} is also valid)
  \item \code{b}         : Blocks (\code{block} is also valid)
+ }
+-------------------- On field evaluated traits --------------------
+ \itemize{
  \item \code{nops}      : Number of plants sowed
  \item \code{nope}      : Number of plants established
  \item \code{noph}      : Number of plants harvested
@@ -55,12 +63,18 @@ The data frame must use the following labels (lower or upper case):
  \item \code{damr}      : Root defects (1-9)
  \item \code{rspr}      : Root sprouting (1-9)
  \item \code{wed}       : Weevil damage (1-9)
+ }
+-------------------- Dry matter assesment --------------------
+ \itemize{
  \item \code{dmf}       : Fresh weight of roots for dry matter assessment (g)
  \item \code{dmd}       : Dry weight of roots for dry matter assessment (g)
  \item \code{dm}        : Storage root dry matter content (\%)
  \item \code{dmvf}      : Fresh weight vines for dry matter assessment (g)
  \item \code{dmvd}      : Dry weight vines for dry matter assessment (g)
  \item \code{dmv}       : Vines dry matter content (\%)
+ }
+-------------------- Raw and cooked roots attributes --------------------
+ \itemize{
  \item \code{fraw1}     : Raw root fiber (1-9), first determination (\code{fraw} is also valid)
  \item \code{suraw1}    : Raw root sugar (1-9), first determination (\code{suraw} is also valid)
  \item \code{straw1}    : Raw root starch (1-9), first determination (\code{straw} is also valid)
@@ -77,6 +91,9 @@ The data frame must use the following labels (lower or upper case):
  \item \code{coost2}    : Cooked root starch (1-9), second evaluation
  \item \code{coot2}     : Cooked root taste (1-9), second evaluation
  \item \code{cooap2}    : Cooked root appearance (1-9), second evaluation
+ }
+-------------------- Nutrients evaluations --------------------
+ \itemize{
  \item \code{prot}      : Protein (\% raw fresh)
  \item \code{fe}        : Iron (mg/100g raw dry weight)
  \item \code{zn}        : Zinc (mg/100g raw dry weight)
@@ -90,6 +107,9 @@ The data frame must use the following labels (lower or upper case):
  \item \code{gluc}      : Glucose (\% raw fresh)
  \item \code{sucr}      : Sucrose (\% raw fresh)
  \item \code{malt}      : Maltose (\% raw fresh)
+ }
+-------------------- Calculated traits --------------------
+ \itemize{
  \item \code{tnr}       : Total number of roots per plot
  \item \code{trw}       : Total root weight (kg/plot)
  \item \code{trw.d}     : Total root dry weight (kg/plot)
