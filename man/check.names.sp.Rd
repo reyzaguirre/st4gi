@@ -16,8 +16,8 @@ It returns a data frame with all traits names in lower case, and a list of the
 traits with names not included in the list shown above.
 }
 \description{
-Check that fieldbook traits names correspond with the names defined in the document
-"PROCEDURES  FOR THE EVALUATION AND ANALYSIS OF SWEETPOTATO TRIALS".
+Check that fieldbook traits names correspond with the names defined in 
+Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-9060-522-5.
 }
 \details{
 The data frame must use the following labels (lower or upper case):
