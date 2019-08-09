@@ -161,6 +161,7 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
 
   # Replace characters for treatment names
   
+  plan <- gsub(":-p", "_", plan)
   book$treat <- gsub(":-p", "_", book$treat)
 
   # Sort by plot number

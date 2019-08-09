@@ -84,6 +84,7 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no")) {
   
   # Replace characters for treatment names
   
+  plan <- gsub(":-p", "_", plan)
   book$treat <- gsub(":-p", "_", book$treat)
 
   # Return
