@@ -410,7 +410,11 @@ check.data <- function(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
   
   # Outliers' detection
   
+  # Set outliers control (only run if oc = 0)
+
   oc <- 0
+  
+  # Select model and check correct names for genotypes, environments and replications
   
   if (out.mod == "rcbd") {
     oc <- 1
