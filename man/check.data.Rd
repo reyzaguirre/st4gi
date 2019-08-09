@@ -28,7 +28,7 @@ AND ANALYSIS OF SWEETPOTATO TRIALS document.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in function
-\code{check.names}. See \code{?check.names} for details.
+\code{check.names.sp}. See \code{?check.names.sp} for details.
 
 Extreme low and high values are detected using the interquartile range.
 The rule is to detect any value out of the interval 

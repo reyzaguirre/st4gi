@@ -2,7 +2,7 @@
 % Please edit documentation in R/cdt.R
 \name{cdt}
 \alias{cdt}
-\title{Compute derived traits}
+\title{Compute derived traits for sweetpotato}
 \usage{
 cdt(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL)
 }
@@ -25,7 +25,7 @@ Compute derived traits for a given fieldbook data frame.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in function
-\code{check.names}. See \code{?check.names} for details.
+\code{check.names.sp}. See \code{?check.names.sp} for details.
 
 Conversion from kilograms per plot to tons per hectare can be done using \code{ps}, the
 plot size, or \code{np}, the total number of plants that are expected to be allocated in a
