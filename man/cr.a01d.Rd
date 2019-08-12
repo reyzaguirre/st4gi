@@ -4,7 +4,8 @@
 \alias{cr.a01d}
 \title{Alpha (0,1) design}
 \usage{
-cr.a01d(geno, check, nb, k, nc = NULL, serpentine = c("yes", "no"))
+cr.a01d(geno, check, nb, k, nc = NULL, breakib = c("no", "yes"),
+  serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -15,9 +16,13 @@ cr.a01d(geno, check, nb, k, nc = NULL, serpentine = c("yes", "no"))
 
 \item{k}{Size for the incomplete blocks.}
 
-\item{nc}{Number of available columns on the field.}
+\item{nc}{Number of available columns on the field for each complete block .}
 
-\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
+\item{breakib}{Logical, if incomplete blocks should be broken in more than one
+row, default \code{"no"}.}
+
+\item{serpentine}{Logical, if planting follows a serpentine path,
+default \code{"yes"}.}
 }
 \value{
 It returns the fieldbook and fieldplan.

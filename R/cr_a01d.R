@@ -5,8 +5,11 @@
 #' @param check The list of checks to repeat in each incomplete block (optional).
 #' @param nb Number of complete blocks.
 #' @param k Size for the incomplete blocks.
-#' @param nc Number of available columns on the field.
-#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
+#' @param nc Number of available columns on the field for each complete block .
+#' @param breakib Logical, if incomplete blocks should be broken in more than one
+#' row, default \code{"no"}.
+#' @param serpentine Logical, if planting follows a serpentine path,
+#' default \code{"yes"}.
 #' @details The genotypes are randomly allocated on a field following an alpha
 #' (0,1) design. In this design each block is a complete replication that is
 #' divided into \code{s} incomplete blocks of size \code{k}. For any pair of
@@ -26,10 +29,12 @@
 #' cr.a01d(1:100, NULL, 3, 5, 28)
 #' @export
 
-cr.a01d <- function(geno, check, nb, k, nc = NULL, serpentine = c("yes", "no")) {
+cr.a01d <- function(geno, check, nb, k, nc = NULL, breakib = c('no', 'yes'),
+                    serpentine = c("yes", "no")) {
   
   # Match arguments
   
+  breakib <- match.arg(breakib)
   serpentine <- match.arg(serpentine)
 
   # Number of genotypes, checks, and incomplete blocks
@@ -55,8 +60,9 @@ cr.a01d <- function(geno, check, nb, k, nc = NULL, serpentine = c("yes", "no")) 
   if (is.null(nc))
     nc <- round(sqrt(ngc))
   
-  nc <- floor(nc / k) * k
-  
+  if (floor(nc / (k + nck)) > 0 & breakib == 'no')
+    nc <- floor(nc / (k + nck)) * (k + nck)
+
   # Design generators
   
   if (nb == 2)
