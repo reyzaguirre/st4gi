@@ -2,13 +2,15 @@
 % Please edit documentation in R/check_data.R
 \name{check.data}
 \alias{check.data}
-\title{Check consistency for sweetpotato experimental data}
+\title{Check consistency for potato and sweetpotato experimental data}
 \usage{
-check.data(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
-  out.max = 4, add = NULL)
+check.data(dfr, crop = c("pt", "sp"), f = 3, out.mod = c("none",
+  "rcbd", "met"), out.max = 4, add = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
+
+\item{crop}{\code{'pt'} for potato or \code{'sp'} for sweetpotato.}
 
 \item{f}{Factor for extreme values detection. See details.}
 
@@ -22,13 +24,16 @@ check.data(dfr, f = 3, out.mod = c("none", "rcbd", "met"),
 It returns all rows with some kind of inconsistency or outliers.
 }
 \description{
-Set of rules to check for consistency of sweetpotato experimental data.
-Data labels must be defined as specified in the PROCEDURES FOR THE EVALUATION
-AND ANALYSIS OF SWEETPOTATO TRIALS document.
+Set of rules to check for consistency of potato and sweetpotato experimental data.
+Data labels must be defined as specified in
+\url{http://www.cropontology.org/ontology/CO_330/Potato} 
+and in the Procedures for the evaluation and analysis of sweetpotato trials,
+ISBN 978-92-9060-522-5, for potato and sweetpotato respectively.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in function
-\code{check.names.sp}. See \code{?check.names.sp} for details.
+\code{check.names.pt} for potato and in function \code{check.names.sp} for sweetpotato.
+See \code{?check.names.pt} and \code{?check.names.sp} for details.
 
 Extreme low and high values are detected using the interquartile range.
 The rule is to detect any value out of the interval 
@@ -40,8 +45,9 @@ and a multi environment trial with RCBD in each environment. By default the thre
 value is \code{out.max = 4}.
 }
 \examples{
-check.data(pjpz09)
+check.data(potatoyield, "pt")
+check.data(pjpz09, "sp")
 }
 \author{
-Raul Eyzaguirre.
+Raul Eyzaguirre, Johan Ninanya.
 }
