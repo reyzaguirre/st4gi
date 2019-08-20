@@ -35,7 +35,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{s}         : Seasons
  \item \code{e}         : Environments (\code{env} is also valid)
  \item \code{g}         : Genotypes (\code{geno} is also valid)
- \item \code{name}      : Names for genotypes
+ \item \code{cipno}     : Institutional CIP number
  \item \code{r}         : Replications (\code{rep} is also valid)
  \item \code{b}         : Blocks (\code{block} is also valid)
  }
