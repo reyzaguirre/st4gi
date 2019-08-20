@@ -495,8 +495,8 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
       if (exists('geno', dfr)) {
         geno <- as.character(dfr[, 'geno'])
       } else {
-        if (exists('name', dfr)) {
-          geno <- as.character(dfr[, 'name'])
+        if (exists('cipno', dfr)) {
+          geno <- as.character(dfr[, 'cipno'])
         } else {
           oc <- 0
           warning("Genotypes are not defined. Use g or geno as labels.", call. = FALSE)  
@@ -524,8 +524,8 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
       if (exists('geno', dfr)) {
         geno <- as.character(dfr[, 'geno'])
       } else {
-        if (exists('name', dfr)) {
-          geno <- as.character(dfr[, 'name'])
+        if (exists('cipno', dfr)) {
+          geno <- as.character(dfr[, 'cipno'])
         } else {
           oc <- 0
           warning("Genotypes are not defined. Use g or geno as labels.", call. = FALSE)  
@@ -1262,8 +1262,8 @@ check.data.pt <- function(dfr, f, out.mod, out.max, add) {
       if (exists('geno', dfr)) {
         geno <- as.character(dfr[, 'geno'])
       } else {
-        if (exists('name', dfr)) {
-          geno <- as.character(dfr[, 'name'])
+        if (exists('cipno', dfr)) {
+          geno <- as.character(dfr[, 'cipno'])
         } else {
           oc <- 0
           warning("Genotypes are not defined. Use instn or geno as labels.", call. = FALSE)  
@@ -1291,8 +1291,8 @@ check.data.pt <- function(dfr, f, out.mod, out.max, add) {
       if (exists('geno', dfr)) {
         geno <- as.character(dfr[, 'geno'])
       } else {
-        if (exists('name', dfr)) {
-          geno <- as.character(dfr[, 'name'])
+        if (exists('cipno', dfr)) {
+          geno <- as.character(dfr[, 'cipno'])
         } else {
           oc <- 0
           warning("Genotypes are not defined. Use instn or geno as labels.", call. = FALSE)  
