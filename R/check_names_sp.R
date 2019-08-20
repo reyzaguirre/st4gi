@@ -15,13 +15,15 @@
 #' -------------------- Classification factors --------------------
 #'  \itemize{
 #'  \item \code{l}         : Locations (\code{loc} is also valid)
-#'  \item \code{y}         : Years
-#'  \item \code{s}         : Seasons
+#'  \item \code{y}         : Years (\code{year} is also valid)
+#'  \item \code{s}         : Seasons (\code{season} is also valid) 
 #'  \item \code{e}         : Environments (\code{env} is also valid)
 #'  \item \code{g}         : Genotypes (\code{geno} is also valid)
 #'  \item \code{cipno}     : Institutional CIP number
 #'  \item \code{r}         : Replications (\code{rep} is also valid)
 #'  \item \code{b}         : Blocks (\code{block} is also valid)
+#'  \item \code{treat}     : Treatment
+#'  \item \code{harvest}   : Harvest time
 #'  }
 #' -------------------- On field evaluated traits --------------------
 #'  \itemize{
@@ -141,7 +143,8 @@ check.names.sp <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
-  factors <- c("l", "loc", "y", "s", "g", "e", "env", "geno", "cipno", "r", "rep", "b", "block")
+  factors <- c("l", "loc", "y", "year", "s", "season", "e", "env", "g", "geno", "cipno",
+               "r", "rep", "b", "block", "treat", "harvest")
   
   traits <- c("nops", "nope", "noph", "vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv",
               "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "scol", "fcol", "fcol.cc",

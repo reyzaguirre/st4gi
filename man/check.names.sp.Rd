@@ -31,13 +31,15 @@ The data frame must use the following labels (lower or upper case):
 -------------------- Classification factors --------------------
  \itemize{
  \item \code{l}         : Locations (\code{loc} is also valid)
- \item \code{y}         : Years
- \item \code{s}         : Seasons
+ \item \code{y}         : Years (\code{year} is also valid)
+ \item \code{s}         : Seasons (\code{season} is also valid) 
  \item \code{e}         : Environments (\code{env} is also valid)
  \item \code{g}         : Genotypes (\code{geno} is also valid)
  \item \code{cipno}     : Institutional CIP number
  \item \code{r}         : Replications (\code{rep} is also valid)
  \item \code{b}         : Blocks (\code{block} is also valid)
+ \item \code{treat}     : Treatment
+ \item \code{harvest}   : Harvest time
  }
 -------------------- On field evaluated traits --------------------
  \itemize{
