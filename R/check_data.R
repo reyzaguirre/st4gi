@@ -31,13 +31,11 @@
 #' @importFrom stats IQR quantile rstandard
 #' @export
 
-check.data <- function(dfr, crop = c("pt", "sp"), f = 3,
-                       out.mod = c("none", "rcbd", "met"),
+check.data <- function(dfr, crop, f = 3, out.mod = c("none", "rcbd", "met"),
                        out.max = 4, add = NULL) {
   
   # Match arguments
 
-  crop = match.arg(crop) 
   out.mod = match.arg(out.mod)
   
   # Run check
