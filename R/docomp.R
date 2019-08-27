@@ -56,7 +56,10 @@ docomp <- function(do, traits, factors, add = NULL, dfr) {
       if (do == "count")
         dfr.out[j, traits[i]] <- sum(!is.na(dfr[idin == idout[j], traits[i]]))
       else
-        dfr.out[j, traits[i]] <- eval(parse(text = do))(dfr[idin == idout[j], traits[i]], na.rm = TRUE)
+        if (sum(!is.na(dfr[idin == idout[j], traits[i]])) == 0)
+          dfr.out[j, traits[i]] <- NA
+        else 
+          dfr.out[j, traits[i]] <- eval(parse(text = do))(dfr[idin == idout[j], traits[i]], na.rm = TRUE)
     }
   }
   
