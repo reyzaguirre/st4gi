@@ -4,16 +4,20 @@
 \alias{cr.rcbd}
 \title{Randomized Complete Block Design}
 \usage{
-cr.rcbd(geno, nb, nc = NULL, serpentine = c("yes", "no"))
+cr.rcbd(geno, nb, nc = NULL, serpentine = c("yes", "no"),
+  alongside = c("no", "rows", "columns"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
 
 \item{nb}{Number of blocks.}
 
-\item{nc}{Number of available columns on the field.}
+\item{nc}{Number of available columns on the field for each block.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
+
+\item{alongside}{\code{"no"} for independent blocks, or \code{"rows"}
+or \code{"columns"} if blocks are together alongside rows or columns.}
 }
 \value{
 It returns the fieldbook and fieldplan.
