@@ -3,20 +3,24 @@
 #' This function creates the fieldbook and fieldplan for a RCBD.
 #' @param geno The list of genotypes.
 #' @param nb Number of blocks.
-#' @param nc Number of available columns on the field.
+#' @param nc Number of available columns on the field for each block.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
-#' @return It returns the fieldbook and fieldplan.
+#' @param alongside \code{"no"} for independent blocks, or \code{"rows"}
+#' or \code{"columns"} if blocks are together alongside rows or columns.
+#' @return It returns the fieldbook and fieldplan. 
 #' @author Raul Eyzaguirre.
 #' @examples
 #' cr.rcbd(1:20, 3, 10)
 #' cr.rcbd(1:20, 2, 7)
 #' @export
 
-cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no")) {
+cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no"),
+                    alongside = c("no", "rows", "columns")) {
   
   # Match arguments
   
   serpentine <- match.arg(serpentine)
+  alongside <- match.arg(alongside)
 
   # Error messages
   
@@ -35,7 +39,7 @@ cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no")) {
 
   nr <- ceiling(ng / nc)
   
-  # Fieldplan array
+  # Fieldplan array for each block
   
   plan.id <- fp(nr, nc, serpentine)
   
@@ -77,6 +81,20 @@ cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no")) {
     book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
 
   rownames(book) <- 1:dim(book)[1]
+
+  # Change row and column numbers if required
+  
+  if (alongside == "rows") {
+    plan <- t(apply(plan, 1, rbind))
+    colnames(plan) <- paste("col", 1:dim(plan)[2])
+    book$col <- book$col + (book$block - 1) * nc
+  }
+  
+  if (alongside == "columns") {
+    plan <- apply(plan, 2, rbind)
+    rownames(plan) <- paste("row", 1:dim(plan)[1])
+    book$row <- book$row + (book$block - 1) * nr
+  }  
 
   # Return
   

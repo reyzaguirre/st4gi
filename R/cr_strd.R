@@ -5,6 +5,8 @@
 #' @param B The levels of factor B (column factor).
 #' @param nb Number of blocks.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
+#' @param alongside \code{"no"} for independent blocks, or \code{"rows"}
+#' or \code{"columns"} if blocks are together alongside rows or columns.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -13,12 +15,14 @@
 #' cr.strd(A, B, 3)
 #' @export
 
-cr.strd <- function(A, B, nb, serpentine = c("yes", "no")) {
+cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
+                    alongside = c("no", "rows", "columns")) {
   
   # Match arguments
   
   serpentine <- match.arg(serpentine)
-
+  alongside <- match.arg(alongside)
+  
   # Error messages
 
   nla <- length(A)
@@ -87,6 +91,20 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no")) {
   plan <- gsub(":-p", "_", plan)
   book$treat <- gsub(":-p", "_", book$treat)
 
+  # Change row and column numbers if required
+  
+  if (alongside == "rows") {
+    plan <- t(apply(plan, 1, rbind))
+    colnames(plan) <- paste("col", 1:dim(plan)[2])
+    book$col <- book$col + (book$block - 1) * nlb
+  }
+  
+  if (alongside == "columns") {
+    plan <- apply(plan, 2, rbind)
+    rownames(plan) <- paste("row", 1:dim(plan)[1])
+    book$row <- book$row + (book$block - 1) * nla
+  }
+  
   # Return
   
   list(plan = plan, book = book)

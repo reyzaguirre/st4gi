@@ -5,7 +5,7 @@
 \title{Create design for a factorial experiment}
 \usage{
 cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
-  serpentine = c("yes", "no"))
+  serpentine = c("yes", "no"), alongside = c("no", "rows", "columns"))
 }
 \arguments{
 \item{fnames}{Factors' names.}
@@ -19,6 +19,9 @@ cr.f(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
 \item{nc}{Number of available columns on the field.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
+
+\item{alongside}{\code{"no"} for independent blocks, or \code{"rows"}
+or \code{"columns"} if blocks are together alongside rows or columns.}
 }
 \value{
 It returns the fieldbook and fieldplan.

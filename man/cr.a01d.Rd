@@ -5,7 +5,7 @@
 \title{Alpha (0,1) design}
 \usage{
 cr.a01d(geno, check, nb, k, nc = NULL, breakib = c("no", "yes"),
-  serpentine = c("yes", "no"))
+  serpentine = c("yes", "no"), alongside = c("no", "rows", "columns"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -18,11 +18,13 @@ cr.a01d(geno, check, nb, k, nc = NULL, breakib = c("no", "yes"),
 
 \item{nc}{Number of available columns on the field for each complete block .}
 
-\item{breakib}{Logical, if incomplete blocks should be broken in more than one
+\item{breakib}{If incomplete blocks should be broken in more than one
 row, default \code{"no"}.}
 
-\item{serpentine}{Logical, if planting follows a serpentine path,
-default \code{"yes"}.}
+\item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
+
+\item{alongside}{\code{"no"} for independent blocks, or \code{"rows"}
+or \code{"columns"} if blocks are together alongside rows or columns.}
 }
 \value{
 It returns the fieldbook and fieldplan.

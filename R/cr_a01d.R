@@ -6,10 +6,11 @@
 #' @param nb Number of complete blocks.
 #' @param k Size for the incomplete blocks.
 #' @param nc Number of available columns on the field for each complete block .
-#' @param breakib Logical, if incomplete blocks should be broken in more than one
+#' @param breakib If incomplete blocks should be broken in more than one
 #' row, default \code{"no"}.
-#' @param serpentine Logical, if planting follows a serpentine path,
-#' default \code{"yes"}.
+#' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
+#' @param alongside \code{"no"} for independent blocks, or \code{"rows"}
+#' or \code{"columns"} if blocks are together alongside rows or columns.
 #' @details The genotypes are randomly allocated on a field following an alpha
 #' (0,1) design. In this design each block is a complete replication that is
 #' divided into \code{s} incomplete blocks of size \code{k}. For any pair of
@@ -30,13 +31,14 @@
 #' @export
 
 cr.a01d <- function(geno, check, nb, k, nc = NULL, breakib = c('no', 'yes'),
-                    serpentine = c("yes", "no")) {
+                    serpentine = c("yes", "no"), alongside = c("no", "rows", "columns")) {
   
   # Match arguments
   
   breakib <- match.arg(breakib)
   serpentine <- match.arg(serpentine)
-
+  alongside <- match.arg(alongside)
+  
   # Number of genotypes, checks, and incomplete blocks
   
   nck <- length(check)
@@ -218,6 +220,20 @@ cr.a01d <- function(geno, check, nb, k, nc = NULL, breakib = c('no', 'yes'),
     book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
   
   rownames(book) <- 1:dim(book)[1]
+
+  # Change row and column numbers if required
+  
+  if (alongside == "rows") {
+    plan <- t(apply(plan, 1, rbind))
+    colnames(plan) <- paste("col", 1:dim(plan)[2])
+    book$col <- book$col + (book$block - 1) * nc
+  }
+  
+  if (alongside == "columns") {
+    plan <- apply(plan, 2, rbind)
+    rownames(plan) <- paste("row", 1:dim(plan)[1])
+    book$row <- book$row + (book$block - 1) * nr
+  }  
 
   # Return
   
