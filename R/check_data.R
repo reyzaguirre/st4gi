@@ -6,7 +6,7 @@
 #' and in the Procedures for the evaluation and analysis of sweetpotato trials,
 #' ISBN 978-92-9060-522-5, for potato and sweetpotato respectively.
 #' @param dfr The name of the data frame.
-#' @param crop \code{'pt'} for potato or \code{'sp'} for sweetpotato.
+#' @param crop \code{"pt"} for potato or \code{"sp"} for sweetpotato.
 #' @param f Factor for extreme values detection. See details.
 #' @param out.mod Statistical model for outliers' detection. See details.
 #' @param out.max Threshold for outliers' detection.
@@ -20,7 +20,7 @@
 #' \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
 #' 
 #' Outliers are detected based on standardized residuals for some statistical models.
-#' Options are \code{'rcbd'} and \code{'met'} for a randomized complete block design
+#' Options are \code{"rcbd"} and \code{"met"} for a randomized complete block design
 #' and a multi environment trial with RCBD in each environment. By default the threshold
 #' value is \code{out.max = 4}.
 #' @return It returns all rows with some kind of inconsistency or outliers.

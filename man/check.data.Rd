@@ -10,7 +10,7 @@ check.data(dfr, crop, f = 3, out.mod = c("none", "rcbd", "met"),
 \arguments{
 \item{dfr}{The name of the data frame.}
 
-\item{crop}{\code{'pt'} for potato or \code{'sp'} for sweetpotato.}
+\item{crop}{\code{"pt"} for potato or \code{"sp"} for sweetpotato.}
 
 \item{f}{Factor for extreme values detection. See details.}
 
@@ -40,7 +40,7 @@ The rule is to detect any value out of the interval
 \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
 
 Outliers are detected based on standardized residuals for some statistical models.
-Options are \code{'rcbd'} and \code{'met'} for a randomized complete block design
+Options are \code{"rcbd"} and \code{"met"} for a randomized complete block design
 and a multi environment trial with RCBD in each environment. By default the threshold
 value is \code{out.max = 4}.
 }
