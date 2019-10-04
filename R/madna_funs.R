@@ -2,7 +2,7 @@
 ## Set sweetpotato impossible data to NA
 ###############################################################################
 
-mad.na.sp <- function(dfr, f, add.con, add.cat, k) {
+madna.sp <- function(dfr, f, add.con, add.cat, k) {
   
   # Check names
   
@@ -151,7 +151,7 @@ mad.na.sp <- function(dfr, f, add.con, add.cat, k) {
 ## Set potato data to NA
 ###############################################################################
 
-mad.na.pt <- function(dfr, f, add.con, add.cat, k) {
+madna.pt <- function(dfr, f, add.con, add.cat, k) {
   
  print('Not implemented yet')
   

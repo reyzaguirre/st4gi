@@ -27,11 +27,11 @@
 #' @return It returns the data frame with all impossible values set to \code{NA}.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' mad.na(pjpz09, "sp")
+#' madna(pjpz09, "sp")
 #' @importFrom stats IQR quantile rstandard
 #' @export
 
-mad.na <- function(dfr, crop, f = 10, add.con = NULL, add.cat = NULL, k = NULL) {
+madna <- function(dfr, crop, f = 10, add.con = NULL, add.cat = NULL, k = NULL) {
   
   # Check f
   
@@ -41,9 +41,9 @@ mad.na <- function(dfr, crop, f = 10, add.con = NULL, add.cat = NULL, k = NULL) 
   # Run fix
   
   if (crop == 'pt')
-    mad.na.pt(dfr, f, add.con, add.cat, k)
+    madna.pt(dfr, f, add.con, add.cat, k)
   
   if (crop == 'sp')
-    mad.na.sp(dfr, f, add.con, add.cat, k)
+    madna.sp(dfr, f, add.con, add.cat, k)
 
 }
