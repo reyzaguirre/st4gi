@@ -4,7 +4,7 @@
 \alias{check.data}
 \title{Check consistency for potato and sweetpotato experimental data}
 \usage{
-check.data(dfr, crop, f = 3, out.mod = c("none", "rcbd", "met"),
+check.data(dfr, crop, f = 5, out.mod = c("none", "rcbd", "met"),
   out.max = 4, add = NULL)
 }
 \arguments{
@@ -37,7 +37,7 @@ See \code{?check.names.pt} and \code{?check.names.sp} for details.
 
 Extreme low and high values are detected using the interquartile range.
 The rule is to detect any value out of the interval 
-\eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 3}.
+\eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 5}.
 
 Outliers are detected based on standardized residuals for some statistical models.
 Options are \code{"rcbd"} and \code{"met"} for a randomized complete block design
