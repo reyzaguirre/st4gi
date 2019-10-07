@@ -4,12 +4,10 @@
 \alias{madna}
 \title{Set impossible values to NA}
 \usage{
-madna(dfr, crop, f = 10, add.con = NULL, add.cat = NULL, k = NULL)
+madna(dfr, f = 10, add.con = NULL, add.cat = NULL, k = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
-
-\item{crop}{\code{"pt"} for potato or \code{"sp"} for sweetpotato.}
 
 \item{f}{Factor for extreme values detection. See details.}
 
@@ -20,15 +18,15 @@ madna(dfr, crop, f = 10, add.con = NULL, add.cat = NULL, k = NULL)
 \item{k}{The \code{k} values.}
 }
 \value{
-It returns the data frame with all impossible values set to \code{NA}.
+It returns the data frame with all impossible values set to \code{NA}
+and a list of warnings with all the rows that have been modified.
 }
 \description{
-Detect impossible values and set them to missing value (NA).
+Detect impossible values for sweetpotato data and set them to missing value (NA).
 }
 \details{
-The data frame must use the labels (lower or upper case) listed in function
-\code{check.names.pt} for potato and in function \code{check.names.sp} for sweetpotato.
-See \code{?check.names.pt} and \code{?check.names.sp} for details.
+The data frame must use the labels (lower or upper case) listed in
+function \code{check.names.sp}; see \code{?check.names.sp} for details.
 Rules are:
 \itemize{
  \item Continuous positive traits cannot be negative.
@@ -45,7 +43,12 @@ Rules are:
 }
 }
 \examples{
-madna(pjpz09, "sp")
+dfr <- data.frame(trw = c(2.2, 5.0, 3.6, 122, 1600),
+                  dm = c(21, 23, 105, 24, -3),
+                  tnr = c(1.3, 10, 11, NA, 2),
+                  scol = c(1, 0, 15, 5, 4),
+                  fcol.cc = c(1, 15, 12, 24, 55))
+madna(dfr)
 }
 \author{
 Raul Eyzaguirre.
