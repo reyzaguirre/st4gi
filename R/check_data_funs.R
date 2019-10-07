@@ -127,14 +127,18 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 2, "nope", "alt2", "- Number of plants established (nope) is zero but there is data for alternaria symptoms second evaluation (alt2):")
   sp1(dfr, 2, "nope", "vv", "- Number of plants established (nope) is zero but there is data for vine vigor (vv):")
 
-  # noph and vw
+  # noph and vw and roots
   
   sp1(dfr, 3, "noph", "vw", "- Number of plants harvested (noph) is zero but vine weight (vw) is greater than zero:") 
   sp1(dfr, 3, "vw", "noph", "- Vine weight (vw) is zero but number of plants harvested (noph) is greater than zero:") 
   sp1(dfr, 3, "noph", "fytha", "- Number of plants harvested (noph) is zero but foliage yield in tons per hectare (fytha) is greater than zero:") 
   sp1(dfr, 3, "fytha", "noph", "- Foliage yield in tons per hectare (fytha) is zero but number of plants harvested (noph) is greater than zero:") 
-  sp1(dfr, 3, "noph", "fytha.aj", "- Number of plants harvested (noph) is zero but foliage yield adjusted in tons per hectare (fytha.aj) is greater than zero:") 
-  sp1(dfr, 3, "fytha.aj", "noph", "- Foliage yield adjusted in tons per hectare (fytha.aj) is zero but number of plants harvested (noph) is greater than zero:") 
+  sp1(dfr, 3, "noph", "tnr", "- Number of plants harvested (noph) is zero but total number of roots (tnr) is greater than zero:")
+  sp1(dfr, 3, "tnr", "noph", "- Number of roots (tnr) is zero number of plants harvested (noph) is greater than zero:")
+  sp1(dfr, 3, "noph", "trw", "- Number of plants harvested (noph) is zero but total root weight (trw) is greater than zero:")
+  sp1(dfr, 3, "trw", "noph", "- Total root weight (trw) is zero number of plants harvested (noph) is greater than zero:")
+  sp1(dfr, 3, "noph", "rytha", "- Number of plants harvested (noph) is zero but root yield in tons per hectare (rytha) is greater than zero:")
+  sp1(dfr, 3, "rytha", "noph", "- Root yield in tons per hectare (rytha) is zero number of plants harvested (noph) is greater than zero:")
   
   # vw and dependencies
   
@@ -150,20 +154,12 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "trw", "nopr", "- Total root weight (trw) is zero but number of plants with roots (nopr) is greater than zero:")
   sp1(dfr, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
   sp1(dfr, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero but number of plants with roots (nopr) is greater than zero:")
-  sp1(dfr, 3, "nopr", "rytha.aj", "- Number of plants with roots (nopr) is zero but root yield adjusted in tons per hectare (rytha.aj) is greater than zero:")
-  sp1(dfr, 3, "rytha.aj", "nopr", "- Root yield adjusted in tons per hectare (rytha.aj) is zero but number of plants with roots (nopr) is greater than zero:")
-  sp1(dfr, 3, "nopr", "cytha", "- Number of plants with roots (nopr) is zero but commercial root yield in tons per hectare (cytha) is greater than zero:")
-  sp1(dfr, 3, "nopr", "cytha.aj", "- Number of plants with roots (nopr) is zero but commercial root yield adjusted in tons per hectare (cytha.aj) is greater than zero:")
   sp1(dfr, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
   
   # Number of roots and root weight
   
   sp1(dfr, 3, "nocr", "crw", "- Number of commercial roots (nocr) is zero but commercial root weight (crw) is greater than zero:") 
   sp1(dfr, 3, "crw", "nocr", "- Commercial root weight (crw) is zero but number of commercial roots (nocr) is greater than zero:") 
-  sp1(dfr, 3, "nocr", "cytha", "- Number of commercial roots (nocr) is zero but commercial root yield in tons per hectare (cytha) is greater than zero:") 
-  sp1(dfr, 3, "cytha", "nocr", "- Commercial root yield in tons per hectare (cytha) is zero but number of commercial roots (nocr) is greater than zero:") 
-  sp1(dfr, 3, "nocr", "cytha.aj", "- Number of commercial roots (nocr) is zero but commercial root yield adjusted in tons per hectare (cytha.aj) is greater than zero:") 
-  sp1(dfr, 3, "cytha.aj", "nocr", "- Commercial root yield adjusted in tons per hectare (cytha.aj) is zero but number of commercial roots (nocr) is greater than zero:") 
   sp1(dfr, 3, "nonc", "ncrw", "- Number of non commercial roots (nonc) is zero but non commercial root weight (ncrw) is greater than zero:")
   sp1(dfr, 3, "ncrw", "nonc", "- Non commercial root weight (ncrw) is zero but number of non commercial roots (nonc) is greater than zero:")
   sp1(dfr, 3, "trw", "tnr", "- Total root weight (trw) is zero but total number of roots (tnr) is greater than zero:")
@@ -200,10 +196,6 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   }
   if (exists("rytha", dfr)) {
     temp <- temp | (is.na(dfr$rytha) | dfr$rytha > 0)
-    do <- TRUE
-  }
-  if (exists("rytha.aj", dfr)) {
-    temp <- temp | (is.na(dfr$rytha.aj) | dfr$rytha.aj > 0)
     do <- TRUE
   }
 

@@ -1,6 +1,7 @@
-#' Set impossible values to NA
+#' Set impossible values to \code{NA}
 #'
-#' Detect impossible values for sweetpotato data and set them to missing value (NA).
+#' Detect impossible values for sweetpotato data and set them to missing value
+#' (\code{NA}).
 #' @param dfr The name of the data frame.
 #' @param f Factor for extreme values detection. See details.
 #' @param add.con Additional continuous positive traits.
@@ -19,7 +20,7 @@
 #'  different from the possible values in the RHS color chart.
 #'  \item Extreme low and high values are detected using the interquartile range.
 #'  The rule is to detect any value out of the interval
-#'  \eqn{[Q_1 - f \times (IQR + m); Q_3 + f \times (IQR + m)]}
+#'  \eqn{[Q_1 - m - f \times IQR; Q_3 + m + f \times IQR]}
 #'  where \code{m} is the mean. By default \code{f = 10} and cannot be less than 10.
 #' }
 #' @return It returns the data frame with all impossible values set to \code{NA}
@@ -169,11 +170,12 @@ madna <- function(dfr, f = 10, add.con = NULL, add.cat = NULL, k = NULL) {
   
   for (i in 1:length(t.all))
     if (exists(t.all[i], dfr)) {
-      tol <- IQR(dfr[, t.all[i]], na.rm = TRUE) + mean(dfr[, t.all[i]], na.rm = TRUE)
+      tol <- IQR(dfr[, t.all[i]], na.rm = TRUE)
+      m <- mean(dfr[, t.all[i]], na.rm = TRUE)
       cond1 <- dfr[, t.all[i]] < quantile(dfr[, t.all[i]], 0.25, na.rm = TRUE) -
-        f * tol & !is.na(dfr[, t.all[i]])
+        m - f * tol & !is.na(dfr[, t.all[i]])
       cond2 <- dfr[, t.all[i]] > quantile(dfr[, t.all[i]], 0.75, na.rm = TRUE) + 
-        f * tol & !is.na(dfr[, t.all[i]])
+        m + f * tol & !is.na(dfr[, t.all[i]])
       cond <- cond1 | cond2
       dfr[cond, t.all[i]] <- NA
       if (sum(cond) > 0)

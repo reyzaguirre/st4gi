@@ -2,40 +2,59 @@
 % Please edit documentation in R/setna.R
 \name{setna}
 \alias{setna}
-\title{Set values to NA or zero.}
+\title{Set values to \code{NA} or \code{0}}
 \usage{
-setna(traits, add = NULL, dfr)
+setna(dfr)
 }
 \arguments{
-\item{traits}{List of traits.}
-
-\item{add}{List of additional traits.}
-
 \item{dfr}{The name of the data frame.}
 }
 \value{
 It returns a data frame.
 }
 \description{
-Set values to NA or zero for selected traits.
+Set values to \code{NA} or \code{0} according to some rules.
 }
 \details{
-This function sets values to NA or zero with the following rules:
+Consider the following groups of traits:
 \itemize{
- \item If all traits in \code{traits} are zero or NA, then all traits in \code{traits}
- and \code{add} are set to NA, and if \code{noph} exists and it is zero or NA,
- then it is set to zero.
- \item If there is at least one trait in \code{traits} with data and \code{noph} is zero,
- then \code{noph} is set to NA.
- }
+ \item \code{rhar} (traits evaluated with roots on harvest): \code{nopr},
+ \code{nocr}, \code{nonc}, \code{crw}, \code{ncrw}, \code{tnr}, and \code{trw}.
+
+ \item \code{rpos} (traits evaluated with roots post-harvest): \code{scol},
+ \code{fcol}, \code{fcol.cc}, \code{rs}, \code{rf}, \code{damr}, \code{rspr},
+ \code{wed}, \code{dmf}, \code{dmd}, \code{dm}, \code{fraw}, \code{fraw1},
+ \code{suraw}, \code{suraw1}, \code{straw}, \code{straw1}, \code{coof},
+ \code{coof1}, \code{coosu}, \code{coosu1}, \code{coost}, \code{coost1},
+ \code{coot}, \code{coot1}, \code{cooap}, \code{cooap1}, \code{fraw2},
+ \code{suraw2}, \code{straw2}, \code{coof2}, \code{coosu2}, \code{coost2},
+ \code{coot2}, \code{cooap2}, \code{prot}, \code{fe}, \code{zn}, \code{ca},
+ \code{mg}, \code{bc}, \code{bc.cc}, \code{tc}, \code{star}, \code{fruc},
+ \code{gluc}, \code{sucr}, and \code{malt}.
+ 
+ \item \code{vpre} (traits evaluated with vines pre-harvest): \code{vir},
+ \code{vir1}, \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
+ 
+ \item \code{vpos} (traits evaluated with vines post-harvest): \code{dmvf},
+ \code{dmvd}, and \code{dmv}.
+}
+Values are set to \code{NA} or \code{0} with the following rules:
+\itemize{
+
+ \item If \code{nope == 0} and there is some data for \code{vpre}, then
+ \code{nope} is set to \code{NA}.
+ 
+ \item If \code{noph == 0} and there is some data for \code{rhar}, then
+ \code{noph} is set to \code{NA}.
+}
 }
 \examples{
-dfr <- data.frame(noph = c(2, 0, 0, 2, 1),
-                  trt1 = c(1, 0, 0, 0, NA),
-                  trt2 = c(3, 0, 1, NA, 2),
-                  trt3 = c(4, 0, 5, 0, 0),
+dfr <- data.frame(nope = c(2, 0, 2, 2, 1),
+                  noph = c(1, 0, 2, 0, NA),
+                  vv = c(3, 2, 1, NA, 2),
+                  crw = c(4, 0, 5, 3, 0),
                   trt4 = c(1, NA, 2, 4, 5))
-setna(c('trt1', 'trt2', 'trt3'), 'trt4', dfr)
+setna(dfr)
 }
 \author{
 Raul Eyzaguirre

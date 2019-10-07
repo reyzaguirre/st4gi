@@ -2,7 +2,7 @@
 % Please edit documentation in R/madna.R
 \name{madna}
 \alias{madna}
-\title{Set impossible values to NA}
+\title{Set impossible values to \code{NA}}
 \usage{
 madna(dfr, f = 10, add.con = NULL, add.cat = NULL, k = NULL)
 }
@@ -22,7 +22,8 @@ It returns the data frame with all impossible values set to \code{NA}
 and a list of warnings with all the rows that have been modified.
 }
 \description{
-Detect impossible values for sweetpotato data and set them to missing value (NA).
+Detect impossible values for sweetpotato data and set them to missing value
+(\code{NA}).
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in
@@ -38,7 +39,7 @@ Rules are:
  different from the possible values in the RHS color chart.
  \item Extreme low and high values are detected using the interquartile range.
  The rule is to detect any value out of the interval
- \eqn{[Q_1 - f \times (IQR + m); Q_3 + f \times (IQR + m)]}
+ \eqn{[Q_1 - m - f \times IQR; Q_3 + m + f \times IQR]}
  where \code{m} is the mean. By default \code{f = 10} and cannot be less than 10.
 }
 }
