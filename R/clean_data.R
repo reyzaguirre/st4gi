@@ -289,10 +289,12 @@ clean.data <- function(dfr, f = 10) {
   
   if (length(t.all) > 0 & exists("nope", dfr)) {
     if (length(t.all) == 1)
-      cond <- dfr[, t.all] > 0 & !is.na(dfr[, t.all])
+      cond <- dfr[, t.all] > 0 & !is.na(dfr[, t.all]) &
+        dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
     if (length(t.all) > 1)
-      cond <- apply(dfr[, t.all] > 0 & !is.na(dfr[, t.all]), 1, sum) > 0
-    dfr[cond & dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope']), 'nope'] <- NA
+      cond <- apply(dfr[, t.all] > 0 & !is.na(dfr[, t.all]), 1, sum) > 0 &
+        dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
+    dfr[cond, 'nope'] <- NA
     if (sum(cond) > 0)
       warning("- Rows replaced with NA for trait nope:",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
@@ -302,10 +304,12 @@ clean.data <- function(dfr, f = 10) {
   
   if (length(t.pos) > 0 & exists("noph", dfr)) {
     if (length(t.pos) == 1)
-      cond <- dfr[, t.pos] > 0 & !is.na(dfr[, t.pos])
+      cond <- dfr[, t.pos] > 0 & !is.na(dfr[, t.pos]) &
+        dfr[, 'noph'] == 0 & !is.na(dfr[, 'noph'])
     if (length(t.pos) > 1)
-      cond <- apply(dfr[, t.pos] > 0 & !is.na(dfr[, t.pos]), 1, sum) > 0
-    dfr[cond & dfr[, 'noph'] == 0 & !is.na(dfr[, 'noph']), 'noph'] <- NA
+      cond <- apply(dfr[, t.pos] > 0 & !is.na(dfr[, t.pos]), 1, sum) > 0 &
+        dfr[, 'noph'] == 0 & !is.na(dfr[, 'noph'])
+    dfr[cond, 'noph'] <- NA
     if (sum(cond) > 0)
       warning("- Rows replaced with NA for trait noph:",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
@@ -315,10 +319,12 @@ clean.data <- function(dfr, f = 10) {
   
   if (length(t.rot) > 0 & exists("nopr", dfr)) {
     if (length(t.rot) == 1)
-      cond <- dfr[, t.rot] > 0 & !is.na(dfr[, t.rot])
+      cond <- dfr[, t.rot] > 0 & !is.na(dfr[, t.rot]) &
+        dfr[, 'nopr'] == 0 & !is.na(dfr[, 'nopr'])
     if (length(t.rot) > 1)
-      cond <- apply(dfr[, t.rot] > 0 & !is.na(dfr[, t.rot]), 1, sum) > 0
-    dfr[cond & dfr[, 'nopr'] == 0 & !is.na(dfr[, 'nopr']), 'nopr'] <- NA
+      cond <- apply(dfr[, t.rot] > 0 & !is.na(dfr[, t.rot]), 1, sum) > 0 &
+        dfr[, 'nopr'] == 0 & !is.na(dfr[, 'nopr'])
+    dfr[cond, 'nopr'] <- NA
     if (sum(cond) > 0)
       warning("- Rows replaced with NA for trait nopr:",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
