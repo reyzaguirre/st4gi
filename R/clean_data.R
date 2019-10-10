@@ -39,7 +39,7 @@
 #'  \item \code{dnn} (discrete non-negative traits): \code{nops}, \code{nope},
 #'  \code{noph}, \code{nopr}, \code{nocr}, \code{nonc}, and \code{tnr}.
 #'  
-#'  \item \code{ctg} {categorical 1 to 9 traits}: \code{vir}, \code{vir1},
+#'  \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
 #'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
 #'  \code{fcol}, \code{rs}, \code{rf}, \code{damr}, \code{rspr}, \code{wed},
 #'  \code{fraw}, \code{fraw1}, \code{suraw}, \code{suraw1}, \code{straw},
