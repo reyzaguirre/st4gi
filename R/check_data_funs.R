@@ -18,7 +18,7 @@ sp1 <- function(dfr, type, t1, t2, tx) {
     if (type == 1)
       cond <- dfr[, t1] > dfr[, t2] & !is.na(dfr[, t1]) & !is.na(dfr[, t2])
     if (type == 2)
-      cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & !is.na(dfr[, t2])
+      cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & !is.na(dfr[, t2]) & !(dfr[, t2] %in% 1:9)
     if (type == 3)
       cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & dfr[, t2] > 0 & !is.na(dfr[, t2])
     output(dfr, cond, tx)
@@ -42,7 +42,13 @@ sp2 <- function(dfr, temp, do, t1, tx) {
 
 sp3 <- function(dfr, vv, t1, tx) {
   if (exists(t1, dfr)) {
-    cond <- !(dfr[, t1] %in% vv) & !is.na(dfr[, t1])
+    if (is.null(vv)) {
+      cond1 <- dfr[, t1] < 0 & !is.na(dfr[, t1])
+      cond2 <- dfr[, t1] %% 1 > 0 & !is.na(dfr[, t1])
+      cond <- cond1 | cond2
+    } else {
+      cond <- !(dfr[, t1] %in% vv)
+    }
     output(dfr, cond, tx)
   }
 }
@@ -55,8 +61,12 @@ sp4 <- function(dfr, ex, t1, tx) {
   if (exists(t1, dfr)) {
     if (ex == "lower")
       cond <- dfr[, t1] < 0 & !is.na(dfr[, t1])
+    if (ex == "lower0")
+      cond <- dfr[, t1] <= 0 & !is.na(dfr[, t1])
     if (ex == "both")
       cond <- dfr[, t1] < 0 | dfr[, t1] > 100 & !is.na(dfr[, t1])
+    if (ex == "both0")
+      cond <- dfr[, t1] <= 0 | dfr[, t1] > 100 & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   }
 }
@@ -107,8 +117,16 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   dfr <- check.names.sp(dfr, add)
   if (!is.null(add))
     add <- tolower(add)
+  
+  # Compute trw and tnr
+  
+  if (exists("crw", dfr) & exists("ncrw", dfr) & !exists("trw", dfr))
+    dfr$trw <- suma(dfr$crw, dfr$ncrw)
 
-  # Inconsistencies for nops > nope > noph > nopr.
+  if (exists("nocr", dfr) & exists("nonc", dfr) & !exists("tnr", dfr))
+    dfr$tnr <- suma(dfr$nocr, dfr$nonc)
+
+  # Inconsistencies for nops > nope > noph > nopr
 
   sp1(dfr, 1, "nope", "nops", "- Number of plants established (nope) is greater than number of plants sowed (nops):")
   sp1(dfr, 1, "noph", "nops", "- Number of plants harvested (noph)  is greater than number of plants sowed (nops):")
@@ -117,7 +135,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 1, "nopr", "nope", "- Number of plants with roots (nopr) is greater than number of plants established (nope):")
   sp1(dfr, 1, "nopr", "noph", "- Number of plants with roots (nopr) is greater than number of plants harvested (noph):")
 
-  # Inconsistencies for nope and dependencies.
+  # Inconsistencies for nope and dependencies
 
   sp1(dfr, 2, "nope", "vir", "- Number of plants established (nope) is zero but there is data for virus symptoms (vir):")
   sp1(dfr, 2, "nope", "vir1", "- Number of plants established (nope) is zero but there is data for virus symptoms first evaluation (vir1):")
@@ -250,7 +268,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   
   # Extreme values detection and values out of range for field data
 
-  sp3(dfr, c(0:100, NA), "nope", "- Out of range values for number of plants established (nope):")
+  sp3(dfr, NULL, "nope", "- Out of range values for number of plants established (nope):")
   sp3(dfr, c(1:9, NA), "vir", "- Out of range values for virus symptoms (vir):")
   sp3(dfr, c(1:9, NA), "vir1", "- Out of range values for virus symptoms first evaluation (vir1):")
   sp3(dfr, c(1:9, NA), "vir2", "- Out of range values for virus symptoms second evaluation (vir2):")
@@ -261,12 +279,12 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower", "vw", "- Out of range values for vine weight (vw):")
   sp5(dfr, f, "low", "vw", "- Extreme low values for vine weight (vw):")
   sp5(dfr, f, "high", "vw", "- Extreme high values for vine weight (vw):")
-  sp4(dfr, "lower", "noph", "- Out of range values for number of plants harvested (noph):")
-  sp4(dfr, "lower", "nopr", "- Out of range values for number of plants with roots (nopr):")
-  sp4(dfr, "lower", "nocr", "- Out of range values for number of commercial roots (nocr):")
+  sp3(dfr, NULL, "noph", "- Out of range values for number of plants harvested (noph):")
+  sp3(dfr, NULL, "nopr", "- Out of range values for number of plants with roots (nopr):")
+  sp3(dfr, NULL, "nocr", "- Out of range values for number of commercial roots (nocr):")
   sp5(dfr, f, "low", "nocr", "- Extreme low values for number of commercial roots (nocr):")
   sp5(dfr, f, "high", "nocr", "- Extreme high values for number of commercial roots (nocr):")
-  sp4(dfr, "lower", "nonc", "- Out of range values for number of non commercial roots (nonc):")
+  sp3(dfr, NULL, "nonc", "- Out of range values for number of non commercial roots (nonc):")
   sp5(dfr, f, "low", "nonc", "- Extreme low values for number of non commercial roots (nonc):")
   sp5(dfr, f, "high", "nonc", "- Extreme high values for number of non commercial roots (nonc):")
   sp4(dfr, "lower", "crw", "- Out of range values for commercial root weight (crw):")
@@ -286,22 +304,22 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
 
   # Extreme values detection and values out of range for dm data
   
-  sp4(dfr, "lower", "dmf", "- Out of range values for fresh weight of roots for dry matter assessment (dmf):")
+  sp4(dfr, "lower0", "dmf", "- Out of range values for fresh weight of roots for dry matter assessment (dmf):")
   sp5(dfr, f, "low", "dmf", "- Extreme low values for fresh weight of roots for dry matter assessment (dmf):")
   sp5(dfr, f, "high", "dmf", "- Extreme high values for fresh weight of roots for dry matter assessment (dmf):")
-  sp4(dfr, "lower", "dmd", "- Out of range values for dry weight of roots for dry matter assessment (dmd):")
+  sp4(dfr, "lower0", "dmd", "- Out of range values for dry weight of roots for dry matter assessment (dmd):")
   sp5(dfr, f, "low", "dmd", "- Extreme low values for dry weight of roots for dry matter assessment (dmd):")
   sp5(dfr, f, "high", "dmd", "- Extreme high values for dry weight of roots for dry matter assessment (dmd):")
-  sp4(dfr, "lower", "dmvf", "- Out of range values for fresh weight vines for dry matter assessment (dmvf):")
+  sp4(dfr, "lower0", "dmvf", "- Out of range values for fresh weight vines for dry matter assessment (dmvf):")
   sp5(dfr, f, "low", "dmvf", "- Extreme low values for fresh weight of vines for dry matter assessment (dmvf):")
   sp5(dfr, f, "high", "dmvf", "- Extreme high values for fresh weight of vines for dry matter assessment (dmvf):")
-  sp4(dfr, "lower", "dmvd", "- Out of range values for dry weight of vines for dry matter assessment (dmvd):")
+  sp4(dfr, "lower0", "dmvd", "- Out of range values for dry weight of vines for dry matter assessment (dmvd):")
   sp5(dfr, f, "low", "dmvd", "- Extreme low values for dry weight of vines for dry matter assessment (dmvd):")
   sp5(dfr, f, "high", "dmvd", "- Extreme high values for dry weight of vines for dry matter assessment (dmvd):")
-  sp4(dfr, "lower", "dm", "- Out of range values for storage root dry matter content (dm):")
+  sp4(dfr, "both0", "dm", "- Out of range values for storage root dry matter content (dm):")
   sp5(dfr, f, "low", "dm", "- Extreme low values for storage root dry matter content (dm):")
   sp5(dfr, f, "high", "dm", "- Extreme high values for storage root dry matter content (dm):")
-  sp4(dfr, "lower", "dmv", "- Out of range values for vine dry matter content (dmv):")
+  sp4(dfr, "both0", "dmv", "- Out of range values for vine dry matter content (dmv):")
   sp5(dfr, f, "low", "dmv", "- Extreme low values for vine dry matter content (dmv):")
   sp5(dfr, f, "high", "dmv", "- Extreme high values for vine dry matter content (dmv):")
   sp4(dfr, "lower", "dmry", "- Out of range values for dry matter root yield in tons per hectare (dmry):")
@@ -343,44 +361,44 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   
   # Extreme values detection and values out of range for lab data
   
-  sp4(dfr, "lower", "prot", "- Out of range values for protein (prot):")
+  sp4(dfr, "both0", "prot", "- Out of range values for protein (prot):")
   sp5(dfr, f, "low", "prot", "- Extreme low values for protein (prot):")
   sp5(dfr, f, "high", "prot", "- Extreme high values for protein (prot):")
-  sp4(dfr, "lower", "fe", "- Out of range values for iron (fe):")
+  sp4(dfr, "lower0", "fe", "- Out of range values for iron (fe):")
   sp5(dfr, f, "low", "fe", "- Extreme low values for iron (fe):")
   sp5(dfr, f, "high", "fe", "- Extreme high values for iron (fe):")
-  sp4(dfr, "lower", "zn", "- Out of range values for zinc (zn):")
+  sp4(dfr, "lower0", "zn", "- Out of range values for zinc (zn):")
   sp5(dfr, f, "low", "zn", "- Extreme low values for zinc (zn):")
   sp5(dfr, f, "high", "zn", "- Extreme high values for zinc (zn):")
-  sp4(dfr, "lower", "ca", "- Out of range values for calcium (ca):")
+  sp4(dfr, "lower0", "ca", "- Out of range values for calcium (ca):")
   sp5(dfr, f, "low", "ca", "- Extreme low values for calcium (ca):")
   sp5(dfr, f, "high", "ca", "- Extreme high values for calcium (ca):")
-  sp4(dfr, "lower", "mg", "- Out of range values for magnesium (mg):")
+  sp4(dfr, "lower0", "mg", "- Out of range values for magnesium (mg):")
   sp5(dfr, f, "low", "mg", "- Extreme low values for magnesium (mg):")
   sp5(dfr, f, "high", "mg", "- Extreme high values for magnesium (mg):")
-  sp4(dfr, "lower", "bc", "- Out of range values for beta-carotene (bc):")
+  sp4(dfr, "lower0", "bc", "- Out of range values for beta-carotene (bc):")
   sp5(dfr, f, "low", "bc", "- Extreme low values for beta-carotene (bc):")
   sp5(dfr, f, "high", "bc", "- Extreme high values for beta-carotene (bc):")
   bc.cc.values <- c(0.03, 0, 0.12, 0.02, 0.15, 1.38, 1.65, 1.5, 1.74, 1.76, 0.69, 1.17, 1.32,
                     1.04, 4.41, 4.92, 6.12, 5.46, 3.96, 5.49, 3.03, 3.76, 4.61, 7.23, 7.76,
                     10.5, 11.03, 12.39, 14.37, NA)
   sp3(dfr, bc.cc.values, "bc.cc", "- Out of range values for beta-carotene (bc.cc):")
-  sp4(dfr, "lower", "tc", "- Out of range values for total carotenoids (tc):")
+  sp4(dfr, "lower0", "tc", "- Out of range values for total carotenoids (tc):")
   sp5(dfr, f, "low", "tc", "- Extreme low values for total carotenoids (tc):")
   sp5(dfr, f, "high", "tc", "- Extreme high values for total carotenoids (tc):")
-  sp4(dfr, "lower", "star", "- Out of range values for starch (star):")
+  sp4(dfr, "both0", "star", "- Out of range values for starch (star):")
   sp5(dfr, f, "low", "star", "- Extreme low values for starch (star):")
   sp5(dfr, f, "high", "star", "- Extreme high values for starch (star):")
-  sp4(dfr, "lower", "fruc", "- Out of range values for fructose (fruc):")
+  sp4(dfr, "both0", "fruc", "- Out of range values for fructose (fruc):")
   sp5(dfr, f, "low", "fruc", "- Extreme low values for fructose (fruc):")
   sp5(dfr, f, "high", "fruc", "- Extreme high values for fructose (fruc):")
-  sp4(dfr, "lower", "gluc", "- Out of range values for glucose (gluc):")
+  sp4(dfr, "both0", "gluc", "- Out of range values for glucose (gluc):")
   sp5(dfr, f, "low", "gluc", "- Extreme low values for glucose (gluc):")
   sp5(dfr, f, "high", "gluc", "- Extreme high values for glucose (gluc):")
-  sp4(dfr, "lower", "sucr", "- Out of range values for sucrose (sucr):")
+  sp4(dfr, "both0", "sucr", "- Out of range values for sucrose (sucr):")
   sp5(dfr, f, "low", "sucr", "- Extreme low values for sucrose (sucr):")
   sp5(dfr, f, "high", "sucr", "- Extreme high values for sucrose (sucr):")
-  sp4(dfr, "lower", "malt", "- Out of range values for maltose (malt):")
+  sp4(dfr, "both0", "malt", "- Out of range values for maltose (malt):")
   sp5(dfr, f, "low", "malt", "- Extreme low values for maltose (malt):")
   sp5(dfr, f, "high", "malt", "- Extreme high values for maltose (malt):")
   
@@ -401,13 +419,13 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower", "rytha.aj", "- Out of range values for total root yield adjusted in tons per hectare (rytha.aj):")
   sp5(dfr, f, "low", "rytha.aj", "- Extreme low values for total root yield adjusted in tons per hectare (rytha.aj):")
   sp5(dfr, f, "high", "rytha.aj", "- Extreme high values for total root yield adjusted in tons per hectare (rytha.aj):")
-  sp4(dfr, "lower", "acrw", "- Out of range values for average commercial root weight (acrw):")
+  sp4(dfr, "lower0", "acrw", "- Out of range values for average commercial root weight (acrw):")
   sp5(dfr, f, "low", "acrw", "- Extreme low values for average commercial root weight (acrw):")
   sp5(dfr, f, "high", "acrw", "- Extreme high values for average commercial root weight (acrw):")
-  sp4(dfr, "lower", "ancrw", "- Out of range values for average non commercial root weight (ancrw):")
+  sp4(dfr, "lower0", "ancrw", "- Out of range values for average non commercial root weight (ancrw):")
   sp5(dfr, f, "low", "ancrw", "- Extreme low values for average non commercial root weight (ancrw):")
   sp5(dfr, f, "high", "ancrw", "- Extreme high values for average non commercial root weight (ancrw):")
-  sp4(dfr, "lower", "atrw", "- Out of range values for average total root weight (atrw):")
+  sp4(dfr, "lower0", "atrw", "- Out of range values for average total root weight (atrw):")
   sp5(dfr, f, "low", "atrw", "- Extreme low values for average total root weight (atrw):")
   sp5(dfr, f, "high", "atrw", "- Extreme high values for average total root weight (atrw):")
   sp4(dfr, "lower", "nrpp", "- Out of range values for number of roots per harvested plant (nrpp):")
