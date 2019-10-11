@@ -10,8 +10,8 @@
 #' function \code{check.names.sp}; see \code{?check.names.sp} for details.
 #' Consider the following groups of traits:
 #' \itemize{
-#'  \item \code{pre} (traits evaluated pre-harvest): \code{vir},
-#'  \code{vir1}, \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
+#'  \item \code{pre} (traits evaluated pre-harvest): \code{vir}, \code{vir1},
+#'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
 #'  
 #'  \item \code{nrt} (traits evaluated without roots): \code{vir}, \code{vir1},
 #'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{vw},
@@ -24,17 +24,16 @@
 #'  \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy}, \code{dmvy.aj},
 #'  \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj}, \code{nrpp},
 #'  \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp}, \code{ypsp}, \code{vpp},
-#'  \code{vpsp}, and \code{rfr}.
+#'  \code{vpsp}, and \code{rfr}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
 #'  
 #'  \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
-#'  \code{dmvf}, \code{dmvd}, \code{fe}, \code{zn}, \code{ca}, \code{mg},
-#'  \code{bc}, \code{tc}, \code{acrw}, \code{ancrw}, and \code{atrw}.
+#'  \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
 #'  
 #'  \item \code{pnn} (percentage non-negative traits): \code{ci}, \code{hi},
-#'  and \code{shi}.
+#'  \code{shi}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
 #'  
 #'  \item \code{ppo} (percentage positive traits): \code{dm}, \code{dmv},
-#'  \code{prot}, \code{star}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
+#'  \code{prot}, and \code{star}.
 #'
 #'  \item \code{dnn} (discrete non-negative traits): \code{nops}, \code{nope},
 #'  \code{noph}, \code{nopr}, \code{nocr}, \code{nonc}, and \code{tnr}.
@@ -42,11 +41,11 @@
 #'  \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
 #'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
 #'  \code{fcol}, \code{rs}, \code{rf}, \code{damr}, \code{rspr}, \code{wed},
-#'  \code{fraw}, \code{fraw1}, \code{suraw}, \code{suraw1}, \code{straw},
-#'  \code{straw1}, \code{coof}, \code{coof1}, \code{coosu}, \code{coosu1},
-#'  \code{coost}, \code{coost1}, \code{coot}, \code{coot1}, \code{cooap},
-#'  \code{cooap1}, \code{fraw2}, \code{suraw2}, \code{straw2}, \code{coof2},
-#'  \code{coosu2}, \code{coost2}, \code{coot2}, and \code{cooap2}.
+#'  \code{fraw}, \code{fraw1}, \code{fraw2}, \code{suraw}, \code{suraw1},
+#'  \code{suraw2}, \code{straw}, \code{straw1}, \code{straw2}, \code{coof},
+#'  \code{coof1}, \code{coof2}, \code{coosu}, \code{coosu1}, \code{coosu2},
+#'  \code{coost}, \code{coost1}, \code{coost2}, \code{coot}, \code{coot1},
+#'  \code{coot2}, \code{cooap}, \code{cooap1}, and \code{cooap2}.
 #' }
 #' Values are set to \code{NA} or \code{0} with the following rules:
 #' \itemize{
@@ -109,9 +108,8 @@ clean.data <- function(dfr, f = 10) {
   
   # Traits evaluated without roots
   
-  nrt <- c("vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv", "vw", "dmvf",
-           "dmvd", "dmv", "vw.d", "fytha", "fytha.aj", "dmvy", "dmvy.aj",
-           "vpp", "vpsp", "shi")
+  nrt <- c(pre, "vw", "dmvf", "dmvd", "dmv", "vw.d", "fytha", "fytha.aj",
+           "dmvy", "dmvy.aj", "vpp", "vpsp", "shi")
   
   # Continuous non-negative traits
   
@@ -119,7 +117,7 @@ clean.data <- function(dfr, f = 10) {
            "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha",
            "fytha.aj", "dmvy", "dmvy.aj", "bytha", "bytha.aj", "dmby", "dmby.aj",
            "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "rfr",
-           "bc", "tc", "fe", "zn", "ca", "mg")
+           "fe", "zn", "ca", "mg")
   
   # Continuous positive traits
   
@@ -139,14 +137,15 @@ clean.data <- function(dfr, f = 10) {
   
   # Categorical 1 to 9 traits
   
-  ctg <- c("vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv", "scol", "fcol",
-           "rs", "rf", "damr", "rspr", "wed", "fraw", "fraw1", "suraw", "suraw1",
-           "straw", "straw1", "coof", "coof1", "coosu", "coosu1", "coost", "coost1",
-           "coot", "coot1", "cooap", "cooap1", "fraw2", "suraw2", "straw2", "coof2",
-           "coosu2", "coost2", "coot2", "cooap2")
+  ctg <- c(pre, "scol", "fcol", "rs", "rf", "damr", "rspr", "wed", "fraw", "fraw1",
+           "fraw2", "suraw", "suraw1", "suraw2", "straw", "straw1", "straw2", "coof",
+           "coof1", "coof2", "coosu", "coosu1", "coosu2", "coost", "coost1", "coost2",
+           "coot", "coot1", "coot2", "cooap", "cooap1", "cooap2")
 
   # Special traits
   
+  bc <- "bc"
+  tc <- "tc"
   bc.cc <- "bc.cc"
   fcol.cc <- "fcol.cc"
   
@@ -249,7 +248,7 @@ clean.data <- function(dfr, f = 10) {
   
   # Extreme values (almost impossible)
   
-  t.all <- c(cnn, cpo, pnn, ppo, dnn)
+  t.all <- c(cnn, cpo, pnn, ppo, dnn, bc, tc)
   
   for (i in 1:length(t.all))
     if (exists(t.all[i], dfr)) {
@@ -272,7 +271,7 @@ clean.data <- function(dfr, f = 10) {
   
   # Subset in fieldook all traits
   
-  t.all <- c(cnn, cpo, pnn, ppo, dnn, ctg, bc.cc, fcol.cc)
+  t.all <- c(cnn, cpo, pnn, ppo, dnn, ctg, bc, tc, bc.cc, fcol.cc)
   t.all <- t.all[t.all %in% colnames(dfr)]
   t.all <- t.all[!(t.all %in% c("nops", "nope"))]
   

@@ -24,8 +24,8 @@ The data frame must use the labels (lower or upper case) listed in
 function \code{check.names.sp}; see \code{?check.names.sp} for details.
 Consider the following groups of traits:
 \itemize{
- \item \code{pre} (traits evaluated pre-harvest): \code{vir},
- \code{vir1}, \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
+ \item \code{pre} (traits evaluated pre-harvest): \code{vir}, \code{vir1},
+ \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
  
  \item \code{nrt} (traits evaluated without roots): \code{vir}, \code{vir1},
  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{vw},
@@ -38,17 +38,16 @@ Consider the following groups of traits:
  \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy}, \code{dmvy.aj},
  \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj}, \code{nrpp},
  \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp}, \code{ypsp}, \code{vpp},
- \code{vpsp}, and \code{rfr}.
+ \code{vpsp}, and \code{rfr}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
  
  \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
- \code{dmvf}, \code{dmvd}, \code{fe}, \code{zn}, \code{ca}, \code{mg},
- \code{bc}, \code{tc}, \code{acrw}, \code{ancrw}, and \code{atrw}.
+ \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
  
  \item \code{pnn} (percentage non-negative traits): \code{ci}, \code{hi},
- and \code{shi}.
+ \code{shi}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
  
  \item \code{ppo} (percentage positive traits): \code{dm}, \code{dmv},
- \code{prot}, \code{star}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
+ \code{prot}, and \code{star}.
 
  \item \code{dnn} (discrete non-negative traits): \code{nops}, \code{nope},
  \code{noph}, \code{nopr}, \code{nocr}, \code{nonc}, and \code{tnr}.
@@ -56,11 +55,11 @@ Consider the following groups of traits:
  \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
  \code{fcol}, \code{rs}, \code{rf}, \code{damr}, \code{rspr}, \code{wed},
- \code{fraw}, \code{fraw1}, \code{suraw}, \code{suraw1}, \code{straw},
- \code{straw1}, \code{coof}, \code{coof1}, \code{coosu}, \code{coosu1},
- \code{coost}, \code{coost1}, \code{coot}, \code{coot1}, \code{cooap},
- \code{cooap1}, \code{fraw2}, \code{suraw2}, \code{straw2}, \code{coof2},
- \code{coosu2}, \code{coost2}, \code{coot2}, and \code{cooap2}.
+ \code{fraw}, \code{fraw1}, \code{fraw2}, \code{suraw}, \code{suraw1},
+ \code{suraw2}, \code{straw}, \code{straw1}, \code{straw2}, \code{coof},
+ \code{coof1}, \code{coof2}, \code{coosu}, \code{coosu1}, \code{coosu2},
+ \code{coost}, \code{coost1}, \code{coost2}, \code{coot}, \code{coot1},
+ \code{coot2}, \code{cooap}, \code{cooap1}, and \code{cooap2}.
 }
 Values are set to \code{NA} or \code{0} with the following rules:
 \itemize{
