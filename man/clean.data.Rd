@@ -83,6 +83,7 @@ Values are set to \code{NA} or \code{0} with the following rules:
  then \code{noph} is set to \code{NA}.
  \item If \code{nopr == 0} and there is some data for any trait evaluated with roots,
  then \code{nopr} is set to \code{NA}.
+ \item If \code{noph > 0} and \code{vw == 0}, then \code{vw} is set to \code{NA}.
  \item If \code{nocr == 0} and \code{crw > 0}, then \code{nocr} is set to \code{NA}.
  \item If \code{nocr > 0} and \code{crw == 0}, then \code{crw} is set to \code{NA}.
  \item If \code{nonc == 0} and \code{ncrw > 0}, then \code{nonc} is set to \code{NA}.

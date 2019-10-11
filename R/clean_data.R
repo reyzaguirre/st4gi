@@ -69,6 +69,7 @@
 #'  then \code{noph} is set to \code{NA}.
 #'  \item If \code{nopr == 0} and there is some data for any trait evaluated with roots,
 #'  then \code{nopr} is set to \code{NA}.
+#'  \item If \code{noph > 0} and \code{vw == 0}, then \code{vw} is set to \code{NA}.
 #'  \item If \code{nocr == 0} and \code{crw > 0}, then \code{nocr} is set to \code{NA}.
 #'  \item If \code{nocr > 0} and \code{crw == 0}, then \code{crw} is set to \code{NA}.
 #'  \item If \code{nonc == 0} and \code{ncrw > 0}, then \code{nonc} is set to \code{NA}.
@@ -296,7 +297,7 @@ clean.data <- function(dfr, f = 10) {
         dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
     dfr[cond, 'nope'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nope:",
+      warning("- Rows replaced with NA for trait nope: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -311,7 +312,7 @@ clean.data <- function(dfr, f = 10) {
         dfr[, 'noph'] == 0 & !is.na(dfr[, 'noph'])
     dfr[cond, 'noph'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait noph:",
+      warning("- Rows replaced with NA for trait noph: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
 
@@ -326,7 +327,7 @@ clean.data <- function(dfr, f = 10) {
         dfr[, 'nopr'] == 0 & !is.na(dfr[, 'nopr'])
     dfr[cond, 'nopr'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nopr:",
+      warning("- Rows replaced with NA for trait nopr: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -334,18 +335,28 @@ clean.data <- function(dfr, f = 10) {
   # Other traits consistency
   #############################################################################
   
+  # noph and vw
+  
+  if (exists("noph", dfr) & exists("vw", dfr)) {
+    cond <- dfr[, "noph"] > 0 & !is.na(dfr[, "noph"]) & dfr[, "vw"] == 0 & !is.na(dfr[, "vw"])
+    dfr[cond, 'vw'] <- NA
+    if (sum(cond) > 0)
+      warning("- Rows replaced with NA for trait vw: ",
+              paste0(rownames(dfr)[cond], " "), call. = FALSE)
+  }
+
   # nocr and crw
   
   if (exists("nocr", dfr) & exists("crw", dfr)) {
     cond <- dfr[, "nocr"] == 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] > 0 & !is.na(dfr[, "crw"])
     dfr[cond, 'nocr'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nocr:",
+      warning("- Rows replaced with NA for trait nocr: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     cond <- dfr[, "nocr"] > 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] == 0 & !is.na(dfr[, "crw"])
     dfr[cond, 'crw'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait crw:",
+      warning("- Rows replaced with NA for trait crw: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -355,12 +366,12 @@ clean.data <- function(dfr, f = 10) {
     cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] > 0 & !is.na(dfr[, "ncrw"])
     dfr[cond, 'nonc'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nonc:",
+      warning("- Rows replaced with NA for trait nonc: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     cond <- dfr[, "nonc"] > 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"])
     dfr[cond, 'ncrw'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait ncrw:",
+      warning("- Rows replaced with NA for trait ncrw: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
