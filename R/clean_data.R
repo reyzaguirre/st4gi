@@ -119,19 +119,19 @@ clean.data <- function(dfr, f = 10) {
            "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha",
            "fytha.aj", "dmvy", "dmvy.aj", "bytha", "bytha.aj", "dmby", "dmby.aj",
            "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "rfr",
-           "bc", "tc")
+           "bc", "tc", "fe", "zn", "ca", "mg")
   
   # Continuous positive traits
   
-  cpo <- c("dmf", "dmd", "dmvf", "dmvd", "fe", "zn", "ca", "mg", "acrw", "ancrw", "atrw")
+  cpo <- c("dmf", "dmd", "dmvf", "dmvd", "acrw", "ancrw", "atrw")
   
   # Percentage non-negative traits
   
-  pnn <- c("ci", "hi", "shi", "malt")
+  pnn <- c("ci", "hi", "shi", "fruc", "gluc", "sucr", "malt")
   
   # Percentage positive traits
   
-  ppo <- c("dm", "dmv", "prot", "star", "fruc", "gluc", "sucr")
+  ppo <- c("dm", "dmv", "prot", "star")
   
   # Discrete non-negative traits
   
