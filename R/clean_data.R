@@ -60,7 +60,7 @@
 #'  the possible values in the RHS color chart are set to \code{NA}.
 #'  \item Extreme low and high values are detected using the interquartile range.
 #'  The rule is to detect any value out of the interval
-#'  \eqn{[Q_1 - f \times (m/2 + IQR); Q_3 + f \times (m/2 + IQR)]} where \code{m}
+#'  \eqn{[Q_1 - f \times (m/3 + IQR); Q_3 + f \times (m/3 + IQR)]} where \code{m}
 #'  is the mean. By default \code{f = 10} and cannot be less than 10. Values out
 #'  of this range are set to \code{NA}.
 #'  \item If \code{nope == 0} and there is some data for any trait,
@@ -118,20 +118,20 @@ clean.data <- function(dfr, f = 10) {
   cnn <- c("vw", "crw", "ncrw", "trw", "trw.d", "biom", "biom.d", "cytha",
            "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha",
            "fytha.aj", "dmvy", "dmvy.aj", "bytha", "bytha.aj", "dmby", "dmby.aj",
-           "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "rfr")
+           "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "rfr",
+           "bc", "tc")
   
   # Continuous positive traits
   
-  cpo <- c("dmf", "dmd", "dmvf", "dmvd", "fe", "zn", "ca", "mg", "bc", "tc",
-           "acrw", "ancrw", "atrw")
+  cpo <- c("dmf", "dmd", "dmvf", "dmvd", "fe", "zn", "ca", "mg", "acrw", "ancrw", "atrw")
   
   # Percentage non-negative traits
   
-  pnn <- c("ci", "hi", "shi")
+  pnn <- c("ci", "hi", "shi", "malt")
   
   # Percentage positive traits
   
-  ppo <- c("dm", "dmv", "prot", "star", "fruc", "gluc", "sucr", "malt")
+  ppo <- c("dm", "dmv", "prot", "star", "fruc", "gluc", "sucr")
   
   # Discrete non-negative traits
   
@@ -161,7 +161,7 @@ clean.data <- function(dfr, f = 10) {
       cond <- dfr[, cnn[i]] < 0 & !is.na(dfr[, cnn[i]])
       dfr[cond, cnn[i]] <- NA
       if (sum(cond) > 0)
-        warning("- Rows with negative values replaced with NA for trait ",
+        warning("Rows with negative values replaced with NA for trait ",
                 cnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
   
@@ -172,7 +172,7 @@ clean.data <- function(dfr, f = 10) {
       cond <- dfr[, cpo[i]] <= 0 & !is.na(dfr[, cpo[i]])
       dfr[cond, cpo[i]] <- NA
       if (sum(cond) > 0)
-        warning("- Rows with non-positive values replaced with NA for trait ",
+        warning("Rows with non-positive values replaced with NA for trait ",
                 cpo[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
 
@@ -185,7 +185,7 @@ clean.data <- function(dfr, f = 10) {
       cond <- cond1 | cond2
       dfr[cond, pnn[i]] <- NA
       if (sum(cond) > 0)
-        warning("- Rows with values out of [0-100] replaced with NA for trait ",
+        warning("Rows with values out of [0-100] replaced with NA for trait ",
                 pnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
   
@@ -198,7 +198,7 @@ clean.data <- function(dfr, f = 10) {
       cond <- cond1 | cond2
       dfr[cond, ppo[i]] <- NA
       if (sum(cond) > 0)
-        warning("- Rows with values out of (0-100] replaced with NA for trait ",
+        warning("Rows with values out of (0-100] replaced with NA for trait ",
                 ppo[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
 
@@ -211,7 +211,7 @@ clean.data <- function(dfr, f = 10) {
       cond <- cond1 | cond2
       dfr[cond, dnn[i]] <- NA
       if (sum(cond) > 0)
-        warning("- Rows with negative or non integer values replaced with NA for trait ",
+        warning("Rows with negative or non integer values replaced with NA for trait ",
                 dnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
   
@@ -222,7 +222,7 @@ clean.data <- function(dfr, f = 10) {
       cond <- !(dfr[, ctg[i]] %in% 1:9) & !is.na(dfr[, ctg[i]])
       dfr[cond, ctg[i]] <- NA
       if (sum(cond) > 0)
-        warning("- Rows with values out of 1-9 integer scale replaced with NA for trait ",
+        warning("Rows with values out of 1-9 integer scale replaced with NA for trait ",
                 ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
   
@@ -235,7 +235,7 @@ clean.data <- function(dfr, f = 10) {
     cond <- !(dfr[, bc.cc] %in% bc.cc.values) & !is.na(dfr[, bc.cc])
     dfr[cond, bc.cc] <- NA
     if (sum(cond) > 0)
-      warning("- Rows with values out of scale replaced with NA for trait ",
+      warning("Rows with values out of scale replaced with NA for trait ",
               bc.cc, ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
 
@@ -243,7 +243,7 @@ clean.data <- function(dfr, f = 10) {
     cond <- !(dfr[, fcol.cc] %in% 1:30) & !is.na(dfr[, fcol.cc])
     dfr[cond, fcol.cc] <- NA
     if (sum(cond) > 0)
-      warning("- Rows with values out of integer scale replaced with NA for trait ",
+      warning("Rows with values out of integer scale replaced with NA for trait ",
               fcol.cc, ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -256,13 +256,13 @@ clean.data <- function(dfr, f = 10) {
       m <- mean(dfr[, t.all[i]], na.rm = TRUE)
       q1 <- quantile(dfr[, t.all[i]], 0.25, na.rm = TRUE)
       q3 <- quantile(dfr[, t.all[i]], 0.75, na.rm = TRUE)
-      tol <- (m / 2 + IQR(dfr[, t.all[i]], na.rm = TRUE))
+      tol <- (m / 3 + IQR(dfr[, t.all[i]], na.rm = TRUE))
       cond1 <- dfr[, t.all[i]] < q1 - f * tol & !is.na(dfr[, t.all[i]])
       cond2 <- dfr[, t.all[i]] > q3 + f * tol & !is.na(dfr[, t.all[i]])
       cond <- cond1 | cond2
       dfr[cond, t.all[i]] <- NA
       if (sum(cond) > 0)
-        warning("- Rows with extreme values replaced with NA for trait ",
+        warning("Rows with extreme values replaced with NA for trait ",
                 t.all[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
   
@@ -297,7 +297,7 @@ clean.data <- function(dfr, f = 10) {
         dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
     dfr[cond, 'nope'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nope: ",
+      warning("Rows with data replaced with NA for trait nope: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -312,7 +312,7 @@ clean.data <- function(dfr, f = 10) {
         dfr[, 'noph'] == 0 & !is.na(dfr[, 'noph'])
     dfr[cond, 'noph'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait noph: ",
+      warning("Rows with data replaced with NA for trait noph: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
 
@@ -327,7 +327,7 @@ clean.data <- function(dfr, f = 10) {
         dfr[, 'nopr'] == 0 & !is.na(dfr[, 'nopr'])
     dfr[cond, 'nopr'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nopr: ",
+      warning("Rows data for roots replaced with NA for trait nopr: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -341,7 +341,7 @@ clean.data <- function(dfr, f = 10) {
     cond <- dfr[, "noph"] > 0 & !is.na(dfr[, "noph"]) & dfr[, "vw"] == 0 & !is.na(dfr[, "vw"])
     dfr[cond, 'vw'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait vw: ",
+      warning("Rows replaced with NA for trait vw: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
 
@@ -351,12 +351,12 @@ clean.data <- function(dfr, f = 10) {
     cond <- dfr[, "nocr"] == 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] > 0 & !is.na(dfr[, "crw"])
     dfr[cond, 'nocr'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nocr: ",
+      warning("Rows replaced with NA for trait nocr: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     cond <- dfr[, "nocr"] > 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] == 0 & !is.na(dfr[, "crw"])
     dfr[cond, 'crw'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait crw: ",
+      warning("Rows replaced with NA for trait crw: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -366,12 +366,12 @@ clean.data <- function(dfr, f = 10) {
     cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] > 0 & !is.na(dfr[, "ncrw"])
     dfr[cond, 'nonc'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait nonc: ",
+      warning("Rows replaced with NA for trait nonc: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     cond <- dfr[, "nonc"] > 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"])
     dfr[cond, 'ncrw'] <- NA
     if (sum(cond) > 0)
-      warning("- Rows replaced with NA for trait ncrw: ",
+      warning("Rows replaced with NA for trait ncrw: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   

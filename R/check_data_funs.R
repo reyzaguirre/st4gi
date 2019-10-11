@@ -376,14 +376,14 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower0", "mg", "- Out of range values for magnesium (mg):")
   sp5(dfr, f, "low", "mg", "- Extreme low values for magnesium (mg):")
   sp5(dfr, f, "high", "mg", "- Extreme high values for magnesium (mg):")
-  sp4(dfr, "lower0", "bc", "- Out of range values for beta-carotene (bc):")
+  sp4(dfr, "lower", "bc", "- Out of range values for beta-carotene (bc):")
   sp5(dfr, f, "low", "bc", "- Extreme low values for beta-carotene (bc):")
   sp5(dfr, f, "high", "bc", "- Extreme high values for beta-carotene (bc):")
   bc.cc.values <- c(0.03, 0, 0.12, 0.02, 0.15, 1.38, 1.65, 1.5, 1.74, 1.76, 0.69, 1.17, 1.32,
                     1.04, 4.41, 4.92, 6.12, 5.46, 3.96, 5.49, 3.03, 3.76, 4.61, 7.23, 7.76,
                     10.5, 11.03, 12.39, 14.37, NA)
   sp3(dfr, bc.cc.values, "bc.cc", "- Out of range values for beta-carotene (bc.cc):")
-  sp4(dfr, "lower0", "tc", "- Out of range values for total carotenoids (tc):")
+  sp4(dfr, "lower", "tc", "- Out of range values for total carotenoids (tc):")
   sp5(dfr, f, "low", "tc", "- Extreme low values for total carotenoids (tc):")
   sp5(dfr, f, "high", "tc", "- Extreme high values for total carotenoids (tc):")
   sp4(dfr, "both0", "star", "- Out of range values for starch (star):")
@@ -398,7 +398,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "both0", "sucr", "- Out of range values for sucrose (sucr):")
   sp5(dfr, f, "low", "sucr", "- Extreme low values for sucrose (sucr):")
   sp5(dfr, f, "high", "sucr", "- Extreme high values for sucrose (sucr):")
-  sp4(dfr, "both0", "malt", "- Out of range values for maltose (malt):")
+  sp4(dfr, "both", "malt", "- Out of range values for maltose (malt):")
   sp5(dfr, f, "low", "malt", "- Extreme low values for maltose (malt):")
   sp5(dfr, f, "high", "malt", "- Extreme high values for maltose (malt):")
   

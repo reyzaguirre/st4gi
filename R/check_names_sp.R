@@ -80,7 +80,7 @@
 #'  }
 #' -------------------- Nutrients evaluations --------------------
 #'  \itemize{
-#'  \item \code{prot}      : Protein (\% raw fresh)
+#'  \item \code{prot}      : Protein (g/100g raw fresh)
 #'  \item \code{fe}        : Iron (mg/100g raw dry weight)
 #'  \item \code{zn}        : Zinc (mg/100g raw dry weight)
 #'  \item \code{ca}        : Calcium (mg/100g raw dry weight)
@@ -88,11 +88,11 @@
 #'  \item \code{bc}        : Beta-carotene (mg/100g raw dry weight)
 #'  \item \code{bc.cc}     : Beta-carotene with RHS color charts (mg/100g raw fresh weight)
 #'  \item \code{tc}        : Total carotenoids (mg/100g raw dry weight)
-#'  \item \code{star}      : Starch (\% raw fresh)
-#'  \item \code{fruc}      : Fructose (\% raw fresh)
-#'  \item \code{gluc}      : Glucose (\% raw fresh)
-#'  \item \code{sucr}      : Sucrose (\% raw fresh)
-#'  \item \code{malt}      : Maltose (\% raw fresh)
+#'  \item \code{star}      : Starch (g/100g raw fresh)
+#'  \item \code{fruc}      : Fructose (g/100g raw fresh)
+#'  \item \code{gluc}      : Glucose (g/100g raw fresh)
+#'  \item \code{sucr}      : Sucrose (g/100g raw fresh)
+#'  \item \code{malt}      : Maltose (g/100g raw fresh)
 #'  }
 #' -------------------- Calculated traits --------------------
 #'  \itemize{
