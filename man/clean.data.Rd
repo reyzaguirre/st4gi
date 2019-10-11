@@ -74,9 +74,9 @@ Values are set to \code{NA} or \code{0} with the following rules:
  the possible values in the RHS color chart are set to \code{NA}.
  \item Extreme low and high values are detected using the interquartile range.
  The rule is to detect any value out of the interval
- \eqn{[Q_1 - m - f \times IQR; Q_3 + m + f \times IQR]} where \code{m} is the
- median. By default \code{f = 10} and cannot be less than 10. Values out of this
- range are set to \code{NA}.
+ \eqn{[Q_1 - f \times (m/2 + IQR); Q_3 + f \times (m/2 + IQR)]} where \code{m}
+ is the mean. By default \code{f = 10} and cannot be less than 10. Values out
+ of this range are set to \code{NA}.
  \item If \code{nope == 0} and there is some data for any trait,
  then \code{nope} is set to \code{NA}.  
  \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,

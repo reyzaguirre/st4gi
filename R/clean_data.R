@@ -60,9 +60,9 @@
 #'  the possible values in the RHS color chart are set to \code{NA}.
 #'  \item Extreme low and high values are detected using the interquartile range.
 #'  The rule is to detect any value out of the interval
-#'  \eqn{[Q_1 - m - f \times IQR; Q_3 + m + f \times IQR]} where \code{m} is the
-#'  median. By default \code{f = 10} and cannot be less than 10. Values out of this
-#'  range are set to \code{NA}.
+#'  \eqn{[Q_1 - f \times (m/2 + IQR); Q_3 + f \times (m/2 + IQR)]} where \code{m}
+#'  is the mean. By default \code{f = 10} and cannot be less than 10. Values out
+#'  of this range are set to \code{NA}.
 #'  \item If \code{nope == 0} and there is some data for any trait,
 #'  then \code{nope} is set to \code{NA}.  
 #'  \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,
@@ -85,7 +85,7 @@
 #'                   scol = c(1, 0, 15, 5, 4, 7),
 #'                   fcol.cc = c(1, 15, 12, 24, 55, 20))
 #' clean.data(dfr)
-#' @importFrom stats IQR quantile median
+#' @importFrom stats IQR quantile
 #' @export
 
 clean.data <- function(dfr, f = 10) {
@@ -253,12 +253,12 @@ clean.data <- function(dfr, f = 10) {
   
   for (i in 1:length(t.all))
     if (exists(t.all[i], dfr)) {
-      tol <- IQR(dfr[, t.all[i]], na.rm = TRUE)
-      m <- median(dfr[, t.all[i]], na.rm = TRUE)
-      cond1 <- dfr[, t.all[i]] < quantile(dfr[, t.all[i]], 0.25, na.rm = TRUE) -
-        m - f * tol & !is.na(dfr[, t.all[i]])
-      cond2 <- dfr[, t.all[i]] > quantile(dfr[, t.all[i]], 0.75, na.rm = TRUE) + 
-        m + f * tol & !is.na(dfr[, t.all[i]])
+      m <- mean(dfr[, t.all[i]], na.rm = TRUE)
+      q1 <- quantile(dfr[, t.all[i]], 0.25, na.rm = TRUE)
+      q3 <- quantile(dfr[, t.all[i]], 0.75, na.rm = TRUE)
+      tol <- (m / 2 + IQR(dfr[, t.all[i]], na.rm = TRUE))
+      cond1 <- dfr[, t.all[i]] < q1 - f * tol & !is.na(dfr[, t.all[i]])
+      cond2 <- dfr[, t.all[i]] > q3 + f * tol & !is.na(dfr[, t.all[i]])
       cond <- cond1 | cond2
       dfr[cond, t.all[i]] <- NA
       if (sum(cond) > 0)
