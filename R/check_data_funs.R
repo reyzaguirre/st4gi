@@ -152,11 +152,11 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "noph", "fytha", "- Number of plants harvested (noph) is zero but foliage yield in tons per hectare (fytha) is greater than zero:") 
   sp1(dfr, 3, "fytha", "noph", "- Foliage yield in tons per hectare (fytha) is zero but number of plants harvested (noph) is greater than zero:") 
   sp1(dfr, 3, "noph", "tnr", "- Number of plants harvested (noph) is zero but total number of roots (tnr) is greater than zero:")
-  sp1(dfr, 3, "tnr", "noph", "- Number of roots (tnr) is zero number of plants harvested (noph) is greater than zero:")
+  sp1(dfr, 3, "tnr", "noph", "- Total number of roots (tnr) is zero but number of plants harvested (noph) is greater than zero:")
   sp1(dfr, 3, "noph", "trw", "- Number of plants harvested (noph) is zero but total root weight (trw) is greater than zero:")
-  sp1(dfr, 3, "trw", "noph", "- Total root weight (trw) is zero number of plants harvested (noph) is greater than zero:")
+  sp1(dfr, 3, "trw", "noph", "- Total root weight (trw) is zero but number of plants harvested (noph) is greater than zero:")
   sp1(dfr, 3, "noph", "rytha", "- Number of plants harvested (noph) is zero but root yield in tons per hectare (rytha) is greater than zero:")
-  sp1(dfr, 3, "rytha", "noph", "- Root yield in tons per hectare (rytha) is zero number of plants harvested (noph) is greater than zero:")
+  sp1(dfr, 3, "rytha", "noph", "- Root yield in tons per hectare (rytha) is zero but number of plants harvested (noph) is greater than zero:")
   
   # vw and dependencies
   
@@ -167,7 +167,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   # nopr and roots
   
   sp1(dfr, 3, "nopr", "tnr", "- Number of plants with roots (nopr) is zero but total number of roots (tnr) is greater than zero:")
-  sp1(dfr, 3, "tnr", "nopr", "- Number of roots (tnr) is zero but number of plants with roots (nopr) is greater than zero:")
+  sp1(dfr, 3, "tnr", "nopr", "- Total number of roots (tnr) is zero but number of plants with roots (nopr) is greater than zero:")
   sp1(dfr, 3, "nopr", "trw", "- Number of plants with roots (nopr) is zero but total root weight (trw) is greater than zero:")
   sp1(dfr, 3, "trw", "nopr", "- Total root weight (trw) is zero but number of plants with roots (nopr) is greater than zero:")
   sp1(dfr, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
