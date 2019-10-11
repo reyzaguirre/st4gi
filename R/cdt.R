@@ -62,19 +62,19 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   if (exists("crw", dfr) & exists("ncrw", dfr)) {
     if ("trw" %in% on)
       ow <- c(ow, "trw")
-    dfr$trw <- suma(dfr$crw, dfr$ncrw)
+    dfr$trw <- dfr$crw + dfr$ncrw
   }
 
   if (exists("trw", dfr) & exists("vw", dfr)) {
     if ("biom" %in% on)
       ow <- c(ow, "biom")
-    dfr$biom <- suma(dfr$trw, dfr$vw)
+    dfr$biom <- dfr$trw + dfr$vw
   }
 
   if (exists("nocr", dfr) & exists("nonc", dfr)) {
     if ("tnr" %in% on)
       ow <- c(ow, "tnr")
-    dfr$tnr <- suma(dfr$nocr, dfr$nonc)
+    dfr$tnr <- dfr$nocr + dfr$nonc
   }
 
   if (exists("crw", dfr) & exists("nocr", dfr)) {
@@ -200,7 +200,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   if (exists("trw.d", dfr) & exists("vw.d", dfr)) {
     if ("biom.d" %in% on)
       ow <- c(ow, "biom.d")
-    dfr$biom.d <- suma(dfr$trw.d, dfr$vw.d)
+    dfr$biom.d <- dfr$trw.d + dfr$vw.d
   }
   
   # Computations based on plot size
@@ -354,25 +354,25 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   if (exists("rytha", dfr) & exists("fytha", dfr)) {
     if ("bytha" %in% on)
       ow <- c(ow, "bytha")
-    dfr$bytha <- suma(dfr$rytha, dfr$fytha)
+    dfr$bytha <- dfr$rytha + dfr$fytha
   }
   
   if (exists("rytha.aj", dfr) & exists("fytha.aj", dfr)) {
     if ("bytha.aj" %in% on)
       ow <- c(ow, "bytha.aj")
-    dfr$bytha.aj <- suma(dfr$rytha.aj, dfr$fytha.aj)
+    dfr$bytha.aj <- dfr$rytha.aj + dfr$fytha.aj
   }
   
   if (exists("rytha", dfr) & exists("fytha", dfr) & exists("dm", dfr) & exists("dmv", dfr)) {
     if ("dmby" %in% on)
       ow <- c(ow, "dmby")
-    dfr$dmby <- suma(dfr$rytha * dfr$dm / 100, dfr$fytha * dfr$dmv / 100)
+    dfr$dmby <- dfr$rytha * dfr$dm / 100 + dfr$fytha * dfr$dmv / 100
   }
   
   if (exists("rytha.aj", dfr) & exists("fytha.aj", dfr) & exists("dm", dfr) & exists("dmv", dfr)) {
     if ("dmby.aj" %in% on)
       ow <- c(ow, "dmby.aj")
-    dfr$dmby.aj <- suma(dfr$rytha.aj * dfr$dm / 100, dfr$fytha.aj * dfr$dmv / 100)
+    dfr$dmby.aj <- dfr$rytha.aj * dfr$dm / 100 + dfr$fytha.aj * dfr$dmv / 100
   }
 
   if (exists("trw.d", dfr) & exists("vw.d", dfr)) {

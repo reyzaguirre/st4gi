@@ -121,10 +121,10 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   # Compute trw and tnr
   
   if (exists("crw", dfr) & exists("ncrw", dfr) & !exists("trw", dfr))
-    dfr$trw <- suma(dfr$crw, dfr$ncrw)
+    dfr$trw <- dfr$crw + dfr$ncrw
 
   if (exists("nocr", dfr) & exists("nonc", dfr) & !exists("tnr", dfr))
-    dfr$tnr <- suma(dfr$nocr, dfr$nonc)
+    dfr$tnr <- dfr$nocr + dfr$nonc
 
   # Inconsistencies for nops > nope > noph > nopr
 

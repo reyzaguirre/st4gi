@@ -66,7 +66,7 @@ ecm <- function(traits, geno, env = NULL, rep, dfr, method = 1) {
     if (!is.null(env)) {
       for (i in 1:(nt - 1)) {
         for (j in (i + 1):nt) {
-          z <- suma(dfr[, traits[i]], dfr[, traits[j]])
+          z <- dfr[, traits[i]] + dfr[, traits[j]]
           fm <- lme4::lmer(z ~ (1|g) + (1|g:e) + (1|e/r))
           vcz <- lme4::VarCorr(fm) # variance components for z = x + y
           G[i, j] <- G[j, i] <- (vcz$g[1] - G[i, i] - G[j, j]) / 2
@@ -78,7 +78,7 @@ ecm <- function(traits, geno, env = NULL, rep, dfr, method = 1) {
     if (is.null(env)) {
       for (i in 1:(nt - 1)) {
         for (j in (i + 1):nt) {
-          z <- suma(dfr[, traits[i]], dfr[, traits[j]])
+          z <- dfr[, traits[i]] + dfr[, traits[j]]
           fm <- lme4::lmer(z ~ (1|g) + (1|r))
           vcz <- lme4::VarCorr(fm) # variance components for z = x + y
           G[i, j] <- G[j, i] <- (vcz$g[1] - G[i, i] - G[j, j]) / 2
