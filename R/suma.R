@@ -15,6 +15,8 @@ suma <- function(v1, v2) {
   
   v3 <- apply(cbind(v1, v2), 1, sum, na.rm = TRUE)
   v3[is.na(v1) & is.na(v2)] <- NA
+  v3[is.na(v1) & v2 == 0] <- NA
+  v3[v1 == 0 & is.na(v2)] <- NA
   
   # Return
   

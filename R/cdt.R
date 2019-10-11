@@ -71,6 +71,12 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
     dfr$biom <- suma(dfr$trw, dfr$vw)
   }
 
+  if (exists("nocr", dfr) & exists("nonc", dfr)) {
+    if ("tnr" %in% on)
+      ow <- c(ow, "tnr")
+    dfr$tnr <- suma(dfr$nocr, dfr$nonc)
+  }
+
   if (exists("crw", dfr) & exists("nocr", dfr)) {
     if ("acrw" %in% on)
       ow <- c(ow, "acrw")
@@ -90,12 +96,6 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
       ow <- c(ow, "atrw")
     dfr$atrw <- dfr$trw / dfr$tnr
     dfr$atrw[dfr$tnr == 0] <- NA
-  }
-
-  if (exists("nocr", dfr) & exists("nonc", dfr)) {
-    if ("tnr" %in% on)
-      ow <- c(ow, "tnr")
-    dfr$tnr <- suma(dfr$nocr, dfr$nonc)
   }
 
   if (exists("tnr", dfr) & exists("noph", dfr)) {
