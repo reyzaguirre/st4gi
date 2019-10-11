@@ -64,9 +64,9 @@ sp4 <- function(dfr, ex, t1, tx) {
     if (ex == "lower0")
       cond <- dfr[, t1] <= 0 & !is.na(dfr[, t1])
     if (ex == "both")
-      cond <- dfr[, t1] < 0 | dfr[, t1] > 100 & !is.na(dfr[, t1])
+      cond <- (dfr[, t1] < 0 | dfr[, t1] > 100) & !is.na(dfr[, t1])
     if (ex == "both0")
-      cond <- dfr[, t1] <= 0 | dfr[, t1] > 100 & !is.na(dfr[, t1])
+      cond <- (dfr[, t1] <= 0 | dfr[, t1] > 100) & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   }
 }

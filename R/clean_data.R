@@ -169,7 +169,7 @@ clean.data <- function(dfr, f = 10) {
   
   for (i in 1:length(cpo))
     if (exists(cpo[i], dfr)) {
-      cond <- dfr[, cpo[i]] < 0 & !is.na(dfr[, cpo[i]])
+      cond <- dfr[, cpo[i]] <= 0 & !is.na(dfr[, cpo[i]])
       dfr[cond, cpo[i]] <- NA
       if (sum(cond) > 0)
         warning("- Rows with non-positive values replaced with NA for trait ",
