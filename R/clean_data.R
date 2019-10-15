@@ -47,7 +47,7 @@
 #'  \code{coost}, \code{coost1}, \code{coost2}, \code{coot}, \code{coot1},
 #'  \code{coot2}, \code{cooap}, \code{cooap1}, and \code{cooap2}.
 #' }
-#' Values are set to \code{NA} or \code{0} with the following rules:
+#' Values are set to \code{NA} with the following rules:
 #' \itemize{
 #'  \item \code{cnn} traits with negative values are set to \code{NA}.
 #'  \item \code{cpo} traits with non-positive values are set to \code{NA}.
@@ -75,7 +75,7 @@
 #'  \item If \code{nonc > 0} and \code{ncrw == 0}, then \code{ncrw} is set to \code{NA}.
 #' }
 #' @return It returns the data frame with all impossible values set to \code{NA}
-#' or \code{0} and a list of warnings with all the rows that have been modified.
+#' and a list of warnings with all the rows that have been modified.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' dfr <- data.frame(trw = c(2.2, 5.0, 3.6, 12, 1600, -4),
