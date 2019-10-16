@@ -5,7 +5,7 @@
 output <- function(dfr, cond, tx) {
   if (sum(cond, na.rm = TRUE) > 0) {
     cat("\n", tx, "\n", sep = "")
-    print(dfr[cond, ])
+    print(dfr[cond, !(colnames(dfr) %in% c('trw.tmp', 'tnr.tmp'))])
   }
 }
 
@@ -118,14 +118,22 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   if (!is.null(add))
     add <- tolower(add)
   
-  # Compute trw and tnr
+  # Compute trw and tnr with NA omited
   
+  if (exists("crw", dfr) & !exists("ncrw", dfr))
+    dfr$trw.tmp <- dfr$crw
   if (exists("crw", dfr) & exists("ncrw", dfr))
-    dfr$trw <- apply(dfr[, c('crw', 'ncrw')], 1, sum, na.rm = TRUE)
-
+    dfr$trw.tmp <- suma(dfr$crw, dfr$ncrw)
+  if (exists("trw", dfr) & (!exists("crw", dfr) | !exists("ncrw", dfr)))
+    dfr$trw.tmp <- dfr$trw
+    
+  if (exists("nocr", dfr) & !exists("nonc", dfr))
+    dfr$tnr.tmp <- dfr$nocr
   if (exists("nocr", dfr) & exists("nonc", dfr))
-    dfr$tnr <- apply(dfr[, c('nocr', 'nonc')], 1, sum, na.rm = TRUE)
-
+    dfr$tnr.tmp <- suma(dfr$nocr, dfr$nonc)
+  if (exists("tnr", dfr) & (!exists("nocr", dfr) | !exists("nonc", dfr)))
+    dfr$tnr.tmp <- dfr$tnr
+  
   # Inconsistencies for nops > nope > noph > nopr
 
   sp1(dfr, 1, "nope", "nops", "- Number of plants established (nope) is greater than number of plants sowed (nops):")
@@ -151,13 +159,10 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "vw", "noph", "- Vine weight (vw) is zero but number of plants harvested (noph) is greater than zero:") 
   sp1(dfr, 3, "noph", "fytha", "- Number of plants harvested (noph) is zero but foliage yield in tons per hectare (fytha) is greater than zero:") 
   sp1(dfr, 3, "fytha", "noph", "- Foliage yield in tons per hectare (fytha) is zero but number of plants harvested (noph) is greater than zero:") 
-  sp1(dfr, 3, "noph", "tnr", "- Number of plants harvested (noph) is zero but total number of roots (tnr) is greater than zero:")
-  sp1(dfr, 3, "tnr", "noph", "- Total number of roots (tnr) is zero but number of plants harvested (noph) is greater than zero:")
-  sp1(dfr, 3, "noph", "trw", "- Number of plants harvested (noph) is zero but total root weight (trw) is greater than zero:")
-  sp1(dfr, 3, "trw", "noph", "- Total root weight (trw) is zero but number of plants harvested (noph) is greater than zero:")
+  sp1(dfr, 3, "noph", "tnr.tmp", "- Number of plants harvested (noph) is zero but total number of roots (nocr + nonc) is greater than zero:")
+  sp1(dfr, 3, "noph", "trw.tmp", "- Number of plants harvested (noph) is zero but total root weight (crw + ncrw) is greater than zero:")
   sp1(dfr, 3, "noph", "rytha", "- Number of plants harvested (noph) is zero but root yield in tons per hectare (rytha) is greater than zero:")
-  sp1(dfr, 3, "rytha", "noph", "- Root yield in tons per hectare (rytha) is zero but number of plants harvested (noph) is greater than zero:")
-  
+
   # vw and dependencies
   
   sp1(dfr, 3, "vw", "dmvf", "- Vine weight (vw) is zero but there is fresh weight vines for dry matter assessment (dmvf):") 
@@ -166,10 +171,10 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
 
   # nopr and roots
   
-  sp1(dfr, 3, "nopr", "tnr", "- Number of plants with roots (nopr) is zero but total number of roots (tnr) is greater than zero:")
-  sp1(dfr, 3, "tnr", "nopr", "- Total number of roots (tnr) is zero but number of plants with roots (nopr) is greater than zero:")
-  sp1(dfr, 3, "nopr", "trw", "- Number of plants with roots (nopr) is zero but total root weight (trw) is greater than zero:")
-  sp1(dfr, 3, "trw", "nopr", "- Total root weight (trw) is zero but number of plants with roots (nopr) is greater than zero:")
+  sp1(dfr, 3, "nopr", "tnr.tmp", "- Number of plants with roots (nopr) is zero but total number of roots (nocr + nonc) is greater than zero:")
+  sp1(dfr, 3, "tnr.tmp", "nopr", "- Total number of roots (nocr + nonc) is zero but number of plants with roots (nopr) is greater than zero:")
+  sp1(dfr, 3, "nopr", "trw.tmp", "- Number of plants with roots (nopr) is zero but total root weight (crw + ncrw) is greater than zero:")
+  sp1(dfr, 3, "trw.tmp", "nopr", "- Total root weight (crw + ncrw) is zero but number of plants with roots (nopr) is greater than zero:")
   sp1(dfr, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
   sp1(dfr, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero but number of plants with roots (nopr) is greater than zero:")
   sp1(dfr, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
@@ -180,8 +185,8 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "crw", "nocr", "- Commercial root weight (crw) is zero but number of commercial roots (nocr) is greater than zero:") 
   sp1(dfr, 3, "nonc", "ncrw", "- Number of non commercial roots (nonc) is zero but non commercial root weight (ncrw) is greater than zero:")
   sp1(dfr, 3, "ncrw", "nonc", "- Non commercial root weight (ncrw) is zero but number of non commercial roots (nonc) is greater than zero:")
-  sp1(dfr, 3, "trw", "tnr", "- Total root weight (trw) is zero but total number of roots (tnr) is greater than zero:")
-  sp1(dfr, 3, "tnr", "trw", "- Total number of roots (tnr) is zero but total root weight (trw) is greater than zero:")
+  sp1(dfr, 3, "trw.tmp", "tnr.tmp", "- Total root weight (crw + ncrw) is zero but total number of roots (nocr + nonc) is greater than zero:")
+  sp1(dfr, 3, "tnr,tmp", "trw.tmp", "- Total number of roots (nocr + nonc) is zero but total root weight (crw + ncrw) is greater than zero:")
   
   # Roots and dependencies
 
