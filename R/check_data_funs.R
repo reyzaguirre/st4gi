@@ -18,7 +18,7 @@ sp1 <- function(dfr, type, t1, t2, tx) {
     if (type == 1)
       cond <- dfr[, t1] > dfr[, t2] & !is.na(dfr[, t1]) & !is.na(dfr[, t2])
     if (type == 2)
-      cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & !is.na(dfr[, t2]) & !(dfr[, t2] %in% 1:9)
+      cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & dfr[, t2] %in% 1:9 & !is.na(dfr[, t2]) 
     if (type == 3)
       cond <- dfr[, t1] == 0 & !is.na(dfr[, t1]) & dfr[, t2] > 0 & !is.na(dfr[, t2])
     output(dfr, cond, tx)
@@ -120,11 +120,11 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   
   # Compute trw and tnr
   
-  if (exists("crw", dfr) & exists("ncrw", dfr) & !exists("trw", dfr))
-    dfr$trw <- dfr$crw + dfr$ncrw
+  if (exists("crw", dfr) & exists("ncrw", dfr))
+    dfr$trw <- apply(dfr[, c('crw', 'ncrw')], 1, sum, na.rm = TRUE)
 
-  if (exists("nocr", dfr) & exists("nonc", dfr) & !exists("tnr", dfr))
-    dfr$tnr <- dfr$nocr + dfr$nonc
+  if (exists("nocr", dfr) & exists("nonc", dfr))
+    dfr$tnr <- apply(dfr[, c('nocr', 'nonc')], 1, sum, na.rm = TRUE)
 
   # Inconsistencies for nops > nope > noph > nopr
 

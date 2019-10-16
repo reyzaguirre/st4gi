@@ -4,8 +4,8 @@
 \alias{check.data}
 \title{Check consistency for potato and sweetpotato experimental data}
 \usage{
-check.data(dfr, crop, f = 5, out.mod = c("none", "rcbd", "met"),
-  out.max = 4, add = NULL)
+check.data(dfr, crop = c("sp", "pt"), f = 5, out.mod = c("none",
+  "rcbd", "met"), out.max = 4, add = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
