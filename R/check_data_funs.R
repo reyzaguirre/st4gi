@@ -134,6 +134,14 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   if (exists("tnr", dfr) & (!exists("nocr", dfr) | !exists("nonc", dfr)))
     dfr$tnr.tmp <- dfr$tnr
   
+  # Check nops
+  
+  if (exists("nops", dfr)) {
+    cond <- dfr[, "nops"] == 0 | is.na(dfr[, "nops"])
+    tx <- "- Number of plants sowed (nops) is missing or zero:"
+    output(dfr, cond, tx)
+  }
+  
   # Inconsistencies for nops > nope > noph > nopr
 
   sp1(dfr, 1, "nope", "nops", "- Number of plants established (nope) is greater than number of plants sowed (nops):")
@@ -194,31 +202,31 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   do <- FALSE
   
   if (exists("nopr", dfr)) {
-    temp <- temp | (is.na(dfr$nopr) | dfr$nopr > 0)
+    temp <- temp | (!is.na(dfr$nopr) & dfr$nopr > 0)
     do <- TRUE
   }
   if (exists("nocr", dfr)) {
-    temp <- temp | (is.na(dfr$nocr) | dfr$nocr > 0)
+    temp <- temp | (!is.na(dfr$nocr) & dfr$nocr > 0)
     do <- TRUE
   }
   if (exists("nonc", dfr)) {
-    temp <- temp | (is.na(dfr$nonc) | dfr$nonc > 0)
+    temp <- temp | (!is.na(dfr$nonc) & dfr$nonc > 0)
     do <- TRUE
   }
   if (exists("crw", dfr)) {
-    temp <- temp | (is.na(dfr$crw) | dfr$crw > 0)
+    temp <- temp | (!is.na(dfr$crw) & dfr$crw > 0)
     do <- TRUE
   }
   if (exists("ncrw", dfr)) {
-    temp <- temp | (is.na(dfr$ncrw) | dfr$ncrw > 0)
+    temp <- temp | (!is.na(dfr$ncrw) & dfr$ncrw > 0)
     do <- TRUE
   }
   if (exists("trw", dfr)) {
-    temp <- temp | (is.na(dfr$trw) | dfr$trw > 0)
+    temp <- temp | (!is.na(dfr$trw) & dfr$trw > 0)
     do <- TRUE
   }
   if (exists("rytha", dfr)) {
-    temp <- temp | (is.na(dfr$rytha) | dfr$rytha > 0)
+    temp <- temp | (!is.na(dfr$rytha) & dfr$rytha > 0)
     do <- TRUE
   }
 

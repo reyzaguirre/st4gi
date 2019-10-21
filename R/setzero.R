@@ -8,13 +8,14 @@
 #' (\code{vw}, \code{nocr}, \code{nonc}, \code{crw}, and \code{ncrw}) which
 #' are \code{NA} according to the following rules:
 #' \itemize{
-#'  \item If there is no information for \code{noph} and all traits are \code{NA},
-#'  then all traits are set to \code{0}.
 #'  \item If \code{noph == 0}, then all traits are set to \code{0}.
 #'  \item If \code{nopr == 0}, then all traits with exception of \code{vw}
 #'  are set to \code{0}.
 #'  \item If \code{nocr == 0}, then \code{crw} is set to \code{0}.
 #'  \item If \code{nonc == 0}, then \code{ncrw} is set to \code{0}.
+#'  \item If there is no information for \code{noph} and all traits are
+#'  \code{NA}, then all traits are set to \code{0}. By default, this only
+#'  rule is set to \code{FALSE}.
 #' }
 #' @return It returns a data frame and a list of warnings with all the rows
 #' that have been modified.
@@ -30,7 +31,7 @@
 #' setzero(dfr)
 #' @export
 
-setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, TRUE)) {
+setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE)) {
   
   # Check noph
   
@@ -48,11 +49,11 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, TRUE)) {
   har <- har[har %in% colnames(dfr)]
   ntr <- length(har)
 
-  # Rule 1 and Rule 2
+  # Rule 1 and Rule 5
   
   if (ntr > 0) {
   
-    # Rule 1: No information for noph and all traits are NA, then all traits are set to 0
+    # Rule 5: No information for noph and all traits are NA, then all traits are set to 0
     
     if (on[1]) {
       
@@ -66,7 +67,7 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, TRUE)) {
       
     }
     
-    # Rule 2: If noph == 0, then all traits are set to 0
+    # Rule 1: If noph == 0, then all traits are set to 0
     
     if (on[2] & exists("noph", dfr)) {
       
@@ -90,7 +91,7 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, TRUE)) {
   har <- har[har != "vw"]
   ntr <- length(har)
   
-  # Rule 3: If nopr == 0, then all traits with exception of vw are set to 0
+  # Rule 2: If nopr == 0, then all traits with exception of vw are set to 0
   
   if (ntr > 0) {
     
@@ -111,7 +112,7 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, TRUE)) {
     
   }
     
-  # Rule 4: If nocr == 0 then crw is set to 0
+  # Rule 3: If nocr == 0 then crw is set to 0
   
   if (on[4] & exists("nocr", dfr) & exists("crw", dfr)) {
     
@@ -125,7 +126,7 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, TRUE)) {
     
   }
   
-  # Rule 5: If nonc == 0 then ncrw is set to 0
+  # Rule 4: If nonc == 0 then ncrw is set to 0
   
   if (on[5] & exists("nonc", dfr) & exists("ncrw", dfr)) {
     

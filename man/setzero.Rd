@@ -4,7 +4,7 @@
 \alias{setzero}
 \title{Set values to \code{0}.}
 \usage{
-setzero(dfr, on = c(TRUE, TRUE, TRUE, TRUE, TRUE))
+setzero(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE))
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -24,13 +24,14 @@ This function sets values to \code{0} for all traits at harvest
 (\code{vw}, \code{nocr}, \code{nonc}, \code{crw}, and \code{ncrw}) which
 are \code{NA} according to the following rules:
 \itemize{
- \item If there is no information for \code{noph} and all traits are \code{NA},
- then all traits are set to \code{0}.
  \item If \code{noph == 0}, then all traits are set to \code{0}.
  \item If \code{nopr == 0}, then all traits with exception of \code{vw}
  are set to \code{0}.
  \item If \code{nocr == 0}, then \code{crw} is set to \code{0}.
  \item If \code{nonc == 0}, then \code{ncrw} is set to \code{0}.
+ \item If there is no information for \code{noph} and all traits are
+ \code{NA}, then all traits are set to \code{0}. By default, this only
+ rule is set to \code{FALSE}.
 }
 }
 \examples{
