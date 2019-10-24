@@ -4,7 +4,7 @@
 \alias{setzero}
 \title{Set values to \code{0}.}
 \usage{
-setzero(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE))
+setzero(dfr, on = c(TRUE, TRUE, TRUE, TRUE))
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -29,9 +29,6 @@ are \code{NA} according to the following rules:
  are set to \code{0}.
  \item If \code{nocr == 0}, then \code{crw} is set to \code{0}.
  \item If \code{nonc == 0}, then \code{ncrw} is set to \code{0}.
- \item If there is no information for \code{noph} and all traits are
- \code{NA}, then all traits are set to \code{0}. By default, this only
- rule is set to \code{FALSE}.
 }
 }
 \examples{

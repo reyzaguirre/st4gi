@@ -13,9 +13,6 @@
 #'  are set to \code{0}.
 #'  \item If \code{nocr == 0}, then \code{crw} is set to \code{0}.
 #'  \item If \code{nonc == 0}, then \code{ncrw} is set to \code{0}.
-#'  \item If there is no information for \code{noph} and all traits are
-#'  \code{NA}, then all traits are set to \code{0}. By default, this only
-#'  rule is set to \code{FALSE}.
 #' }
 #' @return It returns a data frame and a list of warnings with all the rows
 #' that have been modified.
@@ -31,15 +28,8 @@
 #' setzero(dfr)
 #' @export
 
-setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE)) {
+setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE)) {
   
-  # Check noph
-  
-  if (!exists("noph", dfr))
-    dfr$noph.tmp <- NA
-  else
-    dfr$noph.tmp <- dfr$noph
-    
   # Harvest traits
   
   har <- c("vw", "nocr", "nonc", "crw", "ncrw")
@@ -49,27 +39,11 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE)) {
   har <- har[har %in% colnames(dfr)]
   ntr <- length(har)
 
-  # Rule 1 and Rule 5
+  # Rule 1: If noph == 0, then all traits are set to 0
   
   if (ntr > 0) {
-  
-    # Rule 5: No information for noph and all traits are NA, then all traits are set to 0
-    
-    if (on[1]) {
-      
-      cond <- apply(is.na(dfr[, c("noph.tmp", har)]), 1, sum) == ntr + 1
-      
-      dfr[cond, har] <- 0
-      
-      if (sum(cond) > 0)
-        warning("Rule 1: Rows with NA replaced with 0 for all traits: ",
-                paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
-    }
-    
-    # Rule 1: If noph == 0, then all traits are set to 0
-    
-    if (on[2] & exists("noph", dfr)) {
+
+    if (on[1] & exists("noph", dfr)) {
       
       for (i in 1:length(har)) {
         
@@ -78,12 +52,11 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE)) {
         dfr[cond, har[i]] <- 0
         
         if (sum(cond) > 0)
-          warning("Rule 2: Rows with NA replaced with 0 for trait ",
+          warning("Rule 1: Rows with NA replaced with 0 for trait ",
                   har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
         
       }
     }
-    
   }
   
   # Subset in fieldbook and number of traits without vw
@@ -95,7 +68,7 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE)) {
   
   if (ntr > 0) {
     
-    if (on[3] & exists("nopr", dfr)) {
+    if (on[2] & exists("nopr", dfr)) {
       
       for (i in 1:length(har)) {
         
@@ -104,46 +77,42 @@ setzero <- function(dfr, on = c(TRUE, TRUE, TRUE, TRUE, FALSE)) {
         dfr[cond, har[i]] <- 0
         
         if (sum(cond) > 0)
-          warning("Rule 3: Rows with NA replaced with 0 for trait ",
+          warning("Rule 2: Rows with NA replaced with 0 for trait ",
                   har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
         
       }
     }
-    
   }
     
   # Rule 3: If nocr == 0 then crw is set to 0
   
-  if (on[4] & exists("nocr", dfr) & exists("crw", dfr)) {
+  if (on[3] & exists("nocr", dfr) & exists("crw", dfr)) {
     
     cond <- dfr[, "nocr"] == 0 & !is.na(dfr[, "nocr"]) & is.na(dfr[, "crw"])
     
     dfr[cond, "crw"] <- 0
     
     if (sum(cond) > 0)
-      warning("Rule 4: Rows with NA replaced with 0 for crw: ",
+      warning("Rule 3: Rows with NA replaced with 0 for crw: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     
   }
   
   # Rule 4: If nonc == 0 then ncrw is set to 0
   
-  if (on[5] & exists("nonc", dfr) & exists("ncrw", dfr)) {
+  if (on[4] & exists("nonc", dfr) & exists("ncrw", dfr)) {
     
     cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & is.na(dfr[, "ncrw"])
     
     dfr[cond, "ncrw"] <- 0
     
     if (sum(cond) > 0)
-      warning("Rule 5: Rows with NA replaced with 0 for ncrw: ",
+      warning("Rule 4: Rows with NA replaced with 0 for ncrw: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     
   }
-  
+
   # Return data frame
-  
-  if (exists("noph.tmp", dfr))
-    dfr <- dfr[, colnames(dfr) != "noph.tmp"]
   
   dfr
   
