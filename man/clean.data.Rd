@@ -27,10 +27,11 @@ Consider the following groups of traits:
  \item \code{pre} (traits evaluated pre-harvest): \code{vir}, \code{vir1},
  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
  
- \item \code{nrt} (traits evaluated without roots): \code{vir}, \code{vir1},
- \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{vw},
- \code{dmvf}, \code{dmvd}, \code{dmv}, \code{vw.d}, \code{fytha}, \code{fytha.aj},
- \code{dmvy}, \code{dmvy.aj}, \code{vpp}, \code{vpsp}, and \code{shi}.
+ \item \code{wvn} (traits evaluated with vines non-pre-harvest): \code{vw},
+ \code{biom}, \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj},
+ \code{dmvy}, \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby},
+ \code{dmby.aj}, \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd},
+ \code{hi}, \code{shi}, and \code{dmv}.
  
  \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
  \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d}, \code{cytha},

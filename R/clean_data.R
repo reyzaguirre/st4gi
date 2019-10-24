@@ -13,10 +13,11 @@
 #'  \item \code{pre} (traits evaluated pre-harvest): \code{vir}, \code{vir1},
 #'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
 #'  
-#'  \item \code{nrt} (traits evaluated without roots): \code{vir}, \code{vir1},
-#'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{vw},
-#'  \code{dmvf}, \code{dmvd}, \code{dmv}, \code{vw.d}, \code{fytha}, \code{fytha.aj},
-#'  \code{dmvy}, \code{dmvy.aj}, \code{vpp}, \code{vpsp}, and \code{shi}.
+#'  \item \code{wvn} (traits evaluated with vines non-pre-harvest): \code{vw},
+#'  \code{biom}, \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj},
+#'  \code{dmvy}, \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby},
+#'  \code{dmby.aj}, \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd},
+#'  \code{hi}, \code{shi}, and \code{dmv}.
 #'  
 #'  \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
 #'  \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d}, \code{cytha},
@@ -106,11 +107,12 @@ clean.data <- function(dfr, f = 10) {
   
   pre <- c("vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv")
   
-  # Traits evaluated without roots
+  # Traits evaluated with vines non-pre-harvest
   
-  nrt <- c(pre, "vw", "dmvf", "dmvd", "dmv", "vw.d", "fytha", "fytha.aj",
-           "dmvy", "dmvy.aj", "vpp", "vpsp", "shi")
-  
+  wvn <- c("vw", "biom", "biom.d", "vw.d", "fytha", "fytha.aj", "dmvy",
+           "dmvy.aj", "bytha", "bytha.aj", "dmby", "dmby.aj", "vpp",
+           "vpsp", "dmvf", "dmvd", "hi", "shi", "dmv")
+    
   # Continuous non-negative traits
   
   cnn <- c("vw", "crw", "ncrw", "trw", "trw.d", "biom", "biom.d", "cytha",
@@ -280,9 +282,9 @@ clean.data <- function(dfr, f = 10) {
   t.pos <- t.all[!(t.all %in% pre)]
   t.pos <- t.pos[t.pos != "noph"]
 
-  # Subset in fieldook all traits evaluated with roots
+  # Subset in fieldook all traits evaluated only with roots
   
-  t.rot <- t.pos[!(t.pos %in% nrt)]
+  t.rot <- t.pos[!(t.pos %in% wvn)]
   t.rot <- t.rot[t.rot != "nopr"]
   
   # Rule 1 for nope
