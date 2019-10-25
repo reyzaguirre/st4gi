@@ -4,34 +4,103 @@
 \alias{setna}
 \title{Set values to \code{NA}.}
 \usage{
-setna(traits, add = NULL, dfr)
+setna(dfr, f = 10)
 }
 \arguments{
-\item{traits}{List of traits (at least two).}
-
-\item{add}{List of additional traits.}
-
 \item{dfr}{The name of the data frame.}
+
+\item{f}{Factor for extreme values detection. See details.}
 }
 \value{
-It returns a data frame and a list of warnings with all the rows
-that have been modified.
+It returns the data frame with all impossible values set to \code{NA}
+and a list of warnings with all the rows that have been modified.
 }
 \description{
-Set values to \code{NA} for selected traits.
+Detect impossible values for sweetpotato data and set them to missing value
+(\code{NA}) according to some rules.
 }
 \details{
-If all traits in \code{traits} are zero or NA, then all traits
-in \code{traits} and \code{add} are set to \code{NA}.
+The data frame must use the labels (lower or upper case) listed in
+function \code{check.names.sp}; see \code{?check.names.sp} for details.
+Consider the following groups of traits:
+\itemize{
+ \item \code{pre} (traits evaluated pre-harvest): \code{vir}, \code{vir1},
+ \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
+ 
+ \item \code{wvn} (traits evaluated with vines non-pre-harvest): \code{vw},
+ \code{biom}, \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj},
+ \code{dmvy}, \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby},
+ \code{dmby.aj}, \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd},
+ \code{hi}, \code{shi}, and \code{dmv}.
+ 
+ \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
+ \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d}, \code{cytha},
+ \code{cytha.aj}, \code{rytha}, \code{rytha.aj}, \code{dmry}, \code{dmry.aj},
+ \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy}, \code{dmvy.aj},
+ \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj}, \code{nrpp},
+ \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp}, \code{ypsp}, \code{vpp},
+ \code{vpsp}, and \code{rfr}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
+ 
+ \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
+ \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
+ 
+ \item \code{pnn} (percentage non-negative traits): \code{ci}, \code{hi},
+ \code{shi}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
+ 
+ \item \code{ppo} (percentage positive traits): \code{dm}, \code{dmv},
+ \code{prot}, and \code{star}.
+
+ \item \code{dnn} (discrete non-negative traits): \code{nops}, \code{nope},
+ \code{noph}, \code{nopr}, \code{nocr}, \code{nonc}, and \code{tnr}.
+ 
+ \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
+ \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
+ \code{fcol}, \code{rs}, \code{rf}, \code{damr}, \code{rspr}, \code{wed},
+ \code{fraw}, \code{fraw1}, \code{fraw2}, \code{suraw}, \code{suraw1},
+ \code{suraw2}, \code{straw}, \code{straw1}, \code{straw2}, \code{coof},
+ \code{coof1}, \code{coof2}, \code{coosu}, \code{coosu1}, \code{coosu2},
+ \code{coost}, \code{coost1}, \code{coost2}, \code{coot}, \code{coot1},
+ \code{coot2}, \code{cooap}, \code{cooap1}, and \code{cooap2}.
+}
+Values are set to \code{NA} with the following rules:
+\itemize{
+ \item \code{cnn} traits with negative values are set to \code{NA}.
+ \item \code{cpo} traits with non-positive values are set to \code{NA}.
+ \item \code{pnn} traits with values out of the [0, 100] interval are set to \code{NA}.  
+ \item \code{ppo} with values out of the (0, 100] interval are set to \code{NA}.
+ \item \code{dnn} traits with negative and non-integer values are set to \code{NA}.
+ \item \code{ctg} traits with out of scale values are set to \code{NA}.
+ \item Beta carotene values determined by RHS color charts with values different from
+ the possible values in the RHS color chart are set to \code{NA}.
+ \item Extreme low and high values are detected using the interquartile range.
+ The rule is to detect any value out of the interval
+ \eqn{[Q_1 - f \times (m/3 + IQR); Q_3 + f \times (m/3 + IQR)]} where \code{m}
+ is the mean. By default \code{f = 10} and cannot be less than 10. Values out
+ of this range are set to \code{NA}.
+ \item If \code{nope == 0} and there is some data for any trait,
+ then \code{nope} is set to \code{NA}.  
+ \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,
+ then \code{noph} is set to \code{NA}.
+ \item If \code{nopr == 0} and there is some data for any trait evaluated with roots,
+ then \code{nopr} is set to \code{NA}.
+ \item If \code{noph > 0} and \code{nocr}, \code{nonc}, \code{crw}, \code{ncrw}, 
+ and \code{vw} are all 0, then \code{vw} is set to \code{NA}.
+ \item If \code{nopr > 0} and \code{nocr}, \code{nonc}, \code{crw}, and \code{ncrw}
+ are all 0, then \code{ncrw} and \code{nonc} are both set to \code{NA}.
+ \item If \code{nocr == 0} and \code{crw > 0}, then \code{nocr} is set to \code{NA}.
+ \item If \code{nocr > 0} and \code{crw == 0}, then \code{crw} is set to \code{NA}.
+ \item If \code{nonc == 0} and \code{ncrw > 0}, then \code{nonc} is set to \code{NA}.
+ \item If \code{nonc > 0} and \code{ncrw == 0}, then \code{ncrw} is set to \code{NA}.
+}
 }
 \examples{
-dfr <- data.frame(noph = c(2, 0, 0, 2, 1),
-                  trt1 = c(1, 0, 0, 0, NA),
-                  trt2 = c(3, 0, 1, NA, 2),
-                  trt3 = c(4, 0, 5, 0, 0),
-                  trt4 = c(1, NA, 2, 4, 5))
-setna(c('trt1', 'trt2', 'trt3'), 'trt4', dfr)
+dfr <- data.frame(trw = c(2.2, 5.0, 3.6, 12, 1600, -4),
+                  dm = c(21, 23, 105, 24, -3, 30),
+                  tnr = c(1.3, 10, 11, NA, 2, 5),
+                  scol = c(1, 0, 15, 5, 4, 7),
+                  fcol.cc = c(1, 15, 12, 24, 55, 20))
+setna(dfr)
 }
 \author{
-Raul Eyzaguirre
+Raul Eyzaguirre.
 }

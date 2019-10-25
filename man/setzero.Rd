@@ -4,13 +4,10 @@
 \alias{setzero}
 \title{Set values to \code{0}.}
 \usage{
-setzero(dfr, on = c(TRUE, TRUE, TRUE, TRUE))
+setzero(dfr)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
-
-\item{on}{Logic values to turn on or off the rules for setting values
-to \code{0} (see details). Default is \code{TRUE}.}
 }
 \value{
 It returns a data frame and a list of warnings with all the rows
@@ -21,14 +18,19 @@ Set values to \code{0} for harvested traits.
 }
 \details{
 This function sets values to \code{0} for all traits at harvest
-(\code{vw}, \code{nocr}, \code{nonc}, \code{crw}, and \code{ncrw}) which
-are \code{NA} according to the following rules:
+(\code{noph}, \code{nopr}, \code{vw}, \code{nocr}, \code{nonc}, \code{crw},
+and \code{ncrw}) which are \code{NA} according to the following rules:
 \itemize{
  \item If \code{noph == 0}, then all traits are set to \code{0}.
+ \item If all traits are \code{0}, then \code{noph} is set to \code{0}.
  \item If \code{nopr == 0}, then all traits with exception of \code{vw}
  are set to \code{0}.
+ \item If all traits with exception of \code{vw} are \code{0}, then
+ \code{nopr} is set to \code{0}.
  \item If \code{nocr == 0}, then \code{crw} is set to \code{0}.
+ \item If \code{crw == 0}, then \code{nocr} is set to \code{0}.
  \item If \code{nonc == 0}, then \code{ncrw} is set to \code{0}.
+ \item If \code{ncrw == 0}, then \code{nonc} is set to \code{0}.
 }
 }
 \examples{
