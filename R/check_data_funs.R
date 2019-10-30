@@ -165,11 +165,14 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   
   sp1(dfr, 3, "noph", "vw", "- Number of plants harvested (noph) is zero but vine weight (vw) is greater than zero:") 
   sp1(dfr, 3, "vw", "noph", "- Vine weight (vw) is zero but number of plants harvested (noph) is greater than zero:") 
-  sp1(dfr, 3, "noph", "fytha", "- Number of plants harvested (noph) is zero but foliage yield in tons per hectare (fytha) is greater than zero:") 
-  sp1(dfr, 3, "fytha", "noph", "- Foliage yield in tons per hectare (fytha) is zero but number of plants harvested (noph) is greater than zero:") 
+  if (!exists("vw", dfr)) {
+    sp1(dfr, 3, "noph", "fytha", "- Number of plants harvested (noph) is zero but foliage yield in tons per hectare (fytha) is greater than zero:") 
+    sp1(dfr, 3, "fytha", "noph", "- Foliage yield in tons per hectare (fytha) is zero but number of plants harvested (noph) is greater than zero:")
+  }
   sp1(dfr, 3, "noph", "tnr.tmp", "- Number of plants harvested (noph) is zero but total number of roots (nocr + nonc) is greater than zero:")
   sp1(dfr, 3, "noph", "trw.tmp", "- Number of plants harvested (noph) is zero but total root weight (crw + ncrw) is greater than zero:")
-  sp1(dfr, 3, "noph", "rytha", "- Number of plants harvested (noph) is zero but root yield in tons per hectare (rytha) is greater than zero:")
+  if (!exists("trw", dfr))
+    sp1(dfr, 3, "noph", "rytha", "- Number of plants harvested (noph) is zero but root yield in tons per hectare (rytha) is greater than zero:")
 
   # vw and dependencies
   
@@ -183,8 +186,10 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "tnr.tmp", "nopr", "- Total number of roots (nocr + nonc) is zero but number of plants with roots (nopr) is greater than zero:")
   sp1(dfr, 3, "nopr", "trw.tmp", "- Number of plants with roots (nopr) is zero but total root weight (crw + ncrw) is greater than zero:")
   sp1(dfr, 3, "trw.tmp", "nopr", "- Total root weight (crw + ncrw) is zero but number of plants with roots (nopr) is greater than zero:")
-  sp1(dfr, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
-  sp1(dfr, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero but number of plants with roots (nopr) is greater than zero:")
+  if (!exists("trw", dfr)) {
+    sp1(dfr, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
+    sp1(dfr, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero but number of plants with roots (nopr) is greater than zero:")
+  }
   sp1(dfr, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
   
   # Number of roots and root weight
@@ -193,8 +198,8 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "crw", "nocr", "- Commercial root weight (crw) is zero but number of commercial roots (nocr) is greater than zero:") 
   sp1(dfr, 3, "nonc", "ncrw", "- Number of non commercial roots (nonc) is zero but non commercial root weight (ncrw) is greater than zero:")
   sp1(dfr, 3, "ncrw", "nonc", "- Non commercial root weight (ncrw) is zero but number of non commercial roots (nonc) is greater than zero:")
-  sp1(dfr, 3, "trw.tmp", "tnr.tmp", "- Total root weight (crw + ncrw) is zero but total number of roots (nocr + nonc) is greater than zero:")
-  sp1(dfr, 3, "tnr,tmp", "trw.tmp", "- Total number of roots (nocr + nonc) is zero but total root weight (crw + ncrw) is greater than zero:")
+  sp1(dfr, 3, "trw", "tnr", "- Total root weight (trw) is zero but total number of roots (tnr) is greater than zero:")
+  sp1(dfr, 3, "tnr", "trw", "- Total number of roots (tnr) is zero but total root weight (trw) is greater than zero:")
   
   # Roots and dependencies
 
@@ -420,18 +425,24 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower", "trw", "- Out of range values for total root weight (trw):")
   sp5(dfr, f, "low", "trw", "- Extreme low values for total root weight (trw):")
   sp5(dfr, f, "high", "trw", "- Extreme high values for total root weight (trw):")
-  sp4(dfr, "lower", "cytha", "- Out of range values for commercial root yield in tons per hectare (cytha):")
-  sp5(dfr, f, "low", "cytha", "- Extreme low values for commercial root yield in tons per hectare (cytha):")
-  sp5(dfr, f, "high", "cytha", "- Extreme high values for commercial root yield in tons per hectare (cytha):")
+  if (!exists("crw", dfr)) {
+    sp4(dfr, "lower", "cytha", "- Out of range values for commercial root yield in tons per hectare (cytha):")
+    sp5(dfr, f, "low", "cytha", "- Extreme low values for commercial root yield in tons per hectare (cytha):")
+    sp5(dfr, f, "high", "cytha", "- Extreme high values for commercial root yield in tons per hectare (cytha):")
+  }
   sp4(dfr, "lower", "cytha.aj", "- Out of range values for commercial root yield adjusted in tons per hectare (cytha.aj):")
   sp5(dfr, f, "low", "cytha.aj", "- Extreme low values for commercial root yield adjusted in tons per hectare (cytha.aj):")
   sp5(dfr, f, "high", "cytha.aj", "- Extreme high values for commercial root yield adjusted in tons per hectare (cytha.aj):")
-  sp4(dfr, "lower", "rytha", "- Out of range values for total root yield in tons per hectare (rytha):")
-  sp5(dfr, f, "low", "rytha", "- Extreme low values for total root yield in tons per hectare (rytha):")
-  sp5(dfr, f, "high", "rytha", "- Extreme high values for total root yield in tons per hectare (rytha):")
-  sp4(dfr, "lower", "rytha.aj", "- Out of range values for total root yield adjusted in tons per hectare (rytha.aj):")
-  sp5(dfr, f, "low", "rytha.aj", "- Extreme low values for total root yield adjusted in tons per hectare (rytha.aj):")
-  sp5(dfr, f, "high", "rytha.aj", "- Extreme high values for total root yield adjusted in tons per hectare (rytha.aj):")
+  if (!exists("trw", dfr)) {
+    sp4(dfr, "lower", "rytha", "- Out of range values for total root yield in tons per hectare (rytha):")
+    sp5(dfr, f, "low", "rytha", "- Extreme low values for total root yield in tons per hectare (rytha):")
+    sp5(dfr, f, "high", "rytha", "- Extreme high values for total root yield in tons per hectare (rytha):")
+  }
+  if (!exists("ypp", dfr)) {
+    sp4(dfr, "lower", "rytha.aj", "- Out of range values for total root yield adjusted in tons per hectare (rytha.aj):")
+    sp5(dfr, f, "low", "rytha.aj", "- Extreme low values for total root yield adjusted in tons per hectare (rytha.aj):")
+    sp5(dfr, f, "high", "rytha.aj", "- Extreme high values for total root yield adjusted in tons per hectare (rytha.aj):")
+  }
   sp4(dfr, "lower0", "acrw", "- Out of range values for average commercial root weight (acrw):")
   sp5(dfr, f, "low", "acrw", "- Extreme low values for average commercial root weight (acrw):")
   sp5(dfr, f, "high", "acrw", "- Extreme high values for average commercial root weight (acrw):")
@@ -444,27 +455,35 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower", "nrpp", "- Out of range values for number of roots per harvested plant (nrpp):")
   sp5(dfr, f, "low", "nrpp", "- Extreme low values for number of roots per harvested plant (nrpp):")
   sp5(dfr, f, "high", "nrpp", "- Extreme high values for number of roots per harvested plant (nrpp):")
-  sp4(dfr, "lower", "nrpsp", "- Out of range values for number of roots per sowed plant (nrpsp):")
-  sp5(dfr, f, "low", "nrpsp", "- Extreme low values for number of roots per sowed plant (nrpsp):")
-  sp5(dfr, f, "high", "nrpsp", "- Extreme high values for number of roots per sowed plant (nrpsp):")
+  if (!exists("tnr", dfr)) {
+    sp4(dfr, "lower", "nrpsp", "- Out of range values for number of roots per sowed plant (nrpsp):")
+    sp5(dfr, f, "low", "nrpsp", "- Extreme low values for number of roots per sowed plant (nrpsp):")
+    sp5(dfr, f, "high", "nrpsp", "- Extreme high values for number of roots per sowed plant (nrpsp):")
+  }
   sp4(dfr, "lower", "ncrpp", "- Out of range values for number of commercial roots per harvested plant (ncrpp):")
   sp5(dfr, f, "low", "ncrpp", "- Extreme low values for number of commercial roots per harvested plant (ncrpp):")
   sp5(dfr, f, "high", "ncrpp", "- Extreme high values for number of commercial roots per harvested plant (ncrpp):")
-  sp4(dfr, "lower", "ncrpsp", "- Out of range values for number of commercial roots per sowed plant (ncrpsp):")
-  sp5(dfr, f, "low", "ncrpsp", "- Extreme low values for number of commercial roots per sowed plant (ncrpsp):")
-  sp5(dfr, f, "high", "ncrpsp", "- Extreme high values for number of commercial roots per sowed plant (ncrpsp):")
+  if (!exists("nocr", dfr)) {
+    sp4(dfr, "lower", "ncrpsp", "- Out of range values for number of commercial roots per sowed plant (ncrpsp):")
+    sp5(dfr, f, "low", "ncrpsp", "- Extreme low values for number of commercial roots per sowed plant (ncrpsp):")
+    sp5(dfr, f, "high", "ncrpsp", "- Extreme high values for number of commercial roots per sowed plant (ncrpsp):")
+  }
   sp4(dfr, "lower", "ypp", "- Out of range values for yield per harvested plant (ypp):")
   sp5(dfr, f, "low", "ypp", "- Extreme low values for yield per harvested plant (ypp):")
   sp5(dfr, f, "high", "ypp", "- Extreme high values for yield per harvested plant (ypp):")
-  sp4(dfr, "lower", "ypsp", "- Out of range values for yield per sowed plant (ypsp):")
-  sp5(dfr, f, "low", "ypsp", "- Extreme low values for yield per sowed plant (ypsp):")
-  sp5(dfr, f, "high", "ypsp", "- Extreme high values for yield per sowed plant (ypsp):")
+  if (!exists("trw", dfr)) {
+    sp4(dfr, "lower", "ypsp", "- Out of range values for yield per sowed plant (ypsp):")
+    sp5(dfr, f, "low", "ypsp", "- Extreme low values for yield per sowed plant (ypsp):")
+    sp5(dfr, f, "high", "ypsp", "- Extreme high values for yield per sowed plant (ypsp):")
+  }
   sp4(dfr, "lower", "vpp", "- Out of range values for vine weight per harvested plant (vpp):")
   sp5(dfr, f, "low", "vpp", "- Extreme low values for vine weight per harvested plant (vpp):")
   sp5(dfr, f, "high", "vpp", "- Extreme high values for vine weight per harvested plant (vpp):")
-  sp4(dfr, "lower", "vpsp", "- Out of range values for vine weight per sowed plant (vpsp):")
-  sp5(dfr, f, "low", "vpsp", "- Extreme low values for vine weight per sowed plant (vpsp):")
-  sp5(dfr, f, "high", "vpsp", "- Extreme high values for vine weight per sowed plant (vpsp):")
+  if (!exists("vw", dfr)) {
+    sp4(dfr, "lower", "vpsp", "- Out of range values for vine weight per sowed plant (vpsp):")
+    sp5(dfr, f, "low", "vpsp", "- Extreme low values for vine weight per sowed plant (vpsp):")
+    sp5(dfr, f, "high", "vpsp", "- Extreme high values for vine weight per sowed plant (vpsp):")
+  }
   sp4(dfr, "both", "ci", "- Out of range values for commercial index (ci):")
   sp5(dfr, f, "low", "ci", "- Extreme low values for commercial index (ci):")
   sp5(dfr, f, "high", "ci", "- Extreme high values for commercial index (ci):")
@@ -477,18 +496,24 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower", "biom", "- Out of range values for biomass yield (biom):")
   sp5(dfr, f, "low", "biom", "- Extreme low values for biomass yield (biom):")
   sp5(dfr, f, "high", "biom", "- Extreme high values for biomass yield (biom):")
-  sp4(dfr, "lower", "bytha", "- Out of range values for biomass yield in tons per hectare (bytha):")
-  sp5(dfr, f, "low", "bytha", "- Extreme low values for biomass yield in tons per hectare (bytha):")
-  sp5(dfr, f, "high", "bytha", "- Extreme high values for biomass yield in tons per hectare (bytha):")
+  if (!exists("biom", dfr)) {
+    sp4(dfr, "lower", "bytha", "- Out of range values for biomass yield in tons per hectare (bytha):")
+    sp5(dfr, f, "low", "bytha", "- Extreme low values for biomass yield in tons per hectare (bytha):")
+    sp5(dfr, f, "high", "bytha", "- Extreme high values for biomass yield in tons per hectare (bytha):")
+  }
   sp4(dfr, "lower", "bytha.aj", "- Out of range values for biomass yield adjusted in tons per hectare (bytha.aj):")
   sp5(dfr, f, "low", "bytha.aj", "- Extreme low values for biomass yield adjusted in tons per hectare (bytha.aj):")
   sp5(dfr, f, "high", "bytha.aj", "- Extreme high values for biomass yield adjusted in tons per hectare (bytha.aj):")
-  sp4(dfr, "lower", "fytha", "- Out of range values for foliage total yield in tons per hectare (fytha):")
-  sp5(dfr, f, "low", "fytha", "- Extreme low values for foliage total yield in tons per hectare (fytha):")
-  sp5(dfr, f, "high", "fytha", "- Extreme high values for foliage total yield in tons per hectare (fytha):")
-  sp4(dfr, "lower", "fytha.aj", "- Out of range values for foliage total yield adjusted in tons per hectare (fytha.aj):")
-  sp5(dfr, f, "low", "fytha.aj", "- Extreme low values for foliage total yield adjusted in tons per hectare (fytha.aj):")
-  sp5(dfr, f, "high", "fytha.aj", "- Extreme high values for foliage total yield adjusted in tons per hectare (fytha.aj):")
+  if (!exists("vw", dfr)) {
+    sp4(dfr, "lower", "fytha", "- Out of range values for foliage total yield in tons per hectare (fytha):")
+    sp5(dfr, f, "low", "fytha", "- Extreme low values for foliage total yield in tons per hectare (fytha):")
+    sp5(dfr, f, "high", "fytha", "- Extreme high values for foliage total yield in tons per hectare (fytha):")
+  }
+  if (!exists("vpp", dfr)) {
+    sp4(dfr, "lower", "fytha.aj", "- Out of range values for foliage total yield adjusted in tons per hectare (fytha.aj):")
+    sp5(dfr, f, "low", "fytha.aj", "- Extreme low values for foliage total yield adjusted in tons per hectare (fytha.aj):")
+    sp5(dfr, f, "high", "fytha.aj", "- Extreme high values for foliage total yield adjusted in tons per hectare (fytha.aj):")
+  }
   sp4(dfr, "lower", "rfr", "- Out of range values for root foliage ratio (rfr):")
   sp5(dfr, f, "low", "rfr", "- Extreme low values for root foliage ratio (rfr):")
   sp5(dfr, f, "high", "rfr", "- Extreme high values for root foliage ratio (rfr):")
@@ -602,29 +627,39 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
     sp6(dfr, geno, env, rep, "sucr", out.mod, out.max, "- Outliers for sucrose (sucr):")
     sp6(dfr, geno, env, rep, "malt", out.mod, out.max, "- Outliers for maltose (malt):")
     sp6(dfr, geno, env, rep, "trw", out.mod, out.max, "- Outliers for total root weight (trw):")
-    sp6(dfr, geno, env, rep, "cytha", out.mod, out.max, "- Outliers for commercial root yield in tons per hectare (cytha):")
+    if (!exists("crw", dfr))
+      sp6(dfr, geno, env, rep, "cytha", out.mod, out.max, "- Outliers for commercial root yield in tons per hectare (cytha):")
     sp6(dfr, geno, env, rep, "cytha.aj", out.mod, out.max, "- Outliers for commercial root yield adjusted in tons per hectare (cytha.aj):")
-    sp6(dfr, geno, env, rep, "rytha", out.mod, out.max, "- Outliers for total root yield in tons per hectare (rytha):")
-    sp6(dfr, geno, env, rep, "rytha.aj", out.mod, out.max, "- Outliers for total root yield adjusted in tons per hectare (rytha.aj):")
+    if (!exists("trw", dfr))
+      sp6(dfr, geno, env, rep, "rytha", out.mod, out.max, "- Outliers for total root yield in tons per hectare (rytha):")
+    if (!exists("ypp", dfr))
+      sp6(dfr, geno, env, rep, "rytha.aj", out.mod, out.max, "- Outliers for total root yield adjusted in tons per hectare (rytha.aj):")
     sp6(dfr, geno, env, rep, "acrw", out.mod, out.max, "- Outliers for average commercial root weight (acrw):")
     sp6(dfr, geno, env, rep, "ancrw", out.mod, out.max, "- Outliers for average non commercial root weight (ancrw):")
     sp6(dfr, geno, env, rep, "atrw", out.mod, out.max, "- Outliers for average total root weight (atrw):")
     sp6(dfr, geno, env, rep, "nrpp", out.mod, out.max, "- Outliers for number of roots per harvested plant (nrpp):")
-    sp6(dfr, geno, env, rep, "nrpsp", out.mod, out.max, "- Outliers for number of roots per sowed plant (nrpsp):")
+    if (!exists("tnr", dfr))
+      sp6(dfr, geno, env, rep, "nrpsp", out.mod, out.max, "- Outliers for number of roots per sowed plant (nrpsp):")
     sp6(dfr, geno, env, rep, "ncrpp", out.mod, out.max, "- Outliers for number of commercial roots per harvested plant (ncrpp):")
-    sp6(dfr, geno, env, rep, "ncrpsp", out.mod, out.max, "- Outliers for number of commercial roots per sowed plant (ncrpsp):")
+    if (!exists("nocr", dfr))
+      sp6(dfr, geno, env, rep, "ncrpsp", out.mod, out.max, "- Outliers for number of commercial roots per sowed plant (ncrpsp):")
     sp6(dfr, geno, env, rep, "ypp", out.mod, out.max, "- Outliers for yield per harvested plant (ypp):")
-    sp6(dfr, geno, env, rep, "ypsp", out.mod, out.max, "- Outliers for yield per sowed plant (ypsp):")
+    if (!exists("trw", dfr))
+      sp6(dfr, geno, env, rep, "ypsp", out.mod, out.max, "- Outliers for yield per sowed plant (ypsp):")
     sp6(dfr, geno, env, rep, "vpp", out.mod, out.max, "- Outliers for vine weight per harvested plant (vpp):")
-    sp6(dfr, geno, env, rep, "vpsp", out.mod, out.max, "- Outliers for vine weight per sowed plant (vpsp):")
+    if (!exists("vw", dfr))
+      sp6(dfr, geno, env, rep, "vpsp", out.mod, out.max, "- Outliers for vine weight per sowed plant (vpsp):")
     sp6(dfr, geno, env, rep, "ci", out.mod, out.max, "- Outliers for commercial index (ci):")
     sp6(dfr, geno, env, rep, "hi", out.mod, out.max, "- Outliers for harvest index (hi):")
     sp6(dfr, geno, env, rep, "shi", out.mod, out.max, "- Outliers for harvest sowing index (shi):")
     sp6(dfr, geno, env, rep, "biom", out.mod, out.max, "- Outliers for biomass yield (biom):")
-    sp6(dfr, geno, env, rep, "bytha", out.mod, out.max, "- Outliers for biomass yield in tons per hectare (bytha):")
+    if (!exists("biom", dfr))
+      sp6(dfr, geno, env, rep, "bytha", out.mod, out.max, "- Outliers for biomass yield in tons per hectare (bytha):")
     sp6(dfr, geno, env, rep, "bytha.aj", out.mod, out.max, "- Outliers for biomass yield adjusted in tons per hectare (bytha.aj):")
-    sp6(dfr, geno, env, rep, "fytha", out.mod, out.max, "- Outliers for foliage total yield in tons per hectare (fytha):")
-    sp6(dfr, geno, env, rep, "fytha.aj", out.mod, out.max, "- Outliers for foliage total yield adjusted in tons per hectare (fytha.aj):")
+    if (!exists("vw", dfr))
+      sp6(dfr, geno, env, rep, "fytha", out.mod, out.max, "- Outliers for foliage total yield in tons per hectare (fytha):")
+    if (!exists("vpp", dfr))
+      sp6(dfr, geno, env, rep, "fytha.aj", out.mod, out.max, "- Outliers for foliage total yield adjusted in tons per hectare (fytha.aj):")
     sp6(dfr, geno, env, rep, "rfr", out.mod, out.max, "- Outliers for root foliage ratio (rfr):")
     
     # Outliers' detection for additional traits
