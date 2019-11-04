@@ -75,12 +75,18 @@ sp4 <- function(dfr, ex, t1, tx) {
 ## Extreme values
 ###############################################################################
 
-sp5 <- function(dfr, f, ex, t1, tx) { 
+sp5 <- function(dfr, f, ex, t1, tx, thr = NULL) { 
   if (exists(t1, dfr)) {
-    if (ex == "low")
+    if (ex == "low") {
       cond <- dfr[, t1] < quantile(dfr[, t1], 0.25, na.rm = TRUE) - f * IQR(dfr[, t1], na.rm = TRUE) & !is.na(dfr[, t1])
-    if (ex == "high")
+      if (!is.null(thr))
+        cond <- cond | (dfr[, t1] < thr & !is.na(dfr[, t1]))
+    }
+    if (ex == "high") {
       cond <- dfr[, t1] > quantile(dfr[, t1], 0.75, na.rm = TRUE) + f * IQR(dfr[, t1], na.rm = TRUE) & !is.na(dfr[, t1])
+      if (!is.null(thr))
+        cond <- cond | (dfr[, t1] > thr & !is.na(dfr[, t1]))
+    }
     output(dfr, cond, tx)
   } 
 }
@@ -444,11 +450,11 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
     sp5(dfr, f, "high", "rytha.aj", "- Extreme high values for total root yield adjusted in tons per hectare (rytha.aj):")
   }
   sp4(dfr, "lower0", "acrw", "- Out of range values for average commercial root weight (acrw):")
-  sp5(dfr, f, "low", "acrw", "- Extreme low values for average commercial root weight (acrw):")
-  sp5(dfr, f, "high", "acrw", "- Extreme high values for average commercial root weight (acrw):")
+  sp5(dfr, f, "low", "acrw", "- Extreme low values for average commercial root weight (acrw):", 0.075)
+  sp5(dfr, f, "high", "acrw", "- Extreme high values for average commercial root weight (acrw):", 1)
   sp4(dfr, "lower0", "ancrw", "- Out of range values for average non commercial root weight (ancrw):")
-  sp5(dfr, f, "low", "ancrw", "- Extreme low values for average non commercial root weight (ancrw):")
-  sp5(dfr, f, "high", "ancrw", "- Extreme high values for average non commercial root weight (ancrw):")
+  sp5(dfr, f, "low", "ancrw", "- Extreme low values for average non commercial root weight (ancrw):", 0.005)
+  sp5(dfr, f, "high", "ancrw", "- Extreme high values for average non commercial root weight (ancrw):", 0.15)
   sp4(dfr, "lower0", "atrw", "- Out of range values for average total root weight (atrw):")
   sp5(dfr, f, "low", "atrw", "- Extreme low values for average total root weight (atrw):")
   sp5(dfr, f, "high", "atrw", "- Extreme high values for average total root weight (atrw):")
