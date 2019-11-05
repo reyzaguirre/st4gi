@@ -210,36 +210,46 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   # Roots and dependencies
 
   temp <- array(FALSE, dim(dfr)[1])
+  temp.na <- array(FALSE, dim(dfr)[1])
   do <- FALSE
   
   if (exists("nopr", dfr)) {
     temp <- temp | (!is.na(dfr$nopr) & dfr$nopr > 0)
+    temp.na <- temp.na | !is.na(dfr$nopr)
     do <- TRUE
   }
   if (exists("nocr", dfr)) {
     temp <- temp | (!is.na(dfr$nocr) & dfr$nocr > 0)
+    temp.na <- temp.na | !is.na(dfr$nocr)
     do <- TRUE
   }
   if (exists("nonc", dfr)) {
     temp <- temp | (!is.na(dfr$nonc) & dfr$nonc > 0)
+    temp.na <- temp.na | !is.na(dfr$nonc)
     do <- TRUE
   }
   if (exists("crw", dfr)) {
     temp <- temp | (!is.na(dfr$crw) & dfr$crw > 0)
+    temp.na <- temp.na | !is.na(dfr$crw)
     do <- TRUE
   }
   if (exists("ncrw", dfr)) {
     temp <- temp | (!is.na(dfr$ncrw) & dfr$ncrw > 0)
+    temp.na <- temp.na | !is.na(dfr$ncrw)
     do <- TRUE
   }
   if (exists("trw", dfr)) {
     temp <- temp | (!is.na(dfr$trw) & dfr$trw > 0)
+    temp.na <- temp.na | !is.na(dfr$trw)
     do <- TRUE
   }
   if (exists("rytha", dfr)) {
     temp <- temp | (!is.na(dfr$rytha) & dfr$rytha > 0)
+    temp.na <- temp.na | !is.na(dfr$rytha)
     do <- TRUE
   }
+  
+  temp <- temp | !temp.na
 
   sp2(dfr, temp, do, "fcol.cc", "- There are no roots but there is data for root flesh color using RHS color charts (fcol.cc):")
   sp2(dfr, temp, do, "scol", "- There are no roots but there is data for storage root skin color (scol):")
