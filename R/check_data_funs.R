@@ -5,7 +5,7 @@
 output <- function(dfr, cond, tx) {
   if (sum(cond, na.rm = TRUE) > 0) {
     cat("\n", tx, "\n", sep = "")
-    print(dfr[cond, !(colnames(dfr) %in% c('trw.tmp', 'tnr.tmp'))])
+    print(dfr[cond, !(colnames(dfr) %in% c('trw.tmp', 'tnr.tmp', 'dmvf.tmp', 'dmf.tmp'))])
   }
 }
 
@@ -140,6 +140,13 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   if (exists("tnr", dfr) & (!exists("nocr", dfr) | !exists("nonc", dfr)))
     dfr$tnr.tmp <- dfr$tnr
   
+  # Compute dmvf and dmf in kilograms
+  
+  if (exists("dmvf", dfr))
+    dfr$dmvf.tmp <- dfr$dmvf / 1000
+  if (exists("dmf", dfr))
+    dfr$dmf.tmp <- dfr$dmf / 1000
+  
   # Check nops
   
   if (exists("nops", dfr)) {
@@ -185,7 +192,8 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "vw", "dmvf", "- Vine weight (vw) is zero but there is fresh weight vines for dry matter assessment (dmvf):") 
   sp1(dfr, 3, "vw", "dmvd", "- Vine weight (vw) is zero but there is dry weight vines for dry matter assessment (dmvd):") 
   sp1(dfr, 1, "dmvd", "dmvf", "- Dry weight vines for dry matter assessment (dmvd) is greater than fresh weight vines for dry matter assessment (dmvf):")
-
+  sp1(dfr, 1, "dmvf.tmp", "vw", "- Fresh weight vines for dry matter assessment (dmvf) is greater than vine weight (vw):")
+  
   # nopr and roots
   
   sp1(dfr, 3, "nopr", "tnr.tmp", "- Number of plants with roots (nopr) is zero but total number of roots (nocr + nonc) is greater than zero:")
@@ -252,6 +260,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp2(dfr, temp, do, "dmf", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (dmf):")
   sp2(dfr, temp, do, "dmd", "- There are no roots but there is data for dry weight of roots for dry matter assessment (dmd):")
   sp1(dfr, 1, "dmd", "dmf", "- Dry weight of roots for dry matter assessment (dmd) is greater than fresh weight of roots for dry matter assessment (dmf):")
+  sp1(dfr, 1, "dmf.tmp", "trw.tmp", "- Fresh weight of roots for dry matter assessment (dmf) is greater than total root weight (crw + ncrw):")
   sp2(dfr, temp, do, "fraw", "- There are no roots but there is data for root fiber (fraw):")
   sp2(dfr, temp, do, "suraw", "- There are no roots but there is data for root sugar (suraw):")
   sp2(dfr, temp, do, "straw", "- There are no roots but there is data for root starch (straw):")
