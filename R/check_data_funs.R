@@ -129,14 +129,14 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   if (exists("crw", dfr) & !exists("ncrw", dfr))
     dfr$trw.tmp <- dfr$crw
   if (exists("crw", dfr) & exists("ncrw", dfr))
-    dfr$trw.tmp <- suma(dfr$crw, dfr$ncrw)
+    dfr$trw.tmp <- apply(cbind(dfr$crw, dfr$ncrw), 1, sum, na.rm = TRUE)
   if (exists("trw", dfr) & (!exists("crw", dfr) | !exists("ncrw", dfr)))
     dfr$trw.tmp <- dfr$trw
     
   if (exists("nocr", dfr) & !exists("nonc", dfr))
     dfr$tnr.tmp <- dfr$nocr
   if (exists("nocr", dfr) & exists("nonc", dfr))
-    dfr$tnr.tmp <- suma(dfr$nocr, dfr$nonc)
+    dfr$tnr.tmp <- apply(cbind(dfr$nocr, dfr$nonc), 1, sum, na.rm = TRUE)
   if (exists("tnr", dfr) & (!exists("nocr", dfr) | !exists("nonc", dfr)))
     dfr$tnr.tmp <- dfr$tnr
   
