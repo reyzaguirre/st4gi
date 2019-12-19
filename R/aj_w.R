@@ -90,8 +90,8 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
 
   # Get a copy of trait for the adjusted values
   
-  trait.aj <- paste(trait, 'aj', sep = '.') 
-  dfr[, trait.aj] <- dfr[, trait]
+  trait.w <- paste(trait, 'w', sep = '.') 
+  dfr[, trait.w] <- dfr[, trait]
 
   # Compute means for checks
   
@@ -108,12 +108,12 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
   cond1 <- dfr[, geno] == ck1
   cond2 <- dfr[, geno] == ck2
 
-  dfr[cond1, trait.aj] <- (dfr[cond1, trait.aj] - ck1.mean) / ck1.mean * p
-  dfr[cond2, trait.aj] <- (dfr[cond2, trait.aj] - ck2.mean) / ck2.mean * p
+  dfr[cond1, trait.w] <- (dfr[cond1, trait.w] - ck1.mean) / ck1.mean * p
+  dfr[cond2, trait.w] <- (dfr[cond2, trait.w] - ck2.mean) / ck2.mean * p
   
   # Replace missing values with 0 (this is the centered mean)
   
-  dfr[dfr[, geno] %in% c(ck1, ck2) & is.na(dfr[, trait.aj]), trait.aj] <- 0
+  dfr[dfr[, geno] %in% c(ck1, ck2) & is.na(dfr[, trait.w]), trait.w] <- 0
   
   # Choose function for adjustment
   
@@ -133,9 +133,9 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
     if (dfr[i, geno] %in% c(ck1, ck2)) {
       af <- 0
     } else {
-        af <- foo(i, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr)
+        af <- foo(i, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr)
     }
-    dfr[i, trait.aj] <- dfr[i, trait.aj] / (1 + af)
+    dfr[i, trait.w] <- dfr[i, trait.w] / (1 + af)
   }
   
   # Return
@@ -146,7 +146,7 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
 
 # A function for Westcott adjustment with method 2
 
-foo.weig <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
+foo.weig <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Identify row and column for plot
   
@@ -174,8 +174,8 @@ foo.weig <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Check values on the left and right
   
-  ck.lf <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.lf, c(row, trait.aj)]
-  ck.rg <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.rg, c(row, trait.aj)]
+  ck.lf <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.lf, c(row, trait.w)]
+  ck.rg <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.rg, c(row, trait.w)]
   
   # Sort by row
   
@@ -184,8 +184,8 @@ foo.weig <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Get left and right means for adjustment
   
-  m.ck.lf <- sum(ck.lf[, trait.aj] * row.wg) / sum(row.wg)
-  m.ck.rg <- sum(ck.rg[, trait.aj] * row.wg) / sum(row.wg)
+  m.ck.lf <- sum(ck.lf[, trait.w] * row.wg) / sum(row.wg)
+  m.ck.rg <- sum(ck.rg[, trait.w] * row.wg) / sum(row.wg)
   
   # Get adjustment factor
   
@@ -200,7 +200,7 @@ foo.weig <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
 # A function for Westcott adjustment with method 1 or
 # when layout does not follow the Westcott method
 
-foo.flat <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
+foo.flat <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Identify row and column for plot
   
@@ -216,7 +216,7 @@ foo.flat <- function(x, trait.aj, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
 
   # Get adjustment factor
   
-  af <- mean(temp[, trait.aj])
+  af <- mean(temp[, trait.w])
   
   # Return
   
