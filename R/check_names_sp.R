@@ -69,7 +69,7 @@
 #'  \item \code{straw}     : Raw root starch, 1-9 scale (CO_331:0001055).
 #'  \item \code{coof}      : Cooked root fiber, 1-9 (CO_331:0000259).
 #'  \item \code{coosu}     : Cooked root sugars, 1-9 scale (CO_331:0000261).
-#'  \item \code{coost}     : Cooked root starch, 1-9 scale.
+#'  \item \code{coost}     : Cooked root starch, 1-9 scale (CO_331:0000265).
 #'  \item \code{coot}      : Cooked root taste, 1-9 scale (CO_331:0000269).
 #'  \item \code{cooap}     : Cooked root appearance, 1-9 scale (CO_331:0000273).
 #'  }
@@ -84,21 +84,21 @@
 #'  \item \code{bc.cc}     : Beta-carotene with RHS color charts, mg/100g raw fresh weight (CO_331:0001023).
 #'  \item \code{tc}        : Total carotenoids, mg/100g raw dry weight (CO_331:0000290).
 #'  \item \code{star}      : Starch, g/100g raw fresh (CO_331:0001012).
-#'  \item \code{fruc}      : Fructose, g/100g raw fresh (CO_331:0000979).
-#'  \item \code{gluc}      : Glucose, g/100g raw fresh (CO_331:0000981).
-#'  \item \code{sucr}      : Sucrose, g/100g raw fresh (CO_331:0000983).
-#'  \item \code{malt}      : Maltose, g/100g raw fresh (CO_331:0000985).
+#'  \item \code{fruc}      : Fructose, g/100g raw fresh (CO_331:0000292 - CO_331:0000979).
+#'  \item \code{gluc}      : Glucose, g/100g raw fresh (CO_331:0000293 - CO_331:0000981).
+#'  \item \code{sucr}      : Sucrose, g/100g raw fresh (CO_331:0000294 - CO_331:0000983).
+#'  \item \code{malt}      : Maltose, g/100g raw fresh (CO_331:0000295 - CO_331:0000985).
 #'  }
 #' -------------------- Calculated traits --------------------
 #'  \itemize{
-#'  \item \code{tnr}       : Total number of roots per plot (CO_331:0000992).
+#'  \item \code{tnr}       : Total number of roots per plot (CO_331:0000233).
 #'  \item \code{trw}       : Total root weight in kg/plot (CO_331:0000237).
 #'  \item \code{trw.d}     : Total root dry weight in kg/plot (CO_331:0000995).
 #'  \item \code{biom}      : Biomass yield in kg/plot (CO_331:0000683).
 #'  \item \code{biom.d}    : Biomass dry yield in kg/plot (CO_331:0000997).
 #'  \item \code{cytha}     : Commercial root yield in t/ha (CO_331:0000809).
 #'  \item \code{cytha.aj}  : Commercial root yield in t/ha adjusted by number of harvested plants (CO_331:0000998).
-#'  \item \code{rytha}     : Total root yield in t/ha (CO_331:0000998).
+#'  \item \code{rytha}     : Total root yield in t/ha (CO_331:0000296).
 #'  \item \code{rytha.aj}  : Total root yield in t/ha adjusted by number of harvested plants (CO_331:0000999).
 #'  \item \code{dmry}      : Dry matter root yield in t/ha (CO_331:0001000).
 #'  \item \code{dmry.aj}   : Dry matter root yield in t/ha adjusted by number of harvested plants (CO_331:0001001).
