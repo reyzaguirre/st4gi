@@ -41,12 +41,9 @@
 #'  
 #'  \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
 #'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
-#'  \code{fcol}, \code{rs}, \code{rf}, \code{damr}, \code{rspr}, \code{wed},
-#'  \code{fraw}, \code{fraw1}, \code{fraw2}, \code{suraw}, \code{suraw1},
-#'  \code{suraw2}, \code{straw}, \code{straw1}, \code{straw2}, \code{coof},
-#'  \code{coof1}, \code{coof2}, \code{coosu}, \code{coosu1}, \code{coosu2},
-#'  \code{coost}, \code{coost1}, \code{coost2}, \code{coot}, \code{coot1},
-#'  \code{coot2}, \code{cooap}, \code{cooap1}, and \code{cooap2}.
+#'  \code{fcol}, \code{rs}, \code{rf}, \code{damr}, \code{rspr}, \code{alcdam},
+#'  \code{wed}, \code{fraw}, \code{suraw}, \code{straw}, \code{coof}, \code{coosu},
+#'  \code{coost}, \code{coot}, and \code{cooap}.
 #' }
 #' Values are set to \code{NA} with the following rules:
 #' \itemize{
@@ -142,10 +139,8 @@ setna <- function(dfr, f = 10) {
   
   # Categorical 1 to 9 traits
   
-  ctg <- c(pre, "scol", "fcol", "rs", "rf", "damr", "rspr", "wed", "fraw", "fraw1",
-           "fraw2", "suraw", "suraw1", "suraw2", "straw", "straw1", "straw2", "coof",
-           "coof1", "coof2", "coosu", "coosu1", "coosu2", "coost", "coost1", "coost2",
-           "coot", "coot1", "coot2", "cooap", "cooap1", "cooap2")
+  ctg <- c(pre, "scol", "fcol", "rs", "rf", "damr", "rspr", "alcdam", "wed",
+           "fraw", "suraw", "straw", "coof", "coosu", "coost", "coot", "cooap")
   
   # Special traits
   

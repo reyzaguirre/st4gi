@@ -208,6 +208,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
     sp1(dfr, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
     sp1(dfr, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero but number of plants with roots (nopr) is greater than zero:")
   }
+  sp1(dfr, 2, "nopr", "alcdam", "- Number of plants with roots (nopr) is zero but there is data for alcidodes sp. damage (alcdam):")
   sp1(dfr, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
   
   # Number of roots and root weight
@@ -260,6 +261,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp2(dfr, temp, do, "rf", "- There are no roots but there is data for root form (rf):")
   sp2(dfr, temp, do, "damr", "- There are no roots but there is data for root defects (damr):")
   sp2(dfr, temp, do, "rspr", "- There are no roots but there is data for root sprouting (rspr):")
+  sp2(dfr, temp, do, "alcdam", "- There are no roots but there is data for alcidodes sp. damage (alcdam):")
   sp2(dfr, temp, do, "wed", "- There are no roots but there is data for weevil damage (wed):")
   sp2(dfr, temp, do, "dmf", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (dmf):")
   sp2(dfr, temp, do, "dmd", "- There are no roots but there is data for dry weight of roots for dry matter assessment (dmd):")
@@ -273,22 +275,6 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp2(dfr, temp, do, "coost", "- There are no roots but there is data for cooked starch (coost):")
   sp2(dfr, temp, do, "coot", "- There are no roots but there is data for cooked taste (coot):")
   sp2(dfr, temp, do, "cooap", "- There are no roots but there is data for cooked appearance (cooap):")
-  sp2(dfr, temp, do, "fraw1", "- There are no roots but there is data for root fiber first determination (fraw1):")
-  sp2(dfr, temp, do, "suraw1", "- There are no roots but there is data for root sugar first determination (suraw1):")
-  sp2(dfr, temp, do, "straw1", "- There are no roots but there is data for root starch first determination (straw1):")
-  sp2(dfr, temp, do, "coof1", "- There are no roots but there is data for cooked fiber first evaluation (coof1):")
-  sp2(dfr, temp, do, "coosu1", "- There are no roots but there is data for cooked sugars first evaluation (coosu1):")
-  sp2(dfr, temp, do, "coost1", "- There are no roots but there is data for cooked starch first evaluation (coost1):")
-  sp2(dfr, temp, do, "coot1", "- There are no roots but there is data for cooked taste first evaluation (coot1):")
-  sp2(dfr, temp, do, "cooap1", "- There are no roots but there is data for cooked appearance first evaluation (cooap1):")
-  sp2(dfr, temp, do, "fraw2", "- There are no roots but there is data for root fiber second determination (fraw2):")
-  sp2(dfr, temp, do, "suraw2", "- There are no roots but there is data for root sugar second determination (suraw2):")
-  sp2(dfr, temp, do, "straw2", "- There are no roots but there is data for root starch second determination (straw2):")
-  sp2(dfr, temp, do, "coof2", "- There are no roots but there is data for cooked fiber second evaluation (coof2):")
-  sp2(dfr, temp, do, "coosu2", "- There are no roots but there is data for cooked sugars second evaluation (coosu2):")
-  sp2(dfr, temp, do, "coost2", "- There are no roots but there is data for cooked starch second evaluation (coost2):")
-  sp2(dfr, temp, do, "coot2", "- There are no roots but there is data for cooked taste second evaluation (coot2):")
-  sp2(dfr, temp, do, "cooap2", "- There are no roots but there is data for cooked appearance second evaluation (cooap2):")
   sp2(dfr, temp, do, "prot", "- There are no roots but there is data for protein (prot):")
   sp2(dfr, temp, do, "fe", "- There are no roots but there is data for iron (fe):")
   sp2(dfr, temp, do, "zn", "- There are no roots but there is data for zinc (zn):")
@@ -337,6 +323,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp3(dfr, c(1:9, NA), "rf", "- Out of range values for root form (rf):")
   sp3(dfr, c(1:9, NA), "damr", "- Out of range values for root defects (damr):")
   sp3(dfr, c(1:9, NA), "rspr", "- Out of range values for root sprouting (rspr):")
+  sp3(dfr, c(1:9, NA), "alcdam", "- Out of range values for alcidodes sp. damage (alcdam):")
   sp3(dfr, c(1:9, NA), "wed", "- Out of range values for weevil damage (wed):")
 
   # Extreme values detection and values out of range for dm data
@@ -379,23 +366,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp3(dfr, c(1:9, NA), "coost", "- Out of range values for cooked starch (coost):")
   sp3(dfr, c(1:9, NA), "coot", "- Out of range values for cooked taste (coot):")
   sp3(dfr, c(1:9, NA), "cooap", "- Out of range values for cooked appearance (cooap):")
-  sp3(dfr, c(1:9, NA), "fraw1", "- Out of range values for root fiber first determination (fraw1):")
-  sp3(dfr, c(1:9, NA), "suraw1", "- Out of range values for root sugar first determination (suraw1):")
-  sp3(dfr, c(1:9, NA), "straw1", "- Out of range values for root starch first determination (straw1):")
-  sp3(dfr, c(1:9, NA), "coof1", "- Out of range values for cooked fiber first evaluation (coof1):")
-  sp3(dfr, c(1:9, NA), "coosu1", "- Out of range values for cooked sugars first evaluation (coosu1):")
-  sp3(dfr, c(1:9, NA), "coost1", "- Out of range values for cooked starch first evaluation (coost1):")
-  sp3(dfr, c(1:9, NA), "coot1", "- Out of range values for cooked taste first evaluation (coot1):")
-  sp3(dfr, c(1:9, NA), "cooap1", "- Out of range values for cooked appearance first evaluation (cooap1):")
-  sp3(dfr, c(1:9, NA), "fraw2", "- Out of range values for root fiber second determination (fraw2):")
-  sp3(dfr, c(1:9, NA), "suraw2", "- Out of range values for root sugar second determination (suraw2):")
-  sp3(dfr, c(1:9, NA), "straw2", "- Out of range values for root starch second determination (straw2):")
-  sp3(dfr, c(1:9, NA), "coof2", "- Out of range values for cooked fiber second evaluation (coof2):")
-  sp3(dfr, c(1:9, NA), "coosu2", "- Out of range values for cooked sugars second evaluation (coosu2):")
-  sp3(dfr, c(1:9, NA), "coost2", "- Out of range values for cooked starch second evaluation (coost2):")
-  sp3(dfr, c(1:9, NA), "coot2", "- Out of range values for cooked taste second evaluation (coot2):")
-  sp3(dfr, c(1:9, NA), "cooap2", "- Out of range values for cooked appearance second evaluation (cooap2):")
-  
+
   # Extreme values detection and values out of range for lab data
   
   sp4(dfr, "both0", "prot", "- Out of range values for protein (prot):")
