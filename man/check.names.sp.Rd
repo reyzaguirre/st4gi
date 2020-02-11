@@ -41,7 +41,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{treat}     : Treatment.
  \item \code{harvest}   : Harvest time.
  }
--------------------- On field evaluated traits --------------------
+-------------------- Roots and vines --------------------
  \itemize{
  \item \code{nops}      : Number of plants sowed (CO_331:0000678).
  \item \code{nope}      : Number of plants established (CO_331:0000192).
@@ -60,14 +60,18 @@ The data frame must use the following labels (lower or upper case):
  \item \code{crw}       : Commercial root weight in kg/plot (CO_331:0000220).
  \item \code{ncrw}      : Non commercial root weight in kg/plot (CO_331:0000223).
  \item \code{scol}      : Storage root skin color, 1-9 scale, (CO_331:0000175).
- \item \code{fcol}      : Storage root flesh color, 1-9 scale (CO_331:0000178).
+ \item \code{fcol}      : Storage root predominant flesh color, 1-9 scale (CO_331:0000178).
+ \item \code{fcol2}     : Storage root secondary flesh color, 1-9 scale (CO_331:0000179).
  \item \code{fcol.cc}   : Root flesh color using RHS color charts, 1-30 scale.
  \item \code{rs}        : Root size, 1-9 scale, (CO_331:0000184).
  \item \code{rf}        : Root form, 1-9 scale, (CO_331:0000202).
+ \item \code{rtshp}     : Root shape, 1-9 scale, (CO_331:0000181).
  \item \code{damr}      : Root defects, 1-9 scale, (CO_331:0000206).
  \item \code{rspr}      : Root sprouting, 1-9 scale, (CO_331:0000277).
  \item \code{alcdam}    : Alcidodes sp. damage, 1-9 scale (CO_331:0000806).
  \item \code{wed}       : Weevil damage, 1-9 scale (CO_331:0000207).
+ \item \code{stspwv}    : Reaction to striped weevil, 1-9 scale (CO_331:0000720).
+ \item \code{milldam}   : Millipede damage, 1-9 scale (CO_331:0000805).
  }
 -------------------- Dry matter assesment --------------------
  \itemize{
@@ -91,7 +95,7 @@ The data frame must use the following labels (lower or upper case):
  }
 -------------------- Nutrients evaluations --------------------
  \itemize{
- \item \code{prot}      : Protein, g/100g raw fresh (CO_331:0001010).
+ \item \code{prot}      : Protein, g/100g raw dry (CO_331:0000278).
  \item \code{fe}        : Iron, mg/100g raw dry weight measured by NIRS (CO_331:0001016).
  \item \code{zn}        : Zinc, mg/100g raw dry weight measured by NIRS (CO_331:0001017).
  \item \code{ca}        : Calcium, mg/100g raw dry weight measured by NIRS (CO_331:0001029).
@@ -99,11 +103,11 @@ The data frame must use the following labels (lower or upper case):
  \item \code{bc}        : Beta-carotene, mg/100g raw dry weight measured by NIRS (CO_331:0000289).
  \item \code{bc.cc}     : Beta-carotene with RHS color charts, mg/100g raw fresh weight (CO_331:0001023).
  \item \code{tc}        : Total carotenoids, mg/100g raw dry weight (CO_331:0000290).
- \item \code{star}      : Starch, g/100g raw fresh (CO_331:0001012).
- \item \code{fruc}      : Fructose, g/100g raw fresh (CO_331:0000292 - CO_331:0000979).
- \item \code{gluc}      : Glucose, g/100g raw fresh (CO_331:0000293 - CO_331:0000981).
- \item \code{sucr}      : Sucrose, g/100g raw fresh (CO_331:0000294 - CO_331:0000983).
- \item \code{malt}      : Maltose, g/100g raw fresh (CO_331:0000295 - CO_331:0000985).
+ \item \code{star}      : Starch, g/100g raw dry (CO_331:0000291).
+ \item \code{fruc}      : Fructose, g/100g raw dry (CO_331:0000292 - CO_331:0001045).
+ \item \code{gluc}      : Glucose, g/100g raw dry (CO_331:0000293 - CO_331:0001047).
+ \item \code{sucr}      : Sucrose, g/100g raw dry (CO_331:0000294 - CO_331:0001049).
+ \item \code{malt}      : Maltose, g/100g raw dry (CO_331:0000295 - CO_331:0001051).
  }
 -------------------- Calculated traits --------------------
  \itemize{
@@ -138,6 +142,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{ypsp}      : Yield per sowed plant in kg (CO_331:0000989).
  \item \code{vpp}       : Vine weight per harvested plant in kg (CO_331:0000990).
  \item \code{vpsp}      : Vine weight per sowed plant in kg (CO_331:0000991).
+ \item \code{rtyldpct}  : Yield as percentage of check (CO_331:0000792).
  \item \code{ci}        : Commercial index \% (CO_331:0000682).
  \item \code{hi}        : Harvest index \% (CO_331:0000302).
  \item \code{shi}       : Harvest sowing index \% (CO_331:0000301).

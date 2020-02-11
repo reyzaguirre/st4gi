@@ -34,12 +34,13 @@ Consider the following groups of traits:
  \code{hi}, \code{shi}, and \code{dmv}.
  
  \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
- \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d}, \code{cytha},
- \code{cytha.aj}, \code{rytha}, \code{rytha.aj}, \code{dmry}, \code{dmry.aj},
- \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy}, \code{dmvy.aj},
- \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj}, \code{nrpp},
- \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp}, \code{ypsp}, \code{vpp},
- \code{vpsp}, and \code{rfr}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
+ \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d},
+ \code{cytha}, \code{cytha.aj}, \code{rytha}, \code{rytha.aj}, \code{dmry},
+ \code{dmry.aj}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
+ \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj},
+ \code{nrpp}, \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp},
+ \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, and \code{rfr},
+ \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
  
  \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
  \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
@@ -55,8 +56,9 @@ Consider the following groups of traits:
  
  \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
- \code{fcol}, \code{rs}, \code{rf}, \code{damr}, \code{rspr}, \code{alcdam},
- \code{wed}, \code{fraw}, \code{suraw}, \code{straw}, \code{coof}, \code{coosu},
+ \code{fcol}, \code{fcol2}, \code{rs}, \code{rf}, \code{rtshp}, \code{damr},
+ \code{rspr}, \code{alcdam}, \code{wed}, \code{stspwv}, \code{milldam},
+ \code{fraw}, \code{suraw}, \code{straw}, \code{coof}, \code{coosu},
  \code{coost}, \code{coot}, and \code{cooap}.
 }
 Values are set to \code{NA} with the following rules:

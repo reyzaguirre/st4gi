@@ -210,6 +210,8 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   }
   sp1(dfr, 2, "nopr", "alcdam", "- Number of plants with roots (nopr) is zero but there is data for alcidodes sp. damage (alcdam):")
   sp1(dfr, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
+  sp1(dfr, 2, "nopr", "stspwv", "- Number of plants with roots (nopr) is zero but there is data for reaction to striped weevil (stspwv):")
+  sp1(dfr, 2, "nopr", "milldam", "- Number of plants with roots (nopr) is zero but there is data for millipede damage (milldam):")
   
   # Number of roots and root weight
   
@@ -256,13 +258,17 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   
   sp2(dfr, temp, do, "fcol.cc", "- There are no roots but there is data for root flesh color using RHS color charts (fcol.cc):")
   sp2(dfr, temp, do, "scol", "- There are no roots but there is data for storage root skin color (scol):")
-  sp2(dfr, temp, do, "fcol", "- There are no roots but there is data for storage root flesh color (fcol):")
+  sp2(dfr, temp, do, "fcol", "- There are no roots but there is data for storage root predominant flesh color (fcol):")
+  sp2(dfr, temp, do, "fcol2", "- There are no roots but there is data for storage root secondary flesh color (fcol2):")
   sp2(dfr, temp, do, "rs", "- There are no roots but there is data for root size (rs):")
   sp2(dfr, temp, do, "rf", "- There are no roots but there is data for root form (rf):")
+  sp2(dfr, temp, do, "rtshp", "- There are no roots but there is data for root shape (rtshp):")
   sp2(dfr, temp, do, "damr", "- There are no roots but there is data for root defects (damr):")
   sp2(dfr, temp, do, "rspr", "- There are no roots but there is data for root sprouting (rspr):")
   sp2(dfr, temp, do, "alcdam", "- There are no roots but there is data for alcidodes sp. damage (alcdam):")
   sp2(dfr, temp, do, "wed", "- There are no roots but there is data for weevil damage (wed):")
+  sp2(dfr, temp, do, "stspwv", "- There are no roots but there is data for reaction to striped weevil (stspwv):")
+  sp2(dfr, temp, do, "milldam", "- There are no roots but there is data for millipede damage (milldam):")
   sp2(dfr, temp, do, "dmf", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (dmf):")
   sp2(dfr, temp, do, "dmd", "- There are no roots but there is data for dry weight of roots for dry matter assessment (dmd):")
   sp1(dfr, 1, "dmd", "dmf", "- Dry weight of roots for dry matter assessment (dmd) is greater than fresh weight of roots for dry matter assessment (dmf):")
@@ -318,14 +324,18 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f, "high", "ncrw", "- Extreme high values for non commercial root weight (ncrw):")
   sp3(dfr, c(1:30, NA), "fcol.cc", "- Out of range values for root flesh color using RHS color charts (fcol.cc):")
   sp3(dfr, c(1:9, NA), "scol", "- Out of range values for storage root skin color (scol):")
-  sp3(dfr, c(1:9, NA), "fcol", "- Out of range values for storage root flesh color (fcol):")
+  sp3(dfr, c(1:9, NA), "fcol", "- Out of range values for storage root predominant flesh color (fcol):")
+  sp3(dfr, c(1:9, NA), "fcol2", "- Out of range values for storage root secondary flesh color (fcol2):")
   sp3(dfr, c(1:9, NA), "rs", "- Out of range values for root size (rs):")
   sp3(dfr, c(1:9, NA), "rf", "- Out of range values for root form (rf):")
+  sp3(dfr, c(1:9, NA), "rtshp", "- Out of range values for root shape (rtshp):")
   sp3(dfr, c(1:9, NA), "damr", "- Out of range values for root defects (damr):")
   sp3(dfr, c(1:9, NA), "rspr", "- Out of range values for root sprouting (rspr):")
   sp3(dfr, c(1:9, NA), "alcdam", "- Out of range values for alcidodes sp. damage (alcdam):")
   sp3(dfr, c(1:9, NA), "wed", "- Out of range values for weevil damage (wed):")
-
+  sp3(dfr, c(1:9, NA), "stspwv", "- Out of range values for reaction to striped weevil (stspwv):")
+  sp3(dfr, c(1:9, NA), "milldam", "- Out of range values for millipede damage (milldam):")
+  
   # Extreme values detection and values out of range for dm data
   
   sp4(dfr, "lower0", "dmf", "- Out of range values for fresh weight of roots for dry matter assessment (dmf):")
