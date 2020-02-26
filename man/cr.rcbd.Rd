@@ -4,8 +4,13 @@
 \alias{cr.rcbd}
 \title{Randomized Complete Block Design}
 \usage{
-cr.rcbd(geno, nb, nc = NULL, serpentine = c("yes", "no"),
-  alongside = c("no", "rows", "columns"))
+cr.rcbd(
+  geno,
+  nb,
+  nc = NULL,
+  serpentine = c("yes", "no"),
+  alongside = c("no", "rows", "columns")
+)
 }
 \arguments{
 \item{geno}{The list of genotypes.}

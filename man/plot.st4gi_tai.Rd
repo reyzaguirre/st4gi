@@ -4,8 +4,13 @@
 \alias{plot.st4gi_tai}
 \title{Tai plot}
 \usage{
-\method{plot}{st4gi_tai}(x, conf = 0.95, graph.type = c("base",
-  "ggplot"), color = c("darkorange", "black", "gray"), ...)
+\method{plot}{st4gi_tai}(
+  x,
+  conf = 0.95,
+  graph.type = c("base", "ggplot"),
+  color = c("darkorange", "black", "gray"),
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class \code{tai}.}

@@ -4,8 +4,16 @@
 \alias{cr.a01d}
 \title{Alpha (0,1) design}
 \usage{
-cr.a01d(geno, check, nb, k, nc = NULL, breakib = c("no", "yes"),
-  serpentine = c("yes", "no"), alongside = c("no", "rows", "columns"))
+cr.a01d(
+  geno,
+  check,
+  nb,
+  k,
+  nc = NULL,
+  breakib = c("no", "yes"),
+  serpentine = c("yes", "no"),
+  alongside = c("no", "rows", "columns")
+)
 }
 \arguments{
 \item{geno}{The list of genotypes.}

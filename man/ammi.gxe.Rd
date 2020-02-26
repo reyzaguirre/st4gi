@@ -4,8 +4,15 @@
 \alias{ammi.gxe}
 \title{AMMI or GGE with data from an interaction means matrix}
 \usage{
-ammi.gxe(int.mean, trait.name = NULL, nrep = NULL, rdf = NULL,
-  rms = NULL, method = c("ammi", "gge"), f = 0.5)
+ammi.gxe(
+  int.mean,
+  trait.name = NULL,
+  nrep = NULL,
+  rdf = NULL,
+  rms = NULL,
+  method = c("ammi", "gge"),
+  f = 0.5
+)
 }
 \arguments{
 \item{int.mean}{GxE means matrix, genotypes in rows, environments in columns.}

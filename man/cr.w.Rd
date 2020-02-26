@@ -4,8 +4,7 @@
 \alias{cr.w}
 \title{Unreplicated experiment with a grid of checks}
 \usage{
-cr.w(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes",
-  "no"))
+cr.w(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}

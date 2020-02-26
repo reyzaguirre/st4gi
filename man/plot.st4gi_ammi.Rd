@@ -4,9 +4,14 @@
 \alias{plot.st4gi_ammi}
 \title{AMMI or GGE biplots}
 \usage{
-\method{plot}{st4gi_ammi}(x, bp.type = 2, bp1.type = c("effects",
-  "means"), graph.type = c("base", "ggplot"), color = c("darkorange",
-  "black", "gray"), ...)
+\method{plot}{st4gi_ammi}(
+  x,
+  bp.type = 2,
+  bp1.type = c("effects", "means"),
+  graph.type = c("base", "ggplot"),
+  color = c("darkorange", "black", "gray"),
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class \code{ammi}.}

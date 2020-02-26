@@ -4,8 +4,22 @@
 \alias{optim.w}
 \title{Optimize Westcott adjustment}
 \usage{
-optim.w(trait, geno, replicated, ck1, ck2, row, col, ncb, nrs, method, ind,
-  p, opt = c("F.value", "MSE", "CV"), dfr)
+optim.w(
+  trait,
+  geno,
+  replicated,
+  ck1,
+  ck2,
+  row,
+  col,
+  ncb,
+  nrs,
+  method,
+  ind,
+  p,
+  opt = c("F.value", "MSE", "CV"),
+  dfr
+)
 }
 \arguments{
 \item{trait}{The trait to adjust.}

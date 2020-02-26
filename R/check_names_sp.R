@@ -27,9 +27,9 @@
 #'  }
 #' -------------------- Roots and vines --------------------
 #'  \itemize{
-#'  \item \code{nops}      : Number of plants sowed (CO_331:0000678).
-#'  \item \code{nope}      : Number of plants established (CO_331:0000192).
-#'  \item \code{noph}      : Number of plants harvested (CO_331:0000679).
+#'  \item \code{nops}      : Number of plants sowed per plot (CO_331:0000678).
+#'  \item \code{nope}      : Number of plants established per plot (CO_331:0000192).
+#'  \item \code{noph}      : Number of plants harvested per plot (CO_331:0000679).
 #'  \item \code{vir}       : Virus symptoms, 1-9 scale.
 #'  \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (CO_331:0000193).
 #'  \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest.
@@ -38,9 +38,9 @@
 #'  \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest.
 #'  \item \code{vv}        : Vine vigor, 1-9 scale (CO_331:0000197).
 #'  \item \code{vw}        : Vine weight in kg/plot (CO_331:0000227).
-#'  \item \code{nopr}      : Number of plants with roots (CO_331:0000211).
-#'  \item \code{nocr}      : Number of commercial roots (CO_331:0000214).
-#'  \item \code{nonc}      : Number of non commercial roots (CO_331:0000217).
+#'  \item \code{nopr}      : Number of plants with roots per plot (CO_331:0000211).
+#'  \item \code{nocr}      : Number of commercial roots per plot (CO_331:0000214).
+#'  \item \code{nonc}      : Number of non commercial roots per plot (CO_331:0000217).
 #'  \item \code{crw}       : Commercial root weight in kg/plot (CO_331:0000220).
 #'  \item \code{ncrw}      : Non commercial root weight in kg/plot (CO_331:0000223).
 #'  \item \code{scol}      : Storage root skin color, 1-9 scale, (CO_331:0000175).
@@ -71,7 +71,7 @@
 #'  \item \code{fraw}      : Raw root fiber, 1-9 scale (CO_331:0001038).
 #'  \item \code{suraw}     : Raw root sugar, 1-9 scale (CO_331:0000766).
 #'  \item \code{straw}     : Raw root starch, 1-9 scale (CO_331:0001055).
-#'  \item \code{coof}      : Cooked root fiber, 1-9 (CO_331:0000259).
+#'  \item \code{coof}      : Cooked root fiber, 1-9 scale (CO_331:0000259).
 #'  \item \code{coosu}     : Cooked root sugars, 1-9 scale (CO_331:0000261).
 #'  \item \code{coost}     : Cooked root starch, 1-9 scale (CO_331:0000265).
 #'  \item \code{coot}      : Cooked root taste, 1-9 scale (CO_331:0000269).
@@ -79,7 +79,7 @@
 #'  }
 #' -------------------- Nutrients evaluations --------------------
 #'  \itemize{
-#'  \item \code{prot}      : Protein, g/100g raw dry (CO_331:0000278).
+#'  \item \code{prot}      : Protein, g/100g raw dry weight (CO_331:0000278).
 #'  \item \code{fe}        : Iron, mg/100g raw dry weight measured by NIRS (CO_331:0001016).
 #'  \item \code{zn}        : Zinc, mg/100g raw dry weight measured by NIRS (CO_331:0001017).
 #'  \item \code{ca}        : Calcium, mg/100g raw dry weight measured by NIRS (CO_331:0001029).
@@ -87,11 +87,11 @@
 #'  \item \code{bc}        : Beta-carotene, mg/100g raw dry weight measured by NIRS (CO_331:0000289).
 #'  \item \code{bc.cc}     : Beta-carotene with RHS color charts, mg/100g raw fresh weight (CO_331:0001023).
 #'  \item \code{tc}        : Total carotenoids, mg/100g raw dry weight (CO_331:0000290).
-#'  \item \code{star}      : Starch, g/100g raw dry (CO_331:0000291).
-#'  \item \code{fruc}      : Fructose, g/100g raw dry (CO_331:0000292 - CO_331:0001045).
-#'  \item \code{gluc}      : Glucose, g/100g raw dry (CO_331:0000293 - CO_331:0001047).
-#'  \item \code{sucr}      : Sucrose, g/100g raw dry (CO_331:0000294 - CO_331:0001049).
-#'  \item \code{malt}      : Maltose, g/100g raw dry (CO_331:0000295 - CO_331:0001051).
+#'  \item \code{star}      : Starch, g/100g raw dry weight (CO_331:0000291).
+#'  \item \code{fruc}      : Fructose, g/100g raw dry weight (CO_331:0001045).
+#'  \item \code{gluc}      : Glucose, g/100g raw dry weight (CO_331:0001047).
+#'  \item \code{sucr}      : Sucrose, g/100g raw dry weight (CO_331:0001049).
+#'  \item \code{malt}      : Maltose, g/100g raw dry weight (CO_331:0001051).
 #'  }
 #' -------------------- Calculated traits --------------------
 #'  \itemize{
@@ -110,7 +110,7 @@
 #'  \item \code{fytha}     : Foliage total yield in t/ha (CO_331:0000684).
 #'  \item \code{fytha.aj}  : Foliage total yield in t/ha adjusted by number of harvested plants (CO_331:0001002).
 #'  \item \code{dmvy}      : Dry matter vine yield in t/ha (CO_331:0001005).
-#'  \item \code{dmvy.aj}   : Dry matter vine yield (t/ha) adjusted by number of harvested plants (CO_331:0001006).
+#'  \item \code{dmvy.aj}   : Dry matter vine yield in t/ha adjusted by number of harvested plants (CO_331:0001006).
 #'  \item \code{bytha}     : Biomass yield in t/ha (CO_331:0001003).
 #'  \item \code{bytha.aj}  : Biomass yield in t/ha adjusted by number of harvested plants (CO_331:0001004).
 #'  \item \code{dmby}      : Dry matter biomass in t/ha (CO_331:0001007).

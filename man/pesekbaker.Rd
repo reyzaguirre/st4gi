@@ -4,9 +4,18 @@
 \alias{pesekbaker}
 \title{Pesek-Baker Index}
 \usage{
-pesekbaker(traits, geno, env = NULL, rep, dfr, means = c("single",
-  "fitted"), dgg = NULL, units = c("sdu", "actual"), sf = 0.1,
-  method = 1)
+pesekbaker(
+  traits,
+  geno,
+  env = NULL,
+  rep,
+  dfr,
+  means = c("single", "fitted"),
+  dgg = NULL,
+  units = c("sdu", "actual"),
+  sf = 0.1,
+  method = 1
+)
 }
 \arguments{
 \item{traits}{List of traits.}

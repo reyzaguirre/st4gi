@@ -4,8 +4,13 @@
 \alias{cr.strd}
 \title{Strip-Split-Plot Design}
 \usage{
-cr.strd(A, B, nb, serpentine = c("yes", "no"), alongside = c("no",
-  "rows", "columns"))
+cr.strd(
+  A,
+  B,
+  nb,
+  serpentine = c("yes", "no"),
+  alongside = c("no", "rows", "columns")
+)
 }
 \arguments{
 \item{A}{The levels of factor A (row factor).}

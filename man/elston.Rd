@@ -4,8 +4,15 @@
 \alias{elston}
 \title{Elston Index}
 \usage{
-elston(traits, geno, env = NULL, rep = NULL, dfr, means = c("single",
-  "fitted"), lb = 1)
+elston(
+  traits,
+  geno,
+  env = NULL,
+  rep = NULL,
+  dfr,
+  means = c("single", "fitted"),
+  lb = 1
+)
 }
 \arguments{
 \item{traits}{List of traits.}

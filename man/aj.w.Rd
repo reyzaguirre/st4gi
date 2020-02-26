@@ -4,8 +4,20 @@
 \alias{aj.w}
 \title{Adjust values following the method of Westcott}
 \usage{
-aj.w(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
-  method = c("weighted", "flat"), ind = TRUE, p = 0.5, dfr)
+aj.w(
+  trait,
+  geno,
+  ck1,
+  ck2,
+  row,
+  col,
+  ncb = 10,
+  nrs = NULL,
+  method = c("weighted", "flat"),
+  ind = TRUE,
+  p = 0.5,
+  dfr
+)
 }
 \arguments{
 \item{trait}{The trait to adjust.}

@@ -4,8 +4,24 @@
 \alias{ssg1to3}
 \title{Stage selection gain from 1 to 3 stages}
 \usage{
-ssg1to3(nstage, TC, nGF, Vgl, Vgs, Vgls, Ve, TG1, TG2 = NA, TG3 = NA,
-  loc1, loc2 = NA, loc3 = NA, rep1, rep2 = NA, rep3 = NA)
+ssg1to3(
+  nstage,
+  TC,
+  nGF,
+  Vgl,
+  Vgs,
+  Vgls,
+  Ve,
+  TG1,
+  TG2 = NA,
+  TG3 = NA,
+  loc1,
+  loc2 = NA,
+  loc3 = NA,
+  rep1,
+  rep2 = NA,
+  rep3 = NA
+)
 }
 \arguments{
 \item{nstage}{Number of selection stages (1, 2, or 3).}
