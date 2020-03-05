@@ -4,7 +4,7 @@
 \alias{docomp}
 \title{Do computations over some factors}
 \usage{
-docomp(do, traits, factors, add = NULL, dfr)
+docomp(do, traits, factors, add = NULL, dfr, method = c("fast", "slow"))
 }
 \arguments{
 \item{do}{The computation to perform. Implemented options are \code{count},
@@ -18,6 +18,8 @@ and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
 \item{add}{Additional columns to keep.}
 
 \item{dfr}{The name of the data frame.}
+
+\item{method}{Use \code{fast} or \code{slow} method.}
 }
 \value{
 It returns a data frame with the computations.
