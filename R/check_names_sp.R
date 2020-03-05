@@ -30,12 +30,12 @@
 #'  \item \code{nops}      : Number of plants sowed per plot (CO_331:0000678).
 #'  \item \code{nope}      : Number of plants established per plot (CO_331:0000192).
 #'  \item \code{noph}      : Number of plants harvested per plot (CO_331:0000679).
-#'  \item \code{vir}       : Virus symptoms, 1-9 scale.
-#'  \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (CO_331:0000193).
-#'  \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest.
-#'  \item \code{alt}       : Alternaria symptoms, 1-9 scale.
-#'  \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (CO_331:0000198).
-#'  \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest.
+#'  \item \code{vir}       : Virus symptoms, 1-9 scale (CO_331:0000193).
+#'  \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (COMP:0000016).
+#'  \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000017).
+#'  \item \code{alt}       : Alternaria symptoms, 1-9 scale (CO_331:0000198).
+#'  \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (COMP:0000012).
+#'  \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000011).
 #'  \item \code{vv}        : Vine vigor, 1-9 scale (CO_331:0000197).
 #'  \item \code{vw}        : Vine weight in kg/plot (CO_331:0000227).
 #'  \item \code{nopr}      : Number of plants with roots per plot (CO_331:0000211).
