@@ -34,7 +34,7 @@
 #'  \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (COMP:0000016).
 #'  \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000017).
 #'  \item \code{alt}       : Alternaria symptoms, 1-9 scale (CO_331:0000198).
-#'  \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (COMP:0000012).
+#'  \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (COMP:0000010, COMP:0000012, COMP:0000015).
 #'  \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000011).
 #'  \item \code{vv}        : Vine vigor, 1-9 scale (CO_331:0000197).
 #'  \item \code{vw}        : Vine weight in kg/plot (CO_331:0000227).
