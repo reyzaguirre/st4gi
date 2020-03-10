@@ -70,17 +70,34 @@ docomp <- function(do, traits, factors, add = NULL, dfr, method = c("fast", "slo
       }
     }
     
+    row.names(dfr.out) <- 1:dim(dfr.out)[1]
+    
   }
-  
+
   if (method == "fast") {
     
     if (do == "count")
-      for (i in 1:nt)
-        dfr.out[, traits[i]] <- sapply(idout, function(x) sum(!is.na(dfr[idin == x, traits[i]])))
-      
-    if (do != "count")
-      for (i in 1:nt) 
-        dfr.out[, traits[i]] <- sapply(idout, function(x) eval(parse(text = do))(dfr[idin == x, traits[i]], na.rm = TRUE))
+      foo <- function(x) sum(!is.na(x))
+    else
+      foo <- function(x) {
+        if (sum(!is.na(x)) == 0)
+          NA
+        else
+          eval(parse(text = do))(x, na.rm = TRUE)
+      }
+    
+    dfr.out[, "id.to.merge"] <- idout
+        
+    for (i in 1:nt) {
+        
+      dfr.trait <- data.frame(tapply(dfr[, traits[i]], idin, foo))
+      dfr.trait[, 'id.to.merge'] <- rownames(dfr.trait)
+      colnames(dfr.trait)[1] <- traits[i]
+      dfr.out <- merge(dfr.out, dfr.trait, sort = FALSE)
+    
+    }
+
+    dfr.out <- dfr.out[, colnames(dfr.out) != 'id.to.merge']
         
   }
   
