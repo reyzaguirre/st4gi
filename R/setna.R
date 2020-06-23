@@ -60,8 +60,8 @@
 #'  \item Extreme low and high values are detected using the interquartile range.
 #'  The rule is to detect any value out of the interval
 #'  \eqn{[Q_1 - f \times (m/3 + IQR); Q_3 + f \times (m/3 + IQR)]} where \code{m}
-#'  is the mean. By default \code{f = 10} and cannot be less than 10. Values out
-#'  of this range are set to \code{NA}.
+#'  is the mean. By default \code{f = 10} and if less than 10 a warning is shown.
+#'  Values out of this range are set to \code{NA}.
 #'  \item If \code{nope == 0} and there is some data for any trait,
 #'  then \code{nope} is set to \code{NA}.  
 #'  \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,
@@ -99,7 +99,7 @@ setna <- function(dfr, f = 10) {
   # Check f
   
   if (f < 10)
-    f <- 10
+    warning("f < 10 can lead to delete true values", call. = FALSE)
   
   # Check names
   

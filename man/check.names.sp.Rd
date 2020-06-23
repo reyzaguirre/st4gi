@@ -47,11 +47,11 @@ The data frame must use the following labels (lower or upper case):
  \item \code{nope}      : Number of plants established per plot (CO_331:0000192).
  \item \code{noph}      : Number of plants harvested per plot (CO_331:0000679).
  \item \code{vir}       : Virus symptoms, 1-9 scale (CO_331:0000193).
- \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (COMP:0000016).
- \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000017).
+ \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 1 month after planting (COMP:0000023).
+ \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000024).
  \item \code{alt}       : Alternaria symptoms, 1-9 scale (CO_331:0000198).
- \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 4-8 weeks after planting (COMP:0000010, COMP:0000012, COMP:0000015).
- \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000011).
+ \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 1 month after planting (COMP:0000025).
+ \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000022).
  \item \code{vv}        : Vine vigor, 1-9 scale (CO_331:0000197).
  \item \code{vw}        : Vine weight in kg/plot (CO_331:0000227).
  \item \code{nopr}      : Number of plants with roots per plot (CO_331:0000211).
