@@ -4,7 +4,9 @@
 \name{megaclones2}
 \alias{megaclones2}
 \title{Some traits for a multi-environment trial (MET)}
-\format{A data frame with 6 columns and 312 rows.}
+\format{
+A data frame with 6 columns and 312 rows.
+}
 \source{
 International Potato Center, sweetpotato experimental data.
 }

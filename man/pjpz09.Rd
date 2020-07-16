@@ -4,7 +4,9 @@
 \name{pjpz09}
 \alias{pjpz09}
 \title{Data for a yield trial}
-\format{A data frame with 10 columns and 170 rows.}
+\format{
+A data frame with 10 columns and 170 rows.
+}
 \source{
 International Potato Center, sweetpotato experimental data.
 }
