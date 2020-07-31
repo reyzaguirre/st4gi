@@ -329,7 +329,7 @@ setna <- function(dfr, f = 10) {
         dfr[, 'nopr'] == 0 & !is.na(dfr[, 'nopr'])
     dfr[cond, 'nopr'] <- NA
     if (sum(cond) > 0)
-      warning("Rows data for roots replaced with NA for trait nopr: ",
+      warning("Rows with data replaced with NA for trait nopr: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
