@@ -216,7 +216,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "cytha.aj")
         dfr$cytha.aj <- dfr$crw / dfr$noph * dfr$nops * 10 / value
         dfr$cytha.aj[dfr$noph == 0] <- NA
-        dfr$cytha.aj[dfr$crw == 0] <- 0
+#        dfr$cytha.aj[dfr$crw == 0] <- 0
       }
     }
 
@@ -229,7 +229,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "rytha.aj")
         dfr$rytha.aj <- dfr$trw / dfr$noph * dfr$nops * 10 / value
         dfr$rytha.aj[dfr$noph == 0] <- NA
-        dfr$rytha.aj[dfr$trw == 0] <- 0
+#        dfr$rytha.aj[dfr$trw == 0] <- 0
       }
     }
     
@@ -242,7 +242,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "fytha.aj")
         dfr$fytha.aj <- dfr$vw / dfr$noph * dfr$nops * 10 / value
         dfr$fytha.aj[dfr$noph == 0] <- NA
-        dfr$fytha.aj[dfr$vw == 0] <- 0
+#        dfr$fytha.aj[dfr$vw == 0] <- 0
       }
     }
 
@@ -255,7 +255,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmry.aj")
         dfr$dmry.aj <- dfr$trw.d / dfr$noph * dfr$nops * 10 / value
         dfr$dmry.aj[dfr$noph == 0] <- NA
-        dfr$dmry.aj[dfr$trw.d == 0] <- 0
+  #      dfr$dmry.aj[dfr$trw.d == 0] <- 0
       }
     }
    
@@ -268,7 +268,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmvy.aj")
         dfr$dmvy.aj <- dfr$vw.d / dfr$noph * dfr$nops * 10 / value
         dfr$dmvy.aj[dfr$noph == 0] <- NA
-        dfr$dmvy.aj[dfr$vw.d == 0] <- 0
+#        dfr$dmvy.aj[dfr$vw.d == 0] <- 0
       }
     }
   
@@ -290,7 +290,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "cytha.aj")
         dfr$cytha.aj <- dfr$crw / dfr$noph * value / 1000
         dfr$cytha.aj[dfr$noph == 0] <- NA
-        dfr$cytha.aj[dfr$crw == 0] <- 0
+#        dfr$cytha.aj[dfr$crw == 0] <- 0
       }
     }
 
@@ -306,7 +306,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "rytha.aj")
         dfr$rytha.aj <- dfr$trw / dfr$noph * value / 1000
         dfr$rytha.aj[dfr$noph == 0] <- NA
-        dfr$rytha.aj[dfr$trw == 0] <- 0
+#        dfr$rytha.aj[dfr$trw == 0] <- 0
       }
     }
 
@@ -322,7 +322,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "fytha.aj")
         dfr$fytha.aj <- dfr$vw / dfr$noph * value / 1000
         dfr$fytha.aj[dfr$noph == 0] <- NA
-        dfr$fytha.aj[dfr$vw == 0] <- 0
+ #       dfr$fytha.aj[dfr$vw == 0] <- 0
       }
     }
 
@@ -338,7 +338,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmry.aj")
         dfr$dmry.aj <- dfr$trw.d / dfr$noph * value / 1000
         dfr$dmry.aj[dfr$noph == 0] <- NA
-        dfr$dmry.aj[dfr$trw.d == 0] <- 0
+ #       dfr$dmry.aj[dfr$trw.d == 0] <- 0
       }
     }
     
@@ -354,7 +354,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmvy.aj")
         dfr$dmvy.aj <- dfr$vw.d / dfr$noph * value / 1000
         dfr$dmvy.aj[dfr$noph == 0] <- NA
-        dfr$dmvy.aj[dfr$vw.d == 0] <- 0
+ #       dfr$dmvy.aj[dfr$vw.d == 0] <- 0
       }
     }
   }
