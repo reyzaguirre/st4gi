@@ -50,7 +50,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 1 month after planting (COMP:0000023).
  \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000024).
  \item \code{alt}       : Alternaria symptoms, 1-9 scale (CO_331:0000198).
- \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 1 month after planting (COMP:0000025).
+ \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 1 month after planting (COMP:0000026).
  \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000022).
  \item \code{vv}        : Vine vigor, 1-9 scale (CO_331:0000197).
  \item \code{vw}        : Vine weight in kg/plot (CO_331:0000227).
