@@ -252,6 +252,7 @@ setna <- function(dfr, f = 10) {
   # Extreme values (almost impossible)
   
   t.all <- c(cnn, cpo, pnn, ppo, dnn, bc, tc)
+  t.all <- t.all[!(t.all %in% c("nops", "nope", "noph", "nopr"))]
   
   for (i in 1:length(t.all))
     if (exists(t.all[i], dfr)) {
