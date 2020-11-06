@@ -176,7 +176,8 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
         ggplot2::geom_vline(xintercept = 0, col = "gray", linetype = 2) +
         ggplot2::geom_hline(yintercept = 0, col = "gray", linetype = 2) +
         ggrepel::geom_text_repel(ggplot2::aes(x = xx, y = yy, label = rownames(dfr), color = type)) +
-        ggplot2::geom_segment(data = dfr2, ggplot2::aes(x = x0, y = y0, xend = xe, yend = ye), linetype = 2)
+        ggplot2::geom_segment(data = dfr2, ggplot2::aes(x = x0, y = y0, xend = xe, yend = ye), linetype = 2) +
+        ggplot2::coord_fixed()
       
     }
     
