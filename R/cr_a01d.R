@@ -30,7 +30,7 @@
 #' cr.a01d(1:100, NULL, 3, 5, 28)
 #' @export
 
-cr.a01d <- function(geno, check, nb, k, nc = NULL, breakib = c('no', 'yes'),
+cr.a01d <- function(geno, check = NULL, nb, k, nc = NULL, breakib = c('no', 'yes'),
                     serpentine = c("yes", "no"), alongside = c("no", "rows", "columns")) {
   
   # Match arguments
