@@ -6,7 +6,7 @@
 \usage{
 cr.a01d(
   geno,
-  check,
+  check = NULL,
   nb,
   k,
   nc = NULL,
