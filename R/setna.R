@@ -256,7 +256,7 @@ setna <- function(dfr, f = 10) {
   
   for (i in 1:length(t.all))
     if (exists(t.all[i], dfr)) {
-      m <- mean(dfr[, t.all[i]], na.rm = TRUE)
+      m <- mean(dfr[dfr[, t.all[i]] != 0, t.all[i]], na.rm = TRUE)
       q1 <- quantile(dfr[, t.all[i]], 0.25, na.rm = TRUE)
       q3 <- quantile(dfr[, t.all[i]], 0.75, na.rm = TRUE)
       tol <- (m / 3 + IQR(dfr[, t.all[i]], na.rm = TRUE))
