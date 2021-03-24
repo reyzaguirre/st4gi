@@ -2,26 +2,32 @@
 #'
 #' Compute derived traits for a given fieldbook data frame.
 #' @param dfr The name of the data frame.
-#' @param method Method to scale data from plot to hectare level. Options are plot size
-#' \code{"ps"} and number of plants for a full hectare \code{"np"}. See details.
+#' @param method Method to scale data from plot to hectare level. Options are
+#' plot size \code{"ps"} and number of plants for a full hectare \code{"np"}.
+#' See details.
 #' @param value Value for the method selected in square meters if \code{method = "ps"}
 #' and in number of plants per hectare if \code{method = "np"}.
 #' @param nops Number of plants sowed per plot.
-#' @details The data frame must use the labels (lower or upper case) listed in function
-#' \code{check.names.sp}. See \code{?check.names.sp} for details.
+#' @details The data frame must use the labels (lower or upper case) listed in
+#' function \code{check.names.sp}.
 #' 
-#' Conversion from kilograms per plot to tons per hectare can be done using \code{ps}, the
-#' plot size, or \code{np}, the total number of plants that are expected to be allocated in a
-#' full hectare. In both cases computations can be adjusted by the number of harvested plants,
-#' if available in the fieldbook. For \code{method = "np"}, \code{nops} must be specified to
-#' compute non adjusted values.
+#' Conversion from kilograms per plot to tons per hectare can be done using
+#' \code{ps}, the plot size, or \code{np}, the total number of plants that can be
+#' allocated in a full hectare. In both cases computations can be adjusted by the
+#' number of harvested plants if available in the fieldbook. For \code{method = "np"},
+#' \code{nops} must be specified to compute non adjusted values.
 #' @return It returns a data frame with the original and derived traits.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cdt(pjpz09)
+#' cdt.sp(pjpz09)
 #' @export
 
-cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) {
+cdt.sp <- function(dfr, method = c("none", "ps", "np"),
+                   value = NULL, nops = NULL) {
+  
+  # Match arguments
+  
+  method = match.arg(method)
   
   # Check names
   
@@ -33,8 +39,6 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   
   # Warnings
   
-  method = match.arg(method)
-
   if (method == "ps" & is.null(value))
     warning("Plot size value is missing.", call. = FALSE)
   
@@ -42,19 +46,16 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
     warning("Total number of plants per hectare value is missing.", call. = FALSE)
 
   if (!is.null(nops)) {
-    if (exists("nops", dfr)) {
-      dfr$nops <- nops
+    if (exists("nops", dfr))
       warning("nops has been replace in the fieldbook by ", nops, call. = FALSE)
-    } else {
-      dfr$nops <- nops
-    }
+    dfr$nops <- nops
   }
   
   if (method == "np" & !exists("nops", dfr))
     warning("Number of plants sowed, nops, is missing.", call. = FALSE)
 
   # List of traits to overwrite
-
+  
   ow <- NULL 
   
   # General computations a priori
@@ -64,19 +65,19 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
       ow <- c(ow, "trw")
     dfr$trw <- dfr$crw + dfr$ncrw
   }
-
+  
   if (exists("trw", dfr) & exists("vw", dfr)) {
     if ("biom" %in% on)
       ow <- c(ow, "biom")
     dfr$biom <- dfr$trw + dfr$vw
   }
-
+  
   if (exists("nocr", dfr) & exists("nonc", dfr)) {
     if ("tnr" %in% on)
       ow <- c(ow, "tnr")
     dfr$tnr <- dfr$nocr + dfr$nonc
   }
-
+  
   if (exists("crw", dfr) & exists("nocr", dfr)) {
     if ("acrw" %in% on)
       ow <- c(ow, "acrw")
@@ -90,34 +91,34 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
     dfr$ancrw <- dfr$ncrw / dfr$nonc
     dfr$ancrw[dfr$nonc == 0] <- NA
   }
-
+  
   if (exists("trw", dfr) & exists("tnr", dfr)) {
     if ("atrw" %in% on)
       ow <- c(ow, "atrw")
     dfr$atrw <- dfr$trw / dfr$tnr
     dfr$atrw[dfr$tnr == 0] <- NA
   }
-
+  
   if (exists("tnr", dfr) & exists("noph", dfr)) {
     if ("nrpp" %in% on)
       ow <- c(ow, "nrpp")
     dfr$nrpp <- dfr$tnr / dfr$noph
     dfr$nrpp[dfr$noph == 0] <- NA
   }
-
+  
   if (exists("tnr", dfr) & exists("nops", dfr)) {
     if ("nrpsp" %in% on)
       ow <- c(ow, "nrpsp")
     dfr$nrpsp <- dfr$tnr / dfr$nops
   }
-
+  
   if (exists("nocr", dfr) & exists("noph", dfr)) {
     if ("ncrpp" %in% on)
       ow <- c(ow, "ncrpp")
     dfr$ncrpp <- dfr$nocr / dfr$noph
     dfr$ncrpp[dfr$noph == 0] <- NA
   }
-
+  
   if (exists("nocr", dfr) & exists("nops", dfr)) {
     if ("ncrpsp" %in% on)
       ow <- c(ow, "ncrpsp")
@@ -130,20 +131,20 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
     dfr$ypp <- dfr$trw / dfr$noph
     dfr$ypp[dfr$noph == 0] <- NA
   }
-
+  
   if (exists("trw", dfr) & exists("nops", dfr)) {
     if ("ypsp" %in% on)
       ow <- c(ow, "ypsp")
     dfr$ypsp <- dfr$trw / dfr$nops
   }
-
+  
   if (exists("vw", dfr) & exists("noph", dfr)) {
     if ("vpp" %in% on)
       ow <- c(ow, "vpp")
     dfr$vpp <- dfr$vw / dfr$noph
     dfr$vpp[dfr$noph == 0] <- NA
   }
-
+  
   if (exists("vw", dfr) & exists("nops", dfr)) {
     if ("vpsp" %in% on)
       ow <- c(ow, "vpsp")
@@ -156,7 +157,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
     dfr$ci <- dfr$nocr / dfr$tnr * 100
     dfr$ci[dfr$tnr == 0] <- NA
   }
-
+  
   if (exists("trw", dfr) & exists("vw", dfr)) {
     if ("hi" %in% on)
       ow <- c(ow, "hi")
@@ -190,13 +191,13 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
       ow <- c(ow, "trw.d")
     dfr$trw.d <- dfr$trw * dfr$dm / 100
   }
-
+  
   if (exists("vw", dfr) & exists("dmv", dfr)) {
     if ("vw.d" %in% on)
       ow <- c(ow, "vw.d")
     dfr$vw.d <- dfr$vw * dfr$dmv / 100
   }
-
+  
   if (exists("trw.d", dfr) & exists("vw.d", dfr)) {
     if ("biom.d" %in% on)
       ow <- c(ow, "biom.d")
@@ -206,7 +207,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   # Computations based on plot size
   
   if (method == "ps" & !is.null(value)) {
-
+    
     if (exists("crw", dfr)) {
       if ("cytha" %in% on)
         ow <- c(ow, "cytha")
@@ -216,10 +217,10 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "cytha.aj")
         dfr$cytha.aj <- dfr$crw / dfr$noph * dfr$nops * 10 / value
         dfr$cytha.aj[dfr$noph == 0] <- NA
-#        dfr$cytha.aj[dfr$crw == 0] <- 0
+        #        dfr$cytha.aj[dfr$crw == 0] <- 0
       }
     }
-
+    
     if (exists("trw", dfr)) {
       if ("rytha" %in% on)
         ow <- c(ow, "rytha")
@@ -229,7 +230,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "rytha.aj")
         dfr$rytha.aj <- dfr$trw / dfr$noph * dfr$nops * 10 / value
         dfr$rytha.aj[dfr$noph == 0] <- NA
-#        dfr$rytha.aj[dfr$trw == 0] <- 0
+        #        dfr$rytha.aj[dfr$trw == 0] <- 0
       }
     }
     
@@ -242,10 +243,10 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "fytha.aj")
         dfr$fytha.aj <- dfr$vw / dfr$noph * dfr$nops * 10 / value
         dfr$fytha.aj[dfr$noph == 0] <- NA
-#        dfr$fytha.aj[dfr$vw == 0] <- 0
+        #        dfr$fytha.aj[dfr$vw == 0] <- 0
       }
     }
-
+    
     if (exists("trw.d", dfr)) {
       if ("dmry" %in% on)
         ow <- c(ow, "dmry")
@@ -255,10 +256,10 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmry.aj")
         dfr$dmry.aj <- dfr$trw.d / dfr$noph * dfr$nops * 10 / value
         dfr$dmry.aj[dfr$noph == 0] <- NA
-  #      dfr$dmry.aj[dfr$trw.d == 0] <- 0
+        #      dfr$dmry.aj[dfr$trw.d == 0] <- 0
       }
     }
-   
+    
     if (exists("vw.d", dfr)) {
       if ("dmvy" %in% on)
         ow <- c(ow, "dmvy")
@@ -268,16 +269,16 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmvy.aj")
         dfr$dmvy.aj <- dfr$vw.d / dfr$noph * dfr$nops * 10 / value
         dfr$dmvy.aj[dfr$noph == 0] <- NA
-#        dfr$dmvy.aj[dfr$vw.d == 0] <- 0
+        #        dfr$dmvy.aj[dfr$vw.d == 0] <- 0
       }
     }
-  
+    
   }
   
   # Computations based on number of plants
   
   if (method == "np" & !is.null(value)) {
-
+    
     if (exists("crw", dfr)) {
       if (exists("nops", dfr)) {
         if ("cytha" %in% on)
@@ -290,10 +291,10 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "cytha.aj")
         dfr$cytha.aj <- dfr$crw / dfr$noph * value / 1000
         dfr$cytha.aj[dfr$noph == 0] <- NA
-#        dfr$cytha.aj[dfr$crw == 0] <- 0
+        #        dfr$cytha.aj[dfr$crw == 0] <- 0
       }
     }
-
+    
     if (exists("trw", dfr)) {
       if (exists("nops", dfr)) {
         if ("rytha" %in% on)
@@ -306,10 +307,10 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "rytha.aj")
         dfr$rytha.aj <- dfr$trw / dfr$noph * value / 1000
         dfr$rytha.aj[dfr$noph == 0] <- NA
-#        dfr$rytha.aj[dfr$trw == 0] <- 0
+        #        dfr$rytha.aj[dfr$trw == 0] <- 0
       }
     }
-
+    
     if (exists("vw", dfr)) {
       if (exists("nops", dfr)) {
         if ("fytha" %in% on)
@@ -322,10 +323,10 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "fytha.aj")
         dfr$fytha.aj <- dfr$vw / dfr$noph * value / 1000
         dfr$fytha.aj[dfr$noph == 0] <- NA
- #       dfr$fytha.aj[dfr$vw == 0] <- 0
+        #       dfr$fytha.aj[dfr$vw == 0] <- 0
       }
     }
-
+    
     if (exists("trw.d", dfr)) {
       if (exists("nops", dfr)) {
         if ("dmry" %in% on)
@@ -338,7 +339,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmry.aj")
         dfr$dmry.aj <- dfr$trw.d / dfr$noph * value / 1000
         dfr$dmry.aj[dfr$noph == 0] <- NA
- #       dfr$dmry.aj[dfr$trw.d == 0] <- 0
+        #       dfr$dmry.aj[dfr$trw.d == 0] <- 0
       }
     }
     
@@ -354,7 +355,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
           ow <- c(ow, "dmvy.aj")
         dfr$dmvy.aj <- dfr$vw.d / dfr$noph * value / 1000
         dfr$dmvy.aj[dfr$noph == 0] <- NA
- #       dfr$dmvy.aj[dfr$vw.d == 0] <- 0
+        #       dfr$dmvy.aj[dfr$vw.d == 0] <- 0
       }
     }
   }
@@ -384,14 +385,14 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
       ow <- c(ow, "dmby.aj")
     dfr$dmby.aj <- dfr$rytha.aj * dfr$dm / 100 + dfr$fytha.aj * dfr$dmv / 100
   }
-
+  
   if (exists("trw.d", dfr) & exists("vw.d", dfr)) {
     if ("rfr" %in% on)
       ow <- c(ow, "rfr")
     dfr$rfr <- dfr$trw.d / dfr$vw.d * 100
     dfr$rfr[dfr$vw.d == 0] <- NA
   }
-
+  
   # Betacarotene from color chart
   
   if (exists("fcol.cc", dfr)) {
@@ -433,9 +434,9 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL, nops = NULL) 
   
   if (length(ow) > 0)
     warning("Some traits have been overwritten: ", list(ow), call. = FALSE)
-
+  
   # Return
   
   dfr
-
+  
 }
