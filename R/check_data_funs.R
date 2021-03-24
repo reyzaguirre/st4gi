@@ -116,7 +116,7 @@ sp6 <- function(dfr, geno, env, rep, t1, out.mod, out.max, tx) {
 ## Check data sweetpotato rules
 ###############################################################################
 
-check.data.sp <- function(dfr, f, out.mod, out.max, add) {
+rules.sp <- function(dfr, f, out.mod, out.max, add) {
   
   # Check names
   
@@ -675,7 +675,7 @@ check.data.sp <- function(dfr, f, out.mod, out.max, add) {
 ## Check data potato rules
 ###############################################################################
 
-check.data.pt <- function(dfr, f, out.mod, out.max, add) {
+rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   # Check names
   
