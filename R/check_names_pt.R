@@ -69,8 +69,8 @@
 #'  \item \code{ttyna}       : Total tuber yield no adjusted
 #'  \item \code{mtya}        : Marketable tuber yield adjusted
 #'  \item \code{mtyna}       : Marketable tuber yiedl no adjusted
-#'  \item \code{atw}         : Average of tuber weight (\code{mwt} is also valid)
-#'  \item \code{atmw}        : Average of marketable tuber weight (\code{mwmt} is also valid)
+#'  \item \code{atw}         : Average of tuber weight in grams (\code{mwt} is also valid)
+#'  \item \code{atmw}        : Average of marketable tuber weight in grams (\code{mwmt} is also valid)
 #'  }
 #' -------------------- Traits N6 group--------------------
 #'  \itemize{
