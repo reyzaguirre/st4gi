@@ -1,4 +1,4 @@
-#' Set values to \code{NA}.
+#' Set values to \code{NA} for sweetpotato data.
 #'
 #' Detect impossible values for sweetpotato data and set them to missing value
 #' (\code{NA}) according to some rules.
@@ -7,7 +7,7 @@
 #' @param f Factor for extreme values detection. See details.
 #' 
 #' @details The data frame must use the labels (lower or upper case) listed in
-#' function \code{check.names.sp}; see \code{?check.names.sp} for details.
+#' function \code{check.names.sp}.
 #' Consider the following groups of traits:
 #' \itemize{
 #'  \item \code{pre} (traits evaluated pre-harvest): \code{vir}, \code{vir1},
@@ -86,11 +86,11 @@
 #'                   tnr = c(1.3, 10, 11, NA, 2, 5),
 #'                   scol = c(1, 0, 15, 5, 4, 7),
 #'                   fcol.cc = c(1, 15, 12, 24, 55, 20))
-#' setna(dfr)
+#' setna.sp(dfr)
 #' @importFrom stats IQR quantile
 #' @export
 
-setna <- function(dfr, f = 10) {
+setna.sp <- function(dfr, f = 10) {
   
   #############################################################################
   # Preliminary settings

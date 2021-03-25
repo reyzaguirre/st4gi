@@ -1,4 +1,4 @@
-#' Set values to \code{0}.
+#' Set values to \code{0} for sweetpotato data.
 #'
 #' Set values to \code{0} for harvested traits.
 #' @param dfr The name of the data frame.
@@ -28,10 +28,10 @@
 #'                   ncrw = c(NA, NA, NA,  2, NA, 2, 4),
 #'                   nocr = c(NA, NA, NA,  0,  6, 2, 0),
 #'                   nonc = c(NA, NA, NA,  4,  0, 3, 5))
-#' setzero(dfr)
+#' setzero.sp(dfr)
 #' @export
 
-setzero <- function(dfr) {
+setzero.sp <- function(dfr) {
   
   # Harvest traits
   
