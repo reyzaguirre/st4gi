@@ -57,7 +57,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{nfwp}        : Number of flowers per main inflorescence
  \item \code{nlpp}        : Number of leaves per plant
  \item \code{Num_Stolon}  : Number of stolons
- \item \code{Leng_Stolon} : Number of stolons
+ \item \code{Leng_Stolon} : Lenght of stolons
  }
 -------------------- Traits N3 group --------------------
  \itemize{
