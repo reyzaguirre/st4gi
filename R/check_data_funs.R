@@ -54,7 +54,7 @@ sp3 <- function(dfr, vv, t1, tx) {
 }
 
 ###############################################################################
-## Detect out of continous range
+## Detect out of continuous range
 ###############################################################################
 
 sp4 <- function(dfr, ex, t1, tx) { 
@@ -697,24 +697,24 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp1(dfr, 2, "npe", 'pw', paste0("- Number of plants emerged (npe) is zero but there is data for plant wilting (pw):"))
   for(i in 1:5) {
-    xtemp <- paste0('pw', i)
+    xtemp <- paste0('pw_ev', i)
     sp1(dfr, 2, "npe", xtemp, paste0("- Number of plants emerged (npe) is zero but there is data for plant wilting evaluation ", i, " (", xtemp, "):"))
   }
   
-  # Inconsistencies for nme and dependencies (nipp, nfwp, snpp, nlpp, num_stolon, leng_stolon)
+  # Inconsistencies for npe and dependencies (nipp, nfwp, snpp, nlpp)
   
   sp1(dfr, 3, "npe",        "nipp", "- Number of plants emerged (npe) is zero but number of inflorescences per plant (nipp) is greater than zero:")
   sp1(dfr, 3, "npe",        "nfwp", "- Number of plants emerged (npe) is zero but number of flowers per main inflorescence (nfwp) is greater than zero:")
   sp1(dfr, 3, "npe",        "snpp", "- Number of plants emerged (npe) is zero but stem number per plant (snpp) is greater than zero:")
   sp1(dfr, 3, "npe",        "nlpp", "- Number of plants emerged (npe) is zero but number of leaves per plant (nlpp) is greater than zero:")
-  sp1(dfr, 3, "npe",  "num_stolon", "- Number of plants emerged (npe) is zero but number of stolon (num_stolon) is greater than zero:")
-  sp1(dfr, 3, "npe", "leng_stolon", "- Number of plants emerged (npe) is zero but length of stolon (leng_stolon) is greater than zero:")
   
-  # Inconsistencies for nph and dependencies (tuber_apper, tub_unif, tub_size)
+  # Inconsistencies for nph and dependencies (tuber_apper, tub_unif, tub_size, num_stolon, leng_stolon)
   
   sp1(dfr, 2, "nph", "tuber_apper", "- Number of plants harvested (nph) is zero but there is data for tuber appearance (tuber_apper):")
   sp1(dfr, 2, "nph",    "tub_unif", "- Number of plants harvested (nph) is zero but there is data for tuber uniformity (tub_unif):")
   sp1(dfr, 2, "nph",    "tub_size", "- Number of plants harvested (nph) is zero but there is data for tuber size (tub_size):")
+  sp1(dfr, 3, "nph",  "num_stolon", "- Number of plants harvested (nph) is zero but there is data for number of stolon (num_stolon):")
+  sp1(dfr, 3, "nph", "leng_stolon", "- Number of plants harvested (nph) is zero but there is data for length of stolon (leng_stolon):")
   
   # nph vs. number of tubers
   
@@ -739,15 +739,12 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3,   "nph",  "mtwci", "- Number of plants harvested (nph) is zero but marketable tuber weight category I per plot (mtwci) is greater than zero:")
   sp1(dfr, 3,   "nph", "mtwcii", "- Number of plants harvested (nph) is zero but marketable tuber weight category II per plot (mtwcii) is greater than zero:")
   sp1(dfr, 3,   "nph",    "atw", "- Number of plants harvested (nph) is zero but average of tuber weight (atw) is greater than zero:")
-  sp1(dfr, 3,   "nph",    "mwt", "- Number of plants harvested (nph) is zero but average of tuber weight (mwt) is greater than zero:")
   sp1(dfr, 3,   "nph",   "atmw", "- Number of plants harvested (nph) is zero but average of marketable tuber weight (atmw) is greater than zero:")
-  sp1(dfr, 3,   "nph",   "mwmt", "- Number of plants harvested (nph) is zero but average of marketable tuber weight (mwmt) is greater than zero:")
-  
+
   sp1(dfr, 3,  "ttwp",    "nph", "- Total tuber weight per plot (ttwp) is zero but number of plants harvested (nph) is greater than zero:")
   sp1(dfr, 3, "ttwpl",    "nph", "- Total tuber weight per plant (ttwpl) is zero but number of plants harvested (nph) is greater than zero:")
   sp1(dfr, 3,   "atw",    "nph", "- Average of tuber weight (atw) is zero but number of plants harvested (nph) is greater than zero:")
-  sp1(dfr, 3,   "mwt",    "nph", "- Average of tuber weight (atw) is zero but number of plants harvested (nph) is greater than zero:")
-  
+
   # nph vs yield of tubers
   
   sp1(dfr, 3,   "nph",  "ttya", "- Number of plants harvested (nph) is zero but total tuber yield adjusted (ttya) is greater than zero:")
@@ -762,7 +759,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp1(dfr, 1, "stldw", "stlfw", "- Stolon dry weight (stldw) is greater than stolon fresh weight (stlfw) per plant:")
   sp1(dfr, 1,   "sdw",   "sfw", "- Stem dry weight (sdw) is greater than stem fresh weight (sfw) per plant:")
-  sp1(dfr, 1,  "stdw",  "stfw", "- Stem dry weight (stdw) is greater than stem fresh weight (stfw) per plant:")
   sp1(dfr, 1,   "ldw",   "lfw", "- Leaf dry weight (ldw) is greater than leaf fresh weight (lfw) per plant:")
   sp1(dfr, 1,   "rdw",   "rfw", "- Root dry weight (rdw) is greater than root fresh weight (rfw) per plant:")
   sp1(dfr, 1,   "tdw",   "tfw", "- Tuber dry weight (tdw) is greater than tuber fresh weight (tfw) per plant:")
@@ -789,15 +785,12 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 1,  "mtwci",  "mtwp", "- Marketable tuber weight category I per plot (mtwci) is greater than marketable tuber weight per plot (mtwp):")
   sp1(dfr, 1, "mtwcii",  "mtwp", "- Marketable tuber weight category II per plot (mtwcii) is greater than marketable tuber weight per plot (mtwp):")
   
-  # Inconsistencies for: ttya > mtya | ttyna > mtyna | atw > atmw, mwmt | mwt > atmw, mwmt
+  # Inconsistencies for: ttya > mtya | ttyna > mtyna | atw > atmw
   
   sp1(dfr, 1,  "mtya",  "ttya", "- Marketable tuber yield adjusted (mtya) is greater than total tuber yield adjusted (ttya):")
   sp1(dfr, 1, "mtyna", "ttyna", "- Marketable tuber yield no adjusted (mtyna) is greater than total tuber yield no adjusted (ttyna):")
   sp1(dfr, 1,  "atmw",   "atw", "- Average of marketable tuber weight (atmw) is greater than average of tuber weight (atw):")
-  sp1(dfr, 1,  "mwmt",   "atw", "- Average of marketable tuber weight (mwmt) is greater than average of tuber weight (atw):")
-  sp1(dfr, 1,  "atmw",   "mwt", "- Average of marketable tuber weight (atmw) is greater than average of tuber weight (mwt):")
-  sp1(dfr, 1,  "mwmt",   "mwt", "- Average of marketable tuber weight (mwmt) is greater than average of tuber weight (mwt):")
-  
+
   # Number and Weight of tubers 
   
   sp1(dfr, 3,   "tntp",   "ttwp", "- Total number of tubers per plot (tntp) is zero but total tuber weight per plot (ttwp) is greater than zero:")
@@ -819,7 +812,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp1(dfr, 3, "nph", "stlfw", "- Number of plants harvested (nph) is zero but stolon fresh weight per plant (stlfw) is greater than zero:")
   sp1(dfr, 3, "nph",   "sfw", "- Number of plants harvested (nph) is zero but stem fresh weight per plant (sfw) is greater than zero:")
-  sp1(dfr, 3, "nph",  "stfw", "- Number of plants harvested (nph) is zero but stem fresh weight per plant (stfw) is greater than zero:")
   sp1(dfr, 3, "nph",   "lfw", "- Number of plants harvested (nph) is zero but leaf fresh weight per plant (lfw) is greater than zero:")
   sp1(dfr, 3, "nph",   "rfw", "- Number of plants harvested (nph) is zero but root fresh weight per plant (rfw) is greater than zero:")
   sp1(dfr, 3, "nph",   "tfw", "- Number of plants harvested (nph) is zero but tuber fresh weight per plant (tfw) is greater than zero:")
@@ -829,7 +821,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp1(dfr, 3, "nph", "stldw", "- Number of plants harvested (nph) is zero but stolon dry weight per plant (stldw) is greater than zero:")
   sp1(dfr, 3, "nph",   "sdw", "- Number of plants harvested (nph) is zero but stem dry weight per plant (sdw) is greater than zero:")
-  sp1(dfr, 3, "nph",  "stdw", "- Number of plants harvested (nph) is zero but stem dry weight per plant (stdw) is greater than zero:")
   sp1(dfr, 3, "nph",   "ldw", "- Number of plants harvested (nph) is zero but leaf dry weight per plant (ldw) is greater than zero:")
   sp1(dfr, 3, "nph",   "rdw", "- Number of plants harvested (nph) is zero but root dry weight per plant (rdw) is greater than zero:")
   sp1(dfr, 3, "nph",   "tdw", "- Number of plants harvested (nph) is zero but tuber dry weight per plant (tdw) is greater than zero:")
@@ -842,7 +833,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "nph", "rdmcp", "- Number of plants harvested (nph) is zero but root dry matter content per plot (rdmcp) is greater than zer:")
   sp1(dfr, 3, "nph", "tdmcp", "- Number of plants harvested (nph) is zero but tuber dry matter content per plot (tdmcp) is greater than zer:")
   sp1(dfr, 3, "nph",   "pdm", "- Number of plants harvested (nph) is zero but tuber dry matter content (pdm) is greater than zero:")
-  sp1(dfr, 3, "nph",    "dm", "- Number of plants harvested (nph) is zero but tuber dry matter content (dm) is greater than zero:")
   
   # Inconsistencies for root
   
@@ -920,7 +910,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp2(dfr, temp, do,    "tub_unif", "- There are no tubers but there is data for tuber uniformity (tub_unif):")
   sp2(dfr, temp, do,    "tub_size", "- There are no tubers but there is data for tuber size (tub_size):")
   
-  sp2(dfr, temp, do,  "protein", "- There are no tubers but there is data for tuber protein content (protein):")
   sp2(dfr, temp, do,      "pro", "- There are no tubers but there is data for tuber protein content (pro):")
   sp2(dfr, temp, do,     "star", "- There are no tubers but there is data for tuber starch content (star):")
   sp2(dfr, temp, do,     "fruc", "- There are no tubers but there is data for tuber fructose content (fruc):")
@@ -934,13 +923,16 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   vv = c(1, 3, 5, 7, 9, NA)
   sp3(dfr, vv,  "plant_unif", "- Out of range values for plant uniformity (plant_unif):")
   sp3(dfr, vv, "plant_vigor", "- Out of range values for plant vigor (plan_vigor):")
+  sp3(dfr, vv,          "se", "- Out of range values for Senescence (se):")
   sp3(dfr, vv, "tuber_apper", "- Out of range values for tuber appearance (tuber_apper):")
   sp3(dfr, vv,    "tub_unif", "- Out of range values for tuber uniformity (tub_unif):")
   sp3(dfr, vv,    "tub_size", "- Out of range values for tuber size (tub_size):")
+  sp3(dfr, vv,  "num_stolon", "- Out of range values for number of stolons (num_stolon):")
+  sp3(dfr, vv, "leng_stolon", "- Out of range values for length of stolons (leng_stolon):")
   
   sp3(dfr, vv,  'pw', paste0("- Out of range values for plant wilting (pw):"))
   for(i in 1:5) {
-    xtemp <- paste0('pw', i)
+    xtemp <- paste0('pw_ev', i)
     sp3(dfr, vv,  xtemp, paste0("- Out of range values for plant wilting evaluation ", i, " (", xtemp, "):"))
   }
   
@@ -952,29 +944,30 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr,  "both", "pph", "- Out of range values for proportion of plants harvested (pph):")
   sp4(dfr,  "both", "ppe", "- Out of range values for proportion of plants emerged (ppe):")
   
+  # Values out of range for late blight data
+  
+  for(i in 1:8) {
+    xtemp <- paste0('lb', i)
+    sp4(dfr, "both0",  xtemp, paste0("- Out of range values for late blight evaluation ", i, " (", xtemp, "):"))
+  }
+
   # Extreme values detection and values out of range for stem and leaf number (N2)
   
-  sp4(dfr, "lower",        "snpp", "- Out of range values for stem number per plant (snpp):")
-  sp4(dfr, "lower",        "nipp", "- Out of range values for number of inflorescences per plant (nipp):")
-  sp4(dfr, "lower",        "nfwp", "- Out of range values for number of flowers per main inflorescence (nfwp):")
-  sp4(dfr, "lower",        "nlpp", "- Out of range values for number of leaves per plant (nlpp):")
-  sp4(dfr, "lower",  "num_stolon", "- Out of range values for number of stolons (num_stolon):")
-  sp4(dfr, "lower", "leng_stolon", "- Out of range values for length of stolons (leng_stolon):")
-  
-  sp5(dfr, f,  "low",        "snpp", "- Extreme low values for stem number per plant (snpp):")
-  sp5(dfr, f,  "low",        "nipp", "- Extreme low values for nunber of inflorescences per plant (nipp):")
-  sp5(dfr, f,  "low",        "nfwp", "- Extreme low values for number of flowers per main pinflorescence (nfwp):")
-  sp5(dfr, f,  "low",        "nlpp", "- Extreme low values for number of leaves per plant (nlpp):")
-  sp5(dfr, f,  "low",  "num_stolon", "- Extreme low values for number of stolons (num_stolon):")
-  sp5(dfr, f,  "low", "leng_stolon", "- Extreme low values for length of stolons (leng_stolon):")
-  
-  sp5(dfr, f, "high",        "snpp", "- Extreme high values for stem number per plant (snpp):")
-  sp5(dfr, f, "high",        "nipp", "- Extreme high values for nunber of inflorescences per plant (nipp):")
-  sp5(dfr, f, "high",        "nfwp", "- Extreme high values for number of flowers per main pinflorescence (nfwp):")
-  sp5(dfr, f, "high",        "nlpp", "- Extreme high values for number of leaves per plant (nlpp):")
-  sp5(dfr, f, "high",  "num_stolon", "- Extreme high values for number of stolons (num_stolon):")
-  sp5(dfr, f, "high", "leng_stolon", "- Extreme high values for length of stolons (leng_stolon):")
-  
+  sp4(dfr, "lower", "snpp", "- Out of range values for stem number per plant (snpp):")
+  sp4(dfr, "lower", "nipp", "- Out of range values for number of inflorescences per plant (nipp):")
+  sp4(dfr, "lower", "nfwp", "- Out of range values for number of flowers per main inflorescence (nfwp):")
+  sp4(dfr, "lower", "nlpp", "- Out of range values for number of leaves per plant (nlpp):")
+
+  sp5(dfr, f,  "low", "snpp", "- Extreme low values for stem number per plant (snpp):")
+  sp5(dfr, f,  "low", "nipp", "- Extreme low values for nunber of inflorescences per plant (nipp):")
+  sp5(dfr, f,  "low", "nfwp", "- Extreme low values for number of flowers per main pinflorescence (nfwp):")
+  sp5(dfr, f,  "low", "nlpp", "- Extreme low values for number of leaves per plant (nlpp):")
+
+  sp5(dfr, f, "high", "snpp", "- Extreme high values for stem number per plant (snpp):")
+  sp5(dfr, f, "high", "nipp", "- Extreme high values for nunber of inflorescences per plant (nipp):")
+  sp5(dfr, f, "high", "nfwp", "- Extreme high values for number of flowers per main pinflorescence (nfwp):")
+  sp5(dfr, f, "high", "nlpp", "- Extreme high values for number of leaves per plant (nlpp):")
+
   # Extreme values detection and values out of range for tuber number data
   
   sp4(dfr, "lower",   "tntp", "- Out of range values for total number of tubers per plot (tntp):") 
@@ -1034,33 +1027,26 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower",  "mtya", "- Out of range values for marketable tuber yield adjusted (mtya):")
   sp4(dfr, "lower", "mtyna", "- Out of range values for marketable tuber yield no adjusted (mtyna):")
   sp4(dfr, "lower",   "atw", "- Out of range values for average of tuber weight (atw):")
-  sp4(dfr, "lower",   "mwt", "- Out of range values for average of tuber weight (mwt):")
   sp4(dfr, "lower",  "atmw", "- Out of range values for average of marketable tuber weight (atmw):")
-  sp4(dfr, "lower",  "mwmt", "- Out of range values for average of marketable tuber weight (mwmt):")
-  
+
   sp5(dfr, f,  "low",  "ttya", "- Extreme low values for total tuber yield adjusted (ttya):")
   sp5(dfr, f,  "low", "ttyna", "- Extreme low values for total tuber yield no adjusted (ttyna):")
   sp5(dfr, f,  "low",  "mtya", "- Extreme low values for marketable tuber yield adjusted (mtya):")
   sp5(dfr, f,  "low", "mtyna", "- Extreme low values for marketable tuber yield no adjusted (mtyna):")
   sp5(dfr, f,  "low",   "atw", "- Extreme low values for average of tuber weight (atw):")
-  sp5(dfr, f,  "low",   "mwt", "- Extreme low values for average of tuber weight (mwt):")
   sp5(dfr, f,  "low",  "atmw", "- Extreme low values for average of marketable tuber weight (atmw):")
-  sp5(dfr, f,  "low",  "mwmt", "- Extreme low values for average of marketable tuber weight (mwmt):")
-  
+
   sp5(dfr, f, "high",  "ttya", "- Extreme high values for total tuber yield adjusted (ttya):")
   sp5(dfr, f, "high", "ttyna", "- Extreme high values for total tuber yield no adjusted (ttyna):")
   sp5(dfr, f, "high",  "mtya", "- Extreme high values for marketable tuber yield adjusted (mtya):")
   sp5(dfr, f, "high", "mtyna", "- Extreme high values for marketable tuber yield no adjusted (mtyna):")
   sp5(dfr, f, "high",   "atw", "- Extreme high values for average of tuber weight (atw):")
-  sp5(dfr, f, "high",   "mwt", "- Extreme high values for average of tuber weight (mwt):")
   sp5(dfr, f, "high",  "atmw", "- Extreme high values for average of marketable tuber weight (atmw):")
-  sp5(dfr, f, "high",  "mwmt", "- Extreme high values for average of marketable tuber weight (mwmt):")
-  
+
   # Extreme values detection and out of range for fresh weight
   
   sp4(dfr, "lower", "stlfw", "- Out of range for stolon fresh weight per plant (stlfw):")
   sp4(dfr, "lower",   "sfw", "- Out of range for stem fresh weight per plant (sfw):")
-  sp4(dfr, "lower",  "stfw", "- Out of range for stem fresh weight per plant (stfw):")
   sp4(dfr, "lower",   "lfw", "- Out of range for leaf fresh weight per plant (lfw):")
   sp4(dfr, "lower",   "rfw", "- Out of range for root fresh weight per plant (rfw):")
   sp4(dfr, "lower",   "tfw", "- Out of range for tuber fresh weight per plant (tfw):")
@@ -1070,7 +1056,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp5(dfr, f,  "low", "stlfw", "- Extreme low values for stolon fresh weight per plant (stlfw):")
   sp5(dfr, f,  "low",   "sfw", "- Extreme low values for stem fresh weight per plant (sfw):")
-  sp5(dfr, f,  "low",  "stfw", "- Extreme low values for stem fresh weight per plant (stfw):")
   sp5(dfr, f,  "low",   "lfw", "- Extreme low values for leaf fresh weight per plant (lfw):")
   sp5(dfr, f,  "low",   "rfw", "- Extreme low values for root fresh weight per plant (rfw):")
   sp5(dfr, f,  "low",   "tfw", "- Extreme low values for tuber fresh weight per plant (tfw):")
@@ -1080,7 +1065,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp5(dfr, f, "high", "stlfw", "- Extreme high values for stolon fresh weight per plant (stlfw):")
   sp5(dfr, f, "high",   "sfw", "- Extreme high values for stem fresh weight per plant (sfw):")
-  sp5(dfr, f, "high",  "stfw", "- Extreme high values for stem fresh weight per plant (stfw):")
   sp5(dfr, f, "high",   "lfw", "- Extreme high values for leaf fresh weight per plant (lfw):")
   sp5(dfr, f, "high",   "rfw", "- Extreme high values for root fresh weight per plant (rfw):")
   sp5(dfr, f, "high",   "tfw", "- Extreme high values for tuber fresh weight per plant (tfw):")
@@ -1092,7 +1076,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp4(dfr, "lower", "stldw", "- Out of range for stolon dry weight per plant (stldw):")
   sp4(dfr, "lower",   "sdw", "- Out of range for stem dry weight per plant (sdw):")
-  sp4(dfr, "lower",  "stdw", "- Out of range for stem dry weight per plant (stdw):")
   sp4(dfr, "lower",   "ldw", "- Out of range for leaf dry weight per plant (ldw):")
   sp4(dfr, "lower",   "rdw", "- Out of range for root dry weight per plant (rdw):")
   sp4(dfr, "lower",   "tdw", "- Out of range for tuber dry weight per plant (tdw):")
@@ -1102,7 +1085,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp5(dfr, f,  "low", "stldw", "- Extreme low values for stolon dry weight per plant (stldw):")
   sp5(dfr, f,  "low",   "sdw", "- Extreme low values for stem dry weight per plant (sdw):")
-  sp5(dfr, f,  "low",  "stdw", "- Extreme low values for stem dry weight per plant (stdw):")
   sp5(dfr, f,  "low",   "ldw", "- Extreme low values for leaf dry weight per plant (ldw):")
   sp5(dfr, f,  "low",   "rdw", "- Extreme low values for root dry weight per plant (rdw):")
   sp5(dfr, f,  "low",   "tdw", "- Extreme low values for tuber dry weight per plant (tdw):")
@@ -1112,7 +1094,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp5(dfr, f, "high", "stldw", "- Extreme high values for stolon dry weight per plant (stldw):")
   sp5(dfr, f, "high",   "sdw", "- Extreme high values for stem dry weight per plant (sdw):")
-  sp5(dfr, f, "high",  "stdw", "- Extreme high values for stem dry weight per plant (stdw):")
   sp5(dfr, f, "high",   "ldw", "- Extreme high values for leaf dry weight per plant (ldw):")
   sp5(dfr, f, "high",   "rdw", "- Extreme high values for root dry weight per plant (rdw):")
   sp5(dfr, f, "high",   "tdw", "- Extreme high values for tuber dry weight per plant (tdw):")
@@ -1127,15 +1108,13 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f,  "low", "rdmcp", "- Extreme low values for root dry matter content per plot (rdmcp):")
   sp5(dfr, f,  "low", "tdmcp", "- Extreme low values for tuber dry matter content per plot (tdmcp):")
   sp5(dfr, f,  "low",   "pdm", "- Extreme low values for tuber dry matter content (pdm):")
-  sp5(dfr, f,  "low",    "dm", "- Extreme low values for tuber dry matter content (dm):")
-  
+
   sp5(dfr, f, "high", "ldmcp", "- Extreme high values for leaf dry matter content per plot (ldmcp):")
   sp5(dfr, f, "high", "sdmcp", "- Extreme high values for stem dry matter content per plot (sdmcp):")
   sp5(dfr, f, "high", "rdmcp", "- Extreme high values for root dry matter content per plot (rdmcp):")
   sp5(dfr, f, "high", "tdmcp", "- Extreme high values for tuber dry matter content per plot (tdmcp):")
   sp5(dfr, f, "high",   "pdm", "- Extreme high values for tuber dry matter content (pdm):")
-  sp5(dfr, f, "high",    "dm", "- Extreme high values for tuber dry matter content (dm):")
-  
+
   # Extreme values detection for tuber characteristics data
   
   sp5(dfr, f,  "low",  "twa", "- Extreme low values for tuber weight in air (twa):")
@@ -1156,9 +1135,40 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f, "high",  "dsi", "- Extreme high values for drought susceptibility index (dsi):")
   sp5(dfr, f, "high",  "dti", "- Extreme high values for drought tolerance index (dti):")
   
-  # Extreme values detection for tuber content protein, starch, ...
+  # Extreme values detection and out of range values for lab traits
   
-  sp5(dfr, f, "low", "protein", "- Extreme low values for tuber protein content (protein):")
+  sp4(dfr, "both", "fedw", "- Out of range values for tuber iron concentration in dry weight basis (fedw):")
+  sp4(dfr, "both", "fefw", "- Out of range values for tuber iron concentration in fresh weight basis (fefw):")
+  sp4(dfr, "both", "zndw", "- Out of range values for tuber zinc concentration in dry weight basis (zndw):")
+  sp4(dfr, "both", "znfw", "- Out of range values for tuber zinc concentration in fresh weight basis (znfw):")
+  sp4(dfr, "both", "antho_dw", "- Out of range values for tuber anthocyanin concentration in dry weight basis (antho_dw):")
+  sp4(dfr, "both", "antho_fw", "- Out of range values for tuber anthocyanin concentration in fresh weight basis (antho_fw):")
+  sp4(dfr, "lower", "aah_dw", "- Out of range values for tuber hydrophilic antioxidant activity in dry weight basis (aah_dw):")
+  sp4(dfr, "lower", "aah_fw", "- Out of range values for tuber hydrophilic antioxidant activity in fresh weight basis (aah_fw):")
+  sp4(dfr, "lower", "aal_dw", "- Out of range values for tuber lipophilic antioxidant activity in dry weight basis (aal_dw):")
+  sp4(dfr, "lower", "aal_dw", "- Out of range values for tuber lipophilic antioxidant activity in fresh weight basis (aal_fw):")
+  sp4(dfr, "both", "asc_dw", "- Out of range values for tuber ascorbic acid concentration in dry weight basis (asc_dw):")
+  sp4(dfr, "both", "asc_fw", "- Out of range values for tuber ascorbic acid concentration in fresh weight basis (asc_fw):")
+  sp4(dfr, "both", "pro", "- Out of range values for tuber protein content (prot):")
+  sp4(dfr, "both", "star", "- Out of range values for tuber starch content (star):")
+  sp4(dfr, "both", "fruc", "- Out of range values for tuber fructose content (fruc):")
+  sp4(dfr, "both", "gluc", "- Out of range values for tuber glucose content (gluc):")
+  sp4(dfr, "both", "sucr", "- Out of range values for tuber sucruse content (sucr):")
+  sp4(dfr, "both", "malt", "- Out of range values for tuber maltose content (malt):")
+  sp4(dfr, "both", "fiber", "- Out of range values for tuber fiber content (fiber):")
+  
+  sp5(dfr, f, "low",    "fedw", "- Extreme low values for tuber iron concentration in dry weight basis (fedw):")
+  sp5(dfr, f, "low",    "fefw", "- Extreme low values for tuber iron concentration in fresh weight basis (fefw):")
+  sp5(dfr, f, "low",    "zndw", "- Extreme low values for tuber zinc concentration in dry weight basis (zndw):")
+  sp5(dfr, f, "low",    "znfw", "- Extreme low values for tuber zinc concentration in fresh weight basis (znfw):")
+  sp5(dfr, f, "low","antho_dw", "- Extreme low values for tuber anthocyanin concentration in dry weight basis (antho_dw):")
+  sp5(dfr, f, "low","antho_fw", "- Extreme low values for tuber anthocyanin concentration in fresh weight basis (antho_fw):")
+  sp5(dfr, f, "low",  "aah_dw", "- Extreme low values for tuber hydrophilic antioxidant activity in dry weight basis (aah_dw):")
+  sp5(dfr, f, "low",  "aah_fw", "- Extreme low values for tuber hydrophilic antioxidant activity in fresh weight basis (aah_fw):")
+  sp5(dfr, f, "low",  "aal_dw", "- Extreme low values for tuber lipophilic antioxidant activity in dry weight basis (aal_dw):")
+  sp5(dfr, f, "low",  "aal_dw", "- Extreme low values for tuber lipophilic antioxidant activity in fresh weight basis (aal_fw):")
+  sp5(dfr, f, "low",  "asc_dw", "- Extreme low values for tuber ascorbic acid concentration in dry weight basis (asc_dw):")
+  sp5(dfr, f, "low",  "asc_fw", "- Extreme low values for tuber ascorbic acid concentration in fresh weight basis (asc_fw):")
   sp5(dfr, f, "low",     "pro", "- Extreme low values for tuber protein content (pro):")
   sp5(dfr, f, "low",    "star", "- Extreme low values for tuber starch content (star):")
   sp5(dfr, f, "low",    "fruc", "- Extreme low values for tuber fructose content (fruc):")
@@ -1167,7 +1177,18 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f, "low",    "malt", "- Extreme low values for tuber maltose content (malt):")
   sp5(dfr, f, "low",   "fiber", "- Extreme low values for tuber fiber content (fiber):")
   
-  sp5(dfr, f, "high", "protein", "- Extreme high values for tuber protein content (protein):")
+  sp5(dfr, f, "high",    "fedw", "- Extreme high values for tuber iron concentration in dry weight basis (fedw):")
+  sp5(dfr, f, "high",    "fefw", "- Extreme high values for tuber iron concentration in fresh weight basis (fefw):")
+  sp5(dfr, f, "high",    "zndw", "- Extreme high values for tuber zinc concentration in dry weight basis (zndw):")
+  sp5(dfr, f, "high",    "znfw", "- Extreme high values for tuber zinc concentration in fresh weight basis (znfw):")
+  sp5(dfr, f, "high","antho_dw", "- Extreme high values for tuber anthocyanin concentration in dry weight basis (antho_dw):")
+  sp5(dfr, f, "high","antho_fw", "- Extreme high values for tuber anthocyanin concentration in fresh weight basis (antho_fw):")
+  sp5(dfr, f, "high",  "aah_dw", "- Extreme high values for tuber hydrophilic antioxidant activity in dry weight basis (aah_dw):")
+  sp5(dfr, f, "high",  "aah_fw", "- Extreme high values for tuber hydrophilic antioxidant activity in fresh weight basis (aah_fw):")
+  sp5(dfr, f, "high",  "aal_dw", "- Extreme high values for tuber lipophilic antioxidant activity in dry weight basis (aal_dw):")
+  sp5(dfr, f, "high",  "aal_dw", "- Extreme high values for tuber lipophilic antioxidant activity in fresh weight basis (aal_fw):")
+  sp5(dfr, f, "high",  "asc_dw", "- Extreme high values for tuber ascorbic acid concentration in dry weight basis (asc_dw):")
+  sp5(dfr, f, "high",  "asc_fw", "- Extreme high values for tuber ascorbic acid concentration in fresh weight basis (asc_fw):")
   sp5(dfr, f, "high",     "pro", "- Extreme high values for tuber protein content (pro):")
   sp5(dfr, f, "high",    "star", "- Extreme high values for tuber starch content (star):")
   sp5(dfr, f, "high",    "fruc", "- Extreme high values for tuber fructose content (fruc):")
@@ -1178,44 +1199,44 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   # Extreme values for ...
   
-  sp5(dfr, f,  "low", 'leaflet_tw', paste0("- Extreme low values for leaflet turgid weight (leaflet_tw):"))
-  sp5(dfr, f, "high", 'leaflet_tw', paste0("- Extreme high values for leaflet turgid weight (leaflet_tw):"))
-  sp5(dfr, f,  "low", 'insnpp', paste0("- Extreme low values for increase stem number per plant (insnpp):"))
-  sp5(dfr, f, "high", 'insnpp', paste0("- Extreme high values for increase stem number per plant (insnpp):"))
-  sp5(dfr, f,  "low", 'insd', paste0("- Extreme low values for increase stem diameter (insd):"))
-  sp5(dfr, f, "high", 'insd', paste0("- Extreme high values for increase stem diameter (insd):"))
-  sp5(dfr, f,  "low", 'inrwc', paste0("- Extreme low values for increase relative water content (inrwc):"))
-  sp5(dfr, f, "high", 'inrwc', paste0("- Extreme high values for increase relative water content (inrwc):"))
-  sp5(dfr, f,  "low", 'inplahe', paste0("- Extreme low values for increase plant height (inplahe):"))
-  sp5(dfr, f, "high", 'inplahe', paste0("- Extreme high values for increase plant height (inplahe):"))
-  sp5(dfr, f,  "low", 'snpp', paste0("- Extreme low values for stem number per plant (snpp):"))
-  sp5(dfr, f, "high", 'snpp', paste0("- Extreme high values for stem number per plant (snpp):"))
-  sp5(dfr, f,  "low", 'leaflet_fw', paste0("- Extreme low values for leaflet fresh weight (leaflet_fw):"))
-  sp5(dfr, f, "high", 'leaflet_fw', paste0("- Extreme high values for leaflet fresh weight (leaflet_fw):"))
-  sp5(dfr, f,  "low", 'leaflet_dw', paste0("- Extreme low values for leaflet dry weight (leaflet_dw):"))
-  sp5(dfr, f, "high", 'leaflet_dw', paste0("- Extreme high values for leaflet dry weight (leaflet_dw):"))
-  sp5(dfr, f,  "low", 'chc', paste0("- Extremelow values for chlorophyll content (chc):"))
-  sp5(dfr, f, "high", 'chc', paste0("- Extreme high values for chlorophyll content (chc):"))
-  sp5(dfr, f,  "low", 'inchc', paste0("- Extremelow values for increase chlorophyll content (inchc):"))
-  sp5(dfr, f, "high", 'inchc', paste0("- Extreme high values for increase chlorophyll content (inchc):"))
-  sp5(dfr, f,  "low", 'leafsd', paste0("- Extreme low values for leaf stomata density (leafsd):"))
-  sp5(dfr, f, "high", 'leafsd', paste0("- Extreme high values for leaf stomata density (leafsd):"))
-  sp5(dfr, f,  "low", 'plahe', paste0("- Extreme low values for plant height (plahe):"))
-  sp5(dfr, f, "high", 'plahe', paste0("- Extreme high values for plant height (plahe):"))
-  sp5(dfr, f,  "low", 'sd', paste0("- Extremelow values for stem diameter (sd):"))
-  sp5(dfr, f, "high", 'sd', paste0("- Extreme high values for stem diameter (sd):"))
-  sp5(dfr, f,  "low", 'cc', paste0("- Extremelow values for canopy cover (cc):"))
-  sp5(dfr, f, "high", 'cc', paste0("- Extreme high values for canopy cover (cc):"))
-  sp5(dfr, f,  "low", 'chlspad', paste0("- Extreme low values for chlorophyll content index (chlspad):"))
-  sp5(dfr, f, "high", 'chlspad', paste0("- Extreme high values for chlorophyll content index (chlspad):"))
-  sp5(dfr, f,  "low", 'cr', paste0("- Extremelow values for canopy reflectance (cr):"))
-  sp5(dfr, f, "high", 'cr', paste0("- Extreme high values for canopy reflectance (cr):"))
-  sp5(dfr, f,  "low", 'lfa', paste0("- Extreme low values for leaflet area (lfa):"))
-  sp5(dfr, f, "high", 'lfa', paste0("- Extreme high values for leaflet area (lfa):"))
-  sp5(dfr, f,  "low", 'rwc', paste0("- Extreme low values for relative water content (rwc):"))
-  sp5(dfr, f, "high", 'rwc', paste0("- Extreme high values for relative water content (rwc):"))
-  sp5(dfr, f,  "low", 'sla', paste0("- Extreme low values for specific leaf area (sla):"))
-  sp5(dfr, f, "high", 'sla', paste0("- Extreme high values for specific leaf area (sla):"))
+  sp5(dfr, f,  "low", 'leaflet_tw', "- Extreme low values for leaflet turgid weight (leaflet_tw):")
+  sp5(dfr, f, "high", 'leaflet_tw', "- Extreme high values for leaflet turgid weight (leaflet_tw):")
+  sp5(dfr, f,  "low", 'insnpp', "- Extreme low values for increase stem number per plant (insnpp):")
+  sp5(dfr, f, "high", 'insnpp', "- Extreme high values for increase stem number per plant (insnpp):")
+  sp5(dfr, f,  "low", 'insd', "- Extreme low values for increase stem diameter (insd):")
+  sp5(dfr, f, "high", 'insd', "- Extreme high values for increase stem diameter (insd):")
+  sp5(dfr, f,  "low", 'inrwc', "- Extreme low values for increase relative water content (inrwc):")
+  sp5(dfr, f, "high", 'inrwc', "- Extreme high values for increase relative water content (inrwc):")
+  sp5(dfr, f,  "low", 'inplahe', "- Extreme low values for increase plant height (inplahe):")
+  sp5(dfr, f, "high", 'inplahe', "- Extreme high values for increase plant height (inplahe):")
+  sp5(dfr, f,  "low", 'snpp', "- Extreme low values for stem number per plant (snpp):")
+  sp5(dfr, f, "high", 'snpp', "- Extreme high values for stem number per plant (snpp):")
+  sp5(dfr, f,  "low", 'leaflet_fw', "- Extreme low values for leaflet fresh weight (leaflet_fw):")
+  sp5(dfr, f, "high", 'leaflet_fw', "- Extreme high values for leaflet fresh weight (leaflet_fw):")
+  sp5(dfr, f,  "low", 'leaflet_dw', "- Extreme low values for leaflet dry weight (leaflet_dw):")
+  sp5(dfr, f, "high", 'leaflet_dw', "- Extreme high values for leaflet dry weight (leaflet_dw):")
+  sp5(dfr, f,  "low", 'chc', "- Extremelow values for chlorophyll content (chc):")
+  sp5(dfr, f, "high", 'chc', "- Extreme high values for chlorophyll content (chc):")
+  sp5(dfr, f,  "low", 'inchc', "- Extremelow values for increase chlorophyll content (inchc):")
+  sp5(dfr, f, "high", 'inchc', "- Extreme high values for increase chlorophyll content (inchc):")
+  sp5(dfr, f,  "low", 'leafsd', "- Extreme low values for leaf stomata density (leafsd):")
+  sp5(dfr, f, "high", 'leafsd', "- Extreme high values for leaf stomata density (leafsd):")
+  sp5(dfr, f,  "low", 'plahe', "- Extreme low values for plant height (plahe):")
+  sp5(dfr, f, "high", 'plahe', "- Extreme high values for plant height (plahe):")
+  sp5(dfr, f,  "low", 'sd', "- Extremelow values for stem diameter (sd):")
+  sp5(dfr, f, "high", 'sd', "- Extreme high values for stem diameter (sd):")
+  sp5(dfr, f,  "low", 'cc', "- Extremelow values for canopy cover (cc):")
+  sp5(dfr, f, "high", 'cc', "- Extreme high values for canopy cover (cc):")
+  sp5(dfr, f,  "low", 'chlspad', "- Extreme low values for chlorophyll content index (chlspad):")
+  sp5(dfr, f, "high", 'chlspad', "- Extreme high values for chlorophyll content index (chlspad):")
+  sp5(dfr, f,  "low", 'cr', "- Extremelow values for canopy reflectance (cr):")
+  sp5(dfr, f, "high", 'cr', "- Extreme high values for canopy reflectance (cr):")
+  sp5(dfr, f,  "low", 'lfa', "- Extreme low values for leaflet area (lfa):")
+  sp5(dfr, f, "high", 'lfa', "- Extreme high values for leaflet area (lfa):")
+  sp5(dfr, f,  "low", 'rwc', "- Extreme low values for relative water content (rwc):")
+  sp5(dfr, f, "high", 'rwc', "- Extreme high values for relative water content (rwc):")
+  sp5(dfr, f,  "low", 'sla', "- Extreme low values for specific leaf area (sla):")
+  sp5(dfr, f, "high", 'sla', "- Extreme high values for specific leaf area (sla):")
 
   for(i in 1:5){
     xtemp <- paste0('leaflet_tw', i)
@@ -1251,28 +1272,28 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     xtemp <- paste0('leafsd', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extreme low values for leaf stomata density evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for leaf stomata density evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('plahe', i)
+    xtemp <- paste0('plahe_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extreme low values for plant height evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for plant height evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('sd', i)
+    xtemp <- paste0('sd_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extremelow values for stem diameter evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for stem diameter evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('cc', i)
+    xtemp <- paste0('cc_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extremelow values for canopy cover evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for canopy cover evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('chlspad', i)
+    xtemp <- paste0('chlspad_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extreme low values for chlorophyll content index evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for chlorophyll content index evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('cr', i)
+    xtemp <- paste0('cr_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extremelow values for canopy reflectance evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for canopy reflectance evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('lfa', i)
+    xtemp <- paste0('lfa_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extreme low values for leaflet area evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for leaflet area evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('rwc', i)
+    xtemp <- paste0('rwc_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extreme low values for relative water content evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for relative water content evaluation ", i, " (", xtemp, "):"))
-    xtemp <- paste0('sla', i)
+    xtemp <- paste0('sla_ev', i)
     sp5(dfr, f,  "low", xtemp, paste0("- Extreme low values for specific leaf area evaluation ", i, " (", xtemp, "):"))
     sp5(dfr, f, "high", xtemp, paste0("- Extreme high values for specific leaf area evaluation ", i, " (", xtemp, "):"))
   }
@@ -1380,13 +1401,11 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   }
   
   if (oc == 1) {
-    sp6(dfr, geno, env, rep,        "snpp", out.mod, out.max, "- Outliers for stem number per plants (snpp):")
-    sp6(dfr, geno, env, rep,        "nipp", out.mod, out.max, "- Outliers for number of inflorescences per plant (nipp):")
-    sp6(dfr, geno, env, rep,        "nfwp", out.mod, out.max, "- Outliers for number of flowers per main inflorescence (nfwp):")
-    sp6(dfr, geno, env, rep,        "nlpp", out.mod, out.max, "- Outliers for number of leaves per plant (nlpp):")
-    sp6(dfr, geno, env, rep,  "num_stolon", out.mod, out.max, "- Outliers for number of stolons (num_stolon):")
-    sp6(dfr, geno, env, rep, "leng_stolon", out.mod, out.max, "- Outliers for length of stolons (leng_stolon):")
-    
+    sp6(dfr, geno, env, rep,  "snpp", out.mod, out.max, "- Outliers for stem number per plants (snpp):")
+    sp6(dfr, geno, env, rep,  "nipp", out.mod, out.max, "- Outliers for number of inflorescences per plant (nipp):")
+    sp6(dfr, geno, env, rep,  "nfwp", out.mod, out.max, "- Outliers for number of flowers per main inflorescence (nfwp):")
+    sp6(dfr, geno, env, rep,  "nlpp", out.mod, out.max, "- Outliers for number of leaves per plant (nlpp):")
+ 
     sp6(dfr, geno, env, rep,   "tntp", out.mod, out.max, "- Outliers for total number of tubers per plot (tntp):")
     sp6(dfr, geno, env, rep,  "tntpl", out.mod, out.max, "- Outliers for total number of tubers per plant (tntpl):")
     sp6(dfr, geno, env, rep,   "nmtp", out.mod, out.max, "- Outliers for number of marketable tubers per plot (nmtp):")
@@ -1408,13 +1427,10 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp6(dfr, geno, env, rep,  "mtya", out.mod, out.max, "- Outliers for marketable tuber yield adjusted (mtya):")
     sp6(dfr, geno, env, rep, "mtyna", out.mod, out.max, "- Outliers for marketable tuber yield no adjusted (mtyna):")
     sp6(dfr, geno, env, rep,   "atw", out.mod, out.max, "- Outliers for average of tuber weight (atw):")
-    sp6(dfr, geno, env, rep,   "mwt", out.mod, out.max, "- Outliers for average of tuber weight (mwt):")
     sp6(dfr, geno, env, rep,  "atmw", out.mod, out.max, "- Outliers for average of marketable tuber weight (atmw):")
-    sp6(dfr, geno, env, rep,  "mwmt", out.mod, out.max, "- Outliers for average of marketable tuber weight (mwmt):")
-    
+
     sp6(dfr, geno, env, rep, "stlfw", out.mod, out.max, "- Outliers for stolon fresh weight per plant (stlfw):")
     sp6(dfr, geno, env, rep,   "sfw", out.mod, out.max, "- Outliers for stem fresh weight per plant (sfw):")
-    sp6(dfr, geno, env, rep,  "stfw", out.mod, out.max, "- Outliers for stem fresh weight per plant (stfw):")
     sp6(dfr, geno, env, rep,   "lfw", out.mod, out.max, "- Outliers for leaf fresh weight per plant (lfw):")
     sp6(dfr, geno, env, rep,   "rfw", out.mod, out.max, "- Outliers for root fresh weight per plant (rfw):")
     sp6(dfr, geno, env, rep,   "tfw", out.mod, out.max, "- Outliers for tuber fresh weight per plant (tfw):")
@@ -1424,7 +1440,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     
     sp6(dfr, geno, env, rep, "stldw", out.mod, out.max, "- Outliers for stolon dry weight per plant (stlfd):")
     sp6(dfr, geno, env, rep,   "sdw", out.mod, out.max, "- Outliers for stem dry weight per plant (sdw):")
-    sp6(dfr, geno, env, rep,  "stdw", out.mod, out.max, "- Outliers for stem dry weight per plant (stdw):")
     sp6(dfr, geno, env, rep,   "ldw", out.mod, out.max, "- Outliers for leaf dry weight per plant (ldw):")
     sp6(dfr, geno, env, rep,   "rdw", out.mod, out.max, "- Outliers for root dry weight per plant (rdw):")
     sp6(dfr, geno, env, rep,   "tdw", out.mod, out.max, "- Outliers for tuber dry weight per plant (tdw):")
@@ -1437,8 +1452,7 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp6(dfr, geno, env, rep, "rdmcp", out.mod, out.max, "- Outliers for root dry matter content per plot (rdmcp):")
     sp6(dfr, geno, env, rep, "tdmcp", out.mod, out.max, "- Outliers for tuber dry matter content per plot (tdmcp):")
     sp6(dfr, geno, env, rep,   "pdm", out.mod, out.max, "- Outliers for tuber dry matter content (pdm):")
-    sp6(dfr, geno, env, rep,    "dm", out.mod, out.max, "- Outliers for tuber dry matter content (dm):")
-    
+
     sp6(dfr, geno, env, rep,  "twa", out.mod, out.max, "- Outliers for tuber weight in air (twa):")
     sp6(dfr, geno, env, rep,  "tww", out.mod, out.max, "- Outliers for tuber weight in water (tww):")
     sp6(dfr, geno, env, rep, "rsdw", out.mod, out.max, "- Outliers for root system dry weight per plant (rsdw):")
@@ -1447,6 +1461,26 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp6(dfr, geno, env, rep,   "sg", out.mod, out.max, "- Outliers for tuber specific gravity (sg):")
     sp6(dfr, geno, env, rep,  "dsi", out.mod, out.max, "- Outliers for drought susceptibility index (dsi):")
     sp6(dfr, geno, env, rep,  "dti", out.mod, out.max, "- Outliers for drought tolerance index (dti):")
+
+    sp6(dfr, geno, env, rep,    "fedw", out.mod, out.max, "- Outliers for tuber iron concentration in dry weight basis (fedw):")
+    sp6(dfr, geno, env, rep,    "fefw", out.mod, out.max, "- Outliers for tuber iron concentration in fresh weight basis (fefw):")
+    sp6(dfr, geno, env, rep,    "zndw", out.mod, out.max, "- Outliers for tuber zinc concentration in dry weight basis (zndw):")
+    sp6(dfr, geno, env, rep,    "znfw", out.mod, out.max, "- Outliers for tuber zinc concentration in fresh weight basis (znfw):")
+    sp6(dfr, geno, env, rep,"antho_dw", out.mod, out.max, "- Outliers for tuber anthocyanin concentration in dry weight basis (antho_dw):")
+    sp6(dfr, geno, env, rep,"antho_fw", out.mod, out.max, "- Outliers for tuber anthocyanin concentration in fresh weight basis (antho_fw):")
+    sp6(dfr, geno, env, rep,  "aah_dw", out.mod, out.max, "- Outliers for tuber hydrophilic antioxidant activity in dry weight basis (aah_dw):")
+    sp6(dfr, geno, env, rep,  "aah_fw", out.mod, out.max, "- Outliers for tuber hydrophilic antioxidant activity in fresh weight basis (aah_fw):")
+    sp6(dfr, geno, env, rep,  "aal_dw", out.mod, out.max, "- Outliers for tuber lipophilic antioxidant activity in dry weight basis (aal_dw):")
+    sp6(dfr, geno, env, rep,  "aal_dw", out.mod, out.max, "- Outliers for tuber lipophilic antioxidant activity in fresh weight basis (aal_fw):")
+    sp6(dfr, geno, env, rep,  "asc_dw", out.mod, out.max, "- Outliers for tuber ascorbic acid concentration in dry weight basis (asc_dw):")
+    sp6(dfr, geno, env, rep,  "asc_fw", out.mod, out.max, "- Outliers for tuber ascorbic acid concentration in fresh weight basis (asc_fw):")
+    sp6(dfr, geno, env, rep,     "pro", out.mod, out.max, "- Outliers for tuber protein content (pro):")
+    sp6(dfr, geno, env, rep,    "star", out.mod, out.max, "- Outliers for tuber starch content (star):")
+    sp6(dfr, geno, env, rep,    "fruc", out.mod, out.max, "- Outliers for tuber fructose content (fruc):")
+    sp6(dfr, geno, env, rep,    "gluc", out.mod, out.max, "- Outliers for tuber glucose content (gluc):")
+    sp6(dfr, geno, env, rep,    "sucr", out.mod, out.max, "- Outliers for tuber sucrose content (sucr):")
+    sp6(dfr, geno, env, rep,    "malt", out.mod, out.max, "- Outliers for tuber maltose content (malt):")
+    sp6(dfr, geno, env, rep,   "fiber", out.mod, out.max, "- Outliers for tuber fiber content (fiber):")
     
     # Outliers' detection for additional traits
     

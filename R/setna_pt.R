@@ -11,7 +11,7 @@
 #' Consider the following groups of traits:
 #' \itemize{
 #'  \item \code{pre} (traits evaluated pre-harvest): \code{ppe}, \code{plant_unif},
-#'  and \code{plant_vigor}
+#'  \code{plant_vigor} and \code{se}.
 #'  
 #'  \item \code{wvn} (traits evaluated with vines non-pre-harvest): \code{sfw},
 #'  \code{lfw}, \code{sdw}, \code{ldw}, \code{sdmcp}, and \code{ldmcp}.
@@ -24,17 +24,18 @@
 #'  \code{fwts}, \code{dwts}, \code{sfw}, \code{lfw}, \code{sdw}, and \code{ldw}.
 #'      
 #'  \item \code{pnn} (percentage non-negative traits): \code{ppe}, \code{pph},  
-#'  \code{fruc}, \code{gluc}, \code{sucr}, \code{malt}.
+#'  \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
 #'  
 #'  \item \code{ppo} (percentage positive traits): \code{pdm}, \code{pro},
 #'  \code{star}, \code{fiber}, \code{sdmcp}, and \code{ldmcp}.
 #'
 #'  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe},
-#'  \code{nph}, \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci},
+#'  \code{nph}, \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and
 #'  \code{nmtcii}.
 #'  
 #'  \item \code{ctg} (categorical 1 to 9 traits): \code{plant_unif},
-#'  \code{plant_vigor}, \code{tuber_apper}, \code{tub_unif}, \code{tub_size}.
+#'  \code{plant_vigor}, \code{se}, \code{tuber_apper}, \code{tub_unif},
+#'  \code{tub_size}, \code{num_stolon}, and \code{leng_stolon}.
 #' }
 #' Values are set to \code{NA} with the following rules:
 #' \itemize{
@@ -86,7 +87,7 @@ setna.pt <- function(dfr, f = 10) {
   
   # Pre-harvest traits
   
-  pre <- c("ppe", "plant_unif", "plant_vigor")
+  pre <- c("ppe", "plant_unif", "plant_vigor", "se")
   
   # Traits evaluated with vines non-pre-harvest
   
@@ -115,7 +116,8 @@ setna.pt <- function(dfr, f = 10) {
   
   # Categorical 1 to 9 traits
   
-  ctg <- c("plant_unif", "plant_vigor", "tuber_apper", "tub_unif", "tub_size")
+  ctg <- c("plant_unif", "plant_vigor", "se", "tuber_apper", "tub_unif", "tub_size",
+           "num_stolon", "leng_stolon")
   
   #############################################################################
   # Impossible values

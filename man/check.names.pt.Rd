@@ -131,6 +131,18 @@ The data frame must use the following labels (lower or upper case):
  }
 -------------------- Traits N10 group--------------------
  \itemize{
+ \item \code{fedw}        : Tuber iron concentration in dry weight basis
+ \item \code{fefw}        : Tuber iron concentration in fresh weight basis
+ \item \code{zndw}        : Tuber zinc concentration in dry weight basis
+ \item \code{znfw}        : Tuber zinc concentration in fresh weight basis
+ \item \code{antho_dw}    : Tuber anthocyanin concentration in dry weight basis
+ \item \code{antho_fw}    : Tuber anthocyanin concentration in fresh weight basis
+ \item \code{aah_dw}      : Tuber hydrophilic antioxidant activity in dry weight basis
+ \item \code{aah_fw}      : Tuber hydrophilic antioxidant activity in fresh weight basis
+ \item \code{aal_dw}      : Tuber lipophilic antioxidant activity in dry weight basis
+ \item \code{aal_fw}      : Tuber lipophilic antioxidant activity in fresh weight basis
+ \item \code{asc_dw}      : Tuber ascorbic acid concentration in dry weight basis
+ \item \code{asc_fw}      : Tuber ascorbic acid concentration in fresh weight basis
  \item \code{pro}         : Tuber protein content (\code{protein} is also valid)
  \item \code{star}        : Tuber starch content
  \item \code{fruc}        : Tuber fructose content
@@ -143,6 +155,7 @@ The data frame must use the following labels (lower or upper case):
  \itemize{
  \item \code{plant_unif}  : Plant uniformity
  \item \code{plant_vigor} : Plant vigor
+ \item \code{se}          : Senescence
  \item \code{tuber_apper} : Tuber appearance
  \item \code{tub_unif}    : Tuber uniformity
  \item \code{tub_size}    : Tuber size
@@ -154,36 +167,36 @@ The data frame must use the following labels (lower or upper case):
  }
 -------------------- Traits N12 group--------------------
  \itemize{
- \item \code{leaflet_twi} : Leaflet turgid weight Evaluation i (i = 1, 2, 3, ...)
- \item \code{insnppi}     : Increase stem number per plant i (i = 1, 2, 3, ...)
- \item \code{insdi}       : Increase stem diameter i (i = 1, 2, 3, ...)
- \item \code{inrwci}      : Increase relative water content i (i = 1, 2, 3, ...)
+ \item \code{leaflet_twi} : Leaflet turgid weight Evaluation i (i = 1,..., 5)
+ \item \code{insnppi}     : Increase stem number per plant i (i = 1,..., 5)
+ \item \code{insdi}       : Increase stem diameter i (i = 1,...,5)
+ \item \code{inrwci}      : Increase relative water content i (i = 1,..., 5)
  }
 -------------------- Traits N13 group--------------------
  \itemize{
- \item \code{pw_evi}      : Plant wilting Evaluation i (i = 1, 2, 3, ...)
- \item \code{inplahei}    : Increase plant height i (i = 1, 2, 3, ...)
- \item \code{snpp_evi}    : Stem number per plant Evaluation i (i = 1, 2, 3, ...)
- \item \code{leaflet_fwi} : Leaflet fresh weight Evaluation i (i = 1, 2, 3, ...)
- \item \code{leaflet_dwi} : Leaflet dry weight Evaluation i (i = 1, 2, 3, ...)
+ \item \code{pw_evi}      : Plant wilting Evaluation i (i = 1,..., 5)
+ \item \code{inplahei}    : Increase plant height i (i = 1,..., 5)
+ \item \code{snppi}       : Stem number per plant Evaluation i (i = 1,..., 5)
+ \item \code{leaflet_fwi} : Leaflet fresh weight Evaluation i (i = 1,..., 5)
+ \item \code{leaflet_dwi} : Leaflet dry weight Evaluation i (i = 1,..., 5)
  }
 -------------------- Traits N14 group--------------------
  \itemize{
- \item \code{chci}        : Chlorophyll content sample i (i = 1, 2, 3, ...)
- \item \code{inchci}      : Increase chlorophyll content i (i = 1, 2, 3, ...)
- \item \code{leafsdi}     : Leaf stomata density sample i (i = 1, 2, 3, ...)
+ \item \code{chci}        : Chlorophyll content sample i (i = 1,..., 5)
+ \item \code{inchci}      : Increase chlorophyll content i (i = 1,..., 5)
+ \item \code{leafsdi}     : Leaf stomata density sample i (i = 1,..., 5)
  \item \code{av_leafsd}   : Average leaf stomata density
  }
 -------------------- Traits N15 group--------------------
  \itemize{
- \item \code{plahe_evi}   : Plant height Evaluation i (i = 1, 2, 3, ...)
- \item \code{sd_evi}      : Stem diameter Evaluation i (i = 1, 2, 3, ...)
- \item \code{cc_evi}      : Canopy cover Evaluation i (i = 1, 2, 3, ...)
- \item \code{chlspad_evi} : Chlorophyll content index Evaluation i (i = 1, 2, 3, ...)
- \item \code{cr_evi}      : Canopy reflectance Evaluation i (i = 1, 2, 3, ...)
- \item \code{lfa_evi}     : Leaflet area Evaluation i (i = 1, 2, 3, ...)
- \item \code{rwc_evi}     : Relative water content Evaluation i (i = 1, 2, 3, ...)
- \item \code{sla_evi}     : Specific leaf area Evaluation i (i = 1, 2, 3, ...)
+ \item \code{plahe_evi}   : Plant height Evaluation i (i = 1,..., 5)
+ \item \code{sd_evi}      : Stem diameter Evaluation i (i = 1,..., 5)
+ \item \code{cc_evi}      : Canopy cover Evaluation i (i = 1,..., 5)
+ \item \code{chlspad_evi} : Chlorophyll content index Evaluation i (i = 1,..., 5)
+ \item \code{cr_evi}      : Canopy reflectance Evaluation i (i = 1,..., 5)
+ \item \code{lfa_evi}     : Leaflet area Evaluation i (i = 1,..., 5)
+ \item \code{rwc_evi}     : Relative water content Evaluation i (i = 1,..., 5)
+ \item \code{sla_evi}     : Specific leaf area Evaluation i (i = 1,..., 5)
  }
 -------------------- Traits N16 group--------------------
  \itemize{
@@ -194,6 +207,13 @@ The data frame must use the following labels (lower or upper case):
  \item \code{cr_slp}      : Canopy reflectance slope
  \item \code{lfa_slp}     : Leaflet area slope
  \item \code{sla_slp}     : Specific leaf area slope         
+ }
+-------------------- Traits N17 group--------------------
+ \itemize{
+ \item \code{lbi}         : Late Blight severity evaluation i (i = 1, 2,... 8)
+ \item \code{audpc}       : Late blight AUDPC
+ \item \code{raudpc}      : Late blight relative AUDPC
+ \item \code{sraudpc}     : Late blight susceptibility
  }
 }
 \examples{

@@ -115,6 +115,18 @@
 #'  }
 #' -------------------- Traits N10 group--------------------
 #'  \itemize{
+#'  \item \code{fedw}        : Tuber iron concentration in dry weight basis
+#'  \item \code{fefw}        : Tuber iron concentration in fresh weight basis
+#'  \item \code{zndw}        : Tuber zinc concentration in dry weight basis
+#'  \item \code{znfw}        : Tuber zinc concentration in fresh weight basis
+#'  \item \code{antho_dw}    : Tuber anthocyanin concentration in dry weight basis
+#'  \item \code{antho_fw}    : Tuber anthocyanin concentration in fresh weight basis
+#'  \item \code{aah_dw}      : Tuber hydrophilic antioxidant activity in dry weight basis
+#'  \item \code{aah_fw}      : Tuber hydrophilic antioxidant activity in fresh weight basis
+#'  \item \code{aal_dw}      : Tuber lipophilic antioxidant activity in dry weight basis
+#'  \item \code{aal_fw}      : Tuber lipophilic antioxidant activity in fresh weight basis
+#'  \item \code{asc_dw}      : Tuber ascorbic acid concentration in dry weight basis
+#'  \item \code{asc_fw}      : Tuber ascorbic acid concentration in fresh weight basis
 #'  \item \code{pro}         : Tuber protein content (\code{protein} is also valid)
 #'  \item \code{star}        : Tuber starch content
 #'  \item \code{fruc}        : Tuber fructose content
@@ -127,6 +139,7 @@
 #'  \itemize{
 #'  \item \code{plant_unif}  : Plant uniformity
 #'  \item \code{plant_vigor} : Plant vigor
+#'  \item \code{se}          : Senescence
 #'  \item \code{tuber_apper} : Tuber appearance
 #'  \item \code{tub_unif}    : Tuber uniformity
 #'  \item \code{tub_size}    : Tuber size
@@ -138,36 +151,36 @@
 #'  }
 #' -------------------- Traits N12 group--------------------
 #'  \itemize{
-#'  \item \code{leaflet_twi} : Leaflet turgid weight Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{insnppi}     : Increase stem number per plant i (i = 1, 2, 3, ...)
-#'  \item \code{insdi}       : Increase stem diameter i (i = 1, 2, 3, ...)
-#'  \item \code{inrwci}      : Increase relative water content i (i = 1, 2, 3, ...)
+#'  \item \code{leaflet_twi} : Leaflet turgid weight Evaluation i (i = 1,..., 5)
+#'  \item \code{insnppi}     : Increase stem number per plant i (i = 1,..., 5)
+#'  \item \code{insdi}       : Increase stem diameter i (i = 1,...,5)
+#'  \item \code{inrwci}      : Increase relative water content i (i = 1,..., 5)
 #'  }
 #' -------------------- Traits N13 group--------------------
 #'  \itemize{
-#'  \item \code{pw_evi}      : Plant wilting Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{inplahei}    : Increase plant height i (i = 1, 2, 3, ...)
-#'  \item \code{snpp_evi}    : Stem number per plant Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{leaflet_fwi} : Leaflet fresh weight Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{leaflet_dwi} : Leaflet dry weight Evaluation i (i = 1, 2, 3, ...)
+#'  \item \code{pw_evi}      : Plant wilting Evaluation i (i = 1,..., 5)
+#'  \item \code{inplahei}    : Increase plant height i (i = 1,..., 5)
+#'  \item \code{snppi}       : Stem number per plant Evaluation i (i = 1,..., 5)
+#'  \item \code{leaflet_fwi} : Leaflet fresh weight Evaluation i (i = 1,..., 5)
+#'  \item \code{leaflet_dwi} : Leaflet dry weight Evaluation i (i = 1,..., 5)
 #'  }
 #' -------------------- Traits N14 group--------------------
 #'  \itemize{
-#'  \item \code{chci}        : Chlorophyll content sample i (i = 1, 2, 3, ...)
-#'  \item \code{inchci}      : Increase chlorophyll content i (i = 1, 2, 3, ...)
-#'  \item \code{leafsdi}     : Leaf stomata density sample i (i = 1, 2, 3, ...)
+#'  \item \code{chci}        : Chlorophyll content sample i (i = 1,..., 5)
+#'  \item \code{inchci}      : Increase chlorophyll content i (i = 1,..., 5)
+#'  \item \code{leafsdi}     : Leaf stomata density sample i (i = 1,..., 5)
 #'  \item \code{av_leafsd}   : Average leaf stomata density
 #'  }
 #' -------------------- Traits N15 group--------------------
 #'  \itemize{
-#'  \item \code{plahe_evi}   : Plant height Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{sd_evi}      : Stem diameter Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{cc_evi}      : Canopy cover Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{chlspad_evi} : Chlorophyll content index Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{cr_evi}      : Canopy reflectance Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{lfa_evi}     : Leaflet area Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{rwc_evi}     : Relative water content Evaluation i (i = 1, 2, 3, ...)
-#'  \item \code{sla_evi}     : Specific leaf area Evaluation i (i = 1, 2, 3, ...)
+#'  \item \code{plahe_evi}   : Plant height Evaluation i (i = 1,..., 5)
+#'  \item \code{sd_evi}      : Stem diameter Evaluation i (i = 1,..., 5)
+#'  \item \code{cc_evi}      : Canopy cover Evaluation i (i = 1,..., 5)
+#'  \item \code{chlspad_evi} : Chlorophyll content index Evaluation i (i = 1,..., 5)
+#'  \item \code{cr_evi}      : Canopy reflectance Evaluation i (i = 1,..., 5)
+#'  \item \code{lfa_evi}     : Leaflet area Evaluation i (i = 1,..., 5)
+#'  \item \code{rwc_evi}     : Relative water content Evaluation i (i = 1,..., 5)
+#'  \item \code{sla_evi}     : Specific leaf area Evaluation i (i = 1,..., 5)
 #'  }
 #' -------------------- Traits N16 group--------------------
 #'  \itemize{
@@ -178,6 +191,13 @@
 #'  \item \code{cr_slp}      : Canopy reflectance slope
 #'  \item \code{lfa_slp}     : Leaflet area slope
 #'  \item \code{sla_slp}     : Specific leaf area slope         
+#'  }
+#' -------------------- Traits N17 group--------------------
+#'  \itemize{
+#'  \item \code{lbi}         : Late Blight severity evaluation i (i = 1, 2,... 8)
+#'  \item \code{audpc}       : Late blight AUDPC
+#'  \item \code{raudpc}      : Late blight relative AUDPC
+#'  \item \code{sraudpc}     : Late blight susceptibility
 #'  }
 #' @return It returns a data frame with all traits names in lower case, and a list of the
 #' traits with names not included in the list shown above.
@@ -190,17 +210,24 @@ check.names.pt <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
-  factors <- c("l", "loc", "y", "s", "g", "e", "env", "geno", "name", "r", "rep", "b", "block",
-               "treatment", "type", "instn")
+  factors <- c("l", "loc", "y", "s", "g", "e", "env", "geno", "name", "r", "rep",
+               "b", "block", "treatment", "type", "instn")
   
-  # Repeated measures traits
+  # Repeated measures traits (i = 1...5)
   
-  rm.traits <- c("leaflet_tw", "insnpp", "insd", "inrwc", "pw", "inplahe",
+  rm.traits <- c("leaflet_tw", "insnpp", "insd", "inrwc", "pw_ev", "inplahe",
                  "snpp", "leaflet_fw", "leaflet_dw", "chc", "inchc", "leafsd",
-                 "plahe", "sd", "cc", "chlspad", "cr", "lfa", "rwc", "sla")
+                 "plahe_ev", "sd_ev", "cc_ev", "chlspad_ev", "cr_ev", "lfa_ev",
+                 "rwc_ev", "sla_ev")
   
   rm.traits <- c(rm.traits, sapply(rm.traits, function(x) paste0(x, 1:5)))
   
+  # Late blight evaluations
+  
+  lb.ev <- paste0("lb", 1:8)
+  
+  # List of traits
+
   traits <- c("ntp", "npe", "nph", "ppe", "pph",
               "snpp", "nipp", "nfwp", "nlpp", "num_stolon", "leng_stolon",
               "tntp", "tntpl", "nmtp", "nmtpl", "nnomtp", "nmtci", "nmtcii",
@@ -210,11 +237,13 @@ check.names.pt <- function(dfr, add = NULL) {
               "stldw", "sdw", "stdw", "ldw", "rdw", "tdw", "tbdw", "hi_dw", "dwts",
               "ldmcp", "sdmcp", "rdmcp", "tdmcp", "pdm", "dm",
               "twa", "tww", "rsdw", "rd", "rl", "sg", "dsi", "dti",
+              "fedw", "fefw", "zndw", "znfw", "antho_dw", "antho_fw",
+              "aah_dw", "aah_fw", "aal_dw", "aal_fw", "asc_dw", "asc_fw",
               "pro", "protein", "star", "fruc", "gluc", "sucr", "malt", "fiber",
-              "plant_unif", "plant_vigor", "op", "tlwp", "ltp", "dap_chl", "dap_tc",
+              "plant_unif", "plant_vigor", "se", "op", "tlwp", "ltp", "dap_chl", "dap_tc",
               "tuber_apper", "tub_unif", "tub_size", "av_leafsd", "plahe_slp",
               "sd_slp", "cc_slp", "chlspad_slp", "cr_slp", "lfa_slp", "rwc_slp", "sla_slp",
-              rm.traits)
+              rm.traits, lb.ev, "audpc", "raudpc", "saudpc")
   
   colnames.valid <- c(plot.id, factors, traits, tolower(add))
   
@@ -225,6 +254,48 @@ check.names.pt <- function(dfr, add = NULL) {
   check.list.2 <- !(temp %in% colnames.valid)                   # which are valid but lower case
   
   colnames(dfr) <- tolower(colnames(dfr))
+  
+  # Solve synonyms
+  
+  ch.names <- NULL 
+  
+  if (exists("mwt", dfr)) {
+    ch.names <- c(ch.names, "mwt")
+    colnames(dfr)[colnames(dfr) == "mwt"] <- "atw"
+  }
+  
+  if (exists("mwmt", dfr)) {
+    ch.names <- c(ch.names, "mwmt")
+    colnames(dfr)[colnames(dfr) == "mwmt"] <- "atmw"
+  }
+  
+  if (exists("stfw", dfr)) {
+    ch.names <- c(ch.names, "stfw")
+    colnames(dfr)[colnames(dfr) == "stfw"] <- "sfw"
+  }
+  
+  if (exists("stdw", dfr)) {
+    ch.names <- c(ch.names, "stdw")
+    colnames(dfr)[colnames(dfr) == "stdw"] <- "sdw"
+  }
+  
+  if (exists("dm", dfr)) {
+    ch.names <- c(ch.names, "dm")
+    colnames(dfr)[colnames(dfr) == "dm"] <- "pdm"
+  }
+  
+  if (exists("protein", dfr)) {
+    ch.names <- c(ch.names, "protein")
+    colnames(dfr)[colnames(dfr) == "protein"] <- "pro"
+  }
+  
+  old.names <- c("mwt", "mwmt", "stfw", "stdw", "dm", "protein")
+  new.names <- c("atw", "atmw", "sfw", "sdw", "pdm", "pro")
+  
+  if (!is.null(ch.names)) {
+    ch.names.list <- old.names %in% ch.names
+    warning("Traits ", list(old.names[ch.names.list]), " changed to ", list(new.names[ch.names.list]), call. = FALSE)
+  }
   
   # Warnings
   
