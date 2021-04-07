@@ -97,10 +97,6 @@ The data frame must use the following labels (lower or upper case):
  \item \code{tfw}         : Tuber fresh weight per plant
  \item \code{tbfw}        : Total biomass fresh weight per plant
  \item \code{hi_fw}       : Harvest index fresh weight
- \item \code{fwts}        : Fresh weight of tuber sample
- }
--------------------- Traits N7 group--------------------
- \itemize{
  \item \code{stldw}       : Stolon dry weight per plant
  \item \code{sdw}         : Stem dry weight per plant (\code{stdw} is also valid)
  \item \code{ldw}         : Leaf dry weight per plant
@@ -108,17 +104,22 @@ The data frame must use the following labels (lower or upper case):
  \item \code{tdw}         : Tuber dry weight per plant
  \item \code{tbdw}        : Total biomass dry weight per plant
  \item \code{hi_dw}       : Harvest index dry weight
- \item \code{dwts}        : Dry weight of tuber sample
- }
--------------------- Traits N8 group--------------------
- \itemize{
  \item \code{ldmcp}       : Leaf dry matter content per plot
  \item \code{sdmcp}       : Stem dry matter content per plot
  \item \code{rdmcp}       : Root dry matter content per plot
  \item \code{tdmcp}       : Tuber dry matter content per plot
- \item \code{pdm}         : Tuber dry matter content (\code{dm} is also valid)
  }
--------------------- Traits N9 group--------------------
+-------------------- Traits N7 group--------------------
+ \itemize{
+ \item \code{fwts1}        : Fresh weight of tuber sample 1
+ \item \code{fwts2}        : Fresh weight of tuber sample 2
+ \item \code{dwts1}        : Dry weight of tuber sample 1
+ \item \code{dwts2}        : Dry weight of tuber sample 2
+ \item \code{dm1}          : Tuber dry matter content sample 1
+ \item \code{dm2}          : Tuber dry matter content sample 2
+ \item \code{avdm}         : Average tuber dry matter content
+ }
+-------------------- Traits N8 group--------------------
  \itemize{
  \item \code{twa}         : Tuber weight in air
  \item \code{tww}         : Tuber weight in water
@@ -129,8 +130,9 @@ The data frame must use the following labels (lower or upper case):
  \item \code{dsi}         : Drought susceptibility index
  \item \code{dti}         : Drought tolerance index
  }
--------------------- Traits N10 group--------------------
+-------------------- Traits N9 group--------------------
  \itemize{
+ \item \code{pdm}         : Tuber dry matter content (\code{dm} is also valid)
  \item \code{fedw}        : Tuber iron concentration in dry weight basis
  \item \code{fefw}        : Tuber iron concentration in fresh weight basis
  \item \code{zndw}        : Tuber zinc concentration in dry weight basis
@@ -151,7 +153,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{malt}        : Tuber maltose content
  \item \code{fiber}       : Tuber fiber content
  }
--------------------- Traits N11 group--------------------
+-------------------- Traits N10 group--------------------
  \itemize{
  \item \code{plant_unif}  : Plant uniformity
  \item \code{plant_vigor} : Plant vigor
@@ -165,14 +167,14 @@ The data frame must use the following labels (lower or upper case):
  \item \code{dap_chl}     : Chlorophyll relative content - Days after planting # removed
  \item \code{dap_tc}      : Canopy temperature - Days after planting           # removed
  }
--------------------- Traits N12 group--------------------
+-------------------- Traits N11 group--------------------
  \itemize{
  \item \code{leaflet_twi} : Leaflet turgid weight Evaluation i (i = 1,..., 5)
  \item \code{insnppi}     : Increase stem number per plant i (i = 1,..., 5)
  \item \code{insdi}       : Increase stem diameter i (i = 1,...,5)
  \item \code{inrwci}      : Increase relative water content i (i = 1,..., 5)
  }
--------------------- Traits N13 group--------------------
+-------------------- Traits N12 group--------------------
  \itemize{
  \item \code{pw_evi}      : Plant wilting Evaluation i (i = 1,..., 5)
  \item \code{inplahei}    : Increase plant height i (i = 1,..., 5)
@@ -180,14 +182,14 @@ The data frame must use the following labels (lower or upper case):
  \item \code{leaflet_fwi} : Leaflet fresh weight Evaluation i (i = 1,..., 5)
  \item \code{leaflet_dwi} : Leaflet dry weight Evaluation i (i = 1,..., 5)
  }
--------------------- Traits N14 group--------------------
+-------------------- Traits N13 group--------------------
  \itemize{
  \item \code{chci}        : Chlorophyll content sample i (i = 1,..., 5)
  \item \code{inchci}      : Increase chlorophyll content i (i = 1,..., 5)
  \item \code{leafsdi}     : Leaf stomata density sample i (i = 1,..., 5)
  \item \code{av_leafsd}   : Average leaf stomata density
  }
--------------------- Traits N15 group--------------------
+-------------------- Traits N14 group--------------------
  \itemize{
  \item \code{plahe_evi}   : Plant height Evaluation i (i = 1,..., 5)
  \item \code{sd_evi}      : Stem diameter Evaluation i (i = 1,..., 5)
@@ -198,7 +200,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{rwc_evi}     : Relative water content Evaluation i (i = 1,..., 5)
  \item \code{sla_evi}     : Specific leaf area Evaluation i (i = 1,..., 5)
  }
--------------------- Traits N16 group--------------------
+-------------------- Traits N15 group--------------------
  \itemize{
  \item \code{plahe_slp}   : Plant height slope
  \item \code{sd_slp}      : Stem diameter slope
@@ -208,7 +210,7 @@ The data frame must use the following labels (lower or upper case):
  \item \code{lfa_slp}     : Leaflet area slope
  \item \code{sla_slp}     : Specific leaf area slope         
  }
--------------------- Traits N17 group--------------------
+-------------------- Traits N16 group--------------------
  \itemize{
  \item \code{lbi}         : Late Blight severity evaluation i (i = 1, 2,... 8)
  \item \code{audpc}       : Late blight AUDPC

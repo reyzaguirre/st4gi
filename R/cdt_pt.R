@@ -126,11 +126,24 @@ cdt.pt <- function(dfr, method = c("none", "ps", "np"),
     dfr$mtwpl[dfr$nph == 0] <- NA
   }
 
-  if (exists("dwts", dfr) & exists("fwts", dfr)) {
-    if ("pdm" %in% on)
-      ow <- c(ow, "pdm")
-    dfr$pdm <- dfr$dwts / dfr$fwts * 100
-    dfr$pdm[dfr$fwts == 0] <- NA
+  if (exists("dwts1", dfr) & exists("fwts1", dfr)) {
+    if ("dm1" %in% on)
+      ow <- c(ow, "dm1")
+    dfr$dm1 <- dfr$dwts1 / dfr$fwts1 * 100
+    dfr$dm1[dfr$fwts1 == 0] <- NA
+  }
+
+  if (exists("dwts2", dfr) & exists("fwts2", dfr)) {
+    if ("dm2" %in% on)
+      ow <- c(ow, "dm2")
+    dfr$dm2 <- dfr$dwts2 / dfr$fwts2 * 100
+    dfr$dm2[dfr$fwts2 == 0] <- NA
+  }
+
+  if (exists("avdm", dfr) & exists("dm1", dfr) & exists("dm2", dfr)) {
+    if ("avdm" %in% on)
+      ow <- c(ow, "avdm")
+    dfr$avdm <- apply(dfr[, c("dwts1", "dwts2")], 1, mean, na.rm = TRUE) * 100
   }
 
   # Percentages for plants emerged and harvested

@@ -763,7 +763,8 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 1,   "rdw",   "rfw", "- Root dry weight (rdw) is greater than root fresh weight (rfw) per plant:")
   sp1(dfr, 1,   "tdw",   "tfw", "- Tuber dry weight (tdw) is greater than tuber fresh weight (tfw) per plant:")
   sp1(dfr, 1,  "tbdw",  "tbfw", "- Total biomass dry weight (tbdw) is greater than total biomass fresh weight (tbfw) per plant:")
-  sp1(dfr, 1,  "dwts",  "fwts", "- Dry weight of tuber sample (dwts) is greater than fresh weight of tuber sample (fwts):")
+  sp1(dfr, 1, "dwts1", "fwts1", "- Dry weight of tuber sample 1 (dwts1) is greater than fresh weight of tuber sample 1 (fwts1):")
+  sp1(dfr, 1, "dwts2", "fwts2", "- Dry weight of tuber sample 2 (dwts2) is greater than fresh weight of tuber sample 2 (fwts2):")
   
   # Inconsistencies for: tntp > nmtp, nnomtp, nmtci, nmtcii | tntpl > nmtpl | nmtp > nmtci, nmtcii
   
@@ -817,7 +818,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "nph",   "tfw", "- Number of plants harvested (nph) is zero but tuber fresh weight per plant (tfw) is greater than zero:")
   sp1(dfr, 3, "nph",  "tbfw", "- Number of plants harvested (nph) is zero but total biomass fresh weight per plant (tbfw) is greater than zero:")
   sp1(dfr, 3, "nph", "hi_fw", "- Number of plants harvested (nph) is zero but harvest index fresh weight (hi_fw) is greater than zero:")
-  sp1(dfr, 3, "nph",  "fwts", "- Number of plants harvested (nph) is zero but fresh weight of tuber sample (fwts) is greater than zero:")
   
   sp1(dfr, 3, "nph", "stldw", "- Number of plants harvested (nph) is zero but stolon dry weight per plant (stldw) is greater than zero:")
   sp1(dfr, 3, "nph",   "sdw", "- Number of plants harvested (nph) is zero but stem dry weight per plant (sdw) is greater than zero:")
@@ -826,12 +826,13 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp1(dfr, 3, "nph",   "tdw", "- Number of plants harvested (nph) is zero but tuber dry weight per plant (tdw) is greater than zero:")
   sp1(dfr, 3, "nph",  "tbdw", "- Number of plants harvested (nph) is zero but total biomass dry weight per plant (tbdw) is greater than zero:")
   sp1(dfr, 3, "nph", "hi_dw", "- Number of plants harvested (nph) is zero but harvest index dry weight (hi_dw) is greater than zero:")
-  sp1(dfr, 3, "nph",  "dwts", "- Number of plants harvested (nph) is zero but dry weight of tuber sample (dwts) is greater than zero:")
   
   sp1(dfr, 3, "nph", "ldmcp", "- Number of plants harvested (nph) is zero but leaf dry matter content per plot (ldmcp) is greater than zer:")
   sp1(dfr, 3, "nph", "sdmcp", "- Number of plants harvested (nph) is zero but stem dry matter content per plot (sdmcp) is greater than zer:")
   sp1(dfr, 3, "nph", "rdmcp", "- Number of plants harvested (nph) is zero but root dry matter content per plot (rdmcp) is greater than zer:")
   sp1(dfr, 3, "nph", "tdmcp", "- Number of plants harvested (nph) is zero but tuber dry matter content per plot (tdmcp) is greater than zer:")
+
+  sp1(dfr, 3, "nph",  "avdm", "- Number of plants harvested (nph) is zero but average tuber dry matter content (avdm) is greater than zero:")
   sp1(dfr, 3, "nph",   "pdm", "- Number of plants harvested (nph) is zero but tuber dry matter content (pdm) is greater than zero:")
   
   # Inconsistencies for root
@@ -1052,7 +1053,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower",   "tfw", "- Out of range for tuber fresh weight per plant (tfw):")
   sp4(dfr, "lower",  "tbfw", "- Out of range for total biomass fresh weight per plant (tbfw):")
   sp4(dfr, "lower", "hi_fw", "- Out of range for harvest index fresh weight (hi_fw):")
-  sp4(dfr, "lower",  "fwts", "- Out of range for fresh weight of tuber sample (fwts):")
   
   sp5(dfr, f,  "low", "stlfw", "- Extreme low values for stolon fresh weight per plant (stlfw):")
   sp5(dfr, f,  "low",   "sfw", "- Extreme low values for stem fresh weight per plant (sfw):")
@@ -1061,7 +1061,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f,  "low",   "tfw", "- Extreme low values for tuber fresh weight per plant (tfw):")
   sp5(dfr, f,  "low",  "tbfw", "- Extreme low values for total biomass fresh weight per plant (tbfw):")
   sp5(dfr, f,  "low", "hi_fw", "- Extreme low values for harvest index fresh weight (hi_fw):")
-  sp5(dfr, f,  "low",  "fwts", "- Extreme low values for fresh weight of tuber sample (fwts):")
   
   sp5(dfr, f, "high", "stlfw", "- Extreme high values for stolon fresh weight per plant (stlfw):")
   sp5(dfr, f, "high",   "sfw", "- Extreme high values for stem fresh weight per plant (sfw):")
@@ -1070,8 +1069,7 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f, "high",   "tfw", "- Extreme high values for tuber fresh weight per plant (tfw):")
   sp5(dfr, f, "high",  "tbfw", "- Extreme high values for total biomass fresh weight per plant (tbfw):")
   sp5(dfr, f, "high", "hi_fw", "- Extreme high values for harvest index fresh weight (hi_fw):")
-  sp5(dfr, f, "high",  "fwts", "- Extreme high values for fresh weight of tuber sample (fwts):")
-  
+
   # Extreme values detection and out of range for dry weight
   
   sp4(dfr, "lower", "stldw", "- Out of range for stolon dry weight per plant (stldw):")
@@ -1081,8 +1079,7 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp4(dfr, "lower",   "tdw", "- Out of range for tuber dry weight per plant (tdw):")
   sp4(dfr, "lower",  "tbdw", "- Out of range for total biomass dry weight per plant (tbdw):")
   sp4(dfr, "lower", "hi_dw", "- Out of range for harvest index dry weight (hi_dw):")
-  sp4(dfr, "lower",  "dwts", "- Out of range for dry weight of tuber sample (dwts):")
-  
+
   sp5(dfr, f,  "low", "stldw", "- Extreme low values for stolon dry weight per plant (stldw):")
   sp5(dfr, f,  "low",   "sdw", "- Extreme low values for stem dry weight per plant (sdw):")
   sp5(dfr, f,  "low",   "ldw", "- Extreme low values for leaf dry weight per plant (ldw):")
@@ -1090,7 +1087,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f,  "low",   "tdw", "- Extreme low values for tuber dry weight per plant (tdw):")
   sp5(dfr, f,  "low",  "tbdw", "- Extreme low values for total biomass dry weight per plant (tbdw):")
   sp5(dfr, f,  "low", "hi_dw", "- Extreme low values for harvest index dry weight (hi_dw):")
-  sp5(dfr, f,  "low",  "dwts", "- Extreme low values for dry weight of tuber sample (dwts):")
   
   sp5(dfr, f, "high", "stldw", "- Extreme high values for stolon dry weight per plant (stldw):")
   sp5(dfr, f, "high",   "sdw", "- Extreme high values for stem dry weight per plant (sdw):")
@@ -1099,21 +1095,48 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f, "high",   "tdw", "- Extreme high values for tuber dry weight per plant (tdw):")
   sp5(dfr, f, "high",  "tbdw", "- Extreme high values for total biomass dry weight per plant (tbdw):")
   sp5(dfr, f, "high", "hi_dw", "- Extreme high values for harvest index dry weight (hi_dw):")
-  sp5(dfr, f, "high",  "dwts", "- Extreme high values for dry weight of tuber sample (dwts):")
   
+  # Extreme values detection and out of range for dry matter content determination
+
+  sp4(dfr, "lower", "fwts1", "- Out of range for fresh weight of tuber sample 1 (fwts1):")
+  sp4(dfr, "lower", "fwts2", "- Out of range for fresh weight of tuber sample 2 (fwts2):")
+  sp4(dfr, "lower",  "dwt1", "- Out of range for dry weight of tuber sample 1 (dwts1):")
+  sp4(dfr, "lower",  "dwt2", "- Out of range for dry weight of tuber sample 2 (dwts2):")
+  
+  sp5(dfr, f,  "low", "fwts1", "- Extreme low values for fresh weight of tuber sample 1 (fwts1):")
+  sp5(dfr, f,  "low", "fwts2", "- Extreme low values for fresh weight of tuber sample 2 (fwts2):")
+  sp5(dfr, f,  "low", "dwts1", "- Extreme low values for dry weight of tuber sample 1 (dwts1):")
+  sp5(dfr, f,  "low", "dwts2", "- Extreme low values for dry weight of tuber sample 2 (dwts2):")
+  
+  sp5(dfr, f, "high", "fwts1", "- Extreme high values for fresh weight of tuber sample (fwts1):")
+  sp5(dfr, f, "high", "fwts2", "- Extreme high values for fresh weight of tuber sample (fwts2):")
+  sp5(dfr, f, "high", "dwts1", "- Extreme high values for dry weight of tuber sample (dwts1):")
+  sp5(dfr, f, "high", "dwts2", "- Extreme high values for dry weight of tuber sample (dwts2):")
+
   # Extreme values detection for dry content
   
   sp5(dfr, f,  "low", "ldmcp", "- Extreme low values for leaf dry matter content per plot (ldmcp):")
   sp5(dfr, f,  "low", "sdmcp", "- Extreme low values for stem dry matter content per plot (sdmcp):")
   sp5(dfr, f,  "low", "rdmcp", "- Extreme low values for root dry matter content per plot (rdmcp):")
   sp5(dfr, f,  "low", "tdmcp", "- Extreme low values for tuber dry matter content per plot (tdmcp):")
-  sp5(dfr, f,  "low",   "pdm", "- Extreme low values for tuber dry matter content (pdm):")
 
   sp5(dfr, f, "high", "ldmcp", "- Extreme high values for leaf dry matter content per plot (ldmcp):")
   sp5(dfr, f, "high", "sdmcp", "- Extreme high values for stem dry matter content per plot (sdmcp):")
   sp5(dfr, f, "high", "rdmcp", "- Extreme high values for root dry matter content per plot (rdmcp):")
   sp5(dfr, f, "high", "tdmcp", "- Extreme high values for tuber dry matter content per plot (tdmcp):")
+
+  # Extreme values detection for dry matter
+
+  sp5(dfr, f,  "low",   "dm1", "- Extreme low values for tuber dry matter content sample 1 (dm1):")
+  sp5(dfr, f,  "low",   "dm2", "- Extreme low values for tuber dry matter content sample 2 (dm2):")
+  sp5(dfr, f,  "low",  "avdm", "- Extreme low values for average tuber dry matter content (avdm):")
+  sp5(dfr, f,  "low",   "pdm", "- Extreme low values for tuber dry matter content (pdm):")
+  
+  sp5(dfr, f, "high",   "dm1", "- Extreme high values for tuber dry matter content sample 1 (dm1):")
+  sp5(dfr, f, "high",   "dm2", "- Extreme high values for tuber dry matter content sample 2 (dm2):")
+  sp5(dfr, f, "high",  "avdm", "- Extreme high values for average tuber dry matter content (avdm):")
   sp5(dfr, f, "high",   "pdm", "- Extreme high values for tuber dry matter content (pdm):")
+  
 
   # Extreme values detection for tuber characteristics data
   
@@ -1436,7 +1459,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp6(dfr, geno, env, rep,   "tfw", out.mod, out.max, "- Outliers for tuber fresh weight per plant (tfw):")
     sp6(dfr, geno, env, rep,  "tbfw", out.mod, out.max, "- Outliers for total biomass fresh weight per plant (tbfw):")
     sp6(dfr, geno, env, rep, "hi_fw", out.mod, out.max, "- Outliers for harvest index fresh weight (hi_fw):")
-    sp6(dfr, geno, env, rep,  "fwts", out.mod, out.max, "- Outliers for fresh weight of tuber sample (fwts):")
     
     sp6(dfr, geno, env, rep, "stldw", out.mod, out.max, "- Outliers for stolon dry weight per plant (stlfd):")
     sp6(dfr, geno, env, rep,   "sdw", out.mod, out.max, "- Outliers for stem dry weight per plant (sdw):")
@@ -1445,14 +1467,22 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp6(dfr, geno, env, rep,   "tdw", out.mod, out.max, "- Outliers for tuber dry weight per plant (tdw):")
     sp6(dfr, geno, env, rep,  "tbdw", out.mod, out.max, "- Outliers for total biomass dry weight per plant (tbdw):")
     sp6(dfr, geno, env, rep, "hi_dw", out.mod, out.max, "- Outliers for harvest index dry weight (hi_dw):")
-    sp6(dfr, geno, env, rep,  "ddwts", out.mod, out.max, "- Outliers for dry weight of tuber sample (dwts):")
+
+    sp6(dfr, geno, env, rep, "fwts1", out.mod, out.max, "- Outliers for fresh weight of tuber sample 1 (fwts1):")
+    sp6(dfr, geno, env, rep, "fwts2", out.mod, out.max, "- Outliers for fresh weight of tuber sample 2 (fwts2):")
+    sp6(dfr, geno, env, rep, "dwts1", out.mod, out.max, "- Outliers for dry weight of tuber sample 1 (dwts1):")
+    sp6(dfr, geno, env, rep, "dwts2", out.mod, out.max, "- Outliers for dry weight of tuber sample 2 (dwts2):")
     
     sp6(dfr, geno, env, rep, "ldmcp", out.mod, out.max, "- Outliers for leaf dry matter content per plot (ldmcp):")
     sp6(dfr, geno, env, rep, "sdmcp", out.mod, out.max, "- Outliers for stem dry matter content per plot (sdmcp):")
     sp6(dfr, geno, env, rep, "rdmcp", out.mod, out.max, "- Outliers for root dry matter content per plot (rdmcp):")
     sp6(dfr, geno, env, rep, "tdmcp", out.mod, out.max, "- Outliers for tuber dry matter content per plot (tdmcp):")
-    sp6(dfr, geno, env, rep,   "pdm", out.mod, out.max, "- Outliers for tuber dry matter content (pdm):")
 
+    sp6(dfr, geno, env, rep,   "dm1", out.mod, out.max, "- Outliers for tuber dry matter content sample 1 (dm1):")
+    sp6(dfr, geno, env, rep,   "dm2", out.mod, out.max, "- Outliers for tuber dry matter content sample 2 (dm2):")
+    sp6(dfr, geno, env, rep,  "avdm", out.mod, out.max, "- Outliers for average tuber dry matter content (avdm):")
+    sp6(dfr, geno, env, rep,   "pdm", out.mod, out.max, "- Outliers for tuber dry matter content (pdm):")
+    
     sp6(dfr, geno, env, rep,  "twa", out.mod, out.max, "- Outliers for tuber weight in air (twa):")
     sp6(dfr, geno, env, rep,  "tww", out.mod, out.max, "- Outliers for tuber weight in water (tww):")
     sp6(dfr, geno, env, rep, "rsdw", out.mod, out.max, "- Outliers for root system dry weight per plant (rsdw):")

@@ -26,8 +26,8 @@
 #'  \item \code{pnn} (percentage non-negative traits): \code{ppe}, \code{pph},  
 #'  \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
 #'  
-#'  \item \code{ppo} (percentage positive traits): \code{pdm}, \code{pro},
-#'  \code{star}, \code{fiber}, \code{sdmcp}, and \code{ldmcp}.
+#'  \item \code{ppo} (percentage positive traits): \code{avdm}, \code{pdm},
+#'  \code{pro}, \code{star}, \code{fiber}, \code{sdmcp}, and \code{ldmcp}.
 #'
 #'  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe},
 #'  \code{nph}, \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and
@@ -108,7 +108,7 @@ setna.pt <- function(dfr, f = 10) {
   
   # Percentage positive traits
   
-  ppo <- c("pdm", "pro", "star", "fiber", "sdmcp", "ldmcp")
+  ppo <- c("avdm", "pdm", "pro", "star", "fiber", "sdmcp", "ldmcp")
   
   # Discrete non-negative traits
   
