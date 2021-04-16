@@ -216,10 +216,10 @@ rules.sp <- function(dfr, f, out.mod, out.max, add) {
     sp1(dfr, 3, "nopr", "rytha", "- Number of plants with roots (nopr) is zero but root yield in tons per hectare (rytha) is greater than zero:")
     sp1(dfr, 3, "rytha", "nopr", "- Root yield in tons per hectare (rytha) is zero but number of plants with roots (nopr) is greater than zero:")
   }
-  sp1(dfr, 2, "nopr", "alcdam", "- Number of plants with roots (nopr) is zero but there is data for alcidodes sp. damage (alcdam):")
-  sp1(dfr, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
-  sp1(dfr, 2, "nopr", "stspwv", "- Number of plants with roots (nopr) is zero but there is data for reaction to striped weevil (stspwv):")
-  sp1(dfr, 2, "nopr", "milldam", "- Number of plants with roots (nopr) is zero but there is data for millipede damage (milldam):")
+#  sp1(dfr, 2, "nopr", "alcdam", "- Number of plants with roots (nopr) is zero but there is data for alcidodes sp. damage (alcdam):")
+#  sp1(dfr, 2, "nopr", "wed", "- Number of plants with roots (nopr) is zero but there is data for weevil damage (wed):")
+#  sp1(dfr, 2, "nopr", "stspwv", "- Number of plants with roots (nopr) is zero but there is data for reaction to striped weevil (stspwv):")
+#  sp1(dfr, 2, "nopr", "milldam", "- Number of plants with roots (nopr) is zero but there is data for millipede damage (milldam):")
   
   # Number of roots and root weight
   
@@ -273,10 +273,10 @@ rules.sp <- function(dfr, f, out.mod, out.max, add) {
   sp2(dfr, temp, do, "rtshp", "- There are no roots but there is data for root shape (rtshp):")
   sp2(dfr, temp, do, "damr", "- There are no roots but there is data for root defects (damr):")
   sp2(dfr, temp, do, "rspr", "- There are no roots but there is data for root sprouting (rspr):")
-  sp2(dfr, temp, do, "alcdam", "- There are no roots but there is data for alcidodes sp. damage (alcdam):")
-  sp2(dfr, temp, do, "wed", "- There are no roots but there is data for weevil damage (wed):")
-  sp2(dfr, temp, do, "stspwv", "- There are no roots but there is data for reaction to striped weevil (stspwv):")
-  sp2(dfr, temp, do, "milldam", "- There are no roots but there is data for millipede damage (milldam):")
+#  sp2(dfr, temp, do, "alcdam", "- There are no roots but there is data for alcidodes sp. damage (alcdam):")
+#  sp2(dfr, temp, do, "wed", "- There are no roots but there is data for weevil damage (wed):")
+#  sp2(dfr, temp, do, "stspwv", "- There are no roots but there is data for reaction to striped weevil (stspwv):")
+#  sp2(dfr, temp, do, "milldam", "- There are no roots but there is data for millipede damage (milldam):")
   sp2(dfr, temp, do, "dmf", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (dmf):")
   sp2(dfr, temp, do, "dmd", "- There are no roots but there is data for dry weight of roots for dry matter assessment (dmd):")
   sp1(dfr, 1, "dmd", "dmf", "- Dry weight of roots for dry matter assessment (dmd) is greater than fresh weight of roots for dry matter assessment (dmf):")
