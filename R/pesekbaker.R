@@ -68,7 +68,7 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
   nt <- length(traits) # number of traits
   rs <- NULL # response to selection
   
-  # run ecm to get covariance and correlationi matrices
+  # run ecm to get covariance and correlation matrices
   
   cm <- ecm(traits, geno, env, rep, dfr, method)
   
