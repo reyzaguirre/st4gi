@@ -31,7 +31,7 @@ sp1 <- function(dfr, type, t1, t2, tx) {
 
 sp2 <- function(dfr, temp, do, t1, tx) {
   if (exists(t1, dfr) & do == TRUE) {
-    cond <- temp == FALSE & dfr[, t1] > 0 & !is.na(dfr[, t1])
+    cond <- temp == TRUE & dfr[, t1] > 0 & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   }
 }
@@ -233,46 +233,24 @@ rules.sp <- function(dfr, f, out.mod, out.max, add) {
   # Roots and dependencies
 
   temp <- array(FALSE, dim(dfr)[1])
-  temp.na <- array(TRUE, dim(dfr)[1])
   do <- FALSE
   
   if (exists("nopr", dfr)) {
-    temp <- temp | (!is.na(dfr$nopr) & dfr$nopr > 0)
-    temp.na <- temp.na & is.na(dfr$nopr)
+    temp <- temp | (!is.na(dfr$nopr) & dfr$nopr == 0)
     do <- TRUE
   }
-  if (exists("nocr", dfr)) {
-    temp <- temp | (!is.na(dfr$nocr) & dfr$nocr > 0)
-    temp.na <- temp.na & is.na(dfr$nocr)
-    do <- TRUE
-  }
-  if (exists("nonc", dfr)) {
-    temp <- temp | (!is.na(dfr$nonc) & dfr$nonc > 0)
-    temp.na <- temp.na & is.na(dfr$nonc)
-    do <- TRUE
-  }
-  if (exists("crw", dfr)) {
-    temp <- temp | (!is.na(dfr$crw) & dfr$crw > 0)
-    temp.na <- temp.na & is.na(dfr$crw)
-    do <- TRUE
-  }
-  if (exists("ncrw", dfr)) {
-    temp <- temp | (!is.na(dfr$ncrw) & dfr$ncrw > 0)
-    temp.na <- temp.na & is.na(dfr$ncrw)
+  if (exists("tnr", dfr)) {
+    temp <- temp | (!is.na(dfr$tnr) & dfr$tnr == 0)
     do <- TRUE
   }
   if (exists("trw", dfr)) {
-    temp <- temp | (!is.na(dfr$trw) & dfr$trw > 0)
-    temp.na <- temp.na & is.na(dfr$trw)
+    temp <- temp | (!is.na(dfr$trw) & dfr$trw == 0)
     do <- TRUE
   }
   if (exists("rytha", dfr)) {
-    temp <- temp | (!is.na(dfr$rytha) & dfr$rytha > 0)
-    temp.na <- temp.na & is.na(dfr$rytha)
+    temp <- temp | (!is.na(dfr$rytha) & dfr$rytha == 0)
     do <- TRUE
   }
-  
-  temp <- temp | temp.na
   
   sp2(dfr, temp, do, "fcol.cc", "- There are no roots but there is data for root flesh color using RHS color charts (fcol.cc):")
   sp2(dfr, temp, do, "scol", "- There are no roots but there is data for storage root skin color (scol):")
@@ -283,10 +261,6 @@ rules.sp <- function(dfr, f, out.mod, out.max, add) {
   sp2(dfr, temp, do, "rtshp", "- There are no roots but there is data for root shape (rtshp):")
   sp2(dfr, temp, do, "damr", "- There are no roots but there is data for root defects (damr):")
   sp2(dfr, temp, do, "rspr", "- There are no roots but there is data for root sprouting (rspr):")
-#  sp2(dfr, temp, do, "alcdam", "- There are no roots but there is data for alcidodes sp. damage (alcdam):")
-#  sp2(dfr, temp, do, "wed", "- There are no roots but there is data for weevil damage (wed):")
-#  sp2(dfr, temp, do, "stspwv", "- There are no roots but there is data for reaction to striped weevil (stspwv):")
-#  sp2(dfr, temp, do, "milldam", "- There are no roots but there is data for millipede damage (milldam):")
   sp2(dfr, temp, do, "dmf", "- There are no roots but there is data for fresh weight of roots for dry matter assessment (dmf):")
   sp2(dfr, temp, do, "dmd", "- There are no roots but there is data for dry weight of roots for dry matter assessment (dmd):")
   sp1(dfr, 1, "dmd", "dmf", "- Dry weight of roots for dry matter assessment (dmd) is greater than fresh weight of roots for dry matter assessment (dmf):")
@@ -865,62 +839,22 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   do <- FALSE
   
   if (exists("tntp", dfr)) {
-    temp <- temp | (is.na(dfr$tntp) | dfr$tntp > 0)
+    temp <- temp | (!is.na(dfr$tntp) & dfr$tntp == 0)
     do <- TRUE
   }
   if (exists("tntpl", dfr)) {
-    temp <- temp | (is.na(dfr$tntpl) | dfr$tntpl > 0)
-    do <- TRUE
-  }
-  if (exists("nmtp", dfr)) {
-    temp <- temp | (is.na(dfr$nmtp) | dfr$nmtp > 0)
-    do <- TRUE
-  }
-  if (exists("nmtpl", dfr)) {
-    temp <- temp | (is.na(dfr$nmtpl) | dfr$nmtpl > 0)
-    do <- TRUE
-  }
-  if (exists("nnomtp", dfr)) {
-    temp <- temp | (is.na(dfr$nnomtp) | dfr$nnomtp > 0)
-    do <- TRUE
-  }
-  if (exists("nmtci", dfr)) {
-    temp <- temp | (is.na(dfr$nmtci) | dfr$nmtci > 0)
-    do <- TRUE
-  }
-  if (exists("nmtcii", dfr)) {
-    temp <- temp | (is.na(dfr$nmtcii) | dfr$nmtcii > 0)
+    temp <- temp | (!is.na(dfr$tntpl) & dfr$tntpl == 0)
     do <- TRUE
   }
   if (exists("ttwp", dfr)) {
-    temp <- temp | (is.na(dfr$ttwp) | dfr$ttwp > 0)
+    temp <- temp | (!is.na(dfr$ttwp) & dfr$ttwp == 0)
     do <- TRUE
   }
   if (exists("ttwpl", dfr)) {
-    temp <- temp | (is.na(dfr$ttwpl) | dfr$ttwpl > 0)
+    temp <- temp | (!is.na(dfr$ttwpl) & dfr$ttwpl == 0)
     do <- TRUE
   }
-  if (exists("mtwp", dfr)) {
-    temp <- temp | (is.na(dfr$mtwp) | dfr$mtwp > 0)
-    do <- TRUE
-  }
-  if (exists("mtwpl", dfr)) {
-    temp <- temp | (is.na(dfr$mtwpl) | dfr$mtwpl > 0)
-    do <- TRUE
-  }
-  if (exists("nomtwp", dfr)) {
-    temp <- temp | (is.na(dfr$nomtwp) | dfr$nomtwp > 0)
-    do <- TRUE
-  }
-  if (exists("mtwci", dfr)) {
-    temp <- temp | (is.na(dfr$mtwci) | dfr$mtwci > 0)
-    do <- TRUE
-  }
-  if (exists("mtwci", dfr)) {
-    temp <- temp | (is.na(dfr$mtwcii) | dfr$mtwcii > 0)
-    do <- TRUE
-  }
-  
+
   sp2(dfr, temp, do, "twa", "- There are no tubers but there is data for tuber weight in air (twa):")
   sp2(dfr, temp, do, "tww", "- There are no tubers but there is data for tuber weight in water (tww):")
   sp2(dfr, temp, do,  "sg", "- There are no tubers but there is data for tuber specific gravity (sg):")
