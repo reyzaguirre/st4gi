@@ -782,7 +782,6 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   sp1(dfr, 1,  "mtya",  "ttya", "- Marketable tuber yield adjusted (mtya) is greater than total tuber yield adjusted (ttya):")
   sp1(dfr, 1, "mtyna", "ttyna", "- Marketable tuber yield no adjusted (mtyna) is greater than total tuber yield no adjusted (ttyna):")
-  sp1(dfr, 1,  "atmw",   "atw", "- Average of marketable tuber weight (atmw) is greater than average of tuber weight (atw):")
 
   # Number and Weight of tubers 
   
