@@ -872,6 +872,9 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   
   # Values out of range for discrete data
   
+  sp3(dfr, NULL, "ntp", "- Out of range values for number of tubers planted (ntp):")
+  sp3(dfr, NULL, "npe", "- Out of range values for number of plants emerged (npe):")
+  sp3(dfr, NULL, "nph", "- Out of range values for number of plants harvested (nph):")
   vv = c(1, 3, 5, 7, 9, NA)
   sp3(dfr, vv,  "plant_unif", "- Out of range values for plant uniformity (plant_unif):")
   sp3(dfr, vv, "plant_vigor", "- Out of range values for plant vigor (plan_vigor):")
@@ -888,11 +891,8 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp3(dfr, vv,  xtemp, paste0("- Out of range values for plant wilting evaluation ", i, " (", xtemp, "):"))
   }
   
-  # Values out of range for ntp, npe and nph data
+  # Values out of range for pph and ppe
   
-  sp4(dfr, "lower", "ntp", "- Out of range values for number of tubers planted (ntp):")
-  sp4(dfr, "lower", "npe", "- Out of range values for number of plants emerged (npe):")
-  sp4(dfr, "lower", "nph", "- Out of range values for number of plants harvested (nph):")
   sp4(dfr,  "both", "pph", "- Out of range values for proportion of plants harvested (pph):")
   sp4(dfr,  "both", "ppe", "- Out of range values for proportion of plants emerged (ppe):")
   
