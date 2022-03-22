@@ -34,6 +34,11 @@ friedman.t <- function(trait, treat, block, dfr, alpha = 0.05,
   dmx <- by(dfr[, trait], dfr[, c(block, treat)], mean, na.rm = TRUE)
   dmx <- as.data.frame(dmx[, ])
   
+  # Check NA's
+  
+  if (sum(is.na(dmx)) > 0)
+    stop("There are NA values")
+  
   # Number of treatments and blocks
   
   b <- dim(dmx)[1]
@@ -74,7 +79,7 @@ friedman.t <- function(trait, treat, block, dfr, alpha = 0.05,
  
   # Create groups of non-significant differences
   
-  groups <- data.frame(sort(R), '')
+  groups <- data.frame(sort(R, decreasing = TRUE), '')
   groups[, 2] <- as.character(groups[, 2])
   
   i <- 1
