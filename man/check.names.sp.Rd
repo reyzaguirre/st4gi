@@ -114,42 +114,42 @@ or COMP (compound trait) number according to https://sweetpotatobase.org/
  }
 -------------------- Calculated traits --------------------
  \itemize{
- \item \code{tnr}       : Total number of roots per plot (CO_331:0000233).
- \item \code{trw}       : Total root weight in kg/plot (CO_331:0000237).
- \item \code{trw.d}     : Total root dry weight in kg/plot (CO_331:0000995).
- \item \code{biom}      : Biomass yield in kg/plot (CO_331:0000683).
- \item \code{biom.d}    : Biomass dry yield in kg/plot (CO_331:0000997).
- \item \code{cytha}     : Commercial root yield in t/ha (CO_331:0000809).
- \item \code{cytha.aj}  : Commercial root yield in t/ha adjusted by number of harvested plants (CO_331:0000998).
- \item \code{rytha}     : Total root yield in t/ha (CO_331:0000296).
- \item \code{rytha.aj}  : Total root yield in t/ha adjusted by number of harvested plants (CO_331:0000999).
- \item \code{dmry}      : Dry matter root yield in t/ha (CO_331:0001000).
- \item \code{dmry.aj}   : Dry matter root yield in t/ha adjusted by number of harvested plants (CO_331:0001001).
- \item \code{vw.d}      : Vine dry weight in kg/plot (CO_331:0000996).
- \item \code{fytha}     : Foliage total yield in t/ha (CO_331:0000684).
- \item \code{fytha.aj}  : Foliage total yield in t/ha adjusted by number of harvested plants (CO_331:0001002).
- \item \code{dmvy}      : Dry matter vine yield in t/ha (CO_331:0001005).
- \item \code{dmvy.aj}   : Dry matter vine yield in t/ha adjusted by number of harvested plants (CO_331:0001006).
- \item \code{bytha}     : Biomass yield in t/ha (CO_331:0001003).
- \item \code{bytha.aj}  : Biomass yield in t/ha adjusted by number of harvested plants (CO_331:0001004).
- \item \code{dmby}      : Dry matter biomass in t/ha (CO_331:0001007).
- \item \code{dmby.aj}   : Dry matter biomass in t/ha adjusted by number of harvested plants (CO_331:0001008).
- \item \code{acrw}      : Average commercial root weight in kg/root (CO_331:0000680).
- \item \code{ancrw}     : Average non commercial root weight in kg/root (CO_331:0002039).
- \item \code{atrw}      : Average total root weight in kg/root (CO_331:0002040).
- \item \code{nrpp}      : Number of roots per harvested plant (CO_331:0000230).
- \item \code{nrpsp}     : Number of roots per sowed plant (CO_331:0000994).
- \item \code{ncrpp}     : Number of commercial roots per harvested plant (CO_331:2000036).
- \item \code{ncrpsp}    : Number of commercial roots per sowed plant (CO_331:0000993).
- \item \code{ypp}       : Yield per harvested plant in kg (CO_331:0000681).
- \item \code{ypsp}      : Yield per sowed plant in kg (CO_331:0000989).
- \item \code{vpp}       : Vine weight per harvested plant in kg (CO_331:0000990).
- \item \code{vpsp}      : Vine weight per sowed plant in kg (CO_331:0000991).
- \item \code{rtyldpct}  : Yield as percentage of check (CO_331:0000792).
- \item \code{ci}        : Commercial index \% (CO_331:0000682).
- \item \code{hi}        : Harvest index \% (CO_331:0000302).
- \item \code{shi}       : Harvest sowing index \% (CO_331:0000301).
- \item \code{rfr}       : Root foliage ratio \% (CO_331:0001015).
+ \item \code{tnr}       : Total number of roots per plot (CO_331:0000233/CO_331:0000079).
+ \item \code{trw}       : Total root weight in kg/plot (CO_331:0000237/O_331:0000234).
+ \item \code{trw.d}     : Total root dry weight in kg/plot.
+ \item \code{biom}      : Biomass yield in kg/plot (CO_331:0000683/CO_331:0000311).
+ \item \code{biom.d}    : Biomass dry yield in kg/plot.
+ \item \code{cytha}     : Commercial root yield in t/ha.
+ \item \code{cytha.aj}  : Commercial root yield in t/ha adjusted by number of harvested plants.
+ \item \code{rytha}     : Total root yield in t/ha (CO_331:0000296/CO_331:0000082).
+ \item \code{rytha.aj}  : Total root yield in t/ha adjusted by number of harvested plants.
+ \item \code{dmry}      : Dry matter root yield in t/ha.
+ \item \code{dmry.aj}   : Dry matter root yield in t/ha adjusted by number of harvested plants.
+ \item \code{vw.d}      : Vine dry weight in kg/plot.
+ \item \code{fytha}     : Foliage total yield in t/ha (CO_331:0000684/CO_331:0000312).
+ \item \code{fytha.aj}  : Foliage total yield in t/ha adjusted by number of harvested plants.
+ \item \code{dmvy}      : Dry matter vine yield in t/ha.
+ \item \code{dmvy.aj}   : Dry matter vine yield in t/ha adjusted by number of harvested plants.
+ \item \code{bytha}     : Biomass yield in t/ha.
+ \item \code{bytha.aj}  : Biomass yield in t/ha adjusted by number of harvested plants.
+ \item \code{dmby}      : Dry matter biomass in t/ha.
+ \item \code{dmby.aj}   : Dry matter biomass in t/ha adjusted by number of harvested plants.
+ \item \code{acrw}      : Average commercial root weight in kg/root (CO_331:0000680/CO_331:0000308).
+ \item \code{ancrw}     : Average non commercial root weight in kg/root.
+ \item \code{atrw}      : Average total root weight in kg/root.
+ \item \code{nrpp}      : Number of roots per harvested plant (CO_331:0000230/CO_331:0000079).
+ \item \code{nrpsp}     : Number of roots per sowed plant.
+ \item \code{ncrpp}     : Number of commercial roots per harvested plant.
+ \item \code{ncrpsp}    : Number of commercial roots per sowed plant.
+ \item \code{ypp}       : Yield per harvested plant in kg (CO_331:0000681/CO_331:0000309).
+ \item \code{ypsp}      : Yield per sowed plant in kg.
+ \item \code{vpp}       : Vine weight per harvested plant in kg.
+ \item \code{vpsp}      : Vine weight per sowed plant in kg.
+ \item \code{rtyldpct}  : Yield as percentage of check (CO_331:0000792/CO_331:0000425).
+ \item \code{ci}        : Commercial index \% (CO_331:0000682/CO_331:0000310).
+ \item \code{hi}        : Harvest index \% (CO_331:0000302/CO_331:0000085).
+ \item \code{shi}       : Harvest sowing index \% (CO_331:0000301/CO_331:0000298).
+ \item \code{rfr}       : Root foliage ratio \%.
  }
 }
 \examples{
