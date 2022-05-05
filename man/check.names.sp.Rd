@@ -22,7 +22,7 @@ Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-90
 \details{
 The data frame must use the labels (lower or upper case) listed below.
 Between parentheses the CO numbers for variable/trait according to
-https://github.com/Planteome/CO_331-sweetpotato-traits/blob/master/sweetpotato-trait-ontology_withcropname.obo
+https://github.com/Planteome/CO_331-sweetpotato-traits/blob/master/sweetpotato_trait.obo
 or COMP (compound trait) number according to https://sweetpotatobase.org/
 
  -------------------- Plot identifiers --------------------
