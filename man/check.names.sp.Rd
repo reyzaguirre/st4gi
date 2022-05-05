@@ -20,7 +20,10 @@ Check that fieldbook traits names correspond with the names defined in
 Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-9060-522-5.
 }
 \details{
-The data frame must use the following labels (lower or upper case):
+The data frame must use the labels (lower or upper case) listed below.
+Between parentheses the CO numbers for variable/trait according to
+https://github.com/Planteome/CO_331-sweetpotato-traits/blob/master/sweetpotato-trait-ontology_withcropname.obo
+or COMP (compound trait) number according to https://sweetpotatobase.org/
 
  -------------------- Plot identifiers --------------------
  \itemize{
@@ -43,71 +46,71 @@ The data frame must use the following labels (lower or upper case):
  }
 -------------------- Roots and vines --------------------
  \itemize{
- \item \code{nops}      : Number of plants sowed per plot (CO_331:0000678).
- \item \code{nope}      : Number of plants established per plot (CO_331:0000192).
- \item \code{noph}      : Number of plants harvested per plot (CO_331:0000679).
- \item \code{vir}       : Virus symptoms, 1-9 scale (CO_331:0000193).
+ \item \code{nops}      : Number of plants sowed per plot (CO_331:0000678/CO_331:0000303).
+ \item \code{nope}      : Number of plants established per plot (CO_331:0000192/CO_331:0000189).
+ \item \code{noph}      : Number of plants harvested per plot (CO_331:0000679/CO_331:0000304).
+ \item \code{vir}       : Virus symptoms, 1-9 scale (CO_331:0000193/CO_331:0000094).
  \item \code{vir1}      : Virus symptoms, 1-9 scale, first evaluation, 1 month after planting (COMP:0000023).
  \item \code{vir2}      : Virus symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000024).
- \item \code{alt}       : Alternaria symptoms, 1-9 scale (CO_331:0000198).
+ \item \code{alt}       : Alternaria symptoms, 1-9 scale (CO_331:0000198/CO_331:0000091).
  \item \code{alt1}      : Alternaria symptoms, 1-9 scale, first evaluation, 1 month after planting (COMP:0000026).
  \item \code{alt2}      : Alternaria symptoms, 1-9 scale, second evaluation, 1 month before harvest (COMP:0000022).
- \item \code{vv}        : Vine vigor, 1-9 scale (CO_331:0000197).
- \item \code{vw}        : Vine weight in kg/plot (CO_331:0000227).
- \item \code{nopr}      : Number of plants with roots per plot (CO_331:0000211).
- \item \code{nocr}      : Number of commercial roots per plot (CO_331:0000214).
- \item \code{nonc}      : Number of non commercial roots per plot (CO_331:0000217).
- \item \code{crw}       : Commercial root weight in kg/plot (CO_331:0000220).
- \item \code{ncrw}      : Non commercial root weight in kg/plot (CO_331:0000223).
- \item \code{scol}      : Storage root skin color, 1-9 scale, (CO_331:0000175).
- \item \code{fcol}      : Storage root predominant flesh color, 1-9 scale (CO_331:0000178).
- \item \code{fcol2}     : Storage root secondary flesh color, 1-9 scale (CO_331:0000179).
+ \item \code{vv}        : Vine vigor, 1-9 scale (CO_331:0000197/CO_331:0000194).
+ \item \code{vw}        : Vine weight in kg/plot (CO_331:0000227/CO_331:0000224).
+ \item \code{nopr}      : Number of plants with roots per plot (CO_331:0000211/CO_331:0000208).
+ \item \code{nocr}      : Number of commercial roots per plot (CO_331:0000214/CO_331:0000212).
+ \item \code{nonc}      : Number of non commercial roots per plot (CO_331:0000217/CO_331:0000215).
+ \item \code{crw}       : Commercial root weight in kg/plot (CO_331:0000220/CO_331:0000218).
+ \item \code{ncrw}      : Non commercial root weight in kg/plot (CO_331:0000223/CO_331:0000221).
+ \item \code{scol}      : Storage root skin color, 1-9 scale, (CO_331:0000175/CO_331:0000049).
+ \item \code{fcol}      : Storage root predominant flesh color, 1-9 scale (CO_331:0000178/CO_331:0000058).
+ \item \code{fcol2}     : Storage root secondary flesh color, 1-9 scale (CO_331:0000179/CO_331:0000061).
  \item \code{fcol.cc}   : Root flesh color using RHS color charts, 1-30 scale.
- \item \code{rs}        : Root size, 1-9 scale, (CO_331:0000184).
- \item \code{rf}        : Root form, 1-9 scale, (CO_331:0000202).
- \item \code{rtshp}     : Root shape, 1-9 scale, (CO_331:0000181).
- \item \code{damr}      : Root defects, 1-9 scale, (CO_331:0000206).
- \item \code{rspr}      : Root sprouting, 1-9 scale, (CO_331:0000277).
- \item \code{alcdam}    : Alcidodes sp. damage, 1-9 scale (CO_331:0000806).
- \item \code{wed}       : Weevil damage, 1-9 scale (CO_331:0000207).
- \item \code{stspwv}    : Reaction to striped weevil, 1-9 scale (CO_331:0000720).
- \item \code{milldam}   : Millipede damage, 1-9 scale (CO_331:0000805).
+ \item \code{rs}        : Root size, 1-9 scale, (CO_331:0000184/CO_331:0000076).
+ \item \code{rf}        : Root form, 1-9 scale, (CO_331:0000202/CO_331:0000199).
+ \item \code{rtshp}     : Root shape, 1-9 scale, (CO_331:0000181/CO_331:0000067).
+ \item \code{damr}      : Root damage, 1-9 scale, (CO_331:0000206/CO_331:0000203).
+ \item \code{rspr}      : Root sprouting, 1-9 scale, (CO_331:0000277/CO_331:0000274).
+ \item \code{alcdam}    : Alcidodes sp. damage, 1-9 scale (CO_331:0000806/CO_331:0000439).
+ \item \code{wed}       : Weevil damage, 1-9 scale (CO_331:0000207/CO_331:0000088).
+ \item \code{stspwv}    : Reaction to striped weevil, 1-9 scale (CO_331:0000720/CO_331:0000356).
+ \item \code{milldam}   : Millipede damage, 1-9 scale (CO_331:0000805/CO_331:0000438).
  }
 -------------------- Dry matter assesment --------------------
  \itemize{
- \item \code{dmf}       : Fresh weight of roots for dry matter assessment in g (CO_331:0000243). 
- \item \code{dmd}       : Dry weight of roots for dry matter assessment in g (CO_331:0000247).
- \item \code{dm}        : Storage root dry matter content \% (CO_331:0000297).
- \item \code{dmvf}      : Fresh weight vines for dry matter assessment in g (CO_331:0000251).
- \item \code{dmvd}      : Dry weight vines for dry matter assessment in g (CO_331:0000255).
- \item \code{dmv}       : Vines dry matter content \% (CO_331:0001014).
+ \item \code{dmf}       : Fresh weight of roots for dry matter assessment in g (CO_331:0000243/CO_331:0000240). 
+ \item \code{dmd}       : Dry weight of roots for dry matter assessment in g (CO_331:0000247/CO_331:0000244).
+ \item \code{dm}        : Storage root dry matter content \% (CO_331:0000297/CO_331:0000142).
+ \item \code{dmvf}      : Fresh weight vines for dry matter assessment in g (CO_331:0000251/CO_331:0000248).
+ \item \code{dmvd}      : Dry weight vines for dry matter assessment in g (CO_331:0000255/CO_331:0000252).
+ \item \code{dmv}       : Vines dry matter content \%.
  }
 -------------------- Raw and cooked roots attributes --------------------
  \itemize{
- \item \code{fraw}      : Raw root fiber, 1-9 scale (CO_331:0001038).
- \item \code{suraw}     : Raw root sugar, 1-9 scale (CO_331:0000766).
- \item \code{straw}     : Raw root starch, 1-9 scale (CO_331:0001055).
- \item \code{coof}      : Cooked root fiber, 1-9 scale (CO_331:0000259).
- \item \code{coosu}     : Cooked root sugars, 1-9 scale (CO_331:0000261).
- \item \code{coost}     : Cooked root starch, 1-9 scale (CO_331:0000265).
- \item \code{coot}      : Cooked root taste, 1-9 scale (CO_331:0000269).
- \item \code{cooap}     : Cooked root appearance, 1-9 scale (CO_331:0000273).
+ \item \code{fraw}      : Raw root fiber, 1-9 scale.
+ \item \code{suraw}     : Raw root sugar, 1-9 scale (CO_331:0000766/CO_331:0000402).
+ \item \code{straw}     : Raw root starch, 1-9 scale.
+ \item \code{coof}      : Cooked root fiber, 1-9 scale (CO_331:0000259/CO_331:0000256).
+ \item \code{coosu}     : Cooked root sugars, 1-9 scale (CO_331:0000261/CO_331:0000139).
+ \item \code{coost}     : Cooked root starch, 1-9 scale (CO_331:0000265/CO_331:0000136).
+ \item \code{coot}      : Cooked root taste, 1-9 scale (CO_331:0000269/CO_331:0000266).
+ \item \code{cooap}     : Cooked root appearance, 1-9 scale (CO_331:0000273/CO_331:0000270).
  }
 -------------------- Nutrients evaluations --------------------
  \itemize{
- \item \code{prot}      : Protein, g/100g raw dry weight (CO_331:0000278).
- \item \code{fe}        : Iron, mg/100g raw dry weight measured by NIRS (CO_331:0001016).
- \item \code{zn}        : Zinc, mg/100g raw dry weight measured by NIRS (CO_331:0001017).
- \item \code{ca}        : Calcium, mg/100g raw dry weight measured by NIRS (CO_331:0001029).
- \item \code{mg}        : Magnesium, mg/100g raw dry weight measured by NIRS (CO_331:0001030).
- \item \code{bc}        : Beta-carotene, mg/100g raw dry weight measured by NIRS (CO_331:0000289).
- \item \code{bc.cc}     : Beta-carotene with RHS color charts, mg/100g raw fresh weight (CO_331:0001023).
- \item \code{tc}        : Total carotenoids, mg/100g raw dry weight (CO_331:0000290).
- \item \code{star}      : Starch, g/100g raw dry weight (CO_331:0000291).
- \item \code{fruc}      : Fructose, g/100g raw dry weight (CO_331:0001045).
- \item \code{gluc}      : Glucose, g/100g raw dry weight (CO_331:0001047).
- \item \code{sucr}      : Sucrose, g/100g raw dry weight (CO_331:0001049).
- \item \code{malt}      : Maltose, g/100g raw dry weight (CO_331:0001051).
+ \item \code{prot}      : Protein, g/100g raw dry weight (CO_331:0000278/CO_331:0000100).
+ \item \code{fe}        : Iron, mg/100g raw dry weight measured by NIRS (CO_331:0000279/CO_331:0000103).
+ \item \code{zn}        : Zinc, mg/100g raw dry weight measured by NIRS (CO_331:0000280/CO_331:0000106).
+ \item \code{ca}        : Calcium, mg/100g raw dry weight measured by NIRS (CO_331:0000284/CO_331:0000281).
+ \item \code{mg}        : Magnesium, mg/100g raw dry weight measured by NIRS (CO_331:0000288/CO_331:0000285).
+ \item \code{bc}        : Beta-carotene, mg/100g raw dry weight measured by NIRS (CO_331:0000289/CO_331:0000109).
+ \item \code{bc.cc}     : Beta-carotene with RHS color charts, mg/100g raw fresh weight.
+ \item \code{tc}        : Total carotenoids, mg/100g raw dry weight (CO_331:0000290/CO_331:0000112).
+ \item \code{star}      : Starch, g/100g raw dry weight (CO_331:0000291/CO_331:0000115).
+ \item \code{fruc}      : Fructose, g/100g raw dry weight (CO_331:0000292/CO_331:0000118).
+ \item \code{gluc}      : Glucose, g/100g raw dry weight (CO_331:0000293/CO_331:0000121).
+ \item \code{sucr}      : Sucrose, g/100g raw dry weight (CO_331:0000294/CO_331:0000124).
+ \item \code{malt}      : Maltose, g/100g raw dry weight (CO_331:0000295/CO_331:0000127).
  }
 -------------------- Calculated traits --------------------
  \itemize{

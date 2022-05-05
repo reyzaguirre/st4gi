@@ -4,7 +4,15 @@
 \alias{friedman.t}
 \title{Friedman test}
 \usage{
-friedman.t(trait, treat, block, dfr, alpha = 0.05, print.text = TRUE)
+friedman.t(
+  trait,
+  treat,
+  block,
+  dfr,
+  alpha = 0.05,
+  print.mc = TRUE,
+  print.pc = TRUE
+)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -17,7 +25,9 @@ friedman.t(trait, treat, block, dfr, alpha = 0.05, print.text = TRUE)
 
 \item{alpha}{Significant level for comparisons.}
 
-\item{print.text}{Logical, if \code{TRUE}, it prints output text to console.}
+\item{print.mc}{Logical, if \code{TRUE}, it prints multiple comparisons groups.}
+
+\item{print.pc}{Logical, if \code{TRUE}, it prints pairwise comparisons tests.}
 }
 \value{
 It returns the Friedman test and a the multiple comparisons.
