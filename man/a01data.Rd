@@ -3,7 +3,6 @@
 \docType{data}
 \name{a01data}
 \alias{a01data}
-\alias{alpha01data}
 \title{Data for an alpha (0,1) design}
 \format{
 A data frame.
