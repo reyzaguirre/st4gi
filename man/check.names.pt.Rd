@@ -17,7 +17,7 @@ traits with names not included in the list shown above.
 }
 \description{
 Check that fieldbook traits names correspond with the names defined in 
-\url{http://www.cropontology.org/ontology/CO_330/Potato}
+\url{https://cropontology.org/term/CO_330:ROOT}
 }
 \details{
 The data frame must use the labels (lower or upper case) listed below.

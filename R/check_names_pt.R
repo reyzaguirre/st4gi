@@ -1,7 +1,7 @@
 #' Check fieldbook traits names for potato
 #'
 #' Check that fieldbook traits names correspond with the names defined in 
-#' \url{http://www.cropontology.org/ontology/CO_330/Potato}
+#' \url{https://cropontology.org/term/CO_330:ROOT}
 #' @param dfr The name of the data frame.
 #' @param add Additional traits.
 #' @details The data frame must use the labels (lower or upper case) listed below.

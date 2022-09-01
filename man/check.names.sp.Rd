@@ -16,14 +16,15 @@ It returns a data frame with all traits names in lower case, and a list of the
 traits with names not included in the list shown above.
 }
 \description{
-Check that fieldbook traits names correspond with the names defined in 
+Check that fieldbook factors and traits names correspond with the names defined in 
+\url{https://cropontology.org/term/CO_331:ROOT} and in the 
 Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-9060-522-5.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed below.
-Between parentheses the CO numbers for variable/trait according to
-https://github.com/Planteome/CO_331-sweetpotato-traits/blob/master/sweetpotato_trait.obo
-or COMP (compound trait) number according to https://sweetpotatobase.org/
+Between parentheses are the CO numbers for variables defined in
+\url{https://cropontology.org/term/CO_331:ROOT}
+or COMP numbers defined in \url{https://sweetpotatobase.org/}.
 
  -------------------- Plot identifiers --------------------
  \itemize{
@@ -46,115 +47,115 @@ or COMP (compound trait) number according to https://sweetpotatobase.org/
  }
 -------------------- Roots and vines --------------------
  \itemize{
- \item \code{nops}      : Number of plants planted per NET plot (CO_331:0000678/CO_331:0000303).
- \item \code{nope}      : Number of plants established per NET plot (CO_331:0000192/CO_331:0000189).
- \item \code{noph}      : Number of plants harvested per NET plot (CO_331:0000679/CO_331:0000304).
- \item \code{vir}       : Virus symptoms estimating 1-9 (CO_331:0000193/CO_331:0000094).
+ \item \code{nops}      : Number of plants planted per plot (CO_331:0000678).
+ \item \code{nope}      : Number of plants established per plot (CO_331:0000192).
+ \item \code{noph}      : Number of plants harvested per plot (CO_331:0000679).
+ \item \code{vir}       : Virus symptoms estimating 1-9 (CO_331:0000193).
  \item \code{vir1}      : Virus symptoms estimating 1-9, first evaluation, 1 month after planting (COMP:0000023).
  \item \code{vir2}      : Virus symptoms estimating 1-9, second evaluation, 1 month before harvest (COMP:0000024).
- \item \code{alt}       : Alternaria symptoms estimating 1-9 (CO_331:0000198/CO_331:0000091).
+ \item \code{alt}       : Alternaria symptoms estimating 1-9 (CO_331:0000198).
  \item \code{alt1}      : Alternaria symptoms estimating 1-9, first evaluation, 1 month after planting (COMP:0000026).
  \item \code{alt2}      : Alternaria symptoms estimating 1-9, second evaluation, 1 month before harvest (COMP:0000022).
- \item \code{vv}        : Vine vigor estimating 1-9 (CO_331:0000197/CO_331:0000194).
- \item \code{vw}        : Weight of vines per NET plot in kg (CO_331:0000227/CO_331:0000224).
- \item \code{nopr}      : Number of plants with storage roots per NET plot (CO_331:0000211/CO_331:0000208).
- \item \code{nocr}      : Number of commercial storage roots per NET plot (CO_331:0000214/CO_331:0000212).
- \item \code{nonc}      : Number of non-commercial storage roots per NET plot (CO_331:0000217/CO_331:0000215).
- \item \code{crw}       : Weight of commercial storage roots per NET plot in kg (CO_331:0000220/CO_331:0000218).
- \item \code{ncrw}      : Weight of non-commercial storage roots per NET plot in kg (CO_331:0000223/CO_331:0000221).
- \item \code{scol}      : Storage root skin predominant color estimating 1-9 CIP (CO_331:0000175/CO_331:0000049).
- \item \code{fcol}      : Storage root predominant flesh color estimating 1-9 (CO_331:0000178/CO_331:0000058).
- \item \code{fcol2}     : Storage root secondary flesh color estimating 0-9 (CO_331:0000179/CO_331:0000061).
- \item \code{fcol.cc}   : Root flesh color from RHS color chart, 1-30 scale.
- \item \code{rs}        : Storage root size estimating 1-9 (CO_331:0000184/CO_331:0000076).
- \item \code{rf}        : Storage root appearance estimating 1-9 CIP (CO_331:0000202/CO_331:0000199).
- \item \code{rtshp}     : Storage root shape estimating 1-9 CIP (CO_331:0000181/CO_331:0000067).
- \item \code{damr}      : Storage root damage estimating 1-9 (CO_331:0000206/CO_331:0000203).
- \item \code{rspr}      : Sprouting ability estimating 1-9 (CO_331:0000277/CO_331:0000274).
- \item \code{alcdam}    : Alcidodes sp. damage estimating 1-9 (CO_331:0000806/CO_331:0000439).
- \item \code{wed}       : Reaction to sweet potato weevil estimating 1-9 (CO_331:0000207/CO_331:0000088).
- \item \code{stspwv}    : Reaction to Striped sweet potato weevil estimating 1-9 (CO_331:0000720/CO_331:0000356).
- \item \code{milldam}   : Millipede damage estimating 1-9 (CO_331:0000805/CO_331:0000438).
+ \item \code{vv}        : Vine vigor estimating 1-9 (CO_331:0000197).
+ \item \code{vw}        : Weight of vines per plot in kg (CO_331:0000227).
+ \item \code{nopr}      : Number of plants with storage roots per plot (CO_331:0000211).
+ \item \code{nocr}      : Number of commercial storage roots per plot (CO_331:0000214).
+ \item \code{nonc}      : Number of non-commercial storage roots per plot (CO_331:0000217).
+ \item \code{crw}       : Weight of commercial storage roots per plot in kg (CO_331:0000220).
+ \item \code{ncrw}      : Weight of non-commercial storage roots per plot in kg (CO_331:0000223).
+ \item \code{scol}      : Storage root predominant skin color estimating 1-9 (CO_331:0000175).
+ \item \code{fcol}      : Storage root predominant flesh color estimating 1-9 (CO_331:0000178).
+ \item \code{fcol2}     : Storage root secondary flesh color estimating 0-9 (CO_331:0000179).
+ \item \code{fcol.cc}   : Root flesh color from RHS color chart, 1-30.
+ \item \code{rs}        : Storage root size estimating 1-9 (CO_331:0000184).
+ \item \code{rf}        : Storage root appearance estimating 1-9 (CO_331:0000202).
+ \item \code{rtshp}     : Storage root shape estimating 1-9 (CO_331:0000181).
+ \item \code{damr}      : Storage root damage estimating 1-9 (CO_331:0000206).
+ \item \code{rspr}      : Sprouting ability estimating 1-9 (CO_331:0000277).
+ \item \code{alcdam}    : Alcidodes sp. damage estimating 1-9 (CO_331:0000806).
+ \item \code{wed}       : Reaction to sweet potato weevil estimating 1-9 (CO_331:0000207).
+ \item \code{stspwv}    : Reaction to striped sweet potato weevil estimating 1-9 (CO_331:0000720).
+ \item \code{milldam}   : Millipede damage estimating 1-9 (CO_331:0000805).
  }
 -------------------- Dry matter assesment --------------------
  \itemize{
- \item \code{dmf}       : Fresh weight of storage root samples for dry matter assessment measuring g (CO_331:0000243/CO_331:0000240). 
- \item \code{dmd}       : Dry weight of storage root samples for dry matter assessment measuring g (CO_331:0000247/CO_331:0000244).
- \item \code{dm}        : Storage root dry matter content computing percent (CO_331:0000297/CO_331:0000142).
- \item \code{dmvf}      : Fresh weight of vines samples for dry matter assessment measuring g (CO_331:0000251/CO_331:0000248).
- \item \code{dmvd}      : Dry weight of vines samples for dry matter assessment measuring g (CO_331:0000255/CO_331:0000252).
- \item \code{dmv}       : Vine dry matter content computing percent (CO_331:0001014/CO_331:0001084).
+ \item \code{dmf}       : Fresh weight of storage root samples for dry matter assessment measuring g (CO_331:0000243). 
+ \item \code{dmd}       : Dry weight of storage root samples for dry matter assessment measuring g (CO_331:0000247).
+ \item \code{dm}        : Storage root dry matter content computing percent (CO_331:0000297).
+ \item \code{dmvf}      : Fresh weight of vines samples for dry matter assessment measuring g (CO_331:0000251).
+ \item \code{dmvd}      : Dry weight of vines samples for dry matter assessment measuring g (CO_331:0000255).
+ \item \code{dmv}       : Vine dry matter content computing percent (CO_331:0001014).
  }
 -------------------- Raw and cooked roots attributes --------------------
  \itemize{
- \item \code{fraw}      : Fiber content in raw storage roots estimating 1-9 (CO_331:0001038/CO_331:0000130).
- \item \code{suraw}     : Content of total sugars estimating 1-9 (CO_331:0000766/CO_331:0000402).
- \item \code{straw}     : Content of starch in raw storage roots estimating 1-9 (CO_331:0001055/CO_331:0001073).
- \item \code{coof}      : Fiber content in boiled storage roots estimating 1-9 (CO_331:0000259/CO_331:0000256).
- \item \code{coosu}     : Storage root sweetness in cooked samples estimating 1-9 (CO_331:0000261/CO_331:0000139).
- \item \code{coost}     : Storage root texture in boiled samples estimating 1-9 (CO_331:0000265/CO_331:0000136).
- \item \code{coot}      : Boiled storage root flesh taste estimating 1-9 (CO_331:0000269/CO_331:0000266).
- \item \code{cooap}     : Boiled storage root overall appearance estimating 1-9 (CO_331:0000273/CO_331:0000270).
+ \item \code{fraw}      : Fiber content in raw storage roots estimating 1-9 (CO_331:0001038).
+ \item \code{suraw}     : Content of total sugars in raw storage roots estimating 1-9 (CO_331:0000766).
+ \item \code{straw}     : Content of starch in raw storage roots estimating 1-9 (CO_331:0001055).
+ \item \code{coof}      : Fiber content in boiled storage roots estimating 1-9 (CO_331:0000259).
+ \item \code{coosu}     : Storage root sweetness in cooked samples estimating 1-9 (CO_331:0000261).
+ \item \code{coost}     : Storage root texture in boiled samples estimating 1-9 (CO_331:0000265).
+ \item \code{coot}      : Boiled storage root flesh taste estimating 1-9 (CO_331:0000269).
+ \item \code{cooap}     : Boiled storage root overall appearance estimating 1-9 (CO_331:0000273).
  }
 -------------------- Nutrients evaluations --------------------
  \itemize{
- \item \code{prot}      : Content of protein in dry weight basis in raw storage roots measuring percentage (CO_331:0000278/CO_331:0000100).
- \item \code{fe}        : Content of iron in dry weight basis measuring mg per 100g by NIRS (CO_331:0001016/CO_331:0000103).
- \item \code{zn}        : Content of zinc in dry weight basis measuring mg per 100g by NIRS (CO_331:0001017/CO_331:0000106).
- \item \code{ca}        : Content of calcium in dry weight basis measuring mg per 100g by NIRS (CO_331:0001029/CO_331:0000281).
- \item \code{mg}        : Content of magnesium in dry weight basis measuring mg per 100g by NIRS (CO_331:0001030/CO_331:0000285).
- \item \code{bc}        : Content of beta-carotene in dry weight basis in raw storage roots measuring mg per 100g (CO_331:0000289/CO_331:0002051).
- \item \code{bc.cc}     : Content of beta-carotene in fresh weight basis in raw storage roots estimating from RHS color chart in mg per 100g	(CO_331:0001023/CO_331:0000109).
- \item \code{tc}        : Content of total carotenoids in dry weight basis in raw storage roots measuring mg per 100g (CO_331:0000290/CO_331:0002052).
- \item \code{star}      : Content of starch in dry weight basis in raw storage roots measuring percentage (CO_331:0000291/CO_331:0000115).
- \item \code{star.b}    : Content of starch in dry weight basis in boiled storage roots measuring percentage	(CO_331:2000027/CO_331:0000115).
- \item \code{fruc}      : Content of fructose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001045/CO_331:0001067).
- \item \code{fruc.b}    : Content of fructose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001046/CO_331:0001067).
- \item \code{gluc}      : Content of glucose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001047/CO_331:0001069).
- \item \code{gluc.b}    : Content of glucose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001048/CO_331:0001069).
- \item \code{sucr}      : Content of sucrose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001049/CO_331:0001074).
- \item \code{sucr.b}    : Content of sucrose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001050/CO_331:0001074).
- \item \code{malt}      : Content of maltose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001051/CO_331:0001071).
- \item \code{malt.b}    : Content of maltose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001052/CO_331:0001071).
+ \item \code{prot}      : Content of protein in dry weight basis in raw storage roots measuring percentage (CO_331:0000278).
+ \item \code{fe}        : Content of iron in dry weight basis measuring mg per 100g (CO_331:0001016).
+ \item \code{zn}        : Content of zinc in dry weight basis measuring mg per 100g (CO_331:0001017).
+ \item \code{ca}        : Content of calcium in dry weight basis measuring mg per 100g (CO_331:0001029).
+ \item \code{mg}        : Content of magnesium in dry weight basis measuring mg per 100g (CO_331:0001030).
+ \item \code{bc}        : Content of beta-carotene in dry weight basis in raw storage roots measuring mg per 100g (CO_331:0000289).
+ \item \code{bc.cc}     : Content of beta-carotene in fresh weight basis in raw storage roots estimating from RHS color chart in mg per 100g	(CO_331:0001023).
+ \item \code{tc}        : Content of total carotenoids in dry weight basis in raw storage roots measuring mg per 100g (CO_331:0000290).
+ \item \code{star}      : Content of starch in dry weight basis in raw storage roots measuring percentage (CO_331:0000291).
+ \item \code{star.b}    : Content of starch in dry weight basis in boiled storage roots measuring percentage	(CO_331:2000027).
+ \item \code{fruc}      : Content of fructose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001045).
+ \item \code{fruc.b}    : Content of fructose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001046).
+ \item \code{gluc}      : Content of glucose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001047).
+ \item \code{gluc.b}    : Content of glucose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001048).
+ \item \code{sucr}      : Content of sucrose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001049).
+ \item \code{sucr.b}    : Content of sucrose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001050).
+ \item \code{malt}      : Content of maltose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001051).
+ \item \code{malt.b}    : Content of maltose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001052).
  }
 -------------------- Calculated traits --------------------
  \itemize{
- \item \code{tnr}       : Number of storage roots after harvest per NET plot (CO_331:0000233/CO_331:0000079).
- \item \code{trw}       : Total storage root weight per NET plot in kg (CO_331:0000237/O_331:0000234).
- \item \code{trw.d}     : Total storage root weight in dry weight basis per NET plot in kg	(CO_331:0000995/CO_331:0001080).
- \item \code{biom}      : Biomass yield in kg per plot (CO_331:0000683/CO_331:0000311).
- \item \code{biom.d}    : Biomass yield in dry weight basis in kg per plot (CO_331:0000997/CO_331:0001058).
- \item \code{cytha}     : Commercial storage root yield tons per ha (CO_331:0000809/CO_331:0000313).
- \item \code{cytha.aj}  : Commercial storage root yield adjusted by number of harvested plants tons per ha (CO_331:0000998/CO_331:0001059).
- \item \code{rytha}     : Total storage roots yield computation tons per ha (CO_331:0000296/CO_331:0000082).
- \item \code{rytha.aj}  : Total storage roots yield adjusted by number of harvested plants tons per ha	(CO_331:0000999/CO_331:0001081).
- \item \code{dmry}      : Storage root dry matter yield per NET plot in tons per ha (CO_331:0001000/CO_331:0001065).
- \item \code{dmry.aj}   : Storage root dry matter yield adjusted by number of harvested plants per NET plot in tons per ha	(CO_331:0001001/CO_331:0001066).
- \item \code{vw.d}      : Dry weight of vines per NET plot in kg	(CO_331:0000996/CO_331:0001087).
- \item \code{fytha}     : Total foliage yield in tons per ha (CO_331:0000684/CO_331:0000312).
- \item \code{fytha.aj}  : Total foliage yield adjusted by number of harvested plants in tons per ha (CO_331:0001002/CO_331:0001078).
- \item \code{dmvy}      : Vine dry matter yield per NET plot in tons per ha (CO_331:0001005/CO_331:0001085).
- \item \code{dmvy.aj}   : Vine dry matter yield adjusted by number of harvested plants per NET plot in tons per ha	(CO_331:0001006/CO_331:0001086).
- \item \code{bytha}     : Biomass yield in tons per ha	(CO_331:0001003/CO_331:0000311).
- \item \code{bytha.aj}  : Biomass yield adjusted by number of harvested plants in tons per ha (CO_331:0001004/CO_331:0001056).
- \item \code{dmby}      : Biomass yield in dry weight basis in tons per ha (CO_331:0001007/CO_331:0001058).
- \item \code{dmby.aj}   : Biomass yield adjusted by number of harvested plants in dry weight basis in tons per ha (CO_331:0001008/CO_331:0001057).
- \item \code{acrw}      : Average commercial storage root weight computation in kg per root (CO_331:0000680/CO_331:0000308).
- \item \code{ancrw}     : Average non-commercial storage root weight computation in kg per root (CO_331:0002039/CO_331:0002041). 
- \item \code{atrw}      : Average total storage root weight computation in kg per root (CO_331:0002040/CO_331:0002042).
- \item \code{nrpp}      : Number of storage roots-after harvest per plant harvested (CO_331:0000230/CO_331:0000079).
- \item \code{nrpsp}     : Number of storage roots-after harvest per plant planted (CO_331:0000994/CO_331:0000079).
- \item \code{ncrpp}     : Number of commercial storage roots per plant harvested	(CO_331:2000036/CO_331:0000212).
- \item \code{ncrpsp}    : Number of commercial storage roots per plant planted	(CO_331:0000993/CO_331:0000212).
- \item \code{ypp}       : Storage roots yield in kg per plant harvested (CO_331:0000681/CO_331:0000309).
- \item \code{ypsp}      : Storage roots yield in kg per plant planted (CO_331:0000989/CO_331:0000309).
- \item \code{vpp}       : Vine weight in kg per plant harvested (CO_331:0000990/CO_331:0000224).
- \item \code{vpsp}      : Vine weight per sowed plant in kg (CO_331:0000991/CO_331:0000224).
- \item \code{rtyldpct}  : Yield as percent of check (CO_331:0000792/CO_331:0000425).
- \item \code{ci}        : Percentage of commercial storage root (CO_331:0000682/CO_331:0000310).
- \item \code{hi}        : Harvest index computing percent (CO_331:0000302/CO_331:0000085).
- \item \code{shi}       : Survival index computing percent (CO_331:0000301/CO_331:0000298).
- \item \code{rfr}       : Root foliage ratio computing percent	(CO_331:0001015/CO_331:0001063).
+ \item \code{tnr}       : Total number of storage roots per plot (CO_331:0000233).
+ \item \code{trw}       : Total storage root weight per plot in kg (CO_331:0000237).
+ \item \code{trw.d}     : Total storage root weight in dry weight basis per plot in kg	(CO_331:0000995).
+ \item \code{biom}      : Biomass yield per plot in kg (CO_331:0000683).
+ \item \code{biom.d}    : Biomass yield in dry weight basis per plot in kg (CO_331:0000997).
+ \item \code{cytha}     : Commercial storage root yield in tons per ha (CO_331:0000809).
+ \item \code{cytha.aj}  : Commercial storage root yield adjusted by number of harvested plants per plot in tons per ha (CO_331:0000998).
+ \item \code{rytha}     : Total storage roots yield in tons per ha (CO_331:0000296).
+ \item \code{rytha.aj}  : Total storage roots yield adjusted by number of harvested plants per plot in tons per ha	(CO_331:0000999).
+ \item \code{dmry}      : Storage root dry matter yield in tons per ha (CO_331:0001000).
+ \item \code{dmry.aj}   : Storage root dry matter yield adjusted by number of harvested plants per plot in tons per ha	(CO_331:0001001).
+ \item \code{vw.d}      : Dry weight of vines per plot in kg	(CO_331:0000996).
+ \item \code{fytha}     : Total foliage yield in tons per ha (CO_331:0000684).
+ \item \code{fytha.aj}  : Total foliage yield adjusted by number of harvested plants per plot in tons per ha (CO_331:0001002).
+ \item \code{dmvy}      : Vine dry matter yield in tons per ha (CO_331:0001005).
+ \item \code{dmvy.aj}   : Vine dry matter yield adjusted by number of harvested plants per plot in tons per ha	(CO_331:0001006).
+ \item \code{bytha}     : Biomass yield in tons per ha	(CO_331:0001003).
+ \item \code{bytha.aj}  : Biomass yield adjusted by number of harvested plants per plot in tons per ha (CO_331:0001004).
+ \item \code{dmby}      : Biomass dry matter yield in tons per ha (CO_331:0001007).
+ \item \code{dmby.aj}   : Biomass dry matter yield adjusted by number of harvested plants per plot in tons per ha (CO_331:0001008).
+ \item \code{acrw}      : Average commercial storage root weight in kg (CO_331:0000680).
+ \item \code{ancrw}     : Average non-commercial storage root weight in kg (CO_331:0002039). 
+ \item \code{atrw}      : Average total storage root weight in kg (CO_331:0002040).
+ \item \code{nrpp}      : Number of storage roots per plant harvested (CO_331:0000230).
+ \item \code{nrpsp}     : Number of storage roots per plant planted (CO_331:0000994).
+ \item \code{ncrpp}     : Number of commercial storage roots per plant harvested	(CO_331:2000036).
+ \item \code{ncrpsp}    : Number of commercial storage roots per plant planted	(CO_331:0000993).
+ \item \code{ypp}       : Storage roots yield per plant harvested in kg (CO_331:0000681).
+ \item \code{ypsp}      : Storage roots yield per plant planted in kg (CO_331:0000989).
+ \item \code{vpp}       : Vine weight per plant harvested in kg (CO_331:0000990).
+ \item \code{vpsp}      : Vine weight per sowed plant in kg (CO_331:0000991).
+ \item \code{rtyldpct}  : Yield as percent of check (CO_331:0000792).
+ \item \code{ci}        : Commercial index in percentage (CO_331:0000682).
+ \item \code{hi}        : Harvest index in percentage (CO_331:0000302).
+ \item \code{shi}       : Survival index in percentage (CO_331:0000301).
+ \item \code{rfr}       : Root foliage ratio in percentage	(CO_331:0001015).
  }
 }
 \examples{
