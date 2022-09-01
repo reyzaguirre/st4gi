@@ -19,8 +19,8 @@ spt2co <- function(dfr) {
     
   # Convert
   
-  id <- match(colnames(dfr), spont$Short.label)
-  colnames(dfr)[!is.na(id)] <- spont$CO.Number.for.variable[id[!is.na(id)]]
+  id <- match(colnames(dfr), spont$Label)
+  colnames(dfr)[!is.na(id)] <- spont$Variable.ID[id[!is.na(id)]]
   
   # Return
   
