@@ -27,25 +27,21 @@ Consider the following groups of traits:
  \item \code{pre} (traits evaluated pre-harvest): \code{ppe}, \code{plant_unif},
  \code{plant_vigor} and \code{se}.
  
- \item \code{wvn} (traits evaluated with vines non-pre-harvest): \code{sfw},
- \code{lfw}, \code{sdw}, \code{ldw}, \code{sdmcp}, and \code{ldmcp}.
- 
  \item \code{cnn} (continuos non-negative traits): \code{tntpl}, \code{nmtpl},
  \code{ttwp}, \code{ttwpl}, \code{mtwp}, \code{mtwpl}, \code{nomtwp}, \code{mtwci},
  \code{mtwcii}, \code{ttya}, \code{ttyna}, \code{mtya}, and \code{mtyna}.
  
  \item \code{cpo} (continuous positive traits): \code{atw}, \code{atmw},  
- \code{fwts}, \code{dwts}, \code{sfw}, \code{lfw}, \code{sdw}, and \code{ldw}.
+ \code{fwts1}, \code{fwts2}, \code{dwts1}, and \code{dwts2}.
      
  \item \code{pnn} (percentage non-negative traits): \code{ppe}, \code{pph},  
  \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
  
- \item \code{ppo} (percentage positive traits): \code{avdm}, \code{pdm},
- \code{pro}, \code{star}, \code{fiber}, \code{sdmcp}, and \code{ldmcp}.
+ \item \code{ppo} (percentage positive traits): \code{dm}, \code{pro},
+ \code{star}, and \code{fiber}.
 
- \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe},
- \code{nph}, \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and
- \code{nmtcii}.
+ \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe}, \code{nph},
+ \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and \code{nmtcii}.
  
  \item \code{ctg} (categorical 1 to 9 traits): \code{plant_unif},
  \code{plant_vigor}, \code{se}, \code{tuber_apper}, \code{tub_unif},
@@ -76,7 +72,7 @@ Values are set to \code{NA} with the following rules:
 }
 \examples{
 dfr <- data.frame(mtwp = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-                  pdm = c(21, 23, 105, 24, -3, 30, NA),
+                  dm = c(21, 23, 105, 24, -3, 30, NA),
                   nmtp = c(1.3, 10, 11, NA, 2, 5, NA))
 setna.pt(dfr)
 }

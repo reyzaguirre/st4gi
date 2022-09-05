@@ -13,25 +13,21 @@
 #'  \item \code{pre} (traits evaluated pre-harvest): \code{ppe}, \code{plant_unif},
 #'  \code{plant_vigor} and \code{se}.
 #'  
-#'  \item \code{wvn} (traits evaluated with vines non-pre-harvest): \code{sfw},
-#'  \code{lfw}, \code{sdw}, \code{ldw}, \code{sdmcp}, and \code{ldmcp}.
-#'  
 #'  \item \code{cnn} (continuos non-negative traits): \code{tntpl}, \code{nmtpl},
 #'  \code{ttwp}, \code{ttwpl}, \code{mtwp}, \code{mtwpl}, \code{nomtwp}, \code{mtwci},
 #'  \code{mtwcii}, \code{ttya}, \code{ttyna}, \code{mtya}, and \code{mtyna}.
 #'  
 #'  \item \code{cpo} (continuous positive traits): \code{atw}, \code{atmw},  
-#'  \code{fwts}, \code{dwts}, \code{sfw}, \code{lfw}, \code{sdw}, and \code{ldw}.
+#'  \code{fwts1}, \code{fwts2}, \code{dwts1}, and \code{dwts2}.
 #'      
 #'  \item \code{pnn} (percentage non-negative traits): \code{ppe}, \code{pph},  
 #'  \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
 #'  
-#'  \item \code{ppo} (percentage positive traits): \code{avdm}, \code{pdm},
-#'  \code{pro}, \code{star}, \code{fiber}, \code{sdmcp}, and \code{ldmcp}.
+#'  \item \code{ppo} (percentage positive traits): \code{dm}, \code{pro},
+#'  \code{star}, and \code{fiber}.
 #'
-#'  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe},
-#'  \code{nph}, \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and
-#'  \code{nmtcii}.
+#'  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe}, \code{nph},
+#'  \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and \code{nmtcii}.
 #'  
 #'  \item \code{ctg} (categorical 1 to 9 traits): \code{plant_unif},
 #'  \code{plant_vigor}, \code{se}, \code{tuber_apper}, \code{tub_unif},
@@ -64,7 +60,7 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' dfr <- data.frame(mtwp = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-#'                   pdm = c(21, 23, 105, 24, -3, 30, NA),
+#'                   dm = c(21, 23, 105, 24, -3, 30, NA),
 #'                   nmtp = c(1.3, 10, 11, NA, 2, 5, NA))
 #' setna.pt(dfr)
 #' @importFrom stats IQR quantile
@@ -89,10 +85,6 @@ setna.pt <- function(dfr, f = 10) {
   
   pre <- c("ppe", "plant_unif", "plant_vigor", "se")
   
-  # Traits evaluated with vines non-pre-harvest
-  
-  wvn <- c("sfw", "lfw", "sdw", "ldw", "sdmcp", "ldmcp")
-  
   # Continuous non-negative traits
   
   cnn <- c("tntpl", "nmtpl", "ttwp", "ttwpl", "mtwp", "mtwpl", "nomtwp",
@@ -100,7 +92,7 @@ setna.pt <- function(dfr, f = 10) {
   
   # Continuous positive traits
   
-  cpo <- c("atw", "atmw", "fwts", "dwts", "sfw", "lfw", "sdw", "ldw")
+  cpo <- c("atw", "atmw", "fwts1", "fwts2", "dwts1", "dwts2")
   
   # Percentage non-negative traits
   
@@ -108,7 +100,7 @@ setna.pt <- function(dfr, f = 10) {
   
   # Percentage positive traits
   
-  ppo <- c("avdm", "pdm", "pro", "star", "fiber", "sdmcp", "ldmcp")
+  ppo <- c("dm", "pro", "star", "fiber")
   
   # Discrete non-negative traits
   
@@ -129,7 +121,6 @@ setna.pt <- function(dfr, f = 10) {
     if (exists(cnn[i], dfr)) {
       cond <- dfr[, cnn[i]] < 0 & !is.na(dfr[, cnn[i]])
       dfr[cond, cnn[i]] <- NA
-      if (sum(cond) > 0)
         warning("Rows with negative values replaced with NA for trait ",
                 cnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
@@ -230,10 +221,6 @@ setna.pt <- function(dfr, f = 10) {
   t.pos <- t.all[!(t.all %in% pre)]
   t.pos <- t.pos[t.pos != "nph"]
   
-  # Subset in fieldook all traits evaluated only with tubers
-  
-  t.tub <- t.pos[!(t.pos %in% wvn)]
-
   # npe == 0
   
   if (length(t.all) > 0 & exists("npe", dfr)) {
