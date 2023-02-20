@@ -121,6 +121,7 @@ setna.pt <- function(dfr, f = 10) {
     if (exists(cnn[i], dfr)) {
       cond <- dfr[, cnn[i]] < 0 & !is.na(dfr[, cnn[i]])
       dfr[cond, cnn[i]] <- NA
+      if (sum(cond) > 0)
         warning("Rows with negative values replaced with NA for trait ",
                 cnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
