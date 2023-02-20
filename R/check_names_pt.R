@@ -242,9 +242,9 @@ check.names.pt <- function(dfr, add = NULL) {
     colnames(dfr)[colnames(dfr) == "stdw"] <- "sdw"
   }
   
-  if (exists("dm", dfr)) {
-    ch.names <- c(ch.names, "dm")
-    colnames(dfr)[colnames(dfr) == "dm"] <- "pdm"
+  if (exists("pdm", dfr)) {
+    ch.names <- c(ch.names, "pdm")
+    colnames(dfr)[colnames(dfr) == "pdm"] <- "dm"
   }
   
   if (exists("protein", dfr)) {
@@ -252,8 +252,8 @@ check.names.pt <- function(dfr, add = NULL) {
     colnames(dfr)[colnames(dfr) == "protein"] <- "pro"
   }
   
-  old.names <- c("mwt", "mwmt", "stfw", "stdw", "dm", "protein")
-  new.names <- c("atw", "atmw", "sfw", "sdw", "pdm", "pro")
+  old.names <- c("mwt", "mwmt", "stfw", "stdw", "pdm", "protein")
+  new.names <- c("atw", "atmw", "sfw", "sdw", "dm", "pro")
   
   if (!is.null(ch.names)) {
     ch.names.list <- old.names %in% ch.names
