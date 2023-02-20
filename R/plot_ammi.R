@@ -8,6 +8,8 @@
 #' @param graph.type \code{"base"} or \code{"ggplot"}.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes
 #' (Only for the base system plot).
+#' @param main Main title.
+#' @param xlab A title for the x axis.
 #' @param ... Additional plot arguments (Only for the base system plot).
 #' @details It produces a biplot for an object of class \code{ammi}. See \code{?ammi}
 #' for additional details.
@@ -30,7 +32,8 @@
 
 plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
                             graph.type = c("base", "ggplot"),
-                            color = c("darkorange", "black", "gray"), ...) {
+                            color = c("darkorange", "black", "gray"),
+                            main = NULL, xlab = NULL, ...) {
   
   # match arguments
   
@@ -67,7 +70,8 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
   
   if (bp.type == 1) {
     
-    main <- paste0(method, " biplot-1 for ", trait.name)
+    if(is.null(main))
+      main <- paste0(method, " biplot-1 for ", trait.name)
     
     if (bp1.type == "effects") {
 
@@ -77,7 +81,8 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
         limx <- c(minx, maxx)
       }
       
-      xlab <- "Genotype and environment effects"
+      if(is.null(xlab))
+        xlab <- "Genotype and environment effects"
       xcorg <- geno.mean - overall.mean
       xcore <- env.mean - overall.mean
       xline <- 0
@@ -91,7 +96,8 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
         limx <- limx + c(-max(abs(limx)), max(abs(limx))) * 0.05
       }
       
-      xlab <- "Genotype and environment means"
+      if(is.null(xlab))
+        xlab <- "Genotype and environment means"
       xcorg <- geno.mean
       xcore <- env.mean
       xline <- overall.mean
@@ -103,7 +109,7 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
       limy <- range(c(E[, 1], G[, 1]))
       
       plot(1, type = "n", xlim = limx, ylim = limy, main = main, xlab = xlab,
-           ylab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"))
+           ylab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"), ...)
 
       points(xcorg, G[, 1], col = color[2], pch = 17)
       text(xcorg, G[, 1], labels = rownames(int.mean), col = color[2], pos = 1, offset = 0.3)
@@ -136,7 +142,8 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
   
   if (bp.type == 2) {
     
-    main <- paste0(method, " biplot-2 for ", trait.name)
+    if(is.null(main))
+      main <- paste0(method, " biplot-2 for ", trait.name)
     
     if (graph.type == "base") {
 
@@ -147,7 +154,7 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
       plot(1, type = "n", xlim = limx, ylim = limy, main = main,
            xlab = paste("PC1 (", format(PC.cont[1], digits = 3), "%)"),
            ylab = paste("PC2 (", format(PC.cont[2], digits = 3), "%)"),
-           asp = 1)
+           asp = 1, ...)
       
       points(G[, 1], G[, 2], col = color[2], pch = 17)
       text(G[, 1], G[, 2], labels = rownames(int.mean), col = color[2], pos = 1, offset = 0.3)

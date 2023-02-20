@@ -10,6 +10,8 @@
   bp1.type = c("effects", "means"),
   graph.type = c("base", "ggplot"),
   color = c("darkorange", "black", "gray"),
+  main = NULL,
+  xlab = NULL,
   ...
 )
 }
@@ -24,6 +26,10 @@
 
 \item{color}{Color for lines, symbols and/or labels for environments, genotypes and axes
 (Only for the base system plot).}
+
+\item{main}{Main title.}
+
+\item{xlab}{A title for the x axis.}
 
 \item{...}{Additional plot arguments (Only for the base system plot).}
 }
