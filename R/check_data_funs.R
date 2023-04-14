@@ -1,4 +1,14 @@
 ###############################################################################
+## Check data functions
+## Variables:
+## t1, t2: traits
+## tx: text to print
+## vv: valid values
+## ex: extreme (lower, higher, both)
+## ul: upper limet
+###############################################################################
+
+###############################################################################
 ## Print results function
 ###############################################################################
 
@@ -57,16 +67,16 @@ sp3 <- function(dfr, vv, t1, tx) {
 ## Detect out of continuous range
 ###############################################################################
 
-sp4 <- function(dfr, ex, t1, tx) { 
+sp4 <- function(dfr, ex, t1, tx, ul = 100) { 
   if (exists(t1, dfr)) {
     if (ex == "lower")
       cond <- dfr[, t1] < 0 & !is.na(dfr[, t1])
     if (ex == "lower0")
       cond <- dfr[, t1] <= 0 & !is.na(dfr[, t1])
     if (ex == "both")
-      cond <- (dfr[, t1] < 0 | dfr[, t1] > 100) & !is.na(dfr[, t1])
+      cond <- (dfr[, t1] < 0 | dfr[, t1] > ul) & !is.na(dfr[, t1])
     if (ex == "both0")
-      cond <- (dfr[, t1] <= 0 | dfr[, t1] > 100) & !is.na(dfr[, t1])
+      cond <- (dfr[, t1] <= 0 | dfr[, t1] > ul) & !is.na(dfr[, t1])
     output(dfr, cond, tx)
   }
 }
@@ -871,6 +881,9 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp4(dfr, "both0",  xtemp, paste0("- Out of range values for late blight evaluation ", i, " (", xtemp, "):"))
   }
 
+  sp4(dfr, "lower", 'audpc', paste0("- Out of range values for audpc:"))
+  sp4(dfr, "both", 'raudpc', paste0("- Out of range values for raudpc:"), ul = 1)
+  
   # Extreme values detection and values out of range for stem and leaf number (N2)
   
   sp4(dfr, "lower", "snpp", "- Out of range values for stem number per plant (snpp):")
@@ -1016,12 +1029,16 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
   sp5(dfr, f,  "low",   "sg", "- Extreme low values for tuber specific gravity (sg):")
   sp5(dfr, f,  "low",  "dsi", "- Extreme low values for drought susceptibility index (dsi):")
   sp5(dfr, f,  "low",  "dti", "- Extreme low values for drought tolerance index (dti):")
+  sp5(dfr, f,  "low","audpc", "- Extreme low values for audpc:")
+  sp5(dfr, f, "low","raudpc", "- Extreme low values for raudpc:")
   
   sp5(dfr, f, "high",   "rd", "- Extreme high values for root density (rd):")
   sp5(dfr, f, "high",   "rl", "- Extreme high values for root length (rl):")
   sp5(dfr, f, "high",   "sg", "- Extreme high values for tuber specific gravity (sg):")
   sp5(dfr, f, "high",  "dsi", "- Extreme high values for drought susceptibility index (dsi):")
   sp5(dfr, f, "high",  "dti", "- Extreme high values for drought tolerance index (dti):")
+  sp5(dfr, f, "high","audpc", "- Extreme high values for audpc:")
+  sp5(dfr, f,"high","raudpc", "- Extreme high values for raudpc:")
   
   # Extreme values detection and out of range values for lab traits
   
@@ -1264,7 +1281,9 @@ rules.pt <- function(dfr, f, out.mod, out.max, add) {
     sp6(dfr, geno, env, rep,   "sg", out.mod, out.max, "- Outliers for tuber specific gravity (sg):")
     sp6(dfr, geno, env, rep,  "dsi", out.mod, out.max, "- Outliers for drought susceptibility index (dsi):")
     sp6(dfr, geno, env, rep,  "dti", out.mod, out.max, "- Outliers for drought tolerance index (dti):")
-
+    sp6(dfr, geno, env, rep,"audpc", out.mod, out.max, "- Outliers for audpc:")
+    sp6(dfr, geno, env,rep,"raudpc", out.mod, out.max, "- Outliers for raudpc:")
+    
     sp6(dfr, geno, env, rep,    "fedw", out.mod, out.max, "- Outliers for tuber iron concentration in dry weight basis (fedw):")
     sp6(dfr, geno, env, rep,    "fefw", out.mod, out.max, "- Outliers for tuber iron concentration in fresh weight basis (fefw):")
     sp6(dfr, geno, env, rep,    "zndw", out.mod, out.max, "- Outliers for tuber zinc concentration in dry weight basis (zndw):")
