@@ -9,7 +9,8 @@ check.data.sp(
   f = 5,
   out.mod = c("none", "rcbd", "met"),
   out.max = 4,
-  add = NULL
+  add = NULL,
+  format = c("plain.text", "data.frame")
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ check.data.sp(
 \item{out.max}{Threshold for outliers' detection.}
 
 \item{add}{Additional quantitative traits.}
+
+\item{format}{Output format as \code{"plain.text"} or \code{"data.frame"}.}
 }
 \value{
 It returns all rows with some kind of inconsistency or outliers.

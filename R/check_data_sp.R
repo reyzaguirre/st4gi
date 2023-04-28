@@ -8,6 +8,7 @@
 #' @param out.mod Statistical model for outliers' detection. See details.
 #' @param out.max Threshold for outliers' detection.
 #' @param add Additional quantitative traits.
+#' @param format Output format as \code{"plain.text"} or \code{"data.frame"}.
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' function \code{check.names.sp}.
 #' 
@@ -19,6 +20,7 @@
 #' models. Options are \code{"rcbd"} and \code{"met"} for a randomized complete
 #' block design and a multi environment trial with RCBD in each environment.
 #' By default the threshold value is \code{out.max = 4}.
+#' 
 #' @return It returns all rows with some kind of inconsistency or outliers.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -27,15 +29,21 @@
 #' @export
 
 check.data.sp <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
-                          out.max = 4, add = NULL) {
+                          out.max = 4, add = NULL,
+                          format = c("plain.text", "data.frame")) {
   
   # Match arguments
   
   out.mod = match.arg(out.mod)
+  format = match.arg(format)
   
   # Run check
   
-  rules.sp(dfr, f, out.mod, out.max, add)
+  dfr.out <- rules.sp(dfr, f, out.mod, out.max, add, format)
   
-
+  if (format == 'data.frame') {
+    rownames(dfr.out) <- 1:dim(dfr.out)[1]
+    dfr.out
+  }
+  
 }
