@@ -41,7 +41,7 @@ check.data.pt <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
   
   dfr.out <- rules.pt(dfr, f, out.mod, out.max, add, format)
   
-  if (format == 'data.frame') {
+  if (format == 'data.frame' & dim(dfr.out)[1] > 0) {
     rownames(dfr.out) <- 1:dim(dfr.out)[1]
     dfr.out
   }
