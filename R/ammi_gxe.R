@@ -4,19 +4,18 @@
 #' with data from an interaction means matrix.
 #' @param int.mean GxE means matrix, genotypes in rows, environments in columns.
 #' @param trait.name Name of the trait.
-#' @param nrep Number of replications.
-#' @param rdf Residual degrees of freedom.
-#' @param rms Residual mean square.
 #' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
-#' @details Significance of PCs are evaluated only with \code{method = "ammi"} and if
-#' \code{nrep}, \code{rms} and \code{rdf} are specified.
-#' @return It returns an object of class ammi with the overall, genotype,
+#' @param aov.model Analysis of variance model.
+#' @param nrep Number of replications.
+#' @details Significance of PCs are evaluated only with \code{method = "ammi"}
+#' and if \code{aov.model} and \code{nrep} are specified.
+#' @return It returns an object of class \code{ammi} with the overall, genotype,
 #' environment and interaction means, the interaction effects matrix, the
 #' first and second PC values for genotypes and environments, and a table
-#' with the contribution of each PC. Significance of PCs are included in the
-#' contributions table only if \code{method = "ammi"} and \code{nrep}, \code{rms}
-#' and \code{rdf} are specified.
+#' with the contribution of each PC. ANOVA table and significance of PCs are
+#' included only if \code{method = "ammi"}, and \code{aov.model} and \code{nrep}
+#' are specified.
 #' @author Raul Eyzaguirre.
 #' @references
 #' Gollob, H. R. (1968). A Statistical Model which combines Features of Factor Analytic
@@ -37,9 +36,8 @@
 #' @importFrom stats pf
 #' @export
 
-ammi.gxe <- function(int.mean, trait.name = NULL, nrep = NULL, rdf = NULL,
-                     rms = NULL, method = c("ammi", "gge"), f = 0.5) {
-
+ammi.gxe <- function(int.mean, trait.name = NULL,  method = c("ammi", "gge"),
+                     f = 0.5, aov.model = NULL, nrep = NULL) {
   # Match arguments
   
   method <- match.arg(method)
@@ -82,33 +80,47 @@ ammi.gxe <- function(int.mean, trait.name = NULL, nrep = NULL, rdf = NULL,
   PC.acum <- cumsum(PC.cont)
   tablaPC <- data.frame(PC = PC.num, SV = PC.sv, Cont = PC.cont, CumCont = PC.acum)
 
-  # Significance of PCs, only for AMMI and if nrep, rms and rdf are known
+  # Significance of PCs, only for AMMI and if aov.model and nrep, are known
 
   if (method == "ammi") {
-    if (!is.null(nrep)) {
+    
+    if (!is.null(nrep) & !is.null(aov.model)) {
+      
       int.SS <- (t(as.vector(svd.mat)) %*% as.vector(svd.mat)) * nrep
       PC.SS <- (dec$d[1:PC]^2) * nrep
       PC.DF <- env.num + geno.num - 1 - 2 * c(1:PC)
-      MS <- PC.SS / PC.DF
-    }
-    if (!is.null(rms) & !is.null(rdf)) {
-      f <- MS / rms
-      probab <- pf(f, PC.DF, rdf, lower.tail = FALSE)
+      PC.MS <- PC.SS / PC.DF
+      PC.f <- PC.MS / aov.model[5, 3]
+      probab <- pf(PC.f, PC.DF, aov.model[5, 1], lower.tail = FALSE)
       rowlab <- PC.num
-      tablaPC <- cbind(tablaPC, PC.DF, PC.SS, MS, f, probab)
-      colnames(tablaPC)[5:9] <- c("df", "SumSq", "MeanSq", "Fvalue", "Pr(>F)")
+      
+      aov.model[5 + 1:PC, ] <- NA
+      aov.model[5 + PC, ] <- aov.model[5, ]
+      rownames(aov.model)[5 + 0:PC] <- c(PC.num, 'Residuals')
+      aov.model[4 + 1:PC, 1] <- PC.DF
+      aov.model[4 + 1:PC, 2] <- PC.SS
+      aov.model[4 + 1:PC, 3] <- PC.MS
+      aov.model[4 + 1:PC, 4] <- PC.f
+      aov.model[4 + 1:PC, 5] <- probab
+      
     }
   }
 
   # Output
 
-  output <- list(Method = method, Trait = trait.name,
+  output <- list(Method = method,
+                 Trait = trait.name,
                  Number_of_genotypes = geno.num,
                  Number_of_environments = env.num,
-                 Overall_mean = overall.mean, Genotype_means = geno.mean,
-                 Environment_means = env.mean, Interaction_means = int.mean,
-                 Interaction_effects = int.eff, PC_values_genotypes = PC.geno,
-                 PC_values_environments = PC.env, Contribution_PCs = tablaPC)
+                 Overall_mean = overall.mean,
+                 Genotype_means = geno.mean,
+                 Environment_means = env.mean,
+                 Interaction_means = int.mean,
+                 Interaction_effects = int.eff,
+                 PC_values_genotypes = PC.geno,
+                 PC_values_environments = PC.env,
+                 ANOVA = aov.model,
+                 Contribution_PCs = tablaPC)
   
   class(output) <- "st4gi_ammi"
   invisible(output)

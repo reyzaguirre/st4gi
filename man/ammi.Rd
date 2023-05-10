@@ -4,7 +4,16 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(trait, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5)
+ammi(
+  trait,
+  geno,
+  env,
+  rep,
+  dfr,
+  method = c("ammi", "gge"),
+  f = 0.5,
+  maxp = 0.1
+)
 }
 \arguments{
 \item{trait}{The trait to analyze.}
@@ -20,21 +29,24 @@ ammi(trait, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5)
 \item{method}{\code{"ammi"} or \code{"gge"}.}
 
 \item{f}{Scaling factor, defaults to 0.5.}
+
+\item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
 \value{
 It returns an object of class \code{ammi} with the overall, genotype,
 environment and interaction means, the interaction effects matrix, the
-first and second PC values for genotypes and environments, and a table
-with the contribution of each PC. Significance of PCs are included in the
-contributions table only if \code{method = "ammi"} and the data are balanced.
+first and second PC values for genotypes and environments, the ANOVA table,
+and a table with the contribution of each PC. Significance of PCs are
+included only if \code{method = "ammi"} and the data are balanced
+(with missing values estimated if possible).
 }
 \description{
 This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 with data at plot level.
 }
 \details{
-Significance of PCs are evaluated only with \code{method = "ammi"} and if
-the data are balanced.
+Significance of PCs are evaluated only with \code{method = "ammi"}
+and if the data are balanced (with missing values estimated if possible).
 }
 \examples{
 model.ammi <- ammi("y", "geno", "env", "rep", met8x12)

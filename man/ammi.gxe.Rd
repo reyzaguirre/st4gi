@@ -7,11 +7,10 @@
 ammi.gxe(
   int.mean,
   trait.name = NULL,
-  nrep = NULL,
-  rdf = NULL,
-  rms = NULL,
   method = c("ammi", "gge"),
-  f = 0.5
+  f = 0.5,
+  aov.model = NULL,
+  nrep = NULL
 )
 }
 \arguments{
@@ -19,31 +18,29 @@ ammi.gxe(
 
 \item{trait.name}{Name of the trait.}
 
-\item{nrep}{Number of replications.}
-
-\item{rdf}{Residual degrees of freedom.}
-
-\item{rms}{Residual mean square.}
-
 \item{method}{\code{"ammi"} or \code{"gge"}.}
 
 \item{f}{Scaling factor, defaults to 0.5.}
+
+\item{aov.model}{Analysis of variance model.}
+
+\item{nrep}{Number of replications.}
 }
 \value{
-It returns an object of class ammi with the overall, genotype,
+It returns an object of class \code{ammi} with the overall, genotype,
 environment and interaction means, the interaction effects matrix, the
 first and second PC values for genotypes and environments, and a table
-with the contribution of each PC. Significance of PCs are included in the
-contributions table only if \code{method = "ammi"} and \code{nrep}, \code{rms}
-and \code{rdf} are specified.
+with the contribution of each PC. ANOVA table and significance of PCs are
+included only if \code{method = "ammi"}, and \code{aov.model} and \code{nrep}
+are specified.
 }
 \description{
 This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 with data from an interaction means matrix.
 }
 \details{
-Significance of PCs are evaluated only with \code{method = "ammi"} and if
-\code{nrep}, \code{rms} and \code{rdf} are specified.
+Significance of PCs are evaluated only with \code{method = "ammi"}
+and if \code{aov.model} and \code{nrep} are specified.
 }
 \examples{
 # Compute GxE means
