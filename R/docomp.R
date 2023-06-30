@@ -2,8 +2,8 @@
 #'
 #' Do computations for several traits for some specific factors.
 #' @param do The computation to perform. Implemented options are \code{count},
-#' and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
-#' \code{sd}, \code{var}, \code{sum}, etc.
+#' \code{mode}, and standard functions like \code{mean}, \code{median},
+#' \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.
 #' @param traits List of traits. 
 #' @param factors List of factors.
 #' @param add Additional columns to keep.
@@ -31,6 +31,15 @@ docomp <- function(do, traits, factors, add = NULL, dfr, method = c("fast", "slo
   # Match arguments
   
   method <- match.arg(method)
+  
+  # Internal mode function
+  
+  getmode <- function(v) {
+    x <- names(which.max(table(unlist(v))))
+    if (is.null(x))
+      x <- NA
+    x
+  }
   
   # Create data.frame
   
@@ -62,11 +71,14 @@ docomp <- function(do, traits, factors, add = NULL, dfr, method = c("fast", "slo
       for (j in 1:dim(dfr.out)[1]){
         if (do == "count")
           dfr.out[j, traits[i]] <- sum(!is.na(dfr[idin == idout[j], traits[i]]))
-        else
+        if (do == 'mode')
+          dfr.out[j, traits[i]] <- getmode(dfr[idin == idout[j], traits[i]])
+        if (!do %in% c('count', 'mode')) {
           if (sum(!is.na(dfr[idin == idout[j], traits[i]])) == 0)
             dfr.out[j, traits[i]] <- NA
-          else 
+          else
             dfr.out[j, traits[i]] <- eval(parse(text = do))(dfr[idin == idout[j], traits[i]], na.rm = TRUE)
+        }
       }
     }
     
@@ -78,7 +90,9 @@ docomp <- function(do, traits, factors, add = NULL, dfr, method = c("fast", "slo
     
     if (do == "count")
       foo <- function(x) sum(!is.na(x))
-    else
+    if (do == 'mode')
+      foo <- getmode
+    if (!do %in% c('count', 'mode'))
       foo <- function(x) {
         if (sum(!is.na(x)) == 0)
           NA

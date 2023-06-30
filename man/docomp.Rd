@@ -8,8 +8,8 @@ docomp(do, traits, factors, add = NULL, dfr, method = c("fast", "slow"))
 }
 \arguments{
 \item{do}{The computation to perform. Implemented options are \code{count},
-and standard functions like \code{mean}, \code{median}, \code{min}, \code{max},
-\code{sd}, \code{var}, \code{sum}, etc.}
+\code{mode}, and standard functions like \code{mean}, \code{median},
+\code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.}
 
 \item{traits}{List of traits.}
 

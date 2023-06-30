@@ -143,7 +143,7 @@ cdt.pt <- function(dfr, method = c("none", "ps", "np"),
   if (exists("dm1", dfr) & exists("dm2", dfr)) {
     if ("dm" %in% on)
       ow <- c(ow, "dm")
-    dfr$dm <- apply(dfr[, c("dm1", "dm2")], 1, mean, na.rm = TRUE) * 100
+    dfr$dm <- apply(dfr[, c("dm1", "dm2")], 1, mean, na.rm = TRUE)
   }
 
   # Percentages for plants emerged and harvested
