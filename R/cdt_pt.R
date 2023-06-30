@@ -146,6 +146,13 @@ cdt.pt <- function(dfr, method = c("none", "ps", "np"),
     dfr$dm <- apply(dfr[, c("dm1", "dm2")], 1, mean, na.rm = TRUE)
   }
 
+  if (exists("dwts", dfr) & exists("fwts", dfr)) {
+    if ("dm" %in% on)
+      ow <- c(ow, "dm")
+    dfr$dm <- dfr$dwts / dfr$fwts * 100
+    dfr$dm[dfr$fwts == 0] <- NA
+  }
+
   # Percentages for plants emerged and harvested
   
   if (exists("npe", dfr) & exists("ntp", dfr)) {
