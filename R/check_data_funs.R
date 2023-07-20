@@ -754,10 +754,7 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph", "nnomtp", "- Number of plants harvested (nph) is zero but number of non-marketable tubers per plot (nnomtp) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph",  "nmtci", "- Number of plants harvested (nph) is zero but number of marketable tubers category I per plot (nmtci) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph", "nmtcii", "- Number of plants harvested (nph) is zero but number of marketable tubers category II per plot (nmtcii) is greater than zero:", format))
-  
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3,  "tntp",    "nph", "- Total number of tubers per plot (tntp) is zero but number of plants harvested (nph) is greater than zero:", format)) 
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3, "tntpl",    "nph", "- Total number of tubers per plant (tntpl) is zero but number of plants harvested (nph) is greater than zero:", format))
-  
+
   # nph vs weight of tubers
   
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph",   "ttwp", "- Number of plants harvested (nph) is zero but total tuber weight per plot (ttwp) is greater than zero:", format))
@@ -770,20 +767,13 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph",    "atw", "- Number of plants harvested (nph) is zero but average of tuber weight (atw) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph",   "atmw", "- Number of plants harvested (nph) is zero but average of marketable tuber weight (atmw) is greater than zero:", format))
 
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3,  "ttwp",    "nph", "- Total tuber weight per plot (ttwp) is zero but number of plants harvested (nph) is greater than zero:", format))
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3, "ttwpl",    "nph", "- Total tuber weight per plant (ttwpl) is zero but number of plants harvested (nph) is greater than zero:", format))
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "atw",    "nph", "- Average of tuber weight (atw) is zero but number of plants harvested (nph) is greater than zero:", format))
-
   # nph vs yield of tubers
   
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph",  "ttya", "- Number of plants harvested (nph) is zero but total tuber yield adjusted (ttya) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph", "ttyna", "- Number of plants harvested (nph) is zero but total tuber yield no adjusted (ttyna) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph",  "mtya", "- Number of plants harvested (nph) is zero but marketable tuber yield adjusted (mtya) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3,   "nph", "mtyna", "- Number of plants harvested (nph) is zero but marketable tuber yield no adjusted (mtyna) is greater than zero:", format))
-  
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3,  "ttya",   "nph", "- Total tuber yield adjusted (ttya) is zero but number of plants harvested (nph) is greater than zero:", format))
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3, "ttyna",   "nph", "- Total tuber yield no adjusted (ttyna) is zero but number of plants harvested (nph) is greater than zero:", format))
-  
+
   # Inconsistencies for: Fresh vs. dry weight
   
   dfr.out <- rbind(dfr.out, sp1(dfr, 1, "tbdwp", "tbfwp", "- Total biomass dry weight (tbdwp) is greater than total biomass fresh weight (tbfwp) per plant:", format))
