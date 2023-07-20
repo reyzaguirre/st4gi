@@ -558,71 +558,58 @@ rules.sp <- function(dfr, f, out.mod, out.max, add, format) {
   
   # Select model and check correct names for genotypes, environments and replications
   
-  if (out.mod == "rcbd") {
+  # Outliers' detection
+  
+  oc <- 0
+  
+  valid.gen <- c('accession_name', 'geno')
+  valid.rep <- c('rep', 'rep_number', 'block', 'block_number')
+  valid.env <- c('env', 'loc')
+  
+  if (out.mod == 'rcbd' | out.mod == 'met') {
+    
     oc <- 1
-    if (exists('g', dfr)) {
-      geno <- as.character(dfr[, 'g'])
+    
+    valid <- sapply(valid.gen, exists, dfr)
+    valid <- valid[valid == TRUE]
+    valid <- valid[1]
+    
+    if (!is.na(valid)) {
+      geno <- as.character(dfr[, names(valid)])
     } else {
-      if (exists('geno', dfr)) {
-        geno <- as.character(dfr[, 'geno'])
-      } else {
-        if (exists('cipno', dfr)) {
-          geno <- as.character(dfr[, 'cipno'])
-        } else {
-          oc <- 0
-          warning("Genotypes are not defined. Use g or geno as labels.", call. = FALSE)  
-        }
-      }
+      oc <- 0
+      warning("Genotypes are not defined. Use accession_name or geno as labels.", call. = FALSE)
     }
-    if (exists('r', dfr)) {
-      rep <- as.character(dfr[, 'r'])
+    
+    valid <- sapply(valid.rep, exists, dfr)
+    valid <- valid[valid == TRUE]
+    valid <- valid[1]
+    
+    if (!is.na(valid)) {
+      rep <- as.character(dfr[, names(valid)])
     } else {
-      if (exists('rep', dfr)) {
-        rep <- as.character(dfr[, 'rep'])
-      } else {
-        oc <- 0
-        warning('Blocks are not defined. Use r or rep as labels.', call. = FALSE)
-      }
+      oc <- 0
+      warning('Blocks are not defined. Use rep, rep_number, block or block_number as labels.', call. = FALSE)
     }
-    env <- NULL
+    
   }
   
-  if (out.mod == "met") {
-    oc <- 1
-    if (exists('g', dfr)) {
-      geno <- as.character(dfr[, 'g'])
+  if (out.mod == 'rcbd')
+    env <- NULL
+  
+  if (out.mod == 'met') {
+    
+    valid <- sapply(valid.env, exists, dfr)
+    valid <- valid[valid == TRUE]
+    valid <- valid[1]
+    
+    if (!is.na(valid)) {
+      env <- as.character(dfr[, names(valid)])
     } else {
-      if (exists('geno', dfr)) {
-        geno <- as.character(dfr[, 'geno'])
-      } else {
-        if (exists('cipno', dfr)) {
-          geno <- as.character(dfr[, 'cipno'])
-        } else {
-          oc <- 0
-          warning("Genotypes are not defined. Use g or geno as labels.", call. = FALSE)  
-        }
-      }
+      oc <- 0
+      warning('Environments are not defined. Use env or loc as labels.', call. = FALSE)
     }
-    if (exists('e', dfr)) {
-      env <- as.character(dfr[, 'e'])
-    } else {
-      if (exists('env', dfr)) {
-        env <- as.character(dfr[, 'env'])
-      } else {
-        oc <- 0
-        warning('Environments are not defined. Use e or env as labels.', call. = FALSE)
-      }
-    }
-    if (exists('r', dfr)) {
-      rep <- as.character(dfr[, 'r'])
-    } else {
-      if (exists('rep', dfr)) {
-        rep <- as.character(dfr[, 'rep'])
-      } else {
-        oc <- 0
-        warning('Blocks are not defined. Use r or rep as labels.', call. = FALSE)
-      }
-    }
+    
   }
   
   if (oc == 1) {
@@ -1184,71 +1171,54 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
   
   oc <- 0
   
-  if (out.mod == "rcbd") {
+  valid.gen <- c('instn', 'accession_name', 'geno', 'cipno')
+  valid.rep <- c('rep', 'rep_number', 'block', 'block_number')
+  valid.env <- c('env', 'loc')
+  
+  if (out.mod == 'rcbd' | out.mod == 'met') {
+
     oc <- 1
-    if (exists('instn', dfr)) {
-      geno <- as.character(dfr[, 'instn'])
+    
+    valid <- sapply(valid.gen, exists, dfr)
+    valid <- valid[valid == TRUE]
+    valid <- valid[1]
+    
+    if (!is.na(valid)) {
+      geno <- as.character(dfr[, names(valid)])
     } else {
-      if (exists('geno', dfr)) {
-        geno <- as.character(dfr[, 'geno'])
-      } else {
-        if (exists('cipno', dfr)) {
-          geno <- as.character(dfr[, 'cipno'])
-        } else {
-          oc <- 0
-          warning("Genotypes are not defined. Use instn or geno as labels.", call. = FALSE)  
-        }
-      }
+      oc <- 0
+      warning("Genotypes are not defined. Use instn, accession_name, geno, or cipno as labels.", call. = FALSE)
     }
-    if (exists('r', dfr)) {
-      rep <- as.character(dfr[, 'r'])
+    
+    valid <- sapply(valid.rep, exists, dfr)
+    valid <- valid[valid == TRUE]
+    valid <- valid[1]
+    
+    if (!is.na(valid)) {
+      rep <- as.character(dfr[, names(valid)])
     } else {
-      if (exists('rep', dfr)) {
-        rep <- as.character(dfr[, 'rep'])
-      } else {
-        oc <- 0
-        warning('Blocks are not defined. Use r or rep as labels.', call. = FALSE)
-      }
+      oc <- 0
+      warning('Blocks are not defined. Use rep, rep_number, block or block_number as labels.', call. = FALSE)
     }
-    env <- NULL
+
   }
   
-  if (out.mod == "met") {
-    oc <- 1
-    if (exists('instn', dfr)) {
-      geno <- as.character(dfr[, 'instn'])
+  if (out.mod == 'rcbd')
+    env <- NULL
+  
+  if (out.mod == 'met') {
+    
+    valid <- sapply(valid.env, exists, dfr)
+    valid <- valid[valid == TRUE]
+    valid <- valid[1]
+    
+    if (!is.na(valid)) {
+      env <- as.character(dfr[, names(valid)])
     } else {
-      if (exists('geno', dfr)) {
-        geno <- as.character(dfr[, 'geno'])
-      } else {
-        if (exists('cipno', dfr)) {
-          geno <- as.character(dfr[, 'cipno'])
-        } else {
-          oc <- 0
-          warning("Genotypes are not defined. Use instn or geno as labels.", call. = FALSE)  
-        }
-      }
+      oc <- 0
+      warning('Environments are not defined. Use env or loc as labels.', call. = FALSE)
     }
-    if (exists('e', dfr)) {
-      env <- as.character(dfr[, 'e'])
-    } else {
-      if (exists('env', dfr)) {
-        env <- as.character(dfr[, 'env'])
-      } else {
-        oc <- 0
-        warning('Environments are not defined. Use e or env as labels.', call. = FALSE)
-      }
-    }
-    if (exists('r', dfr)) {
-      rep <- as.character(dfr[, 'r'])
-    } else {
-      if (exists('rep', dfr)) {
-        rep <- as.character(dfr[, 'rep'])
-      } else {
-        oc <- 0
-        warning('Blocks are not defined. Use r or rep as labels.', call. = FALSE)
-      }
-    }
+    
   }
   
   if (oc == 1) {
