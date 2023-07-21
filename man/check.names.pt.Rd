@@ -40,6 +40,8 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{instn}     : Institutional CIP number.
  \item \code{rep}       : Replications (\code{rep_number} is also valid).
  \item \code{block}     : Blocks (\code{block_number} is also valid).
+ \item \code{row_number}: Row number position of the plot.
+ \item \code{col_number}: Column number position of the plot.
  \item \code{treatment} : Irrigation treatments.
  }
 -------------------- Traits N1 group --------------------

@@ -26,6 +26,8 @@
 #'  \item \code{cipno}     : Institutional CIP number.
 #'  \item \code{rep}       : Replications (\code{rep_number} is also valid).
 #'  \item \code{block}     : Blocks (\code{block_number} is also valid).
+#'  \item \code{row_number}: Row number position of the plot.
+#'  \item \code{col_number}: Column number position of the plot.
 #'  \item \code{treat}     : Treatment.
 #'  \item \code{harvest}   : Harvest time.
 #'  }
@@ -153,7 +155,8 @@ check.names.sp <- function(dfr, add = NULL) {
   plot.id <- c("plot", "row", "col")
   
   factors <- c("loc", "year", "season", "env", "geno", 'accession_name', "cipno",
-               "rep", 'rep_number', "block", 'block_number', "treat", "harvest")
+               "rep", 'rep_number', "block", 'block_number', 'row_number',
+               'col_number', "treat", "harvest")
   
   traits <- c("nops", "nope", "noph", "vir", "vir1", "vir2", "alt", "alt1", "alt2",
               "vv", "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "scol", "fcol",

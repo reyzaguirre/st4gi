@@ -24,6 +24,8 @@
 #'  \item \code{instn}     : Institutional CIP number.
 #'  \item \code{rep}       : Replications (\code{rep_number} is also valid).
 #'  \item \code{block}     : Blocks (\code{block_number} is also valid).
+#'  \item \code{row_number}: Row number position of the plot.
+#'  \item \code{col_number}: Column number position of the plot.
 #'  \item \code{treatment} : Irrigation treatments.
 #'  }
 #' -------------------- Traits N1 group --------------------
@@ -176,7 +178,8 @@ check.names.pt <- function(dfr, add = NULL) {
   plot.id <- c("plot", "row", "col")
   
   factors <- c("loc", "year", "season", "env", "geno", "accession_name", "instn",
-               "rep", 'rep_number', "block", "block_number", "treatment")
+               "rep", 'rep_number', "block", "block_number", 'row_number',
+               'col_number', "treatment")
   
   # Repeated measures traits (i = 1...5)
   

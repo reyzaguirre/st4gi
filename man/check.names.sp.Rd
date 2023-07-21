@@ -42,6 +42,8 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{cipno}     : Institutional CIP number.
  \item \code{rep}       : Replications (\code{rep_number} is also valid).
  \item \code{block}     : Blocks (\code{block_number} is also valid).
+ \item \code{row_number}: Row number position of the plot.
+ \item \code{col_number}: Column number position of the plot.
  \item \code{treat}     : Treatment.
  \item \code{harvest}   : Harvest time.
  }
