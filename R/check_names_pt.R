@@ -16,17 +16,15 @@
 #'  }
 #' -------------------- Classification factors --------------------
 #'  \itemize{
-#'  \item \code{l}           : Locations (\code{loc} is also valid).
-#'  \item \code{y}           : Years.
-#'  \item \code{s}           : Seasons.
-#'  \item \code{e}           : Environments (\code{env} is also valid).
-#'  \item \code{g}           : Genotypes (\code{geno} is also valid).
-#'  \item \code{name}        : Names for genotypes.
-#'  \item \code{r}           : Replications (\code{rep} is also valid).
-#'  \item \code{b}           : Blocks (\code{block} is also valid).
-#'  \item \code{treatment}   : Irrigation treatments.
-#'  \item \code{type}        : Type: early or late.
-#'  \item \code{instn}       : Code number.
+#'  \item \code{loc}       : Locations.
+#'  \item \code{year}      : Years.
+#'  \item \code{season}    : Seasons. 
+#'  \item \code{env}       : Environments.
+#'  \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
+#'  \item \code{instn}     : Institutional CIP number.
+#'  \item \code{rep}       : Replications (\code{rep_number} is also valid).
+#'  \item \code{block}     : Blocks (\code{block_number} is also valid).
+#'  \item \code{treatment} : Irrigation treatments.
 #'  }
 #' -------------------- Traits N1 group --------------------
 #'  \itemize{
@@ -177,8 +175,8 @@ check.names.pt <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
-  factors <- c("l", "loc", "y", "s", "g", "e", "env", "geno", "name", "r", "rep",
-               "b", "block", "treatment", "type", "instn")
+  factors <- c("loc", "year", "season", "env", "geno", "accession_name", "instn",
+               "rep", 'rep_number', "block", "block_number", "treatment")
   
   # Repeated measures traits (i = 1...5)
   

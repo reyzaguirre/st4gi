@@ -32,17 +32,15 @@ Between parentheses are the CO numbers for variables defined in
  }
 -------------------- Classification factors --------------------
  \itemize{
- \item \code{l}           : Locations (\code{loc} is also valid).
- \item \code{y}           : Years.
- \item \code{s}           : Seasons.
- \item \code{e}           : Environments (\code{env} is also valid).
- \item \code{g}           : Genotypes (\code{geno} is also valid).
- \item \code{name}        : Names for genotypes.
- \item \code{r}           : Replications (\code{rep} is also valid).
- \item \code{b}           : Blocks (\code{block} is also valid).
- \item \code{treatment}   : Irrigation treatments.
- \item \code{type}        : Type: early or late.
- \item \code{instn}       : Code number.
+ \item \code{loc}       : Locations.
+ \item \code{year}      : Years.
+ \item \code{season}    : Seasons. 
+ \item \code{env}       : Environments.
+ \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
+ \item \code{instn}     : Institutional CIP number.
+ \item \code{rep}       : Replications (\code{rep_number} is also valid).
+ \item \code{block}     : Blocks (\code{block_number} is also valid).
+ \item \code{treatment} : Irrigation treatments.
  }
 -------------------- Traits N1 group --------------------
  \itemize{

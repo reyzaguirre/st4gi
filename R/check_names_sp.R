@@ -18,14 +18,14 @@
 #'  }
 #' -------------------- Classification factors --------------------
 #'  \itemize{
-#'  \item \code{l}         : Locations (\code{loc} is also valid).
-#'  \item \code{y}         : Years (\code{year} is also valid).
-#'  \item \code{s}         : Seasons (\code{season} is also valid). 
-#'  \item \code{e}         : Environments (\code{env} is also valid).
-#'  \item \code{g}         : Genotypes (\code{geno} is also valid).
+#'  \item \code{loc}       : Locations.
+#'  \item \code{year}      : Years.
+#'  \item \code{season}    : Seasons. 
+#'  \item \code{env}       : Environments.
+#'  \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
 #'  \item \code{cipno}     : Institutional CIP number.
-#'  \item \code{r}         : Replications (\code{rep} is also valid).
-#'  \item \code{b}         : Blocks (\code{block} is also valid).
+#'  \item \code{rep}       : Replications (\code{rep_number} is also valid).
+#'  \item \code{block}     : Blocks (\code{block_number} is also valid).
 #'  \item \code{treat}     : Treatment.
 #'  \item \code{harvest}   : Harvest time.
 #'  }
@@ -152,8 +152,8 @@ check.names.sp <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
-  factors <- c("l", "loc", "y", "year", "s", "season", "e", "env", "g", "geno",
-               "cipno", "r", "rep", "b", "block", "treat", "harvest")
+  factors <- c("loc", "year", "season", "env", "geno", 'accession_name', "cipno",
+               "rep", 'rep_number', "block", 'block_number', "treat", "harvest")
   
   traits <- c("nops", "nope", "noph", "vir", "vir1", "vir2", "alt", "alt1", "alt2",
               "vv", "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "scol", "fcol",
