@@ -75,13 +75,19 @@
 #'  }
 #' -------------------- Traits N6 group--------------------
 #'  \itemize{
+#'  \item \code{tafw}        : Total aerial fresh weight per plot in g.
+#'  \item \code{tbfw}        : Total biomass fresh weight per plot in g.
 #'  \item \code{tbfwp}       : Total biomass fresh weight per plant in g (CO_330:0000799).
 #'  \item \code{hi_fw}       : Harvest index fresh weight in percentage (CO_330:0000738).
+#'  \item \code{tadw}        : Total aerial dry weight per plot in g.
+#'  \item \code{tbdw}        : Total biomass dry weight per plot in g.
 #'  \item \code{tbdwp}       : Total biomass dry weight per plant in g (CO_330:0000799).
 #'  \item \code{hi_dw}       : Harvest index dry weight in percentage (CO_330:0000735).
 #'  }
 #' -------------------- Traits N7 group--------------------
 #'  \itemize{
+#'  \item \code{fwts}         : Fresh weight of tuber for dry matter determination.
+#'  \item \code{dwts}         : Dry weight of tuber for dry matter determination.
 #'  \item \code{fwts1}        : Fresh weight of tuber sample 1.
 #'  \item \code{fwts2}        : Fresh weight of tuber sample 2.
 #'  \item \code{dwts1}        : Dry weight of tuber sample 1.
@@ -199,8 +205,9 @@ check.names.pt <- function(dfr, add = NULL) {
               "tntp", "tntpl", "nmtp", "nmtpl", "nnomtp", "nmtci", "nmtcii",
               "ttwp", "ttwpl", "mtwp", "mtwpl", "nomtwp", "mtwci", "mtwcii",
               "ttya", "ttyna", "mtya", "mtyna", "atw", "atmw",
-              "tbfwp", "hi_fw", "tbdwp", "hi_dw",
-              "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2", "dm",
+              'tafw', 'tbfw', "tbfwp", "hi_fw",
+              'tadw', 'tbdw', "tbdwp", "hi_dw",
+              'fwts', 'dwts', "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2", "dm",
               "rd", "rl", "sg", "dsi", "dti",
               "fedw", "fefw", "zndw", "znfw", "antho_dw", "antho_fw",
               "aah_dw", "aah_fw", "aal_dw", "aal_fw", "asc_dw", "asc_fw",
@@ -246,6 +253,11 @@ check.names.pt <- function(dfr, add = NULL) {
   if (exists("pdm", dfr)) {
     ch.names <- c(ch.names, "pdm")
     colnames(dfr)[colnames(dfr) == "pdm"] <- "dm"
+  }
+  
+  if (exists("avdm", dfr)) {
+    ch.names <- c(ch.names, "avdm")
+    colnames(dfr)[colnames(dfr) == "avdm"] <- "dm"
   }
   
   if (exists("protein", dfr)) {

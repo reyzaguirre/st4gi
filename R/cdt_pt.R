@@ -58,7 +58,7 @@ cdt.pt <- function(dfr, method = c("none", "ps", "np"),
 
   ow <- NULL 
   
-  # General computations
+  # General computations for marketable and nonmarketable tubers
   
   if (exists("mtwci", dfr) & exists("mtwcii", dfr)) {
     if ("mtwp" %in% on)
@@ -126,6 +126,8 @@ cdt.pt <- function(dfr, method = c("none", "ps", "np"),
     dfr$mtwpl[dfr$nph == 0] <- NA
   }
 
+  # General computations for dry weight of tubers
+
   if (exists("dwts1", dfr) & exists("fwts1", dfr)) {
     if ("dm1" %in% on)
       ow <- c(ow, "dm1")
@@ -153,6 +155,14 @@ cdt.pt <- function(dfr, method = c("none", "ps", "np"),
     dfr$dm[dfr$fwts == 0] <- NA
   }
 
+  # General computations for harvest index
+  
+  if (exists("ttwp", dfr) & exists("tbfw", dfr)) {
+    if ("hi_fw" %in% on)
+      ow <- c(ow, "hi_fw")
+    dfr$hi_fw <- dfr$ttwp * 1000 / dfr$tbfw
+  }
+  
   # Percentages for plants emerged and harvested
   
   if (exists("npe", dfr) & exists("ntp", dfr)) {

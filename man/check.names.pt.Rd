@@ -91,13 +91,19 @@ Between parentheses are the CO numbers for variables defined in
  }
 -------------------- Traits N6 group--------------------
  \itemize{
+ \item \code{tafw}        : Total aerial fresh weight per plot in g.
+ \item \code{tbfw}        : Total biomass fresh weight per plot in g.
  \item \code{tbfwp}       : Total biomass fresh weight per plant in g (CO_330:0000799).
  \item \code{hi_fw}       : Harvest index fresh weight in percentage (CO_330:0000738).
+ \item \code{tadw}        : Total aerial dry weight per plot in g.
+ \item \code{tbdw}        : Total biomass dry weight per plot in g.
  \item \code{tbdwp}       : Total biomass dry weight per plant in g (CO_330:0000799).
  \item \code{hi_dw}       : Harvest index dry weight in percentage (CO_330:0000735).
  }
 -------------------- Traits N7 group--------------------
  \itemize{
+ \item \code{fwts}         : Fresh weight of tuber for dry matter determination.
+ \item \code{dwts}         : Dry weight of tuber for dry matter determination.
  \item \code{fwts1}        : Fresh weight of tuber sample 1.
  \item \code{fwts2}        : Fresh weight of tuber sample 2.
  \item \code{dwts1}        : Dry weight of tuber sample 1.
