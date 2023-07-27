@@ -1,8 +1,8 @@
 Package: st4gi
 Type: Package
 Title: Statistical tools for genetic improvement
-Version: 3.0.0
-Date: 2023-05-10
+Version: 3.0.1
+Date: 2023-07-27
 Author: Raul Eyzaguirre
 Maintainer: Raul Eyzaguirre <R.EYZAGUIRRE@CGIAR.ORG>
 Description: Statistical tools for the analysis of experimental data for crop genetic improvement.
@@ -12,7 +12,8 @@ Imports:
     lme4,
     shiny,
     ggplot2,
-    ggrepel
+    ggrepel,
+    readxl
 License: MIT + file LICENSE
 Copyright: International Potato Center (2015)
 LazyData: true
