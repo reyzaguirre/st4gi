@@ -6,12 +6,12 @@
 #' \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.
 #' @param traits List of traits. 
 #' @param factors List of factors.
-#' @param add Additional columns to keep.
+#' @param keep Additional columns to keep.
 #' @param dfr The name of the data frame.
 #' @param method Use \code{fast} or \code{slow} method. 
 #' @details This function do a specific computation for all the \code{traits}
 #' for each level's combination of the \code{factors}. Additional columns can be
-#' kept if specified in \code{add}. All \code{factors} and \code{add} values
+#' kept if specified in \code{keep}. All \code{factors} and \code{keep} values
 #' are converted to character. \code{do = "count"} counts the number
 #' of valid cases (excluding missing values).
 #' @return It returns a data frame with the computations.
@@ -26,7 +26,7 @@
 #' docomp("max", traits, factors, dfr = spg)
 #' @export
 
-docomp <- function(do, traits, factors, add = NULL, dfr, method = c("fast", "slow")) {
+docomp <- function(do, traits, factors, keep = NULL, dfr, method = c("fast", "slow")) {
 
   # Match arguments
   
@@ -43,8 +43,8 @@ docomp <- function(do, traits, factors, add = NULL, dfr, method = c("fast", "slo
   
   # Create data.frame
   
-  dfr.out <- data.frame(dfr[, c(factors, add)])
-  colnames(dfr.out) <- c(factors, add)
+  dfr.out <- data.frame(dfr[, c(factors, keep)])
+  colnames(dfr.out) <- c(factors, keep)
   dfr.out <- subset(dfr.out, !duplicated(dfr.out[, factors]))
   
   # Number of factors and traits

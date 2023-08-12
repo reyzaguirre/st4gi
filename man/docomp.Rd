@@ -4,7 +4,7 @@
 \alias{docomp}
 \title{Do computations over some factors}
 \usage{
-docomp(do, traits, factors, add = NULL, dfr, method = c("fast", "slow"))
+docomp(do, traits, factors, keep = NULL, dfr, method = c("fast", "slow"))
 }
 \arguments{
 \item{do}{The computation to perform. Implemented options are \code{count},
@@ -15,7 +15,7 @@ docomp(do, traits, factors, add = NULL, dfr, method = c("fast", "slow"))
 
 \item{factors}{List of factors.}
 
-\item{add}{Additional columns to keep.}
+\item{keep}{Additional columns to keep.}
 
 \item{dfr}{The name of the data frame.}
 
@@ -30,7 +30,7 @@ Do computations for several traits for some specific factors.
 \details{
 This function do a specific computation for all the \code{traits}
 for each level's combination of the \code{factors}. Additional columns can be
-kept if specified in \code{add}. All \code{factors} and \code{add} values
+kept if specified in \code{keep}. All \code{factors} and \code{keep} values
 are converted to character. \code{do = "count"} counts the number
 of valid cases (excluding missing values).
 }
