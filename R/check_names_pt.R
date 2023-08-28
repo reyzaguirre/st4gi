@@ -181,6 +181,8 @@
 
 check.names.pt <- function(dfr, add = NULL) {
   
+  # Valid names for factors
+  
   plot.id <- c("plot", "row", "col")
   
   factors <- c("loc", "year", "season", "env", "geno", "accession_name", "instn",
@@ -198,7 +200,7 @@ check.names.pt <- function(dfr, add = NULL) {
   
   lb.ev <- paste0("lb", 1:8)
   
-  # List of traits
+  # Valid names for traits
 
   traits <- c("ntp", "npe", "nph", "ppe", "pph",
               "snpp", "nipp", "nfwp", "num_stolon", "leng_stolon",
@@ -216,70 +218,82 @@ check.names.pt <- function(dfr, add = NULL) {
               "tuber_apper", "tub_unif", "tub_size",
               rm.traits, rm.traitsi, "lb", lb.ev, "audpc", "raudpc", "saudpc")
   
+  # Valid names for factors and traits
+  
   colnames.valid <- c(plot.id, factors, traits, tolower(add))
   
-  colnames.list <- colnames(dfr)
+  # Factors and traits in field book
   
-  check.list.1 <- !(tolower(colnames.list) %in% colnames.valid) # which are not valid
-  temp <- colnames.list[!check.list.1]                          # list of valid names
-  check.list.2 <- !(temp %in% colnames.valid)                   # which are valid but lower case
+  colnames.fb <- colnames(dfr)
+  
+  # check.list.1: mark names not valid
+  
+  check.list.1 <- !(tolower(colnames.fb) %in% colnames.valid)
+  
+  # check.list.2: mark valid names but upper case to be converted to lower case
+  
+  colnames.fb.valid <- colnames.fb[!check.list.1]
+  
+  check.list.2 <- !(colnames.fb.valid %in% colnames.valid)
+  
+  # Convert all fieldbook names to lower case
   
   colnames(dfr) <- tolower(colnames(dfr))
   
   # Solve synonyms
   
-  ch.names <- NULL 
+  change.names <- NULL 
   
   if (exists("mwt", dfr)) {
-    ch.names <- c(ch.names, "mwt")
+    change.names <- c(change.names, "mwt")
     colnames(dfr)[colnames(dfr) == "mwt"] <- "atw"
   }
   
   if (exists("mwmt", dfr)) {
-    ch.names <- c(ch.names, "mwmt")
+    change.names <- c(change.names, "mwmt")
     colnames(dfr)[colnames(dfr) == "mwmt"] <- "atmw"
   }
   
   if (exists("stfw", dfr)) {
-    ch.names <- c(ch.names, "stfw")
+    change.names <- c(change.names, "stfw")
     colnames(dfr)[colnames(dfr) == "stfw"] <- "sfw"
   }
   
   if (exists("stdw", dfr)) {
-    ch.names <- c(ch.names, "stdw")
+    change.names <- c(change.names, "stdw")
     colnames(dfr)[colnames(dfr) == "stdw"] <- "sdw"
   }
   
   if (exists("pdm", dfr)) {
-    ch.names <- c(ch.names, "pdm")
+    change.names <- c(change.names, "pdm")
     colnames(dfr)[colnames(dfr) == "pdm"] <- "dm"
   }
   
   if (exists("avdm", dfr)) {
-    ch.names <- c(ch.names, "avdm")
+    change.names <- c(change.names, "avdm")
     colnames(dfr)[colnames(dfr) == "avdm"] <- "dm"
   }
   
   if (exists("protein", dfr)) {
-    ch.names <- c(ch.names, "protein")
+    change.names <- c(change.names, "protein")
     colnames(dfr)[colnames(dfr) == "protein"] <- "pro"
   }
   
-  old.names <- c("mwt", "mwmt", "stfw", "stdw", "pdm", "protein")
-  new.names <- c("atw", "atmw", "sfw", "sdw", "dm", "pro")
-  
-  if (!is.null(ch.names)) {
-    ch.names.list <- old.names %in% ch.names
-    warning("Traits ", list(old.names[ch.names.list]), " changed to ", list(new.names[ch.names.list]), call. = FALSE)
-  }
+  old.names <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein")
+  new.names <- c("atw", "atmw", "sfw", "sdw", "dm", 'dm', "pro")
   
   # Warnings
   
+  if (!is.null(change.names)) {
+    change.names.list <- old.names %in% change.names
+    warning("Trait's names ", list(old.names[change.names.list]), " changed to ", list(new.names[change.names.list]), call. = FALSE)
+  }
+  
   if (max(check.list.1) == 1)
-    warning("Some columns with invalid names: ", list(colnames.list[check.list.1]), call. = FALSE)
+    warning("Some columns with invalid names: ", list(colnames.fb[check.list.1]), call. = FALSE)
   
   if (max(check.list.2) == 1)
-    warning("Some labels converted to lower case: ", list(temp[check.list.2]), call. = FALSE)
+    warning("Some labels converted to lower case: ", list(colnames.fb.valid[check.list.2]), call. = FALSE)
   
   # Return
   

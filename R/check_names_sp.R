@@ -152,11 +152,15 @@
 
 check.names.sp <- function(dfr, add = NULL) {
   
+  # Valid names for factors
+  
   plot.id <- c("plot", "row", "col")
   
   factors <- c("loc", "year", "season", "env", "geno", 'accession_name', "cipno",
                "rep", 'rep_number', "block", 'block_number', 'row_number',
                'col_number', "treat", "harvest")
+  
+  # Valid names for traits
   
   traits <- c("nops", "nope", "noph", "vir", "vir1", "vir2", "alt", "alt1", "alt2",
               "vv", "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "scol", "fcol",
@@ -172,23 +176,35 @@ check.names.sp <- function(dfr, add = NULL) {
               "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "rtyldpct",
               "ci", "hi", "shi", "rfr")
   
-  colnames.valid <- c(plot.id, factors, traits, tolower(add))
-    
-  colnames.list <- colnames(dfr)
+  # Valid names for factors and traits
   
-  check.list.1 <- !(tolower(colnames.list) %in% colnames.valid) # which are not valid
-  temp <- colnames.list[!check.list.1]                          # list of valid names
-  check.list.2 <- !(temp %in% colnames.valid)                   # which are valid but lower case
+  colnames.valid <- c(plot.id, factors, traits, tolower(add))
+  
+  # Factors and traits in field book
+    
+  colnames.fb <- colnames(dfr)
+  
+  # check.list.1: mark names not valid
+  
+  check.list.1 <- !(tolower(colnames.fb) %in% colnames.valid)
+  
+  # check.list.2: mark valid names but upper case to be converted to lower case
+  
+  colnames.fb.valid <- colnames.fb[!check.list.1]
+  
+  check.list.2 <- !(colnames.fb.valid %in% colnames.valid)
+  
+  # Convert all fieldbook names to lower case
   
   colnames(dfr) <- tolower(colnames(dfr))
     
   # Warnings
   
   if (max(check.list.1) == 1)
-    warning("Some columns with invalid names: ", list(colnames.list[check.list.1]), call. = FALSE)
+    warning("Some columns with invalid names: ", list(colnames.fb[check.list.1]), call. = FALSE)
   
   if (max(check.list.2) == 1)
-    warning("Some labels converted to lower case: ", list(temp[check.list.2]), call. = FALSE)
+    warning("Some labels converted to lower case: ", list(colnames.fb.valid[check.list.2]), call. = FALSE)
   
   # Return
   
