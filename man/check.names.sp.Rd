@@ -147,7 +147,7 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{atrw}      : Average total storage root weight in kg (CO_331:0002040).
  \item \code{nrpp}      : Number of storage roots per plant harvested (CO_331:0000230).
  \item \code{nrpsp}     : Number of storage roots per plant planted (CO_331:0000994).
- \item \code{ncrpp}     : Number of commercial storage roots per plant harvested	(CO_331:2000036).
+ \item \code{ncrpp}     : Number of commercial storage roots per plant harvested	(CO_331:0006024).
  \item \code{ncrpsp}    : Number of commercial storage roots per plant planted	(CO_331:0000993).
  \item \code{ypp}       : Storage roots yield per plant harvested in kg (CO_331:0000681).
  \item \code{ypsp}      : Storage roots yield per plant planted in kg (CO_331:0000989).
