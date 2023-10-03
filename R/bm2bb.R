@@ -76,9 +76,14 @@ bm2ptb <- function(file.name, path.out) {
 
   minima <- as.data.frame(readxl::read_excel(fb, sheet = 'Minimal'))
   instal <- as.data.frame(readxl::read_excel(fb, sheet = 'Installation'))
-    
+  
+  country <- minima[minima$Factor == 'Country', 'Value']
+  
   design.file$trial_name <- minima[minima$Factor == 'Short name or Title', 'Value']
-  design.file$breeding_program <- 'CIP-HQ'
+  if (country == 'Peru') {
+    design.file$breeding_program <- 'CIP-HQ'} else {
+      design.file$breeding_program <- NA}
+  
   design.file$location <- minima[minima$Factor == 'Site short name', 'Value']
   design.file$year <- substr(minima[minima$Factor == 'Begin date', 'Value'], 1, 4)
   design.file$design_type <- instal[instal$Factor == 'Experimental design', 'Value']
