@@ -4,10 +4,13 @@
 \alias{bm2ptb}
 \title{Biomart to potatobase format}
 \usage{
-bm2ptb(file.name)
+bm2ptb(file.name, path.out)
 }
 \arguments{
 \item{file.name}{The name of the biomart Excel fieldbook.}
+
+\item{path.out}{Folder name and path in the working directory to save results;
+\code{output} if \code{NULL}.}
 }
 \value{
 It returns a design file and a data file ready to upload in potatobase.
