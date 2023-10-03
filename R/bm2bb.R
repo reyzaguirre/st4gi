@@ -6,15 +6,13 @@
 #' are converted to CO variable numbers.
 #' @return It returns a design file and a data file ready to upload in potatobase.
 #' @author Raul Eyzaguirre.
-#' @importFrom utils write.csv
 #' @export
 
 bm2ptb <- function(file.name) {
   
-  # Read fieldbook
-  # fb <- 'PTYL200505_APATA_with_irrigation.xls'
-  # fb <- 'PTYL200904_OLJORO.xls'
-  
+  # Read fieldbook (examples to test the script)
+  # file.name <- 'PTYL200505_APATA_with_irrigation'
+
   fb <- paste0(file.name, '.xls')
   data.file <- as.data.frame(readxl::read_excel(fb, sheet = 'Fieldbook'))
 
@@ -40,35 +38,68 @@ bm2ptb <- function(file.name) {
   checks <- checks[checks$Control == 'x' & !is.na(checks$Control), 'Institutional number']
 
   data.file[data.file$accession_name %in% checks, 'is_a_control'] <- 1
+  
+  # Check if plot_number is unique and create plot numbers
+  
+  num.of.plots <- dim(data.file)[1]
+  
+  if (max(table(data.file$plot_number)) > 1) 
+    data.file$plot_number <- 1:num.of.plots
+  
+  # Create plot name
+  
+  pn <- paste0('0000', data.file$plot_number)
+  pn <- substr(pn, nchar(pn) - 4, nchar(pn))
 
+  data.file$plot_name <- paste(file.name, pn, sep = '-')
+  
+  # Create design file
+  
+  cols.to.transfer <- c("plot_number", "rep_number", "accession_name", "is_a_control",
+                        "block_number", "row_number", "col_number")
+  
+  design.file <- data.file[, c('plot_name', cols.to.transfer)]
+  
+  # Remove columns from data file
+  
+  data.file <- data.file[, !names(data.file) %in% cols.to.transfer]
+  names(data.file)[names(data.file) == 'plot_name'] <- 'observationunit_name'
+  
   # Read metadata and give format
 
   minima <- as.data.frame(readxl::read_excel(fb, sheet = 'Minimal'))
   instal <- as.data.frame(readxl::read_excel(fb, sheet = 'Installation'))
     
-  design.file <- data.frame(trial_name = minima[minima$Factor == 'Short name or Title', 'Value'],
-                            breeding_program = 'Peru-CIP',
-                            location = minima[minima$Factor == 'Site short name', 'Value'],
-                            year = substr(minima[minima$Factor == 'Begin date', 'Value'], 1, 4),
-                            design_type = instal[instal$Factor == 'Experimental design', 'Value'],
-                            description = minima[minima$Factor == 'Comments', 'Value'],
-                            trial_type = minima[minima$Factor == 'Type of Trial', 'Value'],
-                            plot_width = as.numeric(instal[instal$Factor == 'Number of rows per plot', 'Value']) *
-                              as.numeric(instal[instal$Factor == 'Distance between rows (m)', 'Value']),
-                            plot_length = as.numeric(instal[instal$Factor == 'Number of plants per row', 'Value']) *
-                              as.numeric(instal[instal$Factor == 'Distance between plants (m)', 'Value']),
-                            planting_date = minima[minima$Factor == 'Begin date', 'Value'],
-                            harvest_date = minima[minima$Factor == 'End date', 'Value'],
-                            `number of plants per ridge` = as.numeric(instal[instal$Factor == 'Number of plants per row', 'Value']),
-                            `number of ridges per plot` = as.numeric(instal[instal$Factor == 'Number of rows per plot', 'Value']),
-                            `space between ridges` = as.numeric(instal[instal$Factor == 'Distance between rows (m)', 'Value']),
-                            `space between plants in ridge` = as.numeric(instal[instal$Factor == 'Distance between plants (m)', 'Value']),
-                            `number plants per plot` = as.numeric(instal[instal$Factor == 'Number of plants per row', 'Value']) *
-                              as.numeric(instal[instal$Factor == 'Number of rows per plot', 'Value']))
-  
+  design.file$trial_name <- minima[minima$Factor == 'Short name or Title', 'Value']
+  design.file$breeding_program <- 'CIP-HQ'
+  design.file$location <- minima[minima$Factor == 'Site short name', 'Value']
+  design.file$year <- substr(minima[minima$Factor == 'Begin date', 'Value'], 1, 4)
+  design.file$design_type <- instal[instal$Factor == 'Experimental design', 'Value']
+  design.file$description <- minima[minima$Factor == 'Comments', 'Value']
+  design.file$trial_type <- minima[minima$Factor == 'Type of Trial', 'Value']
+  design.file$plot_width <- as.numeric(instal[instal$Factor == 'Number of rows per plot', 'Value']) *
+    as.numeric(instal[instal$Factor == 'Distance between rows (m)', 'Value'])
+  design.file$plot_length <- as.numeric(instal[instal$Factor == 'Number of plants per row', 'Value']) *
+    as.numeric(instal[instal$Factor == 'Distance between plants (m)', 'Value'])
+  design.file$planting_date <- minima[minima$Factor == 'Begin date', 'Value']
+  design.file$harvest_date <- minima[minima$Factor == 'End date', 'Value']
+  design.file$`number of plants per ridge` <- as.numeric(instal[instal$Factor == 'Number of plants per row', 'Value'])
+  design.file$`number of ridges per plot` <- as.numeric(instal[instal$Factor == 'Number of rows per plot', 'Value'])
+  design.file$`space between ridges` <- as.numeric(instal[instal$Factor == 'Distance between rows (m)', 'Value'])
+  design.file$`space between plants in ridge` <- as.numeric(instal[instal$Factor == 'Distance between plants (m)', 'Value'])
+  design.file$`number plants per plot` <- as.numeric(instal[instal$Factor == 'Number of plants per row', 'Value']) *
+    as.numeric(instal[instal$Factor == 'Number of rows per plot', 'Value'])
+
   # Return
   
-  write.csv(data.file, paste0(file.name, '_data.csv'), row.names = FALSE)
-  write.csv(design.file, paste0(file.name, '_design.csv'), row.names = FALSE)
+  # Write full data file
+  openxlsx::write.xlsx(data.file, paste0(file.name, '_data_full.xlsx'), rowNames = FALSE)
+  
+  # Write only CO columns data file 
+  tmp <- data.file[, substr(names(data.file), 1, 2)  == 'CO' | names(data.file) == 'observationunit_name']
+  openxlsx::write.xlsx(tmp, paste0(file.name, '_data.xlsx'), rowNames = FALSE)
+  
+  # Write design file
+  openxlsx::write.xlsx(design.file, paste0(file.name, '_design.xlsx'), rowNames = FALSE)
   
 }
