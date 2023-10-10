@@ -157,10 +157,10 @@ cdt.pt <- function(dfr, method = c("none", "ps", "np"),
 
   # General computations for harvest index
   
-  if (exists("ttwp", dfr) & exists("tbfw", dfr)) {
+  if (exists("ttwp", dfr) & exists("tbfwp", dfr)) {
     if ("hi_fw" %in% on)
       ow <- c(ow, "hi_fw")
-    dfr$hi_fw <- dfr$ttwp * 1000 / dfr$tbfw
+    dfr$hi_fw <- dfr$ttwp * 1000 / dfr$tbfwp
   }
   
   # Percentages for plants emerged and harvested

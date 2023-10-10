@@ -24,13 +24,13 @@ The data frame must use the labels (lower or upper case) listed below.
 Between parentheses are the CO numbers for variables defined in
 \url{https://cropontology.org/term/CO_330:ROOT}.
 
- -------------------- Plot identifiers --------------------
+----------------------------- Plot identifiers -----------------------------
  \itemize{
  \item \code{plot}        : Plot number.
  \item \code{row}         : Row number.
  \item \code{col}         : Column number.
  }
--------------------- Classification factors --------------------
+--------------------------- Classification factors--------------------------
  \itemize{
  \item \code{loc}       : Locations.
  \item \code{year}      : Years.
@@ -44,33 +44,25 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{col_number}: Column number position of the plot.
  \item \code{treatment} : Irrigation treatments.
  }
--------------------- Traits N1 group --------------------
+----------------------------------- Plants ---------------------------------
  \itemize{
  \item \code{ntp}         : Number of tubers planted per plot (CO_330:0000265).
  \item \code{npe}         : Number of plants emerged per plot (CO_330:0000268).
  \item \code{nph}         : Number of plants harvested per plot (CO_330:0000287).
- \item \code{ppe}         : Proportion of plants emerged (CO_330:0000283).
- \item \code{pph}         : Proportion of plants harvested (CO_330:0000290).
+ \item \code{ppe}         : Proportion of plants emerged in percentage (CO_330:0000283).
+ \item \code{pph}         : Proportion of plants harvested in percentage (CO_330:0000290).
  }
--------------------- Traits N2 group --------------------
+----------------------------- Number of tubers -----------------------------
  \itemize{
- \item \code{snpp}        : Stem number per plant (CO_330:0000851).
- \item \code{nipp}        : Number of inflorescences per plant estimating 0-7 (CO_330:0000226).
- \item \code{nfwp}        : Number of flowers per main inflorescence estimating 0-5 (CO_330:0000227).
- \item \code{Num_Stolon}  : Number of stolons estimating 1-9 (CO_330:0000340).
- \item \code{Leng_Stolon} : Lenght of stolons estimating 1-9 (CO_330:0000344).
- }
--------------------- Traits N3 group --------------------
- \itemize{
- \item \code{tntp}        : Total number of tuber per plot (CO_330:0000304).
- \item \code{tntpl}       : Total number of tuber per plant (CO_330:0000305).
+ \item \code{tntp}        : Total number of tubers per plot (CO_330:0000304).
+ \item \code{tntpl}       : Total number of tubers per plant (CO_330:0000305).
  \item \code{nmtp}        : Number of marketable tubers per plot (CO_330:0000293).
  \item \code{nmtpl}       : Number of marketable tubers per plant (CO_330:0000297).
  \item \code{nnomtp}      : Number of non-marketable tubers per plot (CO_330:0000300).
  \item \code{nmtci}       : Number of marketable tubers category I per plot.
  \item \code{nmtcii}      : Number of marketable tubers category II per plot.
  }
--------------------- Traits N4 group --------------------
+----------------------------- Weight of tubers -----------------------------
  \itemize{
  \item \code{ttwp}        : Total tuber weight per plot in kg (CO_330:0000317).
  \item \code{ttwpl}       : Total tuber weight per plant in kg (CO_330:0000321).
@@ -79,28 +71,34 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{nomtwp}      : Non-marketable tuber weight per plot in kg (CO_330:0000314).
  \item \code{mtwci}       : Marketable tuber weight category I per plot in kg.
  \item \code{mtwcii}      : Marketable tuber weight category II per plot in kg.
- }
--------------------- Traits N5 group--------------------
- \itemize{
  \item \code{ttya}        : Total tuber yield adjusted by number of plants harvested per plot in tons per ha (CO_330:0000323).
- \item \code{ttyna}       : Total tuber yield no adjusted in tons per ha (CO_330:0000324).
+ \item \code{ttyna}       : Total tuber yield not adjusted in tons per ha (CO_330:0000324).
  \item \code{mtya}        : Marketable tuber yield adjusted by number of plants harvested per plot in tons per ha (CO_330:0000327).
- \item \code{mtyna}       : Marketable tuber yield no adjusted in tons per ha (CO_330:0000330).
- \item \code{atw}         : Average of tuber weight in g (CO_330:0000333).
- \item \code{atmw}        : Average of marketable tuber weight in g (CO_330:0000336).
+ \item \code{mtyna}       : Marketable tuber yield not adjusted in tons per ha (CO_330:0000330).
+ \item \code{atw}         : Average tuber weight in g (CO_330:0000333).
+ \item \code{atmw}        : Average marketable tuber weight in g (CO_330:0000336).
  }
--------------------- Traits N6 group--------------------
+------------------------ Plant and tuber appearance ------------------------
+ \itemize{
+ \item \code{plant_unif}  : Plant uniformity estimating 1-9 (CO_330:0000272).
+ \item \code{plant_vigor} : Plant vigor estimating 1-9 (CO_330:0000276).
+ \item \code{se}          : Senescence estimating 1-9 (CO_330:0000280).
+ \item \code{tuber_apper} : Tuber appearance estimating 1-9 (CO_330:0000348).
+ \item \code{tub_unif}    : Tuber uniformity estimating 1-9 (CO_330:0000352).
+ \item \code{tub_size}    : Tuber size estimating 1-9 (CO_330:0000356).
+ }
+---------------------------------- Biomass ---------------------------------
  \itemize{
  \item \code{tafw}        : Total aerial fresh weight per plot in g.
- \item \code{tbfw}        : Total biomass fresh weight per plot in g.
- \item \code{tbfwp}       : Total biomass fresh weight per plant in g (CO_330:0000799).
+ \item \code{tbfwp}       : Total biomass fresh weight per plot in g. (CO_330:0000829)
+ \item \code{tbfwpl}      : Total biomass fresh weight per plant in g (CO_330:0000799).
  \item \code{hi_fw}       : Harvest index fresh weight in percentage (CO_330:0000738).
  \item \code{tadw}        : Total aerial dry weight per plot in g.
- \item \code{tbdw}        : Total biomass dry weight per plot in g.
- \item \code{tbdwp}       : Total biomass dry weight per plant in g (CO_330:0000799).
+ \item \code{tbdwp}       : Total biomass dry weight per plot in g. (CO_330:0000828)
+ \item \code{tbdwpl}      : Total biomass dry weight per plant in g (CO_330:0000798).
  \item \code{hi_dw}       : Harvest index dry weight in percentage (CO_330:0000735).
  }
--------------------- Traits N7 group--------------------
+-------------------------------- Dry weight --------------------------------
  \itemize{
  \item \code{fwts}         : Fresh weight of tuber for dry matter determination.
  \item \code{dwts}         : Dry weight of tuber for dry matter determination.
@@ -112,28 +110,22 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{dm2}          : Tuber dry matter content sample 2.
  \item \code{dm}           : Tuber dry matter content in percentage (CO_330:0000390).
  }
--------------------- Traits N8 group--------------------
+--------------------------- Nutrients evaluations --------------------------
  \itemize{
- \item \code{rd}          : Root density estimating 1-3 (CO_330:0000834).
- \item \code{rl}          : Root length (CO_330:0000764).
- \item \code{sg}          : Tuber specific gravity (CO_330:0000394).
- \item \code{dsi}         : Drought susceptibility index (CO_330:0000776).
- \item \code{dti}         : Drought tolerance index (CO_330:0000779).
- }
--------------------- Traits N9 group--------------------
- \itemize{
- \item \code{fedw}        : Tuber iron concentration in dry weight basis in mg per kg (CO_330:0000402).
- \item \code{fefw}        : Tuber iron concentration in fresh weight basis in mg per kg (CO_330:0000407).
- \item \code{zndw}        : Tuber zinc concentration in dry weight basis in mg per kg (CO_330:0000408).
- \item \code{znfw}        : Tuber zinc concentration in fresh weight basis in mg per kg (CO_330:0000412).
- \item \code{antho_dw}    : Tuber anthocyanin concentration in dry weight basis in mg per 100 g (CO_330:0000414).
- \item \code{antho_fw}    : Tuber anthocyanin concentration in fresh weight basis in mg per 100 g (CO_330:0000417).
- \item \code{aah_dw}      : Tuber hydrophilic antioxidant activity in dry weight basis in ugTroloxequiv/g (CO_330:0000418).
- \item \code{aah_fw}      : Tuber hydrophilic antioxidant activity in fresh weight basis in ugTroloxequiv/g (CO_330:0000421).
- \item \code{aal_dw}      : Tuber lipophilic antioxidant activity in dry weight basis in ugTroloxequiv/g (CO_330:0000422).
- \item \code{aal_fw}      : Tuber lipophilic antioxidant activity in fresh weight basis in ugTroloxequiv/g (CO_330:0000425).
- \item \code{asc_dw}      : Tuber ascorbic acid concentration in dry weight basis in mg per 100 g (CO_330:0000426).
- \item \code{asc_fw}      : Tuber ascorbic acid concentration in fresh weight basis in mg per 100 g (CO_330:0000429).
+ \item \code{fedw}        : Tuber iron concentration on dry weight basis in mg per 100 g (CO_330:0000402).
+ \item \code{fefw}        : Tuber iron concentration on fresh weight basis in mg per 100 g (CO_330:0000407).
+ \item \code{fedw_xrf}    : Tuber iron concentration on dry weight basis in mg per kg by XRF (CO_330:0000404).
+ \item \code{zndw}        : Tuber zinc concentration on dry weight basis in mg per 100 g (CO_330:0000408).
+ \item \code{znfw}        : Tuber zinc concentration on fresh weight basis in mg per 100 g (CO_330:0000412).
+ \item \code{zndw_xrf}    : Tuber zinc concentration on dry weight basis in mg per kg by XRF (CO_330:0000409).
+ \item \code{antho_dw}    : Tuber anthocyanin concentration on dry weight basis in mg per 100 g (CO_330:0000414).
+ \item \code{antho_fw}    : Tuber anthocyanin concentration on fresh weight basis in mg per 100 g (CO_330:0000417).
+ \item \code{aah_dw}      : Tuber hydrophilic antioxidant activity on dry weight basis in ugTroloxequiv/g (CO_330:0000418).
+ \item \code{aah_fw}      : Tuber hydrophilic antioxidant activity on fresh weight basis in ugTroloxequiv/g (CO_330:0000421).
+ \item \code{aal_dw}      : Tuber lipophilic antioxidant activity on dry weight basis in ugTroloxequiv/g (CO_330:0000422).
+ \item \code{aal_fw}      : Tuber lipophilic antioxidant activity on fresh weight basis in ugTroloxequiv/g (CO_330:0000425).
+ \item \code{asc_dw}      : Tuber ascorbic acid concentration on dry weight basis in mg per 100 g (CO_330:0000426).
+ \item \code{asc_fw}      : Tuber ascorbic acid concentration on fresh weight basis in mg per 100 g (CO_330:0000429).
  \item \code{pro}         : Tuber protein content in percentage (CO_330:0000432).
  \item \code{star}        : Tuber starch content in percentage (CO_330:0000435).
  \item \code{fruc}        : Tuber fructose content in percentage (CO_330:0000438).
@@ -142,51 +134,45 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{malt}        : Tuber maltose content in percentage (CO_330:0000447).
  \item \code{fiber}       : Tuber fiber content in percentage (CO_330:0000450).
  }
--------------------- Traits N10 group--------------------
+-------------------------------- Late Blight -------------------------------
  \itemize{
- \item \code{plant_unif}  : Plant uniformity estimating 1-9 (CO_330:0000272).
- \item \code{plant_vigor} : Plant vigor estimating 1-9 (CO_330:0000276).
- \item \code{se}          : Senescence estimating 1-9 (CO_330:0000280).
- \item \code{tuber_apper} : Tuber appearance estimating 1-9 (CO_330:0000348).
- \item \code{tub_unif}    : Tuber uniformity estimating 1-9 (CO_330:0000352).
- \item \code{tub_size}    : Tuber size estimating 1-9 (CO_330:0000356).
+ \item \code{lb}          : Late Blight severity estimating percentage (CO_330:0000359).
+ \item \code{lbi}         : Late Blight severity estimating percentage evaluation i (i = 1, 2,... 8).
+ \item \code{audpc}       : Late blight AUDPC computed (CO_330:0000363).
+ \item \code{raudpc}      : Late blight relative AUDPC computed (CO_330:0000367).
+ \item \code{saudpc}      : Late blight susceptibility computed (CO_330:0000371).
  }
--------------------- Traits N11 group--------------------
+------------------------------- Other traits -------------------------------
  \itemize{
+ \item \code{rd}          : Root density estimating 1-3 (CO_330:0000834).
+ \item \code{rl}          : Root length in cm (CO_330:0000764).
+ \item \code{sg}          : Tuber specific gravity (CO_330:0000394).
+ \item \code{dsi}         : Drought susceptibility index computed (CO_330:0000776).
+ \item \code{dti}         : Drought tolerance index computed (CO_330:0000779).
  \item \code{leaflet_tw}  : Leaflet turgid weight in mg (CO_330:0000818).
  \item \code{leaflet_twi} : Leaflet turgid weight evaluation i (i = 1,..., 5).
- }
--------------------- Traits N12 group--------------------
- \itemize{
- \item \code{pw_ev}       : Plant wilting estimating 1-9 (CO_330:0000773).
- \item \code{pw_evi}      : Plant wilting evaluation i (i = 1,..., 5)
+ \item \code{pw_ev}       : Degree of canopy wilting estimating 1-9 (CO_330:0000773).
+ \item \code{pw_evi}      : Degree of canopy wilting estimating 1-9 evaluation i (i = 1,..., 5).
  \item \code{snpp}        : Stem number per plant (CO_330:0000851).
  \item \code{snppi}       : Stem number per plant evaluation i (i = 1,..., 5).
- }
--------------------- Traits N13 group--------------------
- \itemize{
+ \item \code{nipp}        : Number of inflorescences per plant estimating 0-7 (CO_330:0000226).
+ \item \code{nfwp}        : Number of flowers per main inflorescence estimating 0-5 (CO_330:0000227).
+ \item \code{Num_Stolon}  : Number of stolons estimating 1-9 (CO_330:0000340).
+ \item \code{Leng_Stolon} : Length of stolons estimating 1-9 (CO_330:0000344).
  \item \code{plahe_ev}    : Plant height in cm (CO_330:0000758).
  \item \code{plahe_evi}   : Plant height evaluation i (i = 1,..., 5).
  \item \code{sd_ev}       : Stem diameter in mm (CO_330:0000847).
  \item \code{sd_evi}      : Stem diameter evaluation i (i = 1,..., 5)
- \item \code{chlspad_ev}  : Chlorophyll content SPAD units (CO_330:0000805).
+ \item \code{chlspad_ev}  : Chlorophyll content index using SPAD-meter in SPAD units (CO_330:0000805).
  \item \code{chlspad_evi} : Chlorophyll content index evaluation i (i = 1,..., 5).
- \item \code{cr_ev}       : Canopy reflectance NDVI (CO_330:0000860).
+ \item \code{cr_ev}       : Canopy reflectance using Green-Seeker-meter in NDVI units (CO_330:0000860).
  \item \code{cr_evi}      : Canopy reflectance evaluation i (i = 1,..., 5).
- \item \code{lfa_ev}      : Leaflet area en cm square (CO_330:0000766).
- \item \code{lfa_evi}     : Leaflet area evaluation i (i = 1,..., 5).
- \item \code{rwc_ev}      : Relative water content in percentage (CO_330:0000765).
+ \item \code{lfa_ev}      : Leaflet area using Compu Eye, Leaf Symptom Area software in cm^2 (CO_330:0000766).
+ \item \code{lfa_evi}     : Leaflet area using Compu Eye, Leaf Symptom Area software in cm^2 evaluation i (i = 1,..., 5).
+ \item \code{rwc_ev}      : Relative water content in percentage (CO_330:0000741).
  \item \code{rwc_evi}     : Relative water content evaluation i (i = 1,..., 5).
- \item \code{sla_ev}      : Leaflet area in cm square per g (CO_330:0000812).
- \item \code{sla_evi}     : Leaflet area evaluation i (i = 1,..., 5).
- }
--------------------- Traits N14 group--------------------
- \itemize{
- \item \code{lb}          : Late Blight severity in percentage (CO_330:0000359).
- \item \code{lbi}         : Late Blight severity evaluation i (i = 1, 2,... 8).
- \item \code{audpc}       : Late blight AUDPC (CO_330:0000363).
- \item \code{raudpc}      : Late blight relative AUDPC (CO_330:0000367).
- \item \code{saudpc}      : Late blight susceptibility (CO_330:0000371).
+ \item \code{sla_ev}      : Leaflet area using EasyLeafArea software in cm^2 per g (CO_330:0000812).
+ \item \code{sla_evi}     : Leaflet area using EasyLeafArea software in cm^2 per g evaluation i (i = 1,..., 5).
  }
 }
 \examples{

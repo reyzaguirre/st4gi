@@ -763,7 +763,7 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
 
   # Inconsistencies for: Fresh vs. dry weight
   
-  dfr.out <- rbind(dfr.out, sp1(dfr, 1, "tbdwp", "tbfwp", "- Total biomass dry weight (tbdwp) is greater than total biomass fresh weight (tbfwp) per plant:", format))
+  dfr.out <- rbind(dfr.out, sp1(dfr, 1, "tbdwpl", "tbfwpl", "- Total biomass dry weight (tbdwpl) is greater than total biomass fresh weight (tbfwpl) per plant:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 1, "dwts1", "fwts1", "- Dry weight of tuber sample 1 (dwts1) is greater than fresh weight of tuber sample 1 (fwts1):", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 1, "dwts2", "fwts2", "- Dry weight of tuber sample 2 (dwts2) is greater than fresh weight of tuber sample 2 (fwts2):", format))
   
@@ -811,9 +811,9 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
   
   # Inconsistencies for nph and fresh, dry and concentration matter
   
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3, "nph", "tbfwp", "- Number of plants harvested (nph) is zero but total biomass fresh weight per plant (tbfwp) is greater than zero:", format))
+  dfr.out <- rbind(dfr.out, sp1(dfr, 3, "nph", "tbfwpl", "- Number of plants harvested (nph) is zero but total biomass fresh weight per plant (tbfwpl) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3, "nph", "hi_fw", "- Number of plants harvested (nph) is zero but harvest index fresh weight (hi_fw) is greater than zero:", format))
-  dfr.out <- rbind(dfr.out, sp1(dfr, 3, "nph", "tbdwp", "- Number of plants harvested (nph) is zero but total biomass dry weight per plant (tbdwp) is greater than zero:", format))
+  dfr.out <- rbind(dfr.out, sp1(dfr, 3, "nph", "tbdwpl", "- Number of plants harvested (nph) is zero but total biomass dry weight per plant (tbdwpl) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3, "nph", "hi_dw", "- Number of plants harvested (nph) is zero but harvest index dry weight (hi_dw) is greater than zero:", format))
   dfr.out <- rbind(dfr.out, sp1(dfr, 3, "nph",    "dm", "- Number of plants harvested (nph) is zero but tuber dry matter content (dm) is greater than zero:", format))
   
@@ -980,24 +980,24 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
 
   # Extreme values detection and out of range for fresh weight
   
-  dfr.out <- rbind(dfr.out, sp4(dfr, "lower", "tbfwp", "- Out of range for total biomass fresh weight per plant (tbfwp):", format = format))
+  dfr.out <- rbind(dfr.out, sp4(dfr, "lower", "tbfwpl", "- Out of range for total biomass fresh weight per plant (tbfwpl):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "lower", "hi_fw", "- Out of range for harvest index fresh weight (hi_fw):", format = format))
   
-  dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "tbfwp", "- Extreme low values for total biomass fresh weight per plant (tbfwp):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "tbfwpl", "- Extreme low values for total biomass fresh weight per plant (tbfwpl):", format = format))
   dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "hi_fw", "- Extreme low values for harvest index fresh weight (hi_fw):", format = format))
   
-  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "tbfwp", "- Extreme high values for total biomass fresh weight per plant (tbfwp):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "tbfwpl", "- Extreme high values for total biomass fresh weight per plant (tbfwpl):", format = format))
   dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "hi_fw", "- Extreme high values for harvest index fresh weight (hi_fw):", format = format))
 
   # Extreme values detection and out of range for dry weight
   
-  dfr.out <- rbind(dfr.out, sp4(dfr, "lower", "tbdwp", "- Out of range for total biomass dry weight per plant (tbdwp):", format = format))
+  dfr.out <- rbind(dfr.out, sp4(dfr, "lower", "tbdwpl", "- Out of range for total biomass dry weight per plant (tbdwpl):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "lower", "hi_dw", "- Out of range for harvest index dry weight (hi_dw):", format = format))
 
-  dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "tbdwp", "- Extreme low values for total biomass dry weight per plant (tbdwp):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "tbdwpl", "- Extreme low values for total biomass dry weight per plant (tbdwpl):", format = format))
   dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "hi_dw", "- Extreme low values for harvest index dry weight (hi_dw):", format = format))
   
-  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "tbdwp", "- Extreme high values for total biomass dry weight per plant (tbdwp):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "tbdwpl", "- Extreme high values for total biomass dry weight per plant (tbdwpl):", format = format))
   dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "hi_dw", "- Extreme high values for harvest index dry weight (hi_dw):", format = format))
   
   # Extreme values detection and out of range for dry matter content determination
@@ -1049,8 +1049,10 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
   
   dfr.out <- rbind(dfr.out, sp4(dfr, "both", "fedw", "- Out of range values for tuber iron concentration in dry weight basis (fedw):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "both", "fefw", "- Out of range values for tuber iron concentration in fresh weight basis (fefw):", format = format))
+  dfr.out <- rbind(dfr.out, sp4(dfr, "both", "fedw_xrf", "- Out of range values for tuber iron concentration in dry weight basis by XRF (fedw_xrf):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "both", "zndw", "- Out of range values for tuber zinc concentration in dry weight basis (zndw):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "both", "znfw", "- Out of range values for tuber zinc concentration in fresh weight basis (znfw):", format = format))
+  dfr.out <- rbind(dfr.out, sp4(dfr, "both", "zndw_xrf", "- Out of range values for tuber zinc concentration in dry weight basis by XRF (zndw_xrf):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "both", "antho_dw", "- Out of range values for tuber anthocyanin concentration in dry weight basis (antho_dw):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "both", "antho_fw", "- Out of range values for tuber anthocyanin concentration in fresh weight basis (antho_fw):", format = format))
   dfr.out <- rbind(dfr.out, sp4(dfr, "lower", "aah_dw", "- Out of range values for tuber hydrophilic antioxidant activity in dry weight basis (aah_dw):", format = format))
@@ -1249,10 +1251,10 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
     dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep,   "atw", out.mod, out.max, "- Outliers for average of tuber weight (atw):", format))
     dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep,  "atmw", out.mod, out.max, "- Outliers for average of marketable tuber weight (atmw):", format))
 
-    dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep, "tbfwp", out.mod, out.max, "- Outliers for total biomass fresh weight per plant (tbfwp):", format))
+    dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep, "tbfwpl", out.mod, out.max, "- Outliers for total biomass fresh weight per plant (tbfwpl):", format))
     dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep, "hi_fw", out.mod, out.max, "- Outliers for harvest index fresh weight (hi_fw):", format))
     
-    dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep, "tbdwp", out.mod, out.max, "- Outliers for total biomass dry weight per plant (tbdwp):", format))
+    dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep, "tbdwpl", out.mod, out.max, "- Outliers for total biomass dry weight per plant (tbdwpl):", format))
     dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep, "hi_dw", out.mod, out.max, "- Outliers for harvest index dry weight (hi_dw):", format))
 
     dfr.out <- rbind(dfr.out, sp6(dfr, geno, env, rep, "fwts1", out.mod, out.max, "- Outliers for fresh weight of tuber sample 1 (fwts1):", format))

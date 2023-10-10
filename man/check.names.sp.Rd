@@ -26,13 +26,13 @@ Between parentheses are the CO numbers for variables defined in
 \url{https://cropontology.org/term/CO_331:ROOT}
 or COMP numbers defined in \url{https://sweetpotatobase.org/}.
 
- -------------------- Plot identifiers --------------------
+----------------------------- Plot identifiers -----------------------------
  \itemize{
  \item \code{plot}      : Plot number.
  \item \code{row}       : Row number.
  \item \code{col}       : Column number.
  }
--------------------- Classification factors --------------------
+--------------------------- Classification factors--------------------------
  \itemize{
  \item \code{loc}       : Locations.
  \item \code{year}      : Years.
@@ -47,7 +47,7 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{treat}     : Treatment.
  \item \code{harvest}   : Harvest time.
  }
--------------------- Roots and vines --------------------
+------------------------------ Roots and vines -----------------------------
  \itemize{
  \item \code{nops}      : Number of plants planted per plot (CO_331:0000678).
  \item \code{nope}      : Number of plants established per plot (CO_331:0000192).
@@ -79,7 +79,7 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{stspwv}    : Reaction to striped sweet potato weevil estimating 1-9 (CO_331:0000720).
  \item \code{milldam}   : Millipede damage estimating 1-9 (CO_331:0000805).
  }
--------------------- Dry matter assesment --------------------
+--------------------------- Dry matter assesment ---------------------------
  \itemize{
  \item \code{dmf}       : Fresh weight of storage root samples for dry matter assessment measuring g (CO_331:0000243). 
  \item \code{dmd}       : Dry weight of storage root samples for dry matter assessment measuring g (CO_331:0000247).
@@ -88,7 +88,7 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{dmvd}      : Dry weight of vines samples for dry matter assessment measuring g (CO_331:0000255).
  \item \code{dmv}       : Vine dry matter content computing percent (CO_331:0001014).
  }
--------------------- Raw and cooked roots attributes --------------------
+---------------------- Raw and cooked roots attributes ---------------------
  \itemize{
  \item \code{fraw}      : Fiber content in raw storage roots estimating 1-9 (CO_331:0001038).
  \item \code{suraw}     : Content of total sugars in raw storage roots estimating 1-9 (CO_331:0000766).
@@ -99,28 +99,28 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{coot}      : Boiled storage root flesh taste estimating 1-9 (CO_331:0000269).
  \item \code{cooap}     : Boiled storage root overall appearance estimating 1-9 (CO_331:0000273).
  }
--------------------- Nutrients evaluations --------------------
+--------------------------- Nutrients evaluations --------------------------
  \itemize{
  \item \code{prot}      : Content of protein in dry weight basis in raw storage roots measuring percentage (CO_331:0000278).
- \item \code{fe}        : Content of iron in dry weight basis measuring mg per 100g (CO_331:0001016).
- \item \code{zn}        : Content of zinc in dry weight basis measuring mg per 100g (CO_331:0001017).
- \item \code{ca}        : Content of calcium in dry weight basis measuring mg per 100g (CO_331:0001029).
- \item \code{mg}        : Content of magnesium in dry weight basis measuring mg per 100g (CO_331:0001030).
- \item \code{bc}        : Content of beta-carotene in dry weight basis in raw storage roots measuring mg per 100g (CO_331:0000289).
- \item \code{bc.cc}     : Content of beta-carotene in fresh weight basis in raw storage roots estimating from RHS color chart in mg per 100g	(CO_331:0001023).
- \item \code{tc}        : Content of total carotenoids in dry weight basis in raw storage roots measuring mg per 100g (CO_331:0000290).
+ \item \code{fe}        : Content of iron in dry weight basis measuring mg per 100 g (CO_331:0001016).
+ \item \code{zn}        : Content of zinc in dry weight basis measuring mg per 100 g (CO_331:0001017).
+ \item \code{ca}        : Content of calcium in dry weight basis measuring mg per 100 g (CO_331:0001029).
+ \item \code{mg}        : Content of magnesium in dry weight basis measuring mg per 100 g (CO_331:0001030).
+ \item \code{bc}        : Content of beta-carotene in dry weight basis in raw storage roots measuring mg per 100 g (CO_331:0000289).
+ \item \code{bc.cc}     : Content of beta-carotene in fresh weight basis in raw storage roots estimating from RHS color chart in mg per 100 g	(CO_331:0001023).
+ \item \code{tc}        : Content of total carotenoids in dry weight basis in raw storage roots measuring mg per 100 g (CO_331:0000290).
  \item \code{star}      : Content of starch in dry weight basis in raw storage roots measuring percentage (CO_331:0000291).
  \item \code{star.b}    : Content of starch in dry weight basis in boiled storage roots measuring percentage	(CO_331:2000027).
- \item \code{fruc}      : Content of fructose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001045).
- \item \code{fruc.b}    : Content of fructose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001046).
- \item \code{gluc}      : Content of glucose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001047).
- \item \code{gluc.b}    : Content of glucose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001048).
- \item \code{sucr}      : Content of sucrose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001049).
- \item \code{sucr.b}    : Content of sucrose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001050).
- \item \code{malt}      : Content of maltose in dry weight basis in raw storage roots measuring g per 100g (CO_331:0001051).
- \item \code{malt.b}    : Content of maltose in dry weight basis in boiled storage roots measuring g per 100g (CO_331:0001052).
+ \item \code{fruc}      : Content of fructose in dry weight basis in raw storage roots measuring g per 100 g (CO_331:0001045).
+ \item \code{fruc.b}    : Content of fructose in dry weight basis in boiled storage roots measuring g per 100 g (CO_331:0001046).
+ \item \code{gluc}      : Content of glucose in dry weight basis in raw storage roots measuring g per 100 g (CO_331:0001047).
+ \item \code{gluc.b}    : Content of glucose in dry weight basis in boiled storage roots measuring g per 100 g (CO_331:0001048).
+ \item \code{sucr}      : Content of sucrose in dry weight basis in raw storage roots measuring g per 100 g (CO_331:0001049).
+ \item \code{sucr.b}    : Content of sucrose in dry weight basis in boiled storage roots measuring g per 100 g (CO_331:0001050).
+ \item \code{malt}      : Content of maltose in dry weight basis in raw storage roots measuring g per 100 g (CO_331:0001051).
+ \item \code{malt.b}    : Content of maltose in dry weight basis in boiled storage roots measuring g per 100 g (CO_331:0001052).
  }
--------------------- Calculated traits --------------------
+----------------------------- Calculated traits ----------------------------
  \itemize{
  \item \code{tnr}       : Total number of storage roots per plot (CO_331:0000233).
  \item \code{trw}       : Total storage root weight per plot in kg (CO_331:0000237).
