@@ -36,14 +36,14 @@ convert.co.sp <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
     colnames(dfr) <- gsub('.*CO_331.', 'CO_331:', colnames(dfr))
     colnames(dfr) <- gsub('.*COMP.', 'COMP:', colnames(dfr))
 
+    # Obsolete values
+    
+    colnames(dfr)[colnames(dfr) == 'CO_331:2000036'] <- 'CO_331:0006024'
+    
     # Convert
     
     id <- match(colnames(dfr), spont$Variable.ID)
     colnames(dfr)[!is.na(id)] <- spont$Label[id[!is.na(id)]]
-    
-    # Obsolete values
-    
-    colnames(dfr)[colnames(dfr) == 'CO_331:2000036'] <- 'CO_331:0006024'
     
     # Factors
     
