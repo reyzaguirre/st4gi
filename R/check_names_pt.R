@@ -10,9 +10,9 @@
 #' 
 #' ----------------------------- Plot identifiers -----------------------------
 #'  \itemize{
-#'  \item \code{plot}        : Plot number.
-#'  \item \code{row}         : Row number.
-#'  \item \code{col}         : Column number.
+#'  \item \code{plot}      : Plot number.
+#'  \item \code{row}       : Row number position of the plot (\code{row_number} is also valid).
+#'  \item \code{col}       : Column number position of the plot (\code{col_number} is also valid).
 #'  }
 #' --------------------------- Classification factors--------------------------
 #'  \itemize{
@@ -22,10 +22,9 @@
 #'  \item \code{env}       : Environments.
 #'  \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
 #'  \item \code{instn}     : Institutional CIP number.
+#'  \item \code{type}      : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
 #'  \item \code{rep}       : Replications (\code{rep_number} is also valid).
 #'  \item \code{block}     : Blocks (\code{block_number} is also valid).
-#'  \item \code{row_number}: Row number position of the plot.
-#'  \item \code{col_number}: Column number position of the plot.
 #'  \item \code{treatment} : Irrigation treatments.
 #'  }
 #' ----------------------------------- Plants ---------------------------------
@@ -169,11 +168,12 @@ check.names.pt <- function(dfr, add = NULL) {
   
   # Valid names for factors
   
-  plot.id <- c("plot", "row", "col")
+  plot.id <- c("plot", "row", 'row_number', "col", 'col_number')
   
-  factors <- c("loc", "year", "season", "env", "geno", "accession_name", "instn",
-               "rep", 'rep_number', "block", "block_number", 'row_number',
-               'col_number', "treatment")
+  factors <- c("loc", "year", "season", "env",
+               "geno", "accession_name", "instn", 'type',
+               "rep", 'rep_number', "block", "block_number",
+               "treatment")
   
   # Repeated measures traits (i = 1...5)
   

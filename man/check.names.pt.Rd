@@ -26,9 +26,9 @@ Between parentheses are the CO numbers for variables defined in
 
 ----------------------------- Plot identifiers -----------------------------
  \itemize{
- \item \code{plot}        : Plot number.
- \item \code{row}         : Row number.
- \item \code{col}         : Column number.
+ \item \code{plot}      : Plot number.
+ \item \code{row}       : Row number position of the plot (\code{row_number} is also valid).
+ \item \code{col}       : Column number position of the plot (\code{col_number} is also valid).
  }
 --------------------------- Classification factors--------------------------
  \itemize{
@@ -38,10 +38,9 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{env}       : Environments.
  \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
  \item \code{instn}     : Institutional CIP number.
+ \item \code{type}      : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
  \item \code{rep}       : Replications (\code{rep_number} is also valid).
  \item \code{block}     : Blocks (\code{block_number} is also valid).
- \item \code{row_number}: Row number position of the plot.
- \item \code{col_number}: Column number position of the plot.
  \item \code{treatment} : Irrigation treatments.
  }
 ----------------------------------- Plants ---------------------------------
