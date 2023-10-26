@@ -47,6 +47,7 @@ convert.co.sp <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
     
     # Factors
     
+    colnames(dfr)[colnames(dfr) == 'studyYear'] <- 'year'
     colnames(dfr)[colnames(dfr) == 'studyName'] <- 'trial'
     colnames(dfr)[colnames(dfr) == 'locationName'] <- 'loc'
     colnames(dfr)[colnames(dfr) == 'germplasmName'] <- 'geno'
@@ -110,6 +111,7 @@ convert.co.pt <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
     
     # Factors
     
+    colnames(dfr)[colnames(dfr) == 'studyYear'] <- 'year'
     colnames(dfr)[colnames(dfr) == 'studyName'] <- 'trial'
     colnames(dfr)[colnames(dfr) == 'locationName'] <- 'loc'
     colnames(dfr)[colnames(dfr) == 'germplasmName'] <- 'geno'
