@@ -4,21 +4,23 @@
 \alias{convert.co.pt}
 \title{Potato CO numbers}
 \usage{
-convert.co.pt(dfr)
+convert.co.pt(dfr, direction = c("labels.to.co", "co.to.labels"))
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
+
+\item{direction}{\code{labels.to.co} or \code{co.to.labels}}
 }
 \value{
-It returns a data frame with all short labels for traits converted to
-Crop Ontology variable numbers.
+It returns a data frame with all short labels for traits interchanged
+with Crop Ontology variable numbers.
 }
 \description{
-Converts potato short labels to Crop Ontology variable numbers.
+Interchanges potato short labels with Crop Ontology variable numbers.
 }
 \details{
 All labels (lower or upper case) listed in function \code{check.names.pt}
-are converted to CO variable numbers.
+are interchanged with CO_330 variable numbers.
 }
 \examples{
 convert.co.pt(potatoyield)

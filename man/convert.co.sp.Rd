@@ -4,21 +4,23 @@
 \alias{convert.co.sp}
 \title{Sweetpotato CO numbers}
 \usage{
-convert.co.sp(dfr)
+convert.co.sp(dfr, direction = c("labels.to.co", "co.to.labels"))
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
+
+\item{direction}{\code{labels.to.co} or \code{co.to.labels}}
 }
 \value{
-It returns a data frame with all short labels for traits converted to
-Crop Ontology variable numbers.
+It returns a data frame with all short labels for traits interchanged
+with Crop Ontology variable numbers.
 }
 \description{
-Converts sweetpotato short labels to Crop Ontology variable numbers.
+Interchanges sweetpotato short labels with Crop Ontology variable numbers.
 }
 \details{
 All labels (lower or upper case) listed in function \code{check.names.sp}
-are converted to CO variable numbers.
+are interchanged with CO_331 variable numbers.
 }
 \examples{
 convert.co.sp(pjpz09)
