@@ -105,7 +105,7 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{zn}        : Content of zinc in dry weight basis measuring mg per 100 g (CO_331:0001017).
  \item \code{ca}        : Content of calcium in dry weight basis measuring mg per 100 g (CO_331:0001029).
  \item \code{mg}        : Content of magnesium in dry weight basis measuring mg per 100 g (CO_331:0001030).
- \item \code{bc}        : Content of beta-carotene in dry weight basis in raw storage roots measuring mg per 100 g (CO_331:0000289).
+ \item \code{bc}        : Content of beta-carotene in dry weight basis in raw storage roots measuring mg per 100 g (CO_331:0001019).
  \item \code{bc.cc}     : Content of beta-carotene in fresh weight basis in raw storage roots estimating from RHS color chart in mg per 100 g	(CO_331:0001023).
  \item \code{tc}        : Content of total carotenoids in dry weight basis in raw storage roots measuring mg per 100 g (CO_331:0000290).
  \item \code{star}      : Content of starch in dry weight basis in raw storage roots measuring percentage (CO_331:0000291).
