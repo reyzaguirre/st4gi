@@ -27,6 +27,15 @@ convert.co.sp <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
     id <- match(colnames(dfr), spont$Label)
     colnames(dfr)[!is.na(id)] <- spont$Variable.ID[id[!is.na(id)]]
     
+    # Factors
+    
+    colnames(dfr)[colnames(dfr) == 'plot'] <- 'plot_number'
+    colnames(dfr)[colnames(dfr) == 'geno'] <- 'accession_name'
+    colnames(dfr)[colnames(dfr) == 'rep'] <- 'rep_number'
+    colnames(dfr)[colnames(dfr) == 'block'] <- 'block_number'
+    colnames(dfr)[colnames(dfr) == 'row'] <- 'row_number'
+    colnames(dfr)[colnames(dfr) == 'col'] <- 'col_number'
+
   }
   
   if (direction == 'co.to.labels') {
@@ -94,6 +103,15 @@ convert.co.pt <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
     
     id <- match(colnames(dfr), ptont$Label)
     colnames(dfr)[!is.na(id)] <- ptont$Variable.ID[id[!is.na(id)]]
+    
+    # Factors
+    
+    colnames(dfr)[colnames(dfr) == 'plot'] <- 'plot_number'
+    colnames(dfr)[colnames(dfr) == 'instn'] <- 'accession_name'
+    colnames(dfr)[colnames(dfr) == 'rep'] <- 'rep_number'
+    colnames(dfr)[colnames(dfr) == 'block'] <- 'block_number'
+    colnames(dfr)[colnames(dfr) == 'row'] <- 'row_number'
+    colnames(dfr)[colnames(dfr) == 'col'] <- 'col_number'
     
   }
   

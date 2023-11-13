@@ -33,11 +33,17 @@ It returns a data frame with fieldbook design and traits.
 Creates a potato fieldbook with short labels.
 }
 \details{
-Labels listed in function \code{check.names.pt} are included.
+Only labels listed in function \code{check.names.pt} are valid.
+Uppercase labels are converted to lowercase.
 }
 \examples{
 book <- cr.rcbd(1:20, 3, 10)$book
+# Get fieldbook with minimal set of traits
 createfb.pt(book)
+# Add additional traits
+createfb.pt(book, add = c('bc', 'fe', 'zn'))
+# Get the fieldbook with CO numbers
+createfb.pt(book, label = 'CO', add = c('dm', 'fedw', 'zndw'))
 }
 \author{
 Raul Eyzaguirre.

@@ -9,12 +9,18 @@
 #' @param add Additional traits to include. Only if \code{minimal = TRUE}.
 #' @param computation Logical, if \code{TRUE}, computed traits are included.
 #' Only if \code{minimal = FALSE}. Default is \code{FALSE}. 
-#' @details Labels listed in function \code{check.names.sp} are included.
+#' @details Only labels listed in function \code{check.names.sp} are valid.
+#' Uppercase labels are converted to lowercase.
 #' @return It returns a data frame with fieldbook design and traits.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' book <- cr.rcbd(1:20, 3, 10)$book
+#' # Get fieldbook with minimal set of traits
 #' createfb.sp(book)
+#' # Add additional traits
+#' createfb.sp(book, add = c('bc', 'fe', 'zn'))
+#' # Get the fieldbook with CO numbers
+#' createfb.sp(book, label = 'CO', add = c('bc', 'fe', 'zn'))
 #' @export
 
 createfb.sp <- function(design, label = c("standard", "CO"),
@@ -33,35 +39,36 @@ createfb.sp <- function(design, label = c("standard", "CO"),
   
   if (!is.null(add)) {
     
+    add <- tolower(add)
+    
     minimal.list <- c(minimal.list, add[add %in% spont$Label])
   
     if (prod(add %in% spont$Label) == 0)
       warning("Some invalid names for labels: ", list(add[!add %in% spont$Label]), call. = FALSE)
   }
   
-  # Choose labels
-  
-  if(label == "standard")
-    labeltouse <- "Label" else
-      labeltouse <- "Variable.ID"
-
   # Add traits
   
   if (minimal == TRUE)
-    add <- spont[spont$Label %in% minimal.list, labeltouse]
+    add <- spont[spont$Label %in% minimal.list, "Label"]
   
   if (minimal == FALSE) 
     if (computation == FALSE)
-      add <- spont[spont$SweetpotatoMethod != "Computation", labeltouse]
+      add <- spont[spont$SweetpotatoMethod != "Computation", "Label"]
   
   if (minimal == FALSE) 
     if (computation == TRUE)
-      add <- spont[, labeltouse]
+      add <- spont[, "Label"]
   
   design[, add] <- NA
 
-  # Return
+  # Choose labels
+
+  if (label == 'CO')
+    suppressWarnings(design <- convert.co.sp(design, 'labels.to.co'))
   
+  # Return
+
   design
   
 }
@@ -77,12 +84,18 @@ createfb.sp <- function(design, label = c("standard", "CO"),
 #' @param add Additional traits to include. Only if \code{minimal = TRUE}.
 #' @param computation Logical, if \code{TRUE}, computed traits are included.
 #' Only if \code{minimal = FALSE}. Default is \code{FALSE}. 
-#' @details Labels listed in function \code{check.names.pt} are included.
+#' @details Only labels listed in function \code{check.names.pt} are valid.
+#' Uppercase labels are converted to lowercase.
 #' @return It returns a data frame with fieldbook design and traits.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' book <- cr.rcbd(1:20, 3, 10)$book
+#' # Get fieldbook with minimal set of traits
 #' createfb.pt(book)
+#' # Add additional traits
+#' createfb.pt(book, add = c('bc', 'fe', 'zn'))
+#' # Get the fieldbook with CO numbers
+#' createfb.pt(book, label = 'CO', add = c('dm', 'fedw', 'zndw'))
 #' @export
 
 createfb.pt <- function(design, label = c("standard", "CO"),
@@ -101,33 +114,34 @@ createfb.pt <- function(design, label = c("standard", "CO"),
   
   if (!is.null(add)) {
     
+    add <- tolower(add)
+  
     minimal.list <- c(minimal.list, add[add %in% ptont$Label])
     
     if (prod(add %in% ptont$Label) == 0)
       warning("Some invalid names for labels: ", list(add[!add %in% ptont$Label]), call. = FALSE)
   }
 
-  # Choose labels
-  
-  if(label == "standard")
-    labeltouse <- "Label" else
-      labeltouse <- "Variable.ID"
-  
   # Add traits
   
   if (minimal == TRUE)
-    add <- ptont[ptont$Label %in% minimal.list, labeltouse]
+    add <- ptont[ptont$Label %in% minimal.list, "Label"]
   
   if (minimal == FALSE) 
     if (computation == FALSE)
-      add <- ptont[ptont$PotatoMethod != "Computation", labeltouse]
+      add <- ptont[ptont$PotatoMethod != "Computation", "Label"]
   
   if (minimal == FALSE) 
     if (computation == TRUE)
-      add <- ptont[, labeltouse]
+      add <- ptont[, "Label"]
   
   design[, add] <- NA
   
+  # Choose labels
+  
+  if (label == 'CO')
+    suppressWarnings(design <- convert.co.pt(design, 'labels.to.co'))
+
   # Return
   
   design
