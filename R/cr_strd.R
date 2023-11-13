@@ -67,22 +67,22 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
   sta <- NULL
   stb <- NULL
   stab <- NULL
-  plot.num <- NULL
+  plot <- NULL
 
   for (i in 1:nb) {
     sta <- c(sta, c(sapply(A[rana[, i]], rep, nlb)))
     stb <- c(stb, rep(B[ranb[, i]], nla))
     stab <- c(stab, c(t(plan[, , i])))
-    plot.num <- c(plot.num, c(t(plan.id)) + nla * nlb * (i - 1))
+    plot <- c(plot, c(t(plan.id)) + nla * nlb * (i - 1))
   }
   
-  book <- data.frame(plot.num, block, row, col,
+  book <- data.frame(plot, block, row, col,
                      A = sta, B = stb, treat = stab, stringsAsFactors = F)
   
   # Sort by plot number
   
   if (serpentine == 'yes')
-    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
   
   rownames(book) <- 1:dim(book)[1]
   

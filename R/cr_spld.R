@@ -110,37 +110,37 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   
   row <- rep(as.integer(gl(nr, nc)), np)
   col <- rep(1:nc, nr * np)
-  plot.num <- as.integer(gl(nl[1] * nb, nsp))
+  plot <- as.integer(gl(nl[1] * nb, nsp))
   block <- as.integer(gl(nb, nl[1] * nsp))
   
   treat <- NULL
-  subplot.num <- NULL
-  subsubplot.num <- NULL
+  subplot <- NULL
+  subsubplot <- NULL
   
   if (nf == 3)
-    subplot.num <- as.integer(gl(np, nr * nc))
+    subplot <- as.integer(gl(np, nr * nc))
 
   cont <- 0
   for (m in 1:nb)
     for (l in 1:nl[1]) {
       if (nf == 2) {
         treat <- c(treat, c(t(plan[, , l, m])))
-        subplot.num <- c(subplot.num, c(t(plan.id)) + nl[2] * cont)
+        subplot <- c(subplot, c(t(plan.id)) + nl[2] * cont)
         cont <- cont + 1
       }
       if (nf == 3)
         for (k in 1:nl[2]) {
           treat <- c(treat, c(t(plan[, , k, l, m])))
-          subsubplot.num <- c(subsubplot.num, c(t(plan.id)) + nl[3] * cont)
+          subsubplot <- c(subsubplot, c(t(plan.id)) + nl[3] * cont)
           cont <- cont + 1
         }
     }
 
   if (nf == 2)
-    book <- data.frame(block, plot.num, subplot.num, row, col, treat,
+    book <- data.frame(block, plot, subplot, row, col, treat,
                        stringsAsFactors = FALSE)
   if (nf == 3)
-    book <- data.frame(block, plot.num, subplot.num, subsubplot.num, row, col, treat,
+    book <- data.frame(block, plot, subplot, subsubplot, row, col, treat,
                        stringsAsFactors = FALSE)
   book <- book[!is.na(book$treat), ]
   
@@ -167,9 +167,9 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   # Sort by plot number
   
   if (serpentine == 'yes' & nr > 1 & nf == 2)
-    book <- book[sort(book$subplot.num, index.return = TRUE)$ix, ]
+    book <- book[sort(book$subplot, index.return = TRUE)$ix, ]
   if (serpentine == 'yes' & nr > 1 & nf == 3)
-    book <- book[sort(book$subsubplot.num, index.return = TRUE)$ix, ]
+    book <- book[sort(book$subsubplot, index.return = TRUE)$ix, ]
   
   rownames(book) <- 1:dim(book)[1]
   

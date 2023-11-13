@@ -93,14 +93,14 @@ cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
   
-  book <- data.frame(plot.num = c(t(plan.id)), row, col,
+  book <- data.frame(plot = c(t(plan.id)), row, col,
                      geno = c(t(plan)), stringsAsFactors = FALSE)
   book <- book[!is.na(book$geno), ]
   
   # Sort by plot number
   
   if (serpentine == 'yes' & nr > 1)
-    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
   
   rownames(book) <- 1:dim(book)[1]
   

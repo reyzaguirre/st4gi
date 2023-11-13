@@ -92,22 +92,22 @@ cr.abd <- function(geno, checks, nb, nc = NULL, serpentine = c("yes", "no"),
   col <- rep(rep(1:nc, nr), nb)
   
   geno <- NULL
-  plot.num <- NULL
+  plot <- NULL
   to.add <- 0
 
   for (i in 1:nb) {
     geno <- c(geno, c(t(plan[, , i])))
-    plot.num <- c(plot.num, c(t(plan.id)) + to.add)
+    plot <- c(plot, c(t(plan.id)) + to.add)
     to.add <- to.add + sum(!is.na(plan[, , i]))
   }
   
-  book <- data.frame(plot.num, block, row, col, geno, stringsAsFactors = FALSE)
+  book <- data.frame(plot, block, row, col, geno, stringsAsFactors = FALSE)
   book <- book[!is.na(book$geno), ]
 
   # Sort by plot number
   
   if (serpentine == 'yes' & nr > 1)
-    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
   
   rownames(book) <- 1:dim(book)[1]
 

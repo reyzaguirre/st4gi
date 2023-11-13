@@ -57,15 +57,15 @@ cr.lsd <- function(geno, serpentine = c("yes", "no")) {
 
   plan.id <- fp(ng, ng, serpentine)
   
-  plot.num <- c(t(plan.id))
+  plot <- c(t(plan.id))
   
-  book <- data.frame(plot.num, row, col, geno = c(t(plan)),
+  book <- data.frame(plot, row, col, geno = c(t(plan)),
                      stringsAsFactors = FALSE)
 
   # Sort by plot number
   
   if (serpentine == 'yes') {
-    book <- book[sort(book$plot.num, index.return = TRUE)$ix, ]
+    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
     rownames(book) <- 1:dim(book)[1]
   }
 
