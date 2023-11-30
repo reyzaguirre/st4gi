@@ -16,15 +16,15 @@
 #' @examples
 #' book <- cr.rcbd(1:20, 3, 10)$book
 #' # Get fieldbook with minimal set of traits
-#' createfb.sp(book)
+#' create.fb.sp(book)
 #' # Add additional traits
-#' createfb.sp(book, add = c('bc', 'fe', 'zn'))
+#' create.fb.sp(book, add = c('bc', 'fe', 'zn'))
 #' # Get the fieldbook with CO numbers
-#' createfb.sp(book, label = 'CO', add = c('bc', 'fe', 'zn'))
+#' create.fb.sp(book, label = 'CO', add = c('bc', 'fe', 'zn'))
 #' @export
 
-createfb.sp <- function(design, label = c("standard", "CO"),
-                        minimal = TRUE, add = NULL, computation = FALSE) {
+create.fb.sp <- function(design, label = c("standard", "CO"),
+                         minimal = TRUE, add = NULL, computation = FALSE) {
   
   # Match arguments
   
@@ -91,15 +91,15 @@ createfb.sp <- function(design, label = c("standard", "CO"),
 #' @examples
 #' book <- cr.rcbd(1:20, 3, 10)$book
 #' # Get fieldbook with minimal set of traits
-#' createfb.pt(book)
+#' create.fb.pt(book)
 #' # Add additional traits
-#' createfb.pt(book, add = c('bc', 'fe', 'zn'))
+#' create.fb.pt(book, add = c('bc', 'fe', 'zn'))
 #' # Get the fieldbook with CO numbers
-#' createfb.pt(book, label = 'CO', add = c('dm', 'fedw', 'zndw'))
+#' create.fb.pt(book, label = 'CO', add = c('dm', 'fedw', 'zndw'))
 #' @export
 
-createfb.pt <- function(design, label = c("standard", "CO"),
-                        minimal = TRUE, add = NULL, computation = FALSE) {
+create.fb.pt <- function(design, label = c("standard", "CO"),
+                         minimal = TRUE, add = NULL, computation = FALSE) {
   
   # Match arguments
   
