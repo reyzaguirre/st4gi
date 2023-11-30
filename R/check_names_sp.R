@@ -153,7 +153,7 @@ check.names.sp <- function(dfr, add = NULL) {
   
   # Valid names for factors
   
-  plot.id <- c("plot", "row", 'row_number', "col", 'col_number')
+  plot.id <- c('observationunit_name', "plot", "row", 'row_number', "col", 'col_number')
   
   factors <- c("loc", "year", "season", "env",
                "geno", 'accession_name', "cipno", 'type',
