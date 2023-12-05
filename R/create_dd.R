@@ -25,11 +25,11 @@
 #'                          description = '20 genotypes with 3 complete blocks',
 #'                          trial_type = 'Advanced Yield Trial')
 #' # Create design and data files for sweetpotatobase
-#' output <- create.bb.sp(metadata)
+#' output <- create.dd.sp(metadata)
 #' @importFrom utils read.csv
 #' @export
 
-create.bb.sp <- function(metadata) {
+create.dd.sp <- function(metadata) {
   
   # Create meta data file
   
