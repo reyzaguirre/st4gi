@@ -1,35 +1,38 @@
-#' Create sweetpotatobase design and data files
+#' Create potatobase and sweetpotatobase design and data files
 #'
-#' Creates sweetpotatobase design and phenotypic data files for a set of fieldbooks.
+#' Creates potatobase and sweetpotatobase design and phenotypic data files for
+#' a set of fieldbooks.
 #' @param metadata The name of the metadata template file.
-#' @details The metadata template can be created with function \code{createmd.sp}.
+#' @details The metadata template can be created with function \code{create.md}.
 #' The fieldbooks should be in memory or as csv files in the working directory,
 #' with the same names specified in the column \code{trial_name} of the metadata,
-#' with standard short labels (see \code{?check.names.sp} for the details).
+#' with standard short labels (see \code{?check.names.pt} and \code{?check.names.sp}
+#' for the details).
 #' @return It returns data.frames with names design.file and data.file ready to
-#' upload into sweetpotatobase. Both data.frames should be saved as xlsx files.
+#' upload into potatobase and sweetpotatobase. Both data.frames should be saved
+#' as xlsx files.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # Create designs
 #' book1 <- cr.rcbd(1:20, 3, 10)$book
 #' book2 <- cr.rcbd(1:20, 3, 10)$book
-#' # Get fieldbook with minimal set of traits
+#' # Get fieldbook with minimal set of traits for sweetpotato
 #' PEP2023CLM_AT01 <- create.fb.sp(book1)
 #' PEP2023CSR_AT02 <- create.fb.sp(book2)
 #' # Create metadata file
-#' metadata <- create.md.sp(trial_name = c('PEP2023CLM_AT01', 'PEP2023CSR_AT02'),
-#'                          breeding_program = 'Peru-CIP',
-#'                          location = c('CLM', 'CSR'),
-#'                          year = 2023,
-#'                          design_type = 'RCBD',
-#'                          description = '20 genotypes with 3 complete blocks',
-#'                          trial_type = 'Advanced Yield Trial')
+#' metadata <- create.md(trial_name = c('PEP2023CLM_AT01', 'PEP2023CSR_AT02'),
+#'                       breeding_program = 'Peru-CIP',
+#'                       location = c('CLM', 'CSR'),
+#'                       year = 2023,
+#'                       design_type = 'RCBD',
+#'                       description = '20 genotypes with 3 complete blocks',
+#'                       trial_type = 'Advanced Yield Trial')
 #' # Create design and data files for sweetpotatobase
-#' output <- create.dd.sp(metadata)
+#' output <- create.dd(metadata)
 #' @importFrom utils read.csv
 #' @export
 
-create.dd.sp <- function(metadata) {
+create.dd <- function(metadata) {
   
   # Create meta data file
   

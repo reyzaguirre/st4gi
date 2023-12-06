@@ -1,14 +1,14 @@
 #' Create metadata template file
 #'
-#' Creates metadata template file for sweetpotatobase upload.
-#' @param folder_name Name of the folder in sweetpotatobase (optional).
-#' @param trial_name Trial name in sweetpotatobase, following convention.
-#' @param breeding_program Breeding program as defined in sweetpotatobase.
-#' @param location Location as defined in sweetpotatobase.
-#' @param year Year (format YYYY)
-#' @param design_type Short hand design type as in sweetpotatobase. See details.
+#' Creates metadata template file for potatobase and sweetpotatobase upload.
+#' @param folder_name Name of the folder (optional).
+#' @param trial_name Trial name following convention.
+#' @param breeding_program Breeding program.
+#' @param location Location.
+#' @param year Year (format YYYY).
+#' @param design_type Short hand design type. See details.
 #' @param description Description of the trial. 
-#' @param trial_type Trial type from options in sweetpotatobase. See details.
+#' @param trial_type Trial type. See details.
 #' @param plot_width The width of the plot in m (optional).
 #' @param plot_length The length of the plot in m (optional).
 #' @param field_size The size of the field in ha (optional).
@@ -54,12 +54,12 @@
 #'  \item Sensory Trial
 #'  \item genotyping_project
 #' }
-#' @return It returns a data.frames with metadata to be used with function
-#' \code{create.bb.sp}.
+#' @return It returns a data.frame with metadata to be used with function
+#' \code{create.dd}.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # Empty metadata file
-#' metadata <- create.md.sp()
+#' metadata <- create.md()
 #' # Not empty metadata file
 #' trials <- c('PEP2021BAR-AT03', 'PEP2021CAN-AT03', 'PEP2021PIU-AT03',
 #'             'PEP2021SAT-AT03', 'PEP2021PUC-AT03', 'PEP2021CSR-AT03')
@@ -70,42 +70,42 @@
 #'         '2021-12-21', '2021-12-21', '2021-12-21')
 #' hd <- c('2022-03-12', '2021-12-14', '2022-03-18',
 #'         '2022-04-22', '2022-04-19', '2022-04-20')                          
-#' metadata <- create.md.sp(trial_name = trials,
-#'                          breeding_program = 'Peru-CIP',
-#'                          location = locations,
-#'                          year = 2021,
-#'                          design_type = 'RRC',
-#'                          description = description,
-#'                          trial_type = 'Advanced Yield Trial',
-#'                          plot_width = 3.6,
-#'                          plot_length = 5.25,
-#'                          planting_date = pd,
-#'                          harvest_date = hd,
-#'                          number_of_plants_per_ridge = 20,
-#'                          number_of_ridges_per_plot = 4,
-#'                          space_between_ridges = 0.9,
-#'                          space_between_plants_in_ridge = 0.25,
-#'                          number_plants_per_plot = 80)
+#' metadata <- create.md(trial_name = trials,
+#'                       breeding_program = 'Peru-CIP',
+#'                       location = locations,
+#'                       year = 2021,
+#'                       design_type = 'RRC',
+#'                       description = description,
+#'                       trial_type = 'Advanced Yield Trial',
+#'                       plot_width = 3.6,
+#'                       plot_length = 5.25,
+#'                       planting_date = pd,
+#'                       harvest_date = hd,
+#'                       number_of_plants_per_ridge = 20,
+#'                       number_of_ridges_per_plot = 4,
+#'                       space_between_ridges = 0.9,
+#'                       space_between_plants_in_ridge = 0.25,
+#'                       number_plants_per_plot = 80)
 #' @export
 
-create.md.sp <- function(folder_name = 'folder_name',
-                        trial_name = NA,
-                        breeding_program = NA,
-                        location = NA,
-                        year = NA,
-                        design_type = NA,
-                        description = NA,
-                        trial_type = NA,
-                        plot_width = NA,
-                        plot_length = NA,
-                        field_size = NA,
-                        planting_date = NA,
-                        harvest_date = NA,
-                        number_of_plants_per_ridge = NA,
-                        number_of_ridges_per_plot = NA,
-                        space_between_ridges = NA,
-                        space_between_plants_in_ridge = NA,
-                        number_plants_per_plot = NA) {
+create.md <- function(folder_name = 'folder_name',
+                      trial_name = NA,
+                      breeding_program = NA,
+                      location = NA,
+                      year = NA,
+                      design_type = NA,
+                      description = NA,
+                      trial_type = NA,
+                      plot_width = NA,
+                      plot_length = NA,
+                      field_size = NA,
+                      planting_date = NA,
+                      harvest_date = NA,
+                      number_of_plants_per_ridge = NA,
+                      number_of_ridges_per_plot = NA,
+                      space_between_ridges = NA,
+                      space_between_plants_in_ridge = NA,
+                      number_plants_per_plot = NA) {
   
   metadata <- data.frame(folder_name = folder_name,
                          trial_name = trial_name,
