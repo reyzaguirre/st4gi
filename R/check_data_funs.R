@@ -1012,10 +1012,10 @@ rules.pt <- function(dfr, f, out.mod, out.max, add, format) {
   dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "dwts1", "- Extreme low values for dry weight of tuber sample 1 (dwts1):", format = format))
   dfr.out <- rbind(dfr.out, sp5(dfr, f,  "low", "dwts2", "- Extreme low values for dry weight of tuber sample 2 (dwts2):", format = format))
   
-  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "fwts1", "- Extreme high values for fresh weight of tuber sample (fwts1):", format = format))
-  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "fwts2", "- Extreme high values for fresh weight of tuber sample (fwts2):", format = format))
-  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "dwts1", "- Extreme high values for dry weight of tuber sample (dwts1):", format = format))
-  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "dwts2", "- Extreme high values for dry weight of tuber sample (dwts2):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "fwts1", "- Extreme high values for fresh weight of tuber sample 1 (fwts1):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "fwts2", "- Extreme high values for fresh weight of tuber sample 2 (fwts2):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "dwts1", "- Extreme high values for dry weight of tuber sample 1 (dwts1):", format = format))
+  dfr.out <- rbind(dfr.out, sp5(dfr, f, "high", "dwts2", "- Extreme high values for dry weight of tuber sample 2 (dwts2):", format = format))
 
   # Extreme values detection for dry matter
 
