@@ -25,8 +25,8 @@
 #'  \code{dmry.aj}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
 #'  \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj},
 #'  \code{nrpp}, \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp},
-#'  \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, and \code{rfr},
-#'  \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
+#'  \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, \code{rfr},
+#'  \code{bc}, \code{tc}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
 #'  
 #'  \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
 #'  \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
@@ -121,7 +121,7 @@ setna.sp <- function(dfr, f = 10) {
            "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha",
            "fytha.aj", "dmvy", "dmvy.aj", "bytha", "bytha.aj", "dmby", "dmby.aj",
            "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "rtyldpct", "vpp",
-           "vpsp", "rfr", "fe", "zn", "ca", "mg")
+           "vpsp", "rfr", 'bc', 'tc', "fe", "zn", "ca", "mg")
   
   # Continuous positive traits
   
@@ -145,10 +145,8 @@ setna.sp <- function(dfr, f = 10) {
            "alcdam", "wed", "stspwv", "milldam", "fraw", "suraw", "straw",
            "coof", "coosu", "coost", "coot", "cooap")
   
-  # Special traits
+  # Categorical traits
   
-  bc <- "bc"
-  tc <- "tc"
   bc.cc <- "bc.cc"
   fcol.cc <- "fcol.cc"
   
@@ -251,7 +249,7 @@ setna.sp <- function(dfr, f = 10) {
   
   # Extreme values (almost impossible)
   
-  t.all <- c(cnn, cpo, pnn, ppo, dnn, bc, tc)
+  t.all <- c(cnn, cpo, pnn, ppo, dnn)
   t.all <- t.all[!(t.all %in% c("nops", "nope", "noph", "nopr"))]
   
   for (i in 1:length(t.all))
@@ -275,7 +273,7 @@ setna.sp <- function(dfr, f = 10) {
   
   # Subset in fieldook all traits
   
-  t.all <- c(cnn, cpo, pnn, ppo, dnn, ctg, bc, tc, bc.cc, fcol.cc)
+  t.all <- c(cnn, cpo, pnn, ppo, dnn, ctg, bc.cc, fcol.cc)
   t.all <- t.all[t.all %in% colnames(dfr)]
   t.all <- t.all[!(t.all %in% c("nops", "nope"))]
   

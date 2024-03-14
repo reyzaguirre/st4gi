@@ -39,8 +39,8 @@ Consider the following groups of traits:
  \code{dmry.aj}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
  \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj},
  \code{nrpp}, \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp},
- \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, and \code{rfr},
- \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
+ \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, \code{rfr},
+ \code{bc}, \code{tc}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
  
  \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
  \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
