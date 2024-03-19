@@ -164,7 +164,8 @@ create.dd <- function(metadata) {
 
   # Edit column names for traits
   
-  data.file <- convert.co.sp(data.file)
+  data.file <- suppressWarnings(convert.co.sp(data.file))
+  data.file <- suppressWarnings(convert.co.pt(data.file))
   
   # output
   
