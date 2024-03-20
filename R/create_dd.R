@@ -36,9 +36,9 @@ create.dd <- function(metadata) {
   
   # Create meta data file
   
-  md <- metadata[, c('trial_name', 'breeding_program', 'location',
-                     'year', 'design_type', 'description', 'trial_type',
-                     'plot_width', 'plot_length', 'field_size',
+  md <- metadata[, c('trial_name', 'breeding_program', 'location', 'year',
+                     'transplanting_date', 'design_type', 'description',
+                     'trial_type', 'plot_width', 'plot_length', 'field_size',
                      'planting_date', 'harvest_date')]
   
   # File names

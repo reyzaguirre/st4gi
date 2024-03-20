@@ -10,6 +10,7 @@ create.md(
   breeding_program = NA,
   location = NA,
   year = NA,
+  transplanting_date = NA,
   design_type = NA,
   description = NA,
   trial_type = NA,
