@@ -37,6 +37,8 @@ create.md(
 
 \item{year}{Year (format YYYY).}
 
+\item{transplanting_date}{Transplanting_date (format YYYY-MM-DD),}
+
 \item{design_type}{Short hand design type. See details.}
 
 \item{description}{Description of the trial.}
@@ -124,6 +126,7 @@ metadata <- create.md(trial_name = trials,
                       breeding_program = 'Peru-CIP',
                       location = locations,
                       year = 2021,
+                      transplanting_date = NA,
                       design_type = 'RRC',
                       description = description,
                       trial_type = 'Advanced Yield Trial',

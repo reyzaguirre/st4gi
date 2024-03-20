@@ -6,6 +6,7 @@
 #' @param breeding_program Breeding program.
 #' @param location Location.
 #' @param year Year (format YYYY).
+#' @param transplanting_date Transplanting_date (format YYYY-MM-DD),
 #' @param design_type Short hand design type. See details.
 #' @param description Description of the trial. 
 #' @param trial_type Trial type. See details.
@@ -74,6 +75,7 @@
 #'                       breeding_program = 'Peru-CIP',
 #'                       location = locations,
 #'                       year = 2021,
+#'                       transplanting_date = NA,
 #'                       design_type = 'RRC',
 #'                       description = description,
 #'                       trial_type = 'Advanced Yield Trial',
