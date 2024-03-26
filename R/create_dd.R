@@ -76,7 +76,7 @@ create.dd <- function(metadata) {
     
     # Block and rep
     
-    if (md$design[i] %in% c('RRC', 'RCBD')) {
+    if (md$design[i] %in% c('RRC', 'RCBD', 'p-rep')) {
       if (exists('rep', d)) {
         names(d)[names(d) == 'rep'] <- 'rep_number'
         d$block_number <- d$rep_number
