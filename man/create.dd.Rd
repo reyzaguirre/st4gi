@@ -4,9 +4,11 @@
 \alias{create.dd}
 \title{Create potatobase and sweetpotatobase design and data files}
 \usage{
-create.dd(metadata)
+create.dd(crop = c("pt", "sp"), metadata)
 }
 \arguments{
+\item{crop}{\code{pt} for potato or \code{sp} for sweetpotato.}
+
 \item{metadata}{The name of the metadata template file.}
 }
 \value{
@@ -41,7 +43,7 @@ metadata <- create.md(trial_name = c('PEP2023CLM_AT01', 'PEP2023CSR_AT02'),
                       description = '20 genotypes with 3 complete blocks',
                       trial_type = 'Advanced Yield Trial')
 # Create design and data files for sweetpotatobase
-output <- create.dd(metadata)
+output <- create.dd('sp', metadata)
 }
 \author{
 Raul Eyzaguirre.

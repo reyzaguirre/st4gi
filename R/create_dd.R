@@ -2,6 +2,7 @@
 #'
 #' Creates potatobase and sweetpotatobase design and phenotypic data files for
 #' a set of fieldbooks.
+#' @param crop \code{pt} for potato or \code{sp} for sweetpotato.
 #' @param metadata The name of the metadata template file.
 #' @details The metadata template can be created with function \code{create.md}.
 #' The fieldbooks should be in memory or as csv files in the working directory,
@@ -28,11 +29,18 @@
 #'                       description = '20 genotypes with 3 complete blocks',
 #'                       trial_type = 'Advanced Yield Trial')
 #' # Create design and data files for sweetpotatobase
-#' output <- create.dd(metadata)
+#' output <- create.dd('sp', metadata)
 #' @importFrom utils read.csv
 #' @export
 
-create.dd <- function(metadata) {
+create.dd <- function(crop = c('pt', 'sp'), metadata) {
+  
+  # Check crop
+  
+  crop <- match.arg(crop)
+  
+  if (!crop %in% c('pt', 'sp'))
+    stop("Invalid crop name.")
   
   # Create meta data file
   
@@ -164,8 +172,10 @@ create.dd <- function(metadata) {
 
   # Edit column names for traits
   
-  data.file <- suppressWarnings(convert.co.sp(data.file))
-  data.file <- suppressWarnings(convert.co.pt(data.file))
+  if(crop == 'pt')
+    data.file <- suppressWarnings(convert.co.pt(data.file))
+  if(crop == 'sp')
+    data.file <- suppressWarnings(convert.co.sp(data.file))
   
   # output
   

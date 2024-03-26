@@ -6,7 +6,7 @@
 #' @param breeding_program Breeding program.
 #' @param location Location.
 #' @param year Year (format YYYY).
-#' @param transplanting_date Transplanting_date (format YYYY-MM-DD),
+#' @param transplanting_date Transplanting_date (optional with format YYYY-MM-DD),
 #' @param design_type Short hand design type. See details.
 #' @param description Description of the trial. 
 #' @param trial_type Trial type. See details.
@@ -15,8 +15,8 @@
 #' @param field_size The size of the field in ha (optional).
 #' @param planting_date Planting date (format YYYY-MM-DD).
 #' @param	harvest_date Harvest date (format YYYY-MM-DD).
-#' @param number_of_plants_per_ridge Required to compute tons/ha.
-#' @param number_of_ridges_per_plot Required to compute tons/ha.
+#' @param number_of_plants_per_ridge Required to compute tons/ha (optional).
+#' @param number_of_ridges_per_plot Required to compute tons/ha (optional).
 #' @param space_between_ridges Required to compute tons/ha.
 #' @param space_between_plants_in_ridge Required to compute tons/ha.
 #' @param number_plants_per_plot Required to compute tons/ha.
@@ -75,7 +75,6 @@
 #'                       breeding_program = 'Peru-CIP',
 #'                       location = locations,
 #'                       year = 2021,
-#'                       transplanting_date = NA,
 #'                       design_type = 'RRC',
 #'                       description = description,
 #'                       trial_type = 'Advanced Yield Trial',
@@ -110,6 +109,8 @@ create.md <- function(folder_name = 'folder_name',
                       space_between_plants_in_ridge = NA,
                       number_plants_per_plot = NA) {
   
+  # Create metadata data frame
+
   metadata <- data.frame(folder_name = folder_name,
                          trial_name = trial_name,
                          breeding_program = breeding_program,

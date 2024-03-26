@@ -37,7 +37,7 @@ create.md(
 
 \item{year}{Year (format YYYY).}
 
-\item{transplanting_date}{Transplanting_date (format YYYY-MM-DD),}
+\item{transplanting_date}{Transplanting_date (optional with format YYYY-MM-DD),}
 
 \item{design_type}{Short hand design type. See details.}
 
@@ -55,9 +55,9 @@ create.md(
 
 \item{harvest_date}{Harvest date (format YYYY-MM-DD).}
 
-\item{number_of_plants_per_ridge}{Required to compute tons/ha.}
+\item{number_of_plants_per_ridge}{Required to compute tons/ha (optional).}
 
-\item{number_of_ridges_per_plot}{Required to compute tons/ha.}
+\item{number_of_ridges_per_plot}{Required to compute tons/ha (optional).}
 
 \item{space_between_ridges}{Required to compute tons/ha.}
 
@@ -126,7 +126,6 @@ metadata <- create.md(trial_name = trials,
                       breeding_program = 'Peru-CIP',
                       location = locations,
                       year = 2021,
-                      transplanting_date = NA,
                       design_type = 'RRC',
                       description = description,
                       trial_type = 'Advanced Yield Trial',
