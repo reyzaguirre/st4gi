@@ -1,6 +1,6 @@
-#' Compute drought tolerance indices
+#' Compute stress tolerance indices
 #'
-#' Compute several drought tolerance indices.
+#' Compute several stress tolerance indices.
 #' @param traits The list of traits.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param normal The identification for the normal group.
@@ -19,15 +19,16 @@
 #'  \item \code{mp}  : Mean productivity.
 #'  \item \code{gmp} : Geometric mean productivity.
 #'  }
-#' @return It returns a data frame with the indices. The names for the indices
+#' @return It returns a data frame with the indices and a data frame with
+#' the stress intensity values for each trait. The names for the indices
 #' follow the convention \code{trait.index}.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' traits <- c("nmtp", "mtwp", "nnomtp")
-#' dti(traits, 'genotype', 'DTWW', 'DTWS', potatostress)
+#' sti(traits, 'genotype', 'DTWW', 'DTWS', potatostress)
 #' @export
 
-dti <- function(traits, geno, normal, stress, dfr) {
+sti <- function(traits, geno, normal, stress, dfr) {
   
   # Trait names
   
