@@ -1,13 +1,13 @@
 #' Optimize Westcott adjustment
 #'
 #' This function optimizes the parameter values of the Westcott adjustment.
-#' @param trait The trait to adjust.
-#' @param geno The genotypes.
+#' @param trait The name of the column for the trait to adjust.
+#' @param geno The name of the column that identifies the genotypes.
 #' @param replicated A \code{yes/no} column to identify replicated genotypes.
 #' @param ck1 Name of check 1.
 #' @param ck2 Name of check 2.
-#' @param row Label for rows.
-#' @param col Label for columns.
+#' @param row The name of the column that identifies the rows.
+#' @param col The name of the column that identifies the columns.
 #' @param ncb Number of columns between two check columns.
 #' @param nrs Set of values for the \code{nrs} param on \code{aj.w}.
 #' @param method Set of values for the \code{method} param on \code{aj.w}.
