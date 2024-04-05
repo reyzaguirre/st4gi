@@ -5,7 +5,7 @@
 \alias{asc}
 \title{Data for a 2-factor factorial with a CRD}
 \format{
-A data frame with 6 columns and 282 rows.
+A data frame with 282 rows and 6 columns.
 }
 \source{
 International Potato Center, potato experimental data.
