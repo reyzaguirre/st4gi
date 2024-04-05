@@ -2,10 +2,10 @@
 #'
 #' This is a modified version of the \code{"lineXtester"} function of package
 #' \code{"agricolae"} for the analysis of a Lina x Tester genetic design.
-#' @param trait The trait to analyze.
-#' @param line The lines.
-#' @param tester The testers.
-#' @param rep The replication.
+#' @param trait The name of the column for the trait to analyze.
+#' @param line The name of the column that identifies the lines.
+#' @param tester The name of the column that identifies the testers.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @details Data must correspond with a line by tester design and must be balanced.
 #' If there are missing values they are not estimated and results can be dubious.

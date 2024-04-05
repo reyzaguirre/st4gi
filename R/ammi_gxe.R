@@ -3,7 +3,7 @@
 #' This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 #' with data from an interaction means matrix.
 #' @param int.mean GxE means matrix, genotypes in rows, environments in columns.
-#' @param trait.name Name of the trait.
+#' @param trait.name The name of the column for the trait to analyze.
 #' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
 #' @param aov.model Analysis of variance model.

@@ -2,10 +2,10 @@
 #'
 #' Function to estimate missing values for a Multi Environment Trial (MET) with a
 #' Randomized Complete Block Design (RCBD) by the least squares method.
-#' @param trait The trait to estimate missing values.
-#' @param geno The genotypes.
-#' @param env The environments.
-#' @param rep The replications.
+#' @param trait The name of the column for the trait to estimate missing values.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param env The name of the column that identifies the environments.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.

@@ -2,9 +2,9 @@
 #'
 #' This function checks that there is only one genotype in each row and column position.
 #' This is a wrapper for \code{ck.pos} function.
-#' @param row Label for rows.
-#' @param col Label for columns.
-#' @param rep Label for replications.
+#' @param row The name of the column that identifies the rows.
+#' @param col The name of the column that identifies the columns.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @return For each replication a list of plots (unique row and column position)
 #' with more than one genotype.

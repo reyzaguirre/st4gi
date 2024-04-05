@@ -7,11 +7,11 @@
 ck.f(trait, factors, rep, dfr)
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The name of the column for the trait to analyze.}
 
-\item{factors}{The factors.}
+\item{factors}{The names of the columns that identify the factors.}
 
-\item{rep}{The replications, \code{NULL} for a CRD.}
+\item{rep}{The name of the column that identifies the replications, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 }

@@ -2,10 +2,10 @@
 #'
 #' This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 #' with data at plot level.
-#' @param trait The trait to analyze.
-#' @param geno The genotypes.
-#' @param env The environments.
-#' @param rep The replications or blocks. A RCBD is assumed.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param env The name of the column that identifies the environments.
+#' @param rep The name of the column that identifies the replications or blocks. A RCBD is assumed.
 #' @param dfr The name of the data frame.
 #' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.

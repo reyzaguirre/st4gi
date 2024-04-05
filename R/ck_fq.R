@@ -1,9 +1,9 @@
 #' Check frequencies
 #' 
 #' This function cheks the frequencies of valid cases for treatments and replications.
-#' @param trait The trait.
-#' @param factors The factors.
-#' @param rep The replications, \code{NULL} for a CRD.
+#' @param trait The name of the column for the trait to analyze.
+#' @param factors The names of the columns that identify the factors.
+#' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
 #' @return A table of frequencies of valid cases for all factors' levels combinations
 #' (\code{tf}), a table of frequencies of valid cases for all factors' levels and

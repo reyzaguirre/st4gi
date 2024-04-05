@@ -18,13 +18,13 @@ pesekbaker(
 )
 }
 \arguments{
-\item{traits}{List of traits.}
+\item{traits}{The names of the columns for the traits.}
 
-\item{geno}{The genotypes.}
+\item{geno}{The name of the column that identifies the genotypes.}
 
-\item{env}{The environments.}
+\item{env}{The name of the column that identifies the environments.}
 
-\item{rep}{The replications.}
+\item{rep}{The name of the column that identifies the replications.}
 
 \item{dfr}{The name of the data frame.}
 

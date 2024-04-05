@@ -7,13 +7,13 @@
 aov.lxt(trait, line, tester, rep, dfr)
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The name of the column for the trait to analyze.}
 
-\item{line}{The lines.}
+\item{line}{The name of the column that identifies the lines.}
 
-\item{tester}{The testers.}
+\item{tester}{The name of the column that identifies the testers.}
 
-\item{rep}{The replication.}
+\item{rep}{The name of the column that identifies the replications.}
 
 \item{dfr}{The name of the data frame.}
 }

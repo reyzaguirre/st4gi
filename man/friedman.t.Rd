@@ -15,11 +15,11 @@ friedman.t(
 )
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The name of the column for the trait to analyze.}
 
-\item{treat}{The treatments.}
+\item{treat}{The name of the column that identifies the treatments.}
 
-\item{block}{The blocks.}
+\item{block}{The name of the column that identifies the blocks.}
 
 \item{dfr}{The name of the data frame.}
 

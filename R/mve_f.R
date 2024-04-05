@@ -2,9 +2,9 @@
 #'
 #' Function to estimate missing values for factorial experiment with a CRD
 #' or a RCBD by the least squares method.
-#' @param trait The trait to estimate missing values.
-#' @param factors The factors.
-#' @param rep The replications or blocks, \code{NULL} for a CRD.
+#' @param trait The name of the column for the trait to estimate missing values.
+#' @param factors The names of the columns that identify the factors.
+#' @param rep The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.

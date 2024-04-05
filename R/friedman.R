@@ -1,9 +1,9 @@
 #' Friedman test
 #'
 #' Performs a Friedman rank sum test with multiple comparisons.
-#' @param trait The trait to analyze.
-#' @param treat The treatments.
-#' @param block The blocks.
+#' @param trait The name of the column for the trait to analyze.
+#' @param treat The name of the column that identifies the treatments.
+#' @param block The name of the column that identifies the blocks.
 #' @param dfr The name of the data frame.
 #' @param alpha Significant level for comparisons.
 #' @param print.mc Logical, if \code{TRUE}, it prints multiple comparisons groups.

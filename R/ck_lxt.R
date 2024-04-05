@@ -1,8 +1,8 @@
 #' Check data for a line by tester genetic design
 #'
 #' This function checks the data structure for a line by tester genetic design.
-#' @param line The lines.
-#' @param tester The testers.
+#' @param line The name of the column that identifies the lines.
+#' @param tester The name of the column that identifies the testers.
 #' @param dfr The name of the data frame.
 #' @return Three control values, the number of lines (\code{nlin}),
 #' and the number of testers (\code{ntes}). The control values are:

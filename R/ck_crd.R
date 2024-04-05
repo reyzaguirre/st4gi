@@ -1,8 +1,8 @@
 #' Check data for a CRD
 #'
 #' This function checks the frequencies of genotypes in a CRD.
-#' @param trait The trait to analyze.
-#' @param geno The genotypes.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
 #' @param dfr The name of the data frame.
 #' @return The number of genotypes (\code{ng}), the number of genotypes without
 #' data (\code{ng.0}), the number of replications (\code{nrep}), and the number

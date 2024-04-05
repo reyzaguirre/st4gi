@@ -13,7 +13,7 @@ dtr(
 )
 }
 \arguments{
-\item{trait}{The trait to transform.}
+\item{trait}{The name of the column for the trait to transform.}
 
 \item{type}{The transformation type. See details.}
 

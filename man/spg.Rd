@@ -5,7 +5,7 @@
 \alias{spg}
 \title{Some traits for a multi-environment trial (MET)}
 \format{
-A data frame with 8 columns and 32 rows.
+A data frame with 32 rows and 8 columns.
 }
 \source{
 International Potato Center, sweetpotato experimental data.

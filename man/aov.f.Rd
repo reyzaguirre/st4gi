@@ -7,11 +7,11 @@
 aov.f(trait, factors, rep, dfr, maxp = 0.1)
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The name of the column for the trait to analyze.}
 
-\item{factors}{The factors.}
+\item{factors}{The names of the columns that identify the factors.}
 
-\item{rep}{The replications or blocks, \code{NULL} for a CRD.}
+\item{rep}{The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 

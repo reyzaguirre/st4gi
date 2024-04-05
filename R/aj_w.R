@@ -2,12 +2,12 @@
 #'
 #' This function adjust the observed values of an experiment planted following
 #' the method described by Westcott (1981) with a grid of checks.
-#' @param trait The trait to adjust.
-#' @param geno The genotypes.
+#' @param trait The name of the column for the trait to adjust.
+#' @param geno The name of the column that identifies the genotypes.
 #' @param ck1 Name of check 1.
 #' @param ck2 Name of check 2.
-#' @param row Label for rows.
-#' @param col Label for columns.
+#' @param row The name of the column that identifies the rows.
+#' @param col The name of the column that identifies the columns.
 #' @param ncb Number of columns between two check columns.
 #' @param nrs Number of rows to span the row of the plot.
 #' @param method The method to fit the values. See details.

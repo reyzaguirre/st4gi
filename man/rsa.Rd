@@ -7,13 +7,13 @@
 rsa(trait, geno, env, rep, dfr, maxp = 0.1)
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The name of the column for the trait to analyze.}
 
-\item{geno}{The genotypes.}
+\item{geno}{The name of the column that identifies the genotypes.}
 
-\item{env}{The environments.}
+\item{env}{The name of the column that identifies the environments.}
 
-\item{rep}{The replications.}
+\item{rep}{The name of the column that identifies the replications.}
 
 \item{dfr}{The name of the data frame.}
 

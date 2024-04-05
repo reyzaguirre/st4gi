@@ -2,10 +2,10 @@
 #'
 #' This function estimates the genotypic and phenotypic covariance and correlation
 #' matrices with data from a RCBD with one or several environments.
-#' @param traits The traits to include.
-#' @param geno The genotypes.
-#' @param env The environments.
-#' @param rep The replications or blocks. A RCBD is assumed.
+#' @param traits The names of the columns for traits to include.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param env The name of the column that identifies the environments.
+#' @param rep The name of the column that identifies the replications or blocks. A RCBD is assumed.
 #' @param dfr The name of the data frame.
 #' @param method The method to compute genotypic covariances. See details.
 #' @details If \code{env = NULL} a RCBD with one environment is considered.

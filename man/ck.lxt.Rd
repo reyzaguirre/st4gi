@@ -7,9 +7,9 @@
 ck.lxt(line, tester, dfr)
 }
 \arguments{
-\item{line}{The lines.}
+\item{line}{The name of the column that identifies the lines.}
 
-\item{tester}{The testers.}
+\item{tester}{The name of the column that identifies the testers.}
 
 \item{dfr}{The name of the data frame.}
 }

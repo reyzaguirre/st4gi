@@ -2,10 +2,11 @@
 #'
 #' Check frequencies for designs with complete replications and one or several
 #' environments. This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
-#' @param trait The trait to analyze.
-#' @param geno Genotypes.
-#' @param env Environments, \code{NULL} if there are no environments.
-#' @param rep The replications.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param env The name of the column that identifies the environments,
+#' \code{NULL} if there are no environments.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @return Information about the balance, missing values, and replications of the design.
 #' @author Raul Eyzaguirre.

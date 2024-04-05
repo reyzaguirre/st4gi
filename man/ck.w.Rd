@@ -7,17 +7,17 @@
 ck.w(trait, geno, ck1, ck2, row, col, ncb, dfr)
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The name of the column for the trait to analyze.}
 
-\item{geno}{The genotypes.}
+\item{geno}{The name of the column that identifies the genotypes.}
 
 \item{ck1}{Name of check 1.}
 
 \item{ck2}{Name of check 2.}
 
-\item{row}{Label for rows.}
+\item{row}{The name of the column that identifies the rows.}
 
-\item{col}{Label for columns.}
+\item{col}{The name of the column that identifies the columns.}
 
 \item{ncb}{Number of columns between two check columns.}
 

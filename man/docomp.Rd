@@ -11,11 +11,11 @@ docomp(do, traits, factors, keep = NULL, dfr, method = c("fast", "slow"))
 \code{mode}, and standard functions like \code{mean}, \code{median},
 \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.}
 
-\item{traits}{List of traits.}
+\item{traits}{The names of the columns for the traits.}
 
-\item{factors}{List of factors.}
+\item{factors}{The names of the columns for the factors.}
 
-\item{keep}{Additional columns to keep.}
+\item{keep}{The names of additional columns to keep.}
 
 \item{dfr}{The name of the data frame.}
 

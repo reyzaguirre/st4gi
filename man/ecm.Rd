@@ -7,13 +7,13 @@
 ecm(traits, geno, env = NULL, rep, dfr, method = 1)
 }
 \arguments{
-\item{traits}{The traits to include.}
+\item{traits}{The names of the columns for traits to include.}
 
-\item{geno}{The genotypes.}
+\item{geno}{The name of the column that identifies the genotypes.}
 
-\item{env}{The environments.}
+\item{env}{The name of the column that identifies the environments.}
 
-\item{rep}{The replications or blocks. A RCBD is assumed.}
+\item{rep}{The name of the column that identifies the replications or blocks. A RCBD is assumed.}
 
 \item{dfr}{The name of the data frame.}
 

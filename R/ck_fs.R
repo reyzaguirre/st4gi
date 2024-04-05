@@ -1,8 +1,8 @@
 #' Check factors structure
 #' 
 #' This function cheks the structure of factors.
-#' @param factors The factors.
-#' @param rep The replications, \code{NULL} for a CRD.
+#' @param factors The names of the columns that identify the factors.
+#' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
 #' @return The number of factors (\code{nf}), the number of levels of the factors
 #' (\code{nl}), the lists of levels of factors (\code{lf}), the number of treatments

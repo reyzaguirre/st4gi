@@ -1,10 +1,10 @@
 #'  Pesek-Baker Index
 #'
 #' Function to compute the Pesek-Baker index (Pesek, J. and R.J. Baker., 1969).
-#' @param traits List of traits.
-#' @param geno The genotypes.
-#' @param env The environments.
-#' @param rep The replications.
+#' @param traits The names of the columns for the traits.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param env The name of the column that identifies the environments.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @param means The genotypic means to compute the index, \code{"single"}
 #' or \code{"fitted"}. The default is \code{"single"}. See details for more information.

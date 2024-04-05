@@ -27,7 +27,6 @@ Compute derived traits for a given fieldbook data frame.
 \details{
 The data frame must use the labels (lower or upper case) listed in
 function \code{check.names.pt}.
-
 Conversion from kilograms per plot to tons per hectare can be done using
 \code{ps}, the plot size, or \code{np}, the total number of plants that can be
 allocated in a full hectare. In both cases computations can be adjusted by the

@@ -2,10 +2,10 @@
 #'
 #' Function to run the regression stability analysis (Yates and Cochran, 1938,
 #' Finlay and Wilkinson, 1963).
-#' @param trait The trait to analyze.
-#' @param geno The genotypes.
-#' @param env The environments.
-#' @param rep The replications.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param env The name of the column that identifies the environments.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details The regression stability analysis is evaluated with a balanced data set.

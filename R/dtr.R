@@ -1,7 +1,7 @@
 #' Data transformations
 #'
 #' This function performs different data transformations.
-#' @param trait The trait to transform.
+#' @param trait The name of the column for the trait to transform.
 #' @param type The transformation type. See details.
 #' @param base Base for the logarithmic transformation. Base 10 by default.
 #' @param n Additional parameter for arc-sine transformation. See details.

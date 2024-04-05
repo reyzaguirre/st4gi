@@ -7,11 +7,11 @@
 asl(dfr, geno, aver, lsd, symbol = NULL)
 }
 \arguments{
-\item{dfr}{The data frame with prediction.}
+\item{dfr}{The name of the data frame.}
 
-\item{geno}{The genotypes column.}
+\item{geno}{The name of the column that identifies the genotypes.}
 
-\item{aver}{The column name with averages.}
+\item{aver}{The name of the column with the averages.}
 
 \item{lsd}{Least significant value.}
 

@@ -7,11 +7,11 @@
 ck.pos(row, col, rep = NULL, dfr)
 }
 \arguments{
-\item{row}{Label for rows.}
+\item{row}{The name of the column that identifies the rows.}
 
-\item{col}{Label for columns.}
+\item{col}{The name of the column that identifies the columns.}
 
-\item{rep}{Label for replications.}
+\item{rep}{The name of the column that identifies the replications.}
 
 \item{dfr}{The name of the data frame.}
 }

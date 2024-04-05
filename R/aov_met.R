@@ -2,10 +2,10 @@
 #'
 #' Fit an analysis of variance model for a multi environment trial (MET) with a RCBD
 #' in each environment.
-#' @param trait The trait to analyze.
-#' @param geno The genotypes.
-#' @param env The environments.
-#' @param rep The replications or blocks.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param env The name of the column that identifies the environments.
+#' @param rep The name of the column that identifies the replications or blocks.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum

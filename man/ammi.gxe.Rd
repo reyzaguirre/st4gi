@@ -16,7 +16,7 @@ ammi.gxe(
 \arguments{
 \item{int.mean}{GxE means matrix, genotypes in rows, environments in columns.}
 
-\item{trait.name}{Name of the trait.}
+\item{trait.name}{The name of the column for the trait to analyze.}
 
 \item{method}{\code{"ammi"} or \code{"gge"}.}
 

@@ -4,9 +4,9 @@
 #' @param do The computation to perform. Implemented options are \code{count},
 #' \code{mode}, and standard functions like \code{mean}, \code{median},
 #' \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.
-#' @param traits List of traits. 
-#' @param factors List of factors.
-#' @param keep Additional columns to keep.
+#' @param traits The names of the columns for the traits. 
+#' @param factors The names of the columns for the factors.
+#' @param keep The names of additional columns to keep.
 #' @param dfr The name of the data frame.
 #' @param method Use \code{fast} or \code{slow} method. 
 #' @details This function do a specific computation for all the \code{traits}

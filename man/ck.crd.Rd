@@ -7,9 +7,9 @@
 ck.crd(trait, geno, dfr)
 }
 \arguments{
-\item{trait}{The trait to analyze.}
+\item{trait}{The name of the column for the trait to analyze.}
 
-\item{geno}{The genotypes.}
+\item{geno}{The name of the column that identifies the genotypes.}
 
 \item{dfr}{The name of the data frame.}
 }

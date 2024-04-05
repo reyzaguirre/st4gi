@@ -5,7 +5,7 @@
 \alias{a01data}
 \title{Data for an alpha (0,1) design}
 \format{
-A data frame.
+A data frame with 60 rows and 4 columns.
 }
 \source{
 International Potato Center, sweetpotato experimental data.

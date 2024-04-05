@@ -5,7 +5,7 @@
 \alias{met8x12}
 \title{Yields for a multi-environment trial (MET)}
 \format{
-A data frame with 4 columns and 288 rows.
+A data frame with 288 rows and 4 columns.
 }
 \source{
 International Potato Center, sweetpotato experimental data.

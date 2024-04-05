@@ -2,9 +2,9 @@
 #'
 #' This function adds columns to a datra frame with averages to identify
 #' non significant pairwise comparisons.
-#' @param dfr The data frame with prediction.
-#' @param geno The genotypes column.
-#' @param aver The column name with averages.
+#' @param dfr The name of the data frame.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param aver The name of the column with the averages.
 #' @param lsd Least significant value.
 #' @param symbol If \code{NULLL} it uses etters by default. See \code{details}
 #' @details The data frame is sorted descending and columns are added to

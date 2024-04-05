@@ -1,9 +1,9 @@
 #' ANOVA for a RCBD
 #'
 #' Fit an analysis of variance model for a RCBD.
-#' @param trait The trait to analyze.
-#' @param geno The genotypes.
-#' @param rep The replications.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum

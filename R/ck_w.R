@@ -2,12 +2,12 @@
 #'
 #' This function checks the grid of checks on the Wescott layout and
 #' the number of missing values.
-#' @param trait The trait to analyze.
-#' @param geno The genotypes.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
 #' @param ck1 Name of check 1.
 #' @param ck2 Name of check 2.
-#' @param row Label for rows.
-#' @param col Label for columns.
+#' @param row The name of the column that identifies the rows.
+#' @param col The name of the column that identifies the columns.
 #' @param ncb Number of columns between two check columns.
 #' @param dfr The name of the data frame.
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},

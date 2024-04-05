@@ -1,9 +1,9 @@
 #' Check data for an ABD
 #'
 #' This function checks the frequencies of genotypes in an ABD.
-#' @param trait The trait to analyze.
-#' @param geno The genotypes including checks.
-#' @param rep The replications.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes including checks.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @return The number of checks \code{ng.ck}, the number of no checks \code{ng},
 #' the number of missing values for checks \code{nmis.ck}), the number of missing

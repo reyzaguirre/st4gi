@@ -7,11 +7,11 @@
 mve.f(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
-\item{trait}{The trait to estimate missing values.}
+\item{trait}{The name of the column for the trait to estimate missing values.}
 
-\item{factors}{The factors.}
+\item{factors}{The names of the columns that identify the factors.}
 
-\item{rep}{The replications or blocks, \code{NULL} for a CRD.}
+\item{rep}{The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.}
 
 \item{dfr}{The name of the data frame.}
 

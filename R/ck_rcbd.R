@@ -1,9 +1,9 @@
 #' Check data for a RCBD
 #'
 #' This function checks the frequencies of genotypes in a RCBD.
-#' @param trait The trait to analyze.
-#' @param geno The genotypes.
-#' @param rep The replications.
+#' @param trait The name of the column for the trait to analyze.
+#' @param geno The name of the column that identifies the genotypes.
+#' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @return The number of genotypes without data (\code{ng.0}), the number of
 #' genotypes with more than one plot in a given block (\code{ng.2}), the number

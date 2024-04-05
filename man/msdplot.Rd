@@ -20,9 +20,9 @@ msdplot(
 )
 }
 \arguments{
-\item{trait}{The trait to plot.}
+\item{trait}{The name of the column for the trait to plot.}
 
-\item{groups}{The grouping factor.}
+\item{groups}{The name of the column for the grouping factor.}
 
 \item{dfr}{The name of the data frame.}
 

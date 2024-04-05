@@ -5,7 +5,7 @@
 \alias{potatoyield}
 \title{Data for a yield trial}
 \format{
-A data frame with 46 columns and 972 rows.
+A data frame with 972 rows and 46 columns.
 }
 \source{
 International Potato Center, potato experimental data.

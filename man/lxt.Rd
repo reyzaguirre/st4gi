@@ -5,7 +5,7 @@
 \alias{lxt}
 \title{Line by tester data}
 \format{
-A data frame with 4 columns and 92 rows.
+A data frame with 92 rows and 4 columns.
 }
 \source{
 Singh and Chaudhary, 1979. Biometrical Methods in Quantitative Genetic Analysis.
