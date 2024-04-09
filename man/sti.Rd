@@ -29,20 +29,50 @@ Compute several stress tolerance indices.
 The names of the columns for the traits must follow the convention
 \code{trait.normal} and \code{trait.stress}, so the data frame must be in
 wide format for the factor with levels \code{normal} and \code{stress}.
-For a trait \code{y} with values \code{yn} and \code{ys} under normal and
-stress conditions, the computed indices are:
+
+For a trait \eqn{y} with values \eqn{y_n} and \eqn{y_s} under normal and
+stress conditions, the stress intensity (\eqn{si}) is computed:
+\deqn{
+si = 1 - \frac{\bar y_s}{\bar y_n}
+}
+It ranges between 0 and 1 and the larger the value, the more severe is the stress intensity.
+Then, the following indices are computed:
 \itemize{
  \item \code{tol} : Tolerance.
+ \deqn{
+ tol = y_n - y_s
+ }  
  \item \code{yrr} : Yield reduction ratio.
+ \deqn{
+ yrr = 1 - \frac{y_s}{y_n}
+ }  
  \item \code{ssi} : Stress susceptibility index.
+ \deqn{
+ ssi = \frac{yrr}{si}
+ }  
  \item \code{sti} : Stress tolerance index.
+ \deqn{
+ sti = \frac{y_n \times y_s}{\bar y_n^2}
+ }
  \item \code{mp}  : Mean productivity.
+ \deqn{
+ mp = \frac{y_n + y_s}{2}
+ }  
  \item \code{gmp} : Geometric mean productivity.
+ \deqn{
+ gmp = \sqrt{y_n \times y_s}
+ }  
  }
 }
 \examples{
 traits <- c("nmtp", "mtwp", "nnomtp")
 sti(traits, 'genotype', 'DTWW', 'DTWS', potatostress)
+}
+\references{
+Fernandez, G.C.J. (1992). Effective Selection Criteria for Assessing Stress Tolerance.
+In: Kuo, C.G., Ed., Proceedings of the International Symposium on Adaptation of
+Vegetables and Other Food Crops in Temperature and Water Stress, AVRDC Publication,
+Tainan, 257-270.
 }
 \author{
 Raul Eyzaguirre.
