@@ -84,7 +84,7 @@ create.dd <- function(crop = c('pt', 'sp'), metadata) {
     
     # Block and rep
     
-    if (md$design[i] %in% c('RRC', 'RCBD', 'p-rep')) {
+    if (md$design[i] %in% c('RRC', 'RCBD', 'p-rep', 'Augmented')) {
       if (exists('rep', d)) {
         names(d)[names(d) == 'rep'] <- 'rep_number'
         d$block_number <- d$rep_number
