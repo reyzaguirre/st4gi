@@ -120,6 +120,8 @@ pesekbaker <- function(traits, geno, env = NULL, rep, dfr, means = c("single", "
         ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", rep, ")"))
         fm <- lme4::lmer(ff, dfr)
       }
+      # The index should be applied on BLUEs not BLUPs because BLUPs already
+      # have the effect of shrinkage by h2 which the index is doing again
       temp <- as.data.frame(lme4::fixef(fm))
       colnames(temp) <- paste("f", traits[i], sep = ".")
       temp[, geno] <- substring(rownames(temp), nchar(geno) + 1)
