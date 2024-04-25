@@ -4,7 +4,7 @@
 \alias{ecm}
 \title{Estimate Genotypic and Phenotypic Covariance and Correlation Matrices}
 \usage{
-ecm(traits, geno, env = NULL, rep, dfr, method = 1)
+ecm(traits, geno, env = NULL, rep = NULL, dfr, method = 1)
 }
 \arguments{
 \item{traits}{The names of the columns for traits to include.}
@@ -13,25 +13,31 @@ ecm(traits, geno, env = NULL, rep, dfr, method = 1)
 
 \item{env}{The name of the column that identifies the environments.}
 
-\item{rep}{The name of the column that identifies the replications or blocks. A RCBD is assumed.}
+\item{rep}{The name of the column that identifies the replications or blocks.}
 
 \item{dfr}{The name of the data frame.}
 
-\item{method}{The method to compute genotypic covariances. See details.}
+\item{method}{The method to compute genotypic covariances and phenotypic
+variances. See details.}
 }
 \value{
 It returns the genotypic and phenotypic covariance and correlation matrices.
 }
 \description{
 This function estimates the genotypic and phenotypic covariance and correlation
-matrices with data from a RCBD with one or several environments.
+matrices with data from one or several environments.
 }
 \details{
-If \code{env = NULL} a RCBD with one environment is considered.
-If \code{method = 1} the covariances between each pair of traits are computed
-using the variances of each trait and the variances of the sum. If \code{method = 2}
-the covariance matrices are approximated using the average of the correlation
-matrices computed with each replication in each environment.
+If \code{env = NULL} data from only one environment is considered.
+If \code{rep = NULL} data from only one replication is considered without
+blocking structure.
+If \code{method = 1} genotypic covariances are computed from BLUEs and
+phenotypic covariances are computed from BLUPs.
+If \code{method = 2} the covariances between each pair of traits are computed
+using the variances of each trait and the variances of the sum.
+If \code{method = 3} the genotypic covariances are approximated using the average
+of the correlation matrices computed with each replication in each environment,
+and the phenotypic covariances are computed pooling all the observed data.
 }
 \examples{
 traits <- c("rytha", "bc", "dm", "star", "nocr")
