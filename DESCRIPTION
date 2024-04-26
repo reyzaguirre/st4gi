@@ -9,13 +9,14 @@ Description: Statistical tools for the analysis of experimental data for crop ge
 Depends:
     R (>= 4.0.0)
 Imports:
-    lme4,
-    shiny,
     ggplot2,
     ggrepel,
-    readxl,
+    lme4,
     openxlsx,
-    plyr
+    plyr,
+    readxl,
+    reshape2,
+    shiny
 License: MIT + file LICENSE
 Copyright: International Potato Center (2015)
 LazyData: true

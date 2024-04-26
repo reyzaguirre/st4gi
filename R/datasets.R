@@ -110,3 +110,13 @@ NULL
 #' @format A data frame with 24 rows and 7 columns.
 #' @source International Potato Center, potato experimental data.
 NULL
+#' @name ptfs
+#' @title Data for 5 potato trials
+#' @docType data
+#' @aliases ptfs
+#' @description This data set contains data for 13 traits in 5 trials with
+#' different number of genotypes, but some in common.
+#' @usage ptfs
+#' @format A data frame with 382 rows and 22 columns.
+#' @source International Potato Center, potato experimental data.
+NULL
