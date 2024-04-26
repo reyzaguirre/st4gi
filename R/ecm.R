@@ -24,6 +24,7 @@
 #' @examples
 #' traits <- c("rytha", "bc", "dm", "star", "nocr")
 #' ecm(traits, "geno", "loc", "rep", spg)
+#' @importFrom stats cor cov
 #' @export
 
 ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
@@ -66,12 +67,12 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
       nr <- length(unique(r)) # number of replications in each environment
   }
   
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   # Fitted models by REML to get:
   # - BLUEs
   # - BLUPs
   # - Variance components
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   
   dfr.out <- data.frame(geno = unique(dfr[, geno]))
   colnames(dfr.out) <- geno
@@ -153,10 +154,10 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     
   }
   
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   # Method 1
   # BLUEs and BLUPs
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   
   if (method == 1) {
     # P matrices
@@ -171,10 +172,10 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     G.cor <- cor(tmp, use = 'pairwise.complete.obs')
   }
 
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   # Method 2
   # Based on Z = Y1 + Y2
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   
   if (method == 2) {
     
@@ -222,10 +223,10 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     
   }
   
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   # Method 3
   # Based on average correlation matrix
-  # ---------------------------------------------------------------------------
+  #----------------------------------------------------------------------------
   
   if (method == 3) {
     
@@ -268,12 +269,12 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
   # results
   
   if (method == 1)
-    output <- list(G.Cov = G.cov, P.Cov = P.cov, G.Cor = G.cor, P.Cor = P.cor,
+    output <- list(G.cov = G.cov, P.cov = P.cov, G.cor = G.cor, P.cor = P.cor,
                    blues = dfr.out[, substr(names(dfr.out), 1, 4) %in% c(geno, 'blue')],
                    blups = dfr.out[, substr(names(dfr.out), 1, 4) %in% c(geno, 'blup')])
   
   if (method %in% c(2, 3))
-    output <- list(G.Cov = G.cov, P.Cov = P.cov, G.Cor = G.cor, P.Cor = P.cor)
+    output <- list(G.cov = G.cov, P.cov = P.cov, G.cor = G.cor, P.cor = P.cor)
   
   output
          
