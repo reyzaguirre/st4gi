@@ -10,15 +10,29 @@
 #' function \code{check.names.sp}.
 #' Consider the following groups of traits:
 #' \itemize{
-#'  \item \code{pre} (traits evaluated pre-harvest): \code{vir}, \code{vir1},
-#'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
+#'  \item Traits evaluated pre-harvest: \code{vir}, \code{vir1}, \code{vir2},
+#'  \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
 #'  
-#'  \item \code{wvn} (traits evaluated with vines non-pre-harvest): \code{vw},
-#'  \code{biom}, \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj},
-#'  \code{dmvy}, \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby},
-#'  \code{dmby.aj}, \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd},
-#'  \code{hi}, \code{shi}, and \code{dmv}.
+#'  \item Traits evaluated with vines non-pre-harvest: \code{vw}, \code{biom},
+#'  \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
+#'  \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj},
+#'  \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd}, \code{hi}, \code{shi},
+#'  and \code{dmv}.
 #'  
+#'  \item Traits evaluated only with roots non-pre-harvest: \code{crw},
+#'  \code{ncrw}, \code{trw}, \code{trw.d}, \code{cytha}, \code{cytha.aj},
+#'  \code{rytha}, \code{rytha.aj}, \code{dmry}, \code{dmry.aj}, \code{nrpp},
+#'  \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp}, \code{ypsp},
+#'  \code{rtyldpct}, \code{rfr}, \code{bc.cc}, \code{fcol.cc}, \code{bc},
+#'  \code{tc}, \code{fe}, \code{zn}, \code{ca}, \code{mg}, \code{dmf},
+#'  \code{dmd}, \code{acrw}, \code{ancrw}, \code{atrw}, \code{ci}, \code{fruc},
+#'  \code{gluc}, \code{sucr}, \code{malt}, \code{dm}, \code{prot}, \code{star},
+#'  \code{nocr}, \code{nonc}, \code{tnr}, \code{scol}, \code{fcol}, \code{fcol2},
+#'  \code{rs}, \code{rf}, \code{rtshp}, \code{damr}, \code{rspr}, \code{alcdam},
+#'  \code{wed}, \code{stspwv}, \code{milldam}, \code{fraw}, \code{suraw},
+#'  \code{straw}, \code{coof}, \code{coosu}, \code{coost}, \code{coot}, and
+#'  \code{cooap} 
+#'
 #'  \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
 #'  \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d},
 #'  \code{cytha}, \code{cytha.aj}, \code{rytha}, \code{rytha.aj}, \code{dmry},
