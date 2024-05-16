@@ -69,7 +69,22 @@
 #'  \item \code{tuber_apper} : Tuber appearance estimating 1-9 (CO_330:0000348).
 #'  \item \code{tub_unif}    : Tuber uniformity estimating 1-9 (CO_330:0000352).
 #'  \item \code{tub_size}    : Tuber size estimating 1-9 (CO_330:0000356).
+#'  \item \code{tbskn1}      : Predominant tuber skin color (CO_330:0000249).
+#'  \item \code{tbfsh1}      : Predominant tuber flesh color (CO_330:0000253).
+#'  \item \code{tbshp1}      : Tuber shape (CO_330:0000256).
+#'  \item \code{tbshp3}      : Tuber depth eyes (CO_330:0000258).
+#'  \item \code{dorpd}       : Tuber dormancy period (CO_330:0000397).
 #'  }
+#' ------------------------------- Organoleptic -------------------------------
+#'  \itemize{
+#'  \item \code{chipping}    : Chips color 1-5 (CO_330:0000384).
+#'  \item \code{ffr}         : French fries color 1-5 (CO_330:0000388).
+#'  \item \code{aocp}        : Chips oil absorption rate (CO_330:0000395).
+#'  \item \code{flavour}     : Tuber flavor after cooking (CO_330:0000379).
+#'  \item \code{textac}      : Tuber texture after cooking (CO_330:0000380).
+#'  \item \code{cookqu}      : Tuber cooking quality (CO_330:0000381).
+#'  \item \code{cootime}     : Tuber cooking time (CO_330:0000389).
+#'  } 
 #' ---------------------------------- Biomass ---------------------------------
 #'  \itemize{
 #'  \item \code{tafw}        : Total aerial fresh weight per plot in g.
@@ -116,14 +131,20 @@
 #'  \item \code{sucr}        : Tuber sucrose content in percentage (CO_330:0000444).
 #'  \item \code{malt}        : Tuber maltose content in percentage (CO_330:0000447).
 #'  \item \code{fiber}       : Tuber fiber content in percentage (CO_330:0000450).
+#'  \item \code{tgly_fw}     : Tuber glycoalkaloid concentration on fresh weight basis in mg per 100 g (CO_330:0000661).
 #'  }
-#' -------------------------------- Late Blight -------------------------------
+#' ---------------------------------- Deseases --------------------------------
 #'  \itemize{
 #'  \item \code{lb}          : Late Blight severity estimating percentage (CO_330:0000359).
 #'  \item \code{lbi}         : Late Blight severity estimating percentage evaluation i (i = 1, 2,... 8).
 #'  \item \code{audpc}       : Late blight AUDPC computed (CO_330:0000363).
 #'  \item \code{raudpc}      : Late blight relative AUDPC computed (CO_330:0000367).
 #'  \item \code{saudpc}      : Late blight susceptibility computed (CO_330:0000371).
+#'  \item \code{pvx}         : Potato virus X resistance (CO_330:0000373).
+#'  \item \code{pvy}         : Potato virus Y resistance (CO_330:0000374).
+#'  \item \code{prlv}        : Potatoleaf roll virus resistance (CO_330:0000375).
+#'  \item \code{bw}          : Bacterial wilt resistance (CO_330:0000376).
+#'  \item \code{rkn}         : Root knot nematode resistance (CO_330:0000377).
 #'  }
 #' ------------------------------- Other traits -------------------------------
 #'  \itemize{
