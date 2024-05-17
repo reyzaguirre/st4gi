@@ -172,10 +172,14 @@ create.dd <- function(crop = c('pt', 'sp'), metadata) {
 
   # Edit column names for traits
   
-  if(crop == 'pt')
+  if(crop == 'pt') {
     data.file <- suppressWarnings(convert.co.pt(data.file))
-  if(crop == 'sp')
+    names(data.file) <- gsub('co_330:', 'CO_330:', names(data.file))
+  }
+  if(crop == 'sp') {
     data.file <- suppressWarnings(convert.co.sp(data.file))
+    names(data.file) <- gsub('co_331:', 'CO_331:', names(data.file))
+  }
   
   # output
   
