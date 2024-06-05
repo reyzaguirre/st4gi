@@ -209,25 +209,11 @@ check.names.pt <- function(dfr, add = NULL) {
   
   # Valid names for traits
 
-  traits <- c("ntp", "npe", "nph", "ppe", "pph",
-              "tntp", "tntpl", "nmtp", "nmtpl", "nnomtp", "nmtci", "nmtcii",
-              "ttwp", "ttwpl", "mtwp", "mtwpl", "nomtwp", "mtwci", "mtwcii",
-              "ttya", "ttyna", "mtya", "mtyna", "atw", "atmw",
-              "plant_unif", "plant_vigor", "se", "tuber_apper", "tub_unif",
-              "tub_size", 'tbskn1', 'tbfsh1', 'tbshp1', 'tbshp3', 'dorpd',
-              'chipping', 'ffr', 'aocp', 'flavour', 'textac', 'cookqu', 'cootime',
-              'tafw', 'tbfwp', "tbfwpl", "hi_fw",
-              'tadw', 'tbdwp', "tbdwpl", "hi_dw",
-              'fwts', 'dwts', "fwts1", "fwts2", "dwts1", "dwts2",
-              "dm1", "dm2", "dm",
-              "fedw", "fefw", 'fedw_xrf', "zndw", "znfw", 'zndw_xrf',
-              "antho_dw", "antho_fw", "aah_dw", "aah_fw",
-              "aal_dw", "aal_fw", "asc_dw", "asc_fw",
-              "pro", "star", "fruc", "gluc", "sucr", "malt", "fiber", 'tgly_fw',
-              "lb", lb.ev, "audpc", "raudpc", "saudpc",
-              'pvx', 'pvy', 'prlv', 'bw', 'rkn',
-              "rd", "rl", "sg", "dsi", "dti", rm.traits, rm.traitsi,
-              "nipp", "nfwp", "num_stolon", "leng_stolon")
+  traits <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii", "tbskn1", "tbfsh1",
+              "tbshp1", "tbshp3", "dorpd", "chipping", "ffr", "aocp", "flavour",
+              "textac", "cookqu", "cootime", "tafw", "tadw", "fwts", "dwts",
+              "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2", "tgly_fw",
+              "pvx", "pvy", "prlv", "bw", "rkn", lb.ev, rm.traits, rm.traitsi)
   
   # Valid names for factors and traits
   
@@ -291,7 +277,7 @@ check.names.pt <- function(dfr, add = NULL) {
   }
   
   old.names <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein")
-  new.names <- c("atw", "atmw", "sfw", "sdw", "dm", 'dm', "pro")
+  new.names <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro")
   
   # Warnings
   

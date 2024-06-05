@@ -162,19 +162,7 @@ check.names.sp <- function(dfr, add = NULL) {
   
   # Valid names for traits
   
-  traits <- c("nops", "nope", "noph", "vir", "vir1", "vir2", "alt", "alt1", "alt2",
-              "vv", "vw", "nopr", "nocr", "nonc", "crw", "ncrw", "scol", "fcol",
-              "fcol2", "fcol.cc", "rs", "rf", "rtshp", "damr", "rspr", "alcdam",
-              "wed", "stspwv", "milldam", "dmf", "dmd", "dm", "dmvf", "dmvd",
-              "dmv", "fraw", "suraw", "straw", "coof", "coosu", "coost", "coot",
-              "cooap", "prot", "fe", "zn", "ca", "mg", "bc", "bc.cc", "tc", "star",
-              "star.b", "fruc", "fruc.b", "gluc", "gluc.b", "sucr", "sucr.b",
-              "malt", "malt.b", "tnr", "trw", "trw.d", "biom",
-              "biom.d", "cytha", "cytha.aj", "rytha", "rytha.aj", "dmry",
-              "dmry.aj", "vw.d", "fytha", "fytha.aj", "dmvy", "dmvy.aj", "bytha",
-              "bytha.aj", "dmby", "dmby.aj", "acrw", "ancrw", "atrw", "nrpp",
-              "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "vpp", "vpsp", "rtyldpct",
-              "ci", "hi", "shi", "rfr")
+  traits <- c(spont$Label, 'fcol.cc')
   
   # Valid names for factors and traits
   
