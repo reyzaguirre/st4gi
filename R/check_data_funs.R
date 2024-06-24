@@ -518,20 +518,6 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
       
     }
    
-    # Outliers' detection for additional traits
-    
-    if (!is.null(add)) {
-      
-      for (i in 1:length(add)) {
-        tmp <- out.detect(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
-        if (!is.null(tmp)) {
-          il <- rbind(il, tmp$il)
-          im <- tmp$im
-        }
-      }
-      
-    }
-    
   }
   
   list(Inconsist.List = il, Inconsist.Matrix = im)
