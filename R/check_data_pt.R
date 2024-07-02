@@ -64,6 +64,7 @@ check.data.pt <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
     rownames(output$Inconsist.List) <- 1:dim(output$Inconsist.List)[1]
   }
 
+  class(output) <- "st4gi_dc"
   invisible(output)
   
 }
