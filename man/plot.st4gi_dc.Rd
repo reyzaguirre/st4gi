@@ -23,6 +23,8 @@ It produces a visual matrix representation of data consistency problems.
 \examples{
 checks <- check.data.sp(pjpz09)
 plot(checks)
+checks <- check.data.pt(potatoyield)
+plot(checks)
 }
 \author{
 Raul Eyzaguirre.
