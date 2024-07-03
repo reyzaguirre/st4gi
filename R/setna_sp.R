@@ -388,8 +388,8 @@ setna.sp <- function(dfr, f = 10) {
 
   # nopr > 0 and all traits 0
   
-  if (exists("nopr", dfr) & (exists("nocr", dfr) | exists("nonc", dfr)) &
-      (exists("crw", dfr) | exists("ncrw", dfr))) {
+  if (exists("nopr", dfr) & (exists("nocr", dfr) | exists("crw", dfr)) &
+      (exists("nonc", dfr) | exists("ncrw", dfr))) {
     cond <- dfr[, "nopr"] > 0 & !is.na(dfr[, "nopr"]) & cr.cond & ncr.cond
     dfr[cond, ncr.traits] <- NA
     if (sum(cond) > 0)
