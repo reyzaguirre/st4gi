@@ -52,7 +52,7 @@ conplot <- function(trait, geno, trial, dfr) {
                          midpoint = mid.val, limit = c(0, max.val),
                          space = "Lab", name = 'N genotypes') +
     ggplot2::theme_minimal() +
-    ggplot2::geom_text(ggplot2::aes(label = value), color = "white", size = 3) +
+    ggplot2::geom_text(ggplot2::aes(label = value), color = "black", size = 3) +
     ggplot2::ylab("") + ggplot2::xlab("") +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, vjust = 1, hjust = 1, face = "bold")) +
     ggplot2::theme(axis.text.y = ggplot2::element_text(angle = 0, vjust = 1,  hjust = 1, face = "bold")) +
