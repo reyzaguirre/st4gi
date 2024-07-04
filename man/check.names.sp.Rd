@@ -12,8 +12,13 @@ check.names.sp(dfr, add = NULL)
 \item{add}{Additional traits.}
 }
 \value{
-It returns a data frame with all traits names in lower case, and a list of the
-traits with names not included in the list shown above.
+It returns:
+\itemize{
+\item The fieldbook data frame with all column names in lowercase and
+with some possible modifications in the names.
+\item A list of warnings for all the column names that have been changed.
+\item A list of warnings for all the column names not recognized.
+}
 }
 \description{
 Check that fieldbook factors and traits names correspond with the names defined in 
@@ -38,8 +43,7 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{year}      : Years.
  \item \code{season}    : Seasons. 
  \item \code{env}       : Environments.
- \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
- \item \code{cipno}     : Institutional CIP number.
+ \item \code{geno}      : Genotypes (\code{accession_name} and \code{cipno} are also valid).
  \item \code{type}      : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
  \item \code{rep}       : Replications (\code{rep_number} is also valid).
  \item \code{block}     : Blocks (\code{block_number} is also valid).

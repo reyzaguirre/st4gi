@@ -10,22 +10,21 @@
 #' 
 #' ----------------------------- Plot identifiers -----------------------------
 #'  \itemize{
-#'  \item \code{plot}      : Plot number.
-#'  \item \code{row}       : Row number position of the plot (\code{row_number} is also valid).
-#'  \item \code{col}       : Column number position of the plot (\code{col_number} is also valid).
+#'  \item \code{plot}        : Plot number.
+#'  \item \code{row}         : Row number position of the plot (\code{row_number} is also valid).
+#'  \item \code{col}         : Column number position of the plot (\code{col_number} is also valid).
 #'  }
 #' --------------------------- Classification factors--------------------------
 #'  \itemize{
-#'  \item \code{loc}       : Locations.
-#'  \item \code{year}      : Years.
-#'  \item \code{season}    : Seasons. 
-#'  \item \code{env}       : Environments.
-#'  \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
-#'  \item \code{instn}     : Institutional CIP number.
-#'  \item \code{type}      : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
-#'  \item \code{rep}       : Replications (\code{rep_number} is also valid).
-#'  \item \code{block}     : Blocks (\code{block_number} is also valid).
-#'  \item \code{treatment} : Irrigation treatments.
+#'  \item \code{loc}         : Locations.
+#'  \item \code{year}        : Years.
+#'  \item \code{season}      : Seasons. 
+#'  \item \code{env}         : Environments.
+#'  \item \code{geno}        : Genotypes (\code{accession_name} and \code{instn} are also valid).
+#'  \item \code{type}        : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
+#'  \item \code{rep}         : Replications (\code{rep_number} is also valid).
+#'  \item \code{block}       : Blocks (\code{block_number} is also valid).
+#'  \item \code{treat}       : Treatments.
 #'  }
 #' ----------------------------------- Plants ---------------------------------
 #'  \itemize{
@@ -98,15 +97,15 @@
 #'  }
 #' -------------------------------- Dry weight --------------------------------
 #'  \itemize{
-#'  \item \code{fwts}         : Fresh weight of tuber for dry matter determination.
-#'  \item \code{dwts}         : Dry weight of tuber for dry matter determination.
-#'  \item \code{fwts1}        : Fresh weight of tuber sample 1.
-#'  \item \code{fwts2}        : Fresh weight of tuber sample 2.
-#'  \item \code{dwts1}        : Dry weight of tuber sample 1.
-#'  \item \code{dwts2}        : Dry weight of tuber sample 2.
-#'  \item \code{dm1}          : Tuber dry matter content sample 1.
-#'  \item \code{dm2}          : Tuber dry matter content sample 2.
-#'  \item \code{dm}           : Tuber dry matter content in percentage (CO_330:0000390).
+#'  \item \code{fwts}        : Fresh weight of tuber for dry matter determination.
+#'  \item \code{dwts}        : Dry weight of tuber for dry matter determination.
+#'  \item \code{fwts1}       : Fresh weight of tuber sample 1.
+#'  \item \code{fwts2}       : Fresh weight of tuber sample 2.
+#'  \item \code{dwts1}       : Dry weight of tuber sample 1.
+#'  \item \code{dwts2}       : Dry weight of tuber sample 2.
+#'  \item \code{dm1}         : Tuber dry matter content sample 1.
+#'  \item \code{dm2}         : Tuber dry matter content sample 2.
+#'  \item \code{dm}          : Tuber dry matter content in percentage (CO_330:0000390).
 #'  }
 #' --------------------------- Nutrients evaluations --------------------------
 #'  \itemize{
@@ -178,8 +177,13 @@
 #'  \item \code{sla_ev}      : Leaflet area using EasyLeafArea software in cm^2 per g (CO_330:0000812).
 #'  \item \code{sla_evi}     : Leaflet area using EasyLeafArea software in cm^2 per g evaluation i (i = 1,..., 5).
 #'  }
-#' @return It returns a data frame with all traits names in lower case, and a list of the
-#' traits with names not included in the list shown above.
+#' @return It returns:
+#' \itemize{
+#' \item The fieldbook data frame with all column names in lowercase and
+#' with some possible modifications in the names.
+#' \item A list of warnings for all the column names that have been changed.
+#' \item A list of warnings for all the column names not recognized.
+#' }
 #' @author Raul Eyzaguirre, Johan Ninanya. 
 #' @examples
 #' check.names.pt(potatoyield)
@@ -194,7 +198,7 @@ check.names.pt <- function(dfr, add = NULL) {
   factors <- c("loc", "year", "season", "env",
                "geno", "accession_name", "instn", 'type',
                "rep", 'rep_number', "block", "block_number",
-               "treatment")
+               "treat")
   
   # Repeated measures traits (i = 1...5)
   
@@ -237,53 +241,48 @@ check.names.pt <- function(dfr, add = NULL) {
   
   colnames(dfr) <- tolower(colnames(dfr))
   
-  # Solve synonyms
+  # Solve synonyms for factors
   
-  change.names <- NULL 
+  change.names.f <- NULL 
+
+  old.names.f <- c("rep_number", "block_number", "row_number", "col_number", "accession_name", "instn")
+  new.names.f <- c("rep",        "block",        "row",        "col",        "geno",           "geno")
   
-  if (exists("mwt", dfr)) {
-    change.names <- c(change.names, "mwt")
-    colnames(dfr)[colnames(dfr) == "mwt"] <- "atw"
-  }
+  for (i in 1:length(old.names.f)) {
+    
+    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i])) {
+      change.names.f <- c(change.names.f, old.names.f[i])
+      colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
+    }
+    
+  }  
+
+  # Solve synonyms for traits
   
-  if (exists("mwmt", dfr)) {
-    change.names <- c(change.names, "mwmt")
-    colnames(dfr)[colnames(dfr) == "mwmt"] <- "atmw"
-  }
-  
-  if (exists("stfw", dfr)) {
-    change.names <- c(change.names, "stfw")
-    colnames(dfr)[colnames(dfr) == "stfw"] <- "sfw"
-  }
-  
-  if (exists("stdw", dfr)) {
-    change.names <- c(change.names, "stdw")
-    colnames(dfr)[colnames(dfr) == "stdw"] <- "sdw"
-  }
-  
-  if (exists("pdm", dfr)) {
-    change.names <- c(change.names, "pdm")
-    colnames(dfr)[colnames(dfr) == "pdm"] <- "dm"
-  }
-  
-  if (exists("avdm", dfr)) {
-    change.names <- c(change.names, "avdm")
-    colnames(dfr)[colnames(dfr) == "avdm"] <- "dm"
-  }
-  
-  if (exists("protein", dfr)) {
-    change.names <- c(change.names, "protein")
-    colnames(dfr)[colnames(dfr) == "protein"] <- "pro"
-  }
-  
-  old.names <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein")
-  new.names <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro")
+  change.names.t <- NULL 
+
+  old.names.t <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein")
+  new.names.t <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro")
+
+  for (i in 1:length(old.names.t)) {
+
+    if (exists(old.names.t[i], dfr) & !exists(new.names.t[i])) {
+      change.names.t <- c(change.names.t, old.names.t[i])
+      colnames(dfr)[colnames(dfr) == old.names.t[i]] <- new.names.t[i]
+    }
+    
+  }  
   
   # Warnings
   
-  if (!is.null(change.names)) {
-    change.names.list <- old.names %in% change.names
-    warning("Trait's names ", list(old.names[change.names.list]), " changed to ", list(new.names[change.names.list]), call. = FALSE)
+  if (!is.null(change.names.f)) {
+    change.names.list <- old.names.f %in% change.names.f
+    warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
+  }
+  
+  if (!is.null(change.names.t)) {
+    change.names.list <- old.names.t %in% change.names.t
+    warning("Traits' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
   }
   
   if (max(check.list.1) == 1)

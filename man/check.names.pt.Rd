@@ -12,8 +12,13 @@ check.names.pt(dfr, add = NULL)
 \item{add}{Additional traits.}
 }
 \value{
-It returns a data frame with all traits names in lower case, and a list of the
-traits with names not included in the list shown above.
+It returns:
+\itemize{
+\item The fieldbook data frame with all column names in lowercase and
+with some possible modifications in the names.
+\item A list of warnings for all the column names that have been changed.
+\item A list of warnings for all the column names not recognized.
+}
 }
 \description{
 Check that fieldbook traits names correspond with the names defined in 
@@ -26,22 +31,21 @@ Between parentheses are the CO numbers for variables defined in
 
 ----------------------------- Plot identifiers -----------------------------
  \itemize{
- \item \code{plot}      : Plot number.
- \item \code{row}       : Row number position of the plot (\code{row_number} is also valid).
- \item \code{col}       : Column number position of the plot (\code{col_number} is also valid).
+ \item \code{plot}        : Plot number.
+ \item \code{row}         : Row number position of the plot (\code{row_number} is also valid).
+ \item \code{col}         : Column number position of the plot (\code{col_number} is also valid).
  }
 --------------------------- Classification factors--------------------------
  \itemize{
- \item \code{loc}       : Locations.
- \item \code{year}      : Years.
- \item \code{season}    : Seasons. 
- \item \code{env}       : Environments.
- \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
- \item \code{instn}     : Institutional CIP number.
- \item \code{type}      : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
- \item \code{rep}       : Replications (\code{rep_number} is also valid).
- \item \code{block}     : Blocks (\code{block_number} is also valid).
- \item \code{treatment} : Irrigation treatments.
+ \item \code{loc}         : Locations.
+ \item \code{year}        : Years.
+ \item \code{season}      : Seasons. 
+ \item \code{env}         : Environments.
+ \item \code{geno}        : Genotypes (\code{accession_name} and \code{instn} are also valid).
+ \item \code{type}        : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
+ \item \code{rep}         : Replications (\code{rep_number} is also valid).
+ \item \code{block}       : Blocks (\code{block_number} is also valid).
+ \item \code{treat}       : Treatments.
  }
 ----------------------------------- Plants ---------------------------------
  \itemize{
@@ -114,15 +118,15 @@ Between parentheses are the CO numbers for variables defined in
  }
 -------------------------------- Dry weight --------------------------------
  \itemize{
- \item \code{fwts}         : Fresh weight of tuber for dry matter determination.
- \item \code{dwts}         : Dry weight of tuber for dry matter determination.
- \item \code{fwts1}        : Fresh weight of tuber sample 1.
- \item \code{fwts2}        : Fresh weight of tuber sample 2.
- \item \code{dwts1}        : Dry weight of tuber sample 1.
- \item \code{dwts2}        : Dry weight of tuber sample 2.
- \item \code{dm1}          : Tuber dry matter content sample 1.
- \item \code{dm2}          : Tuber dry matter content sample 2.
- \item \code{dm}           : Tuber dry matter content in percentage (CO_330:0000390).
+ \item \code{fwts}        : Fresh weight of tuber for dry matter determination.
+ \item \code{dwts}        : Dry weight of tuber for dry matter determination.
+ \item \code{fwts1}       : Fresh weight of tuber sample 1.
+ \item \code{fwts2}       : Fresh weight of tuber sample 2.
+ \item \code{dwts1}       : Dry weight of tuber sample 1.
+ \item \code{dwts2}       : Dry weight of tuber sample 2.
+ \item \code{dm1}         : Tuber dry matter content sample 1.
+ \item \code{dm2}         : Tuber dry matter content sample 2.
+ \item \code{dm}          : Tuber dry matter content in percentage (CO_330:0000390).
  }
 --------------------------- Nutrients evaluations --------------------------
  \itemize{

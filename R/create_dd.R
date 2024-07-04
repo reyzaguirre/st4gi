@@ -186,4 +186,3 @@ create.dd <- function(crop = c('pt', 'sp'), metadata) {
  list(design = design.file, data = data.file)
 
 }
-

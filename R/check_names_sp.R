@@ -22,8 +22,7 @@
 #'  \item \code{year}      : Years.
 #'  \item \code{season}    : Seasons. 
 #'  \item \code{env}       : Environments.
-#'  \item \code{geno}      : Genotypes (\code{accession_name} is also valid).
-#'  \item \code{cipno}     : Institutional CIP number.
+#'  \item \code{geno}      : Genotypes (\code{accession_name} and \code{cipno} are also valid).
 #'  \item \code{type}      : Entry type (\code{clon}, \code{check}, \code{progeny}, \code{parent}).
 #'  \item \code{rep}       : Replications (\code{rep_number} is also valid).
 #'  \item \code{block}     : Blocks (\code{block_number} is also valid).
@@ -142,8 +141,13 @@
 #'  \item \code{shi}       : Survival index in percentage (CO_331:0000301).
 #'  \item \code{rfr}       : Root foliage ratio in percentage	(CO_331:0001015).
 #'  }
-#' @return It returns a data frame with all traits names in lower case, and a list of the
-#' traits with names not included in the list shown above.
+#' @return It returns:
+#' \itemize{
+#' \item The fieldbook data frame with all column names in lowercase and
+#' with some possible modifications in the names.
+#' \item A list of warnings for all the column names that have been changed.
+#' \item A list of warnings for all the column names not recognized.
+#' }
 #' @author Raul Eyzaguirre.
 #' @examples
 #' check.names.sp(pjpz09)
@@ -186,7 +190,28 @@ check.names.sp <- function(dfr, add = NULL) {
   
   colnames(dfr) <- tolower(colnames(dfr))
     
+  # Solve synonyms for factors
+  
+  change.names.f <- NULL 
+  
+  old.names.f <- c("rep_number", "block_number", "row_number", "col_number", "accession_name", "cipno")
+  new.names.f <- c("rep",        "block",        "row",        "col",        "geno",           "geno")
+  
+  for (i in 1:length(old.names.f)) {
+    
+    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i])) {
+      change.names.f <- c(change.names.f, old.names.f[i])
+      colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
+    }
+    
+  }  
+  
   # Warnings
+  
+  if (!is.null(change.names.f)) {
+    change.names.list <- old.names.f %in% change.names.f
+    warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
+  }
   
   if (max(check.list.1) == 1)
     warning("Some columns with invalid names: ", list(colnames.fb[check.list.1]), call. = FALSE)
