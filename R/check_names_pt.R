@@ -237,9 +237,10 @@ check.names.pt <- function(dfr, add = NULL) {
   
   check.list.2 <- !(colnames.fb.valid %in% colnames.valid)
   
-  # Convert all fieldbook names to lower case
+  # Convert all fieldbook names to lower case (except CO numbers)
   
-  colnames(dfr) <- tolower(colnames(dfr))
+  cond <- substring(colnames(dfr), 1, 7) != 'CO_330:'
+  colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
   
   # Solve synonyms for factors
   
