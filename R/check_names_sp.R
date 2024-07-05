@@ -192,14 +192,14 @@ check.names.sp <- function(dfr, add = NULL) {
     
   # Solve synonyms for factors
   
-  change.names.f <- NULL 
+  change.names.f <- NULL
   
   old.names.f <- c("rep_number", "block_number", "row_number", "col_number", "accession_name", "cipno")
   new.names.f <- c("rep",        "block",        "row",        "col",        "geno",           "geno")
   
   for (i in 1:length(old.names.f)) {
     
-    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i])) {
+    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i], dfr)) {
       change.names.f <- c(change.names.f, old.names.f[i])
       colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
     }

@@ -250,7 +250,7 @@ check.names.pt <- function(dfr, add = NULL) {
   
   for (i in 1:length(old.names.f)) {
     
-    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i])) {
+    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i], dfr)) {
       change.names.f <- c(change.names.f, old.names.f[i])
       colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
     }
@@ -266,7 +266,7 @@ check.names.pt <- function(dfr, add = NULL) {
 
   for (i in 1:length(old.names.t)) {
 
-    if (exists(old.names.t[i], dfr) & !exists(new.names.t[i])) {
+    if (exists(old.names.t[i], dfr) & !exists(new.names.t[i], dfr)) {
       change.names.t <- c(change.names.t, old.names.t[i])
       colnames(dfr)[colnames(dfr) == old.names.t[i]] <- new.names.t[i]
     }
