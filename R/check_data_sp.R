@@ -50,32 +50,6 @@ check.data.sp <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
   if (!is.null(add))
     add <- tolower(add)
   
-  # Compute trw with NA omited
-  
-  if (exists("crw", dfr) & !exists("ncrw", dfr))
-    dfr$trw <- dfr$crw
-  if (!exists("crw", dfr) & exists("ncrw", dfr))
-    dfr$trw <- dfr$ncrw
-  if (exists("crw", dfr) & exists("ncrw", dfr)) {
-    dfr$trw <- apply(cbind(dfr$crw, dfr$ncrw), 1, sum, na.rm = TRUE)
-    dfr[is.na(dfr$crw) & is.na(dfr$ncrw), "trw"] <- NA
-    dfr[is.na(dfr$crw) & !is.na(dfr$ncrw) & dfr$ncrw == 0, "trw"] <- NA
-    dfr[!is.na(dfr$crw) & dfr$crw == 0 & is.na(dfr$ncrw), "trw"] <- NA
-  }
-  
-  # Compute tnr with NA omited
-  
-  if (exists("nocr", dfr) & !exists("nonc", dfr))
-    dfr$tnr <- dfr$nocr
-  if (!exists("nocr", dfr) & exists("nonc", dfr))
-    dfr$tnr <- dfr$nonc
-  if (exists("nocr", dfr) & exists("nonc", dfr)) {
-    dfr$tnr <- apply(cbind(dfr$nocr, dfr$nonc), 1, sum, na.rm = TRUE)
-    dfr[is.na(dfr$nocr) & is.na(dfr$nonc), "tnr"] <- NA
-    dfr[is.na(dfr$nocr) & !is.na(dfr$nonc) & dfr$nonc == 0, "tnr"] <- NA
-    dfr[!is.na(dfr$nocr) & dfr$nocr == 0 & is.na(dfr$nonc), "tnr"] <- NA
-  }
-
   # Transform dmvf, dmvd, dmf, and dmd to kilograms
   
   if (exists("dmvf", dfr))
