@@ -140,7 +140,9 @@ create.dd <- function(crop = c('pt', 'sp'), metadata) {
       # Additional fields from fieldbook
       "is_a_control", "rep_number", "range_number", "row_number", "col_number",
       # Additional fields must be in the template (without data)
-      "seedlot_name", "num_seed_per_plot", "weight_gram_seed_per_plot")
+      "seedlot_name", "num_seed_per_plot", "weight_gram_seed_per_plot",
+      # All treatment columns
+      names(d)[startsWith(names(d), 'treatment_')])
     
     # Create design data.frame from fieldbook
     

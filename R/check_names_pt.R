@@ -216,7 +216,7 @@ check.names.pt <- function(dfr, add = NULL) {
   traits <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii", "tbskn1", "tbfsh1",
               "tbshp1", "tbshp3", "dorpd", "chipping", "ffr", "aocp", "flavour",
               "textac", "cookqu", "cootime", "tafw", "tadw", "fwts", "dwts",
-              "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2", "tgly_fw",
+              "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2", "avdm", "tgly_fw",
               "pvx", "pvy", "prlv", "bw", "rkn", lb.ev, rm.traits, rm.traitsi)
   
   # Valid names for factors and traits
