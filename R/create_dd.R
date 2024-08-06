@@ -70,17 +70,19 @@ create.dd <- function(crop = c('pt', 'sp'), metadata) {
     
     d$trial_name <- fn[i]
     
-    # Create plot name
+    # Plot number
     
     names(d)[names(d) == 'plot'] <- 'plot_number'
-    d$plot_name <- paste0(d$trial_name, "-0000", d$plot_number)
     
-    cond <- nchar(d$plot_name) == 24
-    d$plot_name[cond] <- gsub("-000", "-", d$plot_name[cond])
-    cond <- nchar(d$plot_name) == 23
-    d$plot_name[cond] <- gsub("-00", "-", d$plot_name[cond])
-    cond <- nchar(d$plot_name) == 22
-    d$plot_name[cond] <- gsub("-0", "-", d$plot_name[cond])
+    # Create plot name = trial name + plot number
+    # nod = number of digits
+    # fpn = formated plot number
+    
+    nod <- nchar(max(d$plot_number))
+    
+    fpn <- sprintf(paste0("%0", nod, ".0f"), d$plot_number)
+    
+    d$plot_name <- paste0(d$trial_name, "-", fpn)
     
     # Block and rep
     
