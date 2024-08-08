@@ -120,3 +120,13 @@ NULL
 #' @format A data frame with 382 rows and 22 columns.
 #' @source International Potato Center, potato experimental data.
 NULL
+#' @name lbb3c3
+#' @title Data for a late blight experiment
+#' @docType data
+#' @aliases lbb3c3
+#' @description This data set contains late blight evaluations at 6 dates
+#' for a potato experiment with 33 genotypes and 3 replications.
+#' @usage lbb3c3
+#' @format A data frame with 99 rows and 8 columns.
+#' @source International Potato Center, potato experimental data.
+NULL
