@@ -1,16 +1,18 @@
 ###############################################################################
 # Check data functions
-# t1, t2: traits
-# tx: text to print
-# vmin: Minimum value that is valid (< vmin is invalid), use 0.1 to code <= 0 
-# vmax: Maximum value that is valid (> vmax is invalid)
-# ex: extreme (low, high)
-# dcr: data frame with all data consistency rules
-# olr: data frame with all outliers' detection rules
+# - t1, t2: traits
+# - tx: text to print
+# - vmin: Minimum value that is valid (< vmin is invalid), use 0.1 to code <= 0 
+# - vmax: Maximum value that is valid (> vmax is invalid)
+# - ex: extreme (low, high)
+# - dcr: data frame with all data consistency rules
+# - olr: data frame with all outliers' detection rules
 ###############################################################################
 
 ###############################################################################
 # Get results function
+# - Prints results
+# - Creates pieces to ensamble il data frame
 ###############################################################################
 
 get.result <- function(dfr, cond, tx, print.text) {
@@ -39,6 +41,8 @@ get.result <- function(dfr, cond, tx, print.text) {
 
 ###############################################################################
 # Conditions
+# - Creates cond to filter rows with inconsistencies
+# - Creates tx with texts for output
 ###############################################################################
 
 run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
@@ -162,6 +166,7 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
 
 ###############################################################################
 # Outliers' detection
+# - Detects outliers based on residuals
 ###############################################################################
 
 out.detect <- function(dfr, im, geno, env, rep, t1, out.mod, out.max, print.text) {
@@ -227,21 +232,16 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   
   for (i in 1:nrow(dcr)) {
     
-    if (is.na(dcr$excep1[i]))
+    # Conditions to run rules
+    
+    cond.1 <- is.na(dcr$excep1[i])
+    cond.2 <- !is.na(dcr$excep1[i]) & is.na(dcr$excep2[i]) & !exists(dcr$excep1[i], dfr)
+    cond.3 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr)
+    cond.4 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr)
+
+    if (cond.1 | cond.2 | cond.3 | cond.4)
       tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
-    
-    if (!is.na(dcr$excep1[i]) & is.na(dcr$excep2[i]))
-      if (!exists(dcr$excep1[i], dfr))
-        tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
-    
-    if (!is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & is.na(dcr$excep3[i]))
-      if (!exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr))
-        tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
-    
-    if (!is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]))
-      if (!exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr))
-        tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
-    
+
     if (!is.null(tmp)) {
       il <- rbind(il, tmp$il)
       im <- tmp$im
@@ -388,20 +388,15 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   
   for (i in 1:nrow(dcr)) {
     
-    if (is.na(dcr$excep1[i]))
+    # Conditions to run rules
+    
+    cond.1 <- is.na(dcr$excep1[i])
+    cond.2 <- !is.na(dcr$excep1[i]) & is.na(dcr$excep2[i]) & !exists(dcr$excep1[i], dfr)
+    cond.3 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr)
+    cond.4 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr)
+    
+    if (cond.1 | cond.2 | cond.3 | cond.4)
       tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
-    
-    if (!is.na(dcr$excep1[i]) & is.na(dcr$excep2[i]))
-      if (!exists(dcr$excep1[i], dfr))
-        tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
-    
-    if (!is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & is.na(dcr$excep3[i]))
-      if (!exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr))
-        tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
-    
-    if (!is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]))
-      if (!exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr))
-        tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
     
     if (!is.null(tmp)) {
       il <- rbind(il, tmp$il)
