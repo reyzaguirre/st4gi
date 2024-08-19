@@ -43,9 +43,9 @@ Consider the following groups of traits:
  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe}, \code{nph},
  \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and \code{nmtcii}.
  
- \item \code{ctg} (categorical 1 to 9 traits): \code{plant_unif},
- \code{plant_vigor}, \code{se}, \code{tuber_apper}, \code{tub_unif},
- \code{tub_size}, \code{num_stolon}, and \code{leng_stolon}.
+ \item \code{ctg} (categorical traits): \code{plant_unif},
+ \code{plant_vigor}, \code{flowering}, \code{rlb}, \code{se}, \code{tuber_apper},
+ \code{tub_unif}, \code{tub_size}, \code{num_stolon}, and \code{leng_stolon}.
 }
 Values are set to \code{NA} with the following rules:
 \itemize{

@@ -30,6 +30,8 @@
 #'  \itemize{
 #'  \item \code{ntp}         : Number of tubers planted per plot (CO_330:0000265).
 #'  \item \code{npe}         : Number of plants emerged per plot (CO_330:0000268).
+#'  \item \code{npe_15dap}   : Number of plants emerged per plot, 15 days after planting (COMP:0000002).
+#'  \item \code{npe_30dap}   : Number of plants emerged per plot, 30 days after planting (COMP:0000003).
 #'  \item \code{nph}         : Number of plants harvested per plot (CO_330:0000287).
 #'  \item \code{ppe}         : Proportion of plants emerged in percentage (CO_330:0000283).
 #'  \item \code{pph}         : Proportion of plants harvested in percentage (CO_330:0000290).
@@ -62,17 +64,25 @@
 #'  }
 #' ------------------------ Plant and tuber appearance ------------------------
 #'  \itemize{
-#'  \item \code{plant_unif}  : Plant uniformity estimating 1-9 (CO_330:0000272).
-#'  \item \code{plant_vigor} : Plant vigor estimating 1-9 (CO_330:0000276).
-#'  \item \code{se}          : Senescence estimating 1-9 (CO_330:0000280).
-#'  \item \code{tuber_apper} : Tuber appearance estimating 1-9 (CO_330:0000348).
-#'  \item \code{tub_unif}    : Tuber uniformity estimating 1-9 (CO_330:0000352).
-#'  \item \code{tub_size}    : Tuber size estimating 1-9 (CO_330:0000356).
-#'  \item \code{tbskn1}      : Predominant tuber skin color (CO_330:0000249).
-#'  \item \code{tbfsh1}      : Predominant tuber flesh color (CO_330:0000253).
-#'  \item \code{tbshp1}      : Tuber shape (CO_330:0000256).
-#'  \item \code{tbshp3}      : Tuber depth eyes (CO_330:0000258).
-#'  \item \code{dorpd}       : Tuber dormancy period (CO_330:0000397).
+#'  \item \code{flowering}         : Flowering degree estimating 0-7 (CO_330:0000224).
+#'  \item \code{flowering_45dap}   : Flowering degree estimating 0-7, 45 days after planting (COMP:0000010).
+#'  \item \code{flowering_60dap}   : Flowering degree estimating 0-7, 60 days after planting (COMP:0000011).
+#'  \item \code{plant_unif}        : Plant uniformity estimating 1-9 (CO_330:0000272).
+#'  \item \code{plant_unif_45dap}  : Plant uniformity estimating 1-9, 45 days after planting (COMP:0000008).
+#'  \item \code{plant_unif_60dap}  : Plant uniformity estimating 1-9, 60 days after planting (COMP:0000009).
+#'  \item \code{plant_vigor}       : Plant vigor estimating 1-9 (CO_330:0000276).
+#'  \item \code{plant_vigor_30dap} : Plant vigor estimating 1-9, 30 days after planting (COMP:0000004).
+#'  \item \code{plant_vigor_45dap} : Plant vigor estimating 1-9, 45 days after planting (COMP:0000005).
+#'  \item \code{plant_vigor_60dap} : Plant vigor estimating 1-9, 60 days after planting (COMP:0000006).
+#'  \item \code{se}                : Senescence estimating 1-9 (CO_330:0000280).
+#'  \item \code{tuber_apper}       : Tuber appearance estimating 1-9 (CO_330:0000348).
+#'  \item \code{tub_unif}          : Tuber uniformity estimating 1-9 (CO_330:0000352).
+#'  \item \code{tub_size}          : Tuber size estimating 1-9 (CO_330:0000356).
+#'  \item \code{tbskn1}            : Predominant tuber skin color (CO_330:0000249).
+#'  \item \code{tbfsh1}            : Predominant tuber flesh color (CO_330:0000253).
+#'  \item \code{tbshp1}            : Tuber shape (CO_330:0000256).
+#'  \item \code{tbshp3}            : Tuber depth eyes (CO_330:0000258).
+#'  \item \code{dorpd}             : Tuber dormancy period (CO_330:0000397).
 #'  }
 #' ------------------------------- Organoleptic -------------------------------
 #'  \itemize{
@@ -136,6 +146,11 @@
 #'  \itemize{
 #'  \item \code{lb}          : Late Blight severity estimating percentage (CO_330:0000359).
 #'  \item \code{lbi}         : Late Blight severity estimating percentage evaluation i (i = 1, 2,... 8).
+#'  \item \code{rlb}         : Late Blight resistance estimating 1-6 (CO_330:0000372).
+#'  \item \code{rlb_30dap}   : Late Blight resistance estimating 1-6, 30 days after planting (COMP:0000012).
+#'  \item \code{rlb_45dap}   : Late Blight resistance estimating 1-6, 45 days after planting (COMP:0000013).
+#'  \item \code{rlb_60dap}   : Late Blight resistance estimating 1-6, 60 days after planting (COMP:0000014).
+#'  \item \code{rlb_75dap}   : Late Blight resistance estimating 1-6, 75 days after planting (COMP:0000015).
 #'  \item \code{audpc}       : Late blight AUDPC computed (CO_330:0000363).
 #'  \item \code{raudpc}      : Late blight relative AUDPC computed (CO_330:0000367).
 #'  \item \code{saudpc}      : Late blight susceptibility computed (CO_330:0000371).

@@ -29,9 +29,9 @@
 #'  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe}, \code{nph},
 #'  \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and \code{nmtcii}.
 #'  
-#'  \item \code{ctg} (categorical 1 to 9 traits): \code{plant_unif},
-#'  \code{plant_vigor}, \code{se}, \code{tuber_apper}, \code{tub_unif},
-#'  \code{tub_size}, \code{num_stolon}, and \code{leng_stolon}.
+#'  \item \code{ctg} (categorical traits): \code{plant_unif},
+#'  \code{plant_vigor}, \code{flowering}, \code{rlb}, \code{se}, \code{tuber_apper},
+#'  \code{tub_unif}, \code{tub_size}, \code{num_stolon}, and \code{leng_stolon}.
 #' }
 #' Values are set to \code{NA} with the following rules:
 #' \itemize{
@@ -83,7 +83,11 @@ setna.pt <- function(dfr, f = 10) {
   
   # Pre-harvest traits
   
-  pre <- c("ppe", "plant_unif", "plant_vigor", "se")
+  pre <- c("ppe", "plant_unif", "plant_unif_45dap", "plant_unif_60dap",
+           "plant_vigor", "plant_vigor_30dap", "plant_vigor_45dap",
+           "plant_vigor_60dap", "flowering", "flowering_45dap",
+           "flowering_60dap", "rlb", "rlb_30dap", "rlb_45dap",
+           "rlb_60dap", "rlb_75dap", "se")
   
   # Continuous non-negative traits
   
@@ -104,12 +108,17 @@ setna.pt <- function(dfr, f = 10) {
   
   # Discrete non-negative traits
   
-  dnn <- c("ntp", "npe", "nph", "tntp", "nmtp", "nnomtp", "nmtci", "nmtcii")
+  dnn <- c("ntp", "npe", "npe_15dap", "npe_30dap", "nph", "tntp", "nmtp",
+           "nnomtp", "nmtci", "nmtcii")
   
-  # Categorical 1 to 9 traits
+  # Categorical traits
   
-  ctg <- c("plant_unif", "plant_vigor", "se", "tuber_apper", "tub_unif", "tub_size",
-           "num_stolon", "leng_stolon")
+  ctg <- c("plant_unif", "plant_unif_45dap", "plant_unif_60dap",
+           "plant_vigor", "plant_vigor_30dap", "plant_vigor_45dap",
+           "plant_vigor_60dap", "se", "tuber_apper", "tub_unif", "tub_size",
+           "num_stolon", "leng_stolon", "flowering", "flowering_45dap",
+           "flowering_60dap", "rlb", "rlb_30dap", "rlb_45dap",
+           "rlb_60dap", "rlb_75dap")
   
   #############################################################################
   # Impossible values
@@ -178,12 +187,34 @@ setna.pt <- function(dfr, f = 10) {
   
   # Impossible values for 1 to 9 categorical traits
   
-  for (i in 1:length(ctg))
+  for (i in 1:13)
     if (exists(ctg[i], dfr)) {
       cond <- !(dfr[, ctg[i]] %in% 1:9) & !is.na(dfr[, ctg[i]])
       dfr[cond, ctg[i]] <- NA
       if (sum(cond) > 0)
         warning("Rows with values out of 1-9 integer scale replaced with NA for trait ",
+                ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
+    }
+  
+  # Impossible values for 0 to 7 categorical traits
+  
+  for (i in 14:16)
+    if (exists(ctg[i], dfr)) {
+      cond <- !(dfr[, ctg[i]] %in% 0:7) & !is.na(dfr[, ctg[i]])
+      dfr[cond, ctg[i]] <- NA
+      if (sum(cond) > 0)
+        warning("Rows with values out of 0-7 integer scale replaced with NA for trait ",
+                ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
+    }
+  
+  # Impossible values for 1 to 6 categorical traits
+  
+  for (i in 17:21)
+    if (exists(ctg[i], dfr)) {
+      cond <- !(dfr[, ctg[i]] %in% 1:6) & !is.na(dfr[, ctg[i]])
+      dfr[cond, ctg[i]] <- NA
+      if (sum(cond) > 0)
+        warning("Rows with values out of 1-6 integer scale replaced with NA for trait ",
                 ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
   
