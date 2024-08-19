@@ -261,8 +261,8 @@ check.names.pt <- function(dfr, add = NULL) {
   
   change.names.f <- NULL 
 
-  old.names.f <- c("rep_number", "block_number", "row_number", "col_number", "accession_name", "instn")
-  new.names.f <- c("rep",        "block",        "row",        "col",        "geno",           "geno")
+  old.names.f <- c('location', "rep_number", 'replication', "block_number", "row_number", "col_number", "accession_name", "instn")
+  new.names.f <- c('loc',      "rep",        'rep',         "block",        "row",        "col",        "geno",           "geno")
   
   for (i in 1:length(old.names.f)) {
     
