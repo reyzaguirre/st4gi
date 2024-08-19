@@ -210,9 +210,9 @@ check.names.pt <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", 'row_number', "col", 'col_number')
   
-  factors <- c("loc", "year", "season", "env",
-               "geno", "accession_name", "instn", 'type',
-               "rep", 'rep_number', "block", "block_number",
+  factors <- c("loc", 'location', "year", "season", "env",
+               "geno", 'genotype', "accession_name", "instn", 'type',
+               "rep", 'replication', 'rep_number', "block", "block_number",
                "treat")
   
   # Repeated measures traits (i = 1...5)
@@ -261,8 +261,8 @@ check.names.pt <- function(dfr, add = NULL) {
   
   change.names.f <- NULL 
 
-  old.names.f <- c('location', "rep_number", 'replication', "block_number", "row_number", "col_number", "accession_name", "instn")
-  new.names.f <- c('loc',      "rep",        'rep',         "block",        "row",        "col",        "geno",           "geno")
+  old.names.f <- c('location', "replication", 'rep_number', "block_number", "row_number", "col_number", "accession_name", "instn", 'genotype')
+  new.names.f <- c('loc',      "rep",         'rep',        "block",        "row",        "col",        "geno",           "geno",  'geno')
   
   for (i in 1:length(old.names.f)) {
     
