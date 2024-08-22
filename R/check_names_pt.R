@@ -260,18 +260,6 @@ check.names.pt <- function(dfr, add = NULL) {
   cond <- substring(colnames(dfr), 1, 7) != 'CO_330:'
   colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
   
-  # Check traits are numeric
-  
-  nonumeric.list <- NULL
-  
-  column.class <- unlist(lapply(dfr, class))
-  for(i in colnames(dfr)) {
-    if(i %in% traits & column.class[i] != "numeric") {
-      dfr[, i] <- as.numeric(as.character(dfr[, i]))
-      nonumeric.list <- c(nonumeric.list, i)
-    }
-  }
-  
   # Solve synonyms for factors
   
   change.names.f <- NULL 
@@ -304,6 +292,18 @@ check.names.pt <- function(dfr, add = NULL) {
     
   }  
   
+  # Check traits are numeric
+  
+  nonumeric.list <- NULL
+  
+  column.class <- unlist(lapply(dfr, class))
+  for(i in colnames(dfr)) {
+    if(i %in% traits & column.class[i] != "numeric") {
+      dfr[, i] <- as.numeric(as.character(dfr[, i]))
+      nonumeric.list <- c(nonumeric.list, i)
+    }
+  }
+
   # Warnings
   
   if (!is.null(change.names.f)) {

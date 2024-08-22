@@ -194,18 +194,6 @@ check.names.sp <- function(dfr, add = NULL) {
   cond <- substring(colnames(dfr), 1, 7) != 'CO_331:'
   colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
     
-  # Check traits are numeric
-  
-  nonumeric.list <- NULL
-  
-  column.class <- unlist(lapply(dfr, class))
-  for(i in colnames(dfr)) {
-    if(i %in% traits & column.class[i] != "numeric") {
-      dfr[, i] <- as.numeric(as.character(dfr[, i]))
-      nonumeric.list <- c(nonumeric.list, i)
-    }
-  }
-  
   # Solve synonyms for factors
   
   change.names.f <- NULL
@@ -221,12 +209,45 @@ check.names.sp <- function(dfr, add = NULL) {
     }
     
   }  
+
+  # Solve synonyms for traits
+  
+  change.names.t <- NULL 
+  
+  old.names.t <- c("trwd",  "biomd",  "cythaaj",  "rythaaj",  "dmryaj",  'vwd',  "fythaaj",  "dmvyaj",  "bythaaj",  "dmbyaj")
+  new.names.t <- c("trw.d", "biom.d", "cytha.aj", "rytha.aj", "dmry.aj", 'vw.d', "fytha.aj", "dmvy.aj", "bytha.aj", "dmby.aj")
+  
+  for (i in 1:length(old.names.t)) {
+    
+    if (exists(old.names.t[i], dfr) & !exists(new.names.t[i], dfr)) {
+      change.names.t <- c(change.names.t, old.names.t[i])
+      colnames(dfr)[colnames(dfr) == old.names.t[i]] <- new.names.t[i]
+    }
+    
+  }  
+  
+  # Check traits are numeric
+  
+  nonumeric.list <- NULL
+  
+  column.class <- unlist(lapply(dfr, class))
+  for(i in colnames(dfr)) {
+    if(i %in% traits & column.class[i] != "numeric") {
+      dfr[, i] <- as.numeric(as.character(dfr[, i]))
+      nonumeric.list <- c(nonumeric.list, i)
+    }
+  }
   
   # Warnings
   
   if (!is.null(change.names.f)) {
     change.names.list <- old.names.f %in% change.names.f
     warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
+  }
+  
+  if (!is.null(change.names.t)) {
+    change.names.list <- old.names.t %in% change.names.t
+    warning("Traits' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
   }
   
   if (max(check.list.1) == 1)
