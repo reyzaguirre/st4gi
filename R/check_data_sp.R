@@ -49,7 +49,7 @@ check.data.sp <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
   dfr <- check.names.sp(dfr, add)
   if (!is.null(add))
     add <- tolower(add)
-  
+
   # Transform dmvf, dmvd, dmf, and dmd to kilograms
   
   if (exists("dmvf", dfr))
@@ -74,6 +74,8 @@ check.data.sp <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
   if (dim(output$Inconsist.List)[1] > 0) {
     rownames(output$Inconsist.List) <- 1:dim(output$Inconsist.List)[1]
   }
+  
+  # Output
   
   class(output) <- "st4gi_dc"
   invisible(output)

@@ -2,7 +2,8 @@
 #'
 #' Check that fieldbook factors and traits names correspond with the names defined in 
 #' \url{https://cropontology.org/term/CO_331:ROOT} and in the 
-#' Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-9060-522-5.
+#' Procedures for the evaluation and analysis of sweetpotato trials, ISBN 978-92-9060-522-5,
+#' and that all traits are stored as numeric.
 #' @param dfr The name of the data frame.
 #' @param add Additional traits.
 #' @details The data frame must use the labels (lower or upper case) listed below.
@@ -144,9 +145,11 @@
 #' @return It returns:
 #' \itemize{
 #' \item The fieldbook data frame with all column names in lowercase and
-#' with some possible modifications in the names.
+#' with some possible modifications in the names. Traits that are stored
+#' with a non-numeric class are transformed to numeric.
 #' \item A list of warnings for all the column names that have been changed.
 #' \item A list of warnings for all the column names not recognized.
+#' \item A list of warnings for all the column traits that have been changed to numeric.
 #' }
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -166,11 +169,11 @@ check.names.sp <- function(dfr, add = NULL) {
   
   # Valid names for traits
   
-  traits <- c(spont$Label, 'fcol.cc')
+  traits <- c(spont$Label, 'fcol.cc', tolower(add))
   
   # Valid names for factors and traits
   
-  colnames.valid <- c(plot.id, factors, traits, tolower(add))
+  colnames.valid <- c(plot.id, factors, traits)
   
   # Factors and traits in field book
     
@@ -191,6 +194,18 @@ check.names.sp <- function(dfr, add = NULL) {
   cond <- substring(colnames(dfr), 1, 7) != 'CO_331:'
   colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
     
+  # Check traits are numeric
+  
+  nonumeric.list <- NULL
+  
+  column.class <- unlist(lapply(dfr, class))
+  for(i in colnames(dfr)) {
+    if(i %in% traits & column.class[i] != "numeric") {
+      dfr[, i] <- as.numeric(as.character(dfr[, i]))
+      nonumeric.list <- c(nonumeric.list, i)
+    }
+  }
+  
   # Solve synonyms for factors
   
   change.names.f <- NULL
@@ -219,6 +234,9 @@ check.names.sp <- function(dfr, add = NULL) {
   
   if (max(check.list.2) == 1)
     warning("Some labels converted to lower case: ", list(colnames.fb.valid[check.list.2]), call. = FALSE)
+  
+  if (!is.null(nonumeric.list))
+    warning("Some traits converted to numeric: ", list(nonumeric.list), call. = FALSE)
   
   # Return
   

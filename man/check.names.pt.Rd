@@ -15,14 +15,17 @@ check.names.pt(dfr, add = NULL)
 It returns:
 \itemize{
 \item The fieldbook data frame with all column names in lowercase and
-with some possible modifications in the names.
+with some possible modifications in the names. Traits that are stored
+with a non-numeric class are transformed to numeric.
 \item A list of warnings for all the column names that have been changed.
 \item A list of warnings for all the column names not recognized.
+\item A list of warnings for all the column traits that have been changed to numeric.
 }
 }
 \description{
 Check that fieldbook traits names correspond with the names defined in 
-\url{https://cropontology.org/term/CO_330:ROOT}
+\url{https://cropontology.org/term/CO_330:ROOT},
+and that all traits are stored as numeric.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed below.
