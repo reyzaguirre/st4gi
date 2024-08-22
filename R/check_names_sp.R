@@ -243,7 +243,7 @@ check.names.sp <- function(dfr, add = NULL) {
   column.class <- unlist(lapply(dfr, class))
   for(i in colnames(dfr)) {
     if(i %in% traits & column.class[i] != "numeric") {
-      dfr[, i] <- as.numeric(as.character(dfr[, i]))
+      dfr[, i] <- suppressWarnings(as.numeric(as.character(dfr[, i])))
       nonumeric.list <- c(nonumeric.list, i)
     }
   }
