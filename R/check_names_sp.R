@@ -175,25 +175,18 @@ check.names.sp <- function(dfr, add = NULL) {
   
   colnames.valid <- c(plot.id, factors, traits)
   
-  # Factors and traits in field book
+  # Factors and traits in field book (original names)
     
   colnames.fb <- colnames(dfr)
-  
-  # check.list.1: mark names not valid
-  
-  check.list.1 <- !(tolower(colnames.fb) %in% colnames.valid)
-  
-  # check.list.2: mark valid names but upper case to be converted to lower case
-  
-  colnames.fb.valid <- colnames.fb[!check.list.1]
-  
-  check.list.2 <- !(colnames.fb.valid %in% colnames.valid)
-  
+
   # Convert all fieldbook names to lower case (except CO numbers)
   
   cond <- substring(colnames(dfr), 1, 7) != 'CO_331:'
   colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
-    
+  
+  if (sum(colnames.fb != colnames(dfr)) > 0)
+    warning("Some labels converted to lower case", call. = FALSE)
+
   # Solve synonyms for factors
   
   change.names.f <- NULL
@@ -209,7 +202,12 @@ check.names.sp <- function(dfr, add = NULL) {
     }
     
   }  
-
+  
+  if (!is.null(change.names.f)) {
+    change.names.list <- old.names.f %in% change.names.f
+    warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
+  }
+  
   # Solve synonyms for traits
   
   change.names.t <- NULL 
@@ -226,6 +224,18 @@ check.names.sp <- function(dfr, add = NULL) {
     
   }  
   
+  if (!is.null(change.names.t)) {
+    change.names.list <- old.names.t %in% change.names.t
+    warning("Traits' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
+  }
+  
+  # Names not valid
+  
+  names.not.valid <- !(colnames(dfr) %in% colnames.valid)
+
+  if (max(names.not.valid) == 1)
+    warning("Some columns with invalid names: ", list(colnames(dfr)[names.not.valid]), call. = FALSE)
+
   # Check traits are numeric
   
   nonumeric.list <- NULL
@@ -237,24 +247,6 @@ check.names.sp <- function(dfr, add = NULL) {
       nonumeric.list <- c(nonumeric.list, i)
     }
   }
-  
-  # Warnings
-  
-  if (!is.null(change.names.f)) {
-    change.names.list <- old.names.f %in% change.names.f
-    warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
-  }
-  
-  if (!is.null(change.names.t)) {
-    change.names.list <- old.names.t %in% change.names.t
-    warning("Traits' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
-  }
-  
-  if (max(check.list.1) == 1)
-    warning("Some columns with invalid names: ", list(colnames.fb[check.list.1]), call. = FALSE)
-  
-  if (max(check.list.2) == 1)
-    warning("Some labels converted to lower case: ", list(colnames.fb.valid[check.list.2]), call. = FALSE)
   
   if (!is.null(nonumeric.list))
     warning("Some traits converted to numeric: ", list(nonumeric.list), call. = FALSE)
