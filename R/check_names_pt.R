@@ -255,10 +255,15 @@ check.names.pt <- function(dfr, add = NULL) {
   
   # Solve synonyms for factors
   
+  # All options for genotypes
+  
+  old.geno <- c("accession_name", "cipno", "cip.number", 'genotype', "instn")
+  new.geno <- rep('geno', length(old.geno))
+  
   change.names.f <- NULL 
   
-  old.names.f <- c('location', "replication", 'rep_number', "block_number", "row_number", "col_number", "accession_name", "instn", 'genotype')
-  new.names.f <- c('loc',      "rep",         'rep',        "block",        "row",        "col",        "geno",           "geno",  'geno')
+  old.names.f <- c('location', "replication", 'rep_number', "block_number", "row_number", "col_number", old.geno)
+  new.names.f <- c('loc',      "rep",         'rep',        "block",        "row",        "col",        new.geno)
   
   for (i in 1:length(old.names.f)) {
     
