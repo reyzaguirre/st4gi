@@ -118,7 +118,8 @@ setna.pt <- function(dfr, f = 10) {
            "plant_vigor_60dap", "se", "tuber_apper", "tub_unif", "tub_size",
            "num_stolon", "leng_stolon", "flowering", "flowering_45dap",
            "flowering_60dap", "rlb", "rlb_30dap", "rlb_45dap",
-           "rlb_60dap", "rlb_75dap")
+           "rlb_60dap", "rlb_75dap", 'rlmf', 'rlmf_45dap', 'rlmf_60dap',
+           'rlmf_75dap')
   
   #############################################################################
   # Impossible values
@@ -185,39 +186,19 @@ setna.pt <- function(dfr, f = 10) {
                 dnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
   
-  # Impossible values for 1 to 9 categorical traits
+  # Impossible values for categorical traits
   
-  for (i in 1:13)
-    if (exists(ctg[i], dfr)) {
-      cond <- !(dfr[, ctg[i]] %in% 1:9) & !is.na(dfr[, ctg[i]])
-      dfr[cond, ctg[i]] <- NA
+  for (i in ctg)
+    if (exists(i, dfr)) {
+      lims <- ptont[ptont$Label == i, ]
+      cond <- !(dfr[, i] %in% lims$Minimum:lims$Maximum) & !is.na(dfr[, i])
+      dfr[cond, i] <- NA
       if (sum(cond) > 0)
-        warning("Rows with values out of 1-9 integer scale replaced with NA for trait ",
-                ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
+        warning("Rows with values out of ", lims$Minimum, "-", lims$Maximum,
+                " integer scale replaced with NA for trait ",
+                i, ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
-  
-  # Impossible values for 0 to 7 categorical traits
-  
-  for (i in 14:16)
-    if (exists(ctg[i], dfr)) {
-      cond <- !(dfr[, ctg[i]] %in% 0:7) & !is.na(dfr[, ctg[i]])
-      dfr[cond, ctg[i]] <- NA
-      if (sum(cond) > 0)
-        warning("Rows with values out of 0-7 integer scale replaced with NA for trait ",
-                ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
-    }
-  
-  # Impossible values for 1 to 6 categorical traits
-  
-  for (i in 17:21)
-    if (exists(ctg[i], dfr)) {
-      cond <- !(dfr[, ctg[i]] %in% 1:6) & !is.na(dfr[, ctg[i]])
-      dfr[cond, ctg[i]] <- NA
-      if (sum(cond) > 0)
-        warning("Rows with values out of 1-6 integer scale replaced with NA for trait ",
-                ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
-    }
-  
+
   # Extreme values (almost impossible)
   
   t.all <- c(cnn, cpo, pnn, ppo, dnn)

@@ -160,12 +160,10 @@ check.names.sp <- function(dfr, add = NULL) {
   
   # Valid names for factors
   
-  plot.id <- c('observationunit_name', "plot", "row", 'row_number', "col", 'col_number')
+  plot.id <- c("plot", "row", "col")
   
-  factors <- c("loc", 'location', "year", "season", "env",
-               "geno", 'genotype', 'accession_name', "cipno", 'type',
-               "rep", 'replication', 'rep_number', "block", 'block_number',
-               "treat", "harvest")
+  factors <- c("loc", "year", "season", "env", "geno", 'type',
+               "rep", "block", "treat", "harvest")
   
   # Valid names for traits
   
@@ -181,7 +179,7 @@ check.names.sp <- function(dfr, add = NULL) {
 
   # Convert all fieldbook names to lower case (except CO numbers)
   
-  cond <- substring(colnames(dfr), 1, 7) != 'CO_331:'
+  cond <- substring(colnames(dfr), 1, 7) != 'CO_331:' & substring(colnames(dfr), 1, 5) != 'COMP:'
   colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
   
   if (sum(colnames.fb != colnames(dfr)) > 0)

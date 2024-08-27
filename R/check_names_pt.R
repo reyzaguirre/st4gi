@@ -160,6 +160,10 @@
 #'  \item \code{prlv}        : Potatoleaf roll virus resistance (CO_330:0000375).
 #'  \item \code{bw}          : Bacterial wilt resistance (CO_330:0000376).
 #'  \item \code{rkn}         : Root knot nematode resistance (CO_330:0000377).
+#'  \item \code{rlmf}        : Resistance to leaf miner fly 1-5 (CO_330:0000378).
+#'  \item \code{rlmf_45dap}  : Resistance to leaf miner fly 1-5 (COMP_0000016).
+#'  \item \code{rlmf_60dap}  : Resistance to leaf miner fly 1-5 (COMP_0000017).
+#'  \item \code{rlmf_75dap}  : Resistance to leaf miner fly 1-5 (COMP_0000018).
 #'  }
 #' ------------------------------- Other traits -------------------------------
 #'  \itemize{
@@ -211,12 +215,10 @@ check.names.pt <- function(dfr, add = NULL) {
   
   # Valid names for factors
   
-  plot.id <- c("plot", "row", 'row_number', "col", 'col_number')
+  plot.id <- c("plot", "row", "col")
   
-  factors <- c("loc", 'location', "year", "season", "env",
-               "geno", 'genotype', "accession_name", "instn", 'type',
-               "rep", 'replication', 'rep_number', "block", "block_number",
-               "treat")
+  factors <- c("loc", "year", "season", "env", "geno", 'type',
+               "rep", "block", "treat")
   
   # Repeated measures traits (i = 1...5)
   
@@ -247,7 +249,7 @@ check.names.pt <- function(dfr, add = NULL) {
   
   # Convert all fieldbook names to lower case (except CO numbers)
   
-  cond <- substring(colnames(dfr), 1, 7) != 'CO_330:'
+  cond <- substring(colnames(dfr), 1, 7) != 'CO_330:' & substring(colnames(dfr), 1, 5) != 'COMP:'
   colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
   
   if (sum(colnames.fb != colnames(dfr)) > 0)

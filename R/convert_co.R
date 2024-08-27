@@ -107,7 +107,6 @@ convert.co.pt <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
     # Factors
     
     colnames(dfr)[colnames(dfr) == 'plot'] <- 'plot_number'
-    colnames(dfr)[colnames(dfr) == 'instn'] <- 'accession_name'
     colnames(dfr)[colnames(dfr) == 'geno'] <- 'accession_name'
     colnames(dfr)[colnames(dfr) == 'rep'] <- 'rep_number'
     colnames(dfr)[colnames(dfr) == 'block'] <- 'block_number'

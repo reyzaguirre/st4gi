@@ -183,6 +183,10 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{prlv}        : Potatoleaf roll virus resistance (CO_330:0000375).
  \item \code{bw}          : Bacterial wilt resistance (CO_330:0000376).
  \item \code{rkn}         : Root knot nematode resistance (CO_330:0000377).
+ \item \code{rlmf}        : Resistance to leaf miner fly 1-5 (CO_330:0000378).
+ \item \code{rlmf_45dap}  : Resistance to leaf miner fly 1-5 (COMP_0000016).
+ \item \code{rlmf_60dap}  : Resistance to leaf miner fly 1-5 (COMP_0000017).
+ \item \code{rlmf_75dap}  : Resistance to leaf miner fly 1-5 (COMP_0000018).
  }
 ------------------------------- Other traits -------------------------------
  \itemize{
