@@ -232,6 +232,8 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   
   for (i in 1:nrow(dcr)) {
     
+    tmp <- NULL
+    
     # Conditions to run rules
     
     cond.1 <- is.na(dcr$excep1[i])
@@ -254,13 +256,20 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   if (!is.null(add)) {
     
     for (i in 1:length(add)) {
+      
       for (j in c('low', 'high')) {
+        
+        tmp <- NULL
+        
         tmp <- run.rules(dfr, im, f, 6, add[i], NA, NA, NA, j, print.text)
+        
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
           im <- tmp$im
         }
+        
       }
+      
     }
     
   }
@@ -328,6 +337,8 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   if (oc == 1) {
     
     for (i in 1:nrow(olr)) {
+
+      tmp <- NULL
       
       if (is.na(olr$excep1[i]))
         tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
@@ -348,11 +359,16 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
     if (!is.null(add)) {
 
       for (i in 1:length(add)) {
+        
+        tmp <- NULL
+        
         tmp <- out.detect(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
+        
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
           im <- tmp$im
         }
+        
       }
       
     }
@@ -388,6 +404,8 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   
   for (i in 1:nrow(dcr)) {
     
+    tmp <- NULL
+    
     # Conditions to run rules
     
     cond.1 <- is.na(dcr$excep1[i])
@@ -410,13 +428,20 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   if (!is.null(add)) {
     
     for (i in 1:length(add)) {
+      
       for (j in c('low', 'high')) {
+        
+        tmp <- NULL
+        
         tmp <- run.rules(dfr, im, f, 6, add[i], NA, NA, NA, j, print.text)
+        
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
           im <- tmp$im
         }
+        
       }
+      
     }
     
   }
@@ -485,6 +510,8 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
     
     for (i in 1:nrow(olr)) {
       
+      tmp <- NULL
+      
       if (is.na(olr$excep1[i]))
         tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
       
@@ -504,11 +531,16 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
     if (!is.null(add)) {
       
       for (i in 1:length(add)) {
+        
+        tmp <- NULL
+        
         tmp <- out.detect(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
+        
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
           im <- tmp$im
         }
+        
       }
       
     }
