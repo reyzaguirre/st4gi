@@ -5,40 +5,32 @@
 \title{Pesek-Baker Index}
 \usage{
 pesekbaker(
-  traits,
   geno,
-  env = NULL,
-  rep,
-  dfr,
-  gvals = c("blups", "blues", "means"),
+  traits,
   dgg = NULL,
   units = c("sdu", "actual"),
   sf = 0.1,
-  method = 1
+  dfr,
+  G.cov,
+  P.cov
 )
 }
 \arguments{
-\item{traits}{The names of the columns for the traits.}
-
 \item{geno}{The name of the column that identifies the genotypes.}
 
-\item{env}{The name of the column that identifies the environments.}
-
-\item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
-
-\item{gvals}{The genotypic values to compute the index, \code{"blups"},
-\code{"blues"} or \code{"means"}. The default is \code{"blups"}.}
+\item{traits}{The names of the columns for the traits.}
 
 \item{dgg}{Desired genetic gains. The default is one standard deviation for each trait.}
 
-\item{units}{Units for dgg, \code{"sdu"} or \code{"actual"}.
-See details for more information.}
+\item{units}{Units for dgg, \code{"sdu"} or \code{"actual"}. See details for more information.}
 
 \item{sf}{Selected fraction. The default is 0.1.}
 
-\item{method}{The method to compute genotypic covariances. See \code{?ecm} for details.}
+\item{dfr}{The name of the data frame. See details for more information.}
+
+\item{G.cov}{Genotypic covariance matrix.}
+
+\item{P.cov}{Phenotypic covariance matrix.}
 }
 \value{
 It returns:
@@ -58,7 +50,6 @@ Function to compute the Pesek-Baker index (Pesek, J. and R.J. Baker., 1969).
 \details{
 The Pesek-Baker is an index where relative economic weights have been replaced
 by desired gains.
-
 If \code{dgg} is not specified, the desired genetic gains are set to one
 standard deviation for each trait. \code{dgg} can be specified in actual units
 (\code{units = "actual"}) or in standard deviations (\code{units = "sdu"}),
@@ -69,12 +60,16 @@ If you type \code{dgg = 2} and \code{units = "actual"} then this means a desired
 genetic gain of 2 kilograms. If \code{dgg = NULL} then the desired genetic gains
 will be one standard deviation, no matter if \code{units} is set as \code{"actual"}
 or \code{"sdu"}.
+The \code{dfr} must contain the estimations for each genotype with each trait.
 }
 \examples{
 traits <- c("rytha", "bc", "dm", "star", "nocr")
-pesekbaker(traits, "geno", "loc", "rep", spg)
+output <- ecm(traits, "geno", "loc", "rep", spg)
+colnames(output$blups) <- gsub('blup.', '', colnames(output$blups))
+pesekbaker('geno', traits, dfr = output$blups, G.cov = output$G.cov, P.cov = output$P.cov)
 # More weight on bc and dm, less on star and nocr
-pesekbaker(traits, "geno", "loc", "rep", spg, dgg = c(1, 1.5, 1.5, 0.8, 0.8))
+dgg <- c(1, 1.5, 1.5, 0.8, 0.8)
+pesekbaker('geno', traits, dgg, dfr = output$blups, G.cov = output$G.cov, P.cov = output$P.cov)
 }
 \references{
 Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.
