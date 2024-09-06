@@ -110,7 +110,7 @@ Between parentheses are the CO numbers for variables defined in
  }
 ------------------------------- Organoleptic -------------------------------
  \itemize{
- \item \code{chipping}    : Chips color 1-5 (CO_330:0000384).
+ \item \code{chip_color}  : Chips color 1-5 (CO_330:0000384).
  \item \code{ffr}         : French fries color 1-5 (CO_330:0000388).
  \item \code{aocp}        : Chips oil absorption rate (CO_330:0000395).
  \item \code{flavour}     : Tuber flavor after cooking (CO_330:0000379).

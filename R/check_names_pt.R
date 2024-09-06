@@ -87,7 +87,7 @@
 #'  }
 #' ------------------------------- Organoleptic -------------------------------
 #'  \itemize{
-#'  \item \code{chipping}    : Chips color 1-5 (CO_330:0000384).
+#'  \item \code{chip_color}  : Chips color 1-5 (CO_330:0000384).
 #'  \item \code{ffr}         : French fries color 1-5 (CO_330:0000388).
 #'  \item \code{aocp}        : Chips oil absorption rate (CO_330:0000395).
 #'  \item \code{flavour}     : Tuber flavor after cooking (CO_330:0000379).
@@ -234,10 +234,10 @@ check.names.pt <- function(dfr, add = NULL) {
   # Valid names for traits
 
   traits <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii", "tbskn1", "tbfsh1",
-              "tbshp1", "tbshp3", "dorpd", "chipping", "ffr", "aocp", "flavour",
-              "textac", "cookqu", "cootime", "tafw", "tadw", "fwts", "dwts",
-              "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2", "avdm", "tgly_fw",
-              "pvx", "pvy", "prlv", "bw", "rkn", lb.ev, rm.traits, rm.traitsi, tolower(add))
+              "tbshp1", "tbshp3", "dorpd", "ffr", "aocp", "flavour", "textac",
+              "cookqu", "cootime", "tafw", "tadw", "fwts", "dwts", "fwts1", "fwts2",
+              "dwts1", "dwts2", "dm1", "dm2", "avdm", "tgly_fw", "pvx", "pvy",
+              "prlv", "bw", "rkn", lb.ev, rm.traits, rm.traitsi, tolower(add))
   
   # Valid names for factors and traits
   
@@ -285,8 +285,8 @@ check.names.pt <- function(dfr, add = NULL) {
   
   change.names.t <- NULL 
   
-  old.names.t <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein")
-  new.names.t <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro")
+  old.names.t <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein", 'chipping')
+  new.names.t <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro",     'chip_color')
   
   for (i in 1:length(old.names.t)) {
     

@@ -45,7 +45,8 @@ Consider the following groups of traits:
  
  \item \code{ctg} (categorical traits): \code{plant_unif},
  \code{plant_vigor}, \code{flowering}, \code{rlb}, \code{se}, \code{tuber_apper},
- \code{tub_unif}, \code{tub_size}, \code{num_stolon}, and \code{leng_stolon}.
+ \code{tub_unif}, \code{tub_size}, \code{chip_color}, \code{num_stolon},
+ and \code{leng_stolon}.
 }
 Values are set to \code{NA} with the following rules:
 \itemize{

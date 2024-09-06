@@ -31,7 +31,8 @@
 #'  
 #'  \item \code{ctg} (categorical traits): \code{plant_unif},
 #'  \code{plant_vigor}, \code{flowering}, \code{rlb}, \code{se}, \code{tuber_apper},
-#'  \code{tub_unif}, \code{tub_size}, \code{num_stolon}, and \code{leng_stolon}.
+#'  \code{tub_unif}, \code{tub_size}, \code{chip_color}, \code{num_stolon},
+#'  and \code{leng_stolon}.
 #' }
 #' Values are set to \code{NA} with the following rules:
 #' \itemize{
@@ -83,10 +84,9 @@ setna.pt <- function(dfr, f = 10) {
   
   # Pre-harvest traits
   
-  pre <- c("ppe", "plant_unif", "plant_unif_45dap", "plant_unif_60dap",
-           "plant_vigor", "plant_vigor_30dap", "plant_vigor_45dap",
-           "plant_vigor_60dap", "flowering", "flowering_45dap",
-           "flowering_60dap", "rlb", "rlb_30dap", "rlb_45dap",
+  pre <- c("ppe", "plant_unif", "plant_unif_45dap", "plant_unif_60dap", "plant_vigor",
+           "plant_vigor_30dap", "plant_vigor_45dap", "plant_vigor_60dap", "flowering",
+           "flowering_45dap", "flowering_60dap", "rlb", "rlb_30dap", "rlb_45dap",
            "rlb_60dap", "rlb_75dap", "se")
   
   # Continuous non-negative traits
@@ -113,13 +113,12 @@ setna.pt <- function(dfr, f = 10) {
   
   # Categorical traits
   
-  ctg <- c("plant_unif", "plant_unif_45dap", "plant_unif_60dap",
-           "plant_vigor", "plant_vigor_30dap", "plant_vigor_45dap",
-           "plant_vigor_60dap", "se", "tuber_apper", "tub_unif", "tub_size",
-           "num_stolon", "leng_stolon", "flowering", "flowering_45dap",
-           "flowering_60dap", "rlb", "rlb_30dap", "rlb_45dap",
-           "rlb_60dap", "rlb_75dap", 'rlmf', 'rlmf_45dap', 'rlmf_60dap',
-           'rlmf_75dap')
+  ctg <- c("plant_unif", "plant_unif_45dap", "plant_unif_60dap", "plant_vigor",
+           "plant_vigor_30dap", "plant_vigor_45dap", "plant_vigor_60dap", "se",
+           "tuber_apper", "tub_unif", "tub_size", 'chip_color', "num_stolon",
+           "leng_stolon", "flowering", "flowering_45dap", "flowering_60dap",
+           "rlb", "rlb_30dap", "rlb_45dap", "rlb_60dap", "rlb_75dap", 'rlmf',
+           'rlmf_45dap', 'rlmf_60dap', 'rlmf_75dap')
   
   #############################################################################
   # Impossible values
