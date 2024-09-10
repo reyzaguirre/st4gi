@@ -49,6 +49,8 @@
 #'  Values out of this range are set to \code{NA}.
 #'  \item If \code{npe == 0} and there is some data for any trait,
 #'  then \code{npe} is set to \code{NA}.  
+#'  \item If \code{npe == 0} and there is no data but some traits that are \code{0},
+#'  then all those traits are set to \code{NA}.  
 #'  \item If \code{nph == 0} and there is some data for any non-pre-harvest trait,
 #'  then \code{nph} is set to \code{NA}.
 #'  \item If \code{nmtp == 0} and \code{mtwp > 0}, then \code{nmtp} is set to \code{NA}.
@@ -236,6 +238,9 @@ setna.pt <- function(dfr, f = 10) {
   # npe == 0
   
   if (length(t.all) > 0 & exists("npe", dfr)) {
+    
+    # npe == 0 and some data then npe <- NA
+    
     if (length(t.all) == 1)
       cond <- dfr[, t.all] > 0 & !is.na(dfr[, t.all]) &
         dfr[, 'npe'] == 0 & !is.na(dfr[, 'npe'])
@@ -246,6 +251,26 @@ setna.pt <- function(dfr, f = 10) {
     if (sum(cond) > 0)
       warning("Rows with data replaced with NA for trait npe: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
+    
+    # npe == 0 and only zeros then traits <- NA
+    
+    if (length(t.all) == 1)
+      cond <- dfr[, t.all] == 0 & !is.na(dfr[, t.all]) &
+      dfr[, 'npe'] == 0 & !is.na(dfr[, 'npe'])
+    if (length(t.all) > 1)
+      cond <- apply(dfr[, t.all] == 0 & !is.na(dfr[, t.all]), 1, sum) > 0 & 
+        dfr[, 'npe'] == 0 & !is.na(dfr[, 'npe'])
+    
+    if (sum(cond) > 0)
+      for (i in 1:length(t.all)) {
+        cond.tmp <- dfr[, t.all[i]] == 0 & !is.na(dfr[, t.all[i]])
+        cond2 <- cond & cond.tmp
+        dfr[cond2, t.all[i]] <- NA
+        if (sum(cond2) > 0)
+          warning("Rows with NA replaced with NA for trait ",
+                  t.all[i], ": ", paste0(rownames(dfr)[cond2], " "), call. = FALSE)
+    }
+    
   }
   
   # nph == 0

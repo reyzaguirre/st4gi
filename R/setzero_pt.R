@@ -6,7 +6,7 @@
 #' (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp}, and \code{nomtwp})
 #' which are \code{NA} according to the following rules:
 #' \itemize{
-#'  \item If \code{nph == 0}, then all traits are set to \code{0}.
+#'  \item If \code{npe > 0} and \code{nph == 0}, then all traits are set to \code{0}.
 #'  \item If \code{nmtp == 0}, then \code{mtwp} is set to \code{0}.
 #'  \item If \code{mtwp == 0}, then \code{nmtp} is set to \code{0}.
 #'  \item If \code{nnomtp == 0}, then \code{nomtwp} is set to \code{0}.
@@ -43,7 +43,12 @@ setzero.pt <- function(dfr) {
       
       for (i in 1:length(har)) {
         
-        cond <- dfr[, "nph"] == 0 & !is.na(dfr[, "nph"]) & is.na(dfr[, har[i]])
+        if (exists("npe", dfr)) {
+          cond <- dfr[, "npe"] > 0 & !is.na(dfr[, "npe"]) &
+            dfr[, "nph"] == 0 & !is.na(dfr[, "nph"]) & is.na(dfr[, har[i]])
+        } else {
+          cond <- dfr[, "nph"] == 0 & !is.na(dfr[, "nph"]) & is.na(dfr[, har[i]])
+        }
         
         dfr[cond, har[i]] <- 0
         

@@ -77,7 +77,9 @@
 #'  is the mean. By default \code{f = 10} and if less than 10 a warning is shown.
 #'  Values out of this range are set to \code{NA}.
 #'  \item If \code{nope == 0} and there is some data for any trait,
-#'  then \code{nope} is set to \code{NA}.  
+#'  then \code{nope} is set to \code{NA}.
+#'  \item If \code{nope == 0} and there is no data but some traits that are \code{0},
+#'  then all those traits are set to \code{NA}.
 #'  \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,
 #'  then \code{noph} is set to \code{NA}.
 #'  \item If \code{nopr == 0} and there is some data for any trait evaluated with roots,
@@ -304,6 +306,9 @@ setna.sp <- function(dfr, f = 10) {
   # nope == 0
   
   if (length(t.all) > 0 & exists("nope", dfr)) {
+    
+    # nope == 0 and some data then nope <- NA
+    
     if (length(t.all) == 1)
       cond <- dfr[, t.all] > 0 & !is.na(dfr[, t.all]) &
         dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
@@ -314,6 +319,26 @@ setna.sp <- function(dfr, f = 10) {
     if (sum(cond) > 0)
       warning("Rows with data replaced with NA for trait nope: ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
+    
+    # nope == 0 and only zeros then traits <- NA
+    
+    if (length(t.all) == 1)
+      cond <- dfr[, t.all] == 0 & !is.na(dfr[, t.all]) &
+      dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
+    if (length(t.all) > 1)
+      cond <- apply(dfr[, t.all] == 0 & !is.na(dfr[, t.all]), 1, sum) > 0 &
+        dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
+    
+    if (sum(cond) > 0)
+      for (i in 1:length(t.all)) {
+        cond.tmp <- dfr[, t.all[i]] == 0 & !is.na(dfr[, t.all[i]])
+        cond2 <- cond & cond.tmp
+        dfr[cond2, t.all[i]] <- NA
+        if (sum(cond2) > 0)
+          warning("Rows with NA replaced with NA for trait ",
+                  t.all[i], ": ", paste0(rownames(dfr)[cond2], " "), call. = FALSE)
+      }
+    
   }
   
   # noph == 0

@@ -6,7 +6,7 @@
 #' (\code{noph}, \code{nopr}, \code{vw}, \code{nocr}, \code{nonc}, \code{crw},
 #' and \code{ncrw}) which are \code{NA} according to the following rules:
 #' \itemize{
-#'  \item If \code{noph == 0}, then all traits are set to \code{0}.
+#'  \item If \code{nope > 0} and \code{noph == 0}, then all traits are set to \code{0}.
 #'  \item If all traits are \code{0}, then \code{noph} is set to \code{0}.
 #'  \item If \code{nopr == 0}, then all traits with exception of \code{vw}
 #'  are set to \code{0}.
@@ -72,7 +72,12 @@ setzero.sp <- function(dfr) {
       
       for (i in 1:length(har)) {
         
-        cond <- dfr[, "noph"] == 0 & !is.na(dfr[, "noph"]) & is.na(dfr[, har[i]])
+        if (exists('nope', dfr)) {
+          cond <- dfr[, "nope"] > 0 & !is.na(dfr[, "nope"]) &
+            dfr[, "noph"] == 0 & !is.na(dfr[, "noph"]) & is.na(dfr[, har[i]])
+        } else {
+          cond <- dfr[, "noph"] == 0 & !is.na(dfr[, "noph"]) & is.na(dfr[, har[i]])
+        }
         
         dfr[cond, har[i]] <- 0
         
