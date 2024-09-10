@@ -13,7 +13,7 @@
 #' 
 #' ----------------------------- Plot identifiers -----------------------------
 #'  \itemize{
-#'  \item \code{plot}      : Plot number.
+#'  \item \code{plot}      : Plot number (\code{plot_number} is also valid).
 #'  \item \code{row}       : Row number position of the plot (\code{row_number} is also valid).
 #'  \item \code{col}       : Column number position of the plot (\code{col_number} is also valid).
 #'  }
@@ -162,8 +162,8 @@ check.names.sp <- function(dfr, add = NULL) {
   
   plot.id <- c("plot", "row", "col")
   
-  factors <- c("loc", "year", "season", "env", "geno", 'type',
-               "rep", "block", "treat", "harvest")
+  factors <- c("loc", "year", "season", "env", "geno", 'type', "rep", "block",
+               "treat", "harvest", 'is_a_control')
   
   # Valid names for traits
   
@@ -194,8 +194,8 @@ check.names.sp <- function(dfr, add = NULL) {
   
   change.names.f <- NULL
   
-  old.names.f <- c('location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
-  new.names.f <- c('loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
+  old.names.f <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
+  new.names.f <- c('plot',        'loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
   
   for (i in 1:length(old.names.f)) {
     

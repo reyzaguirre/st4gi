@@ -34,7 +34,7 @@ Between parentheses are the CO numbers for variables defined in
 
 ----------------------------- Plot identifiers -----------------------------
  \itemize{
- \item \code{plot}        : Plot number.
+ \item \code{plot}        : Plot number (\code{plot_number} is also valid).
  \item \code{row}         : Row number position of the plot (\code{row_number} is also valid).
  \item \code{col}         : Column number position of the plot (\code{col_number} is also valid).
  }
