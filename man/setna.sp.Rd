@@ -91,7 +91,9 @@ Values are set to \code{NA} with the following rules:
  is the mean. By default \code{f = 10} and if less than 10 a warning is shown.
  Values out of this range are set to \code{NA}.
  \item If \code{nope == 0} and there is some data for any trait,
- then \code{nope} is set to \code{NA}.  
+ then \code{nope} is set to \code{NA}.
+ \item If \code{nope == 0} and there is no data but some traits that are \code{0},
+ then all those traits are set to \code{NA}.
  \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,
  then \code{noph} is set to \code{NA}.
  \item If \code{nopr == 0} and there is some data for any trait evaluated with roots,

@@ -63,6 +63,8 @@ Values are set to \code{NA} with the following rules:
  Values out of this range are set to \code{NA}.
  \item If \code{npe == 0} and there is some data for any trait,
  then \code{npe} is set to \code{NA}.  
+ \item If \code{npe == 0} and there is no data but some traits that are \code{0},
+ then all those traits are set to \code{NA}.  
  \item If \code{nph == 0} and there is some data for any non-pre-harvest trait,
  then \code{nph} is set to \code{NA}.
  \item If \code{nmtp == 0} and \code{mtwp > 0}, then \code{nmtp} is set to \code{NA}.

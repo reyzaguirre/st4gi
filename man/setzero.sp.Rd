@@ -21,7 +21,7 @@ This function sets values to \code{0} for all traits at harvest
 (\code{noph}, \code{nopr}, \code{vw}, \code{nocr}, \code{nonc}, \code{crw},
 and \code{ncrw}) which are \code{NA} according to the following rules:
 \itemize{
- \item If \code{noph == 0}, then all traits are set to \code{0}.
+ \item If \code{nope > 0} and \code{noph == 0}, then all traits are set to \code{0}.
  \item If all traits are \code{0}, then \code{noph} is set to \code{0}.
  \item If \code{nopr == 0}, then all traits with exception of \code{vw}
  are set to \code{0}.

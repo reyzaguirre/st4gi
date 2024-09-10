@@ -21,7 +21,7 @@ This function sets values to \code{0} for all traits at harvest
 (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp}, and \code{nomtwp})
 which are \code{NA} according to the following rules:
 \itemize{
- \item If \code{nph == 0}, then all traits are set to \code{0}.
+ \item If \code{npe > 0} and \code{nph == 0}, then all traits are set to \code{0}.
  \item If \code{nmtp == 0}, then \code{mtwp} is set to \code{0}.
  \item If \code{mtwp == 0}, then \code{nmtp} is set to \code{0}.
  \item If \code{nnomtp == 0}, then \code{nomtwp} is set to \code{0}.
