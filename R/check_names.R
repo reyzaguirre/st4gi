@@ -47,7 +47,7 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   if (crop == 'pt')
     traits <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii",
                 "fwts", "dwts", "fwts1", "fwts2", "dwts1", "dwts2",
-                "dm1", "dm2", "avdm", tolower(add))
+                "dm1", "dm2", tolower(add))
   
   if (crop == 'sp')
     traits <- c(spont$Label, 'fcol.cc', tolower(add))
@@ -70,23 +70,19 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
 
   # Solve synonyms for factors
 
-  # All options for genotypes
-  
   old.geno <- c("accession_name", "cipno", "cip.number", 'genotype', "instn")
   new.geno <- rep('geno', length(old.geno))
   
-  change.names.f <- NULL
-  
   old.names.f <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
   new.names.f <- c('plot',        'loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
+
+  change.names.f <- NULL
   
   for (i in 1:length(old.names.f)) {
-    
     if (exists(old.names.f[i], dfr) & !exists(new.names.f[i], dfr)) {
       change.names.f <- c(change.names.f, old.names.f[i])
       colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
     }
-    
   }  
   
   if (!is.null(change.names.f)) {
@@ -95,8 +91,6 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   }
   
   # Solve synonyms for traits
-  
-  change.names.t <- NULL 
   
   if (crop == 'pt') {
     old.names.t <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein", 'chipping')
@@ -107,14 +101,14 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
     old.names.t <- c("trwd",  "biomd",  "cythaaj",  "rythaaj",  "dmryaj",  'vwd',  "fythaaj",  "dmvyaj",  "bythaaj",  "dmbyaj")
     new.names.t <- c("trw.d", "biom.d", "cytha.aj", "rytha.aj", "dmry.aj", 'vw.d', "fytha.aj", "dmvy.aj", "bytha.aj", "dmby.aj")
   }
+
+  change.names.t <- NULL 
   
   for (i in 1:length(old.names.t)) {
-    
     if (exists(old.names.t[i], dfr) & !exists(new.names.t[i], dfr)) {
       change.names.t <- c(change.names.t, old.names.t[i])
       colnames(dfr)[colnames(dfr) == old.names.t[i]] <- new.names.t[i]
     }
-    
   }  
   
   if (!is.null(change.names.t)) {
@@ -134,6 +128,7 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   nonumeric.list <- NULL
   
   column.class <- unlist(lapply(dfr, class))
+  
   for(i in colnames(dfr)) {
     if(i %in% traits & column.class[i] != "numeric") {
       dfr[, i] <- suppressWarnings(as.numeric(as.character(dfr[, i])))
@@ -149,10 +144,6 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   dfr
   
 }
-
-#------------------------------------------------------------------------------
-# Funs
-#------------------------------------------------------------------------------
 
 #' Potato ontology
 #'

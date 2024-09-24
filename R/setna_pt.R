@@ -61,17 +61,12 @@
 #' @return It returns the data frame with all impossible values set to \code{NA}
 #' and a list of warnings with all the rows that have been modified.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' dfr <- data.frame(mtwp = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-#'                   dm = c(21, 23, 105, 24, -3, 30, NA),
-#'                   nmtp = c(1.3, 10, 11, NA, 2, 5, NA))
-#' setna.pt(dfr)
 #' @importFrom stats IQR quantile
 #' @export
 
 setna.pt <- function(dfr, f = 10) {
   
-  # .Deprecated("setna")
+  .Deprecated("setna")
   
   #############################################################################
   # Preliminary settings

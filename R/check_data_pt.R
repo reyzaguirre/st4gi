@@ -32,15 +32,13 @@
 #' (3) for extreme values or outliers.
 #' }
 #' @author Raul Eyzaguirre.
-#' @examples
-#' check.data.pt(potatoyield)
 #' @importFrom stats IQR quantile rstandard
 #' @export
 
 check.data.pt <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
                           out.max = 4, add = NULL, print.text = TRUE) {
 
-  # .Deprecated("check.data")
+  .Deprecated("check.data")
   
   # Match arguments
   

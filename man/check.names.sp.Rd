@@ -166,9 +166,6 @@ or COMP numbers defined in \url{https://sweetpotatobase.org/}.
  \item \code{rfr}       : Root foliage ratio in percentage	(CO_331:0001015).
  }
 }
-\examples{
-check.names.sp(pjpz09)
-}
 \author{
 Raul Eyzaguirre.
 }

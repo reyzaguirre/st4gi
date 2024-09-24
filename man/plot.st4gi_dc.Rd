@@ -21,9 +21,9 @@ This function produces a visualization of data consistency.
 It produces a visual matrix representation of data consistency problems.
 }
 \examples{
-checks <- check.data.sp(pjpz09)
+checks <- check.data(pjpz09)
 plot(checks)
-checks <- check.data.pt(potatoyield)
+checks <- check.data(potatoyield)
 plot(checks)
 }
 \author{

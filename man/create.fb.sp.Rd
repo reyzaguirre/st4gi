@@ -36,15 +36,6 @@ Creates a sweetpotato fieldbook with short labels.
 Only labels listed in function \code{check.names.sp} are valid.
 Uppercase labels are converted to lowercase.
 }
-\examples{
-book <- cr.rcbd(1:20, 3, 10)$book
-# Get fieldbook with minimal set of traits
-create.fb.sp(book)
-# Add additional traits
-create.fb.sp(book, add = c('bc', 'fe', 'zn'))
-# Get the fieldbook with CO numbers
-create.fb.sp(book, label = 'CO', add = c('bc', 'fe', 'zn'))
-}
 \author{
 Raul Eyzaguirre.
 }

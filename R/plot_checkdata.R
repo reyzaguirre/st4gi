@@ -7,9 +7,9 @@
 #' @return It returns a plot.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' checks <- check.data.sp(pjpz09)
+#' checks <- check.data(pjpz09)
 #' plot(checks)
-#' checks <- check.data.pt(potatoyield)
+#' checks <- check.data(potatoyield)
 #' plot(checks)
 #' @importFrom graphics image
 #' @export

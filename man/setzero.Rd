@@ -21,6 +21,7 @@ Set values to \code{0} for harvested traits.
 \details{
 This function sets values to \code{0} for all traits at harvest
 according to some rules.
+
 For potato, traits (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp},
 and \code{nomtwp}) which are \code{NA} according to the following rules:
 \itemize{

@@ -14,19 +14,12 @@
 #' some values set to \code{0} and a list of warnings with all the rows that have
 #' been modified.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' dfr <- data.frame(crw = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-#'                   dm = c(21, 23, 105, 24, -3, 30, NA),
-#'                   nocr = c(1.3, 10, 11, NA, 2, 5, NA),
-#'                   scol = c(1, 0, 15, 5, 4, 7, NA),
-#'                   fcol.cc = c(1, 15, 12, 24, 55, 20, NA))
-#' clean.data.sp(dfr)
 #' @importFrom stats IQR quantile
 #' @export
 
 clean.data.sp <- function(dfr, f = 10) {
   
-  # .Deprecated("clean.data")
+  .Deprecated("clean.data")
   
   dfr <- setna.sp(dfr, f)
   

@@ -13,20 +13,12 @@
 #' Uppercase labels are converted to lowercase.
 #' @return It returns a data frame with fieldbook design and traits.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' book <- cr.rcbd(1:20, 3, 10)$book
-#' # Get fieldbook with minimal set of traits
-#' create.fb.sp(book)
-#' # Add additional traits
-#' create.fb.sp(book, add = c('bc', 'fe', 'zn'))
-#' # Get the fieldbook with CO numbers
-#' create.fb.sp(book, label = 'CO', add = c('bc', 'fe', 'zn'))
 #' @export
 
 create.fb.sp <- function(design, label = c("standard", "CO"),
                          minimal = TRUE, add = NULL, computation = FALSE) {
   
-  # .Deprecated("create.fb")
+  .Deprecated("create.fb")
   
   # Match arguments
   
@@ -90,20 +82,12 @@ create.fb.sp <- function(design, label = c("standard", "CO"),
 #' Uppercase labels are converted to lowercase.
 #' @return It returns a data frame with fieldbook design and traits.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' book <- cr.rcbd(1:20, 3, 10)$book
-#' # Get fieldbook with minimal set of traits
-#' create.fb.pt(book)
-#' # Add additional traits
-#' create.fb.pt(book, add = c('bc', 'fe', 'zn'))
-#' # Get the fieldbook with CO numbers
-#' create.fb.pt(book, label = 'CO', add = c('dm', 'fedw', 'zndw'))
 #' @export
 
 create.fb.pt <- function(design, label = c("standard", "CO"),
                          minimal = TRUE, add = NULL, computation = FALSE) {
   
-  # .Deprecated("create.fb")
+  .Deprecated("create.fb")
   
   # Match arguments
   

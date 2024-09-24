@@ -180,6 +180,7 @@ create.dd <- function(metadata, crop = c('pt', 'sp')) {
     data.file <- suppressWarnings(convert.co.pt(data.file))
     names(data.file) <- gsub('co_330:', 'CO_330:', names(data.file))
   }
+  
   if(crop == 'sp') {
     data.file <- suppressWarnings(convert.co.sp(data.file))
     names(data.file) <- gsub('co_331:', 'CO_331:', names(data.file))

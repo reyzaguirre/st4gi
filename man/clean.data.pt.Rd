@@ -25,12 +25,6 @@ The data frame must use the labels (lower or upper case) listed
 in function \code{check.names.pt}. Then functions \code{setna.pt} and
 \code{setzero.pt} are applied to the data.
 }
-\examples{
-dfr <- data.frame(mtwp = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-                  dm = c(21, 23, 105, 24, -3, 30, NA),
-                  nmtp = c(1.3, 10, 11, NA, 2, 5, NA))
-clean.data.pt(dfr)
-}
 \author{
 Raul Eyzaguirre.
 }

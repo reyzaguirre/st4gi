@@ -8,13 +8,11 @@
 #' @return It returns a data frame with all short labels for traits interchanged
 #' with Crop Ontology variable numbers.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' convert.co.sp(pjpz09)
 #' @export
 
 convert.co.sp <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
   
-  # .Deprecated("convert.co")
+  .Deprecated("convert.co")
   
   direction <- match.arg(direction)
   
@@ -87,13 +85,11 @@ convert.co.sp <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
 #' @return It returns a data frame with all short labels for traits interchanged
 #' with Crop Ontology variable numbers.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' convert.co.pt(potatoyield)
 #' @export
 
 convert.co.pt <- function(dfr, direction = c('labels.to.co', 'co.to.labels')) {
   
-  # .Deprecated("convert.co")
+  .Deprecated("convert.co")
   
   direction <- match.arg(direction)
 

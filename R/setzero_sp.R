@@ -20,15 +20,6 @@
 #' @return It returns a data frame and a list of warnings with all the rows
 #' that have been modified.
 #' @author Raul Eyzaguirre
-#' @examples
-#' dfr <- data.frame(noph = c(NA,  0,  3,  3,  3, 3, 3),
-#'                   nopr = c(NA,  0,  0,  2,  3, 3, 3),
-#'                   vw   = c(NA, NA,  3,  2,  3, 3, 6),
-#'                   crw  = c(NA, NA, NA, NA,  8, 2, 0),
-#'                   ncrw = c(NA, NA, NA,  2, NA, 2, 4),
-#'                   nocr = c(NA, NA, NA,  0,  6, 2, 0),
-#'                   nonc = c(NA, NA, NA,  4,  0, 3, 5))
-#' setzero.sp(dfr)
 #' @export
 
 setzero.sp <- function(dfr) {

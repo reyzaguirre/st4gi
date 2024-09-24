@@ -2,15 +2,12 @@
 #'
 #' This is a wrapper for functions \code{setna} and \code{setzero} and
 #' applies both in that order.
-#' 
 #' @param dfr The name of the data frame.
 #' @param f Factor for extreme values detection.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' 
 #' @details The data frame must use the labels (lower or upper case) listed
 #' in function \code{check.names}. Then functions \code{setna} and
 #' \code{setzero} are applied to the data.
-#' 
 #' @return It returns the data frame with all impossible values set to \code{NA},
 #' some values set to \code{0} and a list of warnings with all the rows that have
 #' been modified.

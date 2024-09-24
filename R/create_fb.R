@@ -77,6 +77,7 @@ create.fb <- function(design, label = c("standard", "CO"), minimal = TRUE,
   
     if (prod(add %in% ont$Label) == 0)
       warning("Some invalid names for labels: ", list(add[!add %in% ont$Label]), call. = FALSE)
+    
   }
   
   # Add traits

@@ -2,11 +2,9 @@
 #'
 #' Detect impossible values for potato and sweetpotato data and set them to
 #' missing value (\code{NA}) according to some rules.
-#' 
 #' @param dfr The name of the data frame.
 #' @param f Factor for extreme values detection. See details.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' 
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' function \code{check.names}.
 #' 
@@ -14,23 +12,17 @@
 #' \itemize{
 #'  \item \code{pre} (traits evaluated pre-harvest): \code{ppe}, \code{plant_unif},
 #'  \code{plant_vigor} and \code{se}.
-#'  
 #'  \item \code{cnn} (continuos non-negative traits): \code{tntpl}, \code{nmtpl},
 #'  \code{ttwp}, \code{ttwpl}, \code{mtwp}, \code{mtwpl}, \code{nomtwp}, \code{mtwci},
 #'  \code{mtwcii}, \code{ttya}, \code{ttyna}, \code{mtya}, and \code{mtyna}.
-#'  
 #'  \item \code{cpo} (continuous positive traits): \code{atw}, \code{atmw},  
 #'  \code{fwts1}, \code{fwts2}, \code{dwts1}, and \code{dwts2}.
-#'      
 #'  \item \code{pnn} (percentage non-negative traits): \code{ppe}, \code{pph},  
 #'  \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
-#'  
 #'  \item \code{ppo} (percentage positive traits): \code{dm}, \code{pro},
 #'  \code{star}, and \code{fiber}.
-#'
 #'  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe}, \code{nph},
 #'  \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and \code{nmtcii}.
-#'  
 #'  \item \code{ctg} (categorical traits): \code{plant_unif},
 #'  \code{plant_vigor}, \code{flowering}, \code{rlb}, \code{se}, \code{tuber_apper},
 #'  \code{tub_unif}, \code{tub_size}, \code{chip_color}, \code{num_stolon},
@@ -60,18 +52,15 @@
 #'  \item If \code{nnomtp == 0} and \code{nomtwp > 0}, then \code{nnomtp} is set to \code{NA}.
 #'  \item If \code{nnomtp > 0} and \code{nomtwp == 0}, then \code{nomtwp} is set to \code{NA}.
 #' }
-#' 
 #' Consider the following groups of traits for sweetpotato:
 #' \itemize{
 #'  \item Traits evaluated pre-harvest: \code{vir}, \code{vir1}, \code{vir2},
 #'  \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
-#'  
 #'  \item Traits evaluated with vines non-pre-harvest: \code{vw}, \code{biom},
 #'  \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
 #'  \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj},
 #'  \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd}, \code{hi}, \code{shi},
 #'  and \code{dmv}.
-#'  
 #'  \item Traits evaluated only with roots non-pre-harvest: \code{crw},
 #'  \code{ncrw}, \code{trw}, \code{trw.d}, \code{cytha}, \code{cytha.aj},
 #'  \code{rytha}, \code{rytha.aj}, \code{dmry}, \code{dmry.aj}, \code{nrpp},
@@ -85,7 +74,6 @@
 #'  \code{wed}, \code{stspwv}, \code{milldam}, \code{fraw}, \code{suraw},
 #'  \code{straw}, \code{coof}, \code{coosu}, \code{coost}, \code{coot}, and
 #'  \code{cooap} 
-#'
 #'  \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
 #'  \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d},
 #'  \code{cytha}, \code{cytha.aj}, \code{rytha}, \code{rytha.aj}, \code{dmry},
@@ -94,19 +82,14 @@
 #'  \code{nrpp}, \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp},
 #'  \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, \code{rfr},
 #'  \code{bc}, \code{tc}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
-#'  
 #'  \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
 #'  \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
-#'  
 #'  \item \code{pnn} (percentage non-negative traits): \code{ci}, \code{hi},
 #'  \code{shi}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
-#'  
 #'  \item \code{ppo} (percentage positive traits): \code{dm}, \code{dmv},
 #'  \code{prot}, and \code{star}.
-#'
 #'  \item \code{dnn} (discrete non-negative traits): \code{nops}, \code{nope},
 #'  \code{noph}, \code{nopr}, \code{nocr}, \code{nonc}, and \code{tnr}.
-#'  
 #'  \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
 #'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
 #'  \code{fcol}, \code{fcol2}, \code{rs}, \code{rf}, \code{rtshp}, \code{damr},
@@ -400,13 +383,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # nmtp and mtwp
     
     if (exists("nmtp", dfr) & exists("mtwp", dfr)) {
-      
       cond <- dfr[, "nmtp"] == 0 & !is.na(dfr[, "nmtp"]) & dfr[, "mtwp"] > 0 & !is.na(dfr[, "mtwp"])
       dfr[cond, 'nmtp'] <- NA
       if (sum(cond) > 0)
         warning("Rows replaced with NA for trait nmtp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "nmtp"] > 0 & !is.na(dfr[, "nmtp"]) & dfr[, "mtwp"] == 0 & !is.na(dfr[, "mtwp"])
       dfr[cond, 'mtwp'] <- NA
       if (sum(cond) > 0)
@@ -417,13 +398,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # nnomtp and nomtwp
     
     if (exists("nnomtp", dfr) & exists("nomtwp", dfr)) {
-      
       cond <- dfr[, "nnomtp"] == 0 & !is.na(dfr[, "nnomtp"]) & dfr[, "nomtwp"] > 0 & !is.na(dfr[, "nomtwp"])
       dfr[cond, 'nnomtp'] <- NA
       if (sum(cond) > 0)
         warning("Rows replaced with NA for trait nnomtp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "nnomtp"] > 0 & !is.na(dfr[, "nnomtp"]) & dfr[, "nomtwp"] == 0 & !is.na(dfr[, "nomtwp"])
       dfr[cond, 'nomtwp'] <- NA
       if (sum(cond) > 0)
@@ -747,13 +726,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # nocr and crw
     
     if (exists("nocr", dfr) & exists("crw", dfr)) {
-      
       cond <- dfr[, "nocr"] == 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] > 0 & !is.na(dfr[, "crw"])
       dfr[cond, 'nocr'] <- NA
       if (sum(cond) > 0)
         warning("Rows replaced with NA for trait nocr: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "nocr"] > 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] == 0 & !is.na(dfr[, "crw"])
       dfr[cond, 'crw'] <- NA
       if (sum(cond) > 0)
@@ -764,13 +741,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # nonc and ncrw
     
     if (exists("nonc", dfr) & exists("ncrw", dfr)) {
-      
       cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] > 0 & !is.na(dfr[, "ncrw"])
       dfr[cond, 'nonc'] <- NA
       if (sum(cond) > 0)
         warning("Rows replaced with NA for trait nonc: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "nonc"] > 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"])
       dfr[cond, 'ncrw'] <- NA
       if (sum(cond) > 0)
@@ -778,7 +753,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
-  }    
+  }
   
   # Return data frame
   

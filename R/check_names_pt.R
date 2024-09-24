@@ -207,13 +207,11 @@
 #' \item A list of warnings for all the column traits that have been changed to numeric.
 #' }
 #' @author Raul Eyzaguirre, Johan Ninanya. 
-#' @examples
-#' check.names.pt(potatoyield)
 #' @export
 
 check.names.pt <- function(dfr, add = NULL) {
   
-  # .Deprecated("check.names")
+  .Deprecated("check.names")
   
   # Valid names for factors
   

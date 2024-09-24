@@ -22,9 +22,6 @@ Interchanges potato and sweetpotato short labels with Crop Ontology variable num
 All labels (lower or upper case) listed in function \code{check.names.sp}
 are interchanged with CO_331 variable numbers.
 }
-\examples{
-convert.co.sp(pjpz09)
-}
 \author{
 Raul Eyzaguirre.
 }

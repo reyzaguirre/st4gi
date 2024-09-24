@@ -10,7 +10,7 @@
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' function \code{check.names}.
-#' 
+#'  
 #' Extreme low and high values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
 #' \eqn{[Q_1 - f \times IQR; Q_3 + f \times IQR]}. By default \code{f = 5}.

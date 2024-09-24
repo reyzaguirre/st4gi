@@ -17,14 +17,12 @@
 #' \code{ntp} must be specified to compute non adjusted values.
 #' @return It returns a data frame with the original and derived traits.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' cdt.pt(potatoyield)
 #' @export
 
 cdt.pt <- function(dfr, method = c("none", "ps", "np"),
                    value = NULL, ntp = NULL) {
   
-  # .Deprecated("cdt")
+  .Deprecated("cdt")
   
   # Match arguments
   

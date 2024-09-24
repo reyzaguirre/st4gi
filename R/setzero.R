@@ -5,6 +5,7 @@
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details This function sets values to \code{0} for all traits at harvest
 #' according to some rules.
+#' 
 #' For potato, traits (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp},
 #' and \code{nomtwp}) which are \code{NA} according to the following rules:
 #' \itemize{
@@ -64,7 +65,9 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   dfr <- check.names(dfr, crop = crop)
   
+  #--------------------
   # Run potato
+  #--------------------
   
   if (crop == 'pt') {
     
@@ -80,24 +83,18 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     # If nph == 0, then all traits are set to 0
     
     if (ntr > 0) {
-      
       if (exists("nph", dfr)) {
-        
         for (i in 1:length(har)) {
-          
           if (exists("npe", dfr)) {
             cond <- dfr[, "npe"] > 0 & !is.na(dfr[, "npe"]) &
               dfr[, "nph"] == 0 & !is.na(dfr[, "nph"]) & is.na(dfr[, har[i]])
           } else {
             cond <- dfr[, "nph"] == 0 & !is.na(dfr[, "nph"]) & is.na(dfr[, har[i]])
           }
-          
           dfr[cond, har[i]] <- 0
-          
           if (sum(cond) > 0)
             warning("Rows with NA replaced with 0 for trait ",
                     har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
-          
         }
       }
     }
@@ -105,42 +102,38 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     # If nmtp == 0 then mtwp is set to 0, and if mtwp == 0 then nmtp is set to 0
     
     if (exists("nmtp", dfr) & exists("mtwp", dfr)) {
-      
       cond <- dfr[, "nmtp"] == 0 & !is.na(dfr[, "nmtp"]) & is.na(dfr[, "mtwp"])
       dfr[cond, "mtwp"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for mtwp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "mtwp"] == 0 & !is.na(dfr[, "mtwp"]) & is.na(dfr[, "nmtp"])
       dfr[cond, "nmtp"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for nmtp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
     }
     
     # If nnomtp == 0 then nomtwp is set to 0, and if nomtwp == 0 then nnomtp is set to 0
     
     if (exists("nnomtp", dfr) & exists("nomtwp", dfr)) {
-      
       cond <- dfr[, "nnomtp"] == 0 & !is.na(dfr[, "nnomtp"]) & is.na(dfr[, "nomtwp"])
       dfr[cond, "nomtwp"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for nomtwp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "nomtwp"] == 0 & !is.na(dfr[, "nomtwp"]) & is.na(dfr[, "nnomtp"])
       dfr[cond, "nnomtp"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for nnomtp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
     }
    
   }
 
+  #--------------------
   # Run sweetpotato
+  #--------------------
   
   if (crop == 'sp') {
 
@@ -178,24 +171,18 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     # If noph == 0, then all traits are set to 0
     
     if (ntr > 0) {
-      
       if (exists("noph", dfr)) {
-        
         for (i in 1:length(har)) {
-          
           if (exists('nope', dfr)) {
             cond <- dfr[, "nope"] > 0 & !is.na(dfr[, "nope"]) &
               dfr[, "noph"] == 0 & !is.na(dfr[, "noph"]) & is.na(dfr[, har[i]])
           } else {
             cond <- dfr[, "noph"] == 0 & !is.na(dfr[, "noph"]) & is.na(dfr[, har[i]])
           }
-          
           dfr[cond, har[i]] <- 0
-          
           if (sum(cond) > 0)
             warning("Rows with NA replaced with 0 for trait ",
                     har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
-          
         }
       }
     }
@@ -204,15 +191,11 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     
     if (exists("noph", dfr) & (exists("nocr", dfr) | exists("crw", dfr)) &
         (exists("nonc", dfr) | exists("ncrw", dfr)) & exists("vw", dfr)) {
-      
       cond <- is.na(dfr[, "noph"]) & dfr[, "vw"] == 0 & !is.na(dfr[, "vw"]) & cr.cond & ncr.cond
-      
       dfr[cond, "noph"] <- 0
-      
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for noph: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
     }
     
     # Subset in fieldbook and number of traits without vw
@@ -223,19 +206,13 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     # If nopr == 0, then all traits with exception of vw are set to 0
     
     if (ntr > 0) {
-      
       if (exists("nopr", dfr)) {
-        
         for (i in 1:length(har)) {
-          
           cond <- dfr[, "nopr"] == 0 & !is.na(dfr[, "nopr"]) & is.na(dfr[, har[i]])
-          
           dfr[cond, har[i]] <- 0
-          
           if (sum(cond) > 0)
             warning("Rows with NA replaced with 0 for trait ",
                     har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
-          
         }
       }
     }
@@ -244,51 +221,41 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     
     if (exists("nopr", dfr) & (exists("nocr", dfr) | exists("crw", dfr)) &
         (exists("nonc", dfr) | exists("ncrw", dfr))) {
-      
       cond <- is.na(dfr[, "nopr"]) & cr.cond & ncr.cond
-      
       dfr[cond, "nopr"] <- 0
-      
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for nopr: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
     }
     
     # If nocr == 0 then crw is set to 0, and if crw == 0 then nocr is set to 0
     
     if (exists("nocr", dfr) & exists("crw", dfr)) {
-      
       cond <- dfr[, "nocr"] == 0 & !is.na(dfr[, "nocr"]) & is.na(dfr[, "crw"])
       dfr[cond, "crw"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for crw: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "crw"] == 0 & !is.na(dfr[, "crw"]) & is.na(dfr[, "nocr"])
       dfr[cond, "nocr"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for nocr: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
     }
     
     # If nonc == 0 then ncrw is set to 0, and if ncrw == 0 then nonc is set to 0
     
     if (exists("nonc", dfr) & exists("ncrw", dfr)) {
-      
       cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & is.na(dfr[, "ncrw"])
       dfr[cond, "ncrw"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for ncrw: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
       cond <- dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"]) & is.na(dfr[, "nonc"])
       dfr[cond, "nonc"] <- 0
       if (sum(cond) > 0)
         warning("Rows with NA replaced with 0 for nonc: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
-      
     }
     
   }

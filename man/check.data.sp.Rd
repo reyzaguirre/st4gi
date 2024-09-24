@@ -56,9 +56,6 @@ models. Options are \code{"rcbd"} and \code{"met"} for a randomized complete
 block design and a multienvironment trial with RCBD in each environment.
 By default the threshold value is \code{out.max = 4}.
 }
-\examples{
-check.data.sp(pjpz09)
-}
 \author{
 Raul Eyzaguirre.
 }

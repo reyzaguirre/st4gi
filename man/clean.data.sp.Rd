@@ -25,14 +25,6 @@ The data frame must use the labels (lower or upper case) listed
 in function \code{check.names.sp}. Then functions \code{setna.sp} and
 \code{setzero.sp} are applied to the data.
 }
-\examples{
-dfr <- data.frame(crw = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-                  dm = c(21, 23, 105, 24, -3, 30, NA),
-                  nocr = c(1.3, 10, 11, NA, 2, 5, NA),
-                  scol = c(1, 0, 15, 5, 4, 7, NA),
-                  fcol.cc = c(1, 15, 12, 24, 55, 20, NA))
-clean.data.sp(dfr)
-}
 \author{
 Raul Eyzaguirre.
 }

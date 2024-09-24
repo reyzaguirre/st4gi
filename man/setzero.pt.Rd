@@ -28,14 +28,6 @@ which are \code{NA} according to the following rules:
  \item If \code{nomtwp == 0}, then \code{nnomtp} is set to \code{0}.
 }
 }
-\examples{
-dfr <- data.frame(nph = c(NA,  0,  3,  3,  3, 3, 3),
-                  mtwp  = c(NA, NA, NA, NA,  8, 2, 0),
-                  nomtwp = c(NA, NA, NA,  2, NA, 2, 4),
-                  nmtp = c(NA, NA, NA,  0,  6, 2, 0),
-                  nnomtp = c(NA, NA, NA,  4,  0, 3, 5))
-setzero.pt(dfr)
-}
 \author{
 Raul Eyzaguirre
 }

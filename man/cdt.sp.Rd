@@ -33,9 +33,6 @@ allocated in a full hectare. In both cases computations can be adjusted by the
 number of harvested plants if available in the fieldbook. For \code{method = "np"},
 \code{nops} must be specified to compute non adjusted values.
 }
-\examples{
-cdt.sp(pjpz09)
-}
 \author{
 Raul Eyzaguirre.
 }

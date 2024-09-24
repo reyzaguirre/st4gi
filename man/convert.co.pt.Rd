@@ -22,9 +22,6 @@ Interchanges potato short labels with Crop Ontology variable numbers.
 All labels (lower or upper case) listed in function \code{check.names.pt}
 are interchanged with CO_330 variable numbers.
 }
-\examples{
-convert.co.pt(potatoyield)
-}
 \author{
 Raul Eyzaguirre.
 }

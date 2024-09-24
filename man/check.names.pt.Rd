@@ -221,9 +221,6 @@ Between parentheses are the CO numbers for variables defined in
  \item \code{sla_evi}     : Leaflet area using EasyLeafArea software in cm^2 per g evaluation i (i = 1,..., 5).
  }
 }
-\examples{
-check.names.pt(potatoyield)
-}
 \author{
 Raul Eyzaguirre, Johan Ninanya.
 }

@@ -108,14 +108,6 @@ Values are set to \code{NA} with the following rules:
  \item If \code{nonc > 0} and \code{ncrw == 0}, then \code{ncrw} is set to \code{NA}.
 }
 }
-\examples{
-dfr <- data.frame(trw = c(2.2, 5.0, 3.6, 12, 1600, -4),
-                  dm = c(21, 23, 105, 24, -3, 30),
-                  tnr = c(1.3, 10, 11, NA, 2, 5),
-                  scol = c(1, 0, 15, 5, 4, 7),
-                  fcol.cc = c(1, 15, 12, 24, 55, 20))
-setna.sp(dfr)
-}
 \author{
 Raul Eyzaguirre.
 }

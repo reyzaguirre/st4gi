@@ -152,13 +152,11 @@
 #' \item A list of warnings for all the column traits that have been changed to numeric.
 #' }
 #' @author Raul Eyzaguirre.
-#' @examples
-#' check.names.sp(pjpz09)
 #' @export
 
 check.names.sp <- function(dfr, add = NULL) {
   
-  # .Deprecated("check.names")
+  .Deprecated("check.names")
   
   # Valid names for factors
   

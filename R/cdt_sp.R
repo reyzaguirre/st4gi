@@ -17,14 +17,12 @@
 #' \code{nops} must be specified to compute non adjusted values.
 #' @return It returns a data frame with the original and derived traits.
 #' @author Raul Eyzaguirre.
-#' @examples
-#' cdt.sp(pjpz09)
 #' @export
 
 cdt.sp <- function(dfr, method = c("none", "ps", "np"),
                    value = NULL, nops = NULL) {
   
-  # .Deprecated("cdt")
+  .Deprecated("cdt")
   
   # Match arguments
   

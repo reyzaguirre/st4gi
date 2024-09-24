@@ -73,12 +73,6 @@ Values are set to \code{NA} with the following rules:
  \item If \code{nnomtp > 0} and \code{nomtwp == 0}, then \code{nomtwp} is set to \code{NA}.
 }
 }
-\examples{
-dfr <- data.frame(mtwp = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-                  dm = c(21, 23, 105, 24, -3, 30, NA),
-                  nmtp = c(1.3, 10, 11, NA, 2, 5, NA))
-setna.pt(dfr)
-}
 \author{
 Raul Eyzaguirre.
 }

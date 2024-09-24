@@ -161,7 +161,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
       dfr$dm[dfr$fwts == 0] <- NA
     }
     
-    # General computations for harvest index
+    # General computation for harvest index
     
     if (exists("ttwp", dfr) & exists("tbfwp", dfr)) {
       if ("hi_fw" %in% on)
@@ -547,6 +547,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
           dfr$dmvy.aj[dfr$noph == 0] <- NA
         }
       }
+      
     }
     
     # General computations a posteriori
@@ -587,36 +588,36 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
     if (exists("fcol.cc", dfr)) {
       if ("bc.cc" %in% on)
         ow <- c(ow, "bc.cc")
-      dfr$bc.cc[dfr$fcol.cc == "1"] <- 0.03
-      dfr$bc.cc[dfr$fcol.cc == "2"] <- 0
-      dfr$bc.cc[dfr$fcol.cc == "3"] <- 0.12
-      dfr$bc.cc[dfr$fcol.cc == "4"] <- 0.02
-      dfr$bc.cc[dfr$fcol.cc == "5"] <- 0
-      dfr$bc.cc[dfr$fcol.cc == "6"] <- 0.15
-      dfr$bc.cc[dfr$fcol.cc == "7"] <- 1.38
-      dfr$bc.cc[dfr$fcol.cc == "8"] <- 1.65
-      dfr$bc.cc[dfr$fcol.cc == "9"] <- 1.5
-      dfr$bc.cc[dfr$fcol.cc == "10"] <- 1.74
-      dfr$bc.cc[dfr$fcol.cc == "11"] <- 1.76
-      dfr$bc.cc[dfr$fcol.cc == "12"] <- 0.69
-      dfr$bc.cc[dfr$fcol.cc == "13"] <- 1.17
-      dfr$bc.cc[dfr$fcol.cc == "14"] <- 1.32
-      dfr$bc.cc[dfr$fcol.cc == "15"] <- 1.04
-      dfr$bc.cc[dfr$fcol.cc == "16"] <- 4.41
-      dfr$bc.cc[dfr$fcol.cc == "17"] <- 4.92
-      dfr$bc.cc[dfr$fcol.cc == "18"] <- 6.12
-      dfr$bc.cc[dfr$fcol.cc == "19"] <- 5.46
-      dfr$bc.cc[dfr$fcol.cc == "20"] <- 3.96
-      dfr$bc.cc[dfr$fcol.cc == "21"] <- 5.49
-      dfr$bc.cc[dfr$fcol.cc == "22"] <- 3.03
-      dfr$bc.cc[dfr$fcol.cc == "23"] <- 3.76
-      dfr$bc.cc[dfr$fcol.cc == "24"] <- 4.61
-      dfr$bc.cc[dfr$fcol.cc == "25"] <- 7.23
-      dfr$bc.cc[dfr$fcol.cc == "26"] <- 7.76
-      dfr$bc.cc[dfr$fcol.cc == "27"] <- 10.5
-      dfr$bc.cc[dfr$fcol.cc == "28"] <- 11.03
-      dfr$bc.cc[dfr$fcol.cc == "29"] <- 12.39
-      dfr$bc.cc[dfr$fcol.cc == "30"] <- 14.37
+      dfr$bc.cc[dfr$fcol.cc == 1] <- 0.03
+      dfr$bc.cc[dfr$fcol.cc == 2] <- 0
+      dfr$bc.cc[dfr$fcol.cc == 3] <- 0.12
+      dfr$bc.cc[dfr$fcol.cc == 4] <- 0.02
+      dfr$bc.cc[dfr$fcol.cc == 5] <- 0
+      dfr$bc.cc[dfr$fcol.cc == 6] <- 0.15
+      dfr$bc.cc[dfr$fcol.cc == 7] <- 1.38
+      dfr$bc.cc[dfr$fcol.cc == 8] <- 1.65
+      dfr$bc.cc[dfr$fcol.cc == 9] <- 1.5
+      dfr$bc.cc[dfr$fcol.cc == 10] <- 1.74
+      dfr$bc.cc[dfr$fcol.cc == 11] <- 1.76
+      dfr$bc.cc[dfr$fcol.cc == 12] <- 0.69
+      dfr$bc.cc[dfr$fcol.cc == 13] <- 1.17
+      dfr$bc.cc[dfr$fcol.cc == 14] <- 1.32
+      dfr$bc.cc[dfr$fcol.cc == 15] <- 1.04
+      dfr$bc.cc[dfr$fcol.cc == 16] <- 4.41
+      dfr$bc.cc[dfr$fcol.cc == 17] <- 4.92
+      dfr$bc.cc[dfr$fcol.cc == 18] <- 6.12
+      dfr$bc.cc[dfr$fcol.cc == 19] <- 5.46
+      dfr$bc.cc[dfr$fcol.cc == 20] <- 3.96
+      dfr$bc.cc[dfr$fcol.cc == 21] <- 5.49
+      dfr$bc.cc[dfr$fcol.cc == 22] <- 3.03
+      dfr$bc.cc[dfr$fcol.cc == 23] <- 3.76
+      dfr$bc.cc[dfr$fcol.cc == 24] <- 4.61
+      dfr$bc.cc[dfr$fcol.cc == 25] <- 7.23
+      dfr$bc.cc[dfr$fcol.cc == 26] <- 7.76
+      dfr$bc.cc[dfr$fcol.cc == 27] <- 10.5
+      dfr$bc.cc[dfr$fcol.cc == 28] <- 11.03
+      dfr$bc.cc[dfr$fcol.cc == 29] <- 12.39
+      dfr$bc.cc[dfr$fcol.cc == 30] <- 14.37
     }
     
   }
