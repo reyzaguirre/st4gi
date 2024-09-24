@@ -33,6 +33,8 @@
 
 setzero.sp <- function(dfr) {
   
+  # .Deprecated("setzero")
+  
   # Harvest traits
   
   har <- c("vw", "nocr", "nonc", "crw", "ncrw")

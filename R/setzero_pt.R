@@ -26,6 +26,8 @@
 
 setzero.pt <- function(dfr) {
   
+  # .Deprecated("setzero")
+  
   # Harvest traits
   
   har <- c("nmtp", "nnomtp", "mtwp", "nomtwp")

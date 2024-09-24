@@ -4,12 +4,12 @@
 \alias{create.dd}
 \title{Create potatobase and sweetpotatobase design and data files}
 \usage{
-create.dd(crop = c("pt", "sp"), metadata)
+create.dd(metadata, crop = c("pt", "sp"))
 }
 \arguments{
-\item{crop}{\code{pt} for potato or \code{sp} for sweetpotato.}
-
 \item{metadata}{The name of the metadata template file.}
+
+\item{crop}{\code{pt} for potato or \code{sp} for sweetpotato.}
 }
 \value{
 It returns data.frames with names design.file and data.file ready to
@@ -32,8 +32,8 @@ for the details).
 book1 <- cr.rcbd(1:20, 3, 10)$book
 book2 <- cr.rcbd(1:20, 3, 10)$book
 # Get fieldbook with minimal set of traits for sweetpotato
-PEP2023CLM_AT01 <- create.fb.sp(book1)
-PEP2023CSR_AT02 <- create.fb.sp(book2)
+PEP2023CLM_AT01 <- create.fb(book1, crop = 'sp')
+PEP2023CSR_AT02 <- create.fb(book2, crop = 'sp')
 # Create metadata file
 metadata <- create.md(trial_name = c('PEP2023CLM_AT01', 'PEP2023CSR_AT02'),
                       breeding_program = 'Peru-CIP',
@@ -43,7 +43,7 @@ metadata <- create.md(trial_name = c('PEP2023CLM_AT01', 'PEP2023CSR_AT02'),
                       description = '20 genotypes with 3 complete blocks',
                       trial_type = 'Advanced Yield Trial')
 # Create design and data files for sweetpotatobase
-output <- create.dd('sp', metadata)
+output <- create.dd(metadata, 'sp')
 }
 \author{
 Raul Eyzaguirre.

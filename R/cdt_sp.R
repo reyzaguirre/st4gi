@@ -24,6 +24,8 @@
 cdt.sp <- function(dfr, method = c("none", "ps", "np"),
                    value = NULL, nops = NULL) {
   
+  # .Deprecated("cdt")
+  
   # Match arguments
   
   method = match.arg(method)

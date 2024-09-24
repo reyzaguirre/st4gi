@@ -2,8 +2,8 @@
 #'
 #' Creates potatobase and sweetpotatobase design and phenotypic data files for
 #' a set of fieldbooks.
-#' @param crop \code{pt} for potato or \code{sp} for sweetpotato.
 #' @param metadata The name of the metadata template file.
+#' @param crop \code{pt} for potato or \code{sp} for sweetpotato.
 #' @details The metadata template can be created with function \code{create.md}.
 #' The fieldbooks should be in memory or as csv files in the working directory,
 #' with the same names specified in the column \code{trial_name} of the metadata,
@@ -18,8 +18,8 @@
 #' book1 <- cr.rcbd(1:20, 3, 10)$book
 #' book2 <- cr.rcbd(1:20, 3, 10)$book
 #' # Get fieldbook with minimal set of traits for sweetpotato
-#' PEP2023CLM_AT01 <- create.fb.sp(book1)
-#' PEP2023CSR_AT02 <- create.fb.sp(book2)
+#' PEP2023CLM_AT01 <- create.fb(book1, crop = 'sp')
+#' PEP2023CSR_AT02 <- create.fb(book2, crop = 'sp')
 #' # Create metadata file
 #' metadata <- create.md(trial_name = c('PEP2023CLM_AT01', 'PEP2023CSR_AT02'),
 #'                       breeding_program = 'Peru-CIP',
@@ -29,11 +29,11 @@
 #'                       description = '20 genotypes with 3 complete blocks',
 #'                       trial_type = 'Advanced Yield Trial')
 #' # Create design and data files for sweetpotatobase
-#' output <- create.dd('sp', metadata)
+#' output <- create.dd(metadata, 'sp')
 #' @importFrom utils read.csv
 #' @export
 
-create.dd <- function(crop = c('pt', 'sp'), metadata) {
+create.dd <- function(metadata, crop = c('pt', 'sp')) {
   
   # Check crop
   

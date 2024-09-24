@@ -26,6 +26,8 @@
 
 clean.data.sp <- function(dfr, f = 10) {
   
+  # .Deprecated("clean.data")
+  
   dfr <- setna.sp(dfr, f)
   
   dfr <- setzero.sp(dfr)

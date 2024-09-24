@@ -24,6 +24,8 @@
 
 clean.data.pt <- function(dfr, f = 10) {
   
+  # .Deprecated("clean.data")
+  
   dfr <- setna.pt(dfr, f)
   
   dfr <- setzero.pt(dfr)

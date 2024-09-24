@@ -213,6 +213,8 @@
 
 check.names.pt <- function(dfr, add = NULL) {
   
+  # .Deprecated("check.names")
+  
   # Valid names for factors
   
   plot.id <- c("plot", "row", "col")
