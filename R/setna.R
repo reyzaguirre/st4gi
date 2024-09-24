@@ -8,60 +8,60 @@
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' function \code{check.names}.
 #' 
-#' Consider the following groups of traits for potato:
+#' Consider the following groups of variables for potato:
 #' \itemize{
-#'  \item \code{pre} (traits evaluated pre-harvest): \code{ppe}, \code{plant_unif},
+#'  \item \code{pre} (variables evaluated pre-harvest): \code{ppe}, \code{plant_unif},
 #'  \code{plant_vigor} and \code{se}.
-#'  \item \code{cnn} (continuos non-negative traits): \code{tntpl}, \code{nmtpl},
+#'  \item \code{cnn} (continuos non-negative variables): \code{tntpl}, \code{nmtpl},
 #'  \code{ttwp}, \code{ttwpl}, \code{mtwp}, \code{mtwpl}, \code{nomtwp}, \code{mtwci},
 #'  \code{mtwcii}, \code{ttya}, \code{ttyna}, \code{mtya}, and \code{mtyna}.
-#'  \item \code{cpo} (continuous positive traits): \code{atw}, \code{atmw},  
+#'  \item \code{cpo} (continuous positive variables): \code{atw}, \code{atmw},  
 #'  \code{fwts1}, \code{fwts2}, \code{dwts1}, and \code{dwts2}.
-#'  \item \code{pnn} (percentage non-negative traits): \code{ppe}, \code{pph},  
+#'  \item \code{pnn} (percentage non-negative variables): \code{ppe}, \code{pph},  
 #'  \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
-#'  \item \code{ppo} (percentage positive traits): \code{dm}, \code{pro},
+#'  \item \code{ppo} (percentage positive variables): \code{dm}, \code{pro},
 #'  \code{star}, and \code{fiber}.
-#'  \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe}, \code{nph},
+#'  \item \code{dnn} (discrete non-negative variables): \code{ntp}, \code{npe}, \code{nph},
 #'  \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and \code{nmtcii}.
-#'  \item \code{ctg} (categorical traits): \code{plant_unif},
+#'  \item \code{ctg} (categorical variables): \code{plant_unif},
 #'  \code{plant_vigor}, \code{flowering}, \code{rlb}, \code{se}, \code{tuber_apper},
 #'  \code{tub_unif}, \code{tub_size}, \code{chip_color}, \code{num_stolon},
 #'  and \code{leng_stolon}.
 #' }
 #' Values are set to \code{NA} with the following rules:
 #' \itemize{
-#'  \item \code{cnn} traits with negative values are set to \code{NA}.
-#'  \item \code{cpo} traits with non-positive values are set to \code{NA}.
-#'  \item \code{pnn} traits with values out of the [0, 100] interval are set to \code{NA}.  
+#'  \item \code{cnn} variables with negative values are set to \code{NA}.
+#'  \item \code{cpo} variables with non-positive values are set to \code{NA}.
+#'  \item \code{pnn} variables with values out of the [0, 100] interval are set to \code{NA}.  
 #'  \item \code{ppo} with values out of the (0, 100] interval are set to \code{NA}.
-#'  \item \code{dnn} traits with negative and non-integer values are set to \code{NA}.
-#'  \item \code{ctg} traits with out of scale values are set to \code{NA}.
+#'  \item \code{dnn} variables with negative and non-integer values are set to \code{NA}.
+#'  \item \code{ctg} variables with out of scale values are set to \code{NA}.
 #'  \item Extreme low and high values are detected using the interquartile range.
 #'  The rule is to detect any value out of the interval
 #'  \eqn{[Q_1 - f \times (m/3 + IQR); Q_3 + f \times (m/3 + IQR)]} where \code{m}
 #'  is the mean. By default \code{f = 10} and if less than 10 a warning is shown.
 #'  Values out of this range are set to \code{NA}.
-#'  \item If \code{npe == 0} and there is some data for any trait,
+#'  \item If \code{npe == 0} and there is some data for any variable,
 #'  then \code{npe} is set to \code{NA}.  
-#'  \item If \code{npe == 0} and there is no data but some traits that are \code{0},
-#'  then all those traits are set to \code{NA}.  
-#'  \item If \code{nph == 0} and there is some data for any non-pre-harvest trait,
+#'  \item If \code{npe == 0} and there is no data but some variables that are \code{0},
+#'  then all those variables are set to \code{NA}.  
+#'  \item If \code{nph == 0} and there is some data for any non-pre-harvest variable,
 #'  then \code{nph} is set to \code{NA}.
 #'  \item If \code{nmtp == 0} and \code{mtwp > 0}, then \code{nmtp} is set to \code{NA}.
 #'  \item If \code{nmtp > 0} and \code{mtwp == 0}, then \code{mtwp} is set to \code{NA}.
 #'  \item If \code{nnomtp == 0} and \code{nomtwp > 0}, then \code{nnomtp} is set to \code{NA}.
 #'  \item If \code{nnomtp > 0} and \code{nomtwp == 0}, then \code{nomtwp} is set to \code{NA}.
 #' }
-#' Consider the following groups of traits for sweetpotato:
+#' Consider the following groups of variables for sweetpotato:
 #' \itemize{
-#'  \item Traits evaluated pre-harvest: \code{vir}, \code{vir1}, \code{vir2},
+#'  \item Variables evaluated pre-harvest: \code{vir}, \code{vir1}, \code{vir2},
 #'  \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
-#'  \item Traits evaluated with vines non-pre-harvest: \code{vw}, \code{biom},
+#'  \item Variables evaluated with vines non-pre-harvest: \code{vw}, \code{biom},
 #'  \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
 #'  \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj},
 #'  \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd}, \code{hi}, \code{shi},
 #'  and \code{dmv}.
-#'  \item Traits evaluated only with roots non-pre-harvest: \code{crw},
+#'  \item Variables evaluated only with roots non-pre-harvest: \code{crw},
 #'  \code{ncrw}, \code{trw}, \code{trw.d}, \code{cytha}, \code{cytha.aj},
 #'  \code{rytha}, \code{rytha.aj}, \code{dmry}, \code{dmry.aj}, \code{nrpp},
 #'  \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp}, \code{ypsp},
@@ -74,7 +74,7 @@
 #'  \code{wed}, \code{stspwv}, \code{milldam}, \code{fraw}, \code{suraw},
 #'  \code{straw}, \code{coof}, \code{coosu}, \code{coost}, \code{coot}, and
 #'  \code{cooap} 
-#'  \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
+#'  \item \code{cnn} (continuos non-negative variables): \code{vw}, \code{crw},
 #'  \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d},
 #'  \code{cytha}, \code{cytha.aj}, \code{rytha}, \code{rytha.aj}, \code{dmry},
 #'  \code{dmry.aj}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
@@ -82,15 +82,15 @@
 #'  \code{nrpp}, \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp},
 #'  \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, \code{rfr},
 #'  \code{bc}, \code{tc}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
-#'  \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
+#'  \item \code{cpo} (continuous positive variables): \code{dmf}, \code{dmd},
 #'  \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
-#'  \item \code{pnn} (percentage non-negative traits): \code{ci}, \code{hi},
+#'  \item \code{pnn} (percentage non-negative variables): \code{ci}, \code{hi},
 #'  \code{shi}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
-#'  \item \code{ppo} (percentage positive traits): \code{dm}, \code{dmv},
+#'  \item \code{ppo} (percentage positive variables): \code{dm}, \code{dmv},
 #'  \code{prot}, and \code{star}.
-#'  \item \code{dnn} (discrete non-negative traits): \code{nops}, \code{nope},
+#'  \item \code{dnn} (discrete non-negative variables): \code{nops}, \code{nope},
 #'  \code{noph}, \code{nopr}, \code{nocr}, \code{nonc}, and \code{tnr}.
-#'  \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
+#'  \item \code{ctg} (categorical 1 to 9 variables): \code{vir}, \code{vir1},
 #'  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
 #'  \code{fcol}, \code{fcol2}, \code{rs}, \code{rf}, \code{rtshp}, \code{damr},
 #'  \code{rspr}, \code{alcdam}, \code{wed}, \code{stspwv}, \code{milldam},
@@ -99,12 +99,12 @@
 #' }
 #' Values are set to \code{NA} with the following rules:
 #' \itemize{
-#'  \item \code{cnn} traits with negative values are set to \code{NA}.
-#'  \item \code{cpo} traits with non-positive values are set to \code{NA}.
-#'  \item \code{pnn} traits with values out of the [0, 100] interval are set to \code{NA}.  
+#'  \item \code{cnn} variables with negative values are set to \code{NA}.
+#'  \item \code{cpo} variables with non-positive values are set to \code{NA}.
+#'  \item \code{pnn} variables with values out of the [0, 100] interval are set to \code{NA}.  
 #'  \item \code{ppo} with values out of the (0, 100] interval are set to \code{NA}.
-#'  \item \code{dnn} traits with negative and non-integer values are set to \code{NA}.
-#'  \item \code{ctg} traits with out of scale values are set to \code{NA}.
+#'  \item \code{dnn} variables with negative and non-integer values are set to \code{NA}.
+#'  \item \code{ctg} variables with out of scale values are set to \code{NA}.
 #'  \item Beta carotene values determined by RHS color charts with values different from
 #'  the possible values in the RHS color chart are set to \code{NA}.
 #'  \item Extreme low and high values are detected using the interquartile range.
@@ -112,13 +112,13 @@
 #'  \eqn{[Q_1 - f \times (m/3 + IQR); Q_3 + f \times (m/3 + IQR)]} where \code{m}
 #'  is the mean. By default \code{f = 10} and if less than 10 a warning is shown.
 #'  Values out of this range are set to \code{NA}.
-#'  \item If \code{nope == 0} and there is some data for any trait,
+#'  \item If \code{nope == 0} and there is some data for any variable,
 #'  then \code{nope} is set to \code{NA}.
-#'  \item If \code{nope == 0} and there is no data but some traits that are \code{0},
-#'  then all those traits are set to \code{NA}.
-#'  \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,
+#'  \item If \code{nope == 0} and there is no data but some variables that are \code{0},
+#'  then all those variables are set to \code{NA}.
+#'  \item If \code{noph == 0} and there is some data for any non-pre-harvest variable,
 #'  then \code{noph} is set to \code{NA}.
-#'  \item If \code{nopr == 0} and there is some data for any trait evaluated with roots,
+#'  \item If \code{nopr == 0} and there is some data for any variable evaluated with roots,
 #'  then \code{nopr} is set to \code{NA}.
 #'  \item If \code{noph > 0} and \code{nocr}, \code{nonc}, \code{crw}, \code{ncrw}, 
 #'  and \code{vw} are all 0, then \code{vw} is set to \code{NA}.
@@ -172,36 +172,36 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   
   if (crop == 'pt') {
 
-    # Pre-harvest traits
+    # Pre-harvest variables
     
     pre <- c("ppe", "plant_unif", "plant_unif_45dap", "plant_unif_60dap", "plant_vigor",
              "plant_vigor_30dap", "plant_vigor_45dap", "plant_vigor_60dap", "flowering",
              "flowering_45dap", "flowering_60dap", "rlb", "rlb_30dap", "rlb_45dap",
              "rlb_60dap", "rlb_75dap", "se")
     
-    # Continuous non-negative traits
+    # Continuous non-negative variables
     
     cnn <- c("tntpl", "nmtpl", "ttwp", "ttwpl", "mtwp", "mtwpl", "nomtwp",
              "mtwci", "mtwcii", "ttya", "ttyna", "mtya", "mtyna")
     
-    # Continuous positive traits
+    # Continuous positive variables
     
     cpo <- c("atw", "atmw", "fwts1", "fwts2", "dwts1", "dwts2")
     
-    # Percentage non-negative traits
+    # Percentage non-negative variables
     
     pnn <- c("ppe", "pph", "fruc", "gluc", "sucr", "malt")
     
-    # Percentage positive traits
+    # Percentage positive variables
     
     ppo <- c("dm", "pro", "star", "fiber")
     
-    # Discrete non-negative traits
+    # Discrete non-negative variables
     
     dnn <- c("ntp", "npe", "npe_15dap", "npe_30dap", "nph", "tntp", "nmtp",
              "nnomtp", "nmtci", "nmtcii")
     
-    # Categorical traits
+    # Categorical variables
     
     ctg <- c("plant_unif", "plant_unif_45dap", "plant_unif_60dap", "plant_vigor",
              "plant_vigor_30dap", "plant_vigor_45dap", "plant_vigor_60dap", "se",
@@ -214,29 +214,29 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # Impossible values
     #-------------------------------
     
-    # Impossible values for continuous non-negative traits
+    # Impossible values for continuous non-negative variables
     
     for (i in 1:length(cnn))
       if (exists(cnn[i], dfr)) {
         cond <- dfr[, cnn[i]] < 0 & !is.na(dfr[, cnn[i]])
         dfr[cond, cnn[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with negative values replaced with NA for trait ",
+          warning("Rows with negative values replaced with NA for variable ",
                   cnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for continuous positive traits
+    # Impossible values for continuous positive variables
     
     for (i in 1:length(cpo))
       if (exists(cpo[i], dfr)) {
         cond <- dfr[, cpo[i]] <= 0 & !is.na(dfr[, cpo[i]])
         dfr[cond, cpo[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with non-positive values replaced with NA for trait ",
+          warning("Rows with non-positive values replaced with NA for variable ",
                   cpo[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for percentage non-negative traits
+    # Impossible values for percentage non-negative variables
     
     for (i in 1:length(pnn))
       if (exists(pnn[i], dfr)) {
@@ -245,11 +245,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, pnn[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with values out of [0-100] replaced with NA for trait ",
+          warning("Rows with values out of [0-100] replaced with NA for variable ",
                   pnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for percentage positive traits
+    # Impossible values for percentage positive variables
     
     for (i in 1:length(ppo))
       if (exists(ppo[i], dfr)) {
@@ -258,11 +258,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, ppo[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with values out of (0-100] replaced with NA for trait ",
+          warning("Rows with values out of (0-100] replaced with NA for variable ",
                   ppo[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for discrete non-negative traits
+    # Impossible values for discrete non-negative variables
     
     for (i in 1:length(dnn))
       if (exists(dnn[i], dfr)) {
@@ -271,11 +271,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, dnn[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with negative or non integer values replaced with NA for trait ",
+          warning("Rows with negative or non integer values replaced with NA for variable ",
                   dnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for categorical traits
+    # Impossible values for categorical variables
     
     for (i in ctg)
       if (exists(i, dfr)) {
@@ -284,7 +284,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         dfr[cond, i] <- NA
         if (sum(cond) > 0)
           warning("Rows with values out of ", lims$Minimum, "-", lims$Maximum,
-                  " integer scale replaced with NA for trait ",
+                  " integer scale replaced with NA for variable ",
                   i, ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
@@ -304,7 +304,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, t.all[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with extreme values replaced with NA for trait ",
+          warning("Rows with extreme values replaced with NA for variable ",
                   t.all[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
@@ -312,13 +312,13 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # npe, nph consistency
     #-------------------------------
     
-    # Subset in fieldook all traits
+    # Subset in fieldook all variables
     
     t.all <- c(cnn, cpo, pnn, ppo, dnn, ctg)
     t.all <- t.all[t.all %in% colnames(dfr)]
     t.all <- t.all[!(t.all %in% c("ntp", "npe"))]
     
-    # Subset in fieldook all non-pre-harvest traits
+    # Subset in fieldook all non-pre-harvest variables
     
     t.pos <- t.all[!(t.all %in% pre)]
     t.pos <- t.pos[t.pos != "nph"]
@@ -337,10 +337,10 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           dfr[, 'npe'] == 0 & !is.na(dfr[, 'npe'])
       dfr[cond, 'npe'] <- NA
       if (sum(cond) > 0)
-        warning("Rows with data replaced with NA for trait npe: ",
+        warning("Rows with data replaced with NA for variable npe: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
       
-      # npe == 0 and only zeros then traits <- NA
+      # npe == 0 and only zeros then variables <- NA
       
       if (length(t.all) == 1)
         cond <- dfr[, t.all] == 0 & !is.na(dfr[, t.all]) &
@@ -355,7 +355,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           cond2 <- cond & cond.tmp
           dfr[cond2, t.all[i]] <- NA
           if (sum(cond2) > 0)
-            warning("Rows with NA replaced with NA for trait ",
+            warning("Rows with NA replaced with NA for variable ",
                     t.all[i], ": ", paste0(rownames(dfr)[cond2], " "), call. = FALSE)
         }
       
@@ -372,7 +372,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           dfr[, 'nph'] == 0 & !is.na(dfr[, 'nph'])
       dfr[cond, 'nph'] <- NA
       if (sum(cond) > 0)
-        warning("Rows with data replaced with NA for trait nph: ",
+        warning("Rows with data replaced with NA for variable nph: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -386,12 +386,12 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- dfr[, "nmtp"] == 0 & !is.na(dfr[, "nmtp"]) & dfr[, "mtwp"] > 0 & !is.na(dfr[, "mtwp"])
       dfr[cond, 'nmtp'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait nmtp: ",
+        warning("Rows replaced with NA for variable nmtp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
       cond <- dfr[, "nmtp"] > 0 & !is.na(dfr[, "nmtp"]) & dfr[, "mtwp"] == 0 & !is.na(dfr[, "mtwp"])
       dfr[cond, 'mtwp'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait mtwp: ",
+        warning("Rows replaced with NA for variable mtwp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -401,12 +401,12 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- dfr[, "nnomtp"] == 0 & !is.na(dfr[, "nnomtp"]) & dfr[, "nomtwp"] > 0 & !is.na(dfr[, "nomtwp"])
       dfr[cond, 'nnomtp'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait nnomtp: ",
+        warning("Rows replaced with NA for variable nnomtp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
       cond <- dfr[, "nnomtp"] > 0 & !is.na(dfr[, "nnomtp"]) & dfr[, "nomtwp"] == 0 & !is.na(dfr[, "nomtwp"])
       dfr[cond, 'nomtwp'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait nomtwp: ",
+        warning("Rows replaced with NA for variable nomtwp: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -418,17 +418,17 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   
   if (crop == 'sp') {
 
-    # Pre-harvest traits
+    # Pre-harvest variables
     
     pre <- c("vir", "vir1", "vir2", "alt", "alt1", "alt2", "vv")
     
-    # Traits evaluated with vines non-pre-harvest
+    # Variables evaluated with vines non-pre-harvest
     
     wvn <- c("vw", "biom", "biom.d", "vw.d", "fytha", "fytha.aj", "dmvy",
              "dmvy.aj", "bytha", "bytha.aj", "dmby", "dmby.aj", "vpp",
              "vpsp", "dmvf", "dmvd", "hi", "shi", "dmv")
     
-    # Continuous non-negative traits
+    # Continuous non-negative variables
     
     cnn <- c("vw", "crw", "ncrw", "trw", "trw.d", "biom", "biom.d", "cytha",
              "cytha.aj", "rytha", "rytha.aj", "dmry", "dmry.aj", "vw.d", "fytha",
@@ -436,29 +436,29 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
              "nrpp", "nrpsp", "ncrpp", "ncrpsp", "ypp", "ypsp", "rtyldpct", "vpp",
              "vpsp", "rfr", 'bc', 'tc', "fe", "zn", "ca", "mg")
     
-    # Continuous positive traits
+    # Continuous positive variables
     
     cpo <- c("dmf", "dmd", "dmvf", "dmvd", "acrw", "ancrw", "atrw")
     
-    # Percentage non-negative traits
+    # Percentage non-negative variables
     
     pnn <- c("ci", "hi", "shi", "fruc", "gluc", "sucr", "malt")
     
-    # Percentage positive traits
+    # Percentage positive variables
     
     ppo <- c("dm", "dmv", "prot", "star")
     
-    # Discrete non-negative traits
+    # Discrete non-negative variables
     
     dnn <- c("nops", "nope", "noph", "nopr", "nocr", "nonc", "tnr")
     
-    # Categorical 1 to 9 traits
+    # Categorical 1 to 9 variables
     
     ctg <- c(pre, "scol", "fcol", "fcol2", "rs", "rf", "rtshp", "damr", "rspr",
              "alcdam", "wed", "stspwv", "milldam", "fraw", "suraw", "straw",
              "coof", "coosu", "coost", "coot", "cooap")
     
-    # Categorical traits
+    # Categorical variables
     
     bc.cc <- "bc.cc"
     fcol.cc <- "fcol.cc"
@@ -467,29 +467,29 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # Impossible values
     #-------------------------------
     
-    # Impossible values for continuous non-negative traits
+    # Impossible values for continuous non-negative variables
     
     for (i in 1:length(cnn))
       if (exists(cnn[i], dfr)) {
         cond <- dfr[, cnn[i]] < 0 & !is.na(dfr[, cnn[i]])
         dfr[cond, cnn[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with negative values replaced with NA for trait ",
+          warning("Rows with negative values replaced with NA for variable ",
                   cnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for continuous positive traits
+    # Impossible values for continuous positive variables
     
     for (i in 1:length(cpo))
       if (exists(cpo[i], dfr)) {
         cond <- dfr[, cpo[i]] <= 0 & !is.na(dfr[, cpo[i]])
         dfr[cond, cpo[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with non-positive values replaced with NA for trait ",
+          warning("Rows with non-positive values replaced with NA for variable ",
                   cpo[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for percentage non-negative traits
+    # Impossible values for percentage non-negative variables
     
     for (i in 1:length(pnn))
       if (exists(pnn[i], dfr)) {
@@ -498,11 +498,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, pnn[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with values out of [0-100] replaced with NA for trait ",
+          warning("Rows with values out of [0-100] replaced with NA for variable ",
                   pnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for percentage positive traits
+    # Impossible values for percentage positive variables
     
     for (i in 1:length(ppo))
       if (exists(ppo[i], dfr)) {
@@ -511,11 +511,11 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, ppo[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with values out of (0-100] replaced with NA for trait ",
+          warning("Rows with values out of (0-100] replaced with NA for variable ",
                   ppo[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for discrete non-negative traits
+    # Impossible values for discrete non-negative variables
     
     for (i in 1:length(dnn))
       if (exists(dnn[i], dfr)) {
@@ -524,18 +524,18 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, dnn[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with negative or non integer values replaced with NA for trait ",
+          warning("Rows with negative or non integer values replaced with NA for variable ",
                   dnn[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
-    # Impossible values for 1 to 9 categorical traits
+    # Impossible values for 1 to 9 categorical variables
     
     for (i in 1:length(ctg))
       if (exists(ctg[i], dfr)) {
         cond <- !(dfr[, ctg[i]] %in% 1:9) & !is.na(dfr[, ctg[i]])
         dfr[cond, ctg[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with values out of 1-9 integer scale replaced with NA for trait ",
+          warning("Rows with values out of 1-9 integer scale replaced with NA for variable ",
                   ctg[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
@@ -548,7 +548,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- !(dfr[, bc.cc] %in% bc.cc.values) & !is.na(dfr[, bc.cc])
       dfr[cond, bc.cc] <- NA
       if (sum(cond) > 0)
-        warning("Rows with values out of scale replaced with NA for trait ",
+        warning("Rows with values out of scale replaced with NA for variable ",
                 bc.cc, ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -556,7 +556,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- !(dfr[, fcol.cc] %in% 1:30) & !is.na(dfr[, fcol.cc])
       dfr[cond, fcol.cc] <- NA
       if (sum(cond) > 0)
-        warning("Rows with values out of integer scale replaced with NA for trait ",
+        warning("Rows with values out of integer scale replaced with NA for variable ",
                 fcol.cc, ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -576,7 +576,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         cond <- cond1 | cond2
         dfr[cond, t.all[i]] <- NA
         if (sum(cond) > 0)
-          warning("Rows with extreme values replaced with NA for trait ",
+          warning("Rows with extreme values replaced with NA for variable ",
                   t.all[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
       }
     
@@ -584,18 +584,18 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # nope, noph, nopr consistency
     #-------------------------------
     
-    # Subset in fieldook all traits
+    # Subset in fieldook all variables
     
     t.all <- c(cnn, cpo, pnn, ppo, dnn, ctg, bc.cc, fcol.cc)
     t.all <- t.all[t.all %in% colnames(dfr)]
     t.all <- t.all[!(t.all %in% c("nops", "nope"))]
     
-    # Subset in fieldook all non-pre-harvest traits
+    # Subset in fieldook all non-pre-harvest variables
     
     t.pos <- t.all[!(t.all %in% pre)]
     t.pos <- t.pos[t.pos != "noph"]
     
-    # Subset in fieldook all traits evaluated only with roots
+    # Subset in fieldook all variables evaluated only with roots
     
     t.rot <- t.pos[!(t.pos %in% wvn)]
     t.rot <- t.rot[t.rot != "nopr"]
@@ -614,10 +614,10 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           dfr[, 'nope'] == 0 & !is.na(dfr[, 'nope'])
       dfr[cond, 'nope'] <- NA
       if (sum(cond) > 0)
-        warning("Rows with data replaced with NA for trait nope: ",
+        warning("Rows with data replaced with NA for variable nope: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
       
-      # nope == 0 and only zeros then traits <- NA
+      # nope == 0 and only zeros then variables <- NA
       
       if (length(t.all) == 1)
         cond <- dfr[, t.all] == 0 & !is.na(dfr[, t.all]) &
@@ -632,7 +632,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           cond2 <- cond & cond.tmp
           dfr[cond2, t.all[i]] <- NA
           if (sum(cond2) > 0)
-            warning("Rows with NA replaced with NA for trait ",
+            warning("Rows with NA replaced with NA for variable ",
                     t.all[i], ": ", paste0(rownames(dfr)[cond2], " "), call. = FALSE)
         }
       
@@ -649,7 +649,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           dfr[, 'noph'] == 0 & !is.na(dfr[, 'noph'])
       dfr[cond, 'noph'] <- NA
       if (sum(cond) > 0)
-        warning("Rows with data replaced with NA for trait noph: ",
+        warning("Rows with data replaced with NA for variable noph: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -664,7 +664,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           dfr[, 'nopr'] == 0 & !is.na(dfr[, 'nopr'])
       dfr[cond, 'nopr'] <- NA
       if (sum(cond) > 0)
-        warning("Rows with data replaced with NA for trait nopr: ",
+        warning("Rows with data replaced with NA for variable nopr: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -683,20 +683,20 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     
     if (exists("nonc", dfr) & !exists("ncrw", dfr)) {
       ncr.cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"])
-      ncr.traits <- "nonc"
+      ncr.variables <- "nonc"
     }
     
     if (!exists("nonc", dfr) & exists("ncrw", dfr)) {
       ncr.cond <- dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"])
-      ncr.traits <- "ncrw"
+      ncr.variables <- "ncrw"
     }
     
     if (exists("nonc", dfr) & exists("ncrw", dfr)) {
       ncr.cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"])
-      ncr.traits <- c("nonc", "ncrw")
+      ncr.variables <- c("nonc", "ncrw")
     }
     
-    # noph > 0 and all traits 0
+    # noph > 0 and all variables 0
     
     if (exists("noph", dfr) & (exists("nocr", dfr) | exists("crw", dfr)) &
         (exists("nonc", dfr) | exists("ncrw", dfr)) & exists("vw", dfr)) {
@@ -704,18 +704,18 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
         dfr[, "vw"] == 0 & !is.na(dfr[, "vw"])
       dfr[cond, 'vw'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait vw: ",
+        warning("Rows replaced with NA for variable vw: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
-    # nopr > 0 and all traits 0
+    # nopr > 0 and all variables 0
     
     if (exists("nopr", dfr) & (exists("nocr", dfr) | exists("crw", dfr)) &
         (exists("nonc", dfr) | exists("ncrw", dfr))) {
       cond <- dfr[, "nopr"] > 0 & !is.na(dfr[, "nopr"]) & cr.cond & ncr.cond
-      dfr[cond, ncr.traits] <- NA
+      dfr[cond, ncr.variables] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for traits nonc and ncrw: ",
+        warning("Rows replaced with NA for variables nonc and ncrw: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -729,12 +729,12 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- dfr[, "nocr"] == 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] > 0 & !is.na(dfr[, "crw"])
       dfr[cond, 'nocr'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait nocr: ",
+        warning("Rows replaced with NA for variable nocr: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
       cond <- dfr[, "nocr"] > 0 & !is.na(dfr[, "nocr"]) & dfr[, "crw"] == 0 & !is.na(dfr[, "crw"])
       dfr[cond, 'crw'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait crw: ",
+        warning("Rows replaced with NA for variable crw: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
@@ -744,12 +744,12 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] > 0 & !is.na(dfr[, "ncrw"])
       dfr[cond, 'nonc'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait nonc: ",
+        warning("Rows replaced with NA for variable nonc: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
       cond <- dfr[, "nonc"] > 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"])
       dfr[cond, 'ncrw'] <- NA
       if (sum(cond) > 0)
-        warning("Rows replaced with NA for trait ncrw: ",
+        warning("Rows replaced with NA for variable ncrw: ",
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     

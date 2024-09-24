@@ -18,7 +18,7 @@
 \arguments{
 \item{x}{An object of class \code{ammi}.}
 
-\item{bp.type}{Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.}
+\item{bp.type}{Choose 1 for the variable-PC1 biplot and 2 for the PC1-PC2 biplot.}
 
 \item{bp1.type}{Choose "effects" or "means" for biplot-1.}
 

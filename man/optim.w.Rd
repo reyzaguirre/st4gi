@@ -5,7 +5,7 @@
 \title{Optimize Westcott adjustment}
 \usage{
 optim.w(
-  trait,
+  y,
   geno,
   replicated,
   ck1,
@@ -22,7 +22,7 @@ optim.w(
 )
 }
 \arguments{
-\item{trait}{The name of the column for the trait to adjust.}
+\item{y}{The name of the column for the variable to adjust.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

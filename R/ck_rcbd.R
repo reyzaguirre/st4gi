@@ -1,7 +1,7 @@
 #' Check data for a RCBD
 #'
 #' This function checks the frequencies of genotypes in a RCBD.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
@@ -25,7 +25,7 @@
 #' ck.rcbd('y', 'geno', 'block', dfr)
 #' @export
 
-ck.rcbd <- function(trait, geno, rep, dfr) {
+ck.rcbd <- function(y, geno, rep, dfr) {
   
   # Check factor structure
   
@@ -37,7 +37,7 @@ ck.rcbd <- function(trait, geno, rep, dfr) {
   
   # Frequencies for genotypes and replications
   
-  out <- ck.fq(trait, geno, rep, dfr)
+  out <- ck.fq(y, geno, rep, dfr)
   tf <- out$tf
   tfr <- out$tfr
   nmis <- out$nmis

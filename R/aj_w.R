@@ -2,7 +2,7 @@
 #'
 #' This function adjust the observed values of an experiment planted following
 #' the method described by Westcott (1981) with a grid of checks.
-#' @param trait The name of the column for the trait to adjust.
+#' @param y The name of the column for the variable to adjust.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param ck1 Name of check 1.
 #' @param ck2 Name of check 2.
@@ -15,7 +15,7 @@
 #' @param p The proportion of the check values differences used for the adjustment.
 #' See details.
 #' @param dfr The name of the data frame.
-#' @details The values of the selected \code{trait} are adjusted using some mean
+#' @details The values of the selected variable \code{y} are adjusted using some mean
 #' of the values of all the checks located on the row of the plot plus the \code{nrs}
 #' rows at each side of the row of the plot. If \code{method = "flat"} the simple mean
 #' of the checks is used for the adjustment, if \code{method = "weighted"} a weighted mean
@@ -48,7 +48,7 @@
 #' aj.w("y", "geno", "Dag", "Cem", "row", "col", dfr = dfr)
 #' @export
 
-aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
+aj.w <- function(y, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
                  method = c("weighted", "flat"), ind = TRUE, p = 0.5, dfr) {
   
   # Match arguments
@@ -67,7 +67,7 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
   if (out$nplot > 0)
     stop("More than one genotype in the same position. Run check.pos to look over.")
   
-  out <- ck.w(trait, geno, ck1, ck2, row, col, ncb, dfr)
+  out <- ck.w(y, geno, ck1, ck2, row, col, ncb, dfr)
   eval.cond <- sum(out$c1, out$c2, out$c3, out$c4, out$c5)
   
   if (out$c1 == 1)
@@ -88,19 +88,19 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
   if (eval.cond > 0)
     warning("Adjusted values are obtained with the values of the checks nearby.")
 
-  # Get a copy of trait for the adjusted values
+  # Get a copy of y for the adjusted values
   
-  trait.w <- paste(trait, 'w', sep = '.') 
-  dfr[, trait.w] <- dfr[, trait]
+  y.w <- paste(y, 'w', sep = '.') 
+  dfr[, y.w] <- dfr[, y]
 
   # Compute means for checks
   
   if (ind) {
-    ck1.mean <- mean(dfr[dfr[, geno] == ck1, trait], na.rm = TRUE)
-    ck2.mean <- mean(dfr[dfr[, geno] == ck2, trait], na.rm = TRUE)
+    ck1.mean <- mean(dfr[dfr[, geno] == ck1, y], na.rm = TRUE)
+    ck2.mean <- mean(dfr[dfr[, geno] == ck2, y], na.rm = TRUE)
   } else {
-    ck1.mean <- mean(dfr[dfr[, geno] %in% c(ck1, ck2), trait], na.rm = TRUE)
-    ck2.mean <- mean(dfr[dfr[, geno] %in% c(ck1, ck2), trait], na.rm = TRUE)
+    ck1.mean <- mean(dfr[dfr[, geno] %in% c(ck1, ck2), y], na.rm = TRUE)
+    ck2.mean <- mean(dfr[dfr[, geno] %in% c(ck1, ck2), y], na.rm = TRUE)
   }
   
   # Center check values and compute relative variation adjusted by p
@@ -108,12 +108,12 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
   cond1 <- dfr[, geno] == ck1
   cond2 <- dfr[, geno] == ck2
 
-  dfr[cond1, trait.w] <- (dfr[cond1, trait.w] - ck1.mean) / ck1.mean * p
-  dfr[cond2, trait.w] <- (dfr[cond2, trait.w] - ck2.mean) / ck2.mean * p
+  dfr[cond1, y.w] <- (dfr[cond1, y.w] - ck1.mean) / ck1.mean * p
+  dfr[cond2, y.w] <- (dfr[cond2, y.w] - ck2.mean) / ck2.mean * p
   
   # Replace missing values with 0 (this is the centered mean)
   
-  dfr[dfr[, geno] %in% c(ck1, ck2) & is.na(dfr[, trait.w]), trait.w] <- 0
+  dfr[dfr[, geno] %in% c(ck1, ck2) & is.na(dfr[, y.w]), y.w] <- 0
   
   # Choose function for adjustment
   
@@ -133,9 +133,9 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
     if (dfr[i, geno] %in% c(ck1, ck2)) {
       af <- 0
     } else {
-        af <- foo(i, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr)
+        af <- foo(i, y.w, geno, ck1, ck2, row, col, ncb, nrs, dfr)
     }
-    dfr[i, trait.w] <- dfr[i, trait.w] / (1 + af)
+    dfr[i, y.w] <- dfr[i, y.w] / (1 + af)
   }
   
   # Return
@@ -146,7 +146,7 @@ aj.w <- function(trait, geno, ck1, ck2, row, col, ncb = 10, nrs = NULL,
 
 # A function for Westcott adjustment with method 2
 
-foo.weig <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
+foo.weig <- function(x, y.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Identify row and column for plot
   
@@ -174,8 +174,8 @@ foo.weig <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Check values on the left and right
   
-  ck.lf <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.lf, c(row, trait.w)]
-  ck.rg <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.rg, c(row, trait.w)]
+  ck.lf <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.lf, c(row, y.w)]
+  ck.rg <- dfr[dfr[, row] %in% row.ck & dfr[, col] == col.rg, c(row, y.w)]
   
   # Sort by row
   
@@ -184,8 +184,8 @@ foo.weig <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Get left and right means for adjustment
   
-  m.ck.lf <- sum(ck.lf[, trait.w] * row.wg) / sum(row.wg)
-  m.ck.rg <- sum(ck.rg[, trait.w] * row.wg) / sum(row.wg)
+  m.ck.lf <- sum(ck.lf[, y.w] * row.wg) / sum(row.wg)
+  m.ck.rg <- sum(ck.rg[, y.w] * row.wg) / sum(row.wg)
   
   # Get adjustment factor
   
@@ -200,7 +200,7 @@ foo.weig <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
 # A function for Westcott adjustment with method 1 or
 # when layout does not follow the Westcott method
 
-foo.flat <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
+foo.flat <- function(x, y.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
   
   # Identify row and column for plot
   
@@ -216,7 +216,7 @@ foo.flat <- function(x, trait.w, geno, ck1, ck2, row, col, ncb, nrs, dfr) {
 
   # Get adjustment factor
   
-  af <- mean(temp[, trait.w])
+  af <- mean(temp[, y.w])
   
   # Return
   

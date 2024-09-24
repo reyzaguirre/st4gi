@@ -5,7 +5,7 @@
 \title{Adjust values following the method of Westcott}
 \usage{
 aj.w(
-  trait,
+  y,
   geno,
   ck1,
   ck2,
@@ -20,7 +20,7 @@ aj.w(
 )
 }
 \arguments{
-\item{trait}{The name of the column for the trait to adjust.}
+\item{y}{The name of the column for the variable to adjust.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
@@ -53,7 +53,7 @@ This function adjust the observed values of an experiment planted following
 the method described by Westcott (1981) with a grid of checks.
 }
 \details{
-The values of the selected \code{trait} are adjusted using some mean
+The values of the selected variable \code{y} are adjusted using some mean
 of the values of all the checks located on the row of the plot plus the \code{nrs}
 rows at each side of the row of the plot. If \code{method = "flat"} the simple mean
 of the checks is used for the adjustment, if \code{method = "weighted"} a weighted mean

@@ -4,10 +4,10 @@
 \alias{conplot}
 \title{Plot connectivity among trials}
 \usage{
-conplot(trait, geno, trial, dfr)
+conplot(y, geno, trial, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to plot.}
+\item{y}{The name of the column for the variable to plot.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

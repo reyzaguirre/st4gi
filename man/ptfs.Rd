@@ -14,6 +14,6 @@ International Potato Center, potato experimental data.
 ptfs
 }
 \description{
-This data set contains data for 13 traits in 5 trials with
+This data set contains data for 13 variables in 5 trials with
 different number of genotypes, but some in common.
 }

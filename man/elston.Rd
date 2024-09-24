@@ -5,7 +5,7 @@
 \title{Elston Index}
 \usage{
 elston(
-  traits,
+  vars,
   geno,
   env = NULL,
   rep = NULL,
@@ -15,7 +15,7 @@ elston(
 )
 }
 \arguments{
-\item{traits}{The names of the columns for the traits.}
+\item{vars}{The names of the columns for the variables.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
@@ -32,7 +32,7 @@ elston(
 \eqn{k = (n \times min(x) - max(x)) / (n - 1)}}
 }
 \value{
-It returns a data frame with the genotypic means for each trait,
+It returns a data frame with the genotypic means for each variable,
 the Elston index, and the rank for each genotype according to the index.
 }
 \description{
@@ -40,8 +40,8 @@ Function to compute the Elston index (Elston, R. C., 1963).
 }
 \details{
 The Elston index is a weight free index. It is assumed that all the
-traits are in the same direction where the highest the value the better the
-genotype. To include any trait with an opposite direction it must be transformed
+variables are in the same direction where the highest the value the better the
+genotype. To include any variable with an opposite direction it must be transformed
 by multiplication by \code{-1} before.
 
 If \code{means = "fitted"} then a linear model is fitted and used to estimate
@@ -57,7 +57,7 @@ elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", dfr = spg)
 }
 \references{
 Elston, R. C. (1963). A weight-free index for the purpose of ranking or selection
-with respect to several traits at a time. Biometrics. 19(1): 85-97.
+with respect to several variables at a time. Biometrics. 19(1): 85-97.
 }
 \author{
 Raul Eyzaguirre.

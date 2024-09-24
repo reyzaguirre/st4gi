@@ -5,7 +5,7 @@
 #' @param f Factor for extreme values detection. See details.
 #' @param out.mod Statistical model for outliers' detection. See details.
 #' @param out.max Threshold for outliers' detection.
-#' @param add Additional quantitative traits.
+#' @param add Additional quantitative variables.
 #' @param print.text Logical, if \code{TRUE} the output is printed on screen.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed in
@@ -27,7 +27,7 @@
 #' rows with some kind of inconsistency.
 #' \item \code{$Inconsist.Matrix}, a \code{data.frame} with the positions
 #' in the fieldbook data frame where inconsistencies occur. These are coded
-#' with: (1) for inconsistencies among traits, (2) for out of range values,
+#' with: (1) for inconsistencies among variables, (2) for out of range values,
 #' (3) for extreme values or outliers.
 #' }
 #' @author Raul Eyzaguirre.
@@ -77,7 +77,7 @@ check.data <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
 
 ###############################################################################
 # Check data functions
-# - t1, t2: traits
+# - t1, t2: variables
 # - tx: text to print
 # - vmin: Minimum value that is valid (< vmin is invalid), use 0.1 to code <= 0 
 # - vmax: Maximum value that is valid (> vmax is invalid)
@@ -126,7 +126,7 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
   
   output <- NULL
   
-  # Two traits conditions
+  # Two variables conditions
   
   if (rule %in% 1:3) {
     
@@ -343,7 +343,7 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
     
   }
   
-  # Extreme values detection for additional traits
+  # Extreme values detection for additional variables
   
   if (!is.null(add)) {
     
@@ -450,7 +450,7 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
       
     }
     
-    # Outliers' detection for additional traits
+    # Outliers' detection for additional variables
     
     if (!is.null(add)) {
       

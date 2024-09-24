@@ -4,10 +4,10 @@
 \alias{rsa}
 \title{Regression Stability Analysis}
 \usage{
-rsa(trait, geno, env, rep, dfr, maxp = 0.1)
+rsa(y, geno, env, rep, dfr, maxp = 0.1)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

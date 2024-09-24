@@ -1,7 +1,7 @@
 #' Check data for a full factorial
 #'
 #' This function checks the frequencies for a full factorial.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param factors The names of the columns that identify the factors.
 #' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
@@ -29,7 +29,7 @@
 #' ck.f("y", c("A", "B"), "block", dfr)
 #' @export
 
-ck.f <- function(trait, factors, rep, dfr) {
+ck.f <- function(y, factors, rep, dfr) {
   
   # Check factor structure
 
@@ -42,7 +42,7 @@ ck.f <- function(trait, factors, rep, dfr) {
   
   # Frequencies for factors and replications
   
-  out <- ck.fq(trait, factors, rep, dfr)
+  out <- ck.fq(y, factors, rep, dfr)
   tf <- out$tf
   tfr <- out$tfr
   nmis <- out$nmis

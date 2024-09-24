@@ -4,14 +4,14 @@
 \alias{docomp}
 \title{Do computations over some factors}
 \usage{
-docomp(do, traits, factors, keep = NULL, dfr, method = c("fast", "slow"))
+docomp(do, vars, factors, keep = NULL, dfr, method = c("fast", "slow"))
 }
 \arguments{
 \item{do}{The computation to perform. Implemented options are \code{count},
 \code{mode}, and standard functions like \code{mean}, \code{median},
 \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.}
 
-\item{traits}{The names of the columns for the traits.}
+\item{vars}{The names of the columns for the variables.}
 
 \item{factors}{The names of the columns for the factors.}
 
@@ -25,10 +25,10 @@ docomp(do, traits, factors, keep = NULL, dfr, method = c("fast", "slow"))
 It returns a data frame with the computations.
 }
 \description{
-Do computations for several traits for some specific factors.
+Do computations for several variables for some specific factors.
 }
 \details{
-This function do a specific computation for all the \code{traits}
+This function do a specific computation for all the \code{vars}
 for each level's combination of the \code{factors}. Additional columns can be
 kept if specified in \code{keep}. All \code{factors} and \code{keep} values
 are converted to character. \code{do = "count"} counts the number
@@ -36,12 +36,12 @@ of valid cases (excluding missing values).
 }
 \examples{
 # Compute means across replications and then across locations for each genotype
-traits <- c("rytha", "bc", "dm", "star", "nocr")
+vars <- c("rytha", "bc", "dm", "star", "nocr")
 factors <- c("geno", "loc")
-output1 <- docomp("mean", traits, factors, dfr = spg)
-docomp("mean", traits, "geno", dfr = output1) 
+output1 <- docomp("mean", vars, factors, dfr = spg)
+docomp("mean", vars, "geno", dfr = output1) 
 # Compute maxima across replications for each genotype and location.
-docomp("max", traits, factors, dfr = spg)
+docomp("max", vars, factors, dfr = spg)
 }
 \author{
 Raul Eyzaguirre.

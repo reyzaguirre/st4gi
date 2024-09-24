@@ -4,10 +4,10 @@
 \alias{ck.rcbd}
 \title{Check data for a RCBD}
 \usage{
-ck.rcbd(trait, geno, rep, dfr)
+ck.rcbd(y, geno, rep, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

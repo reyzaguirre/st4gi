@@ -18,7 +18,7 @@ convert.co(
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 }
 \value{
-It returns a data frame with all short labels for traits interchanged
+It returns a data frame with all short labels for variables interchanged
 with Crop Ontology variable numbers.
 }
 \description{

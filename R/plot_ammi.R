@@ -3,7 +3,7 @@
 #' This function produces AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000) biplots
 #' using the base system and ggplot2.
 #' @param x An object of class \code{ammi}.
-#' @param bp.type Choose 1 for the trait-PC1 biplot and 2 for the PC1-PC2 biplot.
+#' @param bp.type Choose 1 for the variable-PC1 biplot and 2 for the PC1-PC2 biplot.
 #' @param bp1.type Choose "effects" or "means" for biplot-1.
 #' @param graph.type \code{"base"} or \code{"ggplot"}.
 #' @param color Color for lines, symbols and/or labels for environments, genotypes and axes
@@ -43,7 +43,7 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
   # arguments
   
   method <- x$Method
-  trait.name <- x$Trait
+  y.name <- x$Variable
   overall.mean <- x$Overall_mean
   geno.mean <- x$Genotype_means
   env.mean <- x$Environment_means
@@ -71,7 +71,7 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
   if (bp.type == 1) {
     
     if(is.null(main))
-      main <- paste0(method, " biplot-1 for ", trait.name)
+      main <- paste0(method, " biplot-1 for ", y.name)
     
     if (bp1.type == "effects") {
 
@@ -143,7 +143,7 @@ plot.st4gi_ammi <- function(x, bp.type = 2, bp1.type = c("effects", "means"),
   if (bp.type == 2) {
     
     if(is.null(main))
-      main <- paste0(method, " biplot-2 for ", trait.name)
+      main <- paste0(method, " biplot-2 for ", y.name)
     
     if (graph.type == "base") {
 

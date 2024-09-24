@@ -23,7 +23,7 @@ check.data(
 
 \item{out.max}{Threshold for outliers' detection.}
 
-\item{add}{Additional quantitative traits.}
+\item{add}{Additional quantitative variables.}
 
 \item{print.text}{Logical, if \code{TRUE} the output is printed on screen.}
 
@@ -36,7 +36,7 @@ It returns:
 rows with some kind of inconsistency.
 \item \code{$Inconsist.Matrix}, a \code{data.frame} with the positions
 in the fieldbook data frame where inconsistencies occur. These are coded
-with: (1) for inconsistencies among traits, (2) for out of range values,
+with: (1) for inconsistencies among variables, (2) for out of range values,
 (3) for extreme values or outliers.
 }
 }

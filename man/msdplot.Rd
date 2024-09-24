@@ -5,7 +5,7 @@
 \title{Plot means and standard deviations with a dotplot}
 \usage{
 msdplot(
-  trait,
+  y,
   groups,
   dfr,
   conf = 0.95,
@@ -20,7 +20,7 @@ msdplot(
 )
 }
 \arguments{
-\item{trait}{The name of the column for the trait to plot.}
+\item{y}{The name of the column for the variable to plot.}
 
 \item{groups}{The name of the column for the grouping factor.}
 

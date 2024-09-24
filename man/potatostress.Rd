@@ -14,6 +14,6 @@ International Potato Center, potato experimental data.
 potatostress
 }
 \description{
-This data set contains BLUPs for 24 genotypes and 3 traits in a 
+This data set contains BLUPs for 24 genotypes and 3 variables in a 
 potato trial with two treatments, well water and water stress.
 }

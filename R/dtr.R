@@ -1,7 +1,7 @@
 #' Data transformations
 #'
 #' This function performs different data transformations.
-#' @param trait The name of the column for the trait to transform.
+#' @param y The name of the column for the variable to transform.
 #' @param type The transformation type. See details.
 #' @param base Base for the logarithmic transformation. Base 10 by default.
 #' @param n Additional parameter for arc-sine transformation. See details.
@@ -34,13 +34,13 @@
 #' no transformation could be needed, and where some are on either the range 0 to 0.2 or
 #' 0.8 to 1 a square root transformation could be useful. Finally, Note that for binomial
 #' data, a binomial regression model could be a better option.
-#' @return It returns the transformed trait.
+#' @return It returns the transformed variable.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' dtr("nonc", "logy", dfr = pjpz09)
 #' @export
 
-dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
+dtr <- function(y, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
                 base = 10, n = NULL, dfr) {
 
   # match arguments
@@ -50,8 +50,8 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # log transformations
 
   if (type == "logy") {
-    nn <- paste("log", trait, sep = "_")
-    dfr[, nn] <- dfr[, trait]
+    nn <- paste("log", y, sep = "_")
+    dfr[, nn] <- dfr[, y]
     if (sum(dfr[, nn] <= 0, na.rm = TRUE) > 0) {
       dfr[dfr[, nn] <= 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values <= 0 converted to NA", call. = FALSE)
@@ -60,8 +60,8 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   }
 
   if (type == "logy1") {
-    nn <- paste("log", trait, sep = "_")
-    dfr[, nn] <- dfr[, trait]
+    nn <- paste("log", y, sep = "_")
+    dfr[, nn] <- dfr[, y]
     if (sum(dfr[, nn] + 1 <= 0, na.rm = TRUE) > 0) {
       dfr[dfr[, nn] + 1 <= 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values <= -1 converted to NA", call. = FALSE)
@@ -72,8 +72,8 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # sqrt transformation
 
   if (type == "sqrty") {
-    nn <- paste("sqrt", trait, sep = "_")
-    dfr[, nn] <- dfr[, trait]
+    nn <- paste("sqrt", y, sep = "_")
+    dfr[, nn] <- dfr[, y]
     if (sum(dfr[, nn] < 0, na.rm = TRUE) > 0) {
       dfr[dfr[, nn] < 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values < 0 converted to NA", call. = FALSE)
@@ -82,8 +82,8 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   }
   
   if (type == "sqrty1") {
-    nn <- paste("sqrt", trait, sep = "_")
-    dfr[, nn] <- dfr[, trait]
+    nn <- paste("sqrt", y, sep = "_")
+    dfr[, nn] <- dfr[, y]
     if (sum(dfr[, nn] + 0.5 < 0, na.rm = TRUE) > 0) {
       dfr[dfr[, nn] + 0.5 < 0 & !is.na(dfr[, nn]), nn] <- NA
       warning("Values < -0.5 converted to NA", call. = FALSE)
@@ -94,8 +94,8 @@ dtr <- function(trait, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arc
   # arc-sine transformation
   
   if (type == "arcsin") {
-    nn <- paste("arcsin", trait, sep = "_")
-    dfr[, nn] <- dfr[, trait]
+    nn <- paste("arcsin", y, sep = "_")
+    dfr[, nn] <- dfr[, y]
     if (sum(dfr[, nn] < 0, na.rm = TRUE) > 0 | sum(dfr[, nn] > 1, na.rm = TRUE) > 0) {
       dfr[dfr[, nn] < 0 & !is.na(dfr[, nn]), nn] <- NA
       dfr[dfr[, nn] > 1 & !is.na(dfr[, nn]), nn] <- NA

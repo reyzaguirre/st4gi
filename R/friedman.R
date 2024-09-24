@@ -1,7 +1,7 @@
 #' Friedman test
 #'
 #' Performs a Friedman rank sum test with multiple comparisons.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param treat The name of the column that identifies the treatments.
 #' @param block The name of the column that identifies the blocks.
 #' @param dfr The name of the data frame.
@@ -25,13 +25,13 @@
 #' @importFrom stats pchisq
 #' @export
 
-friedman.t <- function(trait, treat, block, dfr, alpha = 0.05,
+friedman.t <- function(y, treat, block, dfr, alpha = 0.05,
                        print.mc = TRUE, print.pc = TRUE) {
   
   # Create a data matrix
   # compute means if more of one evaluation
   
-  dmx <- by(dfr[, trait], dfr[, c(block, treat)], mean, na.rm = TRUE)
+  dmx <- by(dfr[, y], dfr[, c(block, treat)], mean, na.rm = TRUE)
   dmx <- as.data.frame(dmx[, ])
   
   # Check NA's

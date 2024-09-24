@@ -4,10 +4,10 @@
 \alias{ck.f}
 \title{Check data for a full factorial}
 \usage{
-ck.f(trait, factors, rep, dfr)
+ck.f(y, factors, rep, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{factors}{The names of the columns that identify the factors.}
 

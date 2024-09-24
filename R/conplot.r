@@ -1,7 +1,7 @@
 #' Plot connectivity among trials
 #'
 #' Function to plot number of genotypes in common among trials.
-#' @param trait The name of the column for the trait to plot.
+#' @param y The name of the column for the variable to plot.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param trial The name of the column that identifies the trials.
 #' @param dfr The name of the data frame.
@@ -12,7 +12,11 @@
 #' conplot("ttwp", "geno", "trial.name", ptfs)
 #' @export
 
-conplot <- function(trait, geno, trial, dfr) {
+conplot <- function(y, geno, trial, dfr) {
+  
+  # Only plots with data
+  
+  dfr <- dfr[!is.na(dfr[, y]), ]
 
   # Number and list of trials
   

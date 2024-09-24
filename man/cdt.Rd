@@ -2,7 +2,7 @@
 % Please edit documentation in R/cdt.R
 \name{cdt}
 \alias{cdt}
-\title{Compute derived traits for potato and sweetpotato}
+\title{Compute derived variables for potato and sweetpotato}
 \usage{
 cdt(
   dfr,
@@ -24,10 +24,10 @@ and in number of plants per hectare if \code{method = "np"}.}
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 }
 \value{
-It returns a data frame with the original and derived traits.
+It returns a data frame with the original and derived variables.
 }
 \description{
-Compute derived traits for a given fieldbook data frame.
+Compute derived variables for a given fieldbook data frame.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in

@@ -1,7 +1,7 @@
 #' Check data for an ABD
 #'
 #' This function checks the frequencies of genotypes in an ABD.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes including checks.
 #' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
@@ -28,7 +28,7 @@
 #' ck.abd('y', 'geno', 'block', dfr)
 #' @export
 
-ck.abd <- function(trait, geno, rep, dfr) {
+ck.abd <- function(y, geno, rep, dfr) {
   
   # Check and remove rows with missing values for factors
   
@@ -54,12 +54,12 @@ ck.abd <- function(trait, geno, rep, dfr) {
   # Number of missing values for no checks
   
   temp <- dfr[dfr[, geno] %in% lg, ]
-  nmis <- sum(is.na(temp[, trait]))
+  nmis <- sum(is.na(temp[, y]))
   
   # Evaluate checks
   
   temp <- dfr[dfr[, geno] %in% lg.ck, ]
-  out <- ck.fq(trait, geno, rep, temp)
+  out <- ck.fq(y, geno, rep, temp)
   
   # Number of missing values for checks
   

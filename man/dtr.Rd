@@ -5,7 +5,7 @@
 \title{Data transformations}
 \usage{
 dtr(
-  trait,
+  y,
   type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
   base = 10,
   n = NULL,
@@ -13,7 +13,7 @@ dtr(
 )
 }
 \arguments{
-\item{trait}{The name of the column for the trait to transform.}
+\item{y}{The name of the column for the variable to transform.}
 
 \item{type}{The transformation type. See details.}
 
@@ -24,7 +24,7 @@ dtr(
 \item{dfr}{The name of the data frame.}
 }
 \value{
-It returns the transformed trait.
+It returns the transformed variable.
 }
 \description{
 This function performs different data transformations.

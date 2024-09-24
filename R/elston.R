@@ -1,7 +1,7 @@
 #' Elston Index
 #'
 #' Function to compute the Elston index (Elston, R. C., 1963).
-#' @param traits The names of the columns for the traits.
+#' @param vars The names of the columns for the variables.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
@@ -11,8 +11,8 @@
 #' @param lb Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for
 #' \eqn{k = (n \times min(x) - max(x)) / (n - 1)}
 #' @details The Elston index is a weight free index. It is assumed that all the
-#' traits are in the same direction where the highest the value the better the
-#' genotype. To include any trait with an opposite direction it must be transformed
+#' variables are in the same direction where the highest the value the better the
+#' genotype. To include any variable with an opposite direction it must be transformed
 #' by multiplication by \code{-1} before.
 #'
 #' If \code{means = "fitted"} then a linear model is fitted and used to estimate
@@ -22,18 +22,18 @@
 #' and then for each genotype over environments.
 #' If \code{means = "single"} and \code{env} is not specified, then single arithmetic
 #' means are computed over all the observations for each genotype.
-#' @return It returns a data frame with the genotypic means for each trait,
+#' @return It returns a data frame with the genotypic means for each variable,
 #' the Elston index, and the rank for each genotype according to the index.
 #' @author Raul Eyzaguirre.
 #' @references
 #' Elston, R. C. (1963). A weight-free index for the purpose of ranking or selection
-#' with respect to several traits at a time. Biometrics. 19(1): 85-97.
+#' with respect to several variables at a time. Biometrics. 19(1): 85-97.
 #' @examples
 #' elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", dfr = spg)
 #' @importFrom stats as.formula sd
 #' @export
 
-elston <- function(traits, geno, env = NULL, rep = NULL, dfr,
+elston <- function(vars, geno, env = NULL, rep = NULL, dfr,
                    means = c("single", "fitted"), lb = 1) {
 
   # Match arguments
@@ -46,7 +46,7 @@ elston <- function(traits, geno, env = NULL, rep = NULL, dfr,
 
   # inits
 
-  nt <- length(traits) # number of traits
+  nt <- length(vars) # number of variables
   k <- NULL
   ng <- length(unique(dfr[, geno])) # number of genotypes
 
@@ -59,29 +59,29 @@ elston <- function(traits, geno, env = NULL, rep = NULL, dfr,
   colnames(dfr.out) <- geno
 
   if (means == "single" & is.null(env)) {
-    dfr.out <- docomp("mean", traits, geno, dfr = dfr)
-    colnames(dfr.out) <- c("geno", paste("m", traits, sep = "."))
+    dfr.out <- docomp("mean", vars, geno, dfr = dfr)
+    colnames(dfr.out) <- c("geno", paste("m", vars, sep = "."))
   }
 
   if (means == "single" & !is.null(env)) {
-    dfr.out <- docomp("mean", traits, c(geno, env), dfr = dfr)
-    dfr.out <- docomp("mean", traits, geno, dfr = dfr.out)
-    colnames(dfr.out) <- c("geno", paste("m", traits, sep = "."))
+    dfr.out <- docomp("mean", vars, c(geno, env), dfr = dfr)
+    dfr.out <- docomp("mean", vars, geno, dfr = dfr.out)
+    colnames(dfr.out) <- c("geno", paste("m", vars, sep = "."))
   }
 
   if (means == "fitted") {
     for (i in 1:nt) {
       if (!is.null(env) & !is.null(rep)) {
-        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", geno, ":", env,
+        ff <- as.formula(paste(vars[i], "~", geno, "- 1 + (1|", geno, ":", env,
                                ") + (1|", env, "/", rep, ")"))
         fm <- lme4::lmer(ff, dfr)
       }
       if (is.null(env) & !is.null(rep)) {
-        ff <- as.formula(paste(traits[i], "~", geno, "- 1 + (1|", rep, ")"))
+        ff <- as.formula(paste(vars[i], "~", geno, "- 1 + (1|", rep, ")"))
         fm <- lme4::lmer(ff, dfr)
       }
       temp <- as.data.frame(lme4::fixef(fm))
-      colnames(temp) <- paste("f", traits[i], sep = ".")
+      colnames(temp) <- paste("f", vars[i], sep = ".")
       temp[, geno] <- substring(rownames(temp), nchar(geno) + 1)
       dfr.out <- merge(dfr.out, temp, all = TRUE)
     }
@@ -91,7 +91,7 @@ elston <- function(traits, geno, env = NULL, rep = NULL, dfr,
 
   for (i in 2:(1 + nt))
     dfr.out[, i + nt] <- (dfr.out[, i] - mean(dfr.out[, i], na.rm = TRUE)) / sd(dfr.out[, i], na.rm = TRUE)
-  colnames(dfr.out)[(2 + nt):(1 + 2 * nt)] <- c(paste("s", traits, sep = "."))
+  colnames(dfr.out)[(2 + nt):(1 + 2 * nt)] <- c(paste("s", vars, sep = "."))
 
   # compute lower bounds
 

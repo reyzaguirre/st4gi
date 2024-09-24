@@ -6,7 +6,7 @@
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details All labels (lower or upper case) listed in function \code{check.names}
 #' are interchanged with CO variable numbers.
-#' @return It returns a data frame with all short labels for traits interchanged
+#' @return It returns a data frame with all short labels for variables interchanged
 #' with Crop Ontology variable numbers.
 #' @author Raul Eyzaguirre.
 #' @examples

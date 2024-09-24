@@ -4,10 +4,10 @@
 \alias{check.freq}
 \title{Check frequencies for complete replications}
 \usage{
-check.freq(trait, geno, env = NULL, rep, dfr)
+check.freq(y, geno, env = NULL, rep, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

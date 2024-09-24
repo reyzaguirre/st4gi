@@ -17,7 +17,7 @@
 #' # Create designs
 #' book1 <- cr.rcbd(1:20, 3, 10)$book
 #' book2 <- cr.rcbd(1:20, 3, 10)$book
-#' # Get fieldbook with minimal set of traits for sweetpotato
+#' # Get fieldbook with minimal set of variables for sweetpotato
 #' PEP2023CLM_AT01 <- create.fb(book1, crop = 'sp')
 #' PEP2023CSR_AT02 <- create.fb(book2, crop = 'sp')
 #' # Create metadata file
@@ -174,7 +174,7 @@ create.dd <- function(metadata, crop = c('pt', 'sp')) {
   
   design.file <- merge(md, design.file)
 
-  # Edit column names for traits
+  # Edit column names for variables
   
   if(crop == 'pt') {
     data.file <- suppressWarnings(convert.co.pt(data.file))

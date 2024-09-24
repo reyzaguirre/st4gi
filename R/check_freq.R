@@ -2,7 +2,7 @@
 #'
 #' Check frequencies for designs with complete replications and one or several
 #' environments. This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments,
 #' \code{NULL} if there are no environments.
@@ -15,7 +15,7 @@
 #' check.freq("rytha", "geno", "env", "rep", megaclones)
 #' @export
 
-check.freq <- function(trait, geno, env = NULL, rep, dfr) {
+check.freq <- function(y, geno, env = NULL, rep, dfr) {
   
   # Levels for replications
   
@@ -24,7 +24,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
   # Main text
 
   cat('----------------------------------------\n')
-  cat('Check frequencies for trait', trait, '\n')
+  cat('Check frequencies for variable', y, '\n')
   cat('----------------------------------------\n')
   cat('\n')
 
@@ -32,7 +32,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
     
     # Run check for rcbd
     
-    lc <- ck.rcbd(trait, geno, rep, dfr)
+    lc <- ck.rcbd(y, geno, rep, dfr)
     
     # Write warnings
     
@@ -84,7 +84,7 @@ check.freq <- function(trait, geno, env = NULL, rep, dfr) {
     
     # Run check for factorial
 
-    lc <- ck.f(trait, c(geno, env), rep, dfr)
+    lc <- ck.f(y, c(geno, env), rep, dfr)
     
     # Write warnings
     

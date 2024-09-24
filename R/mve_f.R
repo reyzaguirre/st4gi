@@ -2,14 +2,14 @@
 #'
 #' Function to estimate missing values for factorial experiment with a CRD
 #' or a RCBD by the least squares method.
-#' @param trait The name of the column for the trait to estimate missing values.
+#' @param y The name of the column for the variable to estimate missing values.
 #' @param factors The names of the columns that identify the factors.
 #' @param rep The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with the experimental layout and columns \code{trait}
-#' and \code{trait.est} with the original data and the original data plus the estimated
+#' @return It returns a data frame with the experimental layout and columns \code{y}
+#' and \code{y.est} with the original data and the original data plus the estimated
 #' values.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -20,11 +20,11 @@
 #' mve.f("dm", c("geno", "treat"), NULL, temp)
 #' @export
 
-mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
+mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
   
   # Check data
   
-  lc <- ck.f(trait, factors, rep, dfr)
+  lc <- ck.f(y, factors, rep, dfr)
   
   # Error messages
   
@@ -49,11 +49,11 @@ mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
   if (sum(lc$nl < 2) > 0)
     stop("There are factors with only one level. This is is not a factorial experiment.")
   
-  # Get a copy of trait for estimated values and for temporary values
+  # Get a copy of y for estimated values and for temporary values
   
-  trait.est <- paste0(trait, ".est")
-  dfr[, trait.est] <- dfr[, trait]
-  dfr[, "ytemp"] <- dfr[, trait]
+  y.est <- paste0(y, ".est")
+  dfr[, y.est] <- dfr[, y]
+  dfr[, "ytemp"] <- dfr[, y]
   
   # Create expression for list of factors
   
@@ -66,12 +66,12 @@ mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
   
   # Compute means over replications
 
-  tmeans <- tapply(dfr[, trait], eval(parse(text = lf.expr)), mean, na.rm = TRUE)
+  tmeans <- tapply(dfr[, y], eval(parse(text = lf.expr)), mean, na.rm = TRUE)
 
   # Store means in ytemp for missing values
   
-  for (i in 1:length(dfr[, trait]))
-    if (is.na(dfr[i, trait])) {
+  for (i in 1:length(dfr[, y]))
+    if (is.na(dfr[i, y])) {
       expr <- paste0('tmeans[dfr[', i, ', factors[1]]')
       for (j in 2:lc$nf)
         expr <- paste0(expr, ', dfr[', i, ', factors[', j, ']]')
@@ -82,7 +82,7 @@ mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
   # Estimate missing values for a crd
   
   if (is.null(rep))
-    dfr[, trait.est] <- dfr[, "ytemp"]
+    dfr[, y.est] <- dfr[, "ytemp"]
   
   # Estimate missing values for a rcbd
   
@@ -99,7 +99,7 @@ mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
     
     # Value to control convergence
     
-    cc <- max(dfr[, trait], na.rm = TRUE)
+    cc <- max(dfr[, y], na.rm = TRUE)
     
     # Maximum number of iteration control
     
@@ -107,12 +107,12 @@ mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
     
     # Iterate
     
-    while (cc > max(dfr[, trait], na.rm = TRUE) * tol & cont < 100) {
+    while (cc > max(dfr[, y], na.rm = TRUE) * tol & cont < 100) {
       
       cont <- cont + 1
       
-      for (i in 1:length(dfr[, trait]))
-        if (is.na(dfr[i, trait])) {
+      for (i in 1:length(dfr[, y]))
+        if (is.na(dfr[i, y])) {
       
           # Compute sums
           
@@ -131,19 +131,19 @@ mve.f <- function(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
           mv.num <- nt * eval(parse(text = expr)) + lc$nrep * sum2[dfr[i, rep]] - sum3
           mv.den <- nt * lc$nrep - nt - lc$nrep + 1
 
-          dfr[i, trait.est] <- mv.num / mv.den
+          dfr[i, y.est] <- mv.num / mv.den
           
-          dfr[i, "ytemp"] <- dfr[i, trait.est]
+          dfr[i, "ytemp"] <- dfr[i, y.est]
         }
       
       emv1 <- emv2
-      emv2 <- dfr[is.na(dfr[, trait]), trait.est]
+      emv2 <- dfr[is.na(dfr[, y]), y.est]
       cc <- max(abs(emv1 - emv2))
     }
   }
   
   # Return
   
-  dfr[, c(factors, rep, trait, trait.est)]
+  dfr[, c(factors, rep, y, y.est)]
   
 }

@@ -3,7 +3,7 @@
 #' This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 #' with data from an interaction means matrix.
 #' @param int.mean GxE means matrix, genotypes in rows, environments in columns.
-#' @param trait.name The name of the column for the trait to analyze.
+#' @param var.name The name of the variable to analyze.
 #' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
 #' @param aov.model Analysis of variance model.
@@ -28,15 +28,15 @@
 #' # Compute GxE means
 #' int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
 #' # Run AMMI with GxE means matrix
-#' model.ammi <- ammi.gxe(int.mean, trait.name = "y")
+#' model.ammi <- ammi.gxe(int.mean, var.name = "y")
 #' model.ammi
 #' # Run GGE with GxE means matrix
-#' model.gge <- ammi.gxe(int.mean, trait.name = "y", method = "gge")
+#' model.gge <- ammi.gxe(int.mean, var.name = "y", method = "gge")
 #' model.gge
 #' @importFrom stats pf
 #' @export
 
-ammi.gxe <- function(int.mean, trait.name = NULL,  method = c("ammi", "gge"),
+ammi.gxe <- function(int.mean, var.name = NULL,  method = c("ammi", "gge"),
                      f = 0.5, aov.model = NULL, nrep = NULL) {
   # Match arguments
   
@@ -109,7 +109,7 @@ ammi.gxe <- function(int.mean, trait.name = NULL,  method = c("ammi", "gge"),
   # Output
 
   output <- list(Method = method,
-                 Trait = trait.name,
+                 Variable = var.name,
                  Number_of_genotypes = geno.num,
                  Number_of_environments = env.num,
                  Overall_mean = overall.mean,

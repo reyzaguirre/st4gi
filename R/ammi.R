@@ -2,7 +2,7 @@
 #'
 #' This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 #' with data at plot level.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications or blocks. A RCBD is assumed.
@@ -34,7 +34,7 @@
 #' @importFrom stats aov deviance
 #' @export
 
-ammi <- function(trait, geno, env, rep, dfr, method = c("ammi", "gge"),
+ammi <- function(y, geno, env, rep, dfr, method = c("ammi", "gge"),
                  f = 0.5, maxp = 0.1) {
 
   # Match arguments
@@ -49,7 +49,7 @@ ammi <- function(trait, geno, env, rep, dfr, method = c("ammi", "gge"),
 
   # Check data
 
-  lc <- ck.f(trait, c(geno, env), rep, dfr)
+  lc <- ck.f(y, c(geno, env), rep, dfr)
 
   # Error messages
 
@@ -68,10 +68,10 @@ ammi <- function(trait, geno, env, rep, dfr, method = c("ammi", "gge"),
   # Compute ANOVA
 
   if (lc$nrep > 1 & lc$nt.mult == 0) {
-    aov.model <- aov.met(trait, geno, env, rep, dfr, maxp)
+    aov.model <- aov.met(y, geno, env, rep, dfr, maxp)
     if (lc$nmis > 0) {
-      trait.est <- paste0(trait, ".est")
-      dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp)[, trait.est]
+      y.est <- paste0(y, ".est")
+      dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp)[, y.est]
     }
   } else {
     lc$nrep <- NULL
@@ -80,10 +80,10 @@ ammi <- function(trait, geno, env, rep, dfr, method = c("ammi", "gge"),
 
   # Compute interaction means matrix
   
-  int.mean <- tapply(dfr[, trait], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
+  int.mean <- tapply(dfr[, y], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
 
   # Run ammi.gxe
 
-  ammi.gxe(int.mean, trait, method, f, aov.model, lc$nrep)
+  ammi.gxe(int.mean, y, method, f, aov.model, lc$nrep)
   
 }

@@ -4,10 +4,10 @@
 \alias{ck.fq}
 \title{Check frequencies}
 \usage{
-ck.fq(trait, factors, rep, dfr)
+ck.fq(y, factors, rep, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{factors}{The names of the columns that identify the factors.}
 

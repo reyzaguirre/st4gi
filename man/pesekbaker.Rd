@@ -6,7 +6,7 @@
 \usage{
 pesekbaker(
   geno,
-  traits,
+  vars,
   dgg = NULL,
   units = c("sdu", "actual"),
   sf = 0.1,
@@ -18,9 +18,9 @@ pesekbaker(
 \arguments{
 \item{geno}{The name of the column that identifies the genotypes.}
 
-\item{traits}{The names of the columns for the traits.}
+\item{vars}{The names of the columns for the variables.}
 
-\item{dgg}{Desired genetic gains. The default is one standard deviation for each trait.}
+\item{dgg}{Desired genetic gains. The default is one standard deviation for each variable.}
 
 \item{units}{Units for dgg, \code{"sdu"} or \code{"actual"}. See details for more information.}
 
@@ -40,7 +40,7 @@ It returns:
 \item \code{$Index.Coefficients}, the index coefficients,
 \item \code{$Response.to.Selection}, the response to selection,
 \item \code{$Std.Response.to.Selection}, the standardized response to selection, and
-\item \code{$Pesek.Baker.Index}, a data frame with the genotypic means for each trait,
+\item \code{$Pesek.Baker.Index}, a data frame with the genotypic means for each variable,
 the Pesek-Baker index, and the rank for each genotype according to the index.
 }
 }
@@ -51,25 +51,25 @@ Function to compute the Pesek-Baker index (Pesek, J. and R.J. Baker., 1969).
 The Pesek-Baker is an index where relative economic weights have been replaced
 by desired gains.
 If \code{dgg} is not specified, the desired genetic gains are set to one
-standard deviation for each trait. \code{dgg} can be specified in actual units
+standard deviation for each variable. \code{dgg} can be specified in actual units
 (\code{units = "actual"}) or in standard deviations (\code{units = "sdu"}),
-defaults to \code{"sdu"}. For example, if you have a trait which is expressed
+defaults to \code{"sdu"}. For example, if you have a variable which is expressed
 in kilograms and with a standard deviation of 5 kilograms, typing \code{dgg = 2}
 means a desired genetic gain of 2 standard deviations that corresponds to 10 kilograms.
 If you type \code{dgg = 2} and \code{units = "actual"} then this means a desired
 genetic gain of 2 kilograms. If \code{dgg = NULL} then the desired genetic gains
 will be one standard deviation, no matter if \code{units} is set as \code{"actual"}
 or \code{"sdu"}.
-The \code{dfr} must contain the estimations for each genotype with each trait.
+The \code{dfr} must contain the estimations for each genotype with each variable.
 }
 \examples{
-traits <- c("rytha", "bc", "dm", "star", "nocr")
-output <- ecm(traits, "geno", "loc", "rep", spg)
+vars <- c("rytha", "bc", "dm", "star", "nocr")
+output <- ecm(vars, "geno", "loc", "rep", spg)
 colnames(output$blups) <- gsub('blup.', '', colnames(output$blups))
-pesekbaker('geno', traits, dfr = output$blups, G.cov = output$G.cov, P.cov = output$P.cov)
+pesekbaker('geno', vars, dfr = output$blups, G.cov = output$G.cov, P.cov = output$P.cov)
 # More weight on bc and dm, less on star and nocr
 dgg <- c(1, 1.5, 1.5, 0.8, 0.8)
-pesekbaker('geno', traits, dgg, dfr = output$blups, G.cov = output$G.cov, P.cov = output$P.cov)
+pesekbaker('geno', vars, dgg, dfr = output$blups, G.cov = output$G.cov, P.cov = output$P.cov)
 }
 \references{
 Pesek, J. and R.J. Baker.(1969). Desired improvement in relation to selection indices.

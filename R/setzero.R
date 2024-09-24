@@ -1,29 +1,29 @@
 #' Set values to \code{0} for potato and sweetpotato data.
 #'
-#' Set values to \code{0} for harvested traits.
+#' Set values to \code{0} for variables at harvest.
 #' @param dfr The name of the data frame.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @details This function sets values to \code{0} for all traits at harvest
+#' @details This function sets values to \code{0} for all variables at harvest
 #' according to some rules.
 #' 
-#' For potato, traits (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp},
+#' For potato, variables (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp},
 #' and \code{nomtwp}) which are \code{NA} according to the following rules:
 #' \itemize{
-#'  \item If \code{npe > 0} and \code{nph == 0}, then all traits are set to \code{0}.
+#'  \item If \code{npe > 0} and \code{nph == 0}, then all variables are set to \code{0}.
 #'  \item If \code{nmtp == 0}, then \code{mtwp} is set to \code{0}.
 #'  \item If \code{mtwp == 0}, then \code{nmtp} is set to \code{0}.
 #'  \item If \code{nnomtp == 0}, then \code{nomtwp} is set to \code{0}.
 #'  \item If \code{nomtwp == 0}, then \code{nnomtp} is set to \code{0}.
 #' }
-#' For sweetpotato, traits (\code{noph}, \code{nopr}, \code{vw}, \code{nocr},
+#' For sweetpotato, variables (\code{noph}, \code{nopr}, \code{vw}, \code{nocr},
 #' \code{nonc}, \code{crw}, and \code{ncrw}) which are \code{NA} according to
 #' the following rules:
 #' \itemize{
-#'  \item If \code{nope > 0} and \code{noph == 0}, then all traits are set to \code{0}.
-#'  \item If all traits are \code{0}, then \code{noph} is set to \code{0}.
-#'  \item If \code{nopr == 0}, then all traits with exception of \code{vw}
+#'  \item If \code{nope > 0} and \code{noph == 0}, then all variables are set to \code{0}.
+#'  \item If all variables are \code{0}, then \code{noph} is set to \code{0}.
+#'  \item If \code{nopr == 0}, then all variables with exception of \code{vw}
 #'  are set to \code{0}.
-#'  \item If all traits with exception of \code{vw} are \code{0}, then
+#'  \item If all variables with exception of \code{vw} are \code{0}, then
 #'  \code{nopr} is set to \code{0}.
 #'  \item If \code{nocr == 0}, then \code{crw} is set to \code{0}.
 #'  \item If \code{crw == 0}, then \code{nocr} is set to \code{0}.
@@ -71,16 +71,16 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   if (crop == 'pt') {
     
-    # Harvest traits
+    # Harvest variables
     
     har <- c("nmtp", "nnomtp", "mtwp", "nomtwp")
     
-    # Subset in fielddook and number of traits
+    # Subset in fielddook and number of variables
     
     har <- har[har %in% colnames(dfr)]
     ntr <- length(har)
     
-    # If nph == 0, then all traits are set to 0
+    # If nph == 0, then all variables are set to 0
     
     if (ntr > 0) {
       if (exists("nph", dfr)) {
@@ -93,7 +93,7 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
           }
           dfr[cond, har[i]] <- 0
           if (sum(cond) > 0)
-            warning("Rows with NA replaced with 0 for trait ",
+            warning("Rows with NA replaced with 0 for variable ",
                     har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
         }
       }
@@ -137,11 +137,11 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   if (crop == 'sp') {
 
-    # Harvest traits
+    # Harvest variables
     
     har <- c("vw", "nocr", "nonc", "crw", "ncrw")
     
-    # Subset in fielddook and number of traits
+    # Subset in fielddook and number of variables
     
     har <- har[har %in% colnames(dfr)]
     ntr <- length(har)
@@ -168,7 +168,7 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     if (exists("nonc", dfr) & exists("ncrw", dfr))
       ncr.cond <- dfr[, "nonc"] == 0 & !is.na(dfr[, "nonc"]) & dfr[, "ncrw"] == 0 & !is.na(dfr[, "ncrw"])
     
-    # If noph == 0, then all traits are set to 0
+    # If noph == 0, then all variables are set to 0
     
     if (ntr > 0) {
       if (exists("noph", dfr)) {
@@ -181,7 +181,7 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
           }
           dfr[cond, har[i]] <- 0
           if (sum(cond) > 0)
-            warning("Rows with NA replaced with 0 for trait ",
+            warning("Rows with NA replaced with 0 for variable ",
                     har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
         }
       }
@@ -198,12 +198,12 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
                 paste0(rownames(dfr)[cond], " "), call. = FALSE)
     }
     
-    # Subset in fieldbook and number of traits without vw
+    # Subset in fieldbook and number of variables without vw
     
     har <- har[har != "vw"]
     ntr <- length(har)
     
-    # If nopr == 0, then all traits with exception of vw are set to 0
+    # If nopr == 0, then all variables with exception of vw are set to 0
     
     if (ntr > 0) {
       if (exists("nopr", dfr)) {
@@ -211,7 +211,7 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
           cond <- dfr[, "nopr"] == 0 & !is.na(dfr[, "nopr"]) & is.na(dfr[, har[i]])
           dfr[cond, har[i]] <- 0
           if (sum(cond) > 0)
-            warning("Rows with NA replaced with 0 for trait ",
+            warning("Rows with NA replaced with 0 for variable ",
                     har[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
         }
       }

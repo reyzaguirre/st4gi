@@ -4,10 +4,10 @@
 \alias{sti}
 \title{Compute stress tolerance indices}
 \usage{
-sti(traits, geno, normal, stress, dfr)
+sti(vars, geno, normal, stress, dfr)
 }
 \arguments{
-\item{traits}{The list of traits.}
+\item{vars}{The list of variables.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
@@ -19,18 +19,18 @@ sti(traits, geno, normal, stress, dfr)
 }
 \value{
 It returns a data frame with the indices and a data frame with
-the stress intensity values for each trait. The names for the indices
-follow the convention \code{trait.index}.
+the stress intensity values for each variable. The names for the indices
+follow the convention \code{y.index}.
 }
 \description{
 Compute several stress tolerance indices.
 }
 \details{
-The names of the columns for the traits must follow the convention
-\code{trait.normal} and \code{trait.stress}, so the data frame must be in
+The names of the columns for the variables must follow the convention
+\code{y.normal} and \code{y.stress}, so the data frame must be in
 wide format for the factor with levels \code{normal} and \code{stress}.
 
-For a trait \eqn{y} with values \eqn{y_n} and \eqn{y_s} under normal and
+For a variable \eqn{y} with values \eqn{y_n} and \eqn{y_s} under normal and
 stress conditions, the stress intensity (\eqn{si}) is computed:
 \deqn{
 si = 1 - \frac{\bar y_s}{\bar y_n}
@@ -65,8 +65,8 @@ Then, the following indices are computed:
  }
 }
 \examples{
-traits <- c("nmtp", "mtwp", "nnomtp")
-sti(traits, 'genotype', 'DTWW', 'DTWS', potatostress)
+vars <- c("nmtp", "mtwp", "nnomtp")
+sti(vars, 'genotype', 'DTWW', 'DTWS', potatostress)
 }
 \references{
 Fernandez, G.C.J. (1992). Effective Selection Criteria for Assessing Stress Tolerance.

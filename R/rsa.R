@@ -2,7 +2,7 @@
 #'
 #' Function to run the regression stability analysis (Yates and Cochran, 1938,
 #' Finlay and Wilkinson, 1963).
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
@@ -46,25 +46,25 @@
 #' @importFrom stats coef lm summary.lm
 #' @export
 
-rsa <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
+rsa <- function(y, geno, env, rep, dfr, maxp = 0.1) {
   
   # Error messages
   
-  lc <- ck.f(trait, c(geno, env), rep, dfr)
+  lc <- ck.f(y, c(geno, env), rep, dfr)
   
   if (lc$nl[1] < 3 & lc$nl[2] < 3)
     stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")
 
   # Compute ANOVA and report errors from mve.met
    
-  at <- suppressWarnings(aov.met(trait, geno, env, rep, dfr, maxp))
+  at <- suppressWarnings(aov.met(y, geno, env, rep, dfr, maxp))
 
   # Estimate missing values
 
-  trait.est <- paste0(trait, ".est")
+  y.est <- paste0(y, ".est")
   
   if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
-    dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp, tol = 1e-06)[, trait.est]
+    dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp, tol = 1e-06)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -72,7 +72,7 @@ rsa <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
   
   # Some statistics
 
-  int.mean <- tapply(dfr[, trait], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
+  int.mean <- tapply(dfr[, y], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
   overall.mean <- mean(int.mean, na.rm = TRUE)
   env.mean <- apply(int.mean, 2, mean, na.rm = TRUE)
   geno.mean <- apply(int.mean, 1, mean, na.rm = TRUE)

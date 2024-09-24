@@ -1,7 +1,7 @@
 #' Check frequencies
 #' 
 #' This function cheks the frequencies of valid cases for treatments and replications.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param factors The names of the columns that identify the factors.
 #' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
@@ -36,12 +36,12 @@
 #' ck.fq("y", c("A", "B"), "block", dfr)
 #' @export
 
-ck.fq <- function(trait, factors, rep, dfr) {
+ck.fq <- function(y, factors, rep, dfr) {
   
   # Number of missing values
   
-  nmis <- sum(is.na(dfr[, trait]))
-  pmis <- mean(is.na(dfr[, trait]))
+  nmis <- sum(is.na(dfr[, y]))
+  pmis <- mean(is.na(dfr[, y]))
   
   # tfr NULL for rep = NULL
   
@@ -61,7 +61,7 @@ ck.fq <- function(trait, factors, rep, dfr) {
   
   # Calculate frequencies
   
-  temp <- temp[!is.na(temp[, trait]), ]
+  temp <- temp[!is.na(temp[, y]), ]
 
   if (nf == 1) {
     tf <- table(temp[, factors])

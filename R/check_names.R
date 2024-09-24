@@ -1,22 +1,22 @@
-#' Check fieldbook factors and traits names for potato and sweetpotato
+#' Check fieldbook factors and variables names for potato and sweetpotato
 #'
-#' Check that fieldbook factors and traits' names correspond with the names defined
+#' Check that fieldbook factors and variables' names correspond with the names defined
 #' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
-#' CIP protocols. It also checks that all traits are stored as numeric.
+#' CIP protocols. It also checks that all variables are stored as numeric.
 #' @param dfr The name of the data frame.
-#' @param add Additional traits. See details.
+#' @param add Additional variables. See details.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @details Type \code{pt.ont()} or \code{sp.ont()} to see the list of traits and
+#' @details Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
-#' Additional traits are checked for extreme values only.
+#' Additional variables are checked for extreme values only.
 #' @return It returns:
 #' \itemize{
 #' \item The fieldbook data frame with all column names in lowercase and
-#' with some possible modifications in the names. Traits that are stored
+#' with some possible modifications in the names. Variables that are stored
 #' with a non-numeric class are transformed to numeric.
 #' \item A list of warnings for all the column names that have been changed.
 #' \item A list of warnings for all the column names not recognized.
-#' \item A list of warnings for all the column traits that have been changed to numeric.
+#' \item A list of warnings for all the column variables that have been changed to numeric.
 #' }
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -42,21 +42,21 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   factors <- c("loc", "year", "season", "env", "geno", 'type', "rep", "block",
                "treat", "harvest", 'is_a_control')
   
-  # Valid names for traits
+  # Valid names for variables
   
   if (crop == 'pt')
-    traits <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii",
+    vars <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii",
                 "fwts", "dwts", "fwts1", "fwts2", "dwts1", "dwts2",
                 "dm1", "dm2", tolower(add))
   
   if (crop == 'sp')
-    traits <- c(spont$Label, 'fcol.cc', tolower(add))
+    vars <- c(spont$Label, 'fcol.cc', tolower(add))
   
-  # Valid names for factors and traits
+  # Valid names for factors and variables
   
-  colnames.valid <- c(plot.id, factors, traits)
+  colnames.valid <- c(plot.id, factors, vars)
   
-  # Factors and traits in field book (original names)
+  # Factors and variables in field book (original names)
     
   colnames.fb <- colnames(dfr)
 
@@ -90,7 +90,7 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
     warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
   }
   
-  # Solve synonyms for traits
+  # Solve synonyms for variables
   
   if (crop == 'pt') {
     old.names.t <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein", 'chipping')
@@ -113,7 +113,7 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   
   if (!is.null(change.names.t)) {
     change.names.list <- old.names.t %in% change.names.t
-    warning("Traits' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
+    warning("Variables' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
   }
   
   # Names not valid
@@ -123,21 +123,21 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   if (max(names.not.valid) == 1)
     warning("Some columns with invalid names: ", list(colnames(dfr)[names.not.valid]), call. = FALSE)
 
-  # Check traits are numeric
+  # Check variables are numeric
   
   nonumeric.list <- NULL
   
   column.class <- unlist(lapply(dfr, class))
   
   for(i in colnames(dfr)) {
-    if(i %in% traits & column.class[i] != "numeric") {
+    if(i %in% vars & column.class[i] != "numeric") {
       dfr[, i] <- suppressWarnings(as.numeric(as.character(dfr[, i])))
       nonumeric.list <- c(nonumeric.list, i)
     }
   }
   
   if (!is.null(nonumeric.list))
-    warning("Some traits converted to numeric: ", list(nonumeric.list), call. = FALSE)
+    warning("Some variables converted to numeric: ", list(nonumeric.list), call. = FALSE)
   
   # Return
   

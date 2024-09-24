@@ -4,10 +4,10 @@
 \alias{tai}
 \title{Tai's stability analysis}
 \usage{
-tai(trait, geno, env, rep, dfr, maxp = 0.1)
+tai(y, geno, env, rep, dfr, maxp = 0.1)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

@@ -2,7 +2,7 @@
 #'
 #' This function estimates the genotypic and phenotypic covariance and correlation
 #' matrices with data from one or several environments.
-#' @param traits The names of the columns for traits to include.
+#' @param vars The names of the columns for variables to include.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications or blocks.
@@ -14,20 +14,20 @@
 #' blocking structure.
 #' If \code{method = 1} genotypic covariances are computed from BLUEs and
 #' phenotypic covariances are computed from BLUPs.
-#' If \code{method = 2} the covariances between each pair of traits are computed
-#' using the variances of each trait and the variances of the sum.
+#' If \code{method = 2} the covariances between each pair of variables are computed
+#' using the variances of each variable and the variances of the sum.
 #' If \code{method = 3} the genotypic covariances are approximated using the average
 #' of the correlation matrices computed with each replication in each environment,
 #' and the phenotypic covariances are computed pooling all the observed data.
 #' @return It returns the genotypic and phenotypic covariance and correlation matrices.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' traits <- c("rytha", "bc", "dm", "star", "nocr")
-#' ecm(traits, "geno", "loc", "rep", spg)
+#' vars <- c("rytha", "bc", "dm", "star", "nocr")
+#' ecm(vars, "geno", "loc", "rep", spg)
 #' @importFrom stats cor cov
 #' @export
 
-ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
+ecm <- function(vars, geno, env = NULL, rep = NULL, dfr, method = 1) {
 
   # Check there is at least 2 env or reps
   
@@ -44,7 +44,7 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
 
   # Inits
   
-  nt <- length(traits) # number of traits
+  nt <- length(vars) # number of variables
   
   G.cov <- matrix(nrow = nt, ncol = nt) # genotypic covariance matrix
   P.cov <- matrix(nrow = nt, ncol = nt) # phenotypic covariance matrix
@@ -103,13 +103,13 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
   
   for (i in 1:nt) {
     
-    y <- dfr[, traits[i]]
+    y <- dfr[, vars[i]]
     
     # Fixed effects model
     
     model <- lme4::lmer(fef)
     tmp <- as.data.frame(lme4::fixef(model))
-    colnames(tmp) <- paste("blue", traits[i], sep = ".")
+    colnames(tmp) <- paste("blue", vars[i], sep = ".")
     tmp[, geno] <- substring(rownames(tmp), 2)
     dfr.out <- merge(dfr.out, tmp, all = TRUE)
     
@@ -117,7 +117,7 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     
     model <- lme4::lmer(ref)
     tmp <- lme4::fixef(model) + lme4::ranef(model)$g
-    colnames(tmp) <- paste("blup", traits[i], sep = ".")
+    colnames(tmp) <- paste("blup", vars[i], sep = ".")
     tmp[, geno] <- rownames(tmp)
     dfr.out <- merge(dfr.out, tmp, all = TRUE)
     vc[[i]] <- lme4::VarCorr(model)
@@ -182,7 +182,7 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     if (!is.null(env) & !is.null(rep)) {
       for (i in 1:(nt - 1)) {
         for (j in (i + 1):nt) {
-          z <- dfr[, traits[i]] + dfr[, traits[j]]
+          z <- dfr[, vars[i]] + dfr[, vars[j]]
           model <- lme4::lmer(z ~ (1|g) + (1|g:e) + (1|e/r))
           vcz <- lme4::VarCorr(model) # variance components for z = x + y
           G.cov[i, j] <- G.cov[j, i] <- (vcz$g[1] - G.cov[i, i] - G.cov[j, j]) / 2
@@ -194,7 +194,7 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     if (is.null(env)) {
       for (i in 1:(nt - 1)) {
         for (j in (i + 1):nt) {
-          z <- dfr[, traits[i]] + dfr[, traits[j]]
+          z <- dfr[, vars[i]] + dfr[, vars[j]]
           model <- lme4::lmer(z ~ (1|g) + (1|r))
           vcz <- lme4::VarCorr(model) # variance components for z = x + y
           G.cov[i, j] <- G.cov[j, i] <- (vcz$g[1] - G.cov[i, i] - G.cov[j, j]) / 2
@@ -206,7 +206,7 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     if (is.null(rep)) {
       for (i in 1:(nt - 1)) {
         for (j in (i + 1):nt) {
-          z <- dfr[, traits[i]] + dfr[, traits[j]]
+          z <- dfr[, vars[i]] + dfr[, vars[j]]
           model <- lme4::lmer(z ~ (1|g) + (1|e))
           vcz <- lme4::VarCorr(model) # variance components for z = x + y
           G.cov[i, j] <- G.cov[j, i] <- (vcz$g[1] - G.cov[i, i] - G.cov[j, j]) / 2
@@ -232,19 +232,19 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     
     if (!is.null(env) & !is.null(rep)) {
       # split by env and rep
-      dfr.split <- dfr[, c(traits, env, rep)]
+      dfr.split <- dfr[, c(vars, env, rep)]
       dfr.split <- split(dfr.split, factor(paste(dfr.split[, env], dfr.split[, rep])))
     }
     
     if (is.null(env)) {
       # split by rep
-      dfr.split <- dfr[, c(traits, rep)]
+      dfr.split <- dfr[, c(vars, rep)]
       dfr.split <- split(dfr.split, dfr.split[, rep])
     }
     
     if (is.null(rep)) {
       # split by env
-      dfr.split <- dfr[, c(traits, env)]
+      dfr.split <- dfr[, c(vars, env)]
       dfr.split <- split(dfr.split, dfr.split[, env])
     }
     
@@ -254,7 +254,7 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     for (i in 1:ner)
       cl[[i]] <- cor(dfr.split[[i]][, 1:nt], use = "pairwise.complete.obs")
     G.cor <- apply(simplify2array(cl), 1:2, mean, na.rm = TRUE)
-    P.cor <- cor(dfr[, traits], use = "pairwise.complete.obs")
+    P.cor <- cor(dfr[, vars], use = "pairwise.complete.obs")
     
     d1 <- diag(diag(G.cov)^0.5, nt, nt)
     d2 <- diag(diag(P.cov)^0.5, nt, nt)
@@ -264,7 +264,7 @@ ecm <- function(traits, geno, env = NULL, rep = NULL, dfr, method = 1) {
     
   }
   
-  dimnames(G.cov) <- dimnames(P.cov) <- dimnames(G.cor) <- dimnames(P.cor) <- list(traits, traits)
+  dimnames(G.cov) <- dimnames(P.cov) <- dimnames(G.cor) <- dimnames(P.cor) <- list(vars, vars)
 
   # results
   

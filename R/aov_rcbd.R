@@ -1,7 +1,7 @@
 #' ANOVA for a RCBD
 #'
 #' Fit an analysis of variance model for a RCBD.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
@@ -17,7 +17,7 @@
 #' aov.rcbd("trw", "geno", "rep", temp)
 #' @export
 
-aov.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1) {
+aov.rcbd <- function(y, geno, rep, dfr, maxp = 0.1) {
 
   # Everything as character
 
@@ -26,14 +26,14 @@ aov.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1) {
 
   # Check data
   
-  lc <- ck.rcbd(trait, geno, rep, dfr)
+  lc <- ck.rcbd(y, geno, rep, dfr)
 
   # Estimate missing values and report errors from mve.rcbd
   
-  trait.est <- paste0(trait, ".est")
+  y.est <- paste0(y, ".est")
   
   if (lc$ng.0 > 0 | lc$nrep == 1 | lc$ng.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
-    dfr[, trait] <- mve.rcbd(trait, geno, rep, dfr, maxp, tol = 1e-06)[, trait.est]
+    dfr[, y] <- mve.rcbd(y, geno, rep, dfr, maxp, tol = 1e-06)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -41,8 +41,8 @@ aov.rcbd <- function(trait, geno, rep, dfr, maxp = 0.1) {
 
   # ANOVA
 
-  model <- aov(dfr[, trait] ~ dfr[, geno] + dfr[, rep])
-  model$terms[[2]] <- trait
+  model <- aov(dfr[, y] ~ dfr[, geno] + dfr[, rep])
+  model$terms[[2]] <- y
   
   at <- anova(model)
   

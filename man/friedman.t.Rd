@@ -5,7 +5,7 @@
 \title{Friedman test}
 \usage{
 friedman.t(
-  trait,
+  y,
   treat,
   block,
   dfr,
@@ -15,7 +15,7 @@ friedman.t(
 )
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{treat}{The name of the column that identifies the treatments.}
 

@@ -1,7 +1,7 @@
 #' Plot means and standard deviations with a dotplot
 #'
 #' Function to plot means and confidence limits.
-#' @param trait The name of the column for the trait to plot.
+#' @param y The name of the column for the variable to plot.
 #' @param groups The name of the column for the grouping factor.
 #' @param dfr The name of the data frame.
 #' @param conf Probability for the confidence limits or number of standard deviations.
@@ -29,7 +29,7 @@
 #' @importFrom graphics axis lines plot points
 #' @export
                          
-msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
+msdplot <- function(y, groups, dfr, conf = 0.95, dotplot = TRUE,
                     sort.means = c("none", "increasing", "decreasing"),
                     main.title = NULL, color = c("orange", "orange", "black"),
                     x.las = 1, jf = 0.1, hsep = 0.1, ...) {
@@ -40,12 +40,12 @@ msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
   
   # Delete missing values
 
-  dfr <- dfr[!is.na(dfr[, trait]), ]
+  dfr <- dfr[!is.na(dfr[, y]), ]
   
   # Means and standard deviations
 
-  means <- tapply(dfr[, trait], dfr[, groups], mean, na.rm = TRUE)
-  sdev <- tapply(dfr[, trait], dfr[, groups], sd, na.rm = TRUE)
+  means <- tapply(dfr[, y], dfr[, groups], mean, na.rm = TRUE)
+  sdev <- tapply(dfr[, y], dfr[, groups], sd, na.rm = TRUE)
 
   resu <- data.frame(means, sdev)
 
@@ -84,17 +84,17 @@ msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
   for (i in 1:length(resu$means)) {
     subdata <- dfr[dfr[, groups] == resu$orden[i], ]
     if (dotplot == "TRUE") {
-      a <- min(a, subdata[, trait])
-      b <- max(b, subdata[, trait])
+      a <- min(a, subdata[, y])
+      b <- max(b, subdata[, y])
     }    
   }
 
   # draw the plot
   
   group <- seq(1, length(resu$means))
-  y <- resu$means
+  value <- resu$means
   
-  plot(group, y, xaxt = "n", main = msg, xlim = c(0.5, length(resu$means) + 0.5),
+  plot(group, value, xaxt = "n", main = msg, xlim = c(0.5, length(resu$means) + 0.5),
        ylim = c(a, b), col = color[1], ...)
 
   axis(1, at = seq(1, length(resu$means)), labels = rownames(resu), las = x.las)
@@ -103,8 +103,8 @@ msdplot <- function(trait, groups, dfr, conf = 0.95, dotplot = TRUE,
     lines(c(i, i), c(resu$li[i], resu$ls[i]), col = color[2])
     subdata <- dfr[dfr[, groups] == resu$orden[i], ]
     if (dotplot == "TRUE")
-      points(jitter(rep(i + hsep, length(subdata[, trait])), factor = jf),
-             subdata[, trait], col = color[3])
+      points(jitter(rep(i + hsep, length(subdata[, y])), factor = jf),
+             subdata[, y], col = color[3])
   }
   
 }

@@ -1,7 +1,7 @@
 #' Check data for a CRD
 #'
 #' This function checks the frequencies of genotypes in a CRD.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param dfr The name of the data frame.
 #' @return The number of genotypes (\code{ng}), the number of genotypes without
@@ -22,7 +22,7 @@
 #' ck.crd('y', 'geno', dfr)
 #' @export
 
-ck.crd <- function(trait, geno, dfr) {
+ck.crd <- function(y, geno, dfr) {
   
   # Check factor structure
   
@@ -34,7 +34,7 @@ ck.crd <- function(trait, geno, dfr) {
   
   # Frequencies for genotypes
   
-  out <- ck.fq(trait, geno, NULL, dfr)
+  out <- ck.fq(y, geno, NULL, dfr)
   tf <- out$tf
 
   # Number of genotypes without data

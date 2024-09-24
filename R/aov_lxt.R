@@ -2,7 +2,7 @@
 #'
 #' This is a modified version of the \code{"lineXtester"} function of package
 #' \code{"agricolae"} for the analysis of a Lina x Tester genetic design.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param line The name of the column that identifies the lines.
 #' @param tester The name of the column that identifies the testers.
 #' @param rep The name of the column that identifies the replications.
@@ -16,11 +16,11 @@
 #' @importFrom stats aov pf na.omit pt
 #' @export
 
-aov.lxt <- function(trait, line, tester, rep, dfr) {
+aov.lxt <- function(y, line, tester, rep, dfr) {
 
   # Internal data frame
 
-  dfr <- data.frame(trait = dfr[, trait],
+  dfr <- data.frame(y = dfr[, y],
                     line = dfr[, line],
                     tester = dfr[, tester],
                     rep = dfr[, rep])
@@ -41,17 +41,17 @@ aov.lxt <- function(trait, line, tester, rep, dfr) {
 
   dfr$treat <- paste(dfr$line, dfr$tester)
 
-  model.1 <- aov(trait ~ rep + treat, dfr)
+  model.1 <- aov(y ~ rep + treat, dfr)
   anova.1 <- as.matrix(anova(model.1))
 
-  model.4 <- aov(trait ~ line * tester, dfr)
+  model.4 <- aov(y ~ line * tester, dfr)
   anova.4 <- as.matrix(anova(model.4))
 
   # SCA and GCA
 
   dfr.2 <- na.omit(dfr)
 
-  mm <- tapply(dfr.2$trait, dfr.2[, c("line", "tester")], mean, na.rm = TRUE)
+  mm <- tapply(dfr.2$y, dfr.2[, c("line", "tester")], mean, na.rm = TRUE)
   cmm <- ncol(mm)
   rmm <- nrow(mm)
   SCA <- mm
@@ -60,20 +60,20 @@ aov.lxt <- function(trait, line, tester, rep, dfr) {
       SCA[i, j] <- mm[i, j] - mean(mm[, j], na.rm = TRUE) -
                    mean(mm[i, ], na.rm = TRUE) + mean(mm, na.rm = TRUE)
 
-  mm <- tapply(dfr.2$trait, dfr.2$line, mean, na.rm = TRUE)
-  GCA.line <- mm - mean(dfr.2$trait, na.rm = TRUE)
+  mm <- tapply(dfr.2$y, dfr.2$line, mean, na.rm = TRUE)
+  GCA.line <- mm - mean(dfr.2$y, na.rm = TRUE)
 
-  mm <- tapply(dfr.2$trait, dfr.2$tester, mean, na.rm = TRUE)
-  GCA.tester <- mm - mean(dfr.2$trait, na.rm = TRUE)
+  mm <- tapply(dfr.2$y, dfr.2$tester, mean, na.rm = TRUE)
+  GCA.tester <- mm - mean(dfr.2$y, na.rm = TRUE)
 
   # More anovas
 
-  model.3 <- aov(trait ~ treat, dfr.2)
+  model.3 <- aov(y ~ treat, dfr.2)
   anova.3 <- as.matrix(anova(model.3))
 
   dfr.3 <- dfr[is.na(dfr$line) | is.na(dfr$tester), ]
 
-  model.2 <- aov(trait ~ treat, dfr.3)
+  model.2 <- aov(y ~ treat, dfr.3)
   anova.2 <- as.matrix(anova(model.2))
   anova.5 <- anova.1[2, ] - anova.2[1, ] - anova.3[1, ]
 

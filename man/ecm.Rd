@@ -4,10 +4,10 @@
 \alias{ecm}
 \title{Estimate Genotypic and Phenotypic Covariance and Correlation Matrices}
 \usage{
-ecm(traits, geno, env = NULL, rep = NULL, dfr, method = 1)
+ecm(vars, geno, env = NULL, rep = NULL, dfr, method = 1)
 }
 \arguments{
-\item{traits}{The names of the columns for traits to include.}
+\item{vars}{The names of the columns for variables to include.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
@@ -33,15 +33,15 @@ If \code{rep = NULL} data from only one replication is considered without
 blocking structure.
 If \code{method = 1} genotypic covariances are computed from BLUEs and
 phenotypic covariances are computed from BLUPs.
-If \code{method = 2} the covariances between each pair of traits are computed
-using the variances of each trait and the variances of the sum.
+If \code{method = 2} the covariances between each pair of variables are computed
+using the variances of each variable and the variances of the sum.
 If \code{method = 3} the genotypic covariances are approximated using the average
 of the correlation matrices computed with each replication in each environment,
 and the phenotypic covariances are computed pooling all the observed data.
 }
 \examples{
-traits <- c("rytha", "bc", "dm", "star", "nocr")
-ecm(traits, "geno", "loc", "rep", spg)
+vars <- c("rytha", "bc", "dm", "star", "nocr")
+ecm(vars, "geno", "loc", "rep", spg)
 }
 \author{
 Raul Eyzaguirre.

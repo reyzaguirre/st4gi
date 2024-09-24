@@ -4,10 +4,10 @@
 \alias{mve.f}
 \title{Estimation of missing values for a factorial experiment}
 \usage{
-mve.f(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06)
+mve.f(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to estimate missing values.}
+\item{y}{The name of the column for the variable to estimate missing values.}
 
 \item{factors}{The names of the columns that identify the factors.}
 
@@ -20,8 +20,8 @@ mve.f(trait, factors, rep, dfr, maxp = 0.1, tol = 1e-06)
 \item{tol}{Tolerance for the convergence of the iterative estimation process.}
 }
 \value{
-It returns a data frame with the experimental layout and columns \code{trait}
-and \code{trait.est} with the original data and the original data plus the estimated
+It returns a data frame with the experimental layout and columns \code{y}
+and \code{y.est} with the original data and the original data plus the estimated
 values.
 }
 \description{

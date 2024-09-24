@@ -2,25 +2,25 @@
 #'
 #' Function to estimate missing values for a Multi Environment Trial (MET) with a
 #' Randomized Complete Block Design (RCBD) by the least squares method.
-#' @param trait The name of the column for the trait to estimate missing values.
+#' @param y The name of the column for the variable to estimate missing values.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
 #' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
-#' @return It returns a data frame with the experimental layout and columns \code{trait}
-#' and \code{trait.est} with the original data and the original data plus the estimated values.
+#' @return It returns a data frame with the experimental layout and columns \code{y}
+#' and \code{y.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' mve.met("y", "geno", "env", "rep", met8x12)
 #' @export
 
-mve.met <- function(trait, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06) {
+mve.met <- function(y, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- ck.f(trait, c(geno, env), rep, dfr)
+  lc <- ck.f(y, c(geno, env), rep, dfr)
 
   # Error messages
 
@@ -47,37 +47,37 @@ mve.met <- function(trait, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06) {
 
   # Estimation
 
-  trait.est <- paste0(trait, ".est")
-  dfr[, trait.est] <- dfr[, trait]
-  dfr[, "ytemp"] <- dfr[, trait]
-  mGE <- tapply(dfr[, trait], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
-  for (i in 1:length(dfr[, trait]))
-    if (is.na(dfr[i, trait]))
+  y.est <- paste0(y, ".est")
+  dfr[, y.est] <- dfr[, y]
+  dfr[, "ytemp"] <- dfr[, y]
+  mGE <- tapply(dfr[, y], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
+  for (i in 1:length(dfr[, y]))
+    if (is.na(dfr[i, y]))
       dfr[i, "ytemp"] <- mGE[dfr[i, geno], dfr[i, env]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
-  cc <- max(dfr[, trait], na.rm = TRUE)
+  cc <- max(dfr[, y], na.rm = TRUE)
   cont <- 0
-  while (cc > max(dfr[, trait], na.rm = TRUE) * tol & cont < 100) {
+  while (cc > max(dfr[, y], na.rm = TRUE) * tol & cont < 100) {
     cont <- cont + 1
-    for (i in 1:length(dfr[, trait]))
-      if (is.na(dfr[i, trait])) {
-        dfr[i, "ytemp"] <- dfr[i, trait]
+    for (i in 1:length(dfr[, y]))
+      if (is.na(dfr[i, y])) {
+        dfr[i, "ytemp"] <- dfr[i, y]
         sum1 <- tapply(dfr[, "ytemp"], list(dfr[, geno], dfr[, env]), sum, na.rm = TRUE)
         sum2 <- tapply(dfr[, "ytemp"], list(dfr[, env], dfr[, rep]), sum, na.rm = TRUE)
         sum3 <- tapply(dfr[, "ytemp"], dfr[, env], sum, na.rm = TRUE)
-        dfr[i, trait.est] <- (lc$nl[1] * sum1[dfr[i, geno], dfr[i, env]] +
+        dfr[i, y.est] <- (lc$nl[1] * sum1[dfr[i, geno], dfr[i, env]] +
                                  lc$nrep * sum2[dfr[i, env], dfr[i, rep]] -
                                  sum3[dfr[i, env]]) / (lc$nl[1] * lc$nrep - lc$nl[1] - lc$nrep + 1)
-        dfr[i, "ytemp"] <- dfr[i, trait.est]
+        dfr[i, "ytemp"] <- dfr[i, y.est]
       }
     lc1 <- lc2
-    lc2 <- dfr[is.na(dfr[, trait]), trait.est]
+    lc2 <- dfr[is.na(dfr[, y]), y.est]
     cc <- max(abs(lc1 - lc2))
   }
 
   # Return
 
-  dfr[, c(geno, env, rep, trait, trait.est)]
+  dfr[, c(geno, env, rep, y, y.est)]
   
 }

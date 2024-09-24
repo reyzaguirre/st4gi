@@ -31,7 +31,7 @@ for the details).
 # Create designs
 book1 <- cr.rcbd(1:20, 3, 10)$book
 book2 <- cr.rcbd(1:20, 3, 10)$book
-# Get fieldbook with minimal set of traits for sweetpotato
+# Get fieldbook with minimal set of variables for sweetpotato
 PEP2023CLM_AT01 <- create.fb(book1, crop = 'sp')
 PEP2023CSR_AT02 <- create.fb(book2, crop = 'sp')
 # Create metadata file

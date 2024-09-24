@@ -1,6 +1,6 @@
-#' Compute derived traits for potato and sweetpotato
+#' Compute derived variables for potato and sweetpotato
 #'
-#' Compute derived traits for a given fieldbook data frame.
+#' Compute derived variables for a given fieldbook data frame.
 #' @param dfr The name of the data frame.
 #' @param method Method to scale data from plot to hectare level. Options are
 #' plot size \code{"ps"} and number of plants for a full hectare \code{"np"}.
@@ -15,7 +15,7 @@
 #' allocated in a full hectare. In both cases computations can be adjusted by the
 #' number of harvested plants if available in the fieldbook. For \code{method = "np"},
 #' number of plants sowed must be specified to compute non adjusted values.
-#' @return It returns a data frame with the original and derived traits.
+#' @return It returns a data frame with the original and derived variables.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' cdt(potatoyield)
@@ -36,7 +36,7 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
   if (crop == 'auto')
     crop <- detect.names(dfr)
   
-  # Original trait names
+  # Original variable names
   
   on <- names(dfr)
   
@@ -54,12 +54,12 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
   if (method == "np" & crop == 'sp' & !exists("nops", dfr))
     warning("Number of plants sowed, nops, is missing.", call. = FALSE)
 
-  # List of traits to overwrite
+  # List of variables to overwrite
   
   ow <- NULL
   
   # -------------------------------
-  # Compute traits for potato
+  # Compute variables for potato
   # -------------------------------
   
   if (crop == 'pt') {
@@ -251,9 +251,9 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
     
   }
   
-  # -------------------------------
-  # Compute traits for sweetpotato
-  # -------------------------------
+  # ----------------------------------
+  # Compute variables for sweetpotato
+  # ----------------------------------
   
   if (crop == 'sp') {
 
@@ -622,10 +622,10 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
     
   }
   
-  # Warning: Overwritten traits
+  # Warning: Overwritten variables
   
   if (length(ow) > 0)
-    warning("Some traits have been overwritten: ", list(ow), call. = FALSE)
+    warning("Some variables have been overwritten: ", list(ow), call. = FALSE)
   
   # Return
   

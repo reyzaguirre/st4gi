@@ -2,7 +2,7 @@
 #'
 #' This function checks the grid of checks on the Wescott layout and
 #' the number of missing values.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param ck1 Name of check 1.
 #' @param ck2 Name of check 2.
@@ -28,7 +28,7 @@
 #' ck.w("y", "geno", "A", "B", "row", "col", 10, dfr)
 #' @export
 
-ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
+ck.w <- function(y, geno, ck1, ck2, row, col, ncb, dfr) {
   
   # Check and remove rows with missing values for factors
   
@@ -110,14 +110,14 @@ ck.w <- function(trait, geno, ck1, ck2, row, col, ncb, dfr) {
   # Number of missing values for checks
   
   temp <- dfr[dfr[, col] %in% cck, ]
-  nmis.ck <- sum(is.na(temp[, trait]))
-  pmis.ck <- mean(is.na(temp[, trait]))
+  nmis.ck <- sum(is.na(temp[, y]))
+  pmis.ck <- mean(is.na(temp[, y]))
 
   # Number of missing values for genotypes
   
   temp <- dfr[!(dfr[, col] %in% cck), ]
-  nmis <- sum(is.na(temp[, trait]))
-  pmis <- mean(is.na(temp[, trait]))
+  nmis <- sum(is.na(temp[, y]))
+  pmis <- mean(is.na(temp[, y]))
   
   # Return
   

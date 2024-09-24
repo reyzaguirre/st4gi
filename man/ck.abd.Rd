@@ -4,10 +4,10 @@
 \alias{ck.abd}
 \title{Check data for an ABD}
 \usage{
-ck.abd(trait, geno, rep, dfr)
+ck.abd(y, geno, rep, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes including checks.}
 

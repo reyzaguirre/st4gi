@@ -4,10 +4,10 @@
 \alias{mve.met}
 \title{Estimation of missing values for a MET in a RCBD}
 \usage{
-mve.met(trait, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06)
+mve.met(y, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to estimate missing values.}
+\item{y}{The name of the column for the variable to estimate missing values.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
@@ -22,8 +22,8 @@ mve.met(trait, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06)
 \item{tol}{Tolerance for the convergence of the iterative estimation process.}
 }
 \value{
-It returns a data frame with the experimental layout and columns \code{trait}
-and \code{trait.est} with the original data and the original data plus the estimated values.
+It returns a data frame with the experimental layout and columns \code{y}
+and \code{y.est} with the original data and the original data plus the estimated values.
 }
 \description{
 Function to estimate missing values for a Multi Environment Trial (MET) with a

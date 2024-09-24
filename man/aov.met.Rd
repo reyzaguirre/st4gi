@@ -4,10 +4,10 @@
 \alias{aov.met}
 \title{ANOVA for MET with a RCBD}
 \usage{
-aov.met(trait, geno, env, rep, dfr, maxp = 0.1)
+aov.met(y, geno, env, rep, dfr, maxp = 0.1)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

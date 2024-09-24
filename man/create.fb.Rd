@@ -19,18 +19,18 @@ create.fb(
 \item{label}{Use \code{standard} for standard sweetpotato short labels or
 \code{CO} for CO numbers. Default is \code{standard}.}
 
-\item{minimal}{Logical, if \code{TRUE}, a minimal list of traits is included.
+\item{minimal}{Logical, if \code{TRUE}, a minimal list of variables is included.
 Default is \code{TRUE}.}
 
-\item{add}{Additional traits to include. Only if \code{minimal = TRUE}.}
+\item{add}{Additional variables to include. Only if \code{minimal = TRUE}.}
 
-\item{computation}{Logical, if \code{TRUE}, computed traits are included.
+\item{computation}{Logical, if \code{TRUE}, computed variables are included.
 Only if \code{minimal = FALSE}. Default is \code{FALSE}.}
 
 \item{crop}{\code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 }
 \value{
-It returns a data frame with fieldbook design and traits.
+It returns a data frame with fieldbook design and variables.
 }
 \description{
 Creates a potato and sweetpotato fieldbook with short labels or CO numbers.
@@ -41,15 +41,15 @@ Uppercase labels are converted to lowercase.
 }
 \examples{
 book <- cr.rcbd(1:20, 3, 10)$book
-# Get fieldbook with minimal set of traits for potato
+# Get fieldbook with minimal set of variables for potato
 create.fb(book, crop = 'pt')
-# Add additional traits
+# Add additional variables
 create.fb(book, add = c('fedw', 'zndw'), crop = 'pt')
 # Get the fieldbook with CO numbers
 create.fb(book, label = 'CO', add = c('dm', 'fedw', 'zndw'), crop = 'pt')
-# Get fieldbook with minimal set of traits for sweetpotato
+# Get fieldbook with minimal set of variables for sweetpotato
 create.fb(book, crop = 'sp')
-# Add additional traits
+# Add additional variables
 create.fb(book, add = c('bc', 'fe', 'zn'), crop = 'sp')
 # Get the fieldbook with CO numbers
 create.fb(book, label = 'CO', add = c('bc', 'fe', 'zn'), crop = 'sp')

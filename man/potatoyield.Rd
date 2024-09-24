@@ -14,6 +14,6 @@ International Potato Center, potato experimental data.
 potatoyield
 }
 \description{
-This data set contains data for 39 traits in a potato trial
+This data set contains data for 39 variables in a potato trial
 with 258 genotypes, 3 irrigation treatments, and 6 blocks.
 }

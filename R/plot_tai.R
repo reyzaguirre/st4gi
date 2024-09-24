@@ -31,7 +31,7 @@ plot.st4gi_tai <- function(x, conf = 0.95, graph.type = c("base", "ggplot"),
 
   # arguments
   
-  trait <- x$Trait
+  y.name <- x$Variable
   alpha <- x$Tai_values[, 1]
   lambda <- x$Tai_values[, 2] 
   at <- x$ANOVA
@@ -66,7 +66,7 @@ plot.st4gi_tai <- function(x, conf = 0.95, graph.type = c("base", "ggplot"),
 
   # Tai plot
   
-  main <- paste0("Tai stability analysis for ", trait)
+  main <- paste0("Tai stability analysis for ", y.name)
   
   if (graph.type == "base") {
     

@@ -2,7 +2,7 @@
 #'
 #' This function runs Tai's stability analysis (Tai, G. C. C., 1971).
 #' It assumes a RCBD with fixed effects for genotypes and random effects for environments.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
@@ -20,7 +20,7 @@
 #' model.tai$Tai_values
 #' @export
 
-tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
+tai <- function(y, geno, env, rep, dfr, maxp = 0.1) {
 
   # Everything as character
 
@@ -30,7 +30,7 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   # Check data
 
-  lc <- ck.f(trait, c(geno, env), rep, dfr)
+  lc <- ck.f(y, c(geno, env), rep, dfr)
 
   # Error messages and warnings
 
@@ -39,10 +39,10 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   # Estimate missing values and report errors from mve.met
   
-  trait.est <- paste0(trait, ".est")
+  y.est <- paste0(y, ".est")
   
   if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
-    dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp, tol = 1e-06)[, trait.est]
+    dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp, tol = 1e-06)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -50,7 +50,7 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   # Compute interaction effects matrix
 
-  int.mean <- tapply(dfr[, trait], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
+  int.mean <- tapply(dfr[, y], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
 
   overall.mean <- mean(int.mean)
   env.mean <- apply(int.mean, 2, mean)
@@ -61,7 +61,7 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   # ANOVA
 
-  model <- aov(dfr[, trait] ~ dfr[, geno] + dfr[, env] +
+  model <- aov(dfr[, y] ~ dfr[, geno] + dfr[, env] +
                  dfr[, rep] %in% dfr[, env] + dfr[, geno]:dfr[, env])
   at <- anova(model)
   
@@ -86,7 +86,7 @@ tai <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   # Output
 
-  output <- list(Trait = trait, Tai_values = cbind(alpha, lambda), ANOVA = at, lc = lc)
+  output <- list(Variable = y, Tai_values = cbind(alpha, lambda), ANOVA = at, lc = lc)
   
   class(output) <- "st4gi_tai"
   invisible(output)

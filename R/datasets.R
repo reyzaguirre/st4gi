@@ -29,7 +29,7 @@ NULL
 #' @source Singh and Chaudhary, 1979. Biometrical Methods in Quantitative Genetic Analysis.
 NULL
 #' @name megaclones
-#' @title Some traits for a multi-environment trial (MET)
+#' @title Some variables for a multi-environment trial (MET)
 #' @docType data
 #' @aliases megaclones
 #' @description This data set has data for root yield in tons per hectare (\code{rytha}),
@@ -41,7 +41,7 @@ NULL
 #' @source International Potato Center, sweetpotato experimental data.
 NULL
 #' @name megaclones2
-#' @title Some traits for a multi-environment trial (MET)
+#' @title Some variables for a multi-environment trial (MET)
 #' @docType data
 #' @aliases megaclones2
 #' @description This data set has data for root yield in tons per hectare (\code{rytha})
@@ -67,7 +67,7 @@ NULL
 #' @title Data for a yield trial
 #' @docType data
 #' @aliases potatoyield
-#' @description This data set contains data for 39 traits in a potato trial
+#' @description This data set contains data for 39 variables in a potato trial
 #' with 258 genotypes, 3 irrigation treatments, and 6 blocks.
 #' @usage potatoyield
 #' @format A data frame with 972 rows and 46 columns.
@@ -88,7 +88,7 @@ NULL
 #' @source International Potato Center, sweetpotato experimental data.
 NULL
 #' @name spg
-#' @title Some traits for a multi-environment trial (MET)
+#' @title Some variables for a multi-environment trial (MET)
 #' @docType data
 #' @aliases spg
 #' @description This data set has data for root yield in tons per hectare (\code{rytha}),
@@ -104,7 +104,7 @@ NULL
 #' @title Data for a yield trial
 #' @docType data
 #' @aliases potatostress
-#' @description This data set contains BLUPs for 24 genotypes and 3 traits in a 
+#' @description This data set contains BLUPs for 24 genotypes and 3 variables in a 
 #' potato trial with two treatments, well water and water stress.
 #' @usage potatostress
 #' @format A data frame with 24 rows and 7 columns.
@@ -114,7 +114,7 @@ NULL
 #' @title Data for 5 potato trials
 #' @docType data
 #' @aliases ptfs
-#' @description This data set contains data for 13 traits in 5 trials with
+#' @description This data set contains data for 13 variables in 5 trials with
 #' different number of genotypes, but some in common.
 #' @usage ptfs
 #' @format A data frame with 382 rows and 22 columns.

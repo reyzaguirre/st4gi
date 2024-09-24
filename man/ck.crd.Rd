@@ -4,10 +4,10 @@
 \alias{ck.crd}
 \title{Check data for a CRD}
 \usage{
-ck.crd(trait, geno, dfr)
+ck.crd(y, geno, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

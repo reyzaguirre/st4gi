@@ -1,7 +1,7 @@
 #' ANOVA for a factorial experiment
 #'
 #' Fit an analysis of variance model for a factorial experiment with a CRD or RCBD.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param factors The names of the columns that identify the factors.
 #' @param rep The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
@@ -13,11 +13,11 @@
 #' @importFrom stats anova
 #' @export
 
-aov.f <- function(trait, factors, rep, dfr, maxp = 0.1) {
+aov.f <- function(y, factors, rep, dfr, maxp = 0.1) {
 
   # Check data
   
-  lc <- ck.f(trait, factors, rep, dfr)
+  lc <- ck.f(y, factors, rep, dfr)
 
   # Everything as character
   
@@ -28,11 +28,11 @@ aov.f <- function(trait, factors, rep, dfr, maxp = 0.1) {
 
   # Estimate missing values and report errors from mve.f
   
-  trait.est <- paste0(trait, ".est")
+  y.est <- paste0(y, ".est")
   
   if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 |
       lc$nmis.fac > 0 | sum(lc$nl < 2) > 0) {
-    dfr[, trait] <- mve.f(trait, factors, rep, dfr, maxp)[, trait.est]
+    dfr[, y] <- mve.f(y, factors, rep, dfr, maxp)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -40,7 +40,7 @@ aov.f <- function(trait, factors, rep, dfr, maxp = 0.1) {
 
   # ANOVA
   
-  expr <- paste(trait, '~', factors[1])
+  expr <- paste(y, '~', factors[1])
   for (i in 2:lc$nf)
     expr <- paste(expr, '*', factors[i])
 

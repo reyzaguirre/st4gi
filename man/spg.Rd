@@ -3,7 +3,7 @@
 \docType{data}
 \name{spg}
 \alias{spg}
-\title{Some traits for a multi-environment trial (MET)}
+\title{Some variables for a multi-environment trial (MET)}
 \format{
 A data frame with 32 rows and 8 columns.
 }

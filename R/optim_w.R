@@ -1,7 +1,7 @@
 #' Optimize Westcott adjustment
 #'
 #' This function optimizes the parameter values of the Westcott adjustment.
-#' @param trait The name of the column for the trait to adjust.
+#' @param y The name of the column for the variable to adjust.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param replicated A \code{yes/no} column to identify replicated genotypes.
 #' @param ck1 Name of check 1.
@@ -23,7 +23,7 @@
 #' @author Raul Eyzaguirre.
 #' @export
 
-optim.w <- function(trait, geno, replicated, ck1, ck2, row, col, ncb, nrs, method, ind,
+optim.w <- function(y, geno, replicated, ck1, ck2, row, col, ncb, nrs, method, ind,
                     p, opt = c("F.value", "MSE", "CV"), dfr) {
   
   # Match arguments
@@ -42,11 +42,11 @@ optim.w <- function(trait, geno, replicated, ck1, ck2, row, col, ncb, nrs, metho
   # Anova without adjustment
   
   temp <- dfr[dfr[, replicated] == 'yes', ]
-  ff <- as.formula(paste(trait, '~', geno))
+  ff <- as.formula(paste(y, '~', geno))
   at <- anova(aov(ff, temp))
   MSE <- at[2, 3]
   F.value <- at[1, 4]
-  CV <- sqrt(at[2, 3]) / mean(temp[, trait], na.rm = T) * 100
+  CV <- sqrt(at[2, 3]) / mean(temp[, y], na.rm = T) * 100
   
   # Original values
   
@@ -60,7 +60,7 @@ optim.w <- function(trait, geno, replicated, ck1, ck2, row, col, ncb, nrs, metho
   
   # Run adjustments
   
-  trait.aj <- paste0(trait, '.aj')
+  y.aj <- paste0(y, '.aj')
   i <- 0
   
   for (method.v in method[1:method.l])
@@ -68,14 +68,14 @@ optim.w <- function(trait, geno, replicated, ck1, ck2, row, col, ncb, nrs, metho
       for (nrs.v in nrs[1:nrs.l])
         for (p.v in p[1:p.l]) {
 
-          dfr <- aj.w(trait, geno, ck1, ck2, row, col, ncb, nrs.v, method.v, ind.v, p.v, dfr)
+          dfr <- aj.w(y, geno, ck1, ck2, row, col, ncb, nrs.v, method.v, ind.v, p.v, dfr)
           temp <- dfr[dfr[, replicated] == 'yes', ]
-          ff <- as.formula(paste(trait.aj, '~', geno))
+          ff <- as.formula(paste(y.aj, '~', geno))
           at.aj <- anova(aov(ff, temp))
           
           new.F <- at.aj[1, 4]
           new.MSE <- at.aj[2, 3]
-          new.CV <- sqrt(at.aj[2, 3]) / mean(temp[, trait.aj], na.rm = T) * 100
+          new.CV <- sqrt(at.aj[2, 3]) / mean(temp[, y.aj], na.rm = T) * 100
           
           cond1 <- opt == "F.value" & new.F > best.F
           cond2 <- opt == "MSE" & new.MSE < best.MSE

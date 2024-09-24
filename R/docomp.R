@@ -1,15 +1,15 @@
 #' Do computations over some factors
 #'
-#' Do computations for several traits for some specific factors.
+#' Do computations for several variables for some specific factors.
 #' @param do The computation to perform. Implemented options are \code{count},
 #' \code{mode}, and standard functions like \code{mean}, \code{median},
 #' \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.
-#' @param traits The names of the columns for the traits. 
+#' @param vars The names of the columns for the variables. 
 #' @param factors The names of the columns for the factors.
 #' @param keep The names of additional columns to keep.
 #' @param dfr The name of the data frame.
 #' @param method Use \code{fast} or \code{slow} method. 
-#' @details This function do a specific computation for all the \code{traits}
+#' @details This function do a specific computation for all the \code{vars}
 #' for each level's combination of the \code{factors}. Additional columns can be
 #' kept if specified in \code{keep}. All \code{factors} and \code{keep} values
 #' are converted to character. \code{do = "count"} counts the number
@@ -18,15 +18,15 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # Compute means across replications and then across locations for each genotype
-#' traits <- c("rytha", "bc", "dm", "star", "nocr")
+#' vars <- c("rytha", "bc", "dm", "star", "nocr")
 #' factors <- c("geno", "loc")
-#' output1 <- docomp("mean", traits, factors, dfr = spg)
-#' docomp("mean", traits, "geno", dfr = output1) 
+#' output1 <- docomp("mean", vars, factors, dfr = spg)
+#' docomp("mean", vars, "geno", dfr = output1) 
 #' # Compute maxima across replications for each genotype and location.
-#' docomp("max", traits, factors, dfr = spg)
+#' docomp("max", vars, factors, dfr = spg)
 #' @export
 
-docomp <- function(do, traits, factors, keep = NULL, dfr, method = c("fast", "slow")) {
+docomp <- function(do, vars, factors, keep = NULL, dfr, method = c("fast", "slow")) {
 
   # Match arguments
   
@@ -47,9 +47,9 @@ docomp <- function(do, traits, factors, keep = NULL, dfr, method = c("fast", "sl
   colnames(dfr.out) <- c(factors, keep)
   dfr.out <- subset(dfr.out, !duplicated(dfr.out[, factors]))
   
-  # Number of factors and traits
+  # Number of factors and variables
   
-  nt <- length(traits)
+  nt <- length(vars)
   nf <- length(factors)
   
   # Create matching vars
@@ -70,14 +70,14 @@ docomp <- function(do, traits, factors, keep = NULL, dfr, method = c("fast", "sl
     for (i in 1:nt) {
       for (j in 1:dim(dfr.out)[1]){
         if (do == "count")
-          dfr.out[j, traits[i]] <- sum(!is.na(dfr[idin == idout[j], traits[i]]))
+          dfr.out[j, vars[i]] <- sum(!is.na(dfr[idin == idout[j], vars[i]]))
         if (do == 'mode')
-          dfr.out[j, traits[i]] <- getmode(dfr[idin == idout[j], traits[i]])
+          dfr.out[j, vars[i]] <- getmode(dfr[idin == idout[j], vars[i]])
         if (!do %in% c('count', 'mode')) {
-          if (sum(!is.na(dfr[idin == idout[j], traits[i]])) == 0)
-            dfr.out[j, traits[i]] <- NA
+          if (sum(!is.na(dfr[idin == idout[j], vars[i]])) == 0)
+            dfr.out[j, vars[i]] <- NA
           else
-            dfr.out[j, traits[i]] <- eval(parse(text = do))(dfr[idin == idout[j], traits[i]], na.rm = TRUE)
+            dfr.out[j, vars[i]] <- eval(parse(text = do))(dfr[idin == idout[j], vars[i]], na.rm = TRUE)
         }
       }
     }
@@ -104,10 +104,10 @@ docomp <- function(do, traits, factors, keep = NULL, dfr, method = c("fast", "sl
         
     for (i in 1:nt) {
         
-      dfr.trait <- data.frame(tapply(dfr[, traits[i]], idin, foo))
-      dfr.trait[, 'id.to.merge'] <- rownames(dfr.trait)
-      colnames(dfr.trait)[1] <- traits[i]
-      dfr.out <- merge(dfr.out, dfr.trait, sort = FALSE)
+      dfr.y <- data.frame(tapply(dfr[, vars[i]], idin, foo))
+      dfr.y[, 'id.to.merge'] <- rownames(dfr.y)
+      colnames(dfr.y)[1] <- vars[i]
+      dfr.out <- merge(dfr.out, dfr.y, sort = FALSE)
     
     }
 

@@ -3,7 +3,7 @@
 \docType{data}
 \name{megaclones2}
 \alias{megaclones2}
-\title{Some traits for a multi-environment trial (MET)}
+\title{Some variables for a multi-environment trial (MET)}
 \format{
 A data frame with 312 rows and 6 columns.
 }

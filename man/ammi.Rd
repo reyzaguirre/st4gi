@@ -4,19 +4,10 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(
-  trait,
-  geno,
-  env,
-  rep,
-  dfr,
-  method = c("ammi", "gge"),
-  f = 0.5,
-  maxp = 0.1
-)
+ammi(y, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5, maxp = 0.1)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

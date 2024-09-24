@@ -2,7 +2,7 @@
 #'
 #' Fit an analysis of variance model for a multi environment trial (MET) with a RCBD
 #' in each environment.
-#' @param trait The name of the column for the trait to analyze.
+#' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications or blocks.
@@ -18,7 +18,7 @@
 #' @importFrom stats anova
 #' @export
 
-aov.met <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
+aov.met <- function(y, geno, env, rep, dfr, maxp = 0.1) {
 
   # Everything as character
 
@@ -28,15 +28,15 @@ aov.met <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   # Check data
   
-  lc <- ck.f(trait, c(geno, env), rep, dfr)
+  lc <- ck.f(y, c(geno, env), rep, dfr)
 
   # Estimate missing values and report errors from mve.met
   
-  trait.est <- paste0(trait, ".est")
+  y.est <- paste0(y, ".est")
 
   if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 |
       lc$nmis.fac > 0 | lc$nl[1] < 2 | lc$nl[2] < 2) {
-    dfr[, trait] <- mve.met(trait, geno, env, rep, dfr, maxp)[, trait.est]
+    dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))
@@ -44,9 +44,9 @@ aov.met <- function(trait, geno, env, rep, dfr, maxp = 0.1) {
 
   # ANOVA
 
-  model <- aov(dfr[, trait] ~ dfr[, geno] + dfr[, env]
+  model <- aov(dfr[, y] ~ dfr[, geno] + dfr[, env]
                + dfr[, rep] %in% dfr[, env] + dfr[, geno]:dfr[, env])
-  model$terms[[2]] <- trait
+  model$terms[[2]] <- y
   
   at <- anova(model)
   

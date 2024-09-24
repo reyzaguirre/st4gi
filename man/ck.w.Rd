@@ -4,10 +4,10 @@
 \alias{ck.w}
 \title{Check data for a Wescott layout}
 \usage{
-ck.w(trait, geno, ck1, ck2, row, col, ncb, dfr)
+ck.w(y, geno, ck1, ck2, row, col, ncb, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 

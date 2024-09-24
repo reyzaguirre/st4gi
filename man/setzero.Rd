@@ -16,30 +16,30 @@ It returns a data frame and a list of warnings with all the rows
 that have been modified.
 }
 \description{
-Set values to \code{0} for harvested traits.
+Set values to \code{0} for variables at harvest.
 }
 \details{
-This function sets values to \code{0} for all traits at harvest
+This function sets values to \code{0} for all variables at harvest
 according to some rules.
 
-For potato, traits (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp},
+For potato, variables (\code{nph}, \code{nmtp}, \code{nnomtp}, \code{mtwp},
 and \code{nomtwp}) which are \code{NA} according to the following rules:
 \itemize{
- \item If \code{npe > 0} and \code{nph == 0}, then all traits are set to \code{0}.
+ \item If \code{npe > 0} and \code{nph == 0}, then all variables are set to \code{0}.
  \item If \code{nmtp == 0}, then \code{mtwp} is set to \code{0}.
  \item If \code{mtwp == 0}, then \code{nmtp} is set to \code{0}.
  \item If \code{nnomtp == 0}, then \code{nomtwp} is set to \code{0}.
  \item If \code{nomtwp == 0}, then \code{nnomtp} is set to \code{0}.
 }
-For sweetpotato, traits (\code{noph}, \code{nopr}, \code{vw}, \code{nocr},
+For sweetpotato, variables (\code{noph}, \code{nopr}, \code{vw}, \code{nocr},
 \code{nonc}, \code{crw}, and \code{ncrw}) which are \code{NA} according to
 the following rules:
 \itemize{
- \item If \code{nope > 0} and \code{noph == 0}, then all traits are set to \code{0}.
- \item If all traits are \code{0}, then \code{noph} is set to \code{0}.
- \item If \code{nopr == 0}, then all traits with exception of \code{vw}
+ \item If \code{nope > 0} and \code{noph == 0}, then all variables are set to \code{0}.
+ \item If all variables are \code{0}, then \code{noph} is set to \code{0}.
+ \item If \code{nopr == 0}, then all variables with exception of \code{vw}
  are set to \code{0}.
- \item If all traits with exception of \code{vw} are \code{0}, then
+ \item If all variables with exception of \code{vw} are \code{0}, then
  \code{nopr} is set to \code{0}.
  \item If \code{nocr == 0}, then \code{crw} is set to \code{0}.
  \item If \code{crw == 0}, then \code{nocr} is set to \code{0}.

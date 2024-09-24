@@ -1,16 +1,16 @@
 #' Compute stress tolerance indices
 #'
 #' Compute several stress tolerance indices.
-#' @param traits The list of traits.
+#' @param vars The list of variables.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param normal The identification for the normal group.
 #' @param stress The identification for the stress group.
 #' @param dfr The name of the data frame.
-#' @details The names of the columns for the traits must follow the convention
-#' \code{trait.normal} and \code{trait.stress}, so the data frame must be in
+#' @details The names of the columns for the variables must follow the convention
+#' \code{y.normal} and \code{y.stress}, so the data frame must be in
 #' wide format for the factor with levels \code{normal} and \code{stress}.
 #' 
-#' For a trait \eqn{y} with values \eqn{y_n} and \eqn{y_s} under normal and
+#' For a variable \eqn{y} with values \eqn{y_n} and \eqn{y_s} under normal and
 #' stress conditions, the stress intensity (\eqn{si}) is computed:
 #' \deqn{
 #' si = 1 - \frac{\bar y_s}{\bar y_n}
@@ -44,8 +44,8 @@
 #'  }  
 #'  }
 #' @return It returns a data frame with the indices and a data frame with
-#' the stress intensity values for each trait. The names for the indices
-#' follow the convention \code{trait.index}.
+#' the stress intensity values for each variable. The names for the indices
+#' follow the convention \code{y.index}.
 #' @author Raul Eyzaguirre.
 #' @references
 #' Fernandez, G.C.J. (1992). Effective Selection Criteria for Assessing Stress Tolerance.
@@ -53,16 +53,16 @@
 #' Vegetables and Other Food Crops in Temperature and Water Stress, AVRDC Publication,
 #' Tainan, 257-270.
 #' @examples
-#' traits <- c("nmtp", "mtwp", "nnomtp")
-#' sti(traits, 'genotype', 'DTWW', 'DTWS', potatostress)
+#' vars <- c("nmtp", "mtwp", "nnomtp")
+#' sti(vars, 'genotype', 'DTWW', 'DTWS', potatostress)
 #' @export
 
-sti <- function(traits, geno, normal, stress, dfr) {
+sti <- function(vars, geno, normal, stress, dfr) {
   
-  # Trait names
+  # Variable names
   
-  traits.normal <- paste(traits, normal, sep = '.')
-  traits.stress <- paste(traits, stress, sep = '.')
+  vars.normal <- paste(vars, normal, sep = '.')
+  vars.stress <- paste(vars, stress, sep = '.')
   
   # Stress intensity
   
@@ -71,24 +71,24 @@ sti <- function(traits, geno, normal, stress, dfr) {
   
   # Indices 
   
-  for (i in 1:length(traits)) {
+  for (i in 1:length(vars)) {
     
-    # Normal value of the trait
+    # Normal value of the variable
 
-    y_n <- dfr[, traits.normal[i]]
+    y_n <- dfr[, vars.normal[i]]
     
-    # Stress value of the trait
+    # Stress value of the variable
     
-    y_s <- dfr[, traits.stress[i]]
+    y_s <- dfr[, vars.stress[i]]
     
     # Tolerance
     
-    index.name <- paste(traits[i], 'tol', sep = '.')
+    index.name <- paste(vars[i], 'tol', sep = '.')
     dfr[, index.name] <- y_n - y_s
     
     # Yield reduction ratio
     
-    index.name <- paste(traits[i], 'yrr', sep = '.')
+    index.name <- paste(vars[i], 'yrr', sep = '.')
     dfr[, index.name] <- 1 - y_s / y_n
     tmp <- index.name # Keep name for next index
     
@@ -96,33 +96,33 @@ sti <- function(traits, geno, normal, stress, dfr) {
     
     si <- 1 - mean(y_s) / mean(y_n)
     si.out <- c(si.out, si)
-    si.name <- c(si.name, traits[i])
+    si.name <- c(si.name, vars[i])
     
     # Stress susceptibility index
     
-    index.name <- paste(traits[i], 'ssi', sep = '.')
+    index.name <- paste(vars[i], 'ssi', sep = '.')
     dfr[, index.name] <- dfr[, tmp] / si
     
     # Stress tolerance index
     
-    index.name <- paste(traits[i], 'sti', sep = '.')
+    index.name <- paste(vars[i], 'sti', sep = '.')
     dfr[, index.name] <- y_n * y_s / mean(y_n)^2
 
     # Mean productivity
     
-    index.name <- paste(traits[i], 'mp', sep = '.')
+    index.name <- paste(vars[i], 'mp', sep = '.')
     dfr[, index.name] <- (y_n + y_s) / 2
 
     # Geometric mean productivity
     
-    index.name <- paste(traits[i], 'gmp', sep = '.')
+    index.name <- paste(vars[i], 'gmp', sep = '.')
     dfr[, index.name] <- sqrt(y_n * y_s)
    
   }
   
   # Return
   
-  si.values <- data.frame(trait = si.name,
+  si.values <- data.frame(variable = si.name,
                           si = si.out)
     
   list(index.dfr = dfr,

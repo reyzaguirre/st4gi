@@ -25,60 +25,60 @@ missing value (\code{NA}) according to some rules.
 The data frame must use the labels (lower or upper case) listed in
 function \code{check.names}.
 
-Consider the following groups of traits for potato:
+Consider the following groups of variables for potato:
 \itemize{
- \item \code{pre} (traits evaluated pre-harvest): \code{ppe}, \code{plant_unif},
+ \item \code{pre} (variables evaluated pre-harvest): \code{ppe}, \code{plant_unif},
  \code{plant_vigor} and \code{se}.
- \item \code{cnn} (continuos non-negative traits): \code{tntpl}, \code{nmtpl},
+ \item \code{cnn} (continuos non-negative variables): \code{tntpl}, \code{nmtpl},
  \code{ttwp}, \code{ttwpl}, \code{mtwp}, \code{mtwpl}, \code{nomtwp}, \code{mtwci},
  \code{mtwcii}, \code{ttya}, \code{ttyna}, \code{mtya}, and \code{mtyna}.
- \item \code{cpo} (continuous positive traits): \code{atw}, \code{atmw},  
+ \item \code{cpo} (continuous positive variables): \code{atw}, \code{atmw},  
  \code{fwts1}, \code{fwts2}, \code{dwts1}, and \code{dwts2}.
- \item \code{pnn} (percentage non-negative traits): \code{ppe}, \code{pph},  
+ \item \code{pnn} (percentage non-negative variables): \code{ppe}, \code{pph},  
  \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
- \item \code{ppo} (percentage positive traits): \code{dm}, \code{pro},
+ \item \code{ppo} (percentage positive variables): \code{dm}, \code{pro},
  \code{star}, and \code{fiber}.
- \item \code{dnn} (discrete non-negative traits): \code{ntp}, \code{npe}, \code{nph},
+ \item \code{dnn} (discrete non-negative variables): \code{ntp}, \code{npe}, \code{nph},
  \code{tntp}, \code{nmtp}, \code{nnomtp}, \code{nmtci}, and \code{nmtcii}.
- \item \code{ctg} (categorical traits): \code{plant_unif},
+ \item \code{ctg} (categorical variables): \code{plant_unif},
  \code{plant_vigor}, \code{flowering}, \code{rlb}, \code{se}, \code{tuber_apper},
  \code{tub_unif}, \code{tub_size}, \code{chip_color}, \code{num_stolon},
  and \code{leng_stolon}.
 }
 Values are set to \code{NA} with the following rules:
 \itemize{
- \item \code{cnn} traits with negative values are set to \code{NA}.
- \item \code{cpo} traits with non-positive values are set to \code{NA}.
- \item \code{pnn} traits with values out of the [0, 100] interval are set to \code{NA}.  
+ \item \code{cnn} variables with negative values are set to \code{NA}.
+ \item \code{cpo} variables with non-positive values are set to \code{NA}.
+ \item \code{pnn} variables with values out of the [0, 100] interval are set to \code{NA}.  
  \item \code{ppo} with values out of the (0, 100] interval are set to \code{NA}.
- \item \code{dnn} traits with negative and non-integer values are set to \code{NA}.
- \item \code{ctg} traits with out of scale values are set to \code{NA}.
+ \item \code{dnn} variables with negative and non-integer values are set to \code{NA}.
+ \item \code{ctg} variables with out of scale values are set to \code{NA}.
  \item Extreme low and high values are detected using the interquartile range.
  The rule is to detect any value out of the interval
  \eqn{[Q_1 - f \times (m/3 + IQR); Q_3 + f \times (m/3 + IQR)]} where \code{m}
  is the mean. By default \code{f = 10} and if less than 10 a warning is shown.
  Values out of this range are set to \code{NA}.
- \item If \code{npe == 0} and there is some data for any trait,
+ \item If \code{npe == 0} and there is some data for any variable,
  then \code{npe} is set to \code{NA}.  
- \item If \code{npe == 0} and there is no data but some traits that are \code{0},
- then all those traits are set to \code{NA}.  
- \item If \code{nph == 0} and there is some data for any non-pre-harvest trait,
+ \item If \code{npe == 0} and there is no data but some variables that are \code{0},
+ then all those variables are set to \code{NA}.  
+ \item If \code{nph == 0} and there is some data for any non-pre-harvest variable,
  then \code{nph} is set to \code{NA}.
  \item If \code{nmtp == 0} and \code{mtwp > 0}, then \code{nmtp} is set to \code{NA}.
  \item If \code{nmtp > 0} and \code{mtwp == 0}, then \code{mtwp} is set to \code{NA}.
  \item If \code{nnomtp == 0} and \code{nomtwp > 0}, then \code{nnomtp} is set to \code{NA}.
  \item If \code{nnomtp > 0} and \code{nomtwp == 0}, then \code{nomtwp} is set to \code{NA}.
 }
-Consider the following groups of traits for sweetpotato:
+Consider the following groups of variables for sweetpotato:
 \itemize{
- \item Traits evaluated pre-harvest: \code{vir}, \code{vir1}, \code{vir2},
+ \item Variables evaluated pre-harvest: \code{vir}, \code{vir1}, \code{vir2},
  \code{alt}, \code{alt1}, \code{alt2}, and \code{vv}.
- \item Traits evaluated with vines non-pre-harvest: \code{vw}, \code{biom},
+ \item Variables evaluated with vines non-pre-harvest: \code{vw}, \code{biom},
  \code{biom.d}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
  \code{dmvy.aj}, \code{bytha}, \code{bytha.aj}, \code{dmby}, \code{dmby.aj},
  \code{vpp}, \code{vpsp}, \code{dmvf}, \code{dmvd}, \code{hi}, \code{shi},
  and \code{dmv}.
- \item Traits evaluated only with roots non-pre-harvest: \code{crw},
+ \item Variables evaluated only with roots non-pre-harvest: \code{crw},
  \code{ncrw}, \code{trw}, \code{trw.d}, \code{cytha}, \code{cytha.aj},
  \code{rytha}, \code{rytha.aj}, \code{dmry}, \code{dmry.aj}, \code{nrpp},
  \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp}, \code{ypsp},
@@ -91,7 +91,7 @@ Consider the following groups of traits for sweetpotato:
  \code{wed}, \code{stspwv}, \code{milldam}, \code{fraw}, \code{suraw},
  \code{straw}, \code{coof}, \code{coosu}, \code{coost}, \code{coot}, and
  \code{cooap} 
- \item \code{cnn} (continuos non-negative traits): \code{vw}, \code{crw},
+ \item \code{cnn} (continuos non-negative variables): \code{vw}, \code{crw},
  \code{ncrw}, \code{trw}, \code{trw.d}, \code{biom}, \code{biom.d},
  \code{cytha}, \code{cytha.aj}, \code{rytha}, \code{rytha.aj}, \code{dmry},
  \code{dmry.aj}, \code{vw.d}, \code{fytha}, \code{fytha.aj}, \code{dmvy},
@@ -99,15 +99,15 @@ Consider the following groups of traits for sweetpotato:
  \code{nrpp}, \code{nrpsp}, \code{ncrpp}, \code{ncrpsp}, \code{ypp},
  \code{ypsp}, \code{vpp}, \code{vpsp}, \code{rtyldpct}, \code{rfr},
  \code{bc}, \code{tc}, \code{fe}, \code{zn}, \code{ca}, and \code{mg}.
- \item \code{cpo} (continuous positive traits): \code{dmf}, \code{dmd},
+ \item \code{cpo} (continuous positive variables): \code{dmf}, \code{dmd},
  \code{dmvf}, \code{dmvd}, \code{acrw}, \code{ancrw}, and \code{atrw}.
- \item \code{pnn} (percentage non-negative traits): \code{ci}, \code{hi},
+ \item \code{pnn} (percentage non-negative variables): \code{ci}, \code{hi},
  \code{shi}, \code{fruc}, \code{gluc}, \code{sucr}, and \code{malt}.
- \item \code{ppo} (percentage positive traits): \code{dm}, \code{dmv},
+ \item \code{ppo} (percentage positive variables): \code{dm}, \code{dmv},
  \code{prot}, and \code{star}.
- \item \code{dnn} (discrete non-negative traits): \code{nops}, \code{nope},
+ \item \code{dnn} (discrete non-negative variables): \code{nops}, \code{nope},
  \code{noph}, \code{nopr}, \code{nocr}, \code{nonc}, and \code{tnr}.
- \item \code{ctg} (categorical 1 to 9 traits): \code{vir}, \code{vir1},
+ \item \code{ctg} (categorical 1 to 9 variables): \code{vir}, \code{vir1},
  \code{vir2}, \code{alt}, \code{alt1}, \code{alt2}, \code{vv}, \code{scol},
  \code{fcol}, \code{fcol2}, \code{rs}, \code{rf}, \code{rtshp}, \code{damr},
  \code{rspr}, \code{alcdam}, \code{wed}, \code{stspwv}, \code{milldam},
@@ -116,12 +116,12 @@ Consider the following groups of traits for sweetpotato:
 }
 Values are set to \code{NA} with the following rules:
 \itemize{
- \item \code{cnn} traits with negative values are set to \code{NA}.
- \item \code{cpo} traits with non-positive values are set to \code{NA}.
- \item \code{pnn} traits with values out of the [0, 100] interval are set to \code{NA}.  
+ \item \code{cnn} variables with negative values are set to \code{NA}.
+ \item \code{cpo} variables with non-positive values are set to \code{NA}.
+ \item \code{pnn} variables with values out of the [0, 100] interval are set to \code{NA}.  
  \item \code{ppo} with values out of the (0, 100] interval are set to \code{NA}.
- \item \code{dnn} traits with negative and non-integer values are set to \code{NA}.
- \item \code{ctg} traits with out of scale values are set to \code{NA}.
+ \item \code{dnn} variables with negative and non-integer values are set to \code{NA}.
+ \item \code{ctg} variables with out of scale values are set to \code{NA}.
  \item Beta carotene values determined by RHS color charts with values different from
  the possible values in the RHS color chart are set to \code{NA}.
  \item Extreme low and high values are detected using the interquartile range.
@@ -129,13 +129,13 @@ Values are set to \code{NA} with the following rules:
  \eqn{[Q_1 - f \times (m/3 + IQR); Q_3 + f \times (m/3 + IQR)]} where \code{m}
  is the mean. By default \code{f = 10} and if less than 10 a warning is shown.
  Values out of this range are set to \code{NA}.
- \item If \code{nope == 0} and there is some data for any trait,
+ \item If \code{nope == 0} and there is some data for any variable,
  then \code{nope} is set to \code{NA}.
- \item If \code{nope == 0} and there is no data but some traits that are \code{0},
- then all those traits are set to \code{NA}.
- \item If \code{noph == 0} and there is some data for any non-pre-harvest trait,
+ \item If \code{nope == 0} and there is no data but some variables that are \code{0},
+ then all those variables are set to \code{NA}.
+ \item If \code{noph == 0} and there is some data for any non-pre-harvest variable,
  then \code{noph} is set to \code{NA}.
- \item If \code{nopr == 0} and there is some data for any trait evaluated with roots,
+ \item If \code{nopr == 0} and there is some data for any variable evaluated with roots,
  then \code{nopr} is set to \code{NA}.
  \item If \code{noph > 0} and \code{nocr}, \code{nonc}, \code{crw}, \code{ncrw}, 
  and \code{vw} are all 0, then \code{vw} is set to \code{NA}.
