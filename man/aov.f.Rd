@@ -4,10 +4,10 @@
 \alias{aov.f}
 \title{ANOVA for a factorial experiment}
 \usage{
-aov.f(trait, factors, rep, dfr, maxp = 0.1)
+aov.f(y, factors, rep, dfr, maxp = 0.1)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{factors}{The names of the columns that identify the factors.}
 

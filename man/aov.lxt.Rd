@@ -4,10 +4,10 @@
 \alias{aov.lxt}
 \title{Analysis for a Line x Tester genetic design.}
 \usage{
-aov.lxt(trait, line, tester, rep, dfr)
+aov.lxt(y, line, tester, rep, dfr)
 }
 \arguments{
-\item{trait}{The name of the column for the trait to analyze.}
+\item{y}{The name of the column for the variable to analyze.}
 
 \item{line}{The name of the column that identifies the lines.}
 

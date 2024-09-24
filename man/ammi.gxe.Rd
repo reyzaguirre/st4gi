@@ -6,7 +6,7 @@
 \usage{
 ammi.gxe(
   int.mean,
-  trait.name = NULL,
+  var.name = NULL,
   method = c("ammi", "gge"),
   f = 0.5,
   aov.model = NULL,
@@ -16,7 +16,7 @@ ammi.gxe(
 \arguments{
 \item{int.mean}{GxE means matrix, genotypes in rows, environments in columns.}
 
-\item{trait.name}{The name of the column for the trait to analyze.}
+\item{var.name}{The name of the variable to analyze.}
 
 \item{method}{\code{"ammi"} or \code{"gge"}.}
 
@@ -46,10 +46,10 @@ and if \code{aov.model} and \code{nrep} are specified.
 # Compute GxE means
 int.mean <- tapply(met8x12$y, list(met8x12$geno, met8x12$env), mean, na.rm = TRUE)
 # Run AMMI with GxE means matrix
-model.ammi <- ammi.gxe(int.mean, trait.name = "y")
+model.ammi <- ammi.gxe(int.mean, var.name = "y")
 model.ammi
 # Run GGE with GxE means matrix
-model.gge <- ammi.gxe(int.mean, trait.name = "y", method = "gge")
+model.gge <- ammi.gxe(int.mean, var.name = "y", method = "gge")
 model.gge
 }
 \references{
