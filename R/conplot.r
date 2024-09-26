@@ -14,10 +14,6 @@
 
 conplot <- function(y, geno, trial, dfr) {
   
-  # Only plots with data
-  
-  dfr <- dfr[!is.na(dfr[, y]), ]
-
   # Number and list of trials
   
   trials.list <- unique(dfr[, trial])
@@ -30,7 +26,11 @@ conplot <- function(y, geno, trial, dfr) {
   tcm <- matrix(data = NA, nt, nt) # trial connectivity matrix
   dimnames(tcm) <- list(trials.list, trials.list)
   
-  for(i in 1:nt)
+  # Only plots with data
+  
+  dfr <- dfr[!is.na(dfr[, y]), ]
+
+    for(i in 1:nt)
     for (j in i:nt) {
       group.i <- unique(dfr[dfr[, trial] == trials.list[i], geno])
       group.j <- unique(dfr[dfr[, trial] == trials.list[j], geno])
