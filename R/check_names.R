@@ -177,9 +177,17 @@ sp.ont <- function() {
 
 detect.names <- function(dfr) {
   
+  # Remove extra text
+  
+  colnames(dfr) <- gsub('.*CO_330.', 'CO_330:', colnames(dfr))
+  colnames(dfr) <- gsub('.*CO_331.', 'CO_331:', colnames(dfr))
+  colnames(dfr) <- gsub('.*COMP.', 'COMP:', colnames(dfr))
+
+  # Count number of coincidences
+  
   names.pt <- sum(tolower(colnames(dfr)) %in% tolower(c(ptont$Label, ptont$Variable.ID)))
   names.sp <- sum(tolower(colnames(dfr)) %in% tolower(c(spont$Label, spont$Variable.ID)))
-
+  
   if (names.pt == names.sp) {
     names.pt <- names.pt / length(c(ptont$Label, ptont$Variable.ID))
     names.sp <- names.sp / length(c(spont$Label, spont$Variable.ID))
