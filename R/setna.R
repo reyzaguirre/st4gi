@@ -291,7 +291,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     # Extreme values (almost impossible)
     
     t.all <- c(cnn, cpo, pnn, ppo, dnn)
-    t.all <- t.all[!(t.all %in% c("ntp", "npe", "nph"))]
+    t.all <- t.all[!(t.all %in% c("ntp", "npe", "ppe", "nph", "pph"))]
     
     for (i in 1:length(t.all))
       if (exists(t.all[i], dfr)) {
@@ -316,7 +316,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     
     t.all <- c(cnn, cpo, pnn, ppo, dnn, ctg)
     t.all <- t.all[t.all %in% colnames(dfr)]
-    t.all <- t.all[!(t.all %in% c("ntp", "npe"))]
+    t.all <- t.all[!(t.all %in% c("ntp", "npe", "ppe"))]
     
     # Subset in fieldook all non-pre-harvest variables
     
@@ -355,7 +355,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           cond2 <- cond & cond.tmp
           dfr[cond2, t.all[i]] <- NA
           if (sum(cond2) > 0)
-            warning("Rows with NA replaced with NA for variable ",
+            warning("Rows with 0 replaced with NA for variable ",
                     t.all[i], ": ", paste0(rownames(dfr)[cond2], " "), call. = FALSE)
         }
       
@@ -632,7 +632,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
           cond2 <- cond & cond.tmp
           dfr[cond2, t.all[i]] <- NA
           if (sum(cond2) > 0)
-            warning("Rows with NA replaced with NA for variable ",
+            warning("Rows with 0 replaced with NA for variable ",
                     t.all[i], ": ", paste0(rownames(dfr)[cond2], " "), call. = FALSE)
         }
       
