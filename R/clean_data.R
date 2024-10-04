@@ -39,7 +39,7 @@ clean.data <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   
   dfr <- setna(dfr, f, crop = crop)
   
-  dfr <- setzero(dfr, crop = crop)
+  dfr <- suppressWarnings(setzero(dfr, crop = crop))
   
   # Return
   
