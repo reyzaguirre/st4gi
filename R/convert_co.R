@@ -61,9 +61,9 @@ convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
     
     # Remove extra text
 
-    colnames(dfr) <- gsub('.*CO_330.', 'CO_330:', colnames(dfr))
-    colnames(dfr) <- gsub('.*CO_331.', 'CO_331:', colnames(dfr))
-    colnames(dfr) <- gsub('.*COMP.', 'COMP:', colnames(dfr))
+    colnames(dfr) <- sub('.*CO_330.([0-9]+).*', 'CO_330:\\1', colnames(dfr))
+    colnames(dfr) <- sub('.*CO_331.([0-9]+).*', 'CO_331:\\1', colnames(dfr))
+    colnames(dfr) <- sub('.*COMP.([0-9]+).*', 'COMP:\\1', colnames(dfr))
 
     # Obsolete values
     
