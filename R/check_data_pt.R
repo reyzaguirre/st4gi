@@ -58,7 +58,7 @@ check.data.pt <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
   
   # Run check
   
-  output <- rules.pt(dfr, im, f, out.mod, out.max, add, print.text)
+  output <- rules.pt.old(dfr, im, f, out.mod, out.max, add, print.text)
   
   if (dim(output$Inconsist.List)[1] > 0) {
     rownames(output$Inconsist.List) <- 1:dim(output$Inconsist.List)[1]

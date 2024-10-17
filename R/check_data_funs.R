@@ -15,7 +15,7 @@
 # - Creates pieces to ensamble il data frame
 ###############################################################################
 
-get.result <- function(dfr, cond, tx, print.text) {
+get.result.old <- function(dfr, cond, tx, print.text) {
 
   if (sum(cond, na.rm = TRUE) > 0) {
     
@@ -45,7 +45,7 @@ get.result <- function(dfr, cond, tx, print.text) {
 # - Creates tx with texts for output
 ###############################################################################
 
-run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
+run.rules.old <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
   
   output <- NULL
   
@@ -72,7 +72,7 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
       
       im[cond, c(t1, t2)] <- 1
       
-      output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
+      output <- list(il = get.result.old(dfr, cond, tx, print.text), im = im)
       
     }
 
@@ -101,7 +101,7 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
 
       im[cond, t1] <- 2
 
-      output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
+      output <- list(il = get.result.old(dfr, cond, tx, print.text), im = im)
 
     }
 
@@ -126,7 +126,7 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
       
       im[cond, t1] <- 2
       
-      output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
+      output <- list(il = get.result.old(dfr, cond, tx, print.text), im = im)
       
     }
     
@@ -151,7 +151,7 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
 
           im[cond, t1] <- 3
           
-          output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
+          output <- list(il = get.result.old(dfr, cond, tx, print.text), im = im)
           
         }
         
@@ -169,7 +169,7 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
 # - Detects outliers based on residuals
 ###############################################################################
 
-out.detect <- function(dfr, im, geno, env, rep, t1, out.mod, out.max, print.text) {
+out.detect.old <- function(dfr, im, geno, env, rep, t1, out.mod, out.max, print.text) {
   
   output <- NULL
   
@@ -196,7 +196,7 @@ out.detect <- function(dfr, im, geno, env, rep, t1, out.mod, out.max, print.text
       
       im[cond, t1] <- 3
       
-      output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
+      output <- list(il = get.result.old(dfr, cond, tx, print.text), im = im)
       
     }
     
@@ -211,7 +211,7 @@ out.detect <- function(dfr, im, geno, env, rep, t1, out.mod, out.max, print.text
 # Check data sweetpotato
 ###############################################################################
 
-rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
+rules.sp.old <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   
   # Inconsistencies list output
   
@@ -222,7 +222,7 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   if (exists("nops", dfr)) {
     cond <- dfr[, "nops"] == 0 | is.na(dfr[, "nops"])
     tx <- "- nops is missing or zero:"
-    il <- rbind(il, get.result(dfr, cond, tx, print.text))
+    il <- rbind(il, get.result.old(dfr, cond, tx, print.text))
     im[cond, 'nops'] <- 2
   }
   
@@ -242,7 +242,7 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
     cond.4 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr)
 
     if (cond.1 | cond.2 | cond.3 | cond.4)
-      tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
+      tmp <- run.rules.old(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
 
     if (!is.null(tmp)) {
       il <- rbind(il, tmp$il)
@@ -261,7 +261,7 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
         
         tmp <- NULL
         
-        tmp <- run.rules(dfr, im, f, 6, add[i], NA, NA, NA, j, print.text)
+        tmp <- run.rules.old(dfr, im, f, 6, add[i], NA, NA, NA, j, print.text)
         
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
@@ -341,11 +341,11 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
       tmp <- NULL
       
       if (is.na(olr$excep1[i]))
-        tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
+        tmp <- out.detect.old(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
       
       if (!is.na(olr$excep1[i]))
         if (!exists(olr$excep1[i], dfr))
-          tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
+          tmp <- out.detect.old(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
       
       if (!is.null(tmp)) {
         il <- rbind(il, tmp$il)
@@ -362,7 +362,7 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
         
         tmp <- NULL
         
-        tmp <- out.detect(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
+        tmp <- out.detect.old(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
         
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
@@ -383,7 +383,7 @@ rules.sp <- function(dfr, im, f, out.mod, out.max, add, print.text) {
 # Check data potato
 ###############################################################################
 
-rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
+rules.pt.old <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   
   # Inconsistencies list output
   
@@ -394,7 +394,7 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
   if (exists('ntp', dfr)) {
     cond <- dfr[, "ntp"] == 0 | is.na(dfr[, "ntp"])
     tx <- "- ntp is missing or zero:"
-    il <- rbind(il, get.result(dfr, cond, tx, print.text))
+    il <- rbind(il, get.result.old(dfr, cond, tx, print.text))
     im[cond, 'ntp'] <- 2
   }
   
@@ -414,7 +414,7 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
     cond.4 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr)
     
     if (cond.1 | cond.2 | cond.3 | cond.4)
-      tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
+      tmp <- run.rules.old(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
     
     if (!is.null(tmp)) {
       il <- rbind(il, tmp$il)
@@ -433,7 +433,7 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
         
         tmp <- NULL
         
-        tmp <- run.rules(dfr, im, f, 6, add[i], NA, NA, NA, j, print.text)
+        tmp <- run.rules.old(dfr, im, f, 6, add[i], NA, NA, NA, j, print.text)
         
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
@@ -513,11 +513,11 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
       tmp <- NULL
       
       if (is.na(olr$excep1[i]))
-        tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
+        tmp <- out.detect.old(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
       
       if (!is.na(olr$excep1[i]))
         if (!exists(olr$excep1[i], dfr))
-          tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
+          tmp <- out.detect.old(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
       
       if (!is.null(tmp)) {
         il <- rbind(il, tmp$il)
@@ -534,7 +534,7 @@ rules.pt <- function(dfr, im, f, out.mod, out.max, add, print.text) {
         
         tmp <- NULL
         
-        tmp <- out.detect(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
+        tmp <- out.detect.old(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
         
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)

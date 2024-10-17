@@ -103,7 +103,7 @@ get.result <- function(dfr, cond, tx, print.text) {
       print(result)
     }
     
-    result$rowname <- rownames(result)
+    result$rowdata <- (1:length(cond))[cond]
     result$comment <- gsub(':', '', gsub('- ', '', tx))
     nc <- dim(result)[2]
     result <- result[, c(nc - 1, nc, 1:(nc - 2))]
