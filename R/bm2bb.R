@@ -20,7 +20,7 @@ bm2ptb <- function(file.name, path.out) {
 
   # Format for fieldbook
   
-  data.file <- convert.co.pt(data.file)
+  data.file <- convert.co(data.file, crop = 'pt')
   
   names(data.file)[names(data.file) == 'plot'] <- 'plot_number'
   names(data.file)[names(data.file) == 'instn'] <- 'accession_name'

@@ -175,16 +175,14 @@ create.dd <- function(metadata, crop = c('pt', 'sp')) {
   design.file <- merge(md, design.file)
 
   # Edit column names for variables
+
+  data.file <- suppressWarnings(convert.co(data.file, crop = crop))
   
-  if(crop == 'pt') {
-    data.file <- suppressWarnings(convert.co.pt(data.file))
+  if(crop == 'pt')
     names(data.file) <- gsub('co_330:', 'CO_330:', names(data.file))
-  }
   
-  if(crop == 'sp') {
-    data.file <- suppressWarnings(convert.co.sp(data.file))
+  if(crop == 'sp')
     names(data.file) <- gsub('co_331:', 'CO_331:', names(data.file))
-  }
   
   # output
   
