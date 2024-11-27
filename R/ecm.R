@@ -46,9 +46,8 @@ ecm <- function(vars, geno, env = NULL, rep = NULL, dfr, method = 1) {
   
   nt <- length(vars) # number of variables
   
-  G.cov <- matrix(nrow = nt, ncol = nt) # genotypic covariance matrix
-  P.cov <- matrix(nrow = nt, ncol = nt) # phenotypic covariance matrix
-  
+  G.cov <- P.cov <- matrix(nrow = nt, ncol = nt) # covariance matrices
+
   ng <- length(unique(g)) # number of genotypes
   
   if (!is.null(env))
@@ -123,7 +122,7 @@ ecm <- function(vars, geno, env = NULL, rep = NULL, dfr, method = 1) {
     vc[[i]] <- lme4::VarCorr(model)
   }
   
-  # Get G and P for methods 2 and 3
+  # Get G.cov and P.cov diagonals for methods 2 and 3
   
   if (method %in% c(2, 3)) {
     
@@ -268,14 +267,8 @@ ecm <- function(vars, geno, env = NULL, rep = NULL, dfr, method = 1) {
 
   # results
   
-  if (method == 1)
-    output <- list(G.cov = G.cov, P.cov = P.cov, G.cor = G.cor, P.cor = P.cor,
-                   blues = dfr.out[, substr(names(dfr.out), 1, 4) %in% c(geno, 'blue')],
-                   blups = dfr.out[, substr(names(dfr.out), 1, 4) %in% c(geno, 'blup')])
+  list(G.cov = G.cov, P.cov = P.cov, G.cor = G.cor, P.cor = P.cor,
+       blues = dfr.out[, substr(names(dfr.out), 1, 4) %in% c(geno, 'blue')],
+       blups = dfr.out[, substr(names(dfr.out), 1, 4) %in% c(geno, 'blup')])
   
-  if (method %in% c(2, 3))
-    output <- list(G.cov = G.cov, P.cov = P.cov, G.cor = G.cor, P.cor = P.cor)
-  
-  output
-         
 }
