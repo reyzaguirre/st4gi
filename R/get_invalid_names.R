@@ -126,8 +126,10 @@ get_invalid_names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
     
     # Return
     
-    dfr[, names.not.valid]
+    colnames(dfr[,names.not.valid])
     
+  }else{
+    message("No invalid names")
   }
 
 }
