@@ -25,6 +25,7 @@ with a non-numeric class are transformed to numeric.
 }
 }
 \description{
+run \code{get_invalid_names()} after running \code{check.names()}
 Check that fieldbook factors and variables' names correspond with the names defined
 in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 CIP protocols. It also checks that all variables are stored as numeric.

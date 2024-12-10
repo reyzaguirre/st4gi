@@ -1,5 +1,6 @@
 #' get column names not defined in crop ontology
-#'
+#' 
+#'run \code{get_invalid_names()} after running \code{check.names()}
 #' Check that fieldbook factors and variables' names correspond with the names defined
 #' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 #' CIP protocols. It also checks that all variables are stored as numeric.
@@ -58,37 +59,37 @@ get_invalid_names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   
   # Factors and variables in field book (original names)
   
-  colnames.fb <- colnames(dfr)
+  # colnames.fb <- colnames(dfr)
   
   # Convert all fieldbook names to lower case (except CO numbers)
   
-  cond <- !substring(colnames(dfr), 1, 7) %in% c('CO_330:', 'CO_331:') & substring(colnames(dfr), 1, 5) != 'COMP:'
-  colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
-  
-  if (sum(colnames.fb != colnames(dfr)) > 0)
+  # cond <- !substring(colnames(dfr), 1, 7) %in% c('CO_330:', 'CO_331:') & substring(colnames(dfr), 1, 5) != 'COMP:'
+  # colnames(dfr)[cond] <- tolower(colnames(dfr))[cond]
+  # 
+  # if (sum(colnames.fb != colnames(dfr)) > 0)
     # warning("Some labels converted to lower case", call. = FALSE)
   
   # Solve synonyms for factors
   
-  old.geno <- c("accession_name", "cipno", "cip.number", 'genotype', "instn")
-  new.geno <- rep('geno', length(old.geno))
-  
-  old.names.f <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
-  new.names.f <- c('plot',        'loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
-  
-  change.names.f <- NULL
-  
-  for (i in 1:length(old.names.f)) {
-    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i], dfr)) {
-      change.names.f <- c(change.names.f, old.names.f[i])
-      colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
-    }
-  }  
-  
-  if (!is.null(change.names.f)) {
-    change.names.list <- old.names.f %in% change.names.f
-    # warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
-  }
+  # old.geno <- c("accession_name", "cipno", "cip.number", 'genotype', "instn")
+  # new.geno <- rep('geno', length(old.geno))
+  # 
+  # old.names.f <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
+  # new.names.f <- c('plot',        'loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
+  # 
+  # change.names.f <- NULL
+  # 
+  # for (i in 1:length(old.names.f)) {
+  #   if (exists(old.names.f[i], dfr) & !exists(new.names.f[i], dfr)) {
+  #     change.names.f <- c(change.names.f, old.names.f[i])
+  #     colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
+  #   }
+  # }  
+  # 
+  # if (!is.null(change.names.f)) {
+  #   change.names.list <- old.names.f %in% change.names.f
+  #   # warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
+  # }
   
   # Solve synonyms for variables
   
@@ -102,22 +103,23 @@ get_invalid_names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
     new.names.t <- c("trw.d", "biom.d", "cytha.aj", "rytha.aj", "dmry.aj", 'vw.d', "fytha.aj", "dmvy.aj", "bytha.aj", "dmby.aj")
   }
   
-  change.names.t <- NULL 
-  
-  for (i in 1:length(old.names.t)) {
-    if (exists(old.names.t[i], dfr) & !exists(new.names.t[i], dfr)) {
-      change.names.t <- c(change.names.t, old.names.t[i])
-      colnames(dfr)[colnames(dfr) == old.names.t[i]] <- new.names.t[i]
-    }
-  }  
-  
-  if (!is.null(change.names.t)) {
-    change.names.list <- old.names.t %in% change.names.t
-    # warning("Variables' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
-  }
+  # change.names.t <- NULL 
+  # 
+  # for (i in 1:length(old.names.t)) {
+  #   if (exists(old.names.t[i], dfr) & !exists(new.names.t[i], dfr)) {
+  #     change.names.t <- c(change.names.t, old.names.t[i])
+  #     colnames(dfr)[colnames(dfr) == old.names.t[i]] <- new.names.t[i]
+  #   }
+  # }  
+  # 
+  # if (!is.null(change.names.t)) {
+  #   change.names.list <- old.names.t %in% change.names.t
+  #   # warning("Variables' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
+  # }
   
   
   # Names not valid
+  colnames.valid <- c(colnames.valid, new.names.t)
   
   names.not.valid <- !(colnames(dfr) %in% colnames.valid)
   
