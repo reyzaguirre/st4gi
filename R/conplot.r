@@ -4,15 +4,16 @@
 #' @param y The name of the column for the variable to plot.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param trial The name of the column that identifies the trials.
+#' @param na.remove Logical indicating if NA values should be removed, default \code{TRUE}.
 #' @param dfr The name of the data frame.
 #' @return It returns a plot with the number or percentage of genotypes in
 #' common among trials.
 #' @author Raul Eyzaguirre
 #' @examples
-#' conplot("ttwp", "geno", "trial.name", ptfs)
+#' conplot("ttwp", "geno", "trial.name", dfr = ptfs)
 #' @export
 
-conplot <- function(y, geno, trial, dfr) {
+conplot <- function(y, geno, trial, na.remove = TRUE, dfr) {
   
   # Number and list of trials
   
@@ -28,9 +29,10 @@ conplot <- function(y, geno, trial, dfr) {
   
   # Only plots with data
   
-  dfr <- dfr[!is.na(dfr[, y]), ]
-
-    for(i in 1:nt)
+  if (na.remove == TRUE)
+    dfr <- dfr[!is.na(dfr[, y]), ]
+  
+  for(i in 1:nt)
     for (j in i:nt) {
       group.i <- unique(dfr[dfr[, trial] == trials.list[i], geno])
       group.j <- unique(dfr[dfr[, trial] == trials.list[j], geno])
