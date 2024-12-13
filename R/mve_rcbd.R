@@ -2,25 +2,25 @@
 #'
 #' Function to estimate missing values for a Randomized Complete Block Design (RCBD) by
 #' the least squares method.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to estimate missing values.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, defaults to 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with the experimental layout and columns \code{y}
 #' and \code{y.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' temp <- met8x12[met8x12$env == "TM80N", ]
-#' mve.rcbd("y", "geno", "rep", temp)
+#' tmp <- met8x12[met8x12$env == "TM80N", ]
+#' mve.rcbd(tmp, "y", "geno", "rep")
 #' @export
 
-mve.rcbd <- function(y, geno, rep, dfr, maxp = 0.1, tol = 1e-06) {
+mve.rcbd <- function(dfr, y, geno, rep, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- ck.rcbd(y, geno, rep, dfr)
+  lc <- ck.rcbd(dfr, y, geno, rep)
 
   # Error messages
 

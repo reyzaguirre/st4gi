@@ -2,10 +2,11 @@
 #'
 #' Function to estimate missing values for factorial experiment with a CRD
 #' or a RCBD by the least squares method.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to estimate missing values.
 #' @param factors The names of the columns that identify the factors.
-#' @param rep The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.
-#' @param dfr The name of the data frame.
+#' @param rep The name of the column that identifies the replications or blocks,
+#' default is \code{NULL} for a CRD.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with the experimental layout and columns \code{y}
@@ -14,17 +15,17 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # A data frame with some missing values
-#' temp <- asc
-#' temp$dm[c(3, 10, 115)] <- NA
+#' tmp <- asc
+#' tmp$dm[c(3, 10, 115)] <- NA
 #' # Estimate the missing values
-#' mve.f("dm", c("geno", "treat"), NULL, temp)
+#' mve.f(tmp, "dm", c("geno", "treat"))
 #' @export
 
-mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
+mve.f <- function(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06) {
   
   # Check data
   
-  lc <- ck.f(y, factors, rep, dfr)
+  lc <- ck.f(dfr, y, factors, rep)
   
   # Error messages
   

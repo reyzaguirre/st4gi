@@ -4,14 +4,15 @@
 \alias{ck.fs}
 \title{Check factors structure}
 \usage{
-ck.fs(factors, rep, dfr)
+ck.fs(dfr, factors, rep = NULL)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{factors}{The names of the columns that identify the factors.}
 
-\item{rep}{The name of the column that identifies the replications, \code{NULL} for a CRD.}
-
-\item{dfr}{The name of the data frame.}
+\item{rep}{The name of the column that identifies the replications,
+default is \code{NULL} for a CRD.}
 }
 \value{
 The number of factors (\code{nf}), the number of levels of the factors
@@ -30,7 +31,7 @@ This function cheks the structure of factors.
 dfr <- cr.rcbd(1:20, 3, 10)
 dfr <- dfr$book
 # Check the design
-ck.fs("geno", "block", dfr)
+ck.fs(dfr, "geno", "block")
 
 ## Example 2
 # Create a design
@@ -39,7 +40,7 @@ B <- paste0("b", 1:3)
 dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
 dfr <- dfr$book
 # Check the design
-ck.fs(c("A", "B"), "block", dfr)
+ck.fs(dfr, c("A", "B"), "block")
 }
 \author{
 Raul Eyzaguirre.

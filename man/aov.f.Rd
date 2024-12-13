@@ -4,16 +4,17 @@
 \alias{aov.f}
 \title{ANOVA for a factorial experiment}
 \usage{
-aov.f(y, factors, rep, dfr, maxp = 0.1)
+aov.f(dfr, y, factors, rep = NULL, maxp = 0.1)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{factors}{The names of the columns that identify the factors.}
 
-\item{rep}{The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.}
-
-\item{dfr}{The name of the data frame.}
+\item{rep}{The name of the column that identifies the replications or blocks,
+default is \code{NULL} for a CRD.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
@@ -24,7 +25,7 @@ It returns the ANOVA table.
 Fit an analysis of variance model for a factorial experiment with a CRD or RCBD.
 }
 \examples{
-aov.f("asc.dw", c("geno", "treat"), NULL, asc)
+aov.f(asc, "asc.dw", c("geno", "treat"))
 }
 \author{
 Raul Eyzaguirre.

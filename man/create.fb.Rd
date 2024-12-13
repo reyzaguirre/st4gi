@@ -6,15 +6,17 @@
 \usage{
 create.fb(
   design,
+  crop = c("pt", "sp"),
   label = c("standard", "CO"),
   minimal = TRUE,
   add = NULL,
-  computation = FALSE,
-  crop = c("pt", "sp")
+  computation = FALSE
 )
 }
 \arguments{
 \item{design}{The name of the design data frame.}
+
+\item{crop}{\code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 
 \item{label}{Use \code{standard} for standard sweetpotato short labels or
 \code{CO} for CO numbers. Default is \code{standard}.}
@@ -26,8 +28,6 @@ Default is \code{TRUE}.}
 
 \item{computation}{Logical, if \code{TRUE}, computed variables are included.
 Only if \code{minimal = FALSE}. Default is \code{FALSE}.}
-
-\item{crop}{\code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 }
 \value{
 It returns a data frame with fieldbook design and variables.
@@ -42,17 +42,17 @@ Uppercase labels are converted to lowercase.
 \examples{
 book <- cr.rcbd(1:20, 3, 10)$book
 # Get fieldbook with minimal set of variables for potato
-create.fb(book, crop = 'pt')
+create.fb(book, 'pt')
 # Add additional variables
-create.fb(book, add = c('fedw', 'zndw'), crop = 'pt')
+create.fb(book, 'pt', add = c('fedw', 'zndw'))
 # Get the fieldbook with CO numbers
-create.fb(book, label = 'CO', add = c('dm', 'fedw', 'zndw'), crop = 'pt')
+create.fb(book, 'pt', 'CO', add = c('dm', 'fedw', 'zndw'))
 # Get fieldbook with minimal set of variables for sweetpotato
-create.fb(book, crop = 'sp')
+create.fb(book, 'sp')
 # Add additional variables
-create.fb(book, add = c('bc', 'fe', 'zn'), crop = 'sp')
+create.fb(book, 'sp', add = c('bc', 'fe', 'zn'))
 # Get the fieldbook with CO numbers
-create.fb(book, label = 'CO', add = c('bc', 'fe', 'zn'), crop = 'sp')
+create.fb(book, 'sp', 'CO', add = c('bc', 'fe', 'zn'))
 }
 \author{
 Raul Eyzaguirre.

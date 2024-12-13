@@ -4,16 +4,16 @@
 \alias{ck.f}
 \title{Check data for a full factorial}
 \usage{
-ck.f(y, factors, rep, dfr)
+ck.f(dfr, y, factors, rep)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{factors}{The names of the columns that identify the factors.}
 
 \item{rep}{The name of the column that identifies the replications, \code{NULL} for a CRD.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of treatments without data (\code{nt.0}), the number of
@@ -40,7 +40,7 @@ dfr$y <- rnorm(45)
 # Delete some values
 dfr[c(4, 5, 12), 'y'] <- NA
 # Check the design
-ck.f("y", c("A", "B"), "block", dfr)
+ck.f(dfr, "y", c("A", "B"), "block")
 }
 \author{
 Raul Eyzaguirre.

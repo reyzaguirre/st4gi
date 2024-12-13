@@ -4,14 +4,14 @@
 \alias{ck.lxt}
 \title{Check data for a line by tester genetic design}
 \usage{
-ck.lxt(line, tester, dfr)
+ck.lxt(dfr, line, tester)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{line}{The name of the column that identifies the lines.}
 
 \item{tester}{The name of the column that identifies the testers.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 Three control values, the number of lines (\code{nlin}),
@@ -26,7 +26,7 @@ and the number of testers (\code{ntes}). The control values are:
 This function checks the data structure for a line by tester genetic design.
 }
 \examples{
-ck.lxt("line", "tester", lxt)
+ck.lxt(lxt, "line", "tester")
 }
 \author{
 Raul Eyzaguirre.

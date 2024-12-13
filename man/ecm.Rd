@@ -4,9 +4,11 @@
 \alias{ecm}
 \title{Estimate Genotypic and Phenotypic Covariance and Correlation Matrices}
 \usage{
-ecm(vars, geno, env = NULL, rep = NULL, dfr, method = 1)
+ecm(dfr, vars, geno, env = NULL, rep = NULL, method = 1)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{vars}{The names of the columns for variables to include.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -14,8 +16,6 @@ ecm(vars, geno, env = NULL, rep = NULL, dfr, method = 1)
 \item{env}{The name of the column that identifies the environments.}
 
 \item{rep}{The name of the column that identifies the replications or blocks.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{method}{The method to compute genotypic covariances and phenotypic
 variances. See details.}
@@ -41,7 +41,7 @@ and the phenotypic covariances are computed pooling all the observed data.
 }
 \examples{
 vars <- c("rytha", "bc", "dm", "star", "nocr")
-ecm(vars, "geno", "loc", "rep", spg)
+ecm(spg, vars, "geno", "loc", "rep")
 }
 \author{
 Raul Eyzaguirre.

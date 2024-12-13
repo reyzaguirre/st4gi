@@ -2,25 +2,25 @@
 #'
 #' Function to estimate missing values for a Multi Environment Trial (MET) with a
 #' Randomized Complete Block Design (RCBD) by the least squares method.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to estimate missing values.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with the experimental layout and columns \code{y}
 #' and \code{y.est} with the original data and the original data plus the estimated values.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' mve.met("y", "geno", "env", "rep", met8x12)
+#' mve.met(met8x12, "y", "geno", "env", "rep")
 #' @export
 
-mve.met <- function(y, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06) {
+mve.met <- function(dfr, y, geno, env, rep, maxp = 0.1, tol = 1e-06) {
 
   # Check data
 
-  lc <- ck.f(y, c(geno, env), rep, dfr)
+  lc <- ck.f(dfr, y, c(geno, env), rep)
 
   # Error messages
 

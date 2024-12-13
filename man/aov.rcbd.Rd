@@ -4,16 +4,16 @@
 \alias{aov.rcbd}
 \title{ANOVA for a RCBD}
 \usage{
-aov.rcbd(y, geno, rep, dfr, maxp = 0.1)
+aov.rcbd(dfr, y, geno, rep, maxp = 0.1)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
@@ -29,9 +29,9 @@ proportion, 10\% by default.
 }
 \examples{
 # Get a copy with some missing values for trw and run ANOVA
-temp <- pjpz09
-temp[c(10, 20, 30), "trw"] <- NA
-aov.rcbd("trw", "geno", "rep", temp)
+tmp <- pjpz09
+tmp[c(10, 20, 30), "trw"] <- NA
+aov.rcbd(tmp, "trw", "geno", "rep")
 }
 \author{
 Raul Eyzaguirre.

@@ -4,9 +4,11 @@
 \alias{mve.met}
 \title{Estimation of missing values for a MET in a RCBD}
 \usage{
-mve.met(y, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06)
+mve.met(dfr, y, geno, env, rep, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to estimate missing values.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -14,8 +16,6 @@ mve.met(y, geno, env, rep, dfr, maxp = 0.1, tol = 1e-06)
 \item{env}{The name of the column that identifies the environments.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 
@@ -30,7 +30,7 @@ Function to estimate missing values for a Multi Environment Trial (MET) with a
 Randomized Complete Block Design (RCBD) by the least squares method.
 }
 \examples{
-mve.met("y", "geno", "env", "rep", met8x12)
+mve.met(met8x12, "y", "geno", "env", "rep")
 }
 \author{
 Raul Eyzaguirre.

@@ -4,9 +4,11 @@
 \alias{rsa}
 \title{Regression Stability Analysis}
 \usage{
-rsa(y, geno, env, rep, dfr, maxp = 0.1)
+rsa(dfr, y, geno, env, rep, maxp = 0.1)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -14,8 +16,6 @@ rsa(y, geno, env, rep, dfr, maxp = 0.1)
 \item{env}{The name of the column that identifies the environments.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
@@ -54,7 +54,7 @@ In both cases the X values are centered on zero, so the intercepts of the models
 the means of the genotypes or environments.
 }
 \examples{
-rsa("y", "geno", "env", "rep", met8x12)
+rsa(met8x12, "y", "geno", "env", "rep")
 }
 \references{
 Finlay, K. W., and Wilkinson, G. N. (1963). The Analysis of Adaption in a Plant-Breeding Programme.

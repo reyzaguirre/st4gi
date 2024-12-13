@@ -4,9 +4,11 @@
 \alias{tai}
 \title{Tai's stability analysis}
 \usage{
-tai(y, geno, env, rep, dfr, maxp = 0.1)
+tai(dfr, y, geno, env, rep, maxp = 0.1)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -14,8 +16,6 @@ tai(y, geno, env, rep, dfr, maxp = 0.1)
 \item{env}{The name of the column that identifies the environments.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
@@ -31,7 +31,7 @@ It assumes a RCBD with fixed effects for genotypes and random effects for enviro
 If the data set is unbalanced, a warning is produced.
 }
 \examples{
-model.tai <- tai("y", "geno", "env", "rep", met8x12)
+model.tai <- tai(met8x12, "y", "geno", "env", "rep")
 model.tai$Tai_values
 }
 \references{

@@ -23,7 +23,7 @@
 #' Yan, W. et al. (2000). Cultivar evaluation and mega-environment investigation based
 #' on the GGE biplot, Crop Sci., Vol 40: 597-605.
 #' @examples
-#' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
+#' model.ammi <- ammi(met8x12, "y", "geno", "env", "rep")
 #' plot(model.ammi)
 #' plot(model.ammi, bp.type = 1)
 #' plot(model.ammi, graph.type = "ggplot")

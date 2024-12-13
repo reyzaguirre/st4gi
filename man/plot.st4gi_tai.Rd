@@ -36,7 +36,7 @@ an ANOVA table for a RCBD with blocks nested into environments.See \code{?tai} f
 additional details.
 }
 \examples{
-model.tai <- tai("y", "geno", "env", "rep", met8x12)
+model.tai <- tai(met8x12, "y", "geno", "env", "rep")
 plot(model.tai)
 plot(model.tai, graph.type = "ggplot")
 }

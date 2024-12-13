@@ -4,16 +4,17 @@
 \alias{ck.fq}
 \title{Check frequencies}
 \usage{
-ck.fq(y, factors, rep, dfr)
+ck.fq(dfr, y, factors, rep = NULL)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{factors}{The names of the columns that identify the factors.}
 
-\item{rep}{The name of the column that identifies the replications, \code{NULL} for a CRD.}
-
-\item{dfr}{The name of the data frame.}
+\item{rep}{The name of the column that identifies the replications,
+default is \code{NULL} for a CRD.}
 }
 \value{
 A table of frequencies of valid cases for all factors' levels combinations
@@ -34,7 +35,7 @@ dfr$y <- rnorm(60)
 # Delete some values
 dfr[c(1, 5, 16, 17), 'y'] <- NA
 # Check the frequencies
-ck.fq("y", "geno", "block", dfr)
+ck.fq(dfr, "y", "geno", "block")
 
 ## Example 2
 # Create a design
@@ -47,7 +48,7 @@ dfr$y <- rnorm(45)
 # Delete some values
 dfr[c(5, 10, 24), 'y'] <- NA
 # Check the frequencies
-ck.fq("y", c("A", "B"), "block", dfr)
+ck.fq(dfr, "y", c("A", "B"), "block")
 }
 \author{
 Raul Eyzaguirre.

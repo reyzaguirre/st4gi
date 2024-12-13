@@ -5,9 +5,9 @@
 \title{Plot means and standard deviations with a dotplot}
 \usage{
 msdplot(
+  dfr,
   y,
   groups,
-  dfr,
   conf = 0.95,
   dotplot = TRUE,
   sort.means = c("none", "increasing", "decreasing"),
@@ -20,11 +20,11 @@ msdplot(
 )
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to plot.}
 
 \item{groups}{The name of the column for the grouping factor.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{conf}{Probability for the confidence limits or number of standard deviations.}
 
@@ -62,7 +62,7 @@ as number of standard deviations.
 # Simulate some data
 dfr <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
                   g = rep(1:5, 10))
-msdplot("y", "g", dfr, lwd = 2, pch = 4)
+msdplot(dfr, "y", "g", lwd = 2, pch = 4)
 }
 \author{
 Raul Eyzaguirre
