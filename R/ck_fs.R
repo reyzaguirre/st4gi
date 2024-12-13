@@ -1,9 +1,10 @@
 #' Check factors structure
 #' 
 #' This function cheks the structure of factors.
-#' @param factors The names of the columns that identify the factors.
-#' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
 #' @param dfr The name of the data frame.
+#' @param factors The names of the columns that identify the factors.
+#' @param rep The name of the column that identifies the replications,
+#' default is \code{NULL} for a CRD.
 #' @return The number of factors (\code{nf}), the number of levels of the factors
 #' (\code{nl}), the lists of levels of factors (\code{lf}), the number of treatments
 #' (\code{nt}), the list of treatments (\code{lt}), the number of replications
@@ -17,7 +18,7 @@
 #' dfr <- cr.rcbd(1:20, 3, 10)
 #' dfr <- dfr$book
 #' # Check the design
-#' ck.fs("geno", "block", dfr)
+#' ck.fs(dfr, "geno", "block")
 #' 
 #' ## Example 2
 #' # Create a design
@@ -26,10 +27,10 @@
 #' dfr <- cr.f(c("A", "B"), list(A, B), "rcbd", 3, 10)
 #' dfr <- dfr$book
 #' # Check the design
-#' ck.fs(c("A", "B"), "block", dfr)
+#' ck.fs(dfr, c("A", "B"), "block")
 #' @export
 
-ck.fs <- function(factors, rep, dfr) {
+ck.fs <- function(dfr, factors, rep = NULL) {
 
   # Check missing values for factors
   

@@ -1,9 +1,9 @@
 #' Plot means and standard deviations with a dotplot
 #'
 #' Function to plot means and confidence limits.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to plot.
 #' @param groups The name of the column for the grouping factor.
-#' @param dfr The name of the data frame.
 #' @param conf Probability for the confidence limits or number of standard deviations.
 #' @param dotplot Logical. If \code{TRUE}, a dotplot is shown.
 #' @param sort.means Sort for means. Options are \code{"none"}, \code{"increasing"},
@@ -25,11 +25,11 @@
 #' # Simulate some data
 #' dfr <- data.frame(y = rnorm(50, sample(40:60, 5), sample(5:10, 5)),
 #'                   g = rep(1:5, 10))
-#' msdplot("y", "g", dfr, lwd = 2, pch = 4)
+#' msdplot(dfr, "y", "g", lwd = 2, pch = 4)
 #' @importFrom graphics axis lines plot points
 #' @export
                          
-msdplot <- function(y, groups, dfr, conf = 0.95, dotplot = TRUE,
+msdplot <- function(dfr, y, groups, conf = 0.95, dotplot = TRUE,
                     sort.means = c("none", "increasing", "decreasing"),
                     main.title = NULL, color = c("orange", "orange", "black"),
                     x.las = 1, jf = 0.1, hsep = 0.1, ...) {

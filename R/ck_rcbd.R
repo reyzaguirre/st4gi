@@ -1,10 +1,10 @@
 #' Check data for a RCBD
 #'
 #' This function checks the frequencies of genotypes in a RCBD.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @return The number of genotypes without data (\code{ng.0}), the number of
 #' genotypes with more than one plot in a given block (\code{ng.2}), the number
 #' of missing values \code{nmis}, the proportion of missing values (\code{pmis}),
@@ -22,14 +22,14 @@
 #' # Delete some values
 #' dfr[c(1, 5, 16, 17), 'y'] <- NA
 #' # Check the design
-#' ck.rcbd('y', 'geno', 'block', dfr)
+#' ck.rcbd(dfr, 'y', 'geno', 'block')
 #' @export
 
-ck.rcbd <- function(y, geno, rep, dfr) {
+ck.rcbd <- function(dfr, y, geno, rep) {
   
   # Check factor structure
   
-  out <- ck.fs(geno, rep, dfr)
+  out <- ck.fs(dfr, geno, rep)
   dfr <- out$dfr
   ng <- out$nt
   nrep <- out$nrep
@@ -37,7 +37,7 @@ ck.rcbd <- function(y, geno, rep, dfr) {
   
   # Frequencies for genotypes and replications
   
-  out <- ck.fq(y, geno, rep, dfr)
+  out <- ck.fq(dfr, y, geno, rep)
   tf <- out$tf
   tfr <- out$tfr
   nmis <- out$nmis

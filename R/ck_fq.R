@@ -1,10 +1,11 @@
 #' Check frequencies
 #' 
 #' This function cheks the frequencies of valid cases for treatments and replications.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param factors The names of the columns that identify the factors.
-#' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
-#' @param dfr The name of the data frame.
+#' @param rep The name of the column that identifies the replications,
+#' default is \code{NULL} for a CRD.
 #' @return A table of frequencies of valid cases for all factors' levels combinations
 #' (\code{tf}), a table of frequencies of valid cases for all factors' levels and
 #' replications combinations (\code{tfr}), the number of missing values \code{nmis},
@@ -20,7 +21,7 @@
 #' # Delete some values
 #' dfr[c(1, 5, 16, 17), 'y'] <- NA
 #' # Check the frequencies
-#' ck.fq("y", "geno", "block", dfr)
+#' ck.fq(dfr, "y", "geno", "block")
 #' 
 #' ## Example 2
 #' # Create a design
@@ -33,10 +34,10 @@
 #' # Delete some values
 #' dfr[c(5, 10, 24), 'y'] <- NA
 #' # Check the frequencies
-#' ck.fq("y", c("A", "B"), "block", dfr)
+#' ck.fq(dfr, "y", c("A", "B"), "block")
 #' @export
 
-ck.fq <- function(y, factors, rep, dfr) {
+ck.fq <- function(dfr, y, factors, rep = NULL) {
   
   # Number of missing values
   

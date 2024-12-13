@@ -2,10 +2,10 @@
 #'
 #' This function checks that there is only one genotype in each row and column position.
 #' This is a wrapper for \code{ck.pos} function.
+#' @param dfr The name of the data frame.
 #' @param row The name of the column that identifies the rows.
 #' @param col The name of the column that identifies the columns.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @return For each replication a list of plots (unique row and column position)
 #' with more than one genotype.
 #' @author Raul Eyzaguirre.
@@ -14,12 +14,12 @@
 #' dfr <- cr.rcbd(1:20, 3, 10)
 #' dfr <- dfr$book
 #' # Check positions
-#' check.pos('row', 'col', 'block', dfr)
+#' check.pos(dfr, 'row', 'col', 'block')
 #' @export
 
-check.pos <- function(row, col, rep, dfr) {
+check.pos <- function(dfr, row, col, rep) {
   
-  out <- ck.pos(row, col, rep, dfr)
+  out <- ck.pos(dfr, row, col, rep)
   
   for (i in 1:out$nrep) {
     

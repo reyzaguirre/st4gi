@@ -1,9 +1,9 @@
 #' Area Under the Disease Progress Curve
 #'
 #' Computes the absolute (AUDPC) or relative (rAUDPC) area under the disease progress curve.
+#' @param dfr The name of the data frame.
 #' @param evals The names of the columns for the evaluations.
 #' @param dates A vector with the dates of evaluation.
-#' @param dfr The name of the data frame.
 #' @details Evaluations are subjective ranging from 0 (no disease) to 100 (full disease).
 #' Dates should follow the format YYYY-MM-DD.
 #' \code{audpc} is expressed in days x % and \code{raudpc} as a proportion.
@@ -14,11 +14,11 @@
 #' evals <- c("lb1", "lb2", "lb3", "lb4", "lb5", "lb6")
 #' dates <- c("2017-11-20", "2017-11-27", "2017-12-04",
 #'            "2017-12-11", "2017-12-18", "2017-12-25")
-#' tmp <- audpc(evals, dates, lbb3c3)
+#' tmp <- audpc(lbb3c3, evals, dates)
 #' head(tmp)              
 #' @export
 
-audpc <- function(evals, dates, dfr) {
+audpc <- function(dfr, evals, dates) {
 
   # Check number of evals and dates
   

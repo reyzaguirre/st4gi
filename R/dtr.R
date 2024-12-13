@@ -1,11 +1,11 @@
 #' Data transformations
 #'
 #' This function performs different data transformations.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to transform.
 #' @param type The transformation type. See details.
 #' @param base Base for the logarithmic transformation. Base 10 by default.
 #' @param n Additional parameter for arc-sine transformation. See details.
-#' @param dfr The name of the data frame.
 #' @details Available transformations are:
 #' 
 #' \code{none} for no transformation.
@@ -37,11 +37,11 @@
 #' @return It returns the transformed variable.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' dtr("nonc", "logy", dfr = pjpz09)
+#' dtr(pjpz09, "nonc", "logy")
 #' @export
 
-dtr <- function(y, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
-                base = 10, n = NULL, dfr) {
+dtr <- function(dfr, y, type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
+                base = 10, n = NULL) {
 
   # match arguments
   

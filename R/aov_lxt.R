@@ -2,21 +2,21 @@
 #'
 #' This is a modified version of the \code{"lineXtester"} function of package
 #' \code{"agricolae"} for the analysis of a Lina x Tester genetic design.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param line The name of the column that identifies the lines.
 #' @param tester The name of the column that identifies the testers.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @details Data must correspond with a line by tester design and must be balanced.
 #' If there are missing values they are not estimated and results can be dubious.
 #' @return It returns the analysis for the line by tester genetic design.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' aov.lxt("yield", "line", "tester", "rep", lxt)
+#' aov.lxt(lxt, "yield", "line", "tester", "rep")
 #' @importFrom stats aov pf na.omit pt
 #' @export
 
-aov.lxt <- function(y, line, tester, rep, dfr) {
+aov.lxt <- function(dfr, y, line, tester, rep) {
 
   # Internal data frame
 

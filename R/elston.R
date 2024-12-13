@@ -1,11 +1,11 @@
 #' Elston Index
 #'
 #' Function to compute the Elston index (Elston, R. C., 1963).
+#' @param dfr The name of the data frame.
 #' @param vars The names of the columns for the variables.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @param means The genotypic means to compute the index, \code{"single"} or
 #' \code{"fitted"}. The default is \code{"single"}. See details for more information.
 #' @param lb Lower bound. \code{1} for \eqn{k = min(x)} and \code{2} for
@@ -29,11 +29,11 @@
 #' Elston, R. C. (1963). A weight-free index for the purpose of ranking or selection
 #' with respect to several variables at a time. Biometrics. 19(1): 85-97.
 #' @examples
-#' elston(c("rytha", "bc", "dm", "star", "nocr"), "geno", dfr = spg)
+#' elston(spg, c("rytha", "bc", "dm", "star", "nocr"), "geno")
 #' @importFrom stats as.formula sd
 #' @export
 
-elston <- function(vars, geno, env = NULL, rep = NULL, dfr,
+elston <- function(dfr, vars, geno, env = NULL, rep = NULL,
                    means = c("single", "fitted"), lb = 1) {
 
   # Match arguments

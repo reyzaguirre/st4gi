@@ -14,11 +14,11 @@
 #' @author Raul Eyzaguirre.
 #' @examples 
 #' # Adjust model
-#' model <- aov.rcbd("trw", "geno", "rep", pjpz09)
+#' model <- aov.rcbd(pjpz09, "trw", "geno", "rep")
 #' # LSD values
 #' lsd <- sqrt(model[3, 3]) * qt(.975, model[3, 1])
 #' # Compute means
-#' ests <- docomp('mean', 'trw', 'geno', dfr = pjpz09)
+#' ests <- docomp(pjpz09, 'mean', 'trw', 'geno')
 #' # Add non significant lines
 #' ests <- asl(ests, 'geno', 'trw', lsd)
 #' @export
@@ -107,4 +107,3 @@ asl <- function(dfr, geno, aver, lsd, symbol = NULL) {
   dfr
   
 }
-

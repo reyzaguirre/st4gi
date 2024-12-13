@@ -1,9 +1,9 @@
 #' Check data for a line by tester genetic design
 #'
 #' This function checks the data structure for a line by tester genetic design.
+#' @param dfr The name of the data frame.
 #' @param line The name of the column that identifies the lines.
 #' @param tester The name of the column that identifies the testers.
-#' @param dfr The name of the data frame.
 #' @return Three control values, the number of lines (\code{nlin}),
 #' and the number of testers (\code{ntes}). The control values are:
 #' \itemize{
@@ -13,14 +13,14 @@
 #' }
 #' @author Raul Eyzaguirre.
 #' @examples
-#' ck.lxt("line", "tester", lxt)
+#' ck.lxt(lxt, "line", "tester")
 #' @export
 
-ck.lxt <- function(line, tester, dfr) {
+ck.lxt <- function(dfr, line, tester) {
   
   # Get names and number of lines, testers, and crosses
   
-  out <- ck.fs(c("line", "tester"), NULL, dfr)
+  out <- ck.fs(dfr, c("line", "tester"))
   
   nlin <- out$nl[1]
   ntes <- out$nl[2]

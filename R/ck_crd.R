@@ -1,9 +1,9 @@
 #' Check data for a CRD
 #'
 #' This function checks the frequencies of genotypes in a CRD.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
-#' @param dfr The name of the data frame.
 #' @return The number of genotypes (\code{ng}), the number of genotypes without
 #' data (\code{ng.0}), the number of replications (\code{nrep}), and the number
 #' of rows in the data frame with missing values for factors (\code{nmis.fac}).
@@ -19,14 +19,14 @@
 #' # Delete some values for classification factors
 #' dfr[c(27, 48), 'geno'] <- NA
 #' # Check the design
-#' ck.crd('y', 'geno', dfr)
+#' ck.crd(dfr, 'y', 'geno')
 #' @export
 
-ck.crd <- function(y, geno, dfr) {
+ck.crd <- function(dfr, y, geno) {
   
   # Check factor structure
   
-  out <- ck.fs(geno, NULL, dfr)
+  out <- ck.fs(dfr, geno)
   dfr <- out$dfr
   ng <- out$nt
   nrep <- out$nrep
@@ -34,7 +34,7 @@ ck.crd <- function(y, geno, dfr) {
   
   # Frequencies for genotypes
   
-  out <- ck.fq(y, geno, NULL, dfr)
+  out <- ck.fq(dfr, y, geno)
   tf <- out$tf
 
   # Number of genotypes without data

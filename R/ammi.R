@@ -2,11 +2,11 @@
 #'
 #' This function runs AMMI (Gollob, H. R., 1968) or GGE (Yan , W. et al., 2000)
 #' with data at plot level.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications or blocks. A RCBD is assumed.
-#' @param dfr The name of the data frame.
 #' @param method \code{"ammi"} or \code{"gge"}.
 #' @param f Scaling factor, defaults to 0.5.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
@@ -27,14 +27,14 @@
 #' on the GGE biplot, Crop Sci., Vol 40: 597-605.
 #' @seealso \code{svd}
 #' @examples
-#' model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
+#' model.ammi <- ammi(met8x12, "y", "geno", "env", "rep")
 #' model.ammi
-#' model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "gge")
+#' model.gge <- ammi(met8x12, "y", "geno", "env", "rep", "gge")
 #' model.gge
 #' @importFrom stats aov deviance
 #' @export
 
-ammi <- function(y, geno, env, rep, dfr, method = c("ammi", "gge"),
+ammi <- function(dfr, y, geno, env, rep, method = c("ammi", "gge"),
                  f = 0.5, maxp = 0.1) {
 
   # Match arguments
@@ -49,7 +49,7 @@ ammi <- function(y, geno, env, rep, dfr, method = c("ammi", "gge"),
 
   # Check data
 
-  lc <- ck.f(y, c(geno, env), rep, dfr)
+  lc <- ck.f(dfr, y, c(geno, env), rep)
 
   # Error messages
 
@@ -68,10 +68,10 @@ ammi <- function(y, geno, env, rep, dfr, method = c("ammi", "gge"),
   # Compute ANOVA
 
   if (lc$nrep > 1 & lc$nt.mult == 0) {
-    aov.model <- aov.met(y, geno, env, rep, dfr, maxp)
+    aov.model <- aov.met(dfr, y, geno, env, rep, maxp)
     if (lc$nmis > 0) {
       y.est <- paste0(y, ".est")
-      dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp)[, y.est]
+      dfr[, y] <- mve.met(dfr, y, geno, env, rep, maxp)[, y.est]
     }
   } else {
     lc$nrep <- NULL
