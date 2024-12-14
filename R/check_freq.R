@@ -53,11 +53,11 @@ check.freq <- function(dfr, y, geno, rep, env = NULL) {
     }
     
     if (lc$ng.mult > 0) {
-      temp <- lc$tfr > 1
+      tmp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
       for (i in 1:lc$nrep) {
-        if (sum(temp[, i]) > 0) {
-          lista <- rownames(temp)[temp[, i]]
+        if (sum(tmp[, i]) > 0) {
+          lista <- rownames(tmp)[tmp[, i]]
           cat(paste0('- Replication ', lrep[i], ':'), lista, '\n')
         }
       }
@@ -94,11 +94,11 @@ check.freq <- function(dfr, y, geno, rep, env = NULL) {
     }
 
     if (lc$nt.0 > 0) {
-      temp <- lc$tf == 0
+      tmp <- lc$tf == 0
       cat('There are genotypes without data in a given environment: \n')
       for (i in 1:lc$nl[2]) {
-        if (sum(temp[, i]) > 0) {
-          lista <- rownames(temp)[temp[, i]]
+        if (sum(tmp[, i]) > 0) {
+          lista <- rownames(tmp)[tmp[, i]]
           cat(paste0('- Environment ', le[i], ':'), lista, '\n')
         }
       }
@@ -111,12 +111,12 @@ check.freq <- function(dfr, y, geno, rep, env = NULL) {
     }
     
     if (lc$nt.mult > 0) {
-      temp <- lc$tfr > 1
+      tmp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
       for (i in 1:lc$nl[2]) {
         for (j in 1:lc$nrep) {
-          if (sum(temp[, i, j]) > 0) {
-            lista <- rownames(temp)[temp[, i, j]]
+          if (sum(tmp[, i, j]) > 0) {
+            lista <- rownames(tmp)[tmp[, i, j]]
             cat(paste0('- Environment ', le[i], ', replication ', lrep[j], ':'), lista, '\n')
           }
         }

@@ -54,28 +54,28 @@ ck.fq <- function(dfr, y, factors, rep = NULL) {
   
   # Factors and replications as factors to preserve levels in the table of frequencies
   
-  temp <- dfr
+  tmp <- dfr
   for (i in 1:nf)
-    temp[, factors[i]] <- factor(temp[, factors[i]])
+    tmp[, factors[i]] <- factor(tmp[, factors[i]])
   if (!is.null(rep))
-    temp[, rep] <- factor(temp[, rep])
+    tmp[, rep] <- factor(tmp[, rep])
   
   # Calculate frequencies
   
-  temp <- temp[!is.na(temp[, y]), ]
+  tmp <- tmp[!is.na(tmp[, y]), ]
 
   if (nf == 1) {
-    tf <- table(temp[, factors])
+    tf <- table(tmp[, factors])
     if (!is.null(rep))
-      tfr <- table(temp[, factors], temp[, rep])
+      tfr <- table(tmp[, factors], tmp[, rep])
   } else {
-    expr <- 'table(temp[, factors[1]]'
+    expr <- 'table(tmp[, factors[1]]'
     for (i in 2:nf)
-      expr <- paste0(expr, ', temp[, factors[', i, ']]')
+      expr <- paste0(expr, ', tmp[, factors[', i, ']]')
     expr1 <- paste0(expr, ')')
     tf <- eval(parse(text = expr1))
     if (!is.null(rep)) {
-      expr2 <- paste0(expr, ', temp[, rep])')
+      expr2 <- paste0(expr, ', tmp[, rep])')
       tfr <- eval(parse(text = expr2))
     }
   }

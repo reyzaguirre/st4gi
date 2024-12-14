@@ -30,13 +30,13 @@ ck.lxt <- function(dfr, line, tester) {
 
   # Check that all lines appear as parents
   
-  temp <- dfr[is.na(dfr[, tester]), ]
-  c1 <- identical(llin, unique(temp[!is.na(temp[, line]), line]))
+  tmp <- dfr[is.na(dfr[, tester]), ]
+  c1 <- identical(llin, unique(tmp[!is.na(tmp[, line]), line]))
   
   # Check that all testers appear as parents
   
-  temp <- dfr[is.na(dfr[, line]), ]
-  c2 <- identical(ltes, unique(temp[!is.na(temp[, tester]), tester]))
+  tmp <- dfr[is.na(dfr[, line]), ]
+  c2 <- identical(ltes, unique(tmp[!is.na(tmp[, tester]), tester]))
   
   # Check that there are nl x nt crosses
   

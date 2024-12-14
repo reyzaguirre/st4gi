@@ -102,22 +102,22 @@ ck.w <- function(dfr, y, geno, ck1, ck2, row, col, ncb) {
   for (i in 1:dim(dfr)[1]) {
     rows <- dfr[i, row]
     columns <- (dfr[i, col] - ncb):(dfr[i, col] + ncb)
-    temp <- dfr[dfr[, row] == rows & dfr[, col] %in% columns, geno]
-    if (sum(temp %in% checks) == 0)
+    tmp <- dfr[dfr[, row] == rows & dfr[, col] %in% columns, geno]
+    if (sum(tmp %in% checks) == 0)
       c5 <- 1
   }
 
   # Number of missing values for checks
   
-  temp <- dfr[dfr[, col] %in% cck, ]
-  nmis.ck <- sum(is.na(temp[, y]))
-  pmis.ck <- mean(is.na(temp[, y]))
+  tmp <- dfr[dfr[, col] %in% cck, ]
+  nmis.ck <- sum(is.na(tmp[, y]))
+  pmis.ck <- mean(is.na(tmp[, y]))
 
   # Number of missing values for genotypes
   
-  temp <- dfr[!(dfr[, col] %in% cck), ]
-  nmis <- sum(is.na(temp[, y]))
-  pmis <- mean(is.na(temp[, y]))
+  tmp <- dfr[!(dfr[, col] %in% cck), ]
+  nmis <- sum(is.na(tmp[, y]))
+  pmis <- mean(is.na(tmp[, y]))
   
   # Return
   

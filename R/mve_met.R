@@ -49,11 +49,11 @@ mve.met <- function(dfr, y, geno, env, rep, maxp = 0.1, tol = 1e-06) {
 
   y.est <- paste0(y, ".est")
   dfr[, y.est] <- dfr[, y]
-  dfr[, "ytemp"] <- dfr[, y]
+  dfr[, "ytmp"] <- dfr[, y]
   mGE <- tapply(dfr[, y], list(dfr[, geno], dfr[, env]), mean, na.rm = TRUE)
   for (i in 1:length(dfr[, y]))
     if (is.na(dfr[i, y]))
-      dfr[i, "ytemp"] <- mGE[dfr[i, geno], dfr[i, env]]
+      dfr[i, "ytmp"] <- mGE[dfr[i, geno], dfr[i, env]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
   cc <- max(dfr[, y], na.rm = TRUE)
@@ -62,14 +62,14 @@ mve.met <- function(dfr, y, geno, env, rep, maxp = 0.1, tol = 1e-06) {
     cont <- cont + 1
     for (i in 1:length(dfr[, y]))
       if (is.na(dfr[i, y])) {
-        dfr[i, "ytemp"] <- dfr[i, y]
-        sum1 <- tapply(dfr[, "ytemp"], list(dfr[, geno], dfr[, env]), sum, na.rm = TRUE)
-        sum2 <- tapply(dfr[, "ytemp"], list(dfr[, env], dfr[, rep]), sum, na.rm = TRUE)
-        sum3 <- tapply(dfr[, "ytemp"], dfr[, env], sum, na.rm = TRUE)
+        dfr[i, "ytmp"] <- dfr[i, y]
+        sum1 <- tapply(dfr[, "ytmp"], list(dfr[, geno], dfr[, env]), sum, na.rm = TRUE)
+        sum2 <- tapply(dfr[, "ytmp"], list(dfr[, env], dfr[, rep]), sum, na.rm = TRUE)
+        sum3 <- tapply(dfr[, "ytmp"], dfr[, env], sum, na.rm = TRUE)
         dfr[i, y.est] <- (lc$nl[1] * sum1[dfr[i, geno], dfr[i, env]] +
                                  lc$nrep * sum2[dfr[i, env], dfr[i, rep]] -
                                  sum3[dfr[i, env]]) / (lc$nl[1] * lc$nrep - lc$nl[1] - lc$nrep + 1)
-        dfr[i, "ytemp"] <- dfr[i, y.est]
+        dfr[i, "ytmp"] <- dfr[i, y.est]
       }
     lc1 <- lc2
     lc2 <- dfr[is.na(dfr[, y]), y.est]

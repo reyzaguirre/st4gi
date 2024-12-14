@@ -54,7 +54,7 @@ mve.f <- function(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06) {
   
   y.est <- paste0(y, ".est")
   dfr[, y.est] <- dfr[, y]
-  dfr[, "ytemp"] <- dfr[, y]
+  dfr[, "ytmp"] <- dfr[, y]
   
   # Create expression for list of factors
   
@@ -69,7 +69,7 @@ mve.f <- function(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06) {
 
   tmeans <- tapply(dfr[, y], eval(parse(text = lf.expr)), mean, na.rm = TRUE)
 
-  # Store means in ytemp for missing values
+  # Store means in ytmp for missing values
   
   for (i in 1:length(dfr[, y]))
     if (is.na(dfr[i, y])) {
@@ -77,13 +77,13 @@ mve.f <- function(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06) {
       for (j in 2:lc$nf)
         expr <- paste0(expr, ', dfr[', i, ', factors[', j, ']]')
       expr <- paste0(expr, ']')
-      dfr[i, "ytemp"] <- eval(parse(text = expr))
+      dfr[i, "ytmp"] <- eval(parse(text = expr))
     }
   
   # Estimate missing values for a crd
   
   if (is.null(rep))
-    dfr[, y.est] <- dfr[, "ytemp"]
+    dfr[, y.est] <- dfr[, "ytmp"]
   
   # Estimate missing values for a rcbd
   
@@ -117,10 +117,10 @@ mve.f <- function(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06) {
       
           # Compute sums
           
-          dfr[i, "ytemp"] <- NA
-          sum1 <- tapply(dfr[, "ytemp"], eval(parse(text = lf.expr)), sum, na.rm = TRUE)
-          sum2 <- tapply(dfr[, "ytemp"], dfr[, rep], sum, na.rm = TRUE)
-          sum3 <- sum(dfr[, "ytemp"], na.rm = TRUE)
+          dfr[i, "ytmp"] <- NA
+          sum1 <- tapply(dfr[, "ytmp"], eval(parse(text = lf.expr)), sum, na.rm = TRUE)
+          sum2 <- tapply(dfr[, "ytmp"], dfr[, rep], sum, na.rm = TRUE)
+          sum3 <- sum(dfr[, "ytmp"], na.rm = TRUE)
           
           # Get estimate
           
@@ -134,7 +134,7 @@ mve.f <- function(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06) {
 
           dfr[i, y.est] <- mv.num / mv.den
           
-          dfr[i, "ytemp"] <- dfr[i, y.est]
+          dfr[i, "ytmp"] <- dfr[i, y.est]
         }
       
       emv1 <- emv2

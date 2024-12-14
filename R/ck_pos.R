@@ -45,8 +45,8 @@ ck.pos <- function(dfr, row, col, rep = NULL) {
     
     # Compute frequencies
     
-    temp <- dfr[dfr[, rep] == lrep[i], ]
-    ttt <- as.data.frame(table(temp[, row], temp[, col]))
+    tmp <- dfr[dfr[, rep] == lrep[i], ]
+    ttt <- as.data.frame(table(tmp[, row], tmp[, col]))
     colnames(ttt) <- c('Row', 'Column', 'Freq')
     
     # Number of plots with more than one genotype

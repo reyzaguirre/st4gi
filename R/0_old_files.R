@@ -155,9 +155,9 @@
 #   # Identify columns for checks (left and right)
 #   
 #   columns <- (geno.col - ncb):(geno.col + ncb)
-#   temp <- dfr[dfr[, row] == geno.row & dfr[, col] %in% columns & dfr[, geno] %in% c(ck1, ck2), ]
-#   col.lf <- min(temp[, col])
-#   col.rg <- max(temp[, col])
+#   tmp <- dfr[dfr[, row] == geno.row & dfr[, col] %in% columns & dfr[, geno] %in% c(ck1, ck2), ]
+#   col.lf <- min(tmp[, col])
+#   col.rg <- max(tmp[, col])
 #   
 #   # Identify rows for checks and define weights
 #   
@@ -166,8 +166,8 @@
 #   
 #   # Delete nonexistent rows
 #   
-#   temp <- dfr[dfr[, col] == geno.col, ]
-#   valid.rows <- row.ck %in% temp[, row]
+#   tmp <- dfr[dfr[, col] == geno.col, ]
+#   valid.rows <- row.ck %in% tmp[, row]
 #   row.ck <- row.ck[valid.rows]
 #   row.wg <- row.wg[valid.rows]
 #   
@@ -211,11 +211,11 @@
 #   rows <- (geno.row - nrs):(geno.row + nrs)
 #   columns <- (geno.col - ncb):(geno.col + ncb)
 # 
-#   temp <- dfr[dfr[, row] %in% rows & dfr[, col] %in% columns & dfr[, geno] %in% c(ck1, ck2), ]
+#   tmp <- dfr[dfr[, row] %in% rows & dfr[, col] %in% columns & dfr[, geno] %in% c(ck1, ck2), ]
 # 
 #   # Get adjustment factor
 #   
-#   af <- mean(temp[, y.w])
+#   af <- mean(tmp[, y.w])
 #   
 #   # Return
 #   
@@ -268,12 +268,12 @@
 #   
 #   # Anova without adjustment
 #   
-#   temp <- dfr[dfr[, replicated] == 'yes', ]
+#   tmp <- dfr[dfr[, replicated] == 'yes', ]
 #   ff <- as.formula(paste(y, '~', geno))
-#   at <- anova(aov(ff, temp))
+#   at <- anova(aov(ff, tmp))
 #   MSE <- at[2, 3]
 #   F.value <- at[1, 4]
-#   CV <- sqrt(at[2, 3]) / mean(temp[, y], na.rm = T) * 100
+#   CV <- sqrt(at[2, 3]) / mean(tmp[, y], na.rm = T) * 100
 #   
 #   # Original values
 #   
@@ -296,13 +296,13 @@
 #         for (p.v in p[1:p.l]) {
 # 
 #           dfr <- aj.w(y, geno, ck1, ck2, row, col, ncb, nrs.v, method.v, ind.v, p.v, dfr)
-#           temp <- dfr[dfr[, replicated] == 'yes', ]
+#           tmp <- dfr[dfr[, replicated] == 'yes', ]
 #           ff <- as.formula(paste(y.aj, '~', geno))
-#           at.aj <- anova(aov(ff, temp))
+#           at.aj <- anova(aov(ff, tmp))
 #           
 #           new.F <- at.aj[1, 4]
 #           new.MSE <- at.aj[2, 3]
-#           new.CV <- sqrt(at.aj[2, 3]) / mean(temp[, y.aj], na.rm = T) * 100
+#           new.CV <- sqrt(at.aj[2, 3]) / mean(tmp[, y.aj], na.rm = T) * 100
 #           
 #           cond1 <- opt == "F.value" & new.F > best.F
 #           cond2 <- opt == "MSE" & new.MSE < best.MSE

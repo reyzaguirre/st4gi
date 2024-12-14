@@ -46,11 +46,11 @@ mve.rcbd <- function(dfr, y, geno, rep, maxp = 0.1, tol = 1e-06) {
 
   y.est <- paste0(y, ".est")
   dfr[, y.est] <- dfr[, y]
-  dfr[, "ytemp"] <- dfr[, y]
+  dfr[, "ytmp"] <- dfr[, y]
   mG <- tapply(dfr[, y], dfr[, geno], mean, na.rm = TRUE)
   for (i in 1:length(dfr[, y]))
     if (is.na(dfr[i, y]))
-      dfr[i, "ytemp"] <- mG[dfr[i, geno]]
+      dfr[i, "ytmp"] <- mG[dfr[i, geno]]
   lc1 <- array(0, lc$nmis)
   lc2 <- array(0, lc$nmis)
   cc <- max(dfr[, y], na.rm = TRUE)
@@ -59,13 +59,13 @@ mve.rcbd <- function(dfr, y, geno, rep, maxp = 0.1, tol = 1e-06) {
     cont <- cont + 1
     for (i in 1:length(dfr[, y]))
       if (is.na(dfr[i, y])) {
-        dfr[i, "ytemp"] <- dfr[i, y]
-        sum1 <- tapply(dfr[, "ytemp"], dfr[, geno], sum, na.rm = TRUE)
-        sum2 <- tapply(dfr[, "ytemp"], dfr[, rep], sum, na.rm = TRUE)
-        sum3 <- sum(dfr[, "ytemp"], na.rm = TRUE)
+        dfr[i, "ytmp"] <- dfr[i, y]
+        sum1 <- tapply(dfr[, "ytmp"], dfr[, geno], sum, na.rm = TRUE)
+        sum2 <- tapply(dfr[, "ytmp"], dfr[, rep], sum, na.rm = TRUE)
+        sum3 <- sum(dfr[, "ytmp"], na.rm = TRUE)
         dfr[i, y.est] <- (lc$ng * sum1[dfr[i, geno]] + lc$nrep * sum2[dfr[i, rep]] - sum3) /
           (lc$ng * lc$nrep - lc$ng - lc$nrep + 1)
-        dfr[i, "ytemp"] <- dfr[i, y.est]
+        dfr[i, "ytmp"] <- dfr[i, y.est]
       }
     lc1 <- lc2
     lc2 <- dfr[is.na(dfr[, y]), y.est]

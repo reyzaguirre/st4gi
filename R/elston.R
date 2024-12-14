@@ -80,10 +80,10 @@ elston <- function(dfr, vars, geno, env = NULL, rep = NULL,
         ff <- as.formula(paste(vars[i], "~", geno, "- 1 + (1|", rep, ")"))
         fm <- lme4::lmer(ff, dfr)
       }
-      temp <- as.data.frame(lme4::fixef(fm))
-      colnames(temp) <- paste("f", vars[i], sep = ".")
-      temp[, geno] <- substring(rownames(temp), nchar(geno) + 1)
-      dfr.out <- merge(dfr.out, temp, all = TRUE)
+      tmp <- as.data.frame(lme4::fixef(fm))
+      colnames(tmp) <- paste("f", vars[i], sep = ".")
+      tmp[, geno] <- substring(rownames(tmp), nchar(geno) + 1)
+      dfr.out <- merge(dfr.out, tmp, all = TRUE)
     }
   }
 
