@@ -2,6 +2,7 @@
 #'
 #' Creates a potato and sweetpotato fieldbook with short labels or CO numbers.
 #' @param design The name of the design data frame.
+#' @param crop \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @param label Use \code{standard} for standard sweetpotato short labels or
 #' \code{CO} for CO numbers. Default is \code{standard}.
 #' @param minimal Logical, if \code{TRUE}, a minimal list of variables is included.
@@ -9,7 +10,6 @@
 #' @param add Additional variables to include. Only if \code{minimal = TRUE}.
 #' @param computation Logical, if \code{TRUE}, computed variables are included.
 #' Only if \code{minimal = FALSE}. Default is \code{FALSE}.
-#' @param crop \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details Only labels listed in function \code{check.names} are valid.
 #' Uppercase labels are converted to lowercase.
 #' @return It returns a data frame with fieldbook design and variables.
@@ -17,21 +17,21 @@
 #' @examples
 #' book <- cr.rcbd(1:20, 3, 10)$book
 #' # Get fieldbook with minimal set of variables for potato
-#' create.fb(book, crop = 'pt')
+#' create.fb(book, 'pt')
 #' # Add additional variables
-#' create.fb(book, add = c('fedw', 'zndw'), crop = 'pt')
+#' create.fb(book, 'pt', add = c('fedw', 'zndw'))
 #' # Get the fieldbook with CO numbers
-#' create.fb(book, label = 'CO', add = c('dm', 'fedw', 'zndw'), crop = 'pt')
+#' create.fb(book, 'pt', 'CO', add = c('dm', 'fedw', 'zndw'))
 #' # Get fieldbook with minimal set of variables for sweetpotato
-#' create.fb(book, crop = 'sp')
+#' create.fb(book, 'sp')
 #' # Add additional variables
-#' create.fb(book, add = c('bc', 'fe', 'zn'), crop = 'sp')
+#' create.fb(book, 'sp', add = c('bc', 'fe', 'zn'))
 #' # Get the fieldbook with CO numbers
-#' create.fb(book, label = 'CO', add = c('bc', 'fe', 'zn'), crop = 'sp')
+#' create.fb(book, 'sp', 'CO', add = c('bc', 'fe', 'zn'))
 #' @export
 
-create.fb <- function(design, label = c("standard", "CO"), minimal = TRUE,
-                      add = NULL, computation = FALSE, crop = c('pt', 'sp')) {
+create.fb <- function(design, crop = c('pt', 'sp'), label = c("standard", "CO"),
+                      minimal = TRUE, add = NULL, computation = FALSE) {
   
   # Match arguments
   

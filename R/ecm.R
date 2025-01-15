@@ -2,11 +2,11 @@
 #'
 #' This function estimates the genotypic and phenotypic covariance and correlation
 #' matrices with data from one or several environments.
+#' @param dfr The name of the data frame.
 #' @param vars The names of the columns for variables to include.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications or blocks.
-#' @param dfr The name of the data frame.
 #' @param method The method to compute genotypic covariances and phenotypic
 #' variances. See details.
 #' @details If \code{env = NULL} data from only one environment is considered.
@@ -23,11 +23,11 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' vars <- c("rytha", "bc", "dm", "star", "nocr")
-#' ecm(vars, "geno", "loc", "rep", spg)
+#' ecm(spg, vars, "geno", "loc", "rep")
 #' @importFrom stats cor cov
 #' @export
 
-ecm <- function(vars, geno, env = NULL, rep = NULL, dfr, method = 1) {
+ecm <- function(dfr, vars, geno, env = NULL, rep = NULL, method = 1) {
 
   # Check there is at least 2 env or reps
   

@@ -4,9 +4,11 @@
 \alias{docomp}
 \title{Do computations over some factors}
 \usage{
-docomp(do, vars, factors, keep = NULL, dfr, method = c("fast", "slow"))
+docomp(dfr, do, vars, factors, keep = NULL, method = c("fast", "slow"))
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{do}{The computation to perform. Implemented options are \code{count},
 \code{mode}, and standard functions like \code{mean}, \code{median},
 \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.}
@@ -16,8 +18,6 @@ docomp(do, vars, factors, keep = NULL, dfr, method = c("fast", "slow"))
 \item{factors}{The names of the columns for the factors.}
 
 \item{keep}{The names of additional columns to keep.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{method}{Use \code{fast} or \code{slow} method.}
 }
@@ -38,10 +38,10 @@ of valid cases (excluding missing values).
 # Compute means across replications and then across locations for each genotype
 vars <- c("rytha", "bc", "dm", "star", "nocr")
 factors <- c("geno", "loc")
-output1 <- docomp("mean", vars, factors, dfr = spg)
+output1 <- docomp(spg, "mean", vars, factors)
 docomp("mean", vars, "geno", dfr = output1) 
 # Compute maxima across replications for each genotype and location.
-docomp("max", vars, factors, dfr = spg)
+docomp(spg, "max", vars, factors)
 }
 \author{
 Raul Eyzaguirre.

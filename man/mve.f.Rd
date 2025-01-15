@@ -4,16 +4,17 @@
 \alias{mve.f}
 \title{Estimation of missing values for a factorial experiment}
 \usage{
-mve.f(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06)
+mve.f(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to estimate missing values.}
 
 \item{factors}{The names of the columns that identify the factors.}
 
-\item{rep}{The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.}
-
-\item{dfr}{The name of the data frame.}
+\item{rep}{The name of the column that identifies the replications or blocks,
+default is \code{NULL} for a CRD.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 
@@ -30,10 +31,10 @@ or a RCBD by the least squares method.
 }
 \examples{
 # A data frame with some missing values
-temp <- asc
-temp$dm[c(3, 10, 115)] <- NA
+tmp <- asc
+tmp$dm[c(3, 10, 115)] <- NA
 # Estimate the missing values
-mve.f("dm", c("geno", "treat"), NULL, temp)
+mve.f(tmp, "dm", c("geno", "treat"))
 }
 \author{
 Raul Eyzaguirre.

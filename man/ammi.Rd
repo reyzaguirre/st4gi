@@ -4,9 +4,11 @@
 \alias{ammi}
 \title{AMMI or GGE with data at plot level}
 \usage{
-ammi(y, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5, maxp = 0.1)
+ammi(dfr, y, geno, env, rep, method = c("ammi", "gge"), f = 0.5, maxp = 0.1)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -14,8 +16,6 @@ ammi(y, geno, env, rep, dfr, method = c("ammi", "gge"), f = 0.5, maxp = 0.1)
 \item{env}{The name of the column that identifies the environments.}
 
 \item{rep}{The name of the column that identifies the replications or blocks. A RCBD is assumed.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{method}{\code{"ammi"} or \code{"gge"}.}
 
@@ -40,9 +40,9 @@ Significance of PCs are evaluated only with \code{method = "ammi"}
 and if the data are balanced (with missing values estimated if possible).
 }
 \examples{
-model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
+model.ammi <- ammi(met8x12, "y", "geno", "env", "rep")
 model.ammi
-model.gge <- ammi("y", "geno", "env", "rep", met8x12, method = "gge")
+model.gge <- ammi(met8x12, "y", "geno", "env", "rep", "gge")
 model.gge
 }
 \references{

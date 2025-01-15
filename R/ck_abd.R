@@ -1,10 +1,10 @@
 #' Check data for an ABD
 #'
 #' This function checks the frequencies of genotypes in an ABD.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes including checks.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @return The number of checks \code{ng.ck}, the number of no checks \code{ng},
 #' the number of missing values for checks \code{nmis.ck}), the number of missing
 #' values for no checks \code{nmis}, the number \code{nck.0} and list \code{ck.0}
@@ -25,22 +25,22 @@
 #' # Delete some values for classification factors
 #' dfr[64, 'geno'] <- NA
 #' # Check the design
-#' ck.abd('y', 'geno', 'block', dfr)
+#' ck.abd(dfr, 'y', 'geno', 'block')
 #' @export
 
-ck.abd <- function(y, geno, rep, dfr) {
+ck.abd <- function(dfr, y, geno, rep) {
   
   # Check and remove rows with missing values for factors
   
-  out <- ck.fs(geno, rep, dfr)
+  out <- ck.fs(dfr, geno, rep)
   dfr <- out$dfr
   nmis.fac <- out$nmis.fac
 
   # Identify checks and no checks
   
-  temp <- data.frame(table(dfr[, geno]))
-  lg.ck <- temp[temp$Freq > 1, 1]
-  lg <- temp[temp$Freq == 1, 1]
+  tmp <- data.frame(table(dfr[, geno]))
+  lg.ck <- tmp[tmp$Freq > 1, 1]
+  lg <- tmp[tmp$Freq == 1, 1]
   
   # Number of checks and no checks
   
@@ -53,13 +53,13 @@ ck.abd <- function(y, geno, rep, dfr) {
 
   # Number of missing values for no checks
   
-  temp <- dfr[dfr[, geno] %in% lg, ]
-  nmis <- sum(is.na(temp[, y]))
+  tmp <- dfr[dfr[, geno] %in% lg, ]
+  nmis <- sum(is.na(tmp[, y]))
   
   # Evaluate checks
   
-  temp <- dfr[dfr[, geno] %in% lg.ck, ]
-  out <- ck.fq(y, geno, rep, temp)
+  tmp <- dfr[dfr[, geno] %in% lg.ck, ]
+  out <- ck.fq(tmp, y, geno, rep)
   
   # Number of missing values for checks
   

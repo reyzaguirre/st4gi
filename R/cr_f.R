@@ -70,9 +70,9 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
   
   # Add columns for factor levels
   
-  temp <- unlist(strsplit(output$book$geno, ":-p"))
+  tmp <- unlist(strsplit(output$book$geno, ":-p"))
   
-  fm <- matrix(temp, nrow = length(temp) / nf, ncol = nf, byrow = TRUE)
+  fm <- matrix(tmp, nrow = length(tmp) / nf, ncol = nf, byrow = TRUE)
   
   for (i in 1:nf)
     output$book[, fnames[i]] <- fm[, i]

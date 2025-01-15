@@ -4,16 +4,16 @@
 \alias{check.pos}
 \title{Check row and column positions}
 \usage{
-check.pos(row, col, rep, dfr)
+check.pos(dfr, row, col, rep)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{row}{The name of the column that identifies the rows.}
 
 \item{col}{The name of the column that identifies the columns.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 For each replication a list of plots (unique row and column position)
@@ -28,7 +28,7 @@ This is a wrapper for \code{ck.pos} function.
 dfr <- cr.rcbd(1:20, 3, 10)
 dfr <- dfr$book
 # Check positions
-check.pos('row', 'col', 'block', dfr)
+check.pos(dfr, 'row', 'col', 'block')
 }
 \author{
 Raul Eyzaguirre.

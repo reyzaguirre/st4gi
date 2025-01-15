@@ -4,9 +4,11 @@
 \alias{aov.lxt}
 \title{Analysis for a Line x Tester genetic design.}
 \usage{
-aov.lxt(y, line, tester, rep, dfr)
+aov.lxt(dfr, y, line, tester, rep)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{line}{The name of the column that identifies the lines.}
@@ -14,8 +16,6 @@ aov.lxt(y, line, tester, rep, dfr)
 \item{tester}{The name of the column that identifies the testers.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 It returns the analysis for the line by tester genetic design.
@@ -29,7 +29,7 @@ Data must correspond with a line by tester design and must be balanced.
 If there are missing values they are not estimated and results can be dubious.
 }
 \examples{
-aov.lxt("yield", "line", "tester", "rep", lxt)
+aov.lxt(lxt, "yield", "line", "tester", "rep")
 }
 \author{
 Raul Eyzaguirre.

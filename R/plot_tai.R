@@ -16,7 +16,7 @@
 #' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 #' Regional Trials, Crop Science, Vol 11.
 #' @examples
-#' model.tai <- tai("y", "geno", "env", "rep", met8x12)
+#' model.tai <- tai(met8x12, "y", "geno", "env", "rep")
 #' plot(model.tai)
 #' plot(model.tai, graph.type = "ggplot")
 #' @importFrom stats qf qt
@@ -99,8 +99,8 @@ plot.st4gi_tai <- function(x, conf = 0.95, graph.type = c("base", "ggplot"),
     if (div2 > 0) {
       dt2 <- as.data.frame(cbind(lx, pi.alpha))
       gg <- gg +
-        ggplot2::geom_path(data = dt2, ggplot2::aes(x = dt2$lx, y = dt2$pi.alpha, col = "black")) +
-        ggplot2::geom_path(data = dt2, ggplot2::aes(x = dt2$lx, y = -dt2$pi.alpha, col = "black"))
+        ggplot2::geom_path(data = dt2, ggplot2::aes(x = lx, y = pi.alpha, col = "black")) +
+        ggplot2::geom_path(data = dt2, ggplot2::aes(x = lx, y = -pi.alpha, col = "black"))
     }
     
     # Lambda limits

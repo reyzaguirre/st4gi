@@ -4,16 +4,16 @@
 \alias{ck.abd}
 \title{Check data for an ABD}
 \usage{
-ck.abd(y, geno, rep, dfr)
+ck.abd(dfr, y, geno, rep)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes including checks.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of checks \code{ng.ck}, the number of no checks \code{ng},
@@ -39,7 +39,7 @@ dfr[c(1, 5, 7, 56), 'y'] <- NA
 # Delete some values for classification factors
 dfr[64, 'geno'] <- NA
 # Check the design
-ck.abd('y', 'geno', 'block', dfr)
+ck.abd(dfr, 'y', 'geno', 'block')
 }
 \author{
 Raul Eyzaguirre.

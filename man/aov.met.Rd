@@ -4,9 +4,11 @@
 \alias{aov.met}
 \title{ANOVA for MET with a RCBD}
 \usage{
-aov.met(y, geno, env, rep, dfr, maxp = 0.1)
+aov.met(dfr, y, geno, env, rep, maxp = 0.1)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -14,8 +16,6 @@ aov.met(y, geno, env, rep, dfr, maxp = 0.1)
 \item{env}{The name of the column that identifies the environments.}
 
 \item{rep}{The name of the column that identifies the replications or blocks.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{maxp}{Maximum allowed proportion of missing values to estimate, default is 10\%.}
 }
@@ -32,7 +32,7 @@ proportion, 10\% by default. Genotypes and environments are considered as fixed
 factors while the blocks are considered as random and nested into the environments.
 }
 \examples{
-aov.met("y", "geno", "env", "rep", met8x12)
+aov.met(met8x12, "y", "geno", "env", "rep")
 }
 \author{
 Raul Eyzaguirre.

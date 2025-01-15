@@ -1,10 +1,10 @@
 #' Friedman test
 #'
 #' Performs a Friedman rank sum test with multiple comparisons.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param treat The name of the column that identifies the treatments.
 #' @param block The name of the column that identifies the blocks.
-#' @param dfr The name of the data frame.
 #' @param alpha Significant level for comparisons.
 #' @param print.mc Logical, if \code{TRUE}, it prints multiple comparisons groups.
 #' @param print.pc Logical, if \code{TRUE}, it prints pairwise comparisons tests.
@@ -21,11 +21,11 @@
 #'                         1, 1, 4, 4, 3, 4, 4, 3, 3.5, 2, 1, 3.5),
 #'                   grass = gl(4, 12),
 #'                   homeowner = rep(1:12, 4))
-#' friedman.t("y", "grass", "homeowner", dfr)
+#' friedman.t(dfr, "y", "grass", "homeowner")
 #' @importFrom stats pchisq
 #' @export
 
-friedman.t <- function(y, treat, block, dfr, alpha = 0.05,
+friedman.t <- function(dfr, y, treat, block, alpha = 0.05,
                        print.mc = TRUE, print.pc = TRUE) {
   
   # Create a data matrix

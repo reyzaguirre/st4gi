@@ -4,16 +4,16 @@
 \alias{ck.rcbd}
 \title{Check data for a RCBD}
 \usage{
-ck.rcbd(y, geno, rep, dfr)
+ck.rcbd(dfr, y, geno, rep)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
 \item{rep}{The name of the column that identifies the replications.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of genotypes without data (\code{ng.0}), the number of
@@ -36,7 +36,7 @@ dfr$y <- rnorm(60)
 # Delete some values
 dfr[c(1, 5, 16, 17), 'y'] <- NA
 # Check the design
-ck.rcbd('y', 'geno', 'block', dfr)
+ck.rcbd(dfr, 'y', 'geno', 'block')
 }
 \author{
 Raul Eyzaguirre.

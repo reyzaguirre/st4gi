@@ -1,11 +1,11 @@
 #' Compute stress tolerance indices
 #'
 #' Compute several stress tolerance indices.
+#' @param dfr The name of the data frame.
 #' @param vars The list of variables.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param normal The identification for the normal group.
 #' @param stress The identification for the stress group.
-#' @param dfr The name of the data frame.
 #' @details The names of the columns for the variables must follow the convention
 #' \code{y.normal} and \code{y.stress}, so the data frame must be in
 #' wide format for the factor with levels \code{normal} and \code{stress}.
@@ -54,10 +54,10 @@
 #' Tainan, 257-270.
 #' @examples
 #' vars <- c("nmtp", "mtwp", "nnomtp")
-#' sti(vars, 'genotype', 'DTWW', 'DTWS', potatostress)
+#' sti(potatostress, vars, 'genotype', 'DTWW', 'DTWS')
 #' @export
 
-sti <- function(vars, geno, normal, stress, dfr) {
+sti <- function(dfr, vars, geno, normal, stress) {
   
   # Variable names
   

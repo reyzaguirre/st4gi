@@ -5,23 +5,23 @@
 \title{Friedman test}
 \usage{
 friedman.t(
+  dfr,
   y,
   treat,
   block,
-  dfr,
   alpha = 0.05,
   print.mc = TRUE,
   print.pc = TRUE
 )
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{treat}{The name of the column that identifies the treatments.}
 
 \item{block}{The name of the column that identifies the blocks.}
-
-\item{dfr}{The name of the data frame.}
 
 \item{alpha}{Significant level for comparisons.}
 
@@ -46,7 +46,7 @@ dfr <- data.frame(y = c(4, 4, 3, 3, 4, 2, 1, 2, 3.5, 4, 4, 3.5,
                         1, 1, 4, 4, 3, 4, 4, 3, 3.5, 2, 1, 3.5),
                   grass = gl(4, 12),
                   homeowner = rep(1:12, 4))
-friedman.t("y", "grass", "homeowner", dfr)
+friedman.t(dfr, "y", "grass", "homeowner")
 }
 \references{
 Conover, W. J.(1999). Practical Nonparametric Statistics..

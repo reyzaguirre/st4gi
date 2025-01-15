@@ -4,19 +4,19 @@
 \alias{check.freq}
 \title{Check frequencies for complete replications}
 \usage{
-check.freq(y, geno, env = NULL, rep, dfr)
+check.freq(dfr, y, geno, rep, env = NULL)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
-\item{env}{The name of the column that identifies the environments,
-\code{NULL} if there are no environments.}
-
 \item{rep}{The name of the column that identifies the replications.}
 
-\item{dfr}{The name of the data frame.}
+\item{env}{The name of the column that identifies the environments,
+\code{NULL} if there are no environments.}
 }
 \value{
 Information about the balance, missing values, and replications of the design.
@@ -26,8 +26,8 @@ Check frequencies for designs with complete replications and one or several
 environments. This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
 }
 \examples{
-check.freq("trw", "geno", NULL, "rep", pjpz09)
-check.freq("rytha", "geno", "env", "rep", megaclones)
+check.freq(pjpz09, "trw", "geno", "rep")
+check.freq(megaclones, "rytha", "geno", "rep", "env")
 }
 \author{
 Raul Eyzaguirre.

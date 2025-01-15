@@ -4,14 +4,14 @@
 \alias{ck.crd}
 \title{Check data for a CRD}
 \usage{
-ck.crd(y, geno, dfr)
+ck.crd(dfr, y, geno)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 The number of genotypes (\code{ng}), the number of genotypes without
@@ -32,7 +32,7 @@ dfr[c(1, 5, 56, 77, 111), 'y'] <- NA
 # Delete some values for classification factors
 dfr[c(27, 48), 'geno'] <- NA
 # Check the design
-ck.crd('y', 'geno', dfr)
+ck.crd(dfr, 'y', 'geno')
 }
 \author{
 Raul Eyzaguirre.

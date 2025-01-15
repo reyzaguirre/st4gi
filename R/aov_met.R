@@ -2,11 +2,11 @@
 #'
 #' Fit an analysis of variance model for a multi environment trial (MET) with a RCBD
 #' in each environment.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications or blocks.
-#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default. Genotypes and environments are considered as fixed
@@ -14,11 +14,11 @@
 #' @return It returns the ANOVA table.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' aov.met("y", "geno", "env", "rep", met8x12)
+#' aov.met(met8x12, "y", "geno", "env", "rep")
 #' @importFrom stats anova
 #' @export
 
-aov.met <- function(y, geno, env, rep, dfr, maxp = 0.1) {
+aov.met <- function(dfr, y, geno, env, rep, maxp = 0.1) {
 
   # Everything as character
 
@@ -28,7 +28,7 @@ aov.met <- function(y, geno, env, rep, dfr, maxp = 0.1) {
 
   # Check data
   
-  lc <- ck.f(y, c(geno, env), rep, dfr)
+  lc <- ck.f(dfr, y, c(geno, env), rep)
 
   # Estimate missing values and report errors from mve.met
   
@@ -36,7 +36,7 @@ aov.met <- function(y, geno, env, rep, dfr, maxp = 0.1) {
 
   if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 |
       lc$nmis.fac > 0 | lc$nl[1] < 2 | lc$nl[2] < 2) {
-    dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp)[, y.est]
+    dfr[, y] <- mve.met(dfr, y, geno, env, rep, maxp)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))

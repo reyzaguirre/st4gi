@@ -1,10 +1,10 @@
 #' ANOVA for a RCBD
 #'
 #' Fit an analysis of variance model for a RCBD.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details If data is unbalanced, missing values are estimated up to an specified maximum
 #' proportion, 10\% by default.
@@ -12,12 +12,12 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # Get a copy with some missing values for trw and run ANOVA
-#' temp <- pjpz09
-#' temp[c(10, 20, 30), "trw"] <- NA
-#' aov.rcbd("trw", "geno", "rep", temp)
+#' tmp <- pjpz09
+#' tmp[c(10, 20, 30), "trw"] <- NA
+#' aov.rcbd(tmp, "trw", "geno", "rep")
 #' @export
 
-aov.rcbd <- function(y, geno, rep, dfr, maxp = 0.1) {
+aov.rcbd <- function(dfr, y, geno, rep, maxp = 0.1) {
 
   # Everything as character
 
@@ -26,14 +26,14 @@ aov.rcbd <- function(y, geno, rep, dfr, maxp = 0.1) {
 
   # Check data
   
-  lc <- ck.rcbd(y, geno, rep, dfr)
+  lc <- ck.rcbd(dfr, y, geno, rep)
 
   # Estimate missing values and report errors from mve.rcbd
   
   y.est <- paste0(y, ".est")
   
   if (lc$ng.0 > 0 | lc$nrep == 1 | lc$ng.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
-    dfr[, y] <- mve.rcbd(y, geno, rep, dfr, maxp, tol = 1e-06)[, y.est]
+    dfr[, y] <- mve.rcbd(dfr, y, geno, rep, maxp, tol = 1e-06)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))

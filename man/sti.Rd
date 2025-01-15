@@ -4,9 +4,11 @@
 \alias{sti}
 \title{Compute stress tolerance indices}
 \usage{
-sti(vars, geno, normal, stress, dfr)
+sti(dfr, vars, geno, normal, stress)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{vars}{The list of variables.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -14,8 +16,6 @@ sti(vars, geno, normal, stress, dfr)
 \item{normal}{The identification for the normal group.}
 
 \item{stress}{The identification for the stress group.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 It returns a data frame with the indices and a data frame with
@@ -66,7 +66,7 @@ Then, the following indices are computed:
 }
 \examples{
 vars <- c("nmtp", "mtwp", "nnomtp")
-sti(vars, 'genotype', 'DTWW', 'DTWS', potatostress)
+sti(potatostress, vars, 'genotype', 'DTWW', 'DTWS')
 }
 \references{
 Fernandez, G.C.J. (1992). Effective Selection Criteria for Assessing Stress Tolerance.

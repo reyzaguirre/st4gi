@@ -2,20 +2,20 @@
 #'
 #' Check frequencies for designs with complete replications and one or several
 #' environments. This is a wrapper for \code{ck.rcbd} and \code{ck.f} functions.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
+#' @param rep The name of the column that identifies the replications.
 #' @param env The name of the column that identifies the environments,
 #' \code{NULL} if there are no environments.
-#' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @return Information about the balance, missing values, and replications of the design.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' check.freq("trw", "geno", NULL, "rep", pjpz09)
-#' check.freq("rytha", "geno", "env", "rep", megaclones)
+#' check.freq(pjpz09, "trw", "geno", "rep")
+#' check.freq(megaclones, "rytha", "geno", "rep", "env")
 #' @export
 
-check.freq <- function(y, geno, env = NULL, rep, dfr) {
+check.freq <- function(dfr, y, geno, rep, env = NULL) {
   
   # Levels for replications
   
@@ -32,7 +32,7 @@ check.freq <- function(y, geno, env = NULL, rep, dfr) {
     
     # Run check for rcbd
     
-    lc <- ck.rcbd(y, geno, rep, dfr)
+    lc <- ck.rcbd(dfr, y, geno, rep)
     
     # Write warnings
     
@@ -53,11 +53,11 @@ check.freq <- function(y, geno, env = NULL, rep, dfr) {
     }
     
     if (lc$ng.mult > 0) {
-      temp <- lc$tfr > 1
+      tmp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
       for (i in 1:lc$nrep) {
-        if (sum(temp[, i]) > 0) {
-          lista <- rownames(temp)[temp[, i]]
+        if (sum(tmp[, i]) > 0) {
+          lista <- rownames(tmp)[tmp[, i]]
           cat(paste0('- Replication ', lrep[i], ':'), lista, '\n')
         }
       }
@@ -84,7 +84,7 @@ check.freq <- function(y, geno, env = NULL, rep, dfr) {
     
     # Run check for factorial
 
-    lc <- ck.f(y, c(geno, env), rep, dfr)
+    lc <- ck.f(dfr, y, c(geno, env), rep)
     
     # Write warnings
     
@@ -94,11 +94,11 @@ check.freq <- function(y, geno, env = NULL, rep, dfr) {
     }
 
     if (lc$nt.0 > 0) {
-      temp <- lc$tf == 0
+      tmp <- lc$tf == 0
       cat('There are genotypes without data in a given environment: \n')
       for (i in 1:lc$nl[2]) {
-        if (sum(temp[, i]) > 0) {
-          lista <- rownames(temp)[temp[, i]]
+        if (sum(tmp[, i]) > 0) {
+          lista <- rownames(tmp)[tmp[, i]]
           cat(paste0('- Environment ', le[i], ':'), lista, '\n')
         }
       }
@@ -111,12 +111,12 @@ check.freq <- function(y, geno, env = NULL, rep, dfr) {
     }
     
     if (lc$nt.mult > 0) {
-      temp <- lc$tfr > 1
+      tmp <- lc$tfr > 1
       cat('There are genotypes that appear more than once in a given replication: \n')
       for (i in 1:lc$nl[2]) {
         for (j in 1:lc$nrep) {
-          if (sum(temp[, i, j]) > 0) {
-            lista <- rownames(temp)[temp[, i, j]]
+          if (sum(tmp[, i, j]) > 0) {
+            lista <- rownames(tmp)[tmp[, i, j]]
             cat(paste0('- Environment ', le[i], ', replication ', lrep[j], ':'), lista, '\n')
           }
         }

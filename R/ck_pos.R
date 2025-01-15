@@ -2,10 +2,10 @@
 #'
 #' This function checks that there is only one genotype in each row and column position
 #' for each replication.
+#' @param dfr The name of the data frame.
 #' @param row The name of the column that identifies the rows.
 #' @param col The name of the column that identifies the columns.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @return For each replication, the number (\code{nplot}) and list (\code{lplot})
 #' of plots (unique row and column position) with more than one genotype, and the 
 #' number (\code{nrep}) and list (\code{lrep}) of replications.
@@ -15,10 +15,10 @@
 #' dfr <- cr.rcbd(1:20, 3, 10)
 #' dfr <- dfr$book
 #' # Check positions
-#' ck.pos('row', 'col', 'block', dfr)
+#' ck.pos(dfr, 'row', 'col', 'block')
 #' @export
 
-ck.pos <- function(row, col, rep = NULL, dfr) {
+ck.pos <- function(dfr, row, col, rep = NULL) {
   
   # Define replications
   
@@ -29,7 +29,7 @@ ck.pos <- function(row, col, rep = NULL, dfr) {
   
   # Check and remove rows with missing values for factors
   
-  out <- ck.fs(c(row, col), rep, dfr)
+  out <- ck.fs(dfr, c(row, col), rep)
   dfr <- out$dfr
   nrep <- out$nrep
   lrep <- out$lrep
@@ -45,8 +45,8 @@ ck.pos <- function(row, col, rep = NULL, dfr) {
     
     # Compute frequencies
     
-    temp <- dfr[dfr[, rep] == lrep[i], ]
-    ttt <- as.data.frame(table(temp[, row], temp[, col]))
+    tmp <- dfr[dfr[, rep] == lrep[i], ]
+    ttt <- as.data.frame(table(tmp[, row], tmp[, col]))
     colnames(ttt) <- c('Row', 'Column', 'Freq')
     
     # Number of plots with more than one genotype

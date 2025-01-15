@@ -5,14 +5,16 @@
 \title{Data transformations}
 \usage{
 dtr(
+  dfr,
   y,
   type = c("none", "logy", "logy1", "sqrty", "sqrty1", "arcsin"),
   base = 10,
-  n = NULL,
-  dfr
+  n = NULL
 )
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to transform.}
 
 \item{type}{The transformation type. See details.}
@@ -20,8 +22,6 @@ dtr(
 \item{base}{Base for the logarithmic transformation. Base 10 by default.}
 
 \item{n}{Additional parameter for arc-sine transformation. See details.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 It returns the transformed variable.
@@ -60,7 +60,7 @@ no transformation could be needed, and where some are on either the range 0 to 0
 data, a binomial regression model could be a better option.
 }
 \examples{
-dtr("nonc", "logy", dfr = pjpz09)
+dtr(pjpz09, "nonc", "logy")
 }
 \author{
 Raul Eyzaguirre.

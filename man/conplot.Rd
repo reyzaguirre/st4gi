@@ -4,16 +4,18 @@
 \alias{conplot}
 \title{Plot connectivity among trials}
 \usage{
-conplot(y, geno, trial, dfr)
+conplot(dfr, y, geno, trial, na.remove = TRUE)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to plot.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
 
 \item{trial}{The name of the column that identifies the trials.}
 
-\item{dfr}{The name of the data frame.}
+\item{na.remove}{Logical indicating if NA values should be removed, default \code{TRUE}.}
 }
 \value{
 It returns a plot with the number or percentage of genotypes in
@@ -23,7 +25,7 @@ common among trials.
 Function to plot number of genotypes in common among trials.
 }
 \examples{
-conplot("ttwp", "geno", "trial.name", ptfs)
+conplot(ptfs, "ttwp", "geno", "trial.name")
 }
 \author{
 Raul Eyzaguirre

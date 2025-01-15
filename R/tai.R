@@ -2,11 +2,11 @@
 #'
 #' This function runs Tai's stability analysis (Tai, G. C. C., 1971).
 #' It assumes a RCBD with fixed effects for genotypes and random effects for environments.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details If the data set is unbalanced, a warning is produced.
 #' @return It returns the alpha and lambda values for each genotype for the Tai
@@ -16,11 +16,11 @@
 #' Tai, G. C. C. (1971). Genotypic Stability Analysis and Its Application to Potato
 #' Regional Trials, Crop Science, Vol 11.
 #' @examples
-#' model.tai <- tai("y", "geno", "env", "rep", met8x12)
+#' model.tai <- tai(met8x12, "y", "geno", "env", "rep")
 #' model.tai$Tai_values
 #' @export
 
-tai <- function(y, geno, env, rep, dfr, maxp = 0.1) {
+tai <- function(dfr, y, geno, env, rep, maxp = 0.1) {
 
   # Everything as character
 
@@ -30,7 +30,7 @@ tai <- function(y, geno, env, rep, dfr, maxp = 0.1) {
 
   # Check data
 
-  lc <- ck.f(y, c(geno, env), rep, dfr)
+  lc <- ck.f(dfr, y, c(geno, env), rep)
 
   # Error messages and warnings
 
@@ -42,7 +42,7 @@ tai <- function(y, geno, env, rep, dfr, maxp = 0.1) {
   y.est <- paste0(y, ".est")
   
   if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
-    dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp, tol = 1e-06)[, y.est]
+    dfr[, y] <- mve.met(dfr, y, geno, env, rep, maxp, tol = 1e-06)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))

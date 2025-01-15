@@ -46,7 +46,7 @@ It produces a biplot for an object of class \code{ammi}. See \code{?ammi}
 for additional details.
 }
 \examples{
-model.ammi <- ammi("y", "geno", "env", "rep", met8x12)
+model.ammi <- ammi(met8x12, "y", "geno", "env", "rep")
 plot(model.ammi)
 plot(model.ammi, bp.type = 1)
 plot(model.ammi, graph.type = "ggplot")

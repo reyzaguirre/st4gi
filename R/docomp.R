@@ -1,13 +1,13 @@
 #' Do computations over some factors
 #'
 #' Do computations for several variables for some specific factors.
+#' @param dfr The name of the data frame.
 #' @param do The computation to perform. Implemented options are \code{count},
 #' \code{mode}, and standard functions like \code{mean}, \code{median},
 #' \code{min}, \code{max}, \code{sd}, \code{var}, \code{sum}, etc.
 #' @param vars The names of the columns for the variables. 
 #' @param factors The names of the columns for the factors.
 #' @param keep The names of additional columns to keep.
-#' @param dfr The name of the data frame.
 #' @param method Use \code{fast} or \code{slow} method. 
 #' @details This function do a specific computation for all the \code{vars}
 #' for each level's combination of the \code{factors}. Additional columns can be
@@ -20,13 +20,13 @@
 #' # Compute means across replications and then across locations for each genotype
 #' vars <- c("rytha", "bc", "dm", "star", "nocr")
 #' factors <- c("geno", "loc")
-#' output1 <- docomp("mean", vars, factors, dfr = spg)
+#' output1 <- docomp(spg, "mean", vars, factors)
 #' docomp("mean", vars, "geno", dfr = output1) 
 #' # Compute maxima across replications for each genotype and location.
-#' docomp("max", vars, factors, dfr = spg)
+#' docomp(spg, "max", vars, factors)
 #' @export
 
-docomp <- function(do, vars, factors, keep = NULL, dfr, method = c("fast", "slow")) {
+docomp <- function(dfr, do, vars, factors, keep = NULL, method = c("fast", "slow")) {
 
   # Match arguments
   

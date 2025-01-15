@@ -1,10 +1,11 @@
 #' Check frequencies
 #' 
 #' This function cheks the frequencies of valid cases for treatments and replications.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param factors The names of the columns that identify the factors.
-#' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
-#' @param dfr The name of the data frame.
+#' @param rep The name of the column that identifies the replications,
+#' default is \code{NULL} for a CRD.
 #' @return A table of frequencies of valid cases for all factors' levels combinations
 #' (\code{tf}), a table of frequencies of valid cases for all factors' levels and
 #' replications combinations (\code{tfr}), the number of missing values \code{nmis},
@@ -20,7 +21,7 @@
 #' # Delete some values
 #' dfr[c(1, 5, 16, 17), 'y'] <- NA
 #' # Check the frequencies
-#' ck.fq("y", "geno", "block", dfr)
+#' ck.fq(dfr, "y", "geno", "block")
 #' 
 #' ## Example 2
 #' # Create a design
@@ -33,10 +34,10 @@
 #' # Delete some values
 #' dfr[c(5, 10, 24), 'y'] <- NA
 #' # Check the frequencies
-#' ck.fq("y", c("A", "B"), "block", dfr)
+#' ck.fq(dfr, "y", c("A", "B"), "block")
 #' @export
 
-ck.fq <- function(y, factors, rep, dfr) {
+ck.fq <- function(dfr, y, factors, rep = NULL) {
   
   # Number of missing values
   
@@ -53,28 +54,28 @@ ck.fq <- function(y, factors, rep, dfr) {
   
   # Factors and replications as factors to preserve levels in the table of frequencies
   
-  temp <- dfr
+  tmp <- dfr
   for (i in 1:nf)
-    temp[, factors[i]] <- factor(temp[, factors[i]])
+    tmp[, factors[i]] <- factor(tmp[, factors[i]])
   if (!is.null(rep))
-    temp[, rep] <- factor(temp[, rep])
+    tmp[, rep] <- factor(tmp[, rep])
   
   # Calculate frequencies
   
-  temp <- temp[!is.na(temp[, y]), ]
+  tmp <- tmp[!is.na(tmp[, y]), ]
 
   if (nf == 1) {
-    tf <- table(temp[, factors])
+    tf <- table(tmp[, factors])
     if (!is.null(rep))
-      tfr <- table(temp[, factors], temp[, rep])
+      tfr <- table(tmp[, factors], tmp[, rep])
   } else {
-    expr <- 'table(temp[, factors[1]]'
+    expr <- 'table(tmp[, factors[1]]'
     for (i in 2:nf)
-      expr <- paste0(expr, ', temp[, factors[', i, ']]')
+      expr <- paste0(expr, ', tmp[, factors[', i, ']]')
     expr1 <- paste0(expr, ')')
     tf <- eval(parse(text = expr1))
     if (!is.null(rep)) {
-      expr2 <- paste0(expr, ', temp[, rep])')
+      expr2 <- paste0(expr, ', tmp[, rep])')
       tfr <- eval(parse(text = expr2))
     }
   }

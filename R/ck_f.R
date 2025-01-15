@@ -1,10 +1,10 @@
 #' Check data for a full factorial
 #'
 #' This function checks the frequencies for a full factorial.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param factors The names of the columns that identify the factors.
 #' @param rep The name of the column that identifies the replications, \code{NULL} for a CRD.
-#' @param dfr The name of the data frame.
 #' @return The number of treatments without data (\code{nt.0}), the number of
 #' treatments that appear more than once in a given replication (\code{nt.mult}),
 #' the number of missing values \code{nmis}, the proportion of missing values
@@ -26,14 +26,14 @@
 #' # Delete some values
 #' dfr[c(4, 5, 12), 'y'] <- NA
 #' # Check the design
-#' ck.f("y", c("A", "B"), "block", dfr)
+#' ck.f(dfr, "y", c("A", "B"), "block")
 #' @export
 
-ck.f <- function(y, factors, rep, dfr) {
+ck.f <- function(dfr, y, factors, rep) {
   
   # Check factor structure
 
-  out <- ck.fs(factors, rep, dfr)
+  out <- ck.fs(dfr, factors, rep)
   dfr <- out$dfr
   nf <- out$nf
   nl <- out$nl
@@ -42,7 +42,7 @@ ck.f <- function(y, factors, rep, dfr) {
   
   # Frequencies for factors and replications
   
-  out <- ck.fq(y, factors, rep, dfr)
+  out <- ck.fq(dfr, y, factors, rep)
   tf <- out$tf
   tfr <- out$tfr
   nmis <- out$nmis

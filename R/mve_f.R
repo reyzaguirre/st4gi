@@ -2,10 +2,11 @@
 #'
 #' Function to estimate missing values for factorial experiment with a CRD
 #' or a RCBD by the least squares method.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to estimate missing values.
 #' @param factors The names of the columns that identify the factors.
-#' @param rep The name of the column that identifies the replications or blocks, \code{NULL} for a CRD.
-#' @param dfr The name of the data frame.
+#' @param rep The name of the column that identifies the replications or blocks,
+#' default is \code{NULL} for a CRD.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @param tol Tolerance for the convergence of the iterative estimation process.
 #' @return It returns a data frame with the experimental layout and columns \code{y}
@@ -14,17 +15,17 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' # A data frame with some missing values
-#' temp <- asc
-#' temp$dm[c(3, 10, 115)] <- NA
+#' tmp <- asc
+#' tmp$dm[c(3, 10, 115)] <- NA
 #' # Estimate the missing values
-#' mve.f("dm", c("geno", "treat"), NULL, temp)
+#' mve.f(tmp, "dm", c("geno", "treat"))
 #' @export
 
-mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
+mve.f <- function(dfr, y, factors, rep = NULL, maxp = 0.1, tol = 1e-06) {
   
   # Check data
   
-  lc <- ck.f(y, factors, rep, dfr)
+  lc <- ck.f(dfr, y, factors, rep)
   
   # Error messages
   
@@ -53,7 +54,7 @@ mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
   
   y.est <- paste0(y, ".est")
   dfr[, y.est] <- dfr[, y]
-  dfr[, "ytemp"] <- dfr[, y]
+  dfr[, "ytmp"] <- dfr[, y]
   
   # Create expression for list of factors
   
@@ -68,7 +69,7 @@ mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
 
   tmeans <- tapply(dfr[, y], eval(parse(text = lf.expr)), mean, na.rm = TRUE)
 
-  # Store means in ytemp for missing values
+  # Store means in ytmp for missing values
   
   for (i in 1:length(dfr[, y]))
     if (is.na(dfr[i, y])) {
@@ -76,13 +77,13 @@ mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
       for (j in 2:lc$nf)
         expr <- paste0(expr, ', dfr[', i, ', factors[', j, ']]')
       expr <- paste0(expr, ']')
-      dfr[i, "ytemp"] <- eval(parse(text = expr))
+      dfr[i, "ytmp"] <- eval(parse(text = expr))
     }
   
   # Estimate missing values for a crd
   
   if (is.null(rep))
-    dfr[, y.est] <- dfr[, "ytemp"]
+    dfr[, y.est] <- dfr[, "ytmp"]
   
   # Estimate missing values for a rcbd
   
@@ -116,10 +117,10 @@ mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
       
           # Compute sums
           
-          dfr[i, "ytemp"] <- NA
-          sum1 <- tapply(dfr[, "ytemp"], eval(parse(text = lf.expr)), sum, na.rm = TRUE)
-          sum2 <- tapply(dfr[, "ytemp"], dfr[, rep], sum, na.rm = TRUE)
-          sum3 <- sum(dfr[, "ytemp"], na.rm = TRUE)
+          dfr[i, "ytmp"] <- NA
+          sum1 <- tapply(dfr[, "ytmp"], eval(parse(text = lf.expr)), sum, na.rm = TRUE)
+          sum2 <- tapply(dfr[, "ytmp"], dfr[, rep], sum, na.rm = TRUE)
+          sum3 <- sum(dfr[, "ytmp"], na.rm = TRUE)
           
           # Get estimate
           
@@ -133,7 +134,7 @@ mve.f <- function(y, factors, rep, dfr, maxp = 0.1, tol = 1e-06) {
 
           dfr[i, y.est] <- mv.num / mv.den
           
-          dfr[i, "ytemp"] <- dfr[i, y.est]
+          dfr[i, "ytmp"] <- dfr[i, y.est]
         }
       
       emv1 <- emv2

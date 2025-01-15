@@ -2,6 +2,7 @@
 #'
 #' This function checks the grid of checks on the Wescott layout and
 #' the number of missing values.
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param ck1 Name of check 1.
@@ -9,7 +10,6 @@
 #' @param row The name of the column that identifies the rows.
 #' @param col The name of the column that identifies the columns.
 #' @param ncb Number of columns between two check columns.
-#' @param dfr The name of the data frame.
 #' @return Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},
 #' for the grid of checks, the number of missing values for checks (\code{nmis.ck})
 #' and genotypes \code{nmis}, the proportion of missing values for checks
@@ -25,14 +25,14 @@
 #' # Delete some values
 #' dfr[c(11, 165, 569, 914), 'y'] <- NA
 #' # Check the design
-#' ck.w("y", "geno", "A", "B", "row", "col", 10, dfr)
+#' ck.w(dfr, "y", "geno", "A", "B", "row", "col", 10)
 #' @export
 
-ck.w <- function(y, geno, ck1, ck2, row, col, ncb, dfr) {
+ck.w <- function(dfr, y, geno, ck1, ck2, row, col, ncb) {
   
   # Check and remove rows with missing values for factors
   
-  out <- ck.fs(c(geno, row, col), NULL, dfr)
+  out <- ck.fs(dfr, c(geno, row, col))
   dfr <- out$dfr
   nmis.fac <- out$nmis.fac
 
@@ -102,22 +102,22 @@ ck.w <- function(y, geno, ck1, ck2, row, col, ncb, dfr) {
   for (i in 1:dim(dfr)[1]) {
     rows <- dfr[i, row]
     columns <- (dfr[i, col] - ncb):(dfr[i, col] + ncb)
-    temp <- dfr[dfr[, row] == rows & dfr[, col] %in% columns, geno]
-    if (sum(temp %in% checks) == 0)
+    tmp <- dfr[dfr[, row] == rows & dfr[, col] %in% columns, geno]
+    if (sum(tmp %in% checks) == 0)
       c5 <- 1
   }
 
   # Number of missing values for checks
   
-  temp <- dfr[dfr[, col] %in% cck, ]
-  nmis.ck <- sum(is.na(temp[, y]))
-  pmis.ck <- mean(is.na(temp[, y]))
+  tmp <- dfr[dfr[, col] %in% cck, ]
+  nmis.ck <- sum(is.na(tmp[, y]))
+  pmis.ck <- mean(is.na(tmp[, y]))
 
   # Number of missing values for genotypes
   
-  temp <- dfr[!(dfr[, col] %in% cck), ]
-  nmis <- sum(is.na(temp[, y]))
-  pmis <- mean(is.na(temp[, y]))
+  tmp <- dfr[!(dfr[, col] %in% cck), ]
+  nmis <- sum(is.na(tmp[, y]))
+  pmis <- mean(is.na(tmp[, y]))
   
   # Return
   

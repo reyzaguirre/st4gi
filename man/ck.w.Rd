@@ -4,9 +4,11 @@
 \alias{ck.w}
 \title{Check data for a Wescott layout}
 \usage{
-ck.w(y, geno, ck1, ck2, row, col, ncb, dfr)
+ck.w(dfr, y, geno, ck1, ck2, row, col, ncb)
 }
 \arguments{
+\item{dfr}{The name of the data frame.}
+
 \item{y}{The name of the column for the variable to analyze.}
 
 \item{geno}{The name of the column that identifies the genotypes.}
@@ -20,8 +22,6 @@ ck.w(y, geno, ck1, ck2, row, col, ncb, dfr)
 \item{col}{The name of the column that identifies the columns.}
 
 \item{ncb}{Number of columns between two check columns.}
-
-\item{dfr}{The name of the data frame.}
 }
 \value{
 Four control values (\code{c1}, \code{c2}, \code{c3}, and \code{c4},
@@ -43,7 +43,7 @@ dfr$y <- rnorm(1125)
 # Delete some values
 dfr[c(11, 165, 569, 914), 'y'] <- NA
 # Check the design
-ck.w("y", "geno", "A", "B", "row", "col", 10, dfr)
+ck.w(dfr, "y", "geno", "A", "B", "row", "col", 10)
 }
 \author{
 Raul Eyzaguirre.

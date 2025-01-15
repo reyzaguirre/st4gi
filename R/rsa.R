@@ -2,11 +2,11 @@
 #'
 #' Function to run the regression stability analysis (Yates and Cochran, 1938,
 #' Finlay and Wilkinson, 1963).
+#' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
 #' @param geno The name of the column that identifies the genotypes.
 #' @param env The name of the column that identifies the environments.
 #' @param rep The name of the column that identifies the replications.
-#' @param dfr The name of the data frame.
 #' @param maxp Maximum allowed proportion of missing values to estimate, default is 10\%.
 #' @details The regression stability analysis is evaluated with a balanced data set.
 #' If data is unbalanced, missing values are estimated up to an specified maximum proportion,
@@ -42,29 +42,29 @@
 #' Yates, F., and Cochran, W. G. (1938). The Analysis of Group Experiments.
 #' J. Agric. Sci. 28: 556-580.
 #' @examples
-#' rsa("y", "geno", "env", "rep", met8x12)
+#' rsa(met8x12, "y", "geno", "env", "rep")
 #' @importFrom stats coef lm summary.lm
 #' @export
 
-rsa <- function(y, geno, env, rep, dfr, maxp = 0.1) {
+rsa <- function(dfr, y, geno, env, rep, maxp = 0.1) {
   
   # Error messages
   
-  lc <- ck.f(y, c(geno, env), rep, dfr)
+  lc <- ck.f(dfr, y, c(geno, env), rep)
   
   if (lc$nl[1] < 3 & lc$nl[2] < 3)
     stop("You need at least 3 genotypes or 3 environments for regression stability analysis.")
 
   # Compute ANOVA and report errors from mve.met
    
-  at <- suppressWarnings(aov.met(y, geno, env, rep, dfr, maxp))
+  at <- suppressWarnings(aov.met(dfr, y, geno, env, rep, maxp))
 
   # Estimate missing values
 
   y.est <- paste0(y, ".est")
   
   if (lc$nt.0 > 0 | lc$nrep == 1 | lc$nt.mult > 0 | lc$nmis > 0 | lc$nmis.fac > 0) {
-    dfr[, y] <- mve.met(y, geno, env, rep, dfr, maxp, tol = 1e-06)[, y.est]
+    dfr[, y] <- mve.met(dfr, y, geno, env, rep, maxp, tol = 1e-06)[, y.est]
     warning(paste0("The data set is unbalanced, ",
                    format(lc$pmis * 100, digits = 3),
                    "% missing values estimated."))

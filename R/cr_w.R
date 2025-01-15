@@ -72,20 +72,20 @@ cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"
   
   # Get positions for genotypes
   
-  temp <- plan.id
-  temp[!is.na(plan)] <- NA
-  temp <- c(temp)
-  temp <- sort(temp[!is.na(temp)])
-  temp <- temp[1:ng]
+  tmp <- plan.id
+  tmp[!is.na(plan)] <- NA
+  tmp <- c(tmp)
+  tmp <- sort(tmp[!is.na(tmp)])
+  tmp <- tmp[1:ng]
   
   # Create a data frame with positions and genotypes
   
-  temp <- data.frame(temp, geno, stringsAsFactors = FALSE)
+  tmp <- data.frame(tmp, geno, stringsAsFactors = FALSE)
 
   # Asign genotypes to field plan
     
   for (k in 1:ng) {
-    plan[plan.id == temp[k, 1]] <- temp[k, 2]
+    plan[plan.id == tmp[k, 1]] <- tmp[k, 2]
   }
 
   # Create fielbook
