@@ -14,30 +14,25 @@ get_invalid_names(dfr, add = NULL, crop = c("auto", "pt", "sp"))
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 }
 \value{
-It returns:
-\itemize{
-\item The fieldbook data frame with all column names in lowercase and
-with some possible modifications in the names. Variables that are stored
-with a non-numeric class are transformed to numeric.
-\item A list of warnings for all the column names that have been changed.
-\item A list of warnings for all the column names not recognized.
-\item A list of warnings for all the column variables that have been changed to numeric.
-}
+a character vector of invalid column names
 }
 \description{
 run \code{get_invalid_names()} after running \code{check.names()}
+}
+\details{
 Check that fieldbook factors and variables' names correspond with the names defined
 in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 CIP protocols. It also checks that all variables are stored as numeric.
-}
-\details{
+
 Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
 corresponding short labels and CO numbers.
 Additional variables are checked for extreme values only.
 }
 \examples{
-check.names(potatoyield)
-check.names(pjpz09)
+\dontrun{
+check.names(potatoyield) |> get_invalid_names()
+check.names(pjpz09) |> get_invalid_names()
+}
 }
 \author{
 Raul Eyzaguirre.

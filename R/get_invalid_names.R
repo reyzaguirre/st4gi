@@ -11,19 +11,13 @@
 #' @details Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
 #' Additional variables are checked for extreme values only.
-#' @return It returns:
-#' \itemize{
-#' \item The fieldbook data frame with all column names in lowercase and
-#' with some possible modifications in the names. Variables that are stored
-#' with a non-numeric class are transformed to numeric.
-#' \item A list of warnings for all the column names that have been changed.
-#' \item A list of warnings for all the column names not recognized.
-#' \item A list of warnings for all the column variables that have been changed to numeric.
-#' }
+#' @return a character vector of invalid column names
 #' @author Raul Eyzaguirre.
 #' @examples
-#' check.names(potatoyield)
-#' check.names(pjpz09)
+#' \dontrun{
+#' check.names(potatoyield) |> get_invalid_names()
+#' check.names(pjpz09) |> get_invalid_names()
+#' }
 #' @export
 
 get_invalid_names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
