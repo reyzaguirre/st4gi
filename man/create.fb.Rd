@@ -36,8 +36,8 @@ It returns a data frame with fieldbook design and variables.
 Creates a potato and sweetpotato fieldbook with short labels or CO numbers.
 }
 \details{
-Only labels listed in function \code{check.names} are valid.
-Uppercase labels are converted to lowercase.
+Only labels listed in functions \code{pt.ont()} and \code{sp.ont()}
+are valid. Uppercase labels are converted to lowercase.
 }
 \examples{
 book <- cr.rcbd(1:20, 3, 10)$book

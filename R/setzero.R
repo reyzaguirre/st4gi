@@ -57,7 +57,7 @@ setzero <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   crop = match.arg(crop)
   
   if (crop == 'auto') {
-    crop <- detect.names(dfr)
+    crop <- detect.crop(dfr)
     warning(crop, " crop detected", call. = FALSE)
   }
   

@@ -25,8 +25,8 @@ with Crop Ontology variable numbers.
 Interchanges potato and sweetpotato short labels with Crop Ontology variable numbers.
 }
 \details{
-All labels (lower or upper case) listed in function \code{check.names}
-are interchanged with CO variable numbers.
+All labels (lower or upper case) listed in functions \code{pt.ont()}
+and \code{sp.ont()} are interchanged with CO variable numbers.
 }
 \examples{
 convert.co(potatoyield)

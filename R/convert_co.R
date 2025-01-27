@@ -4,8 +4,8 @@
 #' @param dfr The name of the data frame.
 #' @param direction \code{labels.to.co} or \code{co.to.labels}
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @details All labels (lower or upper case) listed in function \code{check.names}
-#' are interchanged with CO variable numbers.
+#' @details All labels (lower or upper case) listed in functions \code{pt.ont()}
+#' and \code{sp.ont()} are interchanged with CO variable numbers.
 #' @return It returns a data frame with all short labels for variables interchanged
 #' with Crop Ontology variable numbers.
 #' @author Raul Eyzaguirre.
@@ -24,7 +24,7 @@ convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
   crop = match.arg(crop)
   
   if (crop == 'auto') {
-    crop <- detect.names(dfr)
+    crop <- detect.crop(dfr)
     warning(crop, " crop detected", call. = FALSE)
   }
   

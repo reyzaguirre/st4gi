@@ -4,12 +4,10 @@
 \alias{check.names}
 \title{Check fieldbook factors and variables names for potato and sweetpotato}
 \usage{
-check.names(dfr, add = NULL, crop = c("auto", "pt", "sp"))
+check.names(dfr, crop = c("auto", "pt", "sp"))
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
-
-\item{add}{Additional variables. See details.}
 
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 }

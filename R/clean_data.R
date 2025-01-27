@@ -6,7 +6,7 @@
 #' @param f Factor for extreme values detection.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed
-#' in function \code{check.names}. Then functions \code{setna} and
+#' in functions \code{pt.ont()} and \code{sp.ont()}. Then functions \code{setna} and
 #' \code{setzero} are applied to the data.
 #' @return It returns the data frame with all impossible values set to \code{NA},
 #' some values set to \code{0} and a list of warnings with all the rows that have
@@ -33,7 +33,7 @@ clean.data <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   crop = match.arg(crop)
   
   if (crop == 'auto') {
-    crop <- detect.names(dfr)
+    crop <- detect.crop(dfr)
     warning(crop, " crop detected", call. = FALSE)
   }
   

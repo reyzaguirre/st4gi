@@ -19,7 +19,7 @@ It returns a design file and a data file ready to upload in potatobase.
 Converts biomart Excel files to potatobase formats.
 }
 \details{
-All labels (lower or upper case) listed in function \code{check.names.pt}
+All labels (lower or upper case) listed in function \code{pt.ont()}
 are converted to CO variable numbers.
 }
 \author{

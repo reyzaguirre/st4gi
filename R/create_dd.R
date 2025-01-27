@@ -7,8 +7,8 @@
 #' @details The metadata template can be created with function \code{create.md}.
 #' The fieldbooks should be in memory or as csv files in the working directory,
 #' with the same names specified in the column \code{trial_name} of the metadata,
-#' with standard short labels (see \code{?check.names.pt} and \code{?check.names.sp}
-#' for the details).
+#' with standard short labels (type \code{pt.ont()} or \code{sp.ont()}
+#' to see the list of variables).
 #' @return It returns data.frames with names design.file and data.file ready to
 #' upload into potatobase and sweetpotatobase. Both data.frames should be saved
 #' as xlsx files.

@@ -6,7 +6,7 @@
 #' @param f Factor for extreme values detection. See details.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed in
-#' function \code{check.names}.
+#' functions \code{pt.ont()} and \code{sp.ont()}.
 #' 
 #' Consider the following groups of variables for potato:
 #' \itemize{
@@ -153,7 +153,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   crop = match.arg(crop)
   
   if (crop == 'auto') {
-    crop <- detect.names(dfr)
+    crop <- detect.crop(dfr)
     warning(crop, " crop detected", call. = FALSE)
   }
   

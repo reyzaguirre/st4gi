@@ -4,7 +4,6 @@
 #' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 #' CIP protocols. It also checks that all variables are stored as numeric.
 #' @param dfr The name of the data frame.
-#' @param add Additional variables. See details.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
@@ -24,39 +23,38 @@
 #' check.names(pjpz09)
 #' @export
 
-check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
+check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   # Match arguments
   
   crop = match.arg(crop)
   
   if (crop == 'auto') {
-    crop <- detect.names(dfr)
+    crop <- detect.crop(dfr)
     warning(crop, " crop detected", call. = FALSE)
   }
     
   # Valid names for factors
   
-  plot.id <- c("plot", "row", "col")
-  
-  factors <- c("loc", "year", "season", "env", "geno", 'type', "rep", "block",
-               "treat", "harvest", 'is_a_control')
+  factors <- c("plot", "row", "col", "rep", "block",
+               "loc", "year", "season", "env",
+               "geno", 'type', 'is_a_control',
+               "treat", "harvest")
   
   # Valid names for variables
   
   if (crop == 'pt')
-    vars <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii",
-                "fwts", "dwts", "fwts1", "fwts2", "dwts1", "dwts2",
-                "dm1", "dm2", tolower(add))
+    vars <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii", "fwts", "dwts",
+              "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2")
   
   if (crop == 'sp')
-    vars <- c(spont$Label, 'fcol.cc', tolower(add))
+    vars <- c(spont$Label, 'fcol.cc')
   
   # Valid names for factors and variables
   
-  colnames.valid <- c(plot.id, factors, vars)
+  colnames.valid <- c(factors, vars)
   
-  # Factors and variables in field book (original names)
+  # Factors and variables in fieldbook (original names)
     
   colnames.fb <- colnames(dfr)
 
@@ -73,55 +71,55 @@ check.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   old.geno <- c("accession_name", "cipno", "cip.number", 'genotype', "instn")
   new.geno <- rep('geno', length(old.geno))
   
-  old.names.f <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
-  new.names.f <- c('plot',        'loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
+  old.names.factors <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
+  new.names.factors <- c('plot',        'loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
 
-  change.names.f <- NULL
+  changed.names.factors <- NULL
   
-  for (i in 1:length(old.names.f)) {
-    if (exists(old.names.f[i], dfr) & !exists(new.names.f[i], dfr)) {
-      change.names.f <- c(change.names.f, old.names.f[i])
-      colnames(dfr)[colnames(dfr) == old.names.f[i]] <- new.names.f[i]
+  for (i in 1:length(old.names.factors)) {
+    if (exists(old.names.factors[i], dfr) & !exists(new.names.factors[i], dfr)) {
+      changed.names.factors <- c(changed.names.factors, old.names.factors[i])
+      colnames(dfr)[colnames(dfr) == old.names.factors[i]] <- new.names.factors[i]
     }
   }  
   
-  if (!is.null(change.names.f)) {
-    change.names.list <- old.names.f %in% change.names.f
-    warning("Factors' names ", list(old.names.f[change.names.list]), " changed to ", list(new.names.f[change.names.list]), call. = FALSE)
+  if (!is.null(changed.names.factors)) {
+    cond <- old.names.factors %in% changed.names.factors
+    warning("Factors' names ", list(old.names.factors[cond]), " changed to ", list(new.names.factors[cond]), call. = FALSE)
   }
   
   # Solve synonyms for variables
   
   if (crop == 'pt') {
-    old.names.t <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein", 'chipping')
-    new.names.t <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro",     'chip_color')
+    old.names.vars <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein", 'chipping')
+    new.names.vars <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro",     'chip_color')
   }
   
   if (crop == 'sp') {
-    old.names.t <- c("trwd",  "biomd",  "cythaaj",  "rythaaj",  "dmryaj",  'vwd',  "fythaaj",  "dmvyaj",  "bythaaj",  "dmbyaj")
-    new.names.t <- c("trw.d", "biom.d", "cytha.aj", "rytha.aj", "dmry.aj", 'vw.d', "fytha.aj", "dmvy.aj", "bytha.aj", "dmby.aj")
+    old.names.vars <- c("trwd",  "biomd",  "cythaaj",  "rythaaj",  "dmryaj",  'vwd',  "fythaaj",  "dmvyaj",  "bythaaj",  "dmbyaj")
+    new.names.vars <- c("trw.d", "biom.d", "cytha.aj", "rytha.aj", "dmry.aj", 'vw.d', "fytha.aj", "dmvy.aj", "bytha.aj", "dmby.aj")
   }
 
-  change.names.t <- NULL 
+  changed.names.vars <- NULL 
   
-  for (i in 1:length(old.names.t)) {
-    if (exists(old.names.t[i], dfr) & !exists(new.names.t[i], dfr)) {
-      change.names.t <- c(change.names.t, old.names.t[i])
-      colnames(dfr)[colnames(dfr) == old.names.t[i]] <- new.names.t[i]
+  for (i in 1:length(old.names.vars)) {
+    if (exists(old.names.vars[i], dfr) & !exists(new.names.vars[i], dfr)) {
+      changed.names.vars <- c(changed.names.vars, old.names.vars[i])
+      colnames(dfr)[colnames(dfr) == old.names.vars[i]] <- new.names.vars[i]
     }
   }  
   
-  if (!is.null(change.names.t)) {
-    change.names.list <- old.names.t %in% change.names.t
-    warning("Variables' names ", list(old.names.t[change.names.list]), " changed to ", list(new.names.t[change.names.list]), call. = FALSE)
+  if (!is.null(changed.names.vars)) {
+    cond <- old.names.vars %in% changed.names.vars
+    warning("Variables' names ", list(old.names.vars[cond]), " changed to ", list(new.names.vars[cond]), call. = FALSE)
   }
   
   # Names not valid
   
-  names.not.valid <- !(colnames(dfr) %in% colnames.valid)
+  cond <- !(colnames(dfr) %in% colnames.valid)
 
-  if (max(names.not.valid) == 1)
-    warning("Some columns with invalid names: ", list(colnames(dfr)[names.not.valid]), call. = FALSE)
+  if (max(cond) == 1)
+    warning("Some columns with invalid names: ", list(colnames(dfr)[cond]), call. = FALSE)
 
   # Check variables are numeric
   
@@ -173,9 +171,9 @@ sp.ont <- function() {
   spont[, c('Label', 'Full.Name', 'Variable.ID')]
 }
 
-# Detect names automatically
+# Detect crop automatically
 
-detect.names <- function(dfr) {
+detect.crop <- function(dfr) {
   
   # Remove extra text
   

@@ -45,7 +45,7 @@ Set of rules to check for consistency of potato and sweetpotato experimental dat
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in
-function \code{check.names}.
+functions \code{pt.ont()} and \code{sp.ont()}.
  
 Extreme low and high values are detected using the interquartile range.
 The rule is to detect any value out of the interval 

@@ -24,8 +24,8 @@ a set of fieldbooks.
 The metadata template can be created with function \code{create.md}.
 The fieldbooks should be in memory or as csv files in the working directory,
 with the same names specified in the column \code{trial_name} of the metadata,
-with standard short labels (see \code{?check.names.pt} and \code{?check.names.sp}
-for the details).
+with standard short labels (type \code{pt.ont()} or \code{sp.ont()}
+to see the list of variables).
 }
 \examples{
 # Create designs

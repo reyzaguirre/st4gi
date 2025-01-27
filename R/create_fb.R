@@ -10,8 +10,8 @@
 #' @param add Additional variables to include. Only if \code{minimal = TRUE}.
 #' @param computation Logical, if \code{TRUE}, computed variables are included.
 #' Only if \code{minimal = FALSE}. Default is \code{FALSE}.
-#' @details Only labels listed in function \code{check.names} are valid.
-#' Uppercase labels are converted to lowercase.
+#' @details Only labels listed in functions \code{pt.ont()} and \code{sp.ont()}
+#' are valid. Uppercase labels are converted to lowercase.
 #' @return It returns a data frame with fieldbook design and variables.
 #' @author Raul Eyzaguirre.
 #' @examples

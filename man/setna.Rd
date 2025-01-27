@@ -23,7 +23,7 @@ missing value (\code{NA}) according to some rules.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in
-function \code{check.names}.
+functions \code{pt.ont()} and \code{sp.ont()}.
 
 Consider the following groups of variables for potato:
 \itemize{

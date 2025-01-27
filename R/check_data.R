@@ -9,7 +9,7 @@
 #' @param print.text Logical, if \code{TRUE} the output is printed on screen.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed in
-#' function \code{check.names}.
+#' functions \code{pt.ont()} and \code{sp.ont()}.
 #'  
 #' Extreme low and high values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
@@ -50,7 +50,7 @@ check.data <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
   
   dfr <- check.names(dfr, crop = crop)
   if (crop == 'auto')
-    crop <- detect.names(dfr)
+    crop <- detect.crop(dfr)
   if (!is.null(add))
     add <- tolower(add)
 
