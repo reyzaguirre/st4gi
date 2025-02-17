@@ -4,7 +4,7 @@
 \alias{check.pos}
 \title{Check row and column positions}
 \usage{
-check.pos(dfr, row, col, rep)
+check.pos(dfr, row = "row", col = "col", rep = "rep")
 }
 \arguments{
 \item{dfr}{The name of the data frame.}

@@ -79,8 +79,6 @@ check.data <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
 # Check data functions
 # - t1, t2: variables
 # - tx: text to print
-# - vmin: Minimum value that is valid (< vmin is invalid), use 0.1 to code <= 0 
-# - vmax: Maximum value that is valid (> vmax is invalid)
 # - ex: extreme (low, high)
 # - dcr: data frame with all data consistency rules
 # - olr: data frame with all outliers' detection rules
@@ -122,7 +120,7 @@ get.result <- function(dfr, cond, tx, print.text) {
 # - Creates tx with texts for output
 ###############################################################################
 
-run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
+run.rules <- function(dfr, im, f, rule, t1, t2, ex, print.text, crop) {
   
   output <- NULL
   
@@ -155,49 +153,51 @@ run.rules <- function(dfr, im, f, rule, t1, t2, vmin, vmax, ex, print.text) {
     
   }
   
-  # Detect out of discrete range
+  # Detect out of range
+  # Rule 4: Discrete
+  # Rule 5: Continuos
   
-  if (rule == 4) {
+  if (rule %in% 4:5) {
     
     if (exists(t1, dfr)) {
       
-      if (is.na(vmax)) {
-        cond1 <- dfr[, t1] < 0 & !is.na(dfr[, t1])       # No negative
-        cond2 <- dfr[, t1] %% 1 > 0 & !is.na(dfr[, t1])  # Integer
-        cond <- cond1 | cond2
-      } else {
-        vv <- vmin:vmax
-        if (t1 == 'bc.cc') # Exception for bc.cc
-          vv <- c(0.03, 0, 0.12, 0.02, 0.15, 1.38, 1.65, 1.5, 1.74, 1.76, 0.69, 1.17, 1.32,
-                  1.04, 4.41, 4.92, 6.12, 5.46, 3.96, 5.49, 3.03, 3.76, 4.61, 7.23, 7.76,
-                  10.5, 11.03, 12.39, 14.37)
-        cond <- !dfr[, t1] %in% vv & !is.na(dfr[, t1])
+      if (crop == 'pt') {
+        vmin <- ptont$Minimum[ptont$Label == t1]
+        vmax <- ptont$Maximum[ptont$Label == t1]
+        values <- ptont$Values[ptont$Label == t1]
       }
       
-      tx <- paste0('- Out of range values for ', t1, ':')
+      if (crop == 'sp') {
+        vmin <- spont$Minimum[spont$Label == t1]
+        vmax <- spont$Maximum[spont$Label == t1]
+        values <- spont$Values[spont$Label == t1]
+      }
       
-      im[cond, t1] <- 2
-      
-      output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
-      
-    }
-    
-  }
-  
-  # Detect out of continuous range
-  
-  if (rule == 5) {
-    
-    if (exists(t1, dfr)) {
-      
-      if (vmin == 0 & is.na(vmax))
-        cond <- dfr[, t1] < 0 & !is.na(dfr[, t1])
-      if (vmin == 0.1 & is.na(vmax))
-        cond <- dfr[, t1] <= 0 & !is.na(dfr[, t1])
-      if (vmin == 0 & !is.na(vmax))
-        cond <- (dfr[, t1] < 0 | dfr[, t1] > vmax) & !is.na(dfr[, t1])
-      if (vmin == 0.1 & !is.na(vmax))
-        cond <- (dfr[, t1] <= 0 | dfr[, t1] > vmax) & !is.na(dfr[, t1])
+      if (!is.na(values)) {
+        
+        values <- as.numeric(strsplit(values, '/')[[1]])
+        cond <- !dfr[, t1] %in% values & !is.na(dfr[, t1])
+        
+      } else {
+
+        if (rule == 4) {
+          
+          cond1 <- dfr[, t1] < vmin & !is.na(dfr[, t1])
+          cond2 <- dfr[, t1] %% 1 > 0 & !is.na(dfr[, t1])  # Integer
+          cond <- cond1 | cond2
+          
+        } 
+        
+        if (rule == 5) {
+          
+          if (is.na(vmax))
+            cond <- dfr[, t1] < vmin & !is.na(dfr[, t1])
+          if (!is.na(vmax))
+            cond <- (dfr[, t1] < vmin | dfr[, t1] > vmax) & !is.na(dfr[, t1])
+
+        }
+        
+      }
       
       tx <- paste0('- Out of range values for ', t1, ':')
       
@@ -334,7 +334,7 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
     cond.4 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr)
     
     if (cond.1 | cond.2 | cond.3 | cond.4)
-      tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$vmin[i], dcr$vmax[i], dcr$ex[i], print.text)
+      tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$ex[i], print.text, crop)
     
     if (!is.null(tmp)) {
       il <- rbind(il, tmp$il)
@@ -353,7 +353,7 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
         
         tmp <- NULL
         
-        tmp <- run.rules(dfr, im, f, 6, add[i], NA, NA, NA, j, print.text)
+        tmp <- run.rules(dfr, im, f, 6, add[i], NA, j, print.text, crop)
         
         if (!is.null(tmp)) {
           il <- rbind(il, tmp$il)
