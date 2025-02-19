@@ -38,12 +38,12 @@ convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
     
     if (crop == 'pt') {
       id <- match(colnames(dfr), ptont$Label)
-      colnames(dfr)[!is.na(id)] <- ptont$Variable.ID[id[!is.na(id)]]
+      colnames(dfr)[!is.na(id)] <- ptont$ID[id[!is.na(id)]]
     }
       
     if (crop == 'sp') {
       id <- match(colnames(dfr), spont$Label)
-      colnames(dfr)[!is.na(id)] <- spont$Variable.ID[id[!is.na(id)]]
+      colnames(dfr)[!is.na(id)] <- spont$ID[id[!is.na(id)]]
     }
     
     # Factors
@@ -72,12 +72,12 @@ convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
     # Convert
     
     if (crop == 'pt') {
-      id <- match(colnames(dfr), ptont$Variable.ID)
+      id <- match(colnames(dfr), ptont$ID)
       colnames(dfr)[!is.na(id)] <- ptont$Label[id[!is.na(id)]]
     }
     
     if (crop == 'sp') {
-      id <- match(colnames(dfr), spont$Variable.ID)
+      id <- match(colnames(dfr), spont$ID)
       colnames(dfr)[!is.na(id)] <- spont$Label[id[!is.na(id)]]
     }
 

@@ -154,7 +154,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
 #' @export
  
 pt.ont <- function() {
-  ptont[, c('Label', 'Full.Name', 'Variable.ID')]
+  ptont[, c('Label', 'Name', 'ID')]
 }
 
 #' Sweetpotato ontology
@@ -168,7 +168,7 @@ pt.ont <- function() {
 #' @export
 
 sp.ont <- function() {
-  spont[, c('Label', 'Full.Name', 'Variable.ID')]
+  spont[, c('Label', 'Name', 'ID')]
 }
 
 # Detect crop automatically
@@ -183,12 +183,12 @@ detect.crop <- function(dfr) {
 
   # Count number of coincidences
   
-  names.pt <- sum(tolower(colnames(dfr)) %in% tolower(c(ptont$Label, ptont$Variable.ID)))
-  names.sp <- sum(tolower(colnames(dfr)) %in% tolower(c(spont$Label, spont$Variable.ID)))
+  names.pt <- sum(tolower(colnames(dfr)) %in% tolower(c(ptont$Label, ptont$ID)))
+  names.sp <- sum(tolower(colnames(dfr)) %in% tolower(c(spont$Label, spont$ID)))
   
   if (names.pt == names.sp) {
-    names.pt <- names.pt / length(c(ptont$Label, ptont$Variable.ID))
-    names.sp <- names.sp / length(c(spont$Label, spont$Variable.ID))
+    names.pt <- names.pt / length(c(ptont$Label, ptont$ID))
+    names.sp <- names.sp / length(c(spont$Label, spont$ID))
   }
   
   if (names.pt > names.sp)

@@ -174,35 +174,24 @@ run.rules <- function(dfr, im, f, rule, t1, t2, ex, print.text, crop) {
       }
       
       if (!is.na(values)) {
-        
         values <- as.numeric(strsplit(values, '/')[[1]])
         cond <- !dfr[, t1] %in% values & !is.na(dfr[, t1])
-        
       } else {
-
         if (rule == 4) {
-          
           cond1 <- dfr[, t1] < vmin & !is.na(dfr[, t1])
           cond2 <- dfr[, t1] %% 1 > 0 & !is.na(dfr[, t1])  # Integer
           cond <- cond1 | cond2
-          
-        } 
-        
+        }
         if (rule == 5) {
-          
           if (is.na(vmax))
             cond <- dfr[, t1] < vmin & !is.na(dfr[, t1])
           if (!is.na(vmax))
             cond <- (dfr[, t1] < vmin | dfr[, t1] > vmax) & !is.na(dfr[, t1])
-
         }
-        
       }
       
       tx <- paste0('- Out of range values for ', t1, ':')
-      
       im[cond, t1] <- 2
-      
       output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
       
     }
@@ -227,7 +216,6 @@ run.rules <- function(dfr, im, f, rule, t1, t2, ex, print.text, crop) {
         }
         
         im[cond, t1] <- 3
-        
         output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
         
       }
@@ -266,13 +254,9 @@ out.detect <- function(dfr, im, geno, env, rep, t1, out.mod, out.max, print.text
       res$id.res <- as.numeric(row.names(res))
       
       dfr <- merge(dfr, res, all = T)[, -1]
-      
       cond <- abs(dfr[, 'residual']) > out.max & !is.na(dfr[, 'residual'])
-      
       tx <- paste0('- Outliers for ', t1, ':')
-      
       im[cond, t1] <- 3
-      
       output <- list(il = get.result(dfr, cond, tx, print.text), im = im)
       
     }
@@ -352,7 +336,6 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
       for (j in c('low', 'high')) {
         
         tmp <- NULL
-        
         tmp <- run.rules(dfr, im, f, 6, add[i], NA, j, print.text, crop)
         
         if (!is.null(tmp)) {
@@ -457,7 +440,6 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
       for (i in 1:length(add)) {
         
         tmp <- NULL
-        
         tmp <- out.detect(dfr, im, geno, env, rep, add[i], out.mod, out.max, print.text)
         
         if (!is.null(tmp)) {
