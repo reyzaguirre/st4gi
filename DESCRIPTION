@@ -2,7 +2,7 @@ Package: st4gi
 Type: Package
 Title: Statistical tools for genetic improvement
 Version: 3.3.2
-Date: 2025-02-19
+Date: 2025-02-21
 Author: Raul Eyzaguirre
 Maintainer: Raul Eyzaguirre <R.EYZAGUIRRE@CGIAR.ORG>
 Description: Statistical tools for the analysis of experimental data for crop genetic improvement.

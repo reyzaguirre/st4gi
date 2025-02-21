@@ -187,6 +187,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   #----------------------------------------------------------------------------
   
   all.vars <- ont[ont$Evaluation %in% c('pre-harvest', 'root', 'vine'), ]
+  all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
     
   if (dim(all.vars)[1] > 0 & exists(nope, dfr)) {
       
@@ -227,7 +228,8 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   #----------------------------------------------------------------------------
   
   all.vars <- ont[ont$Evaluation %in% c('root', 'vine'), ]
-
+  all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
+  
   if (dim(all.vars)[1] > 0 & exists(noph, dfr)) {
     if (dim(all.vars)[1] == 1)
       cond <- dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]) & dfr[, noph] == 0 & !is.na(dfr[, noph])
@@ -245,7 +247,8 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   #----------------------------------------------------------------------------
   
   all.vars <- ont[ont$Evaluation %in% 'root', ]
-    
+  all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
+  
   if (dim(all.vars)[1] > 0 & exists(nopr, dfr)) {
     if (dim(all.vars)[1] == 1)
       cond <- dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]) & dfr[, nopr] == 0 & !is.na(dfr[, nopr])
