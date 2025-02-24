@@ -256,7 +256,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- apply(dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]), 1, sum) > 0 & dfr[, nopr] == 0 & !is.na(dfr[, nopr])
     dfr[cond, nopr] <- NA
     if (sum(cond) > 0)
-      warning("Rows with data replaced with NA for variable", nopr, ": ",
+      warning("Rows with data replaced with NA for variable ", nopr, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
     

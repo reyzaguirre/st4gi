@@ -2,7 +2,7 @@
 #'
 #' Check that fieldbook factors and variables' names correspond with the names defined
 #' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
-#' CIP protocols. It also checks that all variables are stored as numeric.
+#' CIP protocols.
 #' @param dfr The name of the data frame.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and
 #' \code{"sp"} for sweetpotato.
@@ -26,11 +26,9 @@
 #' @return It returns:
 #' \itemize{
 #' \item The fieldbook data frame with all column names in lowercase and
-#' with some possible modifications in the names. Variables that are stored
-#' with a non-numeric class are transformed to numeric.
+#' with some possible modifications in the names.
 #' \item A list of warnings for all the column names that have been changed.
 #' \item A list of warnings for all the column names not recognized.
-#' \item A list of warnings for all the column variables that have been changed to numeric.
 #' }
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -151,22 +149,6 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   if (max(cond) == 1)
     warning("Some columns with invalid names: ", list(colnames(dfr)[cond]), call. = FALSE)
 
-  # Check variables are numeric
-  
-  nonumeric.list <- NULL
-  
-  column.class <- unlist(lapply(dfr, class))
-  
-  for(i in colnames(dfr)) {
-    if(i %in% vars & column.class[i] != "numeric") {
-      dfr[, i] <- suppressWarnings(as.numeric(as.character(dfr[, i])))
-      nonumeric.list <- c(nonumeric.list, i)
-    }
-  }
-  
-  if (!is.null(nonumeric.list))
-    warning("Some variables converted to numeric: ", list(nonumeric.list), call. = FALSE)
-  
   # Return
   
   dfr
@@ -201,31 +183,163 @@ sp.ont <- function() {
   spont[, c('Label', 'Name', 'ID')]
 }
 
-# Detect crop automatically
+#' Get column names not defined in crop ontology
+#' 
+#' Run \code{get_invalid_names()} after running \code{check.names()}
+#'
+#' Check that fieldbook factors and variables' names correspond with the names defined
+#' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
+#' CIP protocols.
+#' @param dfr The name of the data frame.
+#' @param add Additional variables. See details.
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
+#' @details Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
+#' corresponding short labels and CO numbers.
+#' Additional variables are checked for extreme values only.
+#' @return A character vector of invalid column names
+#' @author Raul Eyzaguirre.
+#' @examples
+#' \dontrun{
+#' tmp <- check.names(potatoyield)
+#' get.invalid.names(tmp)
+#' tmp <- check.names(pjpz09)
+#' get.invalid.names(tmp)
+#' }
+#' @export
 
+get.invalid.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
+  
+  crop <- match.arg(crop)
+  
+  if (crop == 'auto') {
+    crop <- detect.crop(dfr)
+    warning(crop, " crop detected", call. = FALSE)
+  }
+  
+  factors <- c("plot", "row", "col", "rep", "block",
+               "loc", "year", "season", "env",
+               "geno", 'type', "treat")
+  
+  if(crop == "pt")
+    colnames.valid <- c(factors, ptont$Label)
+  
+  if(crop == "sp")
+    colnames.valid <- c(factors, spont$Label)
+  
+  names.not.valid <- !(colnames(dfr) %in% colnames.valid)
+  
+  if (max(names.not.valid) == 1) {
+    
+    # Return
+    
+    colnames(dfr[,names.not.valid])
+    
+  } else {
+    
+    message("No invalid names")
+    
+  }
+  
+}
+
+#' Check fieldbook variables are numeric
+#'
+#' Check that fieldbook variables are stored as numeric.
+#' @param dfr The name of the data frame.
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and
+#' \code{"sp"} for sweetpotato.
+#' @details It checks that all variables recognized by \code{check.names}
+#' are stored as numeric. Non-numeric columns are transformed to numeric
+#' and the NAs values introduced by coercion are listed.
+#' @return It returns the data frame with all non-numeric variables transformed
+#' to numeric, and a list of all NAs values introduced by coercion.
+#' @author Raul Eyzaguirre.
+#' @examples
+#' tmp <- check.names(potatoyield)
+#' check.numeric(tmp)
+#' tmp <- check.names(pjpz09)
+#' check.numeric(tmp)
+#' @export
+
+check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp')) {
+  
+  # Match arguments
+  
+  crop = match.arg(crop)
+  
+  if (crop == 'auto') {
+    crop <- detect.crop(dfr)
+    warning(crop, " crop detected", call. = FALSE)
+  }
+  
+  # Check names
+  
+  dfr <- check.names(dfr, crop = crop)
+  
+  # Valid names for variables
+  
+  if (crop == 'pt')
+    vars <- ptont$Label
+  
+  if (crop == 'sp')
+    vars <- spont$Label
+  
+  # Check variables are numeric
+  
+  nonumeric.list <- NULL
+  
+  nonumeric.nas <- list()
+  
+  column.class <- unlist(lapply(dfr, class))
+  
+  for(i in colnames(dfr)) {
+    if(i %in% vars & column.class[i] != "numeric") {
+      tmp <- dfr[, i] 
+      dfr[, i] <- suppressWarnings(as.numeric(as.character(dfr[, i])))
+      nonumeric.list <- c(nonumeric.list, i)
+      tmp <- data.frame(tmp, dfr[, i])
+      tmp <- tmp[!is.na(tmp[, 1]) & is.na(tmp[, 2]), ]
+      colnames(tmp)[1] <- i
+      nonumeric.nas[[i]] <- tmp[, 1]
+    }
+  }
+  
+  if (!is.null(nonumeric.list)) {
+    print('Non-numeric values detected:')
+    print(nonumeric.nas)
+  }
+  
+  # Return
+  
+  dfr
+  
+}
+
+# Detect crop automatically
+  
 detect.crop <- function(dfr) {
-  
+    
   # Remove extra text
-  
+    
   colnames(dfr) <- gsub('.*CO_330.', 'CO_330:', colnames(dfr))
   colnames(dfr) <- gsub('.*CO_331.', 'CO_331:', colnames(dfr))
   colnames(dfr) <- gsub('.*COMP.', 'COMP:', colnames(dfr))
-
+    
   # Count number of coincidences
-  
+    
   names.pt <- sum(tolower(colnames(dfr)) %in% tolower(c(ptont$Label, ptont$ID)))
   names.sp <- sum(tolower(colnames(dfr)) %in% tolower(c(spont$Label, spont$ID)))
-  
+    
   if (names.pt == names.sp) {
     names.pt <- names.pt / length(c(ptont$Label, ptont$ID))
     names.sp <- names.sp / length(c(spont$Label, spont$ID))
   }
-  
+    
   if (names.pt > names.sp)
     crop <- 'pt'
   if (names.pt < names.sp)
     crop <- 'sp'
-  
+    
   return(crop)
-  
+    
 }

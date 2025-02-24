@@ -16,17 +16,15 @@ check.names(dfr, crop = c("auto", "pt", "sp"))
 It returns:
 \itemize{
 \item The fieldbook data frame with all column names in lowercase and
-with some possible modifications in the names. Variables that are stored
-with a non-numeric class are transformed to numeric.
+with some possible modifications in the names.
 \item A list of warnings for all the column names that have been changed.
 \item A list of warnings for all the column names not recognized.
-\item A list of warnings for all the column variables that have been changed to numeric.
 }
 }
 \description{
 Check that fieldbook factors and variables' names correspond with the names defined
 in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
-CIP protocols. It also checks that all variables are stored as numeric.
+CIP protocols.
 }
 \details{
 The following list of factors are recognized:
