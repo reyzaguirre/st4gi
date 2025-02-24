@@ -4,10 +4,25 @@
 #' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 #' CIP protocols. It also checks that all variables are stored as numeric.
 #' @param dfr The name of the data frame.
-#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @details Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and
+#' \code{"sp"} for sweetpotato.
+#' @details The following list of factors are recognized:
+#' \itemize{
+#' \item \code{plot}: The plot number.
+#' \item \code{row}: The row number in the field.
+#' \item \code{col}: The columnt number in the field.
+#' \item \code{rep}: The replication number.
+#' \item \code{block}: The block number.
+#' \item \code{loc}: The location name.
+#' \item \code{year}: The year.
+#' \item \code{season}: The season.
+#' \item \code{env}: The environment name.
+#' \item \code{geno}: The genotype name.
+#' \item \code{type}: The genotype type (clone, entry, parent, control, etc).
+#' \item \code{treat}: The treatment name.
+#' }
+#' Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
-#' Additional variables are checked for extreme values only.
 #' @return It returns:
 #' \itemize{
 #' \item The fieldbook data frame with all column names in lowercase and
@@ -38,8 +53,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   factors <- c("plot", "row", "col", "rep", "block",
                "loc", "year", "season", "env",
-               "geno", 'type', 'is_a_control',
-               "treat", "harvest")
+               "geno", 'type', "treat")
   
   # Valid names for variables
   
