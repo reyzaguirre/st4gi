@@ -44,11 +44,10 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   # Valid names for variables
   
   if (crop == 'pt')
-    vars <- c(ptont$Label, "nmtci", "nmtcii", "mtwci", "mtwcii", "fwts", "dwts",
-              "fwts1", "fwts2", "dwts1", "dwts2", "dm1", "dm2")
+    vars <- ptont$Label
   
   if (crop == 'sp')
-    vars <- c(spont$Label, 'fcol.cc')
+    vars <- spont$Label
   
   # Valid names for factors and variables
   

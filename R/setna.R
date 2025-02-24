@@ -141,7 +141,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       
     if (exists(all.vars$Label[i], dfr)) {
         
-      values <- all.vars$Values[1]
+      values <- all.vars$Values[i]
       values <- as.numeric(strsplit(values, '/')[[1]])
         
       # Check values
