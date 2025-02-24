@@ -91,8 +91,8 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   # Solve synonyms for variables
   
   if (crop == 'pt') {
-    old.names.vars <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', "protein", 'chipping')
-    new.names.vars <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   "pro",     'chip_color')
+    old.names.vars <- c("mwt", "mwmt", "stfw", "stdw", "pdm", 'avdm', 'dm_oven', 'dm_liof', 'dm_hyd', "protein", 'chipping')
+    new.names.vars <- c("atw", "atmw", "sfw",  "sdw",  "dm",  'dm',   'dm',      'dm',      'dm',     "pro",     'chip_color')
   }
   
   if (crop == 'sp') {
