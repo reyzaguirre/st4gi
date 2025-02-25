@@ -4,7 +4,7 @@
 \alias{check.freq}
 \title{Check frequencies for complete replications}
 \usage{
-check.freq(dfr, y, geno, rep, env = NULL)
+check.freq(dfr, y, geno = "geno", rep = "rep", env = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
