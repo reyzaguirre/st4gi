@@ -49,8 +49,10 @@ check.data <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
   # Check names
   
   dfr <- check.names(dfr, crop = crop)
+  
   if (crop == 'auto')
     crop <- detect.crop(dfr)
+  
   if (!is.null(add))
     add <- tolower(add)
 

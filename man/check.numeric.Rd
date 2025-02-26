@@ -4,13 +4,15 @@
 \alias{check.numeric}
 \title{Check fieldbook variables are numeric}
 \usage{
-check.numeric(dfr, crop = c("auto", "pt", "sp"))
+check.numeric(dfr, crop = c("auto", "pt", "sp"), add = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
 
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and
 \code{"sp"} for sweetpotato.}
+
+\item{add}{Additional quantitative variables.}
 }
 \value{
 It returns the data frame with all non-numeric variables transformed

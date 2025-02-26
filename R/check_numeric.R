@@ -4,6 +4,7 @@
 #' @param dfr The name of the data frame.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and
 #' \code{"sp"} for sweetpotato.
+#' @param add Additional quantitative variables.
 #' @details It checks that all variables recognized by \code{check.names}
 #' are stored as numeric. Non-numeric columns are transformed to numeric
 #' and the NAs values introduced by coercion are listed.
@@ -17,7 +18,7 @@
 #' check.numeric(tmp)
 #' @export
 
-check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp')) {
+check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL) {
   
   # Match arguments
   
@@ -39,6 +40,8 @@ check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   if (crop == 'sp')
     vars <- spont$Label
+  
+  vars <- c(vars, add)
   
   # Check variables are numeric
   
