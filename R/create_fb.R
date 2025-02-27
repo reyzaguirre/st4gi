@@ -10,7 +10,7 @@
 #' @param add Additional variables to include. Only if \code{minimal = TRUE}.
 #' @param computation Logical, if \code{TRUE}, computed variables are included.
 #' Only if \code{minimal = FALSE}. Default is \code{FALSE}.
-#' @details Only labels listed in functions \code{pt.ont()} and \code{sp.ont()}
+#' @details Only labels listed in functions \code{ptont()} and \code{spont()}
 #' are valid. Uppercase labels are converted to lowercase.
 #' @return It returns a data frame with fieldbook design and variables.
 #' @author Raul Eyzaguirre.
@@ -48,7 +48,7 @@ create.fb <- function(design, crop = c('pt', 'sp'), label = c("standard", "CO"),
     
     # Ontology
     
-    ont <- ptont
+    ont <- pt_ont
     Method <- 'PotatoMethod'
     
   }
@@ -62,7 +62,7 @@ create.fb <- function(design, crop = c('pt', 'sp'), label = c("standard", "CO"),
     
     # Ontology
     
-    ont <- spont
+    ont <- sp_ont
     Method <- 'SweetpotatoMethod'
     
   }

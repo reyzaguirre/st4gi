@@ -4,7 +4,7 @@
 #' @param file.name The name of the biomart Excel fieldbook.
 #' @param path.out Folder name and path in the working directory to save results;
 #' \code{output} if \code{NULL}.
-#' @details All labels (lower or upper case) listed in function \code{pt.ont()}
+#' @details All labels (lower or upper case) listed in function \code{ptont()}
 #' are converted to CO variable numbers.
 #' @return It returns a design file and a data file ready to upload in potatobase.
 #' @author Raul Eyzaguirre.

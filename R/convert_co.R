@@ -4,8 +4,8 @@
 #' @param dfr The name of the data frame.
 #' @param direction \code{labels.to.co} or \code{co.to.labels}
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @details All labels (lower or upper case) listed in functions \code{pt.ont()}
-#' and \code{sp.ont()} are interchanged with CO variable numbers.
+#' @details All labels (lower or upper case) listed in functions \code{ptont()}
+#' and \code{spont()} are interchanged with CO variable numbers.
 #' @return It returns a data frame with all short labels for variables interchanged
 #' with Crop Ontology variable numbers.
 #' @author Raul Eyzaguirre.
@@ -37,13 +37,13 @@ convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
     # Convert
     
     if (crop == 'pt') {
-      id <- match(colnames(dfr), ptont$Label)
-      colnames(dfr)[!is.na(id)] <- ptont$ID[id[!is.na(id)]]
+      id <- match(colnames(dfr), pt_ont$Label)
+      colnames(dfr)[!is.na(id)] <- pt_ont$ID[id[!is.na(id)]]
     }
       
     if (crop == 'sp') {
-      id <- match(colnames(dfr), spont$Label)
-      colnames(dfr)[!is.na(id)] <- spont$ID[id[!is.na(id)]]
+      id <- match(colnames(dfr), sp_ont$Label)
+      colnames(dfr)[!is.na(id)] <- sp_ont$ID[id[!is.na(id)]]
     }
     
     # Factors
@@ -72,13 +72,13 @@ convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
     # Convert
     
     if (crop == 'pt') {
-      id <- match(colnames(dfr), ptont$ID)
-      colnames(dfr)[!is.na(id)] <- ptont$Label[id[!is.na(id)]]
+      id <- match(colnames(dfr), pt_ont$ID)
+      colnames(dfr)[!is.na(id)] <- pt_ont$Label[id[!is.na(id)]]
     }
     
     if (crop == 'sp') {
-      id <- match(colnames(dfr), spont$ID)
-      colnames(dfr)[!is.na(id)] <- spont$Label[id[!is.na(id)]]
+      id <- match(colnames(dfr), sp_ont$ID)
+      colnames(dfr)[!is.na(id)] <- sp_ont$Label[id[!is.na(id)]]
     }
 
     

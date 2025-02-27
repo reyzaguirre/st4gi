@@ -24,7 +24,7 @@ Check that fieldbook factors and variables' names correspond with the names defi
 in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 CIP protocols.
 
-Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
+Type \code{ptont()} or \code{spont()} to see the list of variables and
 corresponding short labels and CO numbers.
 Additional variables are checked for extreme values only.
 }

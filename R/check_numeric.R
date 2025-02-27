@@ -36,10 +36,10 @@ check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL) {
   # Valid names for variables
   
   if (crop == 'pt')
-    vars <- ptont$Label
+    vars <- pt_ont$Label
   
   if (crop == 'sp')
-    vars <- spont$Label
+    vars <- sp_ont$Label
   
   vars <- c(vars, add)
   

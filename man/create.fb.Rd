@@ -36,7 +36,7 @@ It returns a data frame with fieldbook design and variables.
 Creates a potato and sweetpotato fieldbook with short labels or CO numbers.
 }
 \details{
-Only labels listed in functions \code{pt.ont()} and \code{sp.ont()}
+Only labels listed in functions \code{ptont()} and \code{spont()}
 are valid. Uppercase labels are converted to lowercase.
 }
 \examples{

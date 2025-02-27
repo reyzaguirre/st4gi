@@ -9,7 +9,7 @@
 #' @param print.text Logical, if \code{TRUE} the output is printed on screen.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed in
-#' functions \code{pt.ont()} and \code{sp.ont()}.
+#' functions \code{ptont()} and \code{spont()}.
 #'  
 #' Extreme low and high values are detected using the interquartile range.
 #' The rule is to detect any value out of the interval 
@@ -164,15 +164,15 @@ run.rules <- function(dfr, im, f, rule, t1, t2, ex, print.text, crop) {
     if (exists(t1, dfr)) {
       
       if (crop == 'pt') {
-        vmin <- ptont$Minimum[ptont$Label == t1]
-        vmax <- ptont$Maximum[ptont$Label == t1]
-        values <- ptont$Values[ptont$Label == t1]
+        vmin <- pt_ont$Minimum[pt_ont$Label == t1]
+        vmax <- pt_ont$Maximum[pt_ont$Label == t1]
+        values <- pt_ont$Values[pt_ont$Label == t1]
       }
       
       if (crop == 'sp') {
-        vmin <- spont$Minimum[spont$Label == t1]
-        vmax <- spont$Maximum[spont$Label == t1]
-        values <- spont$Values[spont$Label == t1]
+        vmin <- sp_ont$Minimum[sp_ont$Label == t1]
+        vmax <- sp_ont$Maximum[sp_ont$Label == t1]
+        values <- sp_ont$Values[sp_ont$Label == t1]
       }
       
       if (!is.na(values)) {

@@ -23,7 +23,7 @@ missing value (\code{NA}) according to some rules.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed in
-functions \code{pt.ont()} and \code{sp.ont()}.
+functions \code{ptont()} and \code{spont()}.
 
 Values are set to \code{NA} with the following rules:
 \itemize{

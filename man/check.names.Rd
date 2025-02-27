@@ -42,7 +42,7 @@ The following list of factors are recognized:
 \item \code{type}: The genotype type (clone, entry, parent, control, etc).
 \item \code{treat}: The treatment name.
 }
-Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
+Type \code{ptont()} or \code{spont()} to see the list of variables and
 corresponding short labels and CO numbers.
 }
 \examples{

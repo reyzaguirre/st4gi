@@ -21,7 +21,7 @@
 #' \item \code{type}: The genotype type (clone, entry, parent, control, etc).
 #' \item \code{treat}: The treatment name.
 #' }
-#' Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
+#' Type \code{ptont()} or \code{spont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
 #' @return It returns:
 #' \itemize{
@@ -56,10 +56,10 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   # Valid names for variables
   
   if (crop == 'pt')
-    vars <- ptont$Label
+    vars <- pt_ont$Label
   
   if (crop == 'sp')
-    vars <- spont$Label
+    vars <- sp_ont$Label
   
   # Valid names for factors and variables
   
@@ -162,11 +162,11 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
 #' @return It returns a data frame.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' pt.ont()
+#' ptont()
 #' @export
  
-pt.ont <- function() {
-  ptont[, c('Label', 'Name', 'ID')]
+ptont <- function() {
+  pt_ont[, c('Label', 'Name', 'ID')]
 }
 
 #' Sweetpotato ontology
@@ -176,11 +176,11 @@ pt.ont <- function() {
 #' @return It returns a data frame.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' sp.ont()
+#' spont()
 #' @export
 
-sp.ont <- function() {
-  spont[, c('Label', 'Name', 'ID')]
+spont <- function() {
+  sp_ont[, c('Label', 'Name', 'ID')]
 }
 
 #' Get column names not defined in crop ontology
@@ -193,7 +193,7 @@ sp.ont <- function() {
 #' @param dfr The name of the data frame.
 #' @param add Additional variables. See details.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @details Type \code{pt.ont()} or \code{sp.ont()} to see the list of variables and
+#' @details Type \code{ptont()} or \code{spont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
 #' Additional variables are checked for extreme values only.
 #' @return A character vector of invalid column names
@@ -221,10 +221,10 @@ get.invalid.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
                "geno", 'type', "treat")
   
   if(crop == "pt")
-    colnames.valid <- c(factors, ptont$Label)
+    colnames.valid <- c(factors, pt_ont$Label)
   
   if(crop == "sp")
-    colnames.valid <- c(factors, spont$Label)
+    colnames.valid <- c(factors, sp_ont$Label)
   
   names.not.valid <- !(colnames(dfr) %in% colnames.valid)
   
@@ -254,12 +254,12 @@ detect.crop <- function(dfr) {
     
   # Count number of coincidences
     
-  names.pt <- sum(tolower(colnames(dfr)) %in% tolower(c(ptont$Label, ptont$ID)))
-  names.sp <- sum(tolower(colnames(dfr)) %in% tolower(c(spont$Label, spont$ID)))
+  names.pt <- sum(tolower(colnames(dfr)) %in% tolower(c(pt_ont$Label, pt_ont$ID)))
+  names.sp <- sum(tolower(colnames(dfr)) %in% tolower(c(sp_ont$Label, sp_ont$ID)))
     
   if (names.pt == names.sp) {
-    names.pt <- names.pt / length(c(ptont$Label, ptont$ID))
-    names.sp <- names.sp / length(c(spont$Label, spont$ID))
+    names.pt <- names.pt / length(c(pt_ont$Label, pt_ont$ID))
+    names.sp <- names.sp / length(c(sp_ont$Label, sp_ont$ID))
   }
     
   if (names.pt > names.sp)

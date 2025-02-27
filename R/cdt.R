@@ -9,7 +9,7 @@
 #' and in number of plants per hectare if \code{method = "np"}.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed in
-#' functions \code{pt.ont()} and \code{sp.ont()}. 
+#' functions \code{ptont()} and \code{spont()}. 
 #' Conversion from kilograms per plot to tons per hectare can be done using
 #' \code{ps}, the plot size, or \code{np}, the total number of plants that can be
 #' allocated in a full hectare. In both cases computations can be adjusted by the

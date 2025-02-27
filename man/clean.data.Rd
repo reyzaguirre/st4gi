@@ -24,7 +24,7 @@ applies both in that order.
 }
 \details{
 The data frame must use the labels (lower or upper case) listed
-in functions \code{pt.ont()} and \code{sp.ont()}. Then functions \code{setna} and
+in functions \code{ptont()} and \code{spont()}. Then functions \code{setna} and
 \code{setzero} are applied to the data.
 }
 \examples{
