@@ -6,7 +6,9 @@
 #' plot size \code{"ps"} and number of plants for a full hectare \code{"np"}.
 #' See details.
 #' @param value Value for the method selected in square meters if \code{method = "ps"}
-#' and in number of plants per hectare if \code{method = "np"}.
+#' and in number of plants per hectare if \code{method = "np"}. For plots with
+#' different values in the experiment, \code{value} must be the name of the column
+#' in the data frame with the corresponding values for each plot.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' functions \code{ptont()} and \code{spont()}. 
@@ -53,6 +55,16 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
   
   if (method == "np" & crop == 'sp' & !exists("nops", dfr))
     warning("Number of plants sowed, nops, is missing.", call. = FALSE)
+  
+  # Define value if it is a column in the data frame
+  
+  if (!is.null(value) & is.character(value)) {
+    value <- dfr[, value]
+    if (method == "ps" & sum(is.na(value)) > 0)
+      warning("Plot size value is missing for some plots.", call. = FALSE)
+    if (method == "np" & sum(is.na(value)) > 0)
+      warning("Total number of plants per hectare value is missing for some plots.", call. = FALSE)
+  }
 
   # List of variables to overwrite
   
