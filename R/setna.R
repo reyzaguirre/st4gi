@@ -166,16 +166,18 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     if (exists(all.vars$Label[i], dfr)) {
         
       m <- mean(dfr[dfr[, all.vars$Label[i]] != 0, all.vars$Label[i]], na.rm = TRUE)
-      q1 <- quantile(dfr[, all.vars$Label[i]], 0.25, na.rm = TRUE)
-      q3 <- quantile(dfr[, all.vars$Label[i]], 0.75, na.rm = TRUE)
-      tol <- (m / 3 + IQR(dfr[, all.vars$Label[i]], na.rm = TRUE))
-      cond1 <- dfr[, all.vars$Label[i]] < q1 - f * tol & !is.na(dfr[, all.vars$Label[i]])
-      cond2 <- dfr[, all.vars$Label[i]] > q3 + f * tol & !is.na(dfr[, all.vars$Label[i]])
-      cond <- cond1 | cond2
-      dfr[cond, all.vars$Label[i]] <- NA
-      if (sum(cond) > 0)
-        warning("Rows with extreme values replaced with NA for variable ",
-                all.vars$Label[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
+      if (!is.nan(m)) {
+        q1 <- quantile(dfr[, all.vars$Label[i]], 0.25, na.rm = TRUE)
+        q3 <- quantile(dfr[, all.vars$Label[i]], 0.75, na.rm = TRUE)
+        tol <- (m / 3 + IQR(dfr[, all.vars$Label[i]], na.rm = TRUE))
+        cond1 <- dfr[, all.vars$Label[i]] < q1 - f * tol & !is.na(dfr[, all.vars$Label[i]])
+        cond2 <- dfr[, all.vars$Label[i]] > q3 + f * tol & !is.na(dfr[, all.vars$Label[i]])
+        cond <- cond1 | cond2
+        dfr[cond, all.vars$Label[i]] <- NA
+        if (sum(cond) > 0)
+          warning("Rows with extreme values replaced with NA for variable ",
+                  all.vars$Label[i], ": ", paste0(rownames(dfr)[cond], " "), call. = FALSE)
+      }
         
     }
     
