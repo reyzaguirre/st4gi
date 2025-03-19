@@ -79,7 +79,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
 
   # Solve synonyms for factors
 
-  old.geno <- c("accession_name", "cipno", "cip.number", 'genotype', "instn")
+  old.geno <- c("accession_name", "cipno", "cipn", "cip.number", 'genotype', "instn")
   new.geno <- rep('geno', length(old.geno))
   
   old.names.factors <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
