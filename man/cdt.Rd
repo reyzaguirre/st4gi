@@ -19,11 +19,12 @@ plot size \code{"ps"} and number of plants for a full hectare \code{"np"}.
 See details.}
 
 \item{value}{Value for the method selected in square meters if \code{method = "ps"}
-and in number of plants per hectare if \code{method = "np"}. For plots with
-different values in the experiment, \code{value} must be the name of the column
+and in number of plants per hectare if \code{method = "np"}. For data frames
+with plots with different values, \code{value} must be the name of the column
 in the data frame with the corresponding values for each plot.}
 
-\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
+\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato
+and \code{"sp"} for sweetpotato.}
 }
 \value{
 It returns a data frame with the original and derived variables.
