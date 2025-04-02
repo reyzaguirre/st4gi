@@ -64,9 +64,8 @@ check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL) {
   }
   
   if (!is.null(nonumeric.list)) {
-    print('Non-numeric values detected:')
+    print('Non-numeric values detected and corresponding variables converted to numeric:')
     print(nonumeric.nas)
-    print('Corresponding variables converted to numeric')
   }
   
   # Return

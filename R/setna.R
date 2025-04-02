@@ -188,7 +188,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   # then all those variables are set to NA
   #----------------------------------------------------------------------------
   
-  all.vars <- ont[ont$Evaluation %in% c('pre-harvest', 'root', 'vine'), ]
+  all.vars <- ont[ont$Evaluation %in% c('plants', 'root', 'vine'), ]
   all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
     
   if (dim(all.vars)[1] > 0 & exists(nope, dfr)) {
@@ -223,7 +223,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       }
       
   }
-    
+  
   #----------------------------------------------------------------------------
   # If noph = 0 and there is some data for any variable,
   # then noph is set to NA
