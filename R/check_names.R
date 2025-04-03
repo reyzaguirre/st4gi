@@ -191,11 +191,10 @@ spont <- function() {
 #' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 #' CIP protocols.
 #' @param dfr The name of the data frame.
-#' @param add Additional variables. See details.
+#' @param add Additional variables.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
 #' @details Type \code{ptont()} or \code{spont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
-#' Additional variables are checked for extreme values only.
 #' @return A character vector of invalid column names
 #' @author Raul Eyzaguirre.
 #' @examples
