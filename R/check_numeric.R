@@ -13,9 +13,9 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' tmp <- check.names(potatoyield)
-#' check.numeric(tmp)
+#' tmp <- check.numeric(tmp)
 #' tmp <- check.names(pjpz09)
-#' check.numeric(tmp)
+#' tmp <- check.numeric(tmp)
 #' @export
 
 check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL) {
@@ -52,7 +52,7 @@ check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL) {
   column.class <- unlist(lapply(dfr, class))
   
   for(i in colnames(dfr)) {
-    if(i %in% vars & column.class[i] != "numeric") {
+    if(i %in% vars & !column.class[i] %in% c("integer", "numeric")) {
       tmp <- dfr[, i] 
       dfr[, i] <- suppressWarnings(as.numeric(as.character(dfr[, i])))
       nonumeric.list <- c(nonumeric.list, i)

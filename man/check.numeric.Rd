@@ -28,9 +28,9 @@ and the NAs values introduced by coercion are listed.
 }
 \examples{
 tmp <- check.names(potatoyield)
-check.numeric(tmp)
+tmp <- check.numeric(tmp)
 tmp <- check.names(pjpz09)
-check.numeric(tmp)
+tmp <- check.numeric(tmp)
 }
 \author{
 Raul Eyzaguirre.
