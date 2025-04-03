@@ -14,5 +14,5 @@ International Potato Center, sweetpotato experimental data.
 a01data
 }
 \description{
-This data set contains data for al alpha (0,1) design.
+This data set contains data for an alpha (0,1) design.
 }

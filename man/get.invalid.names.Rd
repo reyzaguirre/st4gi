@@ -9,7 +9,7 @@ get.invalid.names(dfr, add = NULL, crop = c("auto", "pt", "sp"))
 \arguments{
 \item{dfr}{The name of the data frame.}
 
-\item{add}{Additional variables. See details.}
+\item{add}{Additional variables.}
 
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 }
@@ -26,7 +26,6 @@ CIP protocols.
 
 Type \code{ptont()} or \code{spont()} to see the list of variables and
 corresponding short labels and CO numbers.
-Additional variables are checked for extreme values only.
 }
 \examples{
 \dontrun{
