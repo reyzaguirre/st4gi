@@ -159,7 +159,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   # Extreme values (almost impossible)
   #----------------------------------------------------------------------------
   
-  all.vars <- ont[ont$Scale %in% c('continuous', 'integer') & ont$Evaluation != 'plants', ]
+  all.vars <- ont[ont$Scale %in% c('continuous', 'integer') & ont$Evaluation != 'plant', ]
 
   for (i in 1:dim(all.vars)[1])
       
@@ -188,7 +188,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   # then all those variables are set to NA
   #----------------------------------------------------------------------------
   
-  all.vars <- ont[ont$Evaluation %in% c('plants', 'root', 'vine'), ]
+  all.vars <- ont[ont$Evaluation %in% c('plant', 'root', 'vine'), ]
   all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
     
   if (dim(all.vars)[1] > 0 & exists(nope, dfr)) {
@@ -202,7 +202,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     
     dfr[cond, nope] <- NA
     if (sum(cond) > 0)
-      warning("Rows with data replaced with NA for variable ", nope, ": ",
+      warning("Rows with 0 replaced with NA for variable ", nope, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     
     # nope = 0 and no data
@@ -229,7 +229,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   # then noph is set to NA
   #----------------------------------------------------------------------------
   
-  all.vars <- ont[ont$Evaluation %in% c('root', 'vine'), ]
+  all.vars <- ont[ont$Evaluation %in% c(nopr, 'root', 'vine'), ]
   all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
   
   if (dim(all.vars)[1] > 0 & exists(noph, dfr)) {
@@ -239,7 +239,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- apply(dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]), 1, sum) > 0 & dfr[, noph] == 0 & !is.na(dfr[, noph])
     dfr[cond, noph] <- NA
     if (sum(cond) > 0)
-      warning("Rows with data replaced with NA for variable ", noph, ": ",
+      warning("Rows with 0 replaced with NA for variable ", noph, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
   
@@ -258,7 +258,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
       cond <- apply(dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]), 1, sum) > 0 & dfr[, nopr] == 0 & !is.na(dfr[, nopr])
     dfr[cond, nopr] <- NA
     if (sum(cond) > 0)
-      warning("Rows with data replaced with NA for variable ", nopr, ": ",
+      warning("Rows with 0 replaced with NA for variable ", nopr, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
     
@@ -295,7 +295,9 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
   }
     
   #----------------------------------------------------------------------------
-  # If nopr > 0 and all variables are 0, 
+  # If nopr > 0 and all variables (commercial and noncommercial) are 0, 
+  # then non-commercial yields are set to NA
+  # If some root > 0 and all variables (commercial and noncommercial) are 0, 
   # then non-commercial yields are set to NA
   #----------------------------------------------------------------------------
   
@@ -303,10 +305,24 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     cond <- dfr[, nopr] > 0 & !is.na(dfr[, nopr]) & cr.cond & ncr.cond
     dfr[cond, ncr.variables] <- NA
     if (sum(cond) > 0)
-      warning("Rows replaced with NA for variables ", nonc, " and ", ncrw, ": ",
+      warning("Rows with 0 replaced with NA for variables ", nonc, " and ", ncrw, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
-    
+
+  all.vars <- ont[ont$Evaluation %in% 'root' & !ont$Evaluation %in% c(nocr, crw, nonc, ncrw), ]
+  all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
+  
+  if (dim(all.vars)[1] > 0 & (exists(nonc, dfr) | exists(ncrw, dfr))) {
+    if (dim(all.vars)[1] == 1)
+      cond <- dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]) & ncr.cond
+    if (dim(all.vars)[1] > 1)
+      cond <- apply(dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]), 1, sum) > 0 & ncr.cond
+    dfr[cond, ncr.variables] <- NA
+    if (sum(cond) > 0)
+      warning("Rows with 0 replaced with NA for variables ", nonc, " and ", ncrw, ": ",
+              paste0(rownames(dfr)[cond], " "), call. = FALSE)
+  }
+
   #----------------------------------------------------------------------------
   # 1. If nocr = 0 and crw > 0, then nocr is set to NA
   # 2. If nocr > 0 and crw = 0, then crw is set to NA
@@ -317,13 +333,13 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     cond <- dfr[, nocr] == 0 & !is.na(dfr[, nocr]) & dfr[, crw] > 0 & !is.na(dfr[, crw])
     dfr[cond, nocr] <- NA
     if (sum(cond) > 0)
-      warning("Rows replaced with NA for variable ", nocr, ": ",
+      warning("Rows with 0 replaced with NA for variable ", nocr, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     
     cond <- dfr[, nocr] > 0 & !is.na(dfr[, nocr]) & dfr[, crw] == 0 & !is.na(dfr[, crw])
     dfr[cond, crw] <- NA
     if (sum(cond) > 0)
-      warning("Rows replaced with NA for variable ", crw, ": ",
+      warning("Rows with 0 replaced with NA for variable ", crw, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     
   }
@@ -338,13 +354,13 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp')) {
     cond <- dfr[, nonc] == 0 & !is.na(dfr[, nonc]) & dfr[, ncrw] > 0 & !is.na(dfr[, ncrw])
     dfr[cond, nonc] <- NA
     if (sum(cond) > 0)
-      warning("Rows replaced with NA for variable ", nonc, ": ",
+      warning("Rows with 0 replaced with NA for variable ", nonc, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
     
     cond <- dfr[, nonc] > 0 & !is.na(dfr[, nonc]) & dfr[, ncrw] == 0 & !is.na(dfr[, ncrw])
     dfr[cond, ncrw] <- NA
     if (sum(cond) > 0)
-      warning("Rows replaced with NA for variable ", ncrw, ": ",
+      warning("Rows with 0 replaced with NA for variable ", ncrw, ": ",
               paste0(rownames(dfr)[cond], " "), call. = FALSE)
   }
     
