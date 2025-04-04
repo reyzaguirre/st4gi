@@ -18,6 +18,8 @@
 #' \item \code{season}: The season.
 #' \item \code{env}: The environment name.
 #' \item \code{geno}: The genotype name.
+#' \item \code{is_a_control}: Identification variable for control checks (1 for 
+#' checks and NA for test genotypes).
 #' \item \code{type}: The genotype type (clone, entry, parent, control, etc).
 #' \item \code{treat}: The treatment name.
 #' }
@@ -51,7 +53,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   factors <- c("plot", "row", "col", "rep", "block",
                "loc", "year", "season", "env",
-               "geno", 'type', "treat")
+               "geno", 'is_a_control', 'type', "treat")
   
   # Valid names for variables
   
@@ -217,7 +219,7 @@ get.invalid.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
   
   factors <- c("plot", "row", "col", "rep", "block",
                "loc", "year", "season", "env",
-               "geno", 'type', "treat")
+               "geno", 'is_a_control', 'type', "treat")
   
   if(crop == "pt")
     colnames.valid <- c(factors, pt_ont$Label)
