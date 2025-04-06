@@ -166,7 +166,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
 #' @export
  
 ptont <- function() {
-  pt_ont[, c('Label', 'Name', 'ID')]
+  pt_ont[, c('ID', 'Label', 'Name')]
 }
 
 #' Sweetpotato ontology
@@ -180,7 +180,7 @@ ptont <- function() {
 #' @export
 
 spont <- function() {
-  sp_ont[, c('Label', 'Name', 'ID')]
+  sp_ont[, c('ID', 'Label', 'Name')]
 }
 
 #' Get column names not defined in crop ontology
