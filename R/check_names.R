@@ -81,11 +81,20 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
 
   # Solve synonyms for factors
 
-  old.geno <- c("accession_name", "cipno", "cipn", "cip.number", 'genotype', "instn")
+  old.geno <- c("accession_name", "cipno", "cipn", "cip.number", "genotype", "instn", "clon", "clone")
   new.geno <- rep('geno', length(old.geno))
   
-  old.names.factors <- c('plot_number', 'location', 'replication', "rep_number", "block_number", "row_number", "col_number", old.geno)
-  new.names.factors <- c('plot',        'loc',      'rep',         "rep",        "block",        "row",        "col",        new.geno)
+  old.rep <- c("replication", "rep_number")
+  new.rep <- rep('rep', length(old.rep))
+  
+  old.row <- c("row_number", "fila")
+  new.row <- rep('row', length(old.row))
+  
+  old.col <- c("col_number", "column", "columna")
+  new.col <- rep('col', length(old.col))
+
+  old.names.factors <- c('plot_number', 'location', "block_number", old.geno, old.rep, old.row, old.col)
+  new.names.factors <- c('plot',        'loc',      "block",        new.geno, new.rep, new.row, new.col)
 
   changed.names.factors <- NULL
   

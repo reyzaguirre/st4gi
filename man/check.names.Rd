@@ -39,6 +39,8 @@ The following list of factors are recognized:
 \item \code{season}: The season.
 \item \code{env}: The environment name.
 \item \code{geno}: The genotype name.
+\item \code{is_a_control}: Identification variable for control checks (1 for 
+checks and NA for test genotypes).
 \item \code{type}: The genotype type (clone, entry, parent, control, etc).
 \item \code{treat}: The treatment name.
 }
