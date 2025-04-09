@@ -90,7 +90,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   old.row <- c("row_number", "fila")
   new.row <- rep('row', length(old.row))
   
-  old.col <- c("col_number", "column", "columna")
+  old.col <- c("col_number", "column", "columna", "range")
   new.col <- rep('col', length(old.col))
 
   old.names.factors <- c('plot_number', 'location', "block_number", old.geno, old.rep, old.row, old.col)
