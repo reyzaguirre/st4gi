@@ -11,7 +11,8 @@ check.data(
   out.max = 4,
   add = NULL,
   print.text = TRUE,
-  crop = c("auto", "pt", "sp")
+  crop = c("auto", "pt", "sp"),
+  checknames = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ check.data(
 \item{print.text}{Logical, if \code{TRUE} the output is printed on screen.}
 
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
+
+\item{checknames}{Logical indicating if column names should be checked, default \code{TRUE}.}
 }
 \value{
 It returns:

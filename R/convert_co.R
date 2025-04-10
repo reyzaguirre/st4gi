@@ -4,6 +4,7 @@
 #' @param dfr The name of the data frame.
 #' @param direction \code{labels.to.co} or \code{co.to.labels}
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
+#' @param checknames Logical indicating if column names should be checked, default \code{TRUE}.
 #' @details All labels (lower or upper case) listed in functions \code{ptont()}
 #' and \code{spont()} are interchanged with CO variable numbers.
 #' @return It returns a data frame with all short labels for variables interchanged
@@ -15,7 +16,7 @@
 #' @export
 
 convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
-                       crop = c('auto', 'pt', 'sp')) {
+                       crop = c('auto', 'pt', 'sp'), checknames = TRUE) {
   
   # Match arguments
   
@@ -32,7 +33,8 @@ convert.co <- function(dfr, direction = c('labels.to.co', 'co.to.labels'),
     
     # Check names
     
-    dfr <- check.names(dfr, crop = crop)
+    if (checknames)
+      dfr <- check.names(dfr, crop = crop)
     
     # Convert
     

@@ -5,6 +5,7 @@
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and
 #' \code{"sp"} for sweetpotato.
 #' @param add Additional quantitative variables.
+#' @param checknames Logical indicating if column names should be checked, default \code{TRUE}.
 #' @details It checks that all variables recognized by \code{check.names}
 #' are stored as numeric. Non-numeric columns are transformed to numeric
 #' and the NAs values introduced by coercion are listed.
@@ -18,7 +19,7 @@
 #' tmp <- check.numeric(tmp)
 #' @export
 
-check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL) {
+check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL, checknames = TRUE) {
   
   # Match arguments
   
@@ -31,7 +32,8 @@ check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL) {
   
   # Check names
   
-  dfr <- check.names(dfr, crop = crop)
+  if (checknames)
+    dfr <- check.names(dfr, crop = crop)
   
   # Valid names for variables
   

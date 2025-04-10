@@ -8,6 +8,7 @@
 #' @param add Additional quantitative variables.
 #' @param print.text Logical, if \code{TRUE} the output is printed on screen.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
+#' @param checknames Logical indicating if column names should be checked, default \code{TRUE}.
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' functions \code{ptont()} and \code{spont()}.
 #'  
@@ -39,19 +40,22 @@
 
 check.data <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
                        out.max = 4, add = NULL, print.text = TRUE,
-                       crop = c('auto', 'pt', 'sp')) {
+                       crop = c('auto', 'pt', 'sp'), checknames = TRUE) {
   
   # Match arguments
   
   out.mod = match.arg(out.mod)
   crop = match.arg(crop)
   
+  if (crop == 'auto') {
+    crop <- detect.crop(dfr)
+    warning(crop, " crop detected", call. = FALSE)
+  }
+  
   # Check names
   
-  dfr <- check.names(dfr, crop = crop)
-  
-  if (crop == 'auto')
-    crop <- detect.crop(dfr)
+  if (checknames)
+    dfr <- check.names(dfr, crop = crop)
   
   if (!is.null(add))
     add <- tolower(add)
