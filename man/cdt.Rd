@@ -9,7 +9,7 @@ cdt(
   method = c("none", "ps", "np"),
   value = NULL,
   crop = c("auto", "pt", "sp"),
-  checknames = TRUE
+  checknames = FALSE
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ in the data frame with the corresponding values for each plot.}
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato
 and \code{"sp"} for sweetpotato.}
 
-\item{checknames}{Logical indicating if column names should be checked, default \code{TRUE}.}
+\item{checknames}{Logical indicating if column names should be checked, default \code{FALSE}.}
 }
 \value{
 It returns a data frame with the original and derived variables.

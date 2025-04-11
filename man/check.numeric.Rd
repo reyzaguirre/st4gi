@@ -4,7 +4,12 @@
 \alias{check.numeric}
 \title{Check fieldbook variables are numeric}
 \usage{
-check.numeric(dfr, crop = c("auto", "pt", "sp"), add = NULL, checknames = TRUE)
+check.numeric(
+  dfr,
+  crop = c("auto", "pt", "sp"),
+  add = NULL,
+  checknames = FALSE
+)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -14,7 +19,7 @@ check.numeric(dfr, crop = c("auto", "pt", "sp"), add = NULL, checknames = TRUE)
 
 \item{add}{Additional quantitative variables.}
 
-\item{checknames}{Logical indicating if column names should be checked, default \code{TRUE}.}
+\item{checknames}{Logical indicating if column names should be checked, default \code{FALSE}.}
 }
 \value{
 It returns the data frame with all non-numeric variables transformed

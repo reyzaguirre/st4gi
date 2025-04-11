@@ -4,14 +4,14 @@
 \alias{setzero}
 \title{Set values to \code{0} for potato and sweetpotato data.}
 \usage{
-setzero(dfr, crop = c("auto", "pt", "sp"), checknames = TRUE)
+setzero(dfr, crop = c("auto", "pt", "sp"), checknames = FALSE)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
 
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 
-\item{checknames}{Logical indicating if column names should be checked, default \code{TRUE}.}
+\item{checknames}{Logical indicating if column names should be checked, default \code{FALSE}.}
 }
 \value{
 It returns a data frame and a list of warnings with all the rows

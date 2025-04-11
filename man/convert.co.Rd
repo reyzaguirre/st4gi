@@ -8,7 +8,7 @@ convert.co(
   dfr,
   direction = c("labels.to.co", "co.to.labels"),
   crop = c("auto", "pt", "sp"),
-  checknames = TRUE
+  checknames = FALSE
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ convert.co(
 
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 
-\item{checknames}{Logical indicating if column names should be checked, default \code{TRUE}.}
+\item{checknames}{Logical indicating if column names should be checked, default \code{FALSE}.}
 }
 \value{
 It returns a data frame with all short labels for variables interchanged

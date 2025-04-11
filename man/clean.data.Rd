@@ -4,7 +4,7 @@
 \alias{clean.data}
 \title{Clean potato and sweetpotato data}
 \usage{
-clean.data(dfr, f = 10, crop = c("auto", "pt", "sp"), checknames = TRUE)
+clean.data(dfr, f = 10, crop = c("auto", "pt", "sp"), checknames = FALSE)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -13,7 +13,7 @@ clean.data(dfr, f = 10, crop = c("auto", "pt", "sp"), checknames = TRUE)
 
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
 
-\item{checknames}{Logical indicating if column names should be checked, default \code{TRUE}.}
+\item{checknames}{Logical indicating if column names should be checked, default \code{FALSE}.}
 }
 \value{
 It returns the data frame with all impossible values set to \code{NA},
