@@ -11,7 +11,7 @@
 #' in the data frame with the corresponding values for each plot.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato
 #' and \code{"sp"} for sweetpotato.
-#' @param checknames Logical indicating if column names should be checked, default \code{TRUE}.
+#' @param checknames Logical indicating if column names should be checked, default \code{FALSE}.
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' functions \code{ptont()} and \code{spont()}. 
 #' Conversion from kilograms per plot to tons per hectare can be done using
@@ -27,7 +27,7 @@
 #' @export
 
 cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
-                   crop = c('auto', 'pt', 'sp'), checknames = TRUE) {
+                   crop = c('auto', 'pt', 'sp'), checknames = FALSE) {
   
   # Match arguments
   

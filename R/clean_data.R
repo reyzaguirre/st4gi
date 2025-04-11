@@ -5,7 +5,7 @@
 #' @param dfr The name of the data frame.
 #' @param f Factor for extreme values detection.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @param checknames Logical indicating if column names should be checked, default \code{TRUE}.
+#' @param checknames Logical indicating if column names should be checked, default \code{FALSE}.
 #' @details The data frame must use the labels (lower or upper case) listed
 #' in functions \code{ptont()} and \code{spont()}. Then functions \code{setna} and
 #' \code{setzero} are applied to the data.
@@ -27,7 +27,7 @@
 #' @importFrom stats IQR quantile
 #' @export
 
-clean.data <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp'), checknames = TRUE) {
+clean.data <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp'), checknames = FALSE) {
   
   # Match arguments
   
@@ -41,9 +41,9 @@ clean.data <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp'), checknames = T
   if (checknames)
     dfr <- check.names(dfr, crop = crop)
   
-  dfr <- setna(dfr, f, crop = crop, checknames = FALSE)
+  dfr <- setna(dfr, f, crop = crop)
   
-  dfr <- setzero(dfr, crop = crop, checknames = FALSE)
+  dfr <- setzero(dfr, crop = crop)
   
   # Return
   

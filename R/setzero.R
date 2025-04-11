@@ -3,7 +3,7 @@
 #' Set values to \code{0} for variables at harvest.
 #' @param dfr The name of the data frame.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @param checknames Logical indicating if column names should be checked, default \code{TRUE}.
+#' @param checknames Logical indicating if column names should be checked, default \code{FALSE}.
 #' @details This function sets values to \code{0} for all variables at harvest
 #' according to some rules.
 #' 
@@ -51,7 +51,7 @@
 #' setzero(dfr)
 #' @export
 
-setzero <- function(dfr, crop = c('auto', 'pt', 'sp'), checknames = TRUE) {
+setzero <- function(dfr, crop = c('auto', 'pt', 'sp'), checknames = FALSE) {
 
   # Match arguments
   
