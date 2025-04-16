@@ -4,7 +4,7 @@
 \alias{check.pos}
 \title{Check row and column positions}
 \usage{
-check.pos(dfr, row = "row", col = "col", rep = "rep")
+check.pos(dfr, row = "row", col = "col", rep = NULL)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -16,12 +16,15 @@ check.pos(dfr, row = "row", col = "col", rep = "rep")
 \item{rep}{The name of the column that identifies the replications.}
 }
 \value{
-For each replication a list of plots (unique row and column position)
+A list of plots (unique row and column position)
 with more than one genotype.
 }
 \description{
 This function checks that there is only one genotype in each row and column position.
-This is a wrapper for \code{ck.pos} function.
+}
+\details{
+If \code{rep} is not \code{NULL}, then it checks
+positions for each replication.
 }
 \examples{
 # Create a design
