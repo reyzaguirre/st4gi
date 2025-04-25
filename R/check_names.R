@@ -136,23 +136,6 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     warning("Variables' names ", list(old.names.vars[cond]), " changed to ", list(new.names.vars[cond]), call. = FALSE)
   }
   
-  # Create dm variable for potato
-  
-  if (exists('dm_hyd', dfr) & !exists('dm', dfr)) {
-    dfr[, 'dm'] <- dfr[, 'dm_hyd']
-    warning("dm variable has been created from dm_hyd", call. = FALSE)
-  }
-    
-  if (exists('dm_liof', dfr) & !exists('dm', dfr)) {
-    dfr[, 'dm'] <- dfr[, 'dm_liof']
-    warning("dm variable has been created from dm_liof", call. = FALSE)
-  }
-  
-  if (exists('dm_oven', dfr) & !exists('dm', dfr)) {
-    dfr[, 'dm'] <- dfr[, 'dm_oven']
-    warning("dm variable has been created from dm_oven", call. = FALSE)
-  }
-  
   # Names not valid
   
   cond <- !(colnames(dfr) %in% colnames.valid)
