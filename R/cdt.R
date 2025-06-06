@@ -9,8 +9,8 @@
 #' and in number of plants per hectare if \code{method = "np"}. For data frames
 #' with plots with different values, \code{value} must be the name of the column
 #' in the data frame with the corresponding values for each plot.
-#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato
-#' and \code{"sp"} for sweetpotato.
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato,
+#' \code{"sp"} for sweetpotato and \code{"uk"} for unknown.
 #' @param checknames Logical indicating if column names should be checked, default \code{FALSE}.
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' functions \code{ptont()} and \code{spont()}. 
@@ -27,18 +27,16 @@
 #' @export
 
 cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
-                   crop = c('auto', 'pt', 'sp'), checknames = FALSE) {
+                   crop = c('auto', 'pt', 'sp', 'uk'), checknames = FALSE) {
   
   # Match arguments
   
   method = match.arg(method)
   crop = match.arg(crop)
   
-  if (crop == 'auto') {
+  if (crop == 'auto')
     crop <- detect.crop(dfr)
-    warning(crop, " crop detected", call. = FALSE)
-  }
-  
+
   # Check names
   
   if (checknames)

@@ -6,7 +6,7 @@
 \usage{
 check.numeric(
   dfr,
-  crop = c("auto", "pt", "sp"),
+  crop = c("auto", "pt", "sp", "uk"),
   add = NULL,
   checknames = FALSE
 )
@@ -14,8 +14,8 @@ check.numeric(
 \arguments{
 \item{dfr}{The name of the data frame.}
 
-\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and
-\code{"sp"} for sweetpotato.}
+\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato,
+\code{"sp"} for sweetpotato and \code{"uk"} for unknown.}
 
 \item{add}{Additional quantitative variables.}
 

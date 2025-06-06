@@ -7,7 +7,8 @@
 #' @param out.max Threshold for outliers' detection.
 #' @param add Additional quantitative variables.
 #' @param print.text Logical, if \code{TRUE} the output is printed on screen.
-#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato,
+#' \code{"sp"} for sweetpotato and \code{"uk"} for unknown.
 #' @param checknames Logical indicating if column names should be checked, default \code{FALSE}.
 #' @details The data frame must use the labels (lower or upper case) listed in
 #' functions \code{ptont()} and \code{spont()}.
@@ -40,18 +41,16 @@
 
 check.data <- function(dfr, f = 5, out.mod = c("none", "rcbd", "met"),
                        out.max = 4, add = NULL, print.text = TRUE,
-                       crop = c('auto', 'pt', 'sp'), checknames = FALSE) {
+                       crop = c('auto', 'pt', 'sp', 'uk'), checknames = FALSE) {
   
   # Match arguments
   
   out.mod = match.arg(out.mod)
   crop = match.arg(crop)
   
-  if (crop == 'auto') {
+  if (crop == 'auto')
     crop <- detect.crop(dfr)
-    warning(crop, " crop detected", call. = FALSE)
-  }
-  
+
   # Check names
   
   if (checknames)
@@ -312,27 +311,31 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
   if (crop == 'sp')
     dcr <- dc_rules[dc_rules$crop == 'sp', ]
   
-  for (i in 1:nrow(dcr)) {
-    
-    tmp <- NULL
-    
-    # Conditions to run rules
-    
-    cond.1 <- is.na(dcr$excep1[i])
-    cond.2 <- !is.na(dcr$excep1[i]) & is.na(dcr$excep2[i]) & !exists(dcr$excep1[i], dfr)
-    cond.3 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr)
-    cond.4 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr)
-    
-    if (cond.1 | cond.2 | cond.3 | cond.4)
-      tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$ex[i], print.text, crop)
-    
-    if (!is.null(tmp)) {
-      il <- rbind(il, tmp$il)
-      im <- tmp$im
+  if (crop %in% c('pt', 'sp')) {
+
+    for (i in 1:nrow(dcr)) {
+      
+      tmp <- NULL
+      
+      # Conditions to run rules
+      
+      cond.1 <- is.na(dcr$excep1[i])
+      cond.2 <- !is.na(dcr$excep1[i]) & is.na(dcr$excep2[i]) & !exists(dcr$excep1[i], dfr)
+      cond.3 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr)
+      cond.4 <- !is.na(dcr$excep1[i]) & !is.na(dcr$excep2[i]) & !is.na(dcr$excep3[i]) & !exists(dcr$excep1[i], dfr) & !exists(dcr$excep2[i], dfr) & !exists(dcr$excep3[i], dfr)
+      
+      if (cond.1 | cond.2 | cond.3 | cond.4)
+        tmp <- run.rules(dfr, im, f, dcr$rule[i], dcr$t1[i], dcr$t2[i], dcr$ex[i], print.text, crop)
+      
+      if (!is.null(tmp)) {
+        il <- rbind(il, tmp$il)
+        im <- tmp$im
+      }
+      
     }
     
   }
-  
+
   # Extreme values detection for additional variables
   
   if (!is.null(add)) {
@@ -421,20 +424,24 @@ rules <- function(dfr, im, f, out.mod, out.max, add, print.text, crop) {
   
   if (oc == 1) {
     
-    for (i in 1:nrow(olr)) {
+    if (crop %in% c('pt', 'sp')) {
       
-      tmp <- NULL
-      
-      if (is.na(olr$excep1[i]))
-        tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
-      
-      if (!is.na(olr$excep1[i]))
-        if (!exists(olr$excep1[i], dfr))
+      for (i in 1:nrow(olr)) {
+        
+        tmp <- NULL
+        
+        if (is.na(olr$excep1[i]))
           tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
-      
-      if (!is.null(tmp)) {
-        il <- rbind(il, tmp$il)
-        im <- tmp$im
+        
+        if (!is.na(olr$excep1[i]))
+          if (!exists(olr$excep1[i], dfr))
+            tmp <- out.detect(dfr, im, geno, env, rep, olr$t1[i], out.mod, out.max, print.text)
+        
+        if (!is.null(tmp)) {
+          il <- rbind(il, tmp$il)
+          im <- tmp$im
+        }
+        
       }
       
     }

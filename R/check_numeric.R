@@ -2,8 +2,8 @@
 #'
 #' Check that fieldbook variables are stored as numeric.
 #' @param dfr The name of the data frame.
-#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and
-#' \code{"sp"} for sweetpotato.
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato,
+#' \code{"sp"} for sweetpotato and \code{"uk"} for unknown.
 #' @param add Additional quantitative variables.
 #' @param checknames Logical indicating if column names should be checked, default \code{FALSE}.
 #' @details It checks that all variables recognized by \code{check.names}
@@ -19,17 +19,16 @@
 #' tmp <- check.numeric(tmp)
 #' @export
 
-check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL, checknames = FALSE) {
+check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk'),
+                          add = NULL, checknames = FALSE) {
   
   # Match arguments
   
   crop = match.arg(crop)
   
-  if (crop == 'auto') {
+  if (crop == 'auto')
     crop <- detect.crop(dfr)
-    warning(crop, " crop detected", call. = FALSE)
-  }
-  
+
   # Check names
   
   if (checknames)
@@ -43,6 +42,9 @@ check.numeric <- function(dfr, crop = c('auto', 'pt', 'sp'), add = NULL, checkna
   if (crop == 'sp')
     vars <- sp_ont$Label
   
+  if (crop == 'uk')
+    vars <- NA
+
   vars <- c(vars, add)
   
   # Check variables are numeric

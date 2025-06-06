@@ -31,8 +31,8 @@ matrices with data from one or several environments.
 If \code{env = NULL} data from only one environment is considered.
 If \code{rep = NULL} data from only one replication is considered without
 blocking structure.
-If \code{method = 1} genotypic covariances are computed from BLUEs and
-phenotypic covariances are computed from BLUPs.
+If \code{method = 1} phenotypic covariances are computed from BLUEs and
+genotypic covariances are computed from BLUPs.
 If \code{method = 2} the covariances between each pair of variables are computed
 using the variances of each variable and the variances of the sum.
 If \code{method = 3} the genotypic covariances are approximated using the average

@@ -4,14 +4,15 @@
 \alias{get.invalid.names}
 \title{Get column names not defined in crop ontology}
 \usage{
-get.invalid.names(dfr, add = NULL, crop = c("auto", "pt", "sp"))
+get.invalid.names(dfr, add = NULL, crop = c("auto", "pt", "sp", "uk"))
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
 
 \item{add}{Additional variables.}
 
-\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
+\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato,
+\code{"sp"} for sweetpotato and \code{"uk"} for unknown.}
 }
 \value{
 A character vector of invalid column names

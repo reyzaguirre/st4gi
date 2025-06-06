@@ -8,7 +8,7 @@ cdt(
   dfr,
   method = c("none", "ps", "np"),
   value = NULL,
-  crop = c("auto", "pt", "sp"),
+  crop = c("auto", "pt", "sp", "uk"),
   checknames = FALSE
 )
 }
@@ -24,8 +24,8 @@ and in number of plants per hectare if \code{method = "np"}. For data frames
 with plots with different values, \code{value} must be the name of the column
 in the data frame with the corresponding values for each plot.}
 
-\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato
-and \code{"sp"} for sweetpotato.}
+\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato,
+\code{"sp"} for sweetpotato and \code{"uk"} for unknown.}
 
 \item{checknames}{Logical indicating if column names should be checked, default \code{FALSE}.}
 }

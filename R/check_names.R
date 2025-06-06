@@ -4,8 +4,8 @@
 #' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
 #' CIP protocols.
 #' @param dfr The name of the data frame.
-#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and
-#' \code{"sp"} for sweetpotato.
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato,
+#' \code{"sp"} for sweetpotato and \code{"uk"} for unknown.
 #' @details The following list of factors are recognized:
 #' \itemize{
 #' \item \code{plot}: The plot number.
@@ -38,17 +38,15 @@
 #' check.names(pjpz09)
 #' @export
 
-check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
+check.names <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk')) {
   
   # Match arguments
   
   crop = match.arg(crop)
   
-  if (crop == 'auto') {
+  if (crop == 'auto')
     crop <- detect.crop(dfr)
-    warning(crop, " crop detected", call. = FALSE)
-  }
-    
+
   # Valid names for factors
   
   factors <- c("plot", "row", "col", "rep", "block",
@@ -62,6 +60,9 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
   if (crop == 'sp')
     vars <- sp_ont$Label
+  
+  if (crop == 'uk')
+    vars <- NULL
   
   # Valid names for factors and variables
   
@@ -121,21 +122,25 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
     old.names.vars <- c("trwd",  "biomd",  "cythaaj",  "rythaaj",  "dmryaj",  'vwd',  "fythaaj",  "dmvyaj",  "bythaaj",  "dmbyaj")
     new.names.vars <- c("trw.d", "biom.d", "cytha.aj", "rytha.aj", "dmry.aj", 'vw.d', "fytha.aj", "dmvy.aj", "bytha.aj", "dmby.aj")
   }
-
-  changed.names.vars <- NULL 
   
-  for (i in 1:length(old.names.vars)) {
-    if (exists(old.names.vars[i], dfr) & !exists(new.names.vars[i], dfr)) {
-      changed.names.vars <- c(changed.names.vars, old.names.vars[i])
-      colnames(dfr)[colnames(dfr) == old.names.vars[i]] <- new.names.vars[i]
+  if (crop != 'uk') {
+    
+    changed.names.vars <- NULL 
+    
+    for (i in 1:length(old.names.vars)) {
+      if (exists(old.names.vars[i], dfr) & !exists(new.names.vars[i], dfr)) {
+        changed.names.vars <- c(changed.names.vars, old.names.vars[i])
+        colnames(dfr)[colnames(dfr) == old.names.vars[i]] <- new.names.vars[i]
+      }
     }
-  }  
-  
-  if (!is.null(changed.names.vars)) {
-    cond <- old.names.vars %in% changed.names.vars
-    warning("Variables' names ", list(old.names.vars[cond]), " changed to ", list(new.names.vars[cond]), call. = FALSE)
+    
+    if (!is.null(changed.names.vars)) {
+      cond <- old.names.vars %in% changed.names.vars
+      warning("Variables' names ", list(old.names.vars[cond]), " changed to ", list(new.names.vars[cond]), call. = FALSE)
+    }
+    
   }
-  
+    
   # Names not valid
   
   cond <- !(colnames(dfr) %in% colnames.valid)
@@ -149,6 +154,66 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
   
 }
 
+#' Get column names not defined in crop ontology
+#' 
+#' Run \code{get_invalid_names()} after running \code{check.names()}
+#'
+#' Check that fieldbook factors and variables' names correspond with the names defined
+#' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
+#' CIP protocols.
+#' @param dfr The name of the data frame.
+#' @param add Additional variables.
+#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato,
+#' \code{"sp"} for sweetpotato and \code{"uk"} for unknown.
+#' @details Type \code{ptont()} or \code{spont()} to see the list of variables and
+#' corresponding short labels and CO numbers.
+#' @return A character vector of invalid column names
+#' @author Raul Eyzaguirre.
+#' @examples
+#' \dontrun{
+#' tmp <- check.names(potatoyield)
+#' get.invalid.names(tmp)
+#' tmp <- check.names(pjpz09)
+#' get.invalid.names(tmp)
+#' }
+#' @export
+
+get.invalid.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp', 'uk')) {
+  
+  crop <- match.arg(crop)
+  
+  if (crop == 'auto')
+    crop <- detect.crop(dfr)
+
+  factors <- c("plot", "row", "col", "rep", "block",
+               "loc", "year", "season", "env",
+               "geno", 'is_a_control', 'type', "treat")
+  
+  if(crop == "pt")
+    colnames.valid <- c(factors, pt_ont$Label)
+  
+  if(crop == "sp")
+    colnames.valid <- c(factors, sp_ont$Label)
+  
+  if(crop == "uk")
+    colnames.valid <- factors
+  
+  names.not.valid <- !(colnames(dfr) %in% colnames.valid)
+  
+  if (max(names.not.valid) == 1) {
+    
+    # Return
+    
+    colnames(dfr)[names.not.valid]
+    
+  } else {
+    
+    message("No invalid names")
+    
+  }
+  
+}
+
 #' Potato ontology
 #'
 #' Lists all variables in potato ontology used by \code{st4gi} package.
@@ -158,7 +223,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp')) {
 #' @examples
 #' ptont()
 #' @export
- 
+
 ptont <- function() {
   pt_ont[, c('ID', 'Label', 'Name')]
 }
@@ -175,64 +240,6 @@ ptont <- function() {
 
 spont <- function() {
   sp_ont[, c('ID', 'Label', 'Name')]
-}
-
-#' Get column names not defined in crop ontology
-#' 
-#' Run \code{get_invalid_names()} after running \code{check.names()}
-#'
-#' Check that fieldbook factors and variables' names correspond with the names defined
-#' in crop ontology \url{https://cropontology.org} and in the potato and sweetpotato
-#' CIP protocols.
-#' @param dfr The name of the data frame.
-#' @param add Additional variables.
-#' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.
-#' @details Type \code{ptont()} or \code{spont()} to see the list of variables and
-#' corresponding short labels and CO numbers.
-#' @return A character vector of invalid column names
-#' @author Raul Eyzaguirre.
-#' @examples
-#' \dontrun{
-#' tmp <- check.names(potatoyield)
-#' get.invalid.names(tmp)
-#' tmp <- check.names(pjpz09)
-#' get.invalid.names(tmp)
-#' }
-#' @export
-
-get.invalid.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp')) {
-  
-  crop <- match.arg(crop)
-  
-  if (crop == 'auto') {
-    crop <- detect.crop(dfr)
-    warning(crop, " crop detected", call. = FALSE)
-  }
-  
-  factors <- c("plot", "row", "col", "rep", "block",
-               "loc", "year", "season", "env",
-               "geno", 'is_a_control', 'type', "treat")
-  
-  if(crop == "pt")
-    colnames.valid <- c(factors, pt_ont$Label)
-  
-  if(crop == "sp")
-    colnames.valid <- c(factors, sp_ont$Label)
-  
-  names.not.valid <- !(colnames(dfr) %in% colnames.valid)
-  
-  if (max(names.not.valid) == 1) {
-    
-    # Return
-    
-    colnames(dfr[,names.not.valid])
-    
-  } else {
-    
-    message("No invalid names")
-    
-  }
-  
 }
 
 # Detect crop automatically
@@ -255,10 +262,18 @@ detect.crop <- function(dfr) {
     names.sp <- names.sp / length(c(sp_ont$Label, sp_ont$ID))
   }
     
-  if (names.pt > names.sp)
+  if (names.pt > names.sp) {
     crop <- 'pt'
-  if (names.pt < names.sp)
+    warning("pt crop detected", call. = FALSE)
+  }
+  if (names.pt < names.sp) {
     crop <- 'sp'
+    warning("sp crop detected", call. = FALSE)
+  }
+  if (names.pt == names.sp) {
+    crop <- 'uk'
+    warning("Unknown crop", call. = FALSE)
+  }
     
   return(crop)
     

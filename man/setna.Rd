@@ -4,14 +4,15 @@
 \alias{setna}
 \title{Set values to \code{NA} for potato and sweetpotato data.}
 \usage{
-setna(dfr, f = 10, crop = c("auto", "pt", "sp"), checknames = FALSE)
+setna(dfr, f = 10, crop = c("auto", "pt", "sp", "uk"), checknames = FALSE)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
 
 \item{f}{Factor for extreme values detection. See details.}
 
-\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato and \code{"sp"} for sweetpotato.}
+\item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato,
+\code{"sp"} for sweetpotato and \code{"uk"} for unknown.}
 
 \item{checknames}{Logical indicating if column names should be checked, default \code{FALSE}.}
 }
