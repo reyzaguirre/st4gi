@@ -320,7 +320,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp', 'uk'),
       if (dim(all.vars)[1] == 1)
         cond <- dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]) & ncr.cond
       if (dim(all.vars)[1] > 1)
-        cond <- apply(dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]), 1, sum) > 0 & ncr.cond
+        cond <- apply(dfr[, all.vars$Label] > 0 & !is.na(dfr[, all.vars$Label]), 1, sum) > 0 & ncr.cond & cr.cond
       dfr[cond, ncr.variables] <- NA
       if (sum(cond) > 0)
         warning("Rows with 0 replaced with NA for variables ", nonc, " and ", ncrw, ": ",
