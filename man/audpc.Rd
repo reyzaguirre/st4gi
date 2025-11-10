@@ -4,7 +4,7 @@
 \alias{audpc}
 \title{Area Under the Disease Progress Curve}
 \usage{
-audpc(dfr, evals, dates)
+audpc(dfr, evals, dates, na = FALSE)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -12,6 +12,9 @@ audpc(dfr, evals, dates)
 \item{evals}{The names of the columns for the evaluations.}
 
 \item{dates}{A vector with the dates of evaluation.}
+
+\item{na}{Logical, if \code{TRUE}, \code{NA} values are replace with the 
+contiguous values. Default is \code{FALSE}.}
 }
 \value{
 It returns the original data frame with added columns for AUDPC and rAUDPC.

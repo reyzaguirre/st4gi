@@ -4,6 +4,8 @@
 #' @param dfr The name of the data frame.
 #' @param evals The names of the columns for the evaluations.
 #' @param dates A vector with the dates of evaluation.
+#' @param na Logical, if \code{TRUE}, \code{NA} values are replace with the 
+#' contiguous values. Default is \code{FALSE}.
 #' @details Evaluations are subjective ranging from 0 (no disease) to 100 (full disease).
 #' Dates should follow the format YYYY-MM-DD.
 #' \code{audpc} is expressed in days x % and \code{raudpc} as a proportion.
@@ -18,7 +20,7 @@
 #' head(tmp)              
 #' @export
 
-audpc <- function(dfr, evals, dates) {
+audpc <- function(dfr, evals, dates, na = FALSE) {
 
   # Check number of evals and dates
   
@@ -44,7 +46,10 @@ audpc <- function(dfr, evals, dates) {
   for (i in 2:nd) {
     
     days <- as.numeric(dates[i] - dates[i - 1])
-    dfr$audpc <- dfr$audpc + (dfr[, evals[i - 1]] + dfr[, evals[i]]) / 2 * days
+    if (!na)
+      dfr$audpc <- dfr$audpc + (dfr[, evals[i - 1]] + dfr[, evals[i]]) / 2 * days
+    if (na)
+      dfr$audpc <- dfr$audpc + apply(dfr[, evals[(i - 1):i]], 1, mean, na.rm = TRUE) * days
     
   }
   
