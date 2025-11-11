@@ -38,7 +38,34 @@ audpc <- function(dfr, evals, dates, na = FALSE) {
     if (dates[i] <= dates[i - 1])
       stop("Dates must be ordered.")
   }
+  
+  # Check if there are missing values and report
+  
+  if (sum(is.na(dfr[, evals])) > 0) {
     
+    report.table <- data.frame(evaluation = evals,
+                               date = dates,
+                               n.missing = NA,
+                               p.missing = NA)
+    
+    n.total <- dim(dfr)[1]
+    
+    for (i in 1:nd) {
+      
+      report.table$n.missing[i] <- sum(is.na(dfr[, evals[i]]))
+      report.table$p.missing[i] <- round(report.table$n.missing[i] / n.total, 4)
+      
+    }
+    
+    cat('----------------------------------------\n')
+    cat('There are missing values in evaluations','\n')
+    cat('----------------------------------------\n')
+    cat('\n')
+    print(report.table)
+    cat('\n')
+
+  }
+  
   # Compute AUDPC
   
   dfr$audpc <- 0
@@ -46,13 +73,25 @@ audpc <- function(dfr, evals, dates, na = FALSE) {
   for (i in 2:nd) {
     
     days <- as.numeric(dates[i] - dates[i - 1])
+    
+    # Compute audpc without NAs
+    
     if (!na)
       dfr$audpc <- dfr$audpc + (dfr[, evals[i - 1]] + dfr[, evals[i]]) / 2 * days
+    
+    # Compute audpc with NAs
+    
     if (na)
       dfr$audpc <- dfr$audpc + apply(dfr[, evals[(i - 1):i]], 1, mean, na.rm = TRUE) * days
-    
+      
   }
   
+  if (sum(is.na(dfr$audpc)) > 0) {
+    
+    cat(sum(is.na(dfr$audpc)), 'entries cannot be computed\n')
+    
+  }
+    
   total.days <- as.numeric(dates[nd] - dates[1])
   
   dfr$raudpc <- dfr$audpc / total.days / 100
