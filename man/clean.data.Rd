@@ -32,7 +32,7 @@ in functions \code{ptont()} and \code{spont()}. Then functions \code{setna} and
 }
 \examples{
 dfr <- data.frame(mtwp = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),
-                  dm = c(21, 23, 105, 24, -3, 30, NA),
+                  dm_oven = c(21, 23, 105, 24, -3, 30, NA),
                   nmtp = c(1.3, 10, 11, NA, 2, 5, NA))
 clean.data(dfr)
 dfr <- data.frame(crw = c(2.2, 5.0, 3.6, 12, 1600, -4, 0),

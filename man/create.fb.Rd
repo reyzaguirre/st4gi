@@ -46,7 +46,7 @@ create.fb(book, 'pt')
 # Add additional variables
 create.fb(book, 'pt', add = c('fedw', 'zndw'))
 # Get the fieldbook with CO numbers
-create.fb(book, 'pt', 'CO', add = c('dm', 'fedw', 'zndw'))
+create.fb(book, 'pt', 'CO', add = c('dm_oven', 'fedw', 'zndw'))
 # Get fieldbook with minimal set of variables for sweetpotato
 create.fb(book, 'sp')
 # Add additional variables

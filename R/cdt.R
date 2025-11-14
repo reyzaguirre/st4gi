@@ -151,30 +151,30 @@ cdt <- function(dfr, method = c("none", "ps", "np"), value = NULL,
     # General computations for dry weight of tubers
     
     if (exists("dwts1", dfr) & exists("fwts1", dfr)) {
-      if ("dm1" %in% on)
-        ow <- c(ow, "dm1")
-      dfr$dm1 <- dfr$dwts1 / dfr$fwts1 * 100
-      dfr$dm1[dfr$fwts1 == 0] <- NA
+      if ("dm_oven1" %in% on)
+        ow <- c(ow, "dm_oven1")
+      dfr$dm_oven1 <- dfr$dwts1 / dfr$fwts1 * 100
+      dfr$dm_oven1[dfr$fwts1 == 0] <- NA
     }
     
     if (exists("dwts2", dfr) & exists("fwts2", dfr)) {
-      if ("dm2" %in% on)
-        ow <- c(ow, "dm2")
-      dfr$dm2 <- dfr$dwts2 / dfr$fwts2 * 100
-      dfr$dm2[dfr$fwts2 == 0] <- NA
+      if ("dm_oven2" %in% on)
+        ow <- c(ow, "dm_oven2")
+      dfr$dm_oven2 <- dfr$dwts2 / dfr$fwts2 * 100
+      dfr$dm_oven2[dfr$fwts2 == 0] <- NA
     }
     
-    if (exists("dm1", dfr) & exists("dm2", dfr)) {
-      if ("dm" %in% on)
-        ow <- c(ow, "dm")
-      dfr$dm <- apply(dfr[, c("dm1", "dm2")], 1, mean, na.rm = TRUE)
+    if (exists("dm_oven1", dfr) & exists("dm_oven2", dfr)) {
+      if ("dm_oven" %in% on)
+        ow <- c(ow, "dm_oven")
+      dfr$dm_oven <- apply(dfr[, c("dm_oven1", "dm_oven2")], 1, mean, na.rm = TRUE)
     }
     
     if (exists("dwts", dfr) & exists("fwts", dfr)) {
-      if ("dm" %in% on)
-        ow <- c(ow, "dm")
-      dfr$dm <- dfr$dwts / dfr$fwts * 100
-      dfr$dm[dfr$fwts == 0] <- NA
+      if ("dm_oven" %in% on)
+        ow <- c(ow, "dm_oven")
+      dfr$dm_oven <- dfr$dwts / dfr$fwts * 100
+      dfr$dm_oven[dfr$fwts == 0] <- NA
     }
     
     # General computation for harvest index
