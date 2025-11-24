@@ -30,10 +30,13 @@ CIP protocols.
 The following list of factors are recognized:
 \itemize{
 \item \code{plot}: The plot number.
+\item \code{subplot}: The subplot number.
+\item \code{subsubplot}: The subsubplot number.
 \item \code{row}: The row number in the field.
 \item \code{col}: The columnt number in the field.
 \item \code{rep}: The replication number.
 \item \code{block}: The block number.
+\item \code{subblock}: The subblock (incomplete block) number.
 \item \code{loc}: The location name.
 \item \code{year}: The year.
 \item \code{season}: The season.

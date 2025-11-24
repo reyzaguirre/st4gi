@@ -35,6 +35,8 @@ Default is the number of levels of the last factor.
 A <- paste0("a", 1:4)
 B <- paste0("b", 1:3)
 cr.spld(c("A", "B"), list(A, B), 3)
+C <- paste0("c", 1:2)
+cr.spld(c("A", "B", "C"), list(A, B, C), 3)
 }
 \author{
 Raul Eyzaguirre.

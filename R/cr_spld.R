@@ -18,6 +18,8 @@
 #' A <- paste0("a", 1:4)
 #' B <- paste0("b", 1:3)
 #' cr.spld(c("A", "B"), list(A, B), 3)
+#' C <- paste0("c", 1:2)
+#' cr.spld(c("A", "B", "C"), list(A, B, C), 3)
 #' @export
 
 cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no")) {

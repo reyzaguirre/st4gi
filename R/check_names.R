@@ -9,10 +9,13 @@
 #' @details The following list of factors are recognized:
 #' \itemize{
 #' \item \code{plot}: The plot number.
+#' \item \code{subplot}: The subplot number.
+#' \item \code{subsubplot}: The subsubplot number.
 #' \item \code{row}: The row number in the field.
 #' \item \code{col}: The columnt number in the field.
 #' \item \code{rep}: The replication number.
 #' \item \code{block}: The block number.
+#' \item \code{subblock}: The subblock (incomplete block) number.
 #' \item \code{loc}: The location name.
 #' \item \code{year}: The year.
 #' \item \code{season}: The season.
@@ -49,7 +52,8 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk')) {
 
   # Valid names for factors
   
-  factors <- c("plot", "row", "col", "rep", "block",
+  factors <- c("plot", "subplot", "subsubplot",
+               "row", "col", "rep", "block", "subblock",
                "loc", "year", "season", "env",
                "geno", 'is_a_control', 'type', "treat")
   
@@ -185,7 +189,8 @@ get.invalid.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp', 'uk'
   if (crop == 'auto')
     crop <- detect.crop(dfr)
 
-  factors <- c("plot", "row", "col", "rep", "block",
+  factors <- c("plot", "subplot", "subsubplot",
+               "row", "col", "rep", "block", "subblock",
                "loc", "year", "season", "env",
                "geno", 'is_a_control', 'type', "treat")
   
