@@ -12,7 +12,7 @@ fp <- function(nr, nc, serpentine) {
   
 }
 
-# Get most rectangular field shape
+# Get most squared field shape
 
 gnc <- function(nplot) {
 
