@@ -21,10 +21,11 @@
 #' \item \code{season}: The season.
 #' \item \code{env}: The environment name.
 #' \item \code{geno}: The genotype name.
+#' \item \code{bcode}: The breeder code.
 #' \item \code{is_a_control}: Identification variable for control checks (1 for 
 #' checks and NA for test genotypes).
-#' \item \code{type}: The genotype type (clone, entry, parent, control, etc).
-#' \item \code{treat}: The treatment name.
+#' \item \code{entrytype}: The genotype type (clone, entry, parent, control, etc).
+#' \item \code{trt}: The treatment name.
 #' }
 #' Type \code{ptont()} or \code{spont()} to see the list of variables and
 #' corresponding short labels and CO numbers.
@@ -55,7 +56,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk')) {
   factors <- c("plot", "subplot", "subsubplot",
                "row", "col", "rep", "block", "subblock",
                "loc", "year", "season", "env",
-               "geno", 'is_a_control', 'type', "treat")
+               "geno", 'bcode', 'is_a_control', 'entrytype', "trt")
   
   # Valid names for variables
   
@@ -89,6 +90,9 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk')) {
   old.geno <- c("accession_name", "cipno", "cipn", "cip.number", "genotype", "instn", "clon", "clone")
   new.geno <- rep('geno', length(old.geno))
   
+  old.bcode <- c("breedercode", "breeder.code", "breeder_code")
+  new.bcode <- rep('bcode', length(old.bcode))
+  
   old.rep <- c("replication", "rep_number")
   new.rep <- rep('rep', length(old.rep))
   
@@ -98,8 +102,8 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk')) {
   old.col <- c("col_number", "column", "columna", "range")
   new.col <- rep('col', length(old.col))
 
-  old.names.factors <- c('plot_number', 'location', "block_number", old.geno, old.rep, old.row, old.col)
-  new.names.factors <- c('plot',        'loc',      "block",        new.geno, new.rep, new.row, new.col)
+  old.names.factors <- c('plot_number', 'location', "block_number", old.geno, old.bcode, old.rep, old.row, old.col)
+  new.names.factors <- c('plot',        'loc',      "block",        new.geno, new.bcode, new.rep, new.row, new.col)
 
   changed.names.factors <- NULL
   
@@ -192,7 +196,7 @@ get.invalid.names <- function(dfr, add = NULL, crop = c('auto', 'pt', 'sp', 'uk'
   factors <- c("plot", "subplot", "subsubplot",
                "row", "col", "rep", "block", "subblock",
                "loc", "year", "season", "env",
-               "geno", 'is_a_control', 'type', "treat")
+               "geno", 'bcode', 'is_a_control', 'entrytype', "trt")
   
   if(crop == "pt")
     colnames.valid <- c(factors, pt_ont$Label)
