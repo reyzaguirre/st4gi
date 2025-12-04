@@ -87,7 +87,7 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk')) {
 
   # Solve synonyms for factors
 
-  old.geno <- c("accession_name", "cipno", "cipn", "cip.number", "genotype", "instn", "clon", "clone")
+  old.geno <- c("accession_name", "accession", "cipno", "cipn", "cip.number", "genotype", "instn", "clon", "clone")
   new.geno <- rep('geno', length(old.geno))
   
   old.bcode <- c("breedercode", "breeder.code", "breeder_code")
