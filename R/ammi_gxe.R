@@ -36,7 +36,7 @@
 #' @importFrom stats pf
 #' @export
 
-ammi.gxe <- function(int.mean, var.name = NULL,  method = c("ammi", "gge"),
+ammi.gxe <- function(int.mean, var.name = NULL, method = c("ammi", "gge"),
                      f = 0.5, aov.model = NULL, nrep = NULL) {
   # Match arguments
   

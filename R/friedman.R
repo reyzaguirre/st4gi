@@ -3,7 +3,7 @@
 #' Performs a Friedman rank sum test with multiple comparisons.
 #' @param dfr The name of the data frame.
 #' @param y The name of the column for the variable to analyze.
-#' @param treat The name of the column that identifies the treatments.
+#' @param trt The name of the column that identifies the treatments.
 #' @param block The name of the column that identifies the blocks.
 #' @param alpha Significant level for comparisons.
 #' @param print.mc Logical, if \code{TRUE}, it prints multiple comparisons groups.
@@ -25,13 +25,13 @@
 #' @importFrom stats pchisq
 #' @export
 
-friedman.t <- function(dfr, y, treat, block, alpha = 0.05,
+friedman.t <- function(dfr, y, trt, block, alpha = 0.05,
                        print.mc = TRUE, print.pc = TRUE) {
   
   # Create a data matrix
   # compute means if more of one evaluation
   
-  dmx <- by(dfr[, y], dfr[, c(block, treat)], mean, na.rm = TRUE)
+  dmx <- by(dfr[, y], dfr[, c(block, trt)], mean, na.rm = TRUE)
   dmx <- as.data.frame(dmx[, ])
   
   # Check NA's

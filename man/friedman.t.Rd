@@ -4,22 +4,14 @@
 \alias{friedman.t}
 \title{Friedman test}
 \usage{
-friedman.t(
-  dfr,
-  y,
-  treat,
-  block,
-  alpha = 0.05,
-  print.mc = TRUE,
-  print.pc = TRUE
-)
+friedman.t(dfr, y, trt, block, alpha = 0.05, print.mc = TRUE, print.pc = TRUE)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
 
 \item{y}{The name of the column for the variable to analyze.}
 
-\item{treat}{The name of the column that identifies the treatments.}
+\item{trt}{The name of the column that identifies the treatments.}
 
 \item{block}{The name of the column that identifies the blocks.}
 

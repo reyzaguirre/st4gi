@@ -15,7 +15,7 @@
 #' check.freq(megaclones, "rytha", "geno", "rep", "env")
 #' @export
 
-check.freq <- function(dfr, y, geno = 'geno', rep = 'rep', env = NULL) {
+check.freq <- function(dfr, y, geno, rep, env = NULL) {
   
   # Levels for replications
   

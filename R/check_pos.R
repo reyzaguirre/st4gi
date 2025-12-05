@@ -18,7 +18,7 @@
 #' check.pos(dfr, 'row', 'col', 'block')
 #' @export
 
-check.pos <- function(dfr, row = 'row', col = 'col', rep = NULL) {
+check.pos <- function(dfr, row, col, rep = NULL) {
   
   out <- ck.pos(dfr, row, col, rep)
   
