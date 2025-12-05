@@ -77,17 +77,17 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
   for (i in 1:nf)
     output$book[, fnames[i]] <- fm[, i]
   
-  # Rename geno by treat
+  # Rename geno by trt
   
   if (design == "crd")
-    colnames(output$book)[4] <- "treat"
+    colnames(output$book)[4] <- "trt"
 
   if (design == "rcbd")
-    colnames(output$book)[5] <- "treat"
+    colnames(output$book)[5] <- "trt"
 
   # Replace characters for treatment names
   
-  output$book$treat <- gsub(":-p", "_", output$book$treat)
+  output$book$trt <- gsub(":-p", "_", output$book$trt)
   output$plan <- gsub(":-p", "_", output$plan)
     
   # Return

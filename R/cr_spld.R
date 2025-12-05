@@ -115,7 +115,7 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   plot <- as.integer(gl(nl[1] * nb, nsp))
   block <- as.integer(gl(nb, nl[1] * nsp))
   
-  treat <- NULL
+  trt <- NULL
   subplot <- NULL
   subsubplot <- NULL
   
@@ -126,36 +126,36 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   for (m in 1:nb)
     for (l in 1:nl[1]) {
       if (nf == 2) {
-        treat <- c(treat, c(t(plan[, , l, m])))
+        trt <- c(trt, c(t(plan[, , l, m])))
         subplot <- c(subplot, c(t(plan.id)) + nl[2] * cont)
         cont <- cont + 1
       }
       if (nf == 3)
         for (k in 1:nl[2]) {
-          treat <- c(treat, c(t(plan[, , k, l, m])))
+          trt <- c(trt, c(t(plan[, , k, l, m])))
           subsubplot <- c(subsubplot, c(t(plan.id)) + nl[3] * cont)
           cont <- cont + 1
         }
     }
 
   if (nf == 2)
-    book <- data.frame(block, plot, subplot, row, col, treat,
+    book <- data.frame(block, plot, subplot, row, col, trt,
                        stringsAsFactors = FALSE)
   if (nf == 3)
-    book <- data.frame(block, plot, subplot, subsubplot, row, col, treat,
+    book <- data.frame(block, plot, subplot, subsubplot, row, col, trt,
                        stringsAsFactors = FALSE)
-  book <- book[!is.na(book$treat), ]
+  book <- book[!is.na(book$trt), ]
   
   # Add columns for factor levels
   
-  book$f1 <- unlist(c(data.frame(sapply(book$treat, strsplit, ":-p"),
+  book$f1 <- unlist(c(data.frame(sapply(book$trt, strsplit, ":-p"),
                                  stringsAsFactors = FALSE)[1, ]))
 
-  book$f2 <- unlist(c(data.frame(sapply(book$treat, strsplit, ":-p"),
+  book$f2 <- unlist(c(data.frame(sapply(book$trt, strsplit, ":-p"),
                                  stringsAsFactors = FALSE)[2, ]))
 
   if (nf == 3)
-    book$f3 <- unlist(c(data.frame(sapply(book$treat, strsplit, ":-p"),
+    book$f3 <- unlist(c(data.frame(sapply(book$trt, strsplit, ":-p"),
                                    stringsAsFactors = FALSE)[3, ]))
 
   nc.book <- length(colnames(book))
@@ -164,7 +164,7 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
   # Replace characters for treatment names
   
   plan <- gsub(":-p", "_", plan)
-  book$treat <- gsub(":-p", "_", book$treat)
+  book$trt <- gsub(":-p", "_", book$trt)
 
   # Sort by plot number
   

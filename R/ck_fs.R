@@ -68,26 +68,26 @@ ck.fs <- function(dfr, factors, rep = NULL) {
 
   # Define treatments
   
-  treat <- factors[1]
+  trt <- factors[1]
   if (nf > 1)
     for (i in 2:nf)
-      treat <- paste0(treat, factors[i])
+      trt <- paste0(trt, factors[i])
 
-  dfr[, treat] <- dfr[, factors[1]]
+  dfr[, trt] <- dfr[, factors[1]]
   
   if (nf > 1)
     for (i in 2:nf)
-      dfr[, treat] <- paste(dfr[, treat], dfr[, factors[i]], sep = "_")
+      dfr[, trt] <- paste(dfr[, trt], dfr[, factors[i]], sep = "_")
 
   # Number of treatments
   
-  lt <- sort(unique(dfr[, treat]))
+  lt <- sort(unique(dfr[, trt]))
   nt <- length(lt)
 
   # Number and levels of replications
   
   if (is.null(rep)) {
-    tfreq <- table(dfr[, treat])
+    tfreq <- table(dfr[, trt])
     lrep <- NULL
     nrep <- max(tfreq)
   } else {

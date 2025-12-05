@@ -39,9 +39,9 @@ aov.lxt <- function(dfr, y, line, tester, rep) {
 
   # Models
 
-  dfr$treat <- paste(dfr$line, dfr$tester)
+  dfr$trt <- paste(dfr$line, dfr$tester)
 
-  model.1 <- aov(y ~ rep + treat, dfr)
+  model.1 <- aov(y ~ rep + trt, dfr)
   anova.1 <- as.matrix(anova(model.1))
 
   model.4 <- aov(y ~ line * tester, dfr)
@@ -68,12 +68,12 @@ aov.lxt <- function(dfr, y, line, tester, rep) {
 
   # More anovas
 
-  model.3 <- aov(y ~ treat, dfr.2)
+  model.3 <- aov(y ~ trt, dfr.2)
   anova.3 <- as.matrix(anova(model.3))
 
   dfr.3 <- dfr[is.na(dfr$line) | is.na(dfr$tester), ]
 
-  model.2 <- aov(y ~ treat, dfr.3)
+  model.2 <- aov(y ~ trt, dfr.3)
   anova.2 <- as.matrix(anova(model.2))
   anova.5 <- anova.1[2, ] - anova.2[1, ] - anova.3[1, ]
 

@@ -77,7 +77,7 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
   }
   
   book <- data.frame(plot, block, row, col,
-                     A = sta, B = stb, treat = stab, stringsAsFactors = F)
+                     A = sta, B = stb, trt = stab, stringsAsFactors = F)
   
   # Sort by plot number
   
@@ -89,7 +89,7 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
   # Replace characters for treatment names
   
   plan <- gsub(":-p", "_", plan)
-  book$treat <- gsub(":-p", "_", book$treat)
+  book$trt <- gsub(":-p", "_", book$trt)
 
   # Change row and column numbers if required
   
