@@ -23,18 +23,18 @@ check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk')) {
 
   # Count number of coincidences
   
-  tmp <- germcat[germcat$crop == 'pt', ]
-  pt.ind <- tolower(dfr[, geno]) %in% tolower(c(tmp$cultivar_name, tmp$breeder_code))
+  tmp <- gcat[gcat$crop == 'pt', ]
+  pt.ind <- sapply(dfr[, geno], function(x) sum(grepl(x, c(tmp$cultivar_name, tmp$breeder_code), ignore.case = TRUE)) > 0)
   names.pt <- sum(pt.ind)
-  tmp <- germcat[germcat$crop == 'sp', ]
-  sp.ind <- tolower(dfr[, geno]) %in% tolower(c(tmp$cultivar_name, tmp$breeder_code))
+  tmp <- gcat[gcat$crop == 'sp', ]
+  sp.ind <- sapply(dfr[, geno], function(x) sum(grepl(x, c(tmp$cultivar_name, tmp$breeder_code), ignore.case = TRUE)) > 0)
   names.sp <- sum(sp.ind)
   
   if (crop == 'auto' & names.pt + names.sp > 0) {
     
     if (names.pt == names.sp) {
-      names.pt <- names.pt / dim(germcat[germcat$crop == 'potato', ])[1]
-      names.sp <- names.sp / dim(germcat[germcat$crop == 'sweetpotato', ])[1]
+      names.pt <- names.pt / dim(gcat[gcat$crop == 'potato', ])[1]
+      names.sp <- names.sp / dim(gcat[gcat$crop == 'sweetpotato', ])[1]
     }
       
     if (names.pt > names.sp) {
@@ -55,33 +55,31 @@ check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk')) {
   if (names.pt + names.sp > 0) {
     
     if (crop == 'pt') {
-      index <- pt.ind
-      genos <- unique(dfr[index, geno])
-      output <- germcat[germcat$crop == 'pt', ]
-      output <- output[tolower(output$cultivar_name) %in% tolower(genos) | tolower(output$breeder_code) %in% tolower(genos), ]
+      genos <- unique(dfr[pt.ind, geno])
+      output <- gcat[gcat$crop == 'pt', ]
     }
     
     if (crop == 'sp') {
-      index <- sp.ind
-      genos <- unique(dfr[index, geno])
-      output <- germcat[germcat$crop == 'sp', ]
-      output <- output[tolower(output$cultivar_name) %in% tolower(genos) | tolower(output$breeder_code) %in% tolower(genos), ]
+      genos <- unique(dfr[sp.ind, geno])
+      output <- gcat[gcat$crop == 'sp', ]
     }
     
     if (crop == 'uk') {
-      index <- pt.ind | sp.ind
-      genos <- unique(dfr[index, geno])
-      output <- germcat
-      output <- output[tolower(output$cultivar_name) %in% tolower(genos) | tolower(output$breeder_code) %in% tolower(genos), ]
+      genos <- unique(dfr[pt.ind | sp.ind, geno])
+      output <- gcat
     }
     
-    output
+    tmp1 <- sapply(genos, function(x) grepl(x, output$cultivar_name, ignore.case = TRUE))
+    tmp2 <- sapply(genos, function(x) grepl(x, output$breeder_code, ignore.case = TRUE))
+    tmp <- cbind(tmp1, tmp2)
+    tmp <- apply(tmp, 1, function(x) sum(x) > 0)
+    
+    output[tmp, ]
     
   } else {
     
     message("No genotypes detected with cultivar name or breeder code.")
     
   }
-  
 
 }
