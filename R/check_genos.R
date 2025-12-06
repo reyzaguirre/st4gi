@@ -8,8 +8,8 @@
 #' \code{"sp"} for sweetpotato and \code{"uk"} for unknown.
 #' @details It checks for genotypes with cultivar names or breeder codes that
 #' have a CIP number.
-#' @return It returns a list with all the genotypes with cultivar name or
-#' breeder code.
+#' @return It returns a data frame with the CIP number, cultivar name and
+#' breeder code of all the genotypes identified.
 #' @author Raul Eyzaguirre.
 #' @examples
 #' check.genos(pjpz09, "geno")
@@ -53,15 +53,35 @@ check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk')) {
   }
   
   if (names.pt + names.sp > 0) {
-    if (crop == 'pt')
+    
+    if (crop == 'pt') {
       index <- pt.ind
-    if (crop == 'sp')
+      genos <- unique(dfr[index, geno])
+      output <- germcat[germcat$crop == 'pt', ]
+      output <- output[tolower(output$cultivar_name) %in% tolower(genos) | tolower(output$breeder_code) %in% tolower(genos), ]
+    }
+    
+    if (crop == 'sp') {
       index <- sp.ind
-    if (crop == 'uk')
+      genos <- unique(dfr[index, geno])
+      output <- germcat[germcat$crop == 'sp', ]
+      output <- output[tolower(output$cultivar_name) %in% tolower(genos) | tolower(output$breeder_code) %in% tolower(genos), ]
+    }
+    
+    if (crop == 'uk') {
       index <- pt.ind | sp.ind
-    message("Some genotypes with cultivar name or breeder code: ", list(unique(dfr[index, geno])))
+      genos <- unique(dfr[index, geno])
+      output <- germcat
+      output <- output[tolower(output$cultivar_name) %in% tolower(genos) | tolower(output$breeder_code) %in% tolower(genos), ]
+    }
+    
+    output
+    
   } else {
+    
     message("No genotypes detected with cultivar name or breeder code.")
+    
   }
+  
 
 }

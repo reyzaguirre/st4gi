@@ -15,8 +15,8 @@ check.genos(dfr, geno, crop = c("auto", "pt", "sp", "uk"))
 \code{"sp"} for sweetpotato and \code{"uk"} for unknown.}
 }
 \value{
-It returns a list with all the genotypes with cultivar name or
-breeder code.
+It returns a data frame with the CIP number, cultivar name and
+breeder code of all the genotypes identified.
 }
 \description{
 Check that genotype's names correspond to CIP numbers instead of variety names
