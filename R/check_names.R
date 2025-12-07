@@ -102,8 +102,11 @@ check.names <- function(dfr, crop = c('auto', 'pt', 'sp', 'uk')) {
   old.col <- c("col_number", "column", "columna", "range")
   new.col <- rep('col', length(old.col))
 
-  old.names.factors <- c('plot_number', 'location', "block_number", old.geno, old.bcode, old.rep, old.row, old.col)
-  new.names.factors <- c('plot',        'loc',      "block",        new.geno, new.bcode, new.rep, new.row, new.col)
+  old.trt <- c("traetment", "treat", "tratamiento")
+  new.trt <- rep('trt', length(old.trt))
+  
+  old.names.factors <- c('plot_number', 'location', "block_number", old.geno, old.bcode, old.rep, old.row, old.col, old.trt)
+  new.names.factors <- c('plot',        'loc',      "block",        new.geno, new.bcode, new.rep, new.row, new.col, new.trt)
 
   changed.names.factors <- NULL
   
