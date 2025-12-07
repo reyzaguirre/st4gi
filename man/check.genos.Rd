@@ -4,19 +4,23 @@
 \alias{check.genos}
 \title{Check genotype names for potato and sweetpotato}
 \usage{
-check.genos(dfr, geno, crop = c("auto", "pt", "sp", "uk"))
+check.genos(dfr, geno, replace = FALSE, crop = c("auto", "pt", "sp", "uk"))
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
 
 \item{geno}{The name of the column in \code{dfr} that identifies the genotypes.}
 
+\item{replace}{Logical, if \code{TRUE}, cultivar names or breeder codes are
+replaced with CIP numbers, only for unique entries.}
+
 \item{crop}{\code{"auto"} for autodetection or \code{"pt"} for potato,
 \code{"sp"} for sweetpotato and \code{"uk"} for unknown.}
 }
 \value{
 It returns a data frame with the CIP number, cultivar name and
-breeder code of all the genotypes identified.
+breeder code of all the genotypes identified and, if \code{replace = TRUE},
+a modified data frame with geno names changed to CIP numbers.
 }
 \description{
 Check that genotype's names correspond to CIP numbers instead of variety names
