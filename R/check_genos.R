@@ -84,6 +84,7 @@ check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk'), replace =
 
   } else {
     
+    replace <- FALSE
     message("No genotypes detected with cultivar name or breeder code.")
     
   }
