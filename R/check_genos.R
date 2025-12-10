@@ -36,8 +36,8 @@ check.genos <- function(dfr, geno, replace = FALSE, crop = c('auto', 'pt', 'sp',
   if (crop == 'auto' & names.pt + names.sp > 0) {
     
     if (names.pt == names.sp) {
-      names.pt <- names.pt / dim(gcat[gcat$crop == 'potato', ])[1]
-      names.sp <- names.sp / dim(gcat[gcat$crop == 'sweetpotato', ])[1]
+      names.pt <- names.pt / dim(gcat[gcat$crop == 'pt', ])[1]
+      names.sp <- names.sp / dim(gcat[gcat$crop == 'sp', ])[1]
     }
       
     if (names.pt > names.sp) {
