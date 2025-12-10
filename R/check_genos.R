@@ -117,10 +117,10 @@ check.genos <- function(dfr, geno, replace = FALSE, crop = c('auto', 'pt', 'sp',
       
     }
     
+    # Return
+    
+    dfr
+    
   }
-  
-  # Return
-  
-  dfr
 
 }
