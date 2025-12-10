@@ -4,10 +4,10 @@
 #' or breeder codes.
 #' @param dfr The name of the data frame.
 #' @param geno The name of the column in \code{dfr} that identifies the genotypes.
-#' @param replace Logical, if \code{TRUE}, cultivar names or breeder codes are
-#' replaced with CIP numbers, only for unique entries.
 #' @param crop \code{"auto"} for autodetection or \code{"pt"} for potato,
 #' \code{"sp"} for sweetpotato and \code{"uk"} for unknown.
+#' @param replace Logical, if \code{TRUE}, cultivar names or breeder codes are
+#' replaced with CIP numbers, only for unique entries.
 #' @details It checks for genotypes with cultivar names or breeder codes that
 #' have a CIP number.
 #' @return It returns a data frame with the CIP number, cultivar name and
@@ -18,7 +18,7 @@
 #' check.genos(pjpz09, "geno")
 #' @export
 
-check.genos <- function(dfr, geno, replace = FALSE, crop = c('auto', 'pt', 'sp', 'uk')) {
+check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk'), replace = FALSE) {
   
   # Match arguments
   
