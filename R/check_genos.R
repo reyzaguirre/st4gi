@@ -106,6 +106,8 @@ check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk'), replace =
     
     output.unique <- output[apply(tmp, 1, function(x) sum(x) > 0), ]
     
+    cat('\n')
+    
     for (x in genos.old) {
       
       geno.ind <- which(dfr[, geno] == x)
@@ -114,7 +116,7 @@ check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk'), replace =
       tmp <- tmp1 | tmp2
       geno.rep <- output.unique$designation[tmp]
       dfr[geno.ind, 'geno'] <- geno.rep
-      cat('\n-', x, 'replaced by', geno.rep)
+      cat('-', x, 'replaced by', geno.rep, '\n')
       
     }
     
