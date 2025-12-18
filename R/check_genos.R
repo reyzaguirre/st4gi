@@ -78,9 +78,13 @@ check.genos <- function(dfr, geno, crop = c('auto', 'pt', 'sp', 'uk'), replace =
     tmp2 <- sapply(genos, function(x) grepl(x, output$breeder_code, ignore.case = TRUE))
     tmp <- cbind(tmp1, tmp2)
     
-    message("Genotypes with CIP numbers identified:")
+    message("Genotypes with possible CIP numbers identified:")
     
-    print(output[apply(tmp, 1, function(x) sum(x) > 0), ])
+    idx <- apply(tmp, 1, function(x) sum(x) > 0)
+    genos.detected <- apply(tmp[idx, ], 1, function(x) paste(colnames(tmp[idx, ])[x], sep = ', '))
+    tt <- output[idx, ]
+    tt$original <- genos.detected
+    print(tt)
 
   } else {
     
