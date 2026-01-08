@@ -6,7 +6,9 @@
 #' @param dates A vector with the dates of evaluation.
 #' @param na Logical, if \code{TRUE}, \code{NA} values are replace with the 
 #' contiguous values. Default is \code{FALSE}.
-#' @details Evaluations are subjective ranging from 0 (no disease) to 100 (full disease).
+#' @param eval.max Maximum possible value for observations, default is 100.
+#' @details Evaluations are subjective ranging from 0 (no disease) to
+#' \code{eval.max} (full disease).
 #' Dates should follow the format YYYY-MM-DD.
 #' \code{audpc} is expressed in days x % and \code{raudpc} as a proportion.
 #' @return It returns the original data frame with added columns for AUDPC and rAUDPC.
@@ -20,7 +22,7 @@
 #' head(tmp)              
 #' @export
 
-audpc <- function(dfr, evals, dates, na = FALSE) {
+audpc <- function(dfr, evals, dates, na = FALSE, eval.max = 100) {
 
   # Check number of evals and dates
   
@@ -94,7 +96,7 @@ audpc <- function(dfr, evals, dates, na = FALSE) {
     
   total.days <- as.numeric(dates[nd] - dates[1])
   
-  dfr$raudpc <- dfr$audpc / total.days / 100
+  dfr$raudpc <- dfr$audpc / total.days / eval.max
   
   # result
 
