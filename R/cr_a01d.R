@@ -60,9 +60,9 @@ cr.a01d <- function(geno, check = NULL, nb, k, nc = NULL, breakib = c('no', 'yes
   # Actual number of columns
   
   if (is.null(nc))
-    nc <- round(sqrt(ngc))
+    nc <- gnc(ngc)
   
-  if (floor(nc / (k + nck)) > 0 & breakib == 'no')
+  if (nc / (k + nck) > 1 & breakib == 'no')
     nc <- floor(nc / (k + nck)) * (k + nck)
 
   # Design generators

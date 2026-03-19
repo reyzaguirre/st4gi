@@ -8,6 +8,8 @@
 #' @param ck2 Name of check 2.
 #' @param nc Number of available columns on the field.
 #' @param ncb Number of columns between two check columns (default is 10).
+#' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
+#' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @details The genotypes are randomly allocated on a field between equally spaced
 #' columns of two alternating check varieties. Check columns are planted each
@@ -22,10 +24,13 @@
 #' cr.w(1:100, "A", "B", 23)
 #' @export
 
-cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no")) {
+cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10,
+                 fillby = c('rows', 'columns'),
+                 serpentine = c("yes", "no")) {
   
   # Match arguments
   
+  fillby <- match.arg(fillby)
   serpentine <- match.arg(serpentine)
 
   # Error messages
@@ -49,7 +54,7 @@ cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"
   
   # Fieldplan array
   
-  plan.id <- fp(nr, nc, serpentine)
+  plan.id <- fp(nr, nc, fillby, serpentine)
   
   plan <- array(dim = c(nr, nc))
   
@@ -99,9 +104,7 @@ cr.w <- function(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"
   
   # Sort by plot number
   
-  if (serpentine == 'yes' & nr > 1)
-    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
-  
+  book <- book[order(book$plot), ]
   rownames(book) <- 1:dim(book)[1]
   
   # Return

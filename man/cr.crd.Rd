@@ -4,7 +4,13 @@
 \alias{cr.crd}
 \title{Completely Randomized Design}
 \usage{
-cr.crd(geno, nrep, nc = NULL, serpentine = c("yes", "no"))
+cr.crd(
+  geno,
+  nrep,
+  nc = NULL,
+  fillby = c("rows", "columns"),
+  serpentine = c("yes", "no")
+)
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -12,6 +18,9 @@ cr.crd(geno, nrep, nc = NULL, serpentine = c("yes", "no"))
 \item{nrep}{Number of replications.}
 
 \item{nc}{Number of available columns on the field.}
+
+\item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
+default \code{"rows"}.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }

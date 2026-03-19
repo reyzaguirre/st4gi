@@ -9,6 +9,7 @@ cr.abd(
   checks,
   nb,
   nc = NULL,
+  fillby = c("rows", "columns"),
   serpentine = c("yes", "no"),
   alongside = c("no", "rows", "columns")
 )
@@ -20,12 +21,15 @@ cr.abd(
 
 \item{nb}{Number of blocks.}
 
-\item{nc}{Number of available columns on the field.}
+\item{nc}{Number of available columns on the field for each block.}
+
+\item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
+default \code{"rows"}.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 
 \item{alongside}{\code{"no"} for independent blocks, or \code{"rows"}
-or \code{"columns"} if blocks are together alongside rows or columns.}
+or \code{"columns"} if blocks are contiguous alongside rows or columns.}
 }
 \value{
 It returns the fieldbook and fieldplan.

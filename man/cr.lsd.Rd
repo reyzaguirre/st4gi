@@ -4,10 +4,13 @@
 \alias{cr.lsd}
 \title{Latin Square Design}
 \usage{
-cr.lsd(geno, serpentine = c("yes", "no"))
+cr.lsd(geno, fillby = c("rows", "columns"), serpentine = c("yes", "no"))
 }
 \arguments{
 \item{geno}{The list of genotypes.}
+
+\item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
+default \code{"rows"}.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }

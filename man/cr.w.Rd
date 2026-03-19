@@ -4,7 +4,15 @@
 \alias{cr.w}
 \title{Unreplicated experiment with a grid of checks}
 \usage{
-cr.w(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"))
+cr.w(
+  geno,
+  ck1,
+  ck2,
+  nc = NULL,
+  ncb = 10,
+  fillby = c("rows", "columns"),
+  serpentine = c("yes", "no")
+)
 }
 \arguments{
 \item{geno}{The list of genotypes.}
@@ -16,6 +24,9 @@ cr.w(geno, ck1, ck2, nc = NULL, ncb = 10, serpentine = c("yes", "no"))
 \item{nc}{Number of available columns on the field.}
 
 \item{ncb}{Number of columns between two check columns (default is 10).}
+
+\item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
+default \code{"rows"}.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }

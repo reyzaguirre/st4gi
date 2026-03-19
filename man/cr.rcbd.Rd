@@ -8,6 +8,7 @@ cr.rcbd(
   geno,
   nb,
   nc = NULL,
+  fillby = c("rows", "columns"),
   serpentine = c("yes", "no"),
   alongside = c("no", "rows", "columns")
 )
@@ -18,6 +19,9 @@ cr.rcbd(
 \item{nb}{Number of blocks.}
 
 \item{nc}{Number of available columns on the field for each block.}
+
+\item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
+default \code{"rows"}.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 

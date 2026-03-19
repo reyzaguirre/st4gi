@@ -4,6 +4,8 @@
 #' @param A The levels of factor A (row factor).
 #' @param B The levels of factor B (column factor).
 #' @param nb Number of blocks.
+#' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
+#' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @param alongside \code{"no"} for independent blocks, or \code{"rows"}
 #' or \code{"columns"} if blocks are together alongside rows or columns.
@@ -15,11 +17,14 @@
 #' cr.strd(A, B, 3)
 #' @export
 
-cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
+cr.strd <- function(A, B, nb,
+                    fillby = c('rows', 'columns'),
+                    serpentine = c("yes", "no"),
                     alongside = c("no", "rows", "columns")) {
   
   # Match arguments
   
+  fillby <- match.arg(fillby)
   serpentine <- match.arg(serpentine)
   alongside <- match.arg(alongside)
   
@@ -39,7 +44,7 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
 
   # Fieldplan array
   
-  plan.id <- fp(nla, nlb, serpentine)
+  plan.id <- fp(nla, nlb, fillby, serpentine)
 
   plan <- array(dim = c(nla, nlb, nb))
 
@@ -55,7 +60,7 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
   for (i in 1:nb) {
     rana[, i] <- sample(1:nla)
     ranb[, i] <- sample(1:nlb)
-    plan[, , i] <- outer(A[rana[, i]], B[ranb[, i]], paste, sep = ":-p")
+    plan[, , i] <- outer(A[rana[, i]], B[ranb[, i]], paste, sep = "_")
   }
    
   # Create fielbook
@@ -81,16 +86,9 @@ cr.strd <- function(A, B, nb, serpentine = c("yes", "no"),
   
   # Sort by plot number
   
-  if (serpentine == 'yes')
-    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
-  
+  book <- book[order(book$plot), ]
   rownames(book) <- 1:dim(book)[1]
   
-  # Replace characters for treatment names
-  
-  plan <- gsub(":-p", "_", plan)
-  book$trt <- gsub(":-p", "_", book$trt)
-
   # Change row and column numbers if required
   
   if (alongside == "rows") {

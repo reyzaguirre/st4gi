@@ -2,6 +2,8 @@
 #'
 #' This function creates the fieldbook and fieldplan for a LSD.
 #' @param geno The list of genotypes.
+#' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
+#' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
@@ -10,10 +12,13 @@
 #' cr.lsd(c("A", "B", "C", "D", "E"))
 #' @export
 
-cr.lsd <- function(geno, serpentine = c("yes", "no")) {
+cr.lsd <- function(geno,
+                   fillby = c('rows', 'columns'),
+                   serpentine = c("yes", "no")) {
   
   # Match arguments
   
+  fillby <- match.arg(fillby)
   serpentine <- match.arg(serpentine)
   
   # Error messages
@@ -55,7 +60,7 @@ cr.lsd <- function(geno, serpentine = c("yes", "no")) {
   row <- as.integer(gl(ng, ng))
   col <- rep(1:ng, ng)
 
-  plan.id <- fp(ng, ng, serpentine)
+  plan.id <- fp(ng, ng, fillby, serpentine)
   
   plot <- c(t(plan.id))
   
@@ -64,11 +69,9 @@ cr.lsd <- function(geno, serpentine = c("yes", "no")) {
 
   # Sort by plot number
   
-  if (serpentine == 'yes') {
-    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
-    rownames(book) <- 1:dim(book)[1]
-  }
-
+  book <- book[order(book$plot), ]
+  rownames(book) <- 1:dim(book)[1]
+  
   # Return
   
   list(plan = plan, book = book)

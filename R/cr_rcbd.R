@@ -4,6 +4,8 @@
 #' @param geno The list of genotypes.
 #' @param nb Number of blocks.
 #' @param nc Number of available columns on the field for each block.
+#' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
+#' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @param alongside \code{"no"} for independent blocks, or \code{"rows"}
 #' or \code{"columns"} if blocks are together alongside rows or columns.
@@ -14,11 +16,14 @@
 #' cr.rcbd(1:20, 2, 7)
 #' @export
 
-cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no"),
+cr.rcbd <- function(geno, nb, nc = NULL,
+                    fillby = c('rows', 'columns'),
+                    serpentine = c("yes", "no"),
                     alongside = c("no", "rows", "columns")) {
   
   # Match arguments
   
+  fillby <- match.arg(fillby)
   serpentine <- match.arg(serpentine)
   alongside <- match.arg(alongside)
 
@@ -41,7 +46,7 @@ cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no"),
   
   # Fieldplan array for each block
   
-  plan.id <- fp(nr, nc, serpentine)
+  plan.id <- fp(nr, nc, fillby, serpentine)
   
   # Create fieldplan
 
@@ -77,9 +82,7 @@ cr.rcbd <- function(geno, nb, nc = NULL, serpentine = c("yes", "no"),
   
   # Sort by plot number
   
-  if (serpentine == 'yes' & nr > 1)
-    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
-
+  book <- book[order(book$plot), ]
   rownames(book) <- 1:dim(book)[1]
 
   # Change row and column numbers if required

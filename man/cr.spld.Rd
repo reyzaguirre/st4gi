@@ -4,7 +4,14 @@
 \alias{cr.spld}
 \title{Split-Plot Design}
 \usage{
-cr.spld(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
+cr.spld(
+  fnames,
+  flevels,
+  nb,
+  nc = NULL,
+  fillby = c("rows", "columns"),
+  serpentine = c("yes", "no")
+)
 }
 \arguments{
 \item{fnames}{Factors' names for two or three factors. See details.}
@@ -14,6 +21,9 @@ cr.spld(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
 \item{nb}{Number of blocks for the first factor.}
 
 \item{nc}{Number of columns. See details.}
+
+\item{fillby}{Allocate the sub-plots or sub-sub-plots by \code{"rows"}
+or \code{"columns"}, default \code{"rows"}.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 }
@@ -25,11 +35,11 @@ This function creates the fieldbook and fieldplan for a Split-Plot
 or a Split-Split-Plot design with a RCBD for the whole plots.
 }
 \details{
-Two or three factors must be included. The first factor goes to the
-whole plots, the second to the sub-plots and the third, if any, to the sub-sub-plots.
-The number of columns \code{"nc"} is the maximum available number of columns on
-the field for the sub-plots or the sub-sub-plots if a third factor is provided.
-Default is the number of levels of the last factor.
+Two or three factors must be included. The first factor goes to
+the whole plots, the second to the sub-plots and the third, if any, to
+the sub-sub-plots. The number of columns \code{"nc"} is the maximum
+available number of columns on the corresponding block for the sub-plots
+or the sub-sub-plots if a third factor is provided.
 }
 \examples{
 A <- paste0("a", 1:4)

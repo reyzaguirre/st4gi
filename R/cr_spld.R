@@ -6,12 +6,14 @@
 #' @param flevels A list with the factors' levels.
 #' @param nb Number of blocks for the first factor.
 #' @param nc Number of columns. See details.
+#' @param fillby Allocate the sub-plots or sub-sub-plots by \code{"rows"}
+#' or \code{"columns"}, default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
-#' @details Two or three factors must be included. The first factor goes to the
-#' whole plots, the second to the sub-plots and the third, if any, to the sub-sub-plots.
-#' The number of columns \code{"nc"} is the maximum available number of columns on
-#' the field for the sub-plots or the sub-sub-plots if a third factor is provided.
-#' Default is the number of levels of the last factor.
+#' @details Two or three factors must be included. The first factor goes to
+#' the whole plots, the second to the sub-plots and the third, if any, to
+#' the sub-sub-plots. The number of columns \code{"nc"} is the maximum
+#' available number of columns on the corresponding block for the sub-plots
+#' or the sub-sub-plots if a third factor is provided.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
@@ -22,10 +24,13 @@
 #' cr.spld(c("A", "B", "C"), list(A, B, C), 3)
 #' @export
 
-cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no")) {
+cr.spld <- function(fnames, flevels, nb, nc = NULL,
+                    fillby = c('rows', 'columns'),
+                    serpentine = c("yes", "no")) {
   
   # Match arguments
   
+  fillby <- match.arg(fillby)
   serpentine <- match.arg(serpentine)
   
   # Number of factors
@@ -60,7 +65,7 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
 
   # Fieldplan array
   
-  plan.id <- fp(nr, nc, serpentine)
+  plan.id <- fp(nr, nc, fillby, serpentine)
   
   if (nf == 2)
     plan <- array(dim = c(nr, nc, nl[1], nb))
@@ -168,11 +173,11 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL, serpentine = c("yes", "no"))
 
   # Sort by plot number
   
-  if (serpentine == 'yes' & nr > 1 & nf == 2)
-    book <- book[sort(book$subplot, index.return = TRUE)$ix, ]
-  if (serpentine == 'yes' & nr > 1 & nf == 3)
-    book <- book[sort(book$subsubplot, index.return = TRUE)$ix, ]
-  
+  if (nf == 2)
+    book <- book[order(book$subplot), ]
+  if (nf == 3)
+    book <- book[order(book$subsubplot), ]
+
   rownames(book) <- 1:dim(book)[1]
   
   # Return

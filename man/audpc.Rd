@@ -4,7 +4,7 @@
 \alias{audpc}
 \title{Area Under the Disease Progress Curve}
 \usage{
-audpc(dfr, evals, dates, na = FALSE)
+audpc(dfr, evals, dates, na = FALSE, eval.max = 100)
 }
 \arguments{
 \item{dfr}{The name of the data frame.}
@@ -15,6 +15,8 @@ audpc(dfr, evals, dates, na = FALSE)
 
 \item{na}{Logical, if \code{TRUE}, \code{NA} values are replace with the 
 contiguous values. Default is \code{FALSE}.}
+
+\item{eval.max}{Maximum possible value for observations, default is 100.}
 }
 \value{
 It returns the original data frame with added columns for AUDPC and rAUDPC.
@@ -23,7 +25,8 @@ It returns the original data frame with added columns for AUDPC and rAUDPC.
 Computes the absolute (AUDPC) or relative (rAUDPC) area under the disease progress curve.
 }
 \details{
-Evaluations are subjective ranging from 0 (no disease) to 100 (full disease).
+Evaluations are subjective ranging from 0 (no disease) to
+\code{eval.max} (full disease).
 Dates should follow the format YYYY-MM-DD.
 \code{audpc} is expressed in days x % and \code{raudpc} as a proportion.
 }

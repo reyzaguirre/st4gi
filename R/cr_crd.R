@@ -4,6 +4,8 @@
 #' @param geno The list of genotypes.
 #' @param nrep Number of replications.
 #' @param nc Number of available columns on the field.
+#' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
+#' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
@@ -12,10 +14,13 @@
 #' cr.crd(1:20, 2, 7)
 #' @export
 
-cr.crd <- function(geno, nrep, nc = NULL, serpentine = c("yes", "no")) {
+cr.crd <- function(geno, nrep, nc = NULL,
+                   fillby = c('rows', 'columns'),
+                   serpentine = c("yes", "no")) {
   
   # Match arguments
   
+  fillby <- match.arg(fillby)
   serpentine <- match.arg(serpentine)
 
   # Error messages
@@ -34,7 +39,7 @@ cr.crd <- function(geno, nrep, nc = NULL, serpentine = c("yes", "no")) {
 
   # Fieldplan array
   
-  plan.id <- fp(nr, nc, serpentine)
+  plan.id <- fp(nr, nc, fillby, serpentine)
 
   # Sort genotypes
   
@@ -60,11 +65,9 @@ cr.crd <- function(geno, nrep, nc = NULL, serpentine = c("yes", "no")) {
   
   # Sort by plot number
   
-  if (serpentine == 'yes' & nr > 1) {
-    book <- book[sort(book$plot, index.return = TRUE)$ix, ]
-    rownames(book) <- 1:dim(book)[1]
-  }
-    
+  book <- book[order(book$plot), ]
+  rownames(book) <- 1:dim(book)[1]
+  
   # Return
   
   list(plan = plan, book = book)

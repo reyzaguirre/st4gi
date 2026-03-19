@@ -6,7 +6,10 @@
 #' @param flevels A list with the factors' levels.
 #' @param design The design, \code{crd} or \code{rcbd}.
 #' @param nrep Number of replications or blocks.
-#' @param nc Number of available columns on the field.
+#' @param nc Number of available columns on the field for a \code{crd}
+#' or on the field for each block for a \code{rcbd}.
+#' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
+#' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @param alongside \code{"no"} for independent blocks, or \code{"rows"}
 #' or \code{"columns"} if blocks are together alongside rows or columns.
@@ -20,10 +23,13 @@
 #' @export
 
 cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
-                 serpentine = c("yes", "no"), alongside = c("no", "rows", "columns")) {
+                 fillby = c('rows', 'columns'),
+                 serpentine = c("yes", "no"),
+                 alongside = c("no", "rows", "columns")) {
   
   # Match arguments
   
+  fillby <- match.arg(fillby)
   design <- match.arg(design)
   serpentine <- match.arg(serpentine)
   alongside <- match.arg(alongside)
@@ -63,10 +69,10 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
   # Create fielbook and fieldplan
   
   if (design == "crd")
-    output <- cr.crd(trt, nrep, nc, serpentine)
+    output <- cr.crd(trt, nrep, nc, fillby, serpentine)
   
   if (design == "rcbd")
-    output <- cr.rcbd(trt, nrep, nc, serpentine, alongside)
+    output <- cr.rcbd(trt, nrep, nc, fillby, serpentine, alongside)
   
   # Add columns for factor levels
   

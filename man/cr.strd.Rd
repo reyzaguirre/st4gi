@@ -8,6 +8,7 @@ cr.strd(
   A,
   B,
   nb,
+  fillby = c("rows", "columns"),
   serpentine = c("yes", "no"),
   alongside = c("no", "rows", "columns")
 )
@@ -18,6 +19,9 @@ cr.strd(
 \item{B}{The levels of factor B (column factor).}
 
 \item{nb}{Number of blocks.}
+
+\item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
+default \code{"rows"}.}
 
 \item{serpentine}{\code{"yes"} or \code{"no"}, default \code{"yes"}.}
 
