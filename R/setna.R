@@ -84,6 +84,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp', 'uk'),
 
   if (crop == 'pt') {
     ont <- pt_ont
+    nops <- 'ntp'
     nope <- 'npe'
     noph <- 'nph'
     nopr <- 'npt'
@@ -95,6 +96,7 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp', 'uk'),
 
   if (crop == 'sp') {
     ont <- sp_ont
+    nops <- 'nops'
     nope <- 'nope'
     noph <- 'noph'
     nopr <- 'nopr'
@@ -185,6 +187,22 @@ setna <- function(dfr, f = 10, crop = c('auto', 'pt', 'sp', 'uk'),
         
       }
     
+    #----------------------------------------------------------------------------
+    # If ntp = 0 or nops = 0 then all variables are set to NA
+    #----------------------------------------------------------------------------
+    
+    all.vars <- ont
+    all.vars <- all.vars[all.vars$Label %in% colnames(dfr), ]
+    
+    if (dim(all.vars)[1] > 0 & exists(nops, dfr)) {
+      cond <- dfr[, nops] == 0 & !is.na(dfr[, nops])
+      if (sum(cond) > 0) {
+        dfr[cond, all.vars$Label[all.vars$Label != nops]] <- NA
+        warning("Rows where ", nops, ' is 0 replaced with NA: ',
+                paste0(rownames(dfr)[cond], " "), call. = FALSE)
+      }
+    }
+
     #----------------------------------------------------------------------------
     # 1. If nope = 0 and there is some data for any variable,
     # then nope is set to NA
