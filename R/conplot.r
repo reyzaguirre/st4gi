@@ -17,7 +17,7 @@ conplot <- function(dfr, y, geno, trial, na.remove = TRUE) {
   
   # Number and list of trials
   
-  trials.list <- unique(dfr[, trial])
+  trials.list <- sort(unique(dfr[, trial]))
   
   nt <- length(trials.list)
   
