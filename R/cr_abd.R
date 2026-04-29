@@ -4,12 +4,14 @@
 #' @param geno The list of genotypes.
 #' @param checks The list of checks.
 #' @param nb Number of blocks.
-#' @param nc Number of available columns on the field for each block.
+#' @param nc Number of columns in the field for each block.
 #' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
 #' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
 #' @param alongside \code{"no"} for independent blocks, or \code{"rows"}
 #' or \code{"columns"} if blocks are contiguous alongside rows or columns.
+#' @details If \code{"nc"} is \code{"NULL"}, the function will look for the
+#' most squared rectangular block.
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples

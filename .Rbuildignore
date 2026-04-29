@@ -4,3 +4,5 @@
 ^appveyor\.yml$
 Readme.md
 Readme.rmd
+^\.positai$
+^\.claude$

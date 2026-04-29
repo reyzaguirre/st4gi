@@ -21,7 +21,7 @@ cr.w(
 
 \item{ck2}{Name of check 2.}
 
-\item{nc}{Number of available columns on the field.}
+\item{nc}{Number of columns in the field.}
 
 \item{ncb}{Number of columns between two check columns (default is 10).}
 
@@ -39,7 +39,7 @@ experiment with genotypes randomly allocated on a field with checks
 following the method described by Westcott (1981).
 }
 \details{
-The genotypes are randomly allocated on a field between equally spaced
+The genotypes are randomly allocated in a field between equally spaced
 columns of two alternating check varieties. Check columns are planted each
 \code{ncb} columns.
 }

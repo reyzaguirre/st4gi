@@ -6,12 +6,12 @@
 #' @param geno The list of genotypes.
 #' @param ck1 Name of check 1.
 #' @param ck2 Name of check 2.
-#' @param nc Number of available columns on the field.
+#' @param nc Number of columns in the field.
 #' @param ncb Number of columns between two check columns (default is 10).
 #' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
 #' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.
-#' @details The genotypes are randomly allocated on a field between equally spaced
+#' @details The genotypes are randomly allocated in a field between equally spaced
 #' columns of two alternating check varieties. Check columns are planted each
 #' \code{ncb} columns.
 #' @return It returns the fieldbook and fieldplan.

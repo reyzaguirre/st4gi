@@ -21,7 +21,7 @@ cr.abd(
 
 \item{nb}{Number of blocks.}
 
-\item{nc}{Number of available columns on the field for each block.}
+\item{nc}{Number of columns in the field for each block.}
 
 \item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
 default \code{"rows"}.}
@@ -36,6 +36,10 @@ It returns the fieldbook and fieldplan.
 }
 \description{
 This function creates the fieldbook and fieldplan for an ABD.
+}
+\details{
+If \code{"nc"} is \code{"NULL"}, the function will look for the
+most squared rectangular block.
 }
 \examples{
 checks <- paste("ch", 1:4, sep = "_")

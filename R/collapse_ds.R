@@ -1,8 +1,8 @@
-#' Completely Randomized Design
+#' Collapse design
 #'
-#' This function creates the fieldbook and fieldplan for a CRD.
-#' @param geno The list of genotypes.
-#' @param nrep Number of replications.
+#' Collapse a blocks design to remove missing plots.
+#' @param book The fieldbook design with columns \code{plot}, \code{block}
+#' and \code{geno}.
 #' @param nc Number of columns in the field.
 #' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
 #' default \code{"rows"}.
@@ -12,44 +12,46 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cr.crd(1:20, 3, 12)
-#' cr.crd(1:20, 2, 7)
+#' checks <- paste("ch", 1:4, sep = "_")
+#' genos <- paste("g", 1:20, sep = "_")
+#' book <- cr.abd(genos, checks, 4, 5)$book
+#' cds(book, 5, 'rows', 'yes')
 #' @export
 
-cr.crd <- function(geno, nrep, nc = NULL,
-                   fillby = c('rows', 'columns'),
-                   serpentine = c("yes", "no")) {
+cds <- function(book, nc = NULL,
+                fillby = c('rows', 'columns'),
+                serpentine = c("yes", "no")) {
   
   # Match arguments
   
   fillby <- match.arg(fillby)
   serpentine <- match.arg(serpentine)
-
-  # Error messages
   
-  ng <- length(geno)
-
-  if (ng < 2)
-    stop("Include at least 2 genotypes.")
+  # Sort by plots
+  
+  book <- book[order(book$plot), ]
+  
+  # Number of plots
+  
+  np <- dim(book)[1]
 
   # Number of rows and columns
   
   if (is.null(nc))
-    nc <- gnc(ng * nrep)
+    nc <- gnc(np)
   
-  nr <- ceiling(ng * nrep / nc)
+  nr <- ceiling(np / nc)
 
   # Fieldplan array
   
   plan.id <- fp(nr, nc, fillby, serpentine)
 
-  # Sort genotypes
-  
-  geno <- sample(rep(geno, nrep))
-  
   # Create fieldplan
   
+  geno <- book$geno
+  block <- book$block
   plan <- array(geno[plan.id], c(nr, nc))
+  blockplan <- array(block[plan.id], c(nr, nc))
       
   rownames(plan) <- paste("row", 1:nr)
   colnames(plan) <- paste("col", 1:nc)
@@ -59,9 +61,10 @@ cr.crd <- function(geno, nrep, nc = NULL,
   row <- as.integer(gl(nr, nc))
   col <- rep(1:nc, nr)
   
-  # Create fielbook
+  # Create fielbook with new rows and columns
     
-  book <- data.frame(plot = c(t(plan.id)), row, col, geno = c(t(plan)),
+  book <- data.frame(plot = c(t(plan.id)), block = c(t(blockplan)),
+                     row, col, geno = c(t(plan)),
                      stringsAsFactors = FALSE)
   book <- book[!is.na(book$geno), ]
   

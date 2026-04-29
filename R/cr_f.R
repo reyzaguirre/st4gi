@@ -6,8 +6,8 @@
 #' @param flevels A list with the factors' levels.
 #' @param design The design, \code{crd} or \code{rcbd}.
 #' @param nrep Number of replications or blocks.
-#' @param nc Number of available columns on the field for a \code{crd}
-#' or on the field for each block for a \code{rcbd}.
+#' @param nc Number of columns in the field for a \code{crd}
+#' or in the field for each block for a \code{rcbd}.
 #' @param fillby Allocate the plots by \code{"rows"} or \code{"columns"},
 #' default \code{"rows"}.
 #' @param serpentine \code{"yes"} or \code{"no"}, default \code{"yes"}.

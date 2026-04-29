@@ -24,8 +24,8 @@ cr.f(
 
 \item{nrep}{Number of replications or blocks.}
 
-\item{nc}{Number of available columns on the field for a \code{crd}
-or on the field for each block for a \code{rcbd}.}
+\item{nc}{Number of columns in the field for a \code{crd}
+or in the field for each block for a \code{rcbd}.}
 
 \item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
 default \code{"rows"}.}

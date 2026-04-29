@@ -18,7 +18,7 @@ cr.rcbd(
 
 \item{nb}{Number of blocks.}
 
-\item{nc}{Number of available columns on the field for each block.}
+\item{nc}{Number of columns in the field for each block.}
 
 \item{fillby}{Allocate the plots by \code{"rows"} or \code{"columns"},
 default \code{"rows"}.}
@@ -33,6 +33,10 @@ It returns the fieldbook and fieldplan.
 }
 \description{
 This function creates the fieldbook and fieldplan for a RCBD.
+}
+\details{
+If \code{"nc"} is \code{"NULL"}, the function will look for the
+most squared rectangular block.
 }
 \examples{
 cr.rcbd(1:20, 3, 10)
