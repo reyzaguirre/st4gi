@@ -39,8 +39,14 @@ If \code{"nc"} is \code{"NULL"}, the function will look for the
 most squared rectangular block.
 }
 \examples{
-cr.rcbd(1:20, 3, 10)
-cr.rcbd(1:20, 2, 7)
+ds <- cr.rcbd(1:20, 3, 10, alongside = 'columns')
+ds$plan
+ds$book
+plot(ds)
+ds <- cr.rcbd(1:20, 2, 7)
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

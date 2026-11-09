@@ -35,8 +35,14 @@ If \code{"nc"} is \code{"NULL"}, the function will look for the
 most squared rectangular field.
 }
 \examples{
-cr.crd(1:20, 3, 12)
-cr.crd(1:20, 2, 7)
+ds <- cr.crd(1:20, 3, 12)
+ds$plan
+ds$book
+plot(ds)
+ds <- cr.crd(1:20, 2, 7)
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

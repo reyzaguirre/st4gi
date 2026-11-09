@@ -46,7 +46,10 @@ following a CRD or a RCBD.
 A <- paste0("a", 1:5)
 B <- paste0("b", 1:3)
 C <- paste0("c", 1:2)
-cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12)
+ds <- cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12, alongside = 'columns')
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

@@ -8,8 +8,14 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cr.lsd(c("A", "B", "C"))
-#' cr.lsd(c("A", "B", "C", "D", "E"))
+#' ds <- cr.lsd(c("A", "B", "C"))
+#' ds$plan
+#' ds$book
+#' plot(ds)
+#' ds <- cr.lsd(c("A", "B", "C", "D", "E"))
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.lsd <- function(geno,
@@ -74,6 +80,8 @@ cr.lsd <- function(geno,
   
   # Return
   
-  list(plan = plan, book = book)
+  output <- list(plan = plan, book = book, design = 'LSD')
+  class(output) <- "st4gi_design"
+  invisible(output)
   
 }

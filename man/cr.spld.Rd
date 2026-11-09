@@ -44,9 +44,15 @@ or the sub-sub-plots if a third factor is provided.
 \examples{
 A <- paste0("a", 1:4)
 B <- paste0("b", 1:3)
-cr.spld(c("A", "B"), list(A, B), 3)
+ds <- cr.spld(c("A", "B"), list(A, B), 3)
+ds$plan
+ds$book
+plot(ds)
 C <- paste0("c", 1:2)
-cr.spld(c("A", "B", "C"), list(A, B, C), 3)
+ds <- cr.spld(c("A", "B", "C"), list(A, B, C), 3)
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

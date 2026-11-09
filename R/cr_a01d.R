@@ -26,8 +26,14 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cr.a01d(1:100, NULL, 2, 5)
-#' cr.a01d(1:100, NULL, 3, 5, 28)
+#' ds <- cr.a01d(1:100, NULL, 2, 5)
+#' ds$plan
+#' ds$book
+#' plot(ds)
+#' ds <- cr.a01d(1:100, NULL, 3, 5, 28, alongside = 'columns')
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.a01d <- function(geno, check = NULL, nb, k, nc = NULL, breakib = c('no', 'yes'),
@@ -237,6 +243,8 @@ cr.a01d <- function(geno, check = NULL, nb, k, nc = NULL, breakib = c('no', 'yes
 
   # Return
   
-  list(plan = plan, book = book)
+  output <- list(plan = plan, book = book, design = 'A01')
+  class(output) <- "st4gi_design"
+  invisible(output)
   
 }

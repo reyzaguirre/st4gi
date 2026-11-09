@@ -37,7 +37,10 @@ This function creates the fieldbook and fieldplan for a Strip-Split-Plot design.
 \examples{
 A <- paste0("a", 1:4)
 B <- paste0("b", 1:3)
-cr.strd(A, B, 3)
+ds <- cr.strd(A, B, 3)
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

@@ -16,8 +16,14 @@
 #' @author Raul Eyzaguirre.
 #' @examples
 #' checks <- paste("ch", 1:4, sep = "_")
-#' cr.abd(1:40, checks, 4, 10)
-#' cr.abd(1:50, checks, 3, 7)
+#' ds <- cr.abd(1:40, checks, 4, 10)
+#' ds$plan
+#' ds$book
+#' plot(ds)
+#' ds <- cr.abd(1:50, checks, 3, 7, alongside = 'columns')
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.abd <- function(geno, checks, nb, nc = NULL,
@@ -129,9 +135,11 @@ cr.abd <- function(geno, checks, nb, nc = NULL,
     rownames(plan) <- paste("row", 1:dim(plan)[1])
     book$row <- book$row + (book$block - 1) * nr
   }
-  
+
   # Return
   
-  list(plan = plan, book = book)
+  output <- list(plan = plan, book = book, design = 'ABD')
+  class(output) <- "st4gi_design"
+  invisible(output)
   
 }

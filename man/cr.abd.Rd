@@ -43,8 +43,14 @@ most squared rectangular block.
 }
 \examples{
 checks <- paste("ch", 1:4, sep = "_")
-cr.abd(1:40, checks, 4, 10)
-cr.abd(1:50, checks, 3, 7)
+ds <- cr.abd(1:40, checks, 4, 10)
+ds$plan
+ds$book
+plot(ds)
+ds <- cr.abd(1:50, checks, 3, 7, alongside = 'columns')
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

@@ -14,8 +14,14 @@
 #' @return It returns the fieldbook and fieldplan. 
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cr.rcbd(1:20, 3, 10)
-#' cr.rcbd(1:20, 2, 7)
+#' ds <- cr.rcbd(1:20, 3, 10, alongside = 'columns')
+#' ds$plan
+#' ds$book
+#' plot(ds)
+#' ds <- cr.rcbd(1:20, 2, 7)
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.rcbd <- function(geno, nb, nc = NULL,
@@ -103,6 +109,8 @@ cr.rcbd <- function(geno, nb, nc = NULL,
 
   # Return
   
-  list(plan = plan, book = book)
+  output <- list(plan = plan, book = book, design = 'RCBD')
+  class(output) <- "st4gi_design"
+  invisible(output)
   
 }

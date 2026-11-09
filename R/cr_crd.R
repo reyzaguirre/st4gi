@@ -12,8 +12,14 @@
 #' @return It returns the fieldbook and fieldplan.
 #' @author Raul Eyzaguirre.
 #' @examples
-#' cr.crd(1:20, 3, 12)
-#' cr.crd(1:20, 2, 7)
+#' ds <- cr.crd(1:20, 3, 12)
+#' ds$plan
+#' ds$book
+#' plot(ds)
+#' ds <- cr.crd(1:20, 2, 7)
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.crd <- function(geno, nrep, nc = NULL,
@@ -72,6 +78,8 @@ cr.crd <- function(geno, nrep, nc = NULL,
   
   # Return
   
-  list(plan = plan, book = book)
+  output <- list(plan = plan, book = book, design = 'CRD')
+  class(output) <- "st4gi_design"
+  invisible(output)
   
 }

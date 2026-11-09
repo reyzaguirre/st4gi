@@ -14,7 +14,10 @@
 #' @examples
 #' A <- paste0("a", 1:4)
 #' B <- paste0("b", 1:3)
-#' cr.strd(A, B, 3)
+#' ds <- cr.strd(A, B, 3)
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.strd <- function(A, B, nb,
@@ -105,6 +108,8 @@ cr.strd <- function(A, B, nb,
   
   # Return
   
-  list(plan = plan, book = book)
+  output <- list(plan = plan, book = book, design = 'Strip-Split-Plot')
+  class(output) <- "st4gi_design"
+  invisible(output)
   
 }

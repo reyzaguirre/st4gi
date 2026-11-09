@@ -55,8 +55,14 @@ is 0 or 1 (hence the name of the design). There are 4 options for this design:
 The blocks and incomplete blocks are disposed alongside the rows.
 }
 \examples{
-cr.a01d(1:100, NULL, 2, 5)
-cr.a01d(1:100, NULL, 3, 5, 28)
+ds <- cr.a01d(1:100, NULL, 2, 5)
+ds$plan
+ds$book
+plot(ds)
+ds <- cr.a01d(1:100, NULL, 3, 5, 28, alongside = 'columns')
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

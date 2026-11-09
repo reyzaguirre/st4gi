@@ -21,8 +21,14 @@ It returns the fieldbook and fieldplan.
 This function creates the fieldbook and fieldplan for a LSD.
 }
 \examples{
-cr.lsd(c("A", "B", "C"))
-cr.lsd(c("A", "B", "C", "D", "E"))
+ds <- cr.lsd(c("A", "B", "C"))
+ds$plan
+ds$book
+plot(ds)
+ds <- cr.lsd(c("A", "B", "C", "D", "E"))
+ds$plan
+ds$book
+plot(ds)
 }
 \author{
 Raul Eyzaguirre.

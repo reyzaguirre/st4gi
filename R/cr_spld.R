@@ -19,9 +19,15 @@
 #' @examples
 #' A <- paste0("a", 1:4)
 #' B <- paste0("b", 1:3)
-#' cr.spld(c("A", "B"), list(A, B), 3)
+#' ds <- cr.spld(c("A", "B"), list(A, B), 3)
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' C <- paste0("c", 1:2)
-#' cr.spld(c("A", "B", "C"), list(A, B, C), 3)
+#' ds <- cr.spld(c("A", "B", "C"), list(A, B, C), 3)
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.spld <- function(fnames, flevels, nb, nc = NULL,
@@ -182,6 +188,8 @@ cr.spld <- function(fnames, flevels, nb, nc = NULL,
   
   # Return
   
-  list(plan = plan, book = book)
+  output <- list(plan = plan, book = book, design = 'Split-Plot')
+  class(output) <- "st4gi_design"
+  invisible(output)
   
 }

@@ -19,7 +19,10 @@
 #' A <- paste0("a", 1:5)
 #' B <- paste0("b", 1:3)
 #' C <- paste0("c", 1:2)
-#' cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12)
+#' ds <- cr.f(c("A", "B", "C"), list(A, B, C), "rcbd", 3, 12, alongside = 'columns')
+#' ds$plan
+#' ds$book
+#' plot(ds)
 #' @export
 
 cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
@@ -98,6 +101,9 @@ cr.f <- function(fnames, flevels, design = c("crd", "rcbd"), nrep, nc = NULL,
     
   # Return
   
-  list(plan = output$plan, book = output$book)
+  output <- list(plan = output$plan, book = output$book,
+                 design = paste0('Factorial - ', toupper(design)))
+  class(output) <- "st4gi_design"
+  invisible(output)
 
 }
